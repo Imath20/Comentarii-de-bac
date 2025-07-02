@@ -1,0 +1,14 @@
+.footer {
+  margin: 0;
+  padding: 1.5rem 0;
+  text-align: center;
+  background: rgba(251, 238, 193, 0.95);
+  color: #7c4f2b;
+  font-size: 1rem;
+  border-radius: 0;
+  z-index: 100;
+}
+body.dark-theme .footer {
+  background: rgba(78, 46, 30, 0.95);
+  color: #fbeec1;
+} 
