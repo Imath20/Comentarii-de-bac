@@ -9,7 +9,7 @@ const scriitoriList = [
   {
     nume: 'Ion Creangă',
     date: '1837 – 1889',
-    img: '/scriitori/creanga.jpg',
+    img: '/scriitori/creanga_ion.png',
     color: 'rgba(255,179,71,0.82)',
     categorie: 'basm',
     canonic: true
@@ -17,7 +17,7 @@ const scriitoriList = [
   {
     nume: 'Mihai Eminescu',
     date: '1850 – 1889',
-    img: '/scriitori/eminescu.jpg',
+    img: '/scriitori/eminescu_mihai.png',
     color: 'rgba(122,58,0,0.82)',
     categorie: 'poezie',
     canonic: true

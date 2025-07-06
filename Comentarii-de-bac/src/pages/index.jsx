@@ -8,19 +8,19 @@ const scriitoriList = [
   {
     nume: 'Ion Creangă',
     date: '1837 – 1889',
-    img: '/public/scriitori/creanga.jpg',
+    img: '/public/scriitori/creanga_ion.png',
     color: 'rgba(255,179,71,0.82)',
   },
   {
     nume: 'Mihai Eminescu',
     date: '1850 – 1889',
-    img: '/public/scriitori/eminescu.jpg',
+    img: '/public/scriitori/eminescu_mihai.png',
     color: 'rgba(122,58,0,0.82)',
   },
   {
     nume: 'I.L. Caragiale',
     date: '1852 – 1912',
-    img: '/public/scriitori/caragiale.jpg',
+    img: '/public/scriitori/il-caragiale.png',
     color: 'rgba(255,179,71,0.82)',
   },
   {
