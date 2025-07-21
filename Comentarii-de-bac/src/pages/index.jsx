@@ -82,6 +82,15 @@ const opereList = [
   },
 ];
 
+function getScriitorKey(nume) {
+  return nume
+    .toLowerCase()
+    .replace(/ă/g, 'a').replace(/â/g, 'a').replace(/î/g, 'i').replace(/ș/g, 's').replace(/ş/g, 's').replace(/ț/g, 't').replace(/ţ/g, 't')
+    .replace(/[^a-z0-9 ]/g, '')
+    .split(' ')[1] // prenumele (ex: Mihai Eminescu -> eminescu)
+    || nume.toLowerCase();
+}
+
 const Index = () => {
   const [darkTheme, setDarkTheme] = useState(() => localStorage.getItem('theme') === 'dark');
   const [scrolled, setScrolled] = useState(false);
@@ -326,66 +335,74 @@ const Index = () => {
           justifyItems: 'center',
           padding: '0 1.5rem',
         }}>
-          {scriitoriList.map((scriitor, idx) => (
-            <div
-              key={scriitor.nume}
-              style={{
-                width: cardSize,
-                height: cardSize,
-                borderRadius: '1.5rem',
-                overflow: 'hidden',
-                boxShadow: '0 4px 24px 0 rgba(124,79,43,0.10)',
-                background: 'transparent',
-                border: 'none',
-                position: 'relative',
-                display: 'flex',
-                alignItems: 'flex-end',
-                justifyContent: 'center',
-                transition: 'transform 0.18s cubic-bezier(.4,1.4,.6,1)',
-                cursor: 'pointer',
-              }}
-              onMouseOver={e => {
-                e.currentTarget.style.transform = 'scale(1.045)';
-                e.currentTarget.style.zIndex = 2;
-              }}
-              onMouseOut={e => {
-                e.currentTarget.style.transform = 'scale(1)';
-                e.currentTarget.style.zIndex = 1;
-              }}
-            >
-              <img
-                src={scriitor.img}
-                alt={scriitor.nume}
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  objectFit: 'cover',
-                  borderRadius: '1.5rem',
-                  display: 'block',
-                }}
-              />
-              <div style={{
-                position: 'absolute',
-                bottom: 0,
-                left: 0,
-                width: '100%',
-                padding: '0.5em 0 0.3em 0',
-                background: bandaColor,
-                color: '#fff',
-                fontWeight: 900,
-                fontSize: '1.05rem',
-                textAlign: 'center',
-                letterSpacing: '0.04em',
-                textShadow: '0 2px 8px rgba(60,40,20,0.10)',
-                borderBottomLeftRadius: '1.5rem',
-                borderBottomRightRadius: '1.5rem',
-                backdropFilter: 'blur(1.5px)',
-              }}>
-                <div>{scriitor.nume}</div>
-                <div style={{ fontWeight: 500, fontSize: '0.93em', opacity: 0.92 }}>{scriitor.date}</div>
-              </div>
-            </div>
-          ))}
+          {scriitoriList.map((scriitor, idx) => {
+            const key = getScriitorKey(scriitor.nume);
+            return (
+              <a
+                key={scriitor.nume}
+                href={`/scriitor?name=${key}`}
+                style={{ textDecoration: 'none', color: 'inherit' }}
+              >
+                <div
+                  style={{
+                    width: cardSize,
+                    height: cardSize,
+                    borderRadius: '1.5rem',
+                    overflow: 'hidden',
+                    boxShadow: '0 4px 24px 0 rgba(124,79,43,0.10)',
+                    background: 'transparent',
+                    border: 'none',
+                    position: 'relative',
+                    display: 'flex',
+                    alignItems: 'flex-end',
+                    justifyContent: 'center',
+                    transition: 'transform 0.18s cubic-bezier(.4,1.4,.6,1)',
+                    cursor: 'pointer',
+                  }}
+                  onMouseOver={e => {
+                    e.currentTarget.style.transform = 'scale(1.045)';
+                    e.currentTarget.style.zIndex = 2;
+                  }}
+                  onMouseOut={e => {
+                    e.currentTarget.style.transform = 'scale(1)';
+                    e.currentTarget.style.zIndex = 1;
+                  }}
+                >
+                  <img
+                    src={scriitor.img}
+                    alt={scriitor.nume}
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                      borderRadius: '1.5rem',
+                      display: 'block',
+                    }}
+                  />
+                  <div style={{
+                    position: 'absolute',
+                    bottom: 0,
+                    left: 0,
+                    width: '100%',
+                    padding: '0.5em 0 0.3em 0',
+                    background: bandaColor,
+                    color: '#fff',
+                    fontWeight: 900,
+                    fontSize: '1.05rem',
+                    textAlign: 'center',
+                    letterSpacing: '0.04em',
+                    textShadow: '0 2px 8px rgba(60,40,20,0.10)',
+                    borderBottomLeftRadius: '1.5rem',
+                    borderBottomRightRadius: '1.5rem',
+                    backdropFilter: 'blur(1.5px)',
+                  }}>
+                    <div>{scriitor.nume}</div>
+                    <div style={{ fontWeight: 500, fontSize: '0.93em', opacity: 0.92 }}>{scriitor.date}</div>
+                  </div>
+                </div>
+              </a>
+            );
+          })}
         </div>
         <button
           onClick={() => window.location.href = '/scriitori'}
