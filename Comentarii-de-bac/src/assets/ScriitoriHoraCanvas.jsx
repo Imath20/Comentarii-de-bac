@@ -26,40 +26,33 @@ function isPointInPolygon(point, polygon) {
   return inside;
 }
 
-const scriitoriLinks = [
-  'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
-  'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
-  '#caragiale',
-  '#slavici',
-  '#rebreanu',
-];
 
 // Adaug datele scriitorilor
 const scriitoriInfo = [
   {
     nume: 'Ion Creangă',
     date: '1837 – 1889',
-    link: 'https://ro.wikipedia.org/wiki/Ion_Creang%C4%83',
+    link: '/scriitor?name=creanga',
   },
   {
     nume: 'Mihai Eminescu',
     date: '1850 – 1889',
-    link: 'https://ro.wikipedia.org/wiki/Mihai_Eminescu',
+    link: '/scriitor?name=eminescu',
   },
   {
     nume: 'I.L. Caragiale',
     date: '1852 – 1912',
-    link: 'https://ro.wikipedia.org/wiki/Ion_Luca_Caragiale',
+    link: '/scriitor?name=caragiale',
   },
   {
     nume: 'Ioan Slavici',
     date: '1848 – 1925',
-    link: 'https://ro.wikipedia.org/wiki/Ioan_Slavici',
+    link: '/scriitor?name=slavici',
   },
   {
     nume: 'Liviu Rebreanu',
     date: '1885 – 1944',
-    link: 'https://ro.wikipedia.org/wiki/Liviu_Rebreanu',
+    link: '/scriitor?name=rebreanu',
   },
 ];
 
@@ -144,7 +137,7 @@ const ScriitoriHoraCanvas = () => {
   // Click pe scriitor: deschide linkul din info
   const handleClick = (e) => {
     if (hoveredIndex !== null && scriitoriInfo[hoveredIndex]) {
-      window.open(scriitoriInfo[hoveredIndex].link, '_blank');
+      window.location.href = scriitoriInfo[hoveredIndex].link;
       return;
     }
     // --- DEBUG adăugare puncte (dezactivat) ---
