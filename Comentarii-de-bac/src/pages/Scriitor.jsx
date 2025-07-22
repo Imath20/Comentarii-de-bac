@@ -65,7 +65,7 @@ const Scriitor = () => {
           width: '100vw',
           height: isFullScreen ? '100vh' : 450,
           background: `url(${data.banner}) center center/cover no-repeat`,
-          backgroundPosition: name === 'eminescu' ? 'center 30%' : 'center',
+          backgroundPosition: name === 'eminescu' ? 'center 30%' : name === 'caragiale' ? 'center 20%' : name === 'slavici' ? 'center 20%' : name === 'rebreanu' ? 'center 20%' : name === 'calinescu' ? 'center 20%' : 'center',
           position: 'relative',
           left: 0,
           top: 0,
