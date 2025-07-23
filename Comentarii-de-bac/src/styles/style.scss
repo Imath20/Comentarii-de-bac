@@ -15,3 +15,11 @@
 .page-hero {
 // ... existing code ...
 }
+
+.friend-name-hover {
+  opacity: 0.5;
+}
+
+[style*='cursor: pointer'][style*='width: 70px'][style*='height: 70px']:hover .friend-name-hover {
+  opacity: 0.9 !important;
+}

@@ -6,6 +6,72 @@ const scriitoriData = {
     img: '/scriitori/eminescu_mihai.png',
     color: 'rgba(122,58,0,0.82)',
     banner: '/Banner/eminescu.png',
+    friends: [
+      {
+        name: 'Ion Creangă',
+        key: 'creanga',
+        img: '/scriitori/creanga_ion.png',
+      },
+      {
+        name: 'Ioan Slavici',
+        key: 'slavici',
+        img: '/scriitori/ioan_slavici.png',
+      },
+    ],
+    gallery: [
+      '/Banner/eminescu.png',
+      '/scriitori/eminescu_mihai.png',
+      '/opere/Luceafarul.png',
+    ],
+    posts: [
+      {
+        id: 1,
+        pin: true,
+        date: '15 ianuarie 1883',
+        author: 'Mihai Eminescu',
+        text: 'Astăzi am publicat "Luceafărul". O poezie la care am lucrat ani de zile.',
+        image: '/opere/Luceafarul.png',
+        link: '/poezie/luceafarul',
+        likes: 1883,
+        comments: [
+          {
+            author: 'Ion Creangă',
+            key: 'creanga',
+            text: 'Felicitări, Mihai! O capodoperă!',
+          },
+          {
+            author: 'Ioan Slavici',
+            key: 'slavici',
+            text: 'Incredibilă poezie, prietene!',
+          },
+        ],
+      },
+      {
+        id: 2,
+        date: '15 ianuarie 1850',
+        author: 'Mihai Eminescu',
+        text: 'M-am născut astăzi, la Ipotești. "A fi român e o mândrie!"',
+        image: null,
+        likes: 1850,
+        comments: [
+          {
+            author: 'Ion Creangă',
+            key: 'creanga',
+            text: 'La mulți ani, Mihai!',
+          },
+        ],
+      },
+      {
+        id: 3,
+        date: '1879',
+        author: 'Mihai Eminescu',
+        text: 'Am scris poezia "Glossă". Gânduri despre timp și viață.',
+        image: '/opere/Luceafarul.png', // Folosim aceeași imagine ca exemplu
+        link: '/poezie/glossa',
+        likes: 1879,
+        comments: [],
+      },
+    ],
   },
   creanga: {
     nume: 'Ion Creangă',
