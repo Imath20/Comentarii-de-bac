@@ -192,10 +192,51 @@ const Scriitor = () => {
         margin: '0 auto',
         marginTop: 120,
         padding: '0 1.5rem',
+        paddingBottom: 50,
         gap: 48,
       }}>
         {/* Stânga */}
-        <div style={{ flex: '0 0 340px', minWidth: 280, maxWidth: 360 }}>
+        <div style={{ flex: '0 0 340px', minWidth: 280, maxWidth: 360, position: 'relative' }}>
+          {/* Buton înapoi - stil ca fullscreen button */}
+          <button
+            onClick={() => window.history.back()}
+            style={{
+              position: 'absolute',
+              top: -100,
+              left: 0,
+              background: 'none',
+              border: 'none',
+              borderRadius: '50%',
+              width: 44,
+              height: 44,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              boxShadow: 'none',
+              cursor: 'pointer',
+              zIndex: 20,
+              transition: 'background 0.2s',
+              padding: 0,
+            }}
+            title="Înapoi"
+          >
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              style={{ filter: 'invert(1) brightness(2)' }}
+            >
+              <path
+                d="M19 12H5M12 19L5 12L12 5"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </button>
           {/* Sus: număr prieteni */}
           <div style={{
             fontWeight: 700,
