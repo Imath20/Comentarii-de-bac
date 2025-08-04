@@ -20,6 +20,16 @@
   opacity: 0.5;
 }
 
-[style*='cursor: pointer'][style*='width: 70px'][style*='height: 70px']:hover .friend-name-hover {
+[style*='cursor: pointer'][style*='width: 100px'][style*='height: 100px']:hover .friend-name-hover {
   opacity: 0.9 !important;
+}
+
+/* Ascunde scroll-ul pentru modalul poeziei */
+.poem-modal-scroll {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.poem-modal-scroll::-webkit-scrollbar {
+  display: none;
 }
