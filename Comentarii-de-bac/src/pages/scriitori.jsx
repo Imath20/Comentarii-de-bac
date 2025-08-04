@@ -338,31 +338,10 @@ export default function Scriitori() {
 
       <div className="container">
         {/* Search Bar și Dropdown-uri */}
-        <div style={{
-          display: 'flex',
-          alignItems: 'center',
-          width: '100%',
-          maxWidth: 1300,
-          margin: '0 auto 1.5rem auto',
-          padding: 0,
-          gap: '1.5rem',
-        }}>
+        <div className="scriitori-filters-container">
           {/* Search Bar */}
-          <div style={{
-            position: 'relative',
-            flex: 1,
-            minWidth: 0,
-            maxWidth: '100%',
-          }}>
-            <div style={{
-              position: 'absolute',
-              left: '1.2rem',
-              top: '50%',
-              transform: 'translateY(-50%)',
-              fontSize: '1.25rem',
-              color: darkTheme ? 'rgba(180,180,180,0.55)' : 'rgba(60,40,20,0.45)',
-              zIndex: 2
-            }}>
+          <div className="scriitori-search-container">
+            <div className={`scriitori-search-icon ${darkTheme ? 'dark-theme' : ''}`}>
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <circle cx="11" cy="11" r="8"></circle>
                 <path d="m21 21-4.35-4.35"></path>
@@ -373,20 +352,7 @@ export default function Scriitori() {
               placeholder="Caută scriitori..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              style={{
-                width: '90%',
-                padding: '1.1rem 1.5rem 1.1rem 3.2rem',
-                fontSize: '1.13rem',
-                borderRadius: '2.2rem',
-                border: darkTheme ? '1.5px solid #a97c50' : '1.5px solid #ececec',
-                background: darkTheme ? '#4e2e1e' : '#f7f8fa',
-                color: darkTheme ? 'rgba(255,255,255,0.95)' : '#222',
-                outline: 'none',
-                transition: 'all 0.3s',
-                boxShadow: darkTheme ? '0 2px 12px 0 rgba(60,40,20,0.18)' : '0 2px 8px 0 rgba(60,40,20,0.08)',
-                fontWeight: 500,
-                letterSpacing: '0.01em',
-              }}
+              className={`scriitori-search-input ${darkTheme ? 'dark-theme' : ''}`}
               onFocus={e => {
                 e.target.style.borderColor = darkTheme ? '#ffd591' : '#a3a3a3';
                 e.target.style.background = darkTheme ? '#6a4322' : '#fff';
@@ -398,7 +364,7 @@ export default function Scriitori() {
             />
           </div>
           {/* Dropdown Gen cu react-select */}
-          <div style={{ minWidth: 200, flexShrink: 0 }}>
+          <div className="scriitori-select-container">
             <Select
               options={genOptions}
               value={genOptions.find(opt => opt.value === selectedCategory)}
@@ -421,7 +387,7 @@ export default function Scriitori() {
             />
           </div>
           {/* Dropdown Canonic cu react-select */}
-          <div style={{ minWidth: 200, flexShrink: 0 }}>
+          <div className="scriitori-select-container">
             <Select
               options={canonicOptions}
               value={canonicOptions.find(opt => opt.value === canonicFilter)}
@@ -446,34 +412,12 @@ export default function Scriitori() {
         </div>
 
         {/* Butoane categorii canonice sub search bar */}
-        <div style={{
-          display: 'flex',
-          gap: '0.9rem',
-          justifyContent: 'flex-start',
-          marginBottom: '1.5rem',
-          flexWrap: 'wrap',
-          width: '100%',
-          maxWidth: 1300,
-          margin: '0 auto 1.5rem auto',
-          padding: '0 1.5rem',
-        }}>
+        <div className="scriitori-filter-buttons">
           {categorii.filter(c => c.id !== 'toate').map(categorie => (
             <button
               key={categorie.id}
               onClick={() => setSelectedCategory(categorie.id)}
-              style={{
-                padding: '0.7rem 1.5rem',
-                borderRadius: '2rem',
-                border: selectedCategory === categorie.id ? '2px solid #4e2e1e' : '2px solid #ececec',
-                background: selectedCategory === categorie.id ? (darkTheme ? '#a97c50' : '#ffd591') : (darkTheme ? '#4e2e1e' : '#f7f8fa'),
-                color: selectedCategory === categorie.id ? (darkTheme ? '#4e2e1e' : '#222') : (darkTheme ? 'rgba(255,255,255,0.95)' : '#222'),
-                fontWeight: selectedCategory === categorie.id ? 700 : 500,
-                fontSize: '1rem',
-                cursor: 'pointer',
-                transition: 'all 0.2s',
-                boxShadow: selectedCategory === categorie.id ? '0 2px 8px rgba(60,40,20,0.10)' : 'none',
-                outline: 'none'
-              }}
+              className={`scriitori-filter-button ${darkTheme ? 'dark-theme' : ''} ${selectedCategory === categorie.id ? 'selected' : ''}`}
             >
               {categorie.nume}
             </button>
@@ -481,81 +425,30 @@ export default function Scriitori() {
         </div>
 
         {/* Grid Scriitori */}
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(4, 1fr)',
-          gap: '2.5rem',
-          width: '100%',
-          maxWidth: 1300,
-          justifyItems: 'center',
-          justifyContent: 'center',
-          margin: '0 auto',
-          padding: '0 1.5rem',
-        }}>
+        <div className="scriitori-grid-container">
           {filteredScriitori.map((scriitor, idx) => {
             const key = getScriitorKey(scriitor.nume);
             return (
               <a
                 key={scriitor.nume}
                 href={`/scriitor?name=${key}`}
-                style={{ textDecoration: 'none', color: 'inherit' }}
+                className={`scriitori-card ${darkTheme ? 'dark-theme' : ''}`}
+                onMouseOver={e => {
+                  e.currentTarget.style.transform = 'scale(1.045)';
+                  e.currentTarget.style.zIndex = 2;
+                }}
+                onMouseOut={e => {
+                  e.currentTarget.style.transform = 'scale(1)';
+                  e.currentTarget.style.zIndex = 1;
+                }}
               >
-                <div
-                  style={{
-                    width: cardSize,
-                    height: cardSize,
-                    borderRadius: '2.2rem',
-                    overflow: 'hidden',
-                    boxShadow: 'none',
-                    border: darkTheme ? '1.5px solid #a97c50' : '1.5px solid #ececec',
-                    background: 'transparent',
-                    position: 'relative',
-                    display: 'flex',
-                    alignItems: 'flex-end',
-                    justifyContent: 'center',
-                    transition: 'transform 0.18s cubic-bezier(.4,1.4,.6,1)',
-                    cursor: 'pointer',
-                  }}
-                  onMouseOver={e => {
-                    e.currentTarget.style.transform = 'scale(1.045)';
-                    e.currentTarget.style.zIndex = 2;
-                  }}
-                  onMouseOut={e => {
-                    e.currentTarget.style.transform = 'scale(1)';
-                    e.currentTarget.style.zIndex = 1;
-                  }}
-                >
-                  <img
-                    src={scriitor.img}
-                    alt={scriitor.nume}
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      objectFit: 'cover',
-                      borderRadius: '2.2rem',
-                      display: 'block',
-                    }}
-                  />
-                  <div style={{
-                    position: 'absolute',
-                    bottom: 0,
-                    left: 0,
-                    right: 0,
-                    padding: '0.5em 0 0.3em 0',
-                    background: bandaColor,
-                    color: '#fff',
-                    fontWeight: 900,
-                    fontSize: '1.05rem',
-                    textAlign: 'center',
-                    letterSpacing: '0.04em',
-                    textShadow: '0 2px 8px rgba(60,40,20,0.10)',
-                    borderBottomLeftRadius: '2.2rem',
-                    borderBottomRightRadius: '2.2rem',
-                    backdropFilter: 'blur(1.5px)',
-                  }}>
-                    <div>{scriitor.nume}</div>
-                    <div style={{ fontWeight: 500, fontSize: '0.93em', opacity: 0.92 }}>{scriitor.date}</div>
-                  </div>
+                <img
+                  src={scriitor.img}
+                  alt={scriitor.nume}
+                />
+                <div className={`scriitori-card-info ${darkTheme ? 'dark-theme' : ''}`}>
+                  <div>{scriitor.nume}</div>
+                  <div className="scriitori-card-dates">{scriitor.date}</div>
                 </div>
               </a>
             );
@@ -564,13 +457,7 @@ export default function Scriitori() {
 
         {/* Mesaj când nu sunt rezultate */}
         {filteredScriitori.length === 0 && (
-          <div style={{
-            textAlign: 'center',
-            padding: '3rem 1.5rem',
-            color: darkTheme ? 'rgba(255,255,255,0.7)' : 'rgba(60,40,20,0.7)',
-            fontSize: '1.2rem',
-            fontWeight: '500'
-          }}>
+          <div className={`scriitori-no-results ${darkTheme ? 'dark-theme' : ''}`}>
             Nu s-au găsit scriitori care să corespundă criteriilor de căutare.
           </div>
         )}

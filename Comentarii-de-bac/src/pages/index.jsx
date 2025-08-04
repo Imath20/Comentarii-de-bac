@@ -126,79 +126,24 @@ const Index = () => {
           <ScriitoriHoraCanvas />
         </div>
       </main>
-      <section style={{ width: '100%', maxWidth: 1300, margin: '0 auto', marginTop: '3.5rem', marginBottom: '2.5rem', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <h2 style={{
-          fontSize: '2.7rem',
-          fontWeight: 900,
-          letterSpacing: '0.10em',
-          color: darkTheme ? 'rgba(255,255,255,0.95)' : '#4e2e1e',
-          marginBottom: '1.1rem',
-          textAlign: 'center',
-          textShadow: '0 2px 8px rgba(60,40,20,0.10)'
-        }}>Bine ați venit !</h2>
-        <p style={{
-          fontSize: '1.25rem',
-          fontWeight: 500,
-          color: darkTheme ? 'rgba(255,255,255,0.95)' : '#4e2e1e',
-          textAlign: 'center',
-          maxWidth: 1200,
-          margin: 0,
-          textShadow: '0 2px 8px rgba(60,40,20,0.10)',
-          lineHeight: 1.7,
-        }}>
+      <section className={`index-welcome-section ${darkTheme ? 'dark-theme' : ''}`}>
+        <h2 className={`index-welcome-title ${darkTheme ? 'dark-theme' : ''}`}>Bine ați venit !</h2>
+        <p className={`index-welcome-text ${darkTheme ? 'dark-theme' : ''}`}>
             pe platforma <b>Comentarii de BAC</b><br /><br />
            Aici găsești tot ce ai nevoie pentru a te pregăti eficient la limba și literatura română: comentarii detaliate, rezumate, modele de subiecte, resurse pentru fiecare scriitor important și explicații pe înțelesul tuturor. Indiferent dacă vrei să aprofundezi operele literare, să recapitulezi rapid sau să descoperi perspective noi, ai la dispoziție materiale structurate, moderne și ușor de parcurs.<br /><br />
            Platforma este gândită să te ajute să înveți mai ușor, să-ți organizezi timpul și să ai încredere la examen.
         </p>
-        <div style={{
-          marginTop: '1.7rem',
-          fontSize: '2.1rem',
-          fontWeight: 900,
-          color: darkTheme ? 'rgba(255,255,255,0.95)' : '#4e2e1e',
-          textAlign: 'center',
-          letterSpacing: '0.04em',
-          textShadow: '0 2px 8px rgba(60,40,20,0.10)'
-        }}>
+        <div className={`index-welcome-subtitle ${darkTheme ? 'dark-theme' : ''}`}>
           Succes la BAC!
         </div>
       </section>
-      <section style={{ width: '100%', margin: '0 auto', marginTop: '4rem', marginBottom: '4rem', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <h2 style={{
-          fontSize: '3.2rem',
-          fontWeight: 900,
-          letterSpacing: '0.12em',
-          color: darkTheme ? 'rgba(255,255,255,0.95)' : '#4e2e1e',
-          marginBottom: '2.5rem',
-          textAlign: 'center',
-          textShadow: '0 2px 8px rgba(60,40,20,0.10)'
-        }}>Opere</h2>
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))',
-          gap: '2.2rem',
-          width: '100%',
-          maxWidth: 1300,
-          justifyItems: 'center',
-          padding: '0 1.5rem',
-        }}>
+      <section className={`index-section ${darkTheme ? 'dark-theme' : ''}`}>
+        <h2 className={`index-section-title ${darkTheme ? 'dark-theme' : ''}`}>Opere</h2>
+        <div className="index-opere-grid">
           {opereList.map((opera, idx) => (
             <div
               key={opera.titlu}
-              style={{
-                width: 400,
-                height: 210,
-                borderRadius: '1.5rem',
-                overflow: 'hidden',
-                boxShadow: '0 4px 24px 0 rgba(124,79,43,0.13)',
-                background: 'transparent',
-                border: 'none',
-                position: 'relative',
-                display: 'flex',
-                alignItems: 'flex-end',
-                justifyContent: 'center',
-                transition: 'box-shadow 0.22s cubic-bezier(.4,1.4,.6,1), transform 0.18s cubic-bezier(.4,1.4,.6,1)',
-                cursor: 'pointer',
-              }}
+              className={`index-opera-card ${darkTheme ? 'dark-theme' : ''}`}
               onMouseOver={e => {
                 e.currentTarget.style.transform = 'scale(1.055)';
                 e.currentTarget.style.boxShadow = '0 8px 32px 0 rgba(60,40,20,0.22)';
@@ -213,95 +158,22 @@ const Index = () => {
               <img
                 src={opera.img}
                 alt={opera.titlu}
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  objectFit: 'cover',
-                  borderRadius: '1.5rem',
-                  display: 'block',
-                  filter: darkTheme ? 'brightness(0.92)' : 'brightness(0.98)',
-                }}
+                className={darkTheme ? 'dark-theme' : ''}
               />
               {/* Gradient overlay for readability */}
-              <div style={{
-                position: 'absolute',
-                left: 0,
-                bottom: 0,
-                width: '100%',
-                height: '45%',
-                background: darkTheme
-                  ? 'linear-gradient(0deg, rgba(26,13,0,0.92) 60%, rgba(26,13,0,0.18) 100%)'
-                  : 'linear-gradient(0deg, rgba(255,179,71,0.92) 60%, rgba(255,179,71,0.10) 100%)',
-                zIndex: 1,
-                pointerEvents: 'none',
-              }} />
+              <div className={`index-opera-overlay ${darkTheme ? 'dark-theme' : ''}`} />
               {/* Content overlay */}
-              <div style={{
-                position: 'absolute',
-                bottom: 0,
-                left: 0,
-                width: '100%',
-                zIndex: 2,
-                padding: '1.1em 0 1.1em 0',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'flex-end',
-                color: '#fff',
-                textShadow: '0 2px 8px rgba(60,40,20,0.18)',
-              }}>
-                <div style={{
-                  fontSize: '1.45rem',
-                  fontWeight: 900,
-                  fontStyle: 'italic',
-                  marginBottom: 6,
-                  letterSpacing: '0.04em',
-                  textAlign: 'center',
-                  lineHeight: 1.13,
-                }}>{opera.titlu}</div>
-                <div style={{
-                  fontSize: '1.05rem',
-                  fontWeight: 400,
-                  fontStyle: 'normal',
-                  opacity: 0.93,
-                  marginBottom: 4,
-                  textAlign: 'center',
-                }}>{opera.autor}</div>
-                <div style={{
-                  fontSize: '0.98rem',
-                  fontWeight: 600,
-                  background: darkTheme ? 'rgba(255,255,255,0.13)' : 'rgba(255,255,255,0.22)',
-                  color: darkTheme ? '#ffd591' : '#7a3a00',
-                  borderRadius: '1.2em',
-                  padding: '0.18em 1.1em',
-                  marginTop: 4,
-                  display: 'inline-block',
-                  boxShadow: '0 1px 6px 0 rgba(60,40,20,0.10)',
-                  letterSpacing: '0.03em',
-                }}>{opera.data.replace('Redactare: ', '')}</div>
+              <div className="index-opera-content">
+                <div className="index-opera-title">{opera.titlu}</div>
+                <div className="index-opera-author">{opera.autor}</div>
+                <div className={`index-opera-date ${darkTheme ? 'dark-theme' : ''}`}>{opera.data.replace('Redactare: ', '')}</div>
               </div>
             </div>
           ))}
         </div>
         <button
           onClick={() => window.location.href = '/opere'}
-          style={{
-            marginTop: '2.7rem',
-            padding: '1.1em 2.7em',
-            fontSize: '1.25rem',
-            fontWeight: 900,
-            borderRadius: '2.5em',
-            border: 'none',
-            background: darkTheme ? 'rgba(47,24,0,0.92)' : 'rgba(255,179,71,0.92)',
-            color: '#fff',
-            boxShadow: '0 2px 16px 0 rgba(124, 79, 43, 0.10)',
-            cursor: 'pointer',
-            letterSpacing: '0.04em',
-            transition: 'background 0.18s, box-shadow 0.18s, transform 0.18s cubic-bezier(.4,1.4,.6,1)',
-            display: 'block',
-            marginLeft: 'auto',
-            marginRight: 'auto',
-          }}
+          className={`index-primary-button ${darkTheme ? 'dark-theme' : ''}`}
           onMouseOver={e => {
             e.currentTarget.style.background = darkTheme ? 'rgba(80,40,0,0.98)' : '#ffd591';
             e.currentTarget.style.boxShadow = '0 4px 24px 0 rgba(124,79,43,0.18)';
@@ -316,25 +188,9 @@ const Index = () => {
           Vezi toate operele
         </button>
       </section>
-      <section style={{ width: '100%', margin: '0 auto', marginTop: '4rem', marginBottom: '4rem', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <h2 style={{
-          fontSize: '3.2rem',
-          fontWeight: 900,
-          letterSpacing: '0.12em',
-          color: darkTheme ? 'rgba(255,255,255,0.95)' : '#4e2e1e',
-          marginBottom: '2.5rem',
-          textAlign: 'center',
-          textShadow: '0 2px 8px rgba(60,40,20,0.10)'
-        }}>Scriitori</h2>
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(3, 1fr)',
-          gap: '2.5rem',
-          width: '100%',
-          maxWidth: 1020,
-          justifyItems: 'center',
-          padding: '0 1.5rem',
-        }}>
+      <section className={`index-section ${darkTheme ? 'dark-theme' : ''}`}>
+        <h2 className={`index-section-title ${darkTheme ? 'dark-theme' : ''}`}>Scriitori</h2>
+        <div className="index-scriitori-grid">
           {scriitoriList.map((scriitor, idx) => {
             const key = getScriitorKey(scriitor.nume);
             return (
@@ -344,21 +200,7 @@ const Index = () => {
                 style={{ textDecoration: 'none', color: 'inherit' }}
               >
                 <div
-                  style={{
-                    width: cardSize,
-                    height: cardSize,
-                    borderRadius: '1.5rem',
-                    overflow: 'hidden',
-                    boxShadow: '0 4px 24px 0 rgba(124,79,43,0.10)',
-                    background: 'transparent',
-                    border: 'none',
-                    position: 'relative',
-                    display: 'flex',
-                    alignItems: 'flex-end',
-                    justifyContent: 'center',
-                    transition: 'transform 0.18s cubic-bezier(.4,1.4,.6,1)',
-                    cursor: 'pointer',
-                  }}
+                  className={`index-scriitor-card ${darkTheme ? 'dark-theme' : ''}`}
                   onMouseOver={e => {
                     e.currentTarget.style.transform = 'scale(1.045)';
                     e.currentTarget.style.zIndex = 2;
@@ -371,33 +213,10 @@ const Index = () => {
                   <img
                     src={scriitor.img}
                     alt={scriitor.nume}
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      objectFit: 'cover',
-                      borderRadius: '1.5rem',
-                      display: 'block',
-                    }}
                   />
-                  <div style={{
-                    position: 'absolute',
-                    bottom: 0,
-                    left: 0,
-                    width: '100%',
-                    padding: '0.5em 0 0.3em 0',
-                    background: bandaColor,
-                    color: '#fff',
-                    fontWeight: 900,
-                    fontSize: '1.05rem',
-                    textAlign: 'center',
-                    letterSpacing: '0.04em',
-                    textShadow: '0 2px 8px rgba(60,40,20,0.10)',
-                    borderBottomLeftRadius: '1.5rem',
-                    borderBottomRightRadius: '1.5rem',
-                    backdropFilter: 'blur(1.5px)',
-                  }}>
+                  <div className={`index-scriitor-info ${darkTheme ? 'dark-theme' : ''}`}>
                     <div>{scriitor.nume}</div>
-                    <div style={{ fontWeight: 500, fontSize: '0.93em', opacity: 0.92 }}>{scriitor.date}</div>
+                    <div className="index-scriitor-dates">{scriitor.date}</div>
                   </div>
                 </div>
               </a>
@@ -406,23 +225,7 @@ const Index = () => {
         </div>
         <button
           onClick={() => window.location.href = '/scriitori'}
-          style={{
-            marginTop: '2.7rem',
-            padding: '1.1em 2.7em',
-            fontSize: '1.25rem',
-            fontWeight: 900,
-            borderRadius: '2.5em',
-            border: 'none',
-            background: darkTheme ? 'rgba(47,24,0,0.92)' : 'rgba(255,179,71,0.92)',
-            color: '#fff',
-            boxShadow: '0 2px 16px 0 rgba(124, 79, 43, 0.10)',
-            cursor: 'pointer',
-            letterSpacing: '0.04em',
-            transition: 'background 0.18s, box-shadow 0.18s, transform 0.18s cubic-bezier(.4,1.4,.6,1)',
-            display: 'block',
-            marginLeft: 'auto',
-            marginRight: 'auto',
-          }}
+          className={`index-primary-button ${darkTheme ? 'dark-theme' : ''}`}
           onMouseOver={e => {
             e.currentTarget.style.background = darkTheme ? 'rgba(80,40,0,0.98)' : '#ffd591';
             e.currentTarget.style.boxShadow = '0 4px 24px 0 rgba(124,79,43,0.18)';
@@ -437,26 +240,9 @@ const Index = () => {
           Vezi toți scriitorii
         </button>
       </section>
-      <section style={{ width: '100%', margin: '0 auto', marginTop: '4rem', marginBottom: '4rem', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <h2 style={{
-          fontSize: '3.2rem',
-          fontWeight: 900,
-          letterSpacing: '0.12em',
-          color: darkTheme ? 'rgba(255,255,255,0.95)' : '#4e2e1e',
-          marginBottom: '2.5rem',
-          textAlign: 'center',
-          textShadow: '0 2px 8px rgba(60,40,20,0.10)'
-        }}>Subiecte</h2>
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(3, 1fr)',
-          gap: '2.5rem',
-          width: '100%',
-          maxWidth: 1020,
-          justifyItems: 'center',
-          justifyContent: 'center',
-          padding: '0 1.5rem',
-        }}>
+      <section className={`index-section ${darkTheme ? 'dark-theme' : ''}`}>
+        <h2 className={`index-section-title ${darkTheme ? 'dark-theme' : ''}`}>Subiecte</h2>
+        <div className="index-subiecte-grid">
           {[
             {
               nr: 'I',
@@ -491,21 +277,7 @@ const Index = () => {
           ].map((sub, idx) => (
             <div
               key={sub.nr}
-              style={{
-                width: 320,
-                minHeight: 340,
-                borderRadius: '1.5rem',
-                background: darkTheme ? 'rgba(26,13,0,0.82)' : 'rgba(255,179,71,0.13)',
-                boxShadow: '0 4px 24px 0 rgba(124,79,43,0.10)',
-                padding: '2.2rem 1.2rem 1.5rem 1.2rem',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                position: 'relative',
-                transition: 'transform 0.18s cubic-bezier(.4,1.4,.6,1)',
-                cursor: 'pointer',
-                minHeight: 340,
-              }}
+              className={`index-subiect-card ${darkTheme ? 'dark-theme' : ''}`}
               onMouseOver={e => {
                 e.currentTarget.style.transform = 'scale(1.045)';
                 e.currentTarget.style.zIndex = 2;
@@ -515,71 +287,19 @@ const Index = () => {
                 e.currentTarget.style.zIndex = 1;
               }}
             >
-              <div style={{
-                width: 64,
-                height: 64,
-                borderRadius: '50%',
-                background: darkTheme ? 'rgba(255,179,71,0.82)' : 'rgba(255,179,71,0.92)',
-                color: darkTheme ? '#1a0d00' : '#fff',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontWeight: 900,
-                fontSize: '2.1rem',
-                position: 'absolute',
-                top: -32,
-                left: '50%',
-                transform: 'translateX(-50%)',
-                boxShadow: '0 2px 8px 0 rgba(124,79,43,0.10)',
-                border: darkTheme ? '2px solid #fff' : '2px solid #fffbe6',
-              }}>{sub.nr}</div>
-              <div style={{
-                marginTop: 40,
-                fontSize: '1.35rem',
-                fontWeight: 900,
-                color: darkTheme ? 'rgba(255,255,255,0.95)' : '#4e2e1e',
-                marginBottom: 12,
-                textAlign: 'center',
-                letterSpacing: '0.04em',
-              }}>{sub.titlu}</div>
-              <ul style={{
-                listStyle: 'none',
-                padding: 0,
-                margin: 0,
-                marginBottom: 18,
-                width: '100%',
-                color: darkTheme ? '#fbeec1' : '#7a3a00',
-                fontWeight: 500,
-                fontSize: '1.05rem',
-                textAlign: 'left',
-                lineHeight: 1.5,
-              }}>
+              <div className={`index-subiect-number ${darkTheme ? 'dark-theme' : ''}`}>{sub.nr}</div>
+              <div className={`index-subiect-title ${darkTheme ? 'dark-theme' : ''}`}>{sub.titlu}</div>
+              <ul className={`index-subiect-list ${darkTheme ? 'dark-theme' : ''}`}>
                 {sub.componente.map((c, i) => (
-                  <li key={i} style={{ marginBottom: 4, paddingLeft: 8, position: 'relative' }}>
-                    <span style={{ position: 'absolute', left: 0, top: 0, color: darkTheme ? '#ffb347' : '#7a3a00', fontWeight: 900 }}>&#8226;</span>
-                    <span style={{ marginLeft: 18 }}>{c}</span>
+                  <li key={i}>
+                    <span className={`bullet-point ${darkTheme ? 'dark-theme' : ''}`}>&#8226;</span>
+                    <span className="component-text">{c}</span>
                   </li>
                 ))}
               </ul>
               <button
                 onClick={e => { e.stopPropagation(); window.location.href = sub.link; }}
-                style={{
-                  marginTop: 'auto',
-                  padding: '0.6em 1.5em',
-                  fontSize: '1.05rem',
-                  fontWeight: 800,
-                  borderRadius: '2em',
-                  border: 'none',
-                  background: darkTheme ? 'rgba(255,179,71,0.82)' : 'rgba(255,179,71,0.92)',
-                  color: darkTheme ? '#1a0d00' : '#fff',
-                  boxShadow: '0 2px 8px 0 rgba(124,79,43,0.10)',
-                  cursor: 'pointer',
-                  letterSpacing: '0.03em',
-                  transition: 'background 0.18s, box-shadow 0.18s, transform 0.18s cubic-bezier(.4,1.4,.6,1)',
-                  marginLeft: 'auto',
-                  marginRight: 'auto',
-                  display: 'block',
-                }}
+                className={`index-subiect-button ${darkTheme ? 'dark-theme' : ''}`}
                 onMouseOver={e => {
                   e.currentTarget.style.background = darkTheme ? '#ffd591' : '#ffd591';
                   e.currentTarget.style.transform = 'scale(1.07)';
@@ -594,33 +314,10 @@ const Index = () => {
             </div>
           ))}
         </div>
-        <div style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          width: '100%',
-          maxWidth: 1020,
-          marginTop: '2.7rem',
-          gap: '0.7rem',
-        }}>
+        <div className="index-button-container">
           <button
             onClick={() => window.location.href = '/subiecte'}
-            style={{
-              padding: '1.1em 2.7em',
-              fontSize: '1.25rem',
-              fontWeight: 900,
-              borderRadius: '2.5em',
-              border: `2.5px solid ${darkTheme ? '#ffd591' : '#ffb347'}`,
-              background: 'transparent',
-              color: darkTheme ? '#ffd591' : '#7a3a00',
-              boxShadow: 'none',
-              cursor: 'pointer',
-              letterSpacing: '0.04em',
-              transition: 'border 0.18s, color 0.18s, background 0.18s, transform 0.18s cubic-bezier(.4,1.4,.6,1)',
-              display: 'block',
-              flex: 1,
-              maxWidth: 'none',
-            }}
+            className={`index-secondary-button ${darkTheme ? 'dark-theme' : ''}`}
             onMouseOver={e => {
               e.currentTarget.style.background = darkTheme ? 'rgba(255,179,71,0.08)' : '#fffbe6';
               e.currentTarget.style.color = darkTheme ? '#1a0d00' : '#7a3a00';
@@ -638,22 +335,7 @@ const Index = () => {
           </button>
           <button
             onClick={() => window.location.href = '/ai'}
-            style={{
-              padding: '1.1em 2.7em',
-              fontSize: '1.25rem',
-              fontWeight: 900,
-              borderRadius: '2.5em',
-              border: 'none',
-              background: darkTheme ? 'rgba(47,24,0,0.92)' : 'rgba(255,179,71,0.92)',
-              color: '#fff',
-              boxShadow: '0 2px 16px 0 rgba(124, 79, 43, 0.10)',
-              cursor: 'pointer',
-              letterSpacing: '0.04em',
-              transition: 'background 0.18s, box-shadow 0.18s, transform 0.18s cubic-bezier(.4,1.4,.6,1)',
-              display: 'block',
-              flex: 1,
-              maxWidth: 'none',
-            }}
+            className={`index-primary-button ${darkTheme ? 'dark-theme' : ''}`}
             onMouseOver={e => {
               e.currentTarget.style.background = darkTheme ? 'rgba(80,40,0,0.98)' : '#ffd591';
               e.currentTarget.style.boxShadow = '0 4px 24px 0 rgba(124,79,43,0.18)';
@@ -669,78 +351,13 @@ const Index = () => {
           </button>
         </div>
       </section>
-      <section
-        style={{
-          width: '100%',
-          margin: '0 auto',
-          marginTop: '4rem',
-          marginBottom: '4rem',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-        }}
-      >
-        <div
-          style={{
-            width: 'min(950px, 98vw)',
-            height: '420px',
-            background: darkTheme ? '#3a2312' : '#a97c50',
-            border: darkTheme ? '6px double #2a170a' : '6px double #7a5232',
-            boxShadow: '0 8px 48px 0 rgba(60,40,20,0.18)',
-            padding: '2.2rem 1.2rem 1.2rem 1.2rem',
-            position: 'relative',
-            overflow: 'hidden',
-            borderRadius: 0,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'flex-start',
-          }}
-        >
-          <h2
-            style={{
-              fontSize: '2.1rem',
-              fontWeight: 900,
-              letterSpacing: '0.12em',
-              color: darkTheme ? 'rgba(255,255,255,0.95)' : '#fffbe6',
-              marginBottom: '0.5rem',
-              textAlign: 'center',
-              textShadow: '0 2px 8px rgba(60,40,20,0.10)',
-              zIndex: 2,
-            }}
-          >Proiecte</h2>
-          <div
-            style={{
-              fontSize: '1.01rem',
-              fontWeight: 500,
-              color: darkTheme ? 'rgba(255,255,255,0.92)' : '#fffbe6',
-              textAlign: 'center',
-              maxWidth: 500,
-              margin: '0 0 0.7rem 0',
-              textShadow: '0 2px 8px rgba(60,40,20,0.10)',
-              lineHeight: 1.5,
-              zIndex: 2,
-            }}
-          >
+      <section className={`index-section ${darkTheme ? 'dark-theme' : ''}`}>
+        <div className={`index-proiecte-container ${darkTheme ? 'dark-theme' : ''}`}>
+          <h2 className={`index-proiecte-title ${darkTheme ? 'dark-theme' : ''}`}>Proiecte</h2>
+          <div className={`index-proiecte-desc ${darkTheme ? 'dark-theme' : ''}`}>
             Proiectele colegilor noștri – idei creative, teme, prezentări și inițiative deosebite.
           </div>
-          <div
-            style={{
-              position: 'absolute',
-              top: 180,
-              left: 0,
-              width: '100%',
-              height: 220,
-              display: 'grid',
-              gridTemplateColumns: 'repeat(5, 1fr)',
-              gridTemplateRows: 'repeat(2, 1fr)',
-              gap: '18px 28px',
-              justifyItems: 'center',
-              alignItems: 'center',
-              pointerEvents: 'none',
-              zIndex: 2,
-            }}
-          >
+          <div className="index-proiecte-grid">
             {[
               { titlu: 'Revista BAC+', desc: 'O revistă digitală cu articole, eseuri și creații literare ale elevilor.' },
               { titlu: 'Podcast: BAC la Cafea', desc: 'Discuții relaxate despre subiecte de BAC, cu invitați speciali.' },
@@ -758,23 +375,8 @@ const Index = () => {
               return (
                 <div
                   key={proj.titlu}
-                  style={{
-                    width: 140,
-                    minHeight: 70,
-                    background: darkTheme ? '#fbeec1' : '#fffbe6',
-                    borderRadius: '0.7rem',
-                    boxShadow: '0 2px 12px 0 rgba(60,40,20,0.13)',
-                    padding: '0.7rem 0.6rem 0.6rem 0.6rem',
-                    position: 'relative',
-                    transform: `rotate(${angles[idx]}deg)` ,
-                    zIndex: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    pointerEvents: 'auto',
-                    transition: 'box-shadow 0.18s, transform 0.18s cubic-bezier(.4,1.4,.6,1)',
-                  }}
+                  className="index-proiect-card"
+                  style={{ transform: `rotate(${angles[idx]}deg)` }}
                   onMouseOver={e => {
                     e.currentTarget.style.boxShadow = '0 8px 24px 0 rgba(60,40,20,0.22)';
                     e.currentTarget.style.transform = `scale(1.07) rotate(${angles[idx]}deg)`;
@@ -790,44 +392,13 @@ const Index = () => {
                     <circle cx="16" cy="16" r="8" fill={pinColors[idx]} stroke="#222" strokeWidth="1.5" />
                     <rect x="14.7" y="20" width="2.6" height="6" rx="1.1" fill="#b08968" stroke="#222" strokeWidth="1" />
                   </svg>
-                  <div style={{
-                    fontWeight: 900,
-                    fontSize: '0.99rem',
-                    color: '#7a3a00',
-                    marginBottom: 4,
-                    textAlign: 'center',
-                    letterSpacing: '0.02em',
-                    lineHeight: 1.1,
-                  }}>{proj.titlu}</div>
-                  <div style={{
-                    fontWeight: 500,
-                    fontSize: '0.81rem',
-                    color: '#4e2e1e',
-                    opacity: 0.92,
-                    textAlign: 'center',
-                    lineHeight: 1.1,
-                  }}>{proj.desc}</div>
+                  <div className="index-proiect-title">{proj.titlu}</div>
+                  <div className="index-proiect-desc">{proj.desc}</div>
                 </div>
               );
             })}
           </div>
-          <div style={{
-            position: 'absolute',
-            left: 0,
-            bottom: 0,
-            width: '100%',
-            height: 24,
-            background: darkTheme ? '#6a4322' : '#b88a4a',
-            borderTop: darkTheme ? '2px solid #2a170a' : '2px solid #a97c50',
-            borderBottomLeftRadius: 16,
-            borderBottomRightRadius: 16,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            zIndex: 5,
-            boxShadow: '0 2px 8px 0 rgba(60,40,20,0.10)',
-            gap: 32,
-          }}>
+          <div className={`index-proiecte-footer ${darkTheme ? 'dark-theme' : ''}`}>
             <svg width="44" height="14" viewBox="0 0 44 14" style={{ display: 'block' }}>
               <rect x="0" y="4" width="36" height="6" rx="2.5" fill="#fff" stroke="#e0e0e0" strokeWidth="1.2" />
               <rect x="36" y="5.5" width="7" height="3" rx="1.2" fill="#e0e0e0" />

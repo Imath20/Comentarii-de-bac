@@ -238,96 +238,95 @@ const romanSubcategoriiOptions = [
 ];
 
 const customSelectStyles = (darkTheme) => ({
-    control: (provided, state) => ({
-        ...provided,
-        minWidth: 270,
-        maxWidth: 320,
-        height: '56px',
-        borderRadius: '2.2rem',
-        border: `1.5px solid ${darkTheme ? '#a97c50' : '#ececec'}`,
-        background: darkTheme ? '#4e2e1e' : '#f7f8fa',
-        color: darkTheme ? 'rgba(255,255,255,0.95)' : '#222',
-        fontWeight: 500,
-        fontSize: '1.13rem',
-        boxShadow: state.isFocused ? `0 0 0 2px ${darkTheme ? '#ffd591' : '#a3a3a3'}` : 'none',
-        '&:hover': { borderColor: darkTheme ? '#ffd591' : '#a3a3a3' },
-        cursor: 'pointer',
-        paddingLeft: 0,
-        paddingRight: 0,
-        transition: 'all 0.3s',
-        outline: 'none',
-        alignItems: 'center',
-        display: 'flex',
-        justifyContent: 'space-between',
-    }),
-    valueContainer: (provided) => ({
-        ...provided,
-        height: '56px',
-        padding: '0 1.5rem',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        flex: 1,
-        position: 'relative',
-    }),
-    menu: (provided) => ({
-        ...provided,
-        borderRadius: '2.2rem',
-        background: darkTheme ? '#4e2e1e' : '#f7f8fa',
-        color: darkTheme ? 'rgba(255,255,255,0.95)' : '#222',
-        boxShadow: '0 8px 32px 0 rgba(60,40,20,0.18)',
-        overflow: 'hidden',
-        zIndex: 10,
-        marginTop: 6,
-    }),
-    option: (provided, state) => ({
-        ...provided,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        textAlign: 'center',
-        color: darkTheme ? 'rgba(255,255,255,0.95)' : '#222',
-        background: state.isSelected
-            ? (darkTheme ? '#a97c50' : '#ffd591')
-            : state.isFocused
-                ? (darkTheme ? '#6a4322' : '#fff')
-                : (darkTheme ? '#4e2e1e' : '#f7f8fa'),
-        fontWeight: state.isSelected ? 700 : 500,
-        fontSize: '1.13rem',
-        cursor: 'pointer',
-        borderRadius: 0,
-        padding: '0.7rem 0',
-        minHeight: 40,
-    }),
-    singleValue: (provided) => ({
-        ...provided,
-        color: darkTheme ? 'rgba(255,255,255,0.95)' : '#222',
-        textAlign: 'center',
-        fontWeight: 500,
-        width: '100%',
-        fontSize: '1.13rem',
-        display: 'flex',
-        alignItems: 'center',
-        height: '56px',
-        position: 'absolute',
-        left: '1.5rem',
-        right: '1.5rem',
-    }),
-    dropdownIndicator: (provided, state) => ({
-        ...provided,
-        color: darkTheme ? '#ffd591' : '#a97c50',
-        padding: 8,
-        transition: 'color 0.2s',
-        alignItems: 'center',
-        justifyContent: 'center',
-        display: 'flex',
-        height: '56px',
-        position: 'absolute',
-        right: '1.5rem',
-    }),
-    indicatorSeparator: () => ({ display: 'none' }),
-    input: (provided) => ({ ...provided, display: 'none' }),
-    menuList: (provided) => ({ ...provided, padding: 0, maxHeight: 'none', overflowY: 'auto' }),
+  control: (provided, state) => ({
+    ...provided,
+    minWidth: 270,
+    maxWidth: 320,
+    height: '56px',
+    borderRadius: '2.2rem',
+    border: `1.5px solid ${darkTheme ? '#a97c50' : '#ececec'}`,
+    background: darkTheme ? '#4e2e1e' : '#f7f8fa',
+    color: darkTheme ? 'rgba(255,255,255,0.95)' : '#222',
+    fontWeight: 500,
+    fontSize: '1.13rem',
+    boxShadow: state.isFocused ? `0 0 0 2px ${darkTheme ? '#ffd591' : '#a3a3a3'}` : 'none',
+    cursor: 'pointer',
+    paddingLeft: 0,
+    paddingRight: 0,
+    transition: 'all 0.3s',
+    outline: 'none',
+    alignItems: 'center',
+    display: 'flex',
+    justifyContent: 'space-between',
+  }),
+  valueContainer: (provided) => ({
+    ...provided,
+    height: '56px',
+    padding: '0 1.5rem',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    flex: 1,
+    position: 'relative',
+  }),
+  menu: (provided) => ({
+    ...provided,
+    borderRadius: '2.2rem',
+    background: darkTheme ? '#4e2e1e' : '#f7f8fa',
+    color: darkTheme ? 'rgba(255,255,255,0.95)' : '#222',
+    boxShadow: '0 8px 32px 0 rgba(60,40,20,0.18)',
+    overflow: 'hidden',
+    zIndex: 10,
+    marginTop: 6,
+  }),
+  option: (provided, state) => ({
+    ...provided,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    textAlign: 'center',
+    color: darkTheme ? 'rgba(255,255,255,0.95)' : '#222',
+    background: state.isSelected
+      ? (darkTheme ? '#a97c50' : '#ffd591')
+      : state.isFocused
+        ? (darkTheme ? '#6a4322' : '#fff')
+        : (darkTheme ? '#4e2e1e' : '#f7f8fa'),
+    fontWeight: state.isSelected ? 700 : 500,
+    fontSize: '1.13rem',
+    cursor: 'pointer',
+    borderRadius: 0,
+    padding: '0.7rem 0',
+    minHeight: 40,
+  }),
+  singleValue: (provided) => ({
+    ...provided,
+    color: darkTheme ? 'rgba(255,255,255,0.95)' : '#222',
+    textAlign: 'center',
+    fontWeight: 500,
+    width: '100%',
+    fontSize: '1.13rem',
+    display: 'flex',
+    alignItems: 'center',
+    height: '56px',
+    position: 'absolute',
+    left: '1.5rem',
+    right: '1.5rem',
+  }),
+  dropdownIndicator: (provided, state) => ({
+    ...provided,
+    color: darkTheme ? '#ffd591' : '#a97c50',
+    padding: 8,
+    transition: 'color 0.2s',
+    alignItems: 'center',
+    justifyContent: 'center',
+    display: 'flex',
+    height: '56px',
+    position: 'absolute',
+    right: '1.5rem',
+  }),
+  indicatorSeparator: () => ({ display: 'none' }),
+  input: (provided) => ({ ...provided, display: 'none' }),
+  menuList: (provided) => ({ ...provided, padding: 0, maxHeight: 'none', overflowY: 'auto' }),
 });
 
 export default function Opre() {
@@ -388,31 +387,10 @@ export default function Opre() {
 
             <div className="container">
                 {/* Search Bar și Dropdown-uri */}
-                <div style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    width: '100%',
-                    maxWidth: 1300,
-                    margin: '0 auto 1.5rem auto',
-                    padding: 0,
-                    gap: '1.5rem',
-                }}>
+                <div className="opere-filters-container">
                     {/* Search Bar */}
-                    <div style={{
-                        position: 'relative',
-                        flex: 1,
-                        minWidth: 0,
-                        maxWidth: '100%',
-                    }}>
-                        <div style={{
-                            position: 'absolute',
-                            left: '1.2rem',
-                            top: '50%',
-                            transform: 'translateY(-50%)',
-                            fontSize: '1.25rem',
-                            color: darkTheme ? 'rgba(180,180,180,0.55)' : 'rgba(60,40,20,0.45)',
-                            zIndex: 2
-                        }}>
+                    <div className="opere-search-container">
+                        <div className={`opere-search-icon ${darkTheme ? 'dark-theme' : ''}`}>
                             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                 <circle cx="11" cy="11" r="8"></circle>
                                 <path d="m21 21-4.35-4.35"></path>
@@ -423,20 +401,7 @@ export default function Opre() {
                             placeholder="Caută opere..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
-                            style={{
-                                width: '90%',
-                                padding: '1.1rem 1.5rem 1.1rem 3.2rem',
-                                fontSize: '1.13rem',
-                                borderRadius: '2.2rem',
-                                border: darkTheme ? '1.5px solid #a97c50' : '1.5px solid #ececec',
-                                background: darkTheme ? '#4e2e1e' : '#f7f8fa',
-                                color: darkTheme ? 'rgba(255,255,255,0.95)' : '#222',
-                                outline: 'none',
-                                transition: 'all 0.3s',
-                                boxShadow: darkTheme ? '0 2px 12px 0 rgba(60,40,20,0.18)' : '0 2px 8px 0 rgba(60,40,20,0.08)',
-                                fontWeight: 500,
-                                letterSpacing: '0.01em',
-                            }}
+                            className={`opere-search-input ${darkTheme ? 'dark-theme' : ''}`}
                             onFocus={e => {
                                 e.target.style.borderColor = darkTheme ? '#ffd591' : '#a3a3a3';
                                 e.target.style.background = darkTheme ? '#6a4322' : '#fff';
@@ -448,7 +413,7 @@ export default function Opre() {
                         />
                     </div>
                     {/* Dropdown Gen cu react-select */}
-                    <div style={{ minWidth: 200, flexShrink: 0 }}>
+                    <div className="opere-select-container">
                         <Select
                             options={genOptions}
                             value={genOptions.find(opt => opt.value === selectedCategory)}
@@ -471,7 +436,7 @@ export default function Opre() {
                         />
                     </div>
                     {/* Dropdown Canonic cu react-select */}
-                    <div style={{ minWidth: 200, flexShrink: 0 }}>
+                    <div className="opere-select-container">
                         <Select
                             options={canonicOptions}
                             value={canonicOptions.find(opt => opt.value === canonicFilter)}
@@ -496,35 +461,12 @@ export default function Opre() {
                 </div>
 
                 {/* Butoane categorii canonice sub search bar */}
-                <div style={{
-                    display: 'flex',
-                    gap: '0.9rem',
-                    justifyContent: 'flex-start',
-                    marginBottom: '1.5rem',
-                    flexWrap: 'wrap',
-                    width: '100%',
-                    maxWidth: 1300,
-                    margin: '0 auto 1.5rem auto',
-                    padding: '0 1.5rem',
-                    alignItems: 'center',
-                }}>
+                <div className="opere-filter-buttons">
                     {categorii.filter(c => c.id !== 'toate').map(categorie => (
                         <button
                             key={categorie.id}
                             onClick={() => setSelectedCategory(categorie.id)}
-                            style={{
-                                padding: '0.7rem 1.5rem',
-                                borderRadius: '2rem',
-                                border: selectedCategory === categorie.id ? '2px solid #4e2e1e' : '2px solid #ececec',
-                                background: selectedCategory === categorie.id ? (darkTheme ? '#a97c50' : '#ffd591') : (darkTheme ? '#4e2e1e' : '#f7f8fa'),
-                                color: selectedCategory === categorie.id ? (darkTheme ? '#4e2e1e' : '#222') : (darkTheme ? 'rgba(255,255,255,0.95)' : '#222'),
-                                fontWeight: selectedCategory === categorie.id ? 700 : 500,
-                                fontSize: '1rem',
-                                cursor: 'pointer',
-                                transition: 'all 0.2s',
-                                boxShadow: selectedCategory === categorie.id ? '0 2px 8px rgba(60,40,20,0.10)' : 'none',
-                                outline: 'none'
-                            }}
+                            className={`opere-filter-button ${darkTheme ? 'dark-theme' : ''} ${selectedCategory === categorie.id ? 'selected' : ''}`}
                         >
                             {categorie.nume}
                         </button>
@@ -532,7 +474,7 @@ export default function Opre() {
                     
                     {/* Dropdown Subcategorii Roman - în linie cu butoanele */}
                     {selectedCategory === 'roman' && (
-                        <div style={{ minWidth: 200, flexShrink: 0, marginLeft: '8rem' }}>
+                        <div className="opere-roman-subcategory-container">
                             <Select
                                 options={romanSubcategoriiOptions}
                                 value={romanSubcategoriiOptions.find(opt => opt.value === romanSubcategorieFilter)}
@@ -558,35 +500,11 @@ export default function Opre() {
                 </div>
 
                 {/* Grid Opere */}
-                <div style={{
-                    display: 'grid',
-                    gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))',
-                    gap: '2.2rem',
-                    width: '100%',
-                    maxWidth: 1300,
-                    justifyItems: 'center',
-                    justifyContent: 'center',
-                    margin: '0 auto',
-                    padding: '0 1.5rem',
-                }}>
+                <div className="opere-grid-container">
                     {filteredOpere.map((opera, idx) => (
                         <div
                             key={opera.titlu}
-                            style={{
-                                width: 400,
-                                height: 210,
-                                borderRadius: '1.5rem',
-                                overflow: 'hidden',
-                                boxShadow: '0 4px 24px 0 rgba(124,79,43,0.13)',
-                                background: 'transparent',
-                                border: 'none',
-                                position: 'relative',
-                                display: 'flex',
-                                alignItems: 'flex-end',
-                                justifyContent: 'center',
-                                transition: 'box-shadow 0.22s cubic-bezier(.4,1.4,.6,1), transform 0.18s cubic-bezier(.4,1.4,.6,1)',
-                                cursor: 'pointer',
-                            }}
+                            className={`opere-card ${darkTheme ? 'dark-theme' : ''}`}
                             onMouseOver={e => {
                                 e.currentTarget.style.transform = 'scale(1.055)';
                                 e.currentTarget.style.boxShadow = '0 8px 32px 0 rgba(60,40,20,0.22)';
@@ -601,72 +519,16 @@ export default function Opre() {
                             <img
                                 src={opera.img}
                                 alt={opera.titlu}
-                                style={{
-                                    width: '100%',
-                                    height: '100%',
-                                    objectFit: 'cover',
-                                    borderRadius: '1.5rem',
-                                    display: 'block',
-                                    filter: darkTheme ? 'brightness(0.92)' : 'brightness(0.98)',
-                                }}
                             />
                             {/* Gradient overlay for readability */}
-                            <div style={{
-                                position: 'absolute',
-                                left: 0,
-                                bottom: 0,
-                                width: '100%',
-                                height: '45%',
-                                background: darkTheme
-                                    ? 'linear-gradient(0deg, rgba(26,13,0,0.92) 60%, rgba(26,13,0,0.18) 100%)'
-                                    : 'linear-gradient(0deg, rgba(255,179,71,0.92) 60%, rgba(255,179,71,0.10) 100%)',
-                                zIndex: 1,
-                                pointerEvents: 'none',
-                            }} />
+                            <div className={`opere-card-overlay ${darkTheme ? 'dark-theme' : ''}`} />
                             {/* Content overlay */}
-                            <div style={{
-                                position: 'absolute',
-                                bottom: 0,
-                                left: 0,
-                                width: '100%',
-                                zIndex: 2,
-                                padding: '1.1em 0 1.1em 0',
-                                display: 'flex',
-                                flexDirection: 'column',
-                                alignItems: 'center',
-                                justifyContent: 'flex-end',
-                                color: '#fff',
-                                textShadow: '0 2px 8px rgba(60,40,20,0.18)',
-                            }}>
-                                <div style={{
-                                    fontSize: '1.45rem',
-                                    fontWeight: 900,
-                                    fontStyle: 'italic',
-                                    marginBottom: 6,
-                                    letterSpacing: '0.04em',
-                                    textAlign: 'center',
-                                    lineHeight: 1.13,
-                                }}>{opera.titlu}</div>
-                                <div style={{
-                                    fontSize: '1.05rem',
-                                    fontWeight: 400,
-                                    fontStyle: 'normal',
-                                    opacity: 0.93,
-                                    marginBottom: 4,
-                                    textAlign: 'center',
-                                }}>{opera.autor}</div>
-                                <div style={{
-                                    fontSize: '0.98rem',
-                                    fontWeight: 600,
-                                    background: darkTheme ? 'rgba(255,255,255,0.13)' : 'rgba(255,255,255,0.22)',
-                                    color: darkTheme ? '#ffd591' : '#7a3a00',
-                                    borderRadius: '1.2em',
-                                    padding: '0.18em 1.1em',
-                                    marginTop: 4,
-                                    display: 'inline-block',
-                                    boxShadow: '0 1px 6px 0 rgba(60,40,20,0.10)',
-                                    letterSpacing: '0.03em',
-                                }}>{opera.data.replace('Redactare: ', '')}</div>
+                            <div className="opere-card-content">
+                                <div className="opere-card-title">{opera.titlu}</div>
+                                <div className="opere-card-author">{opera.autor}</div>
+                                <div className={`opere-card-date ${darkTheme ? 'dark-theme' : ''}`}>
+                                    {opera.data.replace('Redactare: ', '')}
+                                </div>
                             </div>
                         </div>
                     ))}
@@ -674,13 +536,7 @@ export default function Opre() {
 
                 {/* Mesaj când nu sunt rezultate */}
                 {filteredOpere.length === 0 && (
-                    <div style={{
-                        textAlign: 'center',
-                        padding: '3rem 1.5rem',
-                        color: darkTheme ? 'rgba(255,255,255,0.7)' : 'rgba(60,40,20,0.7)',
-                        fontSize: '1.2rem',
-                        fontWeight: '500'
-                    }}>
+                    <div className={`opere-no-results ${darkTheme ? 'dark-theme' : ''}`}>
                         Nu s-au găsit opere care să corespundă criteriilor de căutare.
                     </div>
                 )}

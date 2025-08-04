@@ -1,0 +1,432 @@
+// Opere page styles
+
+// Custom select styles for react-select
+.opere-custom-select {
+  &-control {
+    min-width: 270px;
+    max-width: 320px;
+    height: 56px;
+    border-radius: 2.2rem;
+    border: 1.5px solid;
+    background: #f7f8fa;
+    color: #222;
+    font-weight: 500;
+    font-size: 1.13rem;
+    box-shadow: none;
+    cursor: pointer;
+    padding-left: 0;
+    padding-right: 0;
+    transition: all 0.3s;
+    outline: none;
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+
+    &:hover {
+      border-color: #a3a3a3;
+    }
+
+    &.dark-theme {
+      border-color: #a97c50;
+      background: #4e2e1e;
+      color: rgba(255, 255, 255, 0.95);
+
+      &:hover {
+        border-color: #ffd591;
+      }
+
+      &.focused {
+        box-shadow: 0 0 0 2px #ffd591;
+      }
+    }
+
+    &.light-theme {
+      border-color: #ececec;
+      background: #f7f8fa;
+      color: #222;
+
+      &:hover {
+        border-color: #a3a3a3;
+      }
+
+      &.focused {
+        box-shadow: 0 0 0 2px #a3a3a3;
+      }
+    }
+  }
+
+  &-value-container {
+    height: 56px;
+    padding: 0 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex: 1;
+    position: relative;
+  }
+
+  &-menu {
+    border-radius: 2.2rem;
+    background: #f7f8fa;
+    color: #222;
+    box-shadow: 0 8px 32px 0 rgba(60, 40, 20, 0.18);
+    overflow: hidden;
+    z-index: 10;
+    margin-top: 6px;
+
+    &.dark-theme {
+      background: #4e2e1e;
+      color: rgba(255, 255, 255, 0.95);
+    }
+  }
+
+  &-option {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #222;
+    background: #f7f8fa;
+    font-weight: 500;
+    font-size: 1.13rem;
+    cursor: pointer;
+    border-radius: 0;
+    padding: 0.7rem 0;
+    min-height: 40px;
+
+    &.selected {
+      background: #ffd591;
+      font-weight: 700;
+    }
+
+    &.focused {
+      background: #fff;
+    }
+
+    &.dark-theme {
+      color: rgba(255, 255, 255, 0.95);
+      background: #4e2e1e;
+
+      &.selected {
+        background: #a97c50;
+      }
+
+      &.focused {
+        background: #6a4322;
+      }
+    }
+  }
+
+  &-single-value {
+    color: #222;
+    text-align: center;
+    font-weight: 500;
+    width: 100%;
+    font-size: 1.13rem;
+    display: flex;
+    align-items: center;
+    height: 56px;
+    position: absolute;
+    left: 1.5rem;
+    right: 1.5rem;
+
+    &.dark-theme {
+      color: rgba(255, 255, 255, 0.95);
+    }
+  }
+
+  &-dropdown-indicator {
+    color: #a97c50;
+    padding: 8px;
+    transition: color 0.2s;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    height: 56px;
+    position: absolute;
+    right: 1.5rem;
+
+    &.dark-theme {
+      color: #ffd591;
+    }
+  }
+
+  &-indicator-separator {
+    display: none;
+  }
+
+  &-input {
+    display: none;
+  }
+
+  &-menu-list {
+    padding: 0;
+    max-height: none;
+    overflow-y: auto;
+  }
+}
+
+// Search bar styles
+.opere-search-container {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.opere-search-icon {
+  position: absolute;
+  left: 1.2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.25rem;
+  color: rgba(60, 40, 20, 0.45);
+  z-index: 2;
+
+  &.dark-theme {
+    color: rgba(180, 180, 180, 0.55);
+  }
+}
+
+.opere-search-input {
+  width: 90%;
+  padding: 1.1rem 1.5rem 1.1rem 3.2rem;
+  font-size: 1.13rem;
+  border-radius: 2.2rem;
+  border: 1.5px solid #ececec;
+  background: #f7f8fa;
+  color: #222;
+  outline: none;
+  transition: all 0.3s;
+  box-shadow: 0 2px 8px 0 rgba(60, 40, 20, 0.08);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+
+  &.dark-theme {
+    border-color: #a97c50;
+    background: #4e2e1e;
+    color: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 2px 12px 0 rgba(60, 40, 20, 0.18);
+  }
+
+  &:focus {
+    border-color: #a3a3a3;
+    background: #fff;
+
+    &.dark-theme {
+      border-color: #ffd591;
+      background: #6a4322;
+    }
+  }
+
+  &:blur {
+    border-color: #ececec;
+    background: #f7f8fa;
+
+    &.dark-theme {
+      border-color: #a97c50;
+      background: #4e2e1e;
+    }
+  }
+}
+
+// Filter buttons styles
+.opere-filter-buttons {
+  display: flex;
+  gap: 0.9rem;
+  justify-content: flex-start;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: 1300px;
+  margin: 0 auto 1.5rem auto;
+  padding: 0 1.5rem;
+  align-items: center;
+}
+
+.opere-filter-button {
+  padding: 0.7rem 1.5rem;
+  border-radius: 2rem;
+  border: 2px solid #ececec;
+  background: #f7f8fa;
+  color: #222;
+  font-weight: 500;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: none;
+  outline: none;
+
+  &.dark-theme {
+    border-color: #a97c50;
+    background: #4e2e1e;
+    color: rgba(255, 255, 255, 0.95);
+  }
+
+  &.selected {
+    border-color: #4e2e1e;
+    background: #ffd591;
+    color: #222;
+    font-weight: 700;
+    box-shadow: 0 2px 8px rgba(60, 40, 20, 0.10);
+
+    &.dark-theme {
+      border-color: #4e2e1e;
+      background: #a97c50;
+      color: #4e2e1e;
+    }
+  }
+}
+
+// Grid container styles
+.opere-grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 2.2rem;
+  width: 100%;
+  max-width: 1300px;
+  justify-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+// Card styles
+.opere-card {
+  width: 400px;
+  height: 210px;
+  border-radius: 1.5rem;
+  overflow: hidden;
+  box-shadow: 0 4px 24px 0 rgba(124, 79, 43, 0.13);
+  background: transparent;
+  border: none;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  transition: box-shadow 0.22s cubic-bezier(0.4, 1.4, 0.6, 1), transform 0.18s cubic-bezier(0.4, 1.4, 0.6, 1);
+  cursor: pointer;
+
+  &.dark-theme {
+    img {
+      filter: brightness(0.92);
+    }
+  }
+
+  &:hover {
+    transform: scale(1.055);
+    box-shadow: 0 8px 32px 0 rgba(60, 40, 20, 0.22);
+    z-index: 2;
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 1.5rem;
+    display: block;
+    filter: brightness(0.98);
+  }
+}
+
+.opere-card-overlay {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 45%;
+  background: linear-gradient(0deg, rgba(255, 179, 71, 0.92) 60%, rgba(255, 179, 71, 0.10) 100%);
+  z-index: 1;
+  pointer-events: none;
+
+  &.dark-theme {
+    background: linear-gradient(0deg, rgba(26, 13, 0, 0.92) 60%, rgba(26, 13, 0, 0.18) 100%);
+  }
+}
+
+.opere-card-content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 2;
+  padding: 1.1em 0 1.1em 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  color: #fff;
+  text-shadow: 0 2px 8px rgba(60, 40, 20, 0.18);
+}
+
+.opere-card-title {
+  font-size: 1.45rem;
+  font-weight: 900;
+  font-style: italic;
+  margin-bottom: 6px;
+  letter-spacing: 0.04em;
+  text-align: center;
+  line-height: 1.13;
+}
+
+.opere-card-author {
+  font-size: 1.05rem;
+  font-weight: 400;
+  font-style: normal;
+  opacity: 0.93;
+  margin-bottom: 4px;
+  text-align: center;
+}
+
+.opere-card-date {
+  font-size: 0.98rem;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.22);
+  color: #7a3a00;
+  border-radius: 1.2em;
+  padding: 0.18em 1.1em;
+  margin-top: 4px;
+  display: inline-block;
+  box-shadow: 0 1px 6px 0 rgba(60, 40, 20, 0.10);
+  letter-spacing: 0.03em;
+
+  &.dark-theme {
+    background: rgba(255, 255, 255, 0.13);
+    color: #ffd591;
+  }
+}
+
+// No results message
+.opere-no-results {
+  text-align: center;
+  padding: 3rem 1.5rem;
+  color: rgba(60, 40, 20, 0.7);
+  font-size: 1.2rem;
+  font-weight: 500;
+
+  &.dark-theme {
+    color: rgba(255, 255, 255, 0.7);
+  }
+}
+
+// Search and filter container
+.opere-filters-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 1300px;
+  margin: 0 auto 1.5rem auto;
+  padding: 0;
+  gap: 1.5rem;
+}
+
+.opere-select-container {
+  min-width: 200px;
+  flex-shrink: 0;
+}
+
+.opere-roman-subcategory-container {
+  min-width: 200px;
+  flex-shrink: 0;
+  margin-left: 8rem;
+} 

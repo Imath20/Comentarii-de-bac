@@ -1,0 +1,48 @@
+// Despre Noi page styles
+
+.desprenoi-section {
+  width: 100%;
+  margin: 0 auto;
+  margin-top: 4rem;
+  margin-bottom: 4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.desprenoi-title {
+  font-size: 3.2rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  color: #4e2e1e;
+  margin-bottom: 2.5rem;
+  text-align: center;
+  text-shadow: 0 2px 8px rgba(60, 40, 20, 0.10);
+
+  &.dark-theme {
+    color: rgba(255, 255, 255, 0.95);
+  }
+}
+
+.desprenoi-content {
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: #4e2e1e;
+  text-align: center;
+  max-width: 1400px;
+  margin: 0;
+  text-shadow: 0 2px 8px rgba(60, 40, 20, 0.10);
+  line-height: 1.7;
+
+  &.dark-theme {
+    color: rgba(255, 255, 255, 0.95);
+  }
+
+  p {
+    margin: 0 0 1.5em 0;
+
+    &:last-child {
+      margin: 0;
+    }
+  }
+} 
