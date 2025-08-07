@@ -161,6 +161,14 @@ const ScriitorInfo = ({ name }) => {
       locNastere: 'Născut în Pârscov, Buzău',
       perioada: '1884-1963',
       opere: '"Shakespeare", "Zahei orbul"'
+    },
+    veronica: {
+      ocupatie: 'Poetă și scriitoare',
+      studii: 'Studii la Iași și Viena',
+      activitate: 'Muza și iubita lui Mihai Eminescu',
+      locNastere: 'Născută în Năsăud, Transilvania',
+      perioada: '1850-1889',
+      opere: '"Scrisori către Eminescu", "Poezii", "Răsunetul inimii"'
     }
   };
 

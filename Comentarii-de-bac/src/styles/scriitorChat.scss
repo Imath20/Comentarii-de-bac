@@ -1,0 +1,342 @@
+.scriitor-chat-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(5px);
+}
+
+.scriitor-chat-container {
+  width: 90%;
+  max-width: 500px;
+  height: 80vh;
+  max-height: 600px;
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: chatSlideIn 0.3s ease-out;
+}
+
+@keyframes chatSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.scriitor-chat-header {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  position: relative;
+}
+
+.scriitor-chat-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 15px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.scriitor-chat-info {
+  flex: 1;
+  
+  h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+  }
+  
+  .scriitor-chat-status {
+    font-size: 14px;
+    opacity: 0.9;
+    margin-top: 2px;
+    display: block;
+  }
+}
+
+.scriitor-chat-close {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+  
+  &:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+}
+
+.scriitor-chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+  background: #f8f9fa;
+  
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: #ddd;
+    border-radius: 3px;
+  }
+}
+
+.scriitor-chat-message {
+  display: flex;
+  margin-bottom: 15px;
+  align-items: flex-end;
+  
+  &.user {
+    flex-direction: row-reverse;
+    
+    .scriitor-chat-message-content {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      margin-left: 0;
+      margin-right: 10px;
+      border-radius: 18px 18px 4px 18px;
+    }
+  }
+  
+  &.scriitor {
+    .scriitor-chat-message-content {
+      background: white;
+      color: #333;
+      margin-left: 10px;
+      border-radius: 18px 18px 18px 4px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+  }
+}
+
+.scriitor-chat-avatar-small {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+  
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.scriitor-chat-message-content {
+  max-width: 70%;
+  padding: 12px 16px;
+  position: relative;
+  
+  .scriitor-chat-message-text {
+    line-height: 1.4;
+    word-wrap: break-word;
+  }
+  
+  .scriitor-chat-message-time {
+    font-size: 11px;
+    opacity: 0.7;
+    margin-top: 5px;
+    text-align: right;
+  }
+}
+
+.scriitor-chat-typing {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 12px;
+  
+  span {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #999;
+    animation: typing 1.4s infinite ease-in-out;
+    
+    &:nth-child(1) {
+      animation-delay: -0.32s;
+    }
+    
+    &:nth-child(2) {
+      animation-delay: -0.16s;
+    }
+  }
+}
+
+@keyframes typing {
+  0%, 80%, 100% {
+    transform: scale(0.8);
+    opacity: 0.5;
+  }
+  40% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.scriitor-chat-input-container {
+  padding: 20px;
+  background: white;
+  border-top: 1px solid #eee;
+}
+
+.scriitor-chat-input-wrapper {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  background: #f8f9fa;
+  border-radius: 25px;
+  padding: 8px;
+  border: 2px solid transparent;
+  transition: border-color 0.2s;
+  
+  &:focus-within {
+    border-color: #667eea;
+  }
+}
+
+.scriitor-chat-input {
+  flex: 1;
+  border: none;
+  background: none;
+  outline: none;
+  resize: none;
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.4;
+  color: #444 !important;
+  max-height: 100px;
+  padding: 8px 0;
+  
+  &::placeholder {
+    color: #999;
+  }
+}
+
+.scriitor-chat-send-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: white;
+  transition: transform 0.2s, box-shadow 0.2s;
+  
+  &:hover:not(:disabled) {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+  }
+  
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  
+  svg {
+    width: 70%;
+    height: 70%;
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .scriitor-chat-container {
+    width: 95%;
+    height: 90vh;
+    max-height: none;
+    border-radius: 15px;
+  }
+  
+  .scriitor-chat-message-content {
+    max-width: 85%;
+  }
+  
+  .scriitor-chat-header {
+    padding: 15px;
+  }
+  
+  .scriitor-chat-messages {
+    padding: 15px;
+  }
+  
+  .scriitor-chat-input-container {
+    padding: 15px;
+  }
+}
+
+// Animații pentru mesaje
+.scriitor-chat-message {
+  animation: messageSlideIn 0.3s ease-out;
+}
+
+@keyframes messageSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Stiluri pentru scrollbar personalizat
+.scriitor-chat-messages {
+  scrollbar-width: thin;
+  scrollbar-color: #ddd transparent;
+}
+
+// Efecte hover pentru butoane
+.scriitor-chat-close:hover,
+.scriitor-chat-send-btn:hover:not(:disabled) {
+  transform: scale(1.1);
+}
+
+// Stiluri pentru focus accessibility
+.scriitor-chat-input:focus,
+.scriitor-chat-send-btn:focus {
+  outline: 2px solid #667eea;
+  outline-offset: 2px;
+} 

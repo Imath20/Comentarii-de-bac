@@ -25,6 +25,11 @@ const eminescu = {
       key: 'maiorescu',
       img: '/scriitori/titu_maiorescu (2).png',
     },
+    {
+      name: 'Veronica Micle',
+      key: 'veronica',
+      img: '/Profile ganditorimea/Veronica Micle.png',
+    },
   ],
   gallery: [
     '/Banner/eminescu.png',
@@ -44,6 +49,7 @@ const eminescu = {
       link: '/poezie/luceafarul',
       likes: 1883,
       reactions: [
+        { friendKey: 'veronica', reaction: 'ador' },
         { friendKey: 'creanga', reaction: 'love' },
         { friendKey: 'slavici', reaction: 'strengh' },
         { friendKey: 'caragiale', reaction: 'cool' },
@@ -73,6 +79,7 @@ const eminescu = {
         { friendKey: 'creanga', reaction: 'love' },
         { friendKey: 'slavici', reaction: 'love' },
         { friendKey: 'caragiale', reaction: 'strengh' },
+        { friendKey: 'veronica', reaction: 'ador' },
       ],
       comments: [
         {

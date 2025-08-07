@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import scriitoriData from '../scriitoriData';
 import ScriitorInfo from '../assets/ScriitorInfo';
 import AvatarSearchBar from '../assets/AvatarSearchBar';
+import ScriitorChat from '../assets/ScriitorChat';
 
 const REACTIONS = [
   { type: 'like', label: 'Like', emoji: '👍' },
@@ -32,6 +33,7 @@ const Scriitor = () => {
   const bannerRef = useRef(null);
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [likesModal, setLikesModal] = useState({ open: false, postId: null });
+  const [showChat, setShowChat] = useState(false);
 
   const handleFullScreen = () => {
     if (!isFullScreen) {
@@ -267,6 +269,25 @@ const Scriitor = () => {
               <div className="scriitor-section-title">Prezentare</div>
               <div className="scriitor-presentation">
                 <ScriitorInfo name={name} />
+              </div>
+              {/* Buton Chat */}
+              <div className="scriitor-chat-button-container">
+                <button
+                  onClick={() => setShowChat(true)}
+                  className="scriitor-chat-button"
+                  title={`Vorbește cu ${data.nume}`}
+                >
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                    <path
+                      d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                  <span>Vorbește cu {data.nume}</span>
+                </button>
               </div>
             </div>
           {/* Galerie */}
@@ -640,6 +661,14 @@ const Scriitor = () => {
             )}
           </div>
         </div>
+      )}
+      
+      {/* Chat Component */}
+      {showChat && (
+        <ScriitorChat
+          scriitorKey={name}
+          onClose={() => setShowChat(false)}
+        />
       )}
     </div>
   );
