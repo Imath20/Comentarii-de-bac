@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import scriitoriData from '../scriitoriData';
 import ScriitorInfo from '../assets/ScriitorInfo';
+import AvatarSearchBar from '../assets/AvatarSearchBar';
 
 const REACTIONS = [
   { type: 'like', label: 'Like', emoji: '👍' },
@@ -196,6 +197,12 @@ const Scriitor = () => {
            backgroundPosition: name === 'eminescu' ? 'center 30%' : name === 'caragiale' ? 'center 20%' : name === 'slavici' ? 'center 20%' : name === 'rebreanu' ? 'center 20%' : name === 'calinescu' ? 'center 20%' : 'center',
          }}
        >
+        {/* AvatarSearchBar pe stânga sus, doar dacă nu e fullscreen */}
+        {!isFullScreen && (
+          <div className="avatar-searchbar-banner-wrapper">
+            <AvatarSearchBar onSelect={s => goToScriitor(Object.keys(scriitoriData).find(k => scriitoriData[k].nume === s.nume))} />
+          </div>
+        )}
         {/* Buton full screen dreapta sus */}
         <button
           onClick={handleFullScreen}
@@ -221,6 +228,7 @@ const Scriitor = () => {
       <div className="scriitor-main-layout">
         {/* Stânga */}
         <div className="scriitor-left-column">
+          {/* AvatarSearchBar eliminat de aici */}
           {/* Buton înapoi - stil ca fullscreen button */}
                      <button
              onClick={() => window.history.back()}
