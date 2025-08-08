@@ -1,9 +1,11 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import scriitoriData from '../scriitoriData';
 import ScriitorInfo from '../assets/ScriitorInfo';
 import AvatarSearchBar from '../assets/AvatarSearchBar';
 import ScriitorChat from '../assets/ScriitorChat';
+import { getScriitorOpere } from '../data/scriitoriOpere';
+import { getScriitorPrezentare } from '../data/scriitoriPrezentare';
 
 const REACTIONS = [
   { type: 'like', label: 'Like', emoji: '👍' },
@@ -34,6 +36,8 @@ const Scriitor = () => {
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [likesModal, setLikesModal] = useState({ open: false, postId: null });
   const [showChat, setShowChat] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const handleFullScreen = () => {
     if (!isFullScreen) {
@@ -106,6 +110,17 @@ const Scriitor = () => {
   const closePoemPreview = () => {
     setPoemPreviewModal({ open: false, post: null });
     // Restabilește scroll-ul pe fundal
+    document.body.style.overflow = 'unset';
+  };
+
+  // Pentru modal "Citește tot"
+  const [readAllModal, setReadAllModal] = useState(false);
+  const openReadAllModal = () => {
+    setReadAllModal(true);
+    document.body.style.overflow = 'hidden';
+  };
+  const closeReadAllModal = () => {
+    setReadAllModal(false);
     document.body.style.overflow = 'unset';
   };
 
@@ -188,6 +203,8 @@ const Scriitor = () => {
     return r ? r.emoji : '👍';
   }
 
+
+
   return (
     <div className="scriitor-page">
       {/* Banner pe toată lățimea ferestrei */}
@@ -232,8 +249,7 @@ const Scriitor = () => {
         <div className="scriitor-left-column">
           {/* AvatarSearchBar eliminat de aici */}
           {/* Buton înapoi - stil ca fullscreen button */}
-                     <button
-             onClick={() => window.history.back()}
+                     <button onClick={() => navigate("/scriitori")}
              className="scriitor-back-btn-inline"
              onMouseEnter={(e) => {
                e.target.style.transform = 'translateX(-8px)';
@@ -269,9 +285,17 @@ const Scriitor = () => {
               <div className="scriitor-section-title">Prezentare</div>
               <div className="scriitor-presentation">
                 <ScriitorInfo name={name} />
+                <div className="scriitor-presentation-extra">
+                  {(() => {
+                    const prezentare = getScriitorPrezentare(name);
+                    return prezentare.paragrafe.map((paragraf, index) => (
+                      <p key={index}>{paragraf}</p>
+                    ));
+                  })()}
+                </div>
               </div>
-              {/* Buton Chat */}
-              <div className="scriitor-chat-button-container">
+              {/* Butoane */}
+              <div className="scriitor-buttons-container">
                 <button
                   onClick={() => setShowChat(true)}
                   className="scriitor-chat-button"
@@ -287,6 +311,23 @@ const Scriitor = () => {
                     />
                   </svg>
                   <span>Vorbește cu {data.nume}</span>
+                </button>
+                
+                <button
+                  onClick={openReadAllModal}
+                  className="scriitor-readall-button"
+                  title="Vezi toate operele"
+                >
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                    <path
+                      d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                  <span>Vezi toate operele</span>
                 </button>
               </div>
             </div>
@@ -379,6 +420,76 @@ const Scriitor = () => {
                           </button>
                         </div>
                       )}
+                    </div>
+                  </div>
+                ) : post.isStory ? (
+                  <div className="scriitor-story-container">
+                    {/* Stânga: imagine poveste */}
+                    <div className="scriitor-story-image">
+                      {post.image && (
+                        <div className="scriitor-story-image-wrapper"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            openPoemGallery([post.image], 0);
+                            setPoemGalleryCurrentIndex(0);
+                          }}
+                        >
+                          <img
+                            src={post.image}
+                            alt={`${post.storyTitle}`}
+                          />
+                        </div>
+                      )}
+                    </div>
+                    {/* Dreapta: text poveste */}
+                    <div className="scriitor-story-content">
+                      <h3 className="scriitor-story-title">
+                        {post.storyTitle}
+                      </h3>
+                      <div className="scriitor-story-text">
+                        {expandedPoems[post.id]
+                          ? post.storyText.split('\n\n').slice(0, 2).join('\n\n')
+                          : post.storyText.split('\n\n').slice(0, 2).join('\n\n')
+                        }
+                      </div>
+                      <div className="scriitor-story-expand">
+                        <button
+                          className="vezi-mai-mult"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setPoemPreviewModal({ 
+                              open: true, 
+                              post: { 
+                                title: post.storyTitle || post.poemTitle || "Poveste",
+                                storyTitle: post.storyTitle,
+                                poemTitle: post.poemTitle,
+                                text: post.storyText || post.poemText,
+                                storyText: post.storyText,
+                                poemText: post.poemText,
+                                showReadAllButton: post.showReadAllButton,
+                                readAllButtonText: post.readAllButtonText,
+                                readAllButtonLink: post.readAllButtonLink
+                              } 
+                            });
+                            document.body.style.overflow = 'hidden';
+                          }}
+                        >
+                          Vezi mai mult
+                        </button>
+                        {post.showReadAllButton && post.readAllButtonLink && (
+                          <button
+                            className="citeste-tot"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              navigate(post.readAllButtonLink, { 
+                                state: { from: location.pathname + location.search } 
+                              });
+                            }}
+                          >
+                            {post.readAllButtonText || 'Citește tot'}
+                          </button>
+                        )}
+                      </div>
                     </div>
                   </div>
                 ) : post.image && (
@@ -560,23 +671,38 @@ const Scriitor = () => {
             {/* Header cu titlu centrat și buton închidere */}
             <div className="scriitor-poem-preview-header">
               <h2>
-                {poemPreviewModal.post.poemTitle}
+                {poemPreviewModal.post.poemTitle || poemPreviewModal.post.storyTitle}
               </h2>
               <button
                 onClick={closePoemPreview}
                 className="scriitor-modal-close-btn-poem"
-                title="Închide preview poezie"
+                title="Închide preview"
               >
                 ×
               </button>
             </div>
 
-            {/* Conținut cu scroll - doar poezia */}
-            <div className="scriitor-poem-preview-content">
-              <div className="scriitor-poem-preview-text">
-                {poemPreviewModal.post.poemText}
-              </div>
-            </div>
+            {/* Conținut cu scroll - poezie sau poveste */}
+                            <div className="scriitor-poem-preview-content">
+                  <div className="scriitor-poem-preview-text">
+                    {poemPreviewModal.post.poemText || poemPreviewModal.post.storyText || poemPreviewModal.post.text}
+                    {poemPreviewModal.post.showReadAllButton && (
+                      <div className="scriitor-poem-preview-actions">
+                        <button
+                          onClick={() => {
+                            closePoemPreview();
+                            navigate(poemPreviewModal.post.readAllButtonLink || '/carte/amintiri-din-copilarie', { 
+                              state: { from: location.pathname + location.search } 
+                            });
+                          }}
+                          className="scriitor-poem-preview-read-btn"
+                        >
+                          {poemPreviewModal.post.readAllButtonText || 'Citește tot'}
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                </div>
           </div>
         </div>
       )}
@@ -669,6 +795,68 @@ const Scriitor = () => {
           scriitorKey={name}
           onClose={() => setShowChat(false)}
         />
+      )}
+
+      {/* Modal "Citește tot" */}
+      {readAllModal && (
+        <div
+          className="scriitor-modal-overlay scriitor-modal-overlay-readall"
+          onClick={closeReadAllModal}
+        >
+          <div
+            className="scriitor-readall-modal"
+            onClick={e => e.stopPropagation()}
+          >
+            <div className="scriitor-readall-header">
+              <h2>Opere Complete - {data.nume}</h2>
+              <button
+                onClick={closeReadAllModal}
+                className="scriitor-modal-close-btn-poem"
+                title="Închide"
+              >
+                ×
+              </button>
+            </div>
+            
+            <div className="scriitor-readall-content">
+              {(() => {
+                const opere = getScriitorOpere(name);
+                return (
+                  <>
+                    <div className="scriitor-readall-section">
+                      <h3>Poezii</h3>
+                      <ul>
+                        {opere.poezii.map((opera, index) => (
+                          <li key={index}>{opera}</li>
+                        ))}
+                      </ul>
+                    </div>
+                    
+                    <div className="scriitor-readall-section">
+                      <h3>Proză</h3>
+                      <ul>
+                        {opere.proza.map((opera, index) => (
+                          <li key={index}>{opera}</li>
+                        ))}
+                      </ul>
+                    </div>
+                    
+                    <div className="scriitor-readall-section">
+                      <h3>Critică literară</h3>
+                      <ul>
+                        {opere.critica.map((opera, index) => (
+                          <li key={index}>{opera}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  </>
+                );
+              })()}
+            </div>
+            
+
+          </div>
+        </div>
       )}
     </div>
   );

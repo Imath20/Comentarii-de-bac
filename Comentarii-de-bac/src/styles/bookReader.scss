@@ -1,0 +1,324 @@
+.book-reader-wrapper {
+  width: 100vw !important;
+  min-height: 100vh !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  padding-top: 0px !important;
+  padding-bottom: 40px !important;
+  box-sizing: border-box !important;
+}
+
+.book-reader {
+  position: relative !important;
+  margin: 0 auto !important;
+  background: none;
+  border-radius: 18px;
+  padding: 0 0 32px 0;
+  font-family: 'Georgia', serif;
+  display: block !important;
+}
+
+.book-reader-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 24px 0 24px;
+  width: 100% !important;
+  max-width: 100% !important;
+  gap: 16px;
+}
+
+.book-reader-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #a97c50;
+  margin-right: 12px;
+  flex: 1;
+  text-align: end;
+}
+
+.book-reader-back {
+  background: none;
+  border: 2px solid #a97c50;
+  border-radius: 20px;
+  padding: 6px 18px;
+  color: #a97c50;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.2s;
+  margin-left: 12px;
+  white-space: nowrap;
+}
+
+.book-reader-back:hover {
+  background: #a97c50;
+  color: #fff;
+}
+
+.book-reader-content {
+  min-height: 340px;
+  padding: 32px 32px 0 32px;
+  width: 100% !important;
+  max-width: 100% !important;
+  display: block !important;
+}
+
+.book-reader-page {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: #3a2a13;
+  white-space: pre-line;
+  background: #fffbe9;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 4px 24px 0 rgba(124,79,43,0.13);
+  width: 100% !important;
+  max-width: 100% !important;
+  display: block !important;
+}
+
+.book-reader-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  margin-top: 24px;
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+.book-reader-page-input-form {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.book-reader-page-input {
+  width: 30px;
+  height: 36px;
+  border: 2px solid #a97c50;
+  border-radius: 18px;
+  padding: 0 12px;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #a97c50;
+  background: none;
+  outline: none;
+  transition: all 0.2s;
+  
+  /* Hide increment/decrement arrows */
+  -webkit-appearance: none;
+  -moz-appearance: textfield;
+}
+
+.book-reader-page-input::-webkit-outer-spin-button,
+.book-reader-page-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.book-reader-page-input:focus {
+  border-color: #7c4f2b;
+  box-shadow: 0 0 0 2px rgba(124, 79, 43, 0.2);
+}
+
+.book-reader-page-input::placeholder {
+  color: #a97c50;
+  opacity: 0.7;
+}
+
+.book-reader-page-separator {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #a97c50;
+}
+
+.book-reader-total-pages {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #a97c50;
+  min-width: 20px;
+  text-align: center;
+}
+
+.book-reader-controls button {
+  background: none;
+  border: 2px solid #a97c50;
+  border-radius: 20px;
+  padding: 8px 20px;
+  color: #a97c50;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 1rem;
+  outline: none;
+}
+
+.book-reader-controls button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.book-reader-controls button:hover:not(:disabled) {
+  background: #a97c50;
+  color: #fff;
+}
+
+.book-reader-bookmark {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  padding: 0 32px;
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+.book-reader-bookmark-btn {
+  background: linear-gradient(135deg, #7c4f2b 0%, #a97c50 100%);
+  border: none;
+  border-radius: 25px;
+  padding: 8px 16px;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 16px rgba(124, 79, 43, 0.2);
+  font-family: 'Georgia', serif;
+  text-align: center !important;
+  white-space: nowrap;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.book-reader-bookmark-btn:hover {
+  transform: translateX(-50%) translateY(-2px);
+  box-shadow: 0 6px 20px rgba(124, 79, 43, 0.3);
+  background: linear-gradient(135deg, #6b4524 0%, #8f6b3f 100%);
+}
+
+.book-reader-bookmark-btn:active {
+  transform: translateX(-50%) translateY(0);
+  box-shadow: 0 2px 8px rgba(124, 79, 43, 0.2);
+}
+
+.book-reader-bookmark-indicator {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: linear-gradient(135deg, #7c4f2b 0%, #a97c50 100%);
+  color: white;
+  padding: 8px 12px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 16px rgba(124, 79, 43, 0.3);
+  z-index: 1000;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.bookmark-icon {
+  font-size: 1.2rem;
+}
+
+.bookmark-text {
+  white-space: nowrap;
+}
+
+.book-reader-confirm-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+.book-reader-confirm-modal {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.book-reader-confirm-modal h3 {
+  margin: 0 0 16px 0;
+  color: #7c4f2b;
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.book-reader-confirm-modal p {
+  margin: 0 0 24px 0;
+  color: #555;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.book-reader-confirm-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.book-reader-confirm-btn {
+  background: linear-gradient(135deg, #7c4f2b 0%, #a97c50 100%);
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 12px 20px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.book-reader-confirm-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(124, 79, 43, 0.3);
+}
+
+.book-reader-remove-btn {
+  background: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 12px 20px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.book-reader-remove-btn:hover {
+  background: #c82333;
+  transform: translateY(-2px);
+}
+
+.book-reader-cancel-btn {
+  background: #6c757d;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 12px 20px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.book-reader-cancel-btn:hover {
+  background: #5a6268;
+  transform: translateY(-2px);
+}
