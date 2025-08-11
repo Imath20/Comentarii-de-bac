@@ -1,19 +1,25 @@
 // Date cu operele specifice fiecărui scriitor
 export const scriitoriOpere = {
   'eminescu': {
-    poezii: [
+    'opere de BAC': [
       'Luceafărul',
-      'Scrisori',
+      'Scrisoarea I',
+      'Floare albastră'
+    ],
+    poezii: [
+      'Scrisori (I-V)',
       'Somnoroase păsărele',
       'Doina',
       'Epigonii',
       'Mai am un singur dor',
       'La steaua',
-      'Si dacă',
+      'Și dacă...',
       'Călin (file de poveste)',
       'Strigoii',
       'Făt-Frumos din tei',
-      'Povestea teiului'
+      'Povestea teiului',
+      'Ce te legeni...',
+      'Peste vârfuri'
     ],
     proza: [
       'Geniu pustiu',
@@ -21,345 +27,352 @@ export const scriitoriOpere = {
       'Cezara',
       'Făt-Frumos din lacrimă',
       'Sărmanul Dionis',
-      'Cezara'
+      'Cezara',
+      'Umbra mea'
     ],
     critica: [
       'Articole din Convorbiri Literare',
-      'Studii despre literatura română',
-      'Traduceri din literatura germană',
-      'Critici literare',
-      'Eseuri despre filosofie'
+      'Influența austriacă asupra românilor din Principate',
+      'Dăciile lui Bolliac',
+      'Scrisorile unui dac'
     ]
   },
   'creanga': {
+    'opere de BAC': [
+      'Amintiri din copilărie',
+      'Harap-Alb'
+    ],
     poezii: [
       'Poezii populare'
     ],
     proza: [
-      'Amintiri din copilărie',
-      'Povești din folclor',
-      'Schițe și momente',
-      'Harap-Alb',
       'Poveștile lui Moș Ion Roată',
       'Capra cu trei iezi',
       'Dănilă Prepeleac',
-      'Ivan Turbincă'
-    ],
-    critica: [
-      'Articole despre educație',
-      'Scrieri pedagogice',
-      'Studii despre folclor',
-      'Note despre tradiții'
+      'Ivan Turbincă',
+      'Ursul păcălit de vulpe',
+      'Povestea porcului',
+      'Soacra cu trei nurori',
+      'Fata babei și fata moșneagului'
     ]
   },
   'caragiale': {
-    poezii: [
-      'Momente și schițe',
-      'Scrisori',
-      'Note și polemici',
-      'Versuri satirice'
+    'opere de BAC': [
+      'O scrisoare pierdută',
+      'O noapte furtunoasă'
+    ],
+    teatru: [
+      'Năpasta',
+      'Conul Leonida față cu reacțiunea',
+      'D-ale carnavalului'
     ],
     proza: [
       'Momente și schițe',
-      'Nuvele',
-      'Teatru',
-      'O scrisoare pierdută',
-      'Momente și schițe',
-      'Nuvele și schițe',
-      'Momente și schițe'
-    ],
-    critica: [
-      'Articole de critică',
-      'Polemici literare',
-      'Studii despre teatru',
-      'Note despre societate'
+      'La hanul lui Mânjoală',
+      'O făclie de Paște',
+      'Kir Ianulea',
+      'Bubico',
+      'Căldură mare',
+      'Din două una',
+      'Vizita',
+      'D-l Goe'
     ]
   },
   'slavici': {
-    poezii: [
-      'Poezii populare',
-      'Balade',
-      'Cântece',
-      'Versuri tradiționale'
+    'opere de BAC': [
+      'Moara cu noroc',
+      'Mara'
     ],
     proza: [
-      'Moara cu noroc',
-      'Mara',
-      'Povești populare',
-      'Nuvele',
-      'Povești din folclor',
-      'Schițe și momente'
-    ],
-    critica: [
-      'Studii despre folclor',
-      'Articole despre tradiții',
-      'Note despre literatura populară',
-      'Eseuri despre cultura română'
+      'Popa Tanda',
+      'Budulea Taichii',
+      'Păcat',
+      'Nuvele din popor',
+      'Tinerețe fără bătrânețe'
     ]
   },
   'rebreanu': {
-    poezii: [
-      'Poezii patriotice',
-      'Versuri de luptă',
-      'Balade',
-      'Cântece populare'
-    ],
-    proza: [
+    'opere de BAC': [
       'Ion',
       'Pădurea spânzuraților',
+      'Răscoala'
+    ],
+    proza: [
       'Adam și Eva',
       'Crăișorul',
       'Gorila',
-      'Jocul cu moartea',
-      'Ciuleandra'
+      'Ciuleandra',
+      'Amândoi'
     ],
-    critica: [
-      'Articole despre societate',
-      'Studii despre romanul românesc',
-      'Note despre literatura interbelică',
-      'Eseuri despre identitatea română'
+    teatru: [
+      'Plicul',
+      'Apostolii'
     ]
   },
   'calinescu': {
-    poezii: [
-      'Poezii simboliste',
-      'Versuri moderne',
-      'Balade',
-      'Sonete'
+    'opere de BAC': [
+      'Enigma Otiliei'
     ],
     proza: [
-      'Enigma Otiliei',
       'Bietul Ioanide',
       'Scrinul negru',
-      'Cartea nălucilor',
-      'Crai nou în lună',
-      'Sfântul mitic'
+      'Cartea nunții',
+      'Sub semnul Săgetătorului'
     ],
     critica: [
-      'Istoria literaturii române',
-      'Studii critice',
-      'Eseuri literare',
-      'Opera lui Eminescu',
-      'Studii despre modernism',
-      'Critica literară'
+      'Istoria literaturii române de la origini până în prezent',
+      'Opera lui Mihai Eminescu',
+      'Principii de estetică',
+      'Cronicile optimistului',
+      'Impresii asupra literaturii spaniole'
     ]
   },
   'bacovia': {
-    poezii: [
+    'opere de BAC': [
       'Plumb',
-      'Lacustră',
+      'Lacustră'
+    ],
+    poezii: [
       'Scântei galbene',
       'Cu voi...',
-      'Poeme',
-      'Versuri'
-    ],
-    proza: [
-      'Proză',
-      'Schițe',
-      'Momente literare'
-    ],
-    critica: [
-      'Articole literare',
-      'Note critice',
-      'Studii despre simbolism'
+      'Stanțe burgheze',
+      'Comedii burgheze'
     ]
   },
   'barbu': {
+    'opere de BAC': [
+      'Riga Crypto și Lapona Enigel',
+      'Joc secund'
+    ],
     poezii: [
-      'Joc secund',
-      'Uvedenii',
-      'Cântecul amintirii',
-      'Poeme',
-      'Versuri'
+      'După melci',
+      'Isarlîk',
+      'Dan Barbilian - Poezii'
     ],
-    proza: [
-      'Proză',
-      'Schițe',
-      'Momente'
-    ],
-    critica: [
-      'Articole despre poezie',
-      'Studii critice',
-      'Note despre modernism'
+    matematica: [
+      'Lucrări de teoria numerelor',
+      'Contribuții la geometria algebrică',
+      'Studii matematice'
     ]
   },
   'blaga': {
+    'opere de BAC': [
+      'Eu nu strivesc corola de minuni a lumii',
+      'Poemele luminii'
+    ],
     poezii: [
-      'Poemele luminii',
-      'Meșterul Manole',
       'Poemele tăcerii',
+      'Pașii profetului',
+      'În marea trecere',
+      'Lauda somnului',
+      'La cumpăna apelor',
       'Nebănuitele trepte',
       'Vârsta de fier',
-      'Poeme'
+      'Corăbii cu aripi frânte'
     ],
     proza: [
       'Hronicul și cântecul vârstei',
-      'Meșterul Manole',
-      'Proză',
-      'Schițe'
     ],
-    critica: [
-      'Cultura și civilizația',
-      'Filosofia stilului',
-      'Eseuri despre artă',
-      'Studii despre mit'
+    teatru: [
+      'Meșterul Manole',
+      'Tulburarea apelor',
+      'Cruciada copiilor',
+      'Avram Iancu',
+      'Anton Pann'
+    ],
+    filosofie: [
+      'Trilogia culturii',
+      'Trilogia valorilor',
+      'Trilogia cunoașterii',
+      'Cenzura transcendentă',
+      'Diferențialele divine'
     ]
   },
   'arghezi': {
+    'opere de BAC': [
+      'Testament',
+      'Flori de mucigai'
+    ],
     poezii: [
       'Cuvinte potrivite',
-      'Flori de mucigai',
-      'Carte de versuri',
-      'Poeme',
-      'Versuri'
+      'Cartea cu jucării',
+      'Une victoire',
+      'Hore',
+      'Versuri de seară',
+      'Frunze',
+      '1907 - Peizaje'
     ],
     proza: [
-      'Cimitirul Buna-Vestire',
       'Icoane de lemn',
-      'Proză',
-      'Schițe'
-    ],
-    critica: [
-      'Articole literare',
-      'Note critice',
-      'Studii despre poezie'
+      'Poarta neagră',
+      'Tablete din Țara de Kuty',
+      'Cimitirul Buna-Vestire'
     ]
   },
   'sadoveanu': {
-    poezii: [
-      'Poezii populare',
-      'Balade',
-      'Versuri tradiționale'
+    'opere de BAC': [
+      'Baltagul'
     ],
     proza: [
       'Neamul Șoimăreștilor',
       'Hanu Ancuței',
-      'Baltagul',
       'Creanga de aur',
       'Zodia Cancerului',
-      'Divanul persan'
-    ],
-    critica: [
-      'Articole despre folclor',
-      'Studii despre tradiții',
-      'Note despre literatura populară'
+      'Divanul persian',
+      'Frații Jderi',
+      'Mitrea Cocor',
+      'Nunta domniței Ruxandra'
     ]
   },
   'petrescu': {
-    poezii: [
-      'Versuri',
-      'Poezii',
-      'Balade'
+    'opere de BAC': [
+      'Ultima noapte de dragoste, întâia noapte de război',
+      'Patul lui Procust'
     ],
     proza: [
-      'Ultima noapte de dragoste, întâia noapte de război',
       'Patul lui Procust',
       'Un om între oameni',
-      'Jocul ielelor',
-      'Cazul Șerpe',
-      'Aranca, șarpele'
+      'Jocul ielelor'
     ],
-    critica: [
-      'Articole despre roman',
-      'Studii critice',
-      'Note despre modernism'
+    teatru: [
+      'Suflete tari',
+      'Mitică Popescu',
+      'Bălcescu'
+    ],
+    filosofie: [
+      'Modalitatea estetică',
+      'Filosofia cunoașterii'
     ]
   },
   'eliade': {
-    poezii: [
-      'Poezii',
-      'Versuri',
-      'Balade'
+    'opere de BAC': [
+      'Maitreyi'
     ],
     proza: [
-      'Maitreyi',
       'Șantier',
       'Domnișoara Christina',
       'Nunta în cer',
       'Pe strada Mântuleasa',
-      'Noaptea de Sânziene'
+      'Noaptea de Sânziene',
+      'La țigănci',
+      'Secretul doctorului Honigberger'
     ],
-    critica: [
-      'Istoria religiilor',
-      'Studii despre mit',
-      'Eseuri despre spiritualitate',
-      'Note despre tradiții'
+    studii: [
+      'Traité d\'histoire des religions',
+      'Le Mythe de l\'éternel retour',
+      'Aspecte ale mitului',
+      'Istoria credințelor și ideilor religioase',
+      'Yoga. Eseu despre originile misticismului indian'
     ]
   },
   'preda': {
-    poezii: [
-      'Versuri',
-      'Poezii',
-      'Balade'
+    'opere de BAC': [
+      'Moromeții'
     ],
     proza: [
-      'Moromeții',
-      'Viața ca o pradă',
       'Cel mai iubit dintre pământeni',
+      'Viața ca o pradă',
       'Delirul',
       'Imposibila întoarcere',
-      'Jurnal'
-    ],
-    critica: [
-      'Articole despre roman',
-      'Studii critice',
-      'Note despre literatura contemporană'
+      'Risipitorii',
+      'Marele singuratic'
     ]
   },
   'stanescu': {
+    'opere de BAC': [
+      'Leoaica tânără iubirea'
+    ],
     poezii: [
       'Sensul iubirii',
       'O viziune a sentimentelor',
-      'Noduri și semne',
+      'Dreptul la timp',
       '11 elegii',
+      'Necuvintele',
+      'Epica magna',
       'Belgradul în cinci prieteni',
-      'Poezii'
-    ],
-    proza: [
-      'Proză',
-      'Schițe',
-      'Momente'
-    ],
-    critica: [
-      'Articole despre poezie',
-      'Studii critice',
-      'Note despre postmodernism'
+      'Noduri și semne'
     ]
   },
   'sorescu': {
+    'opere de BAC': [
+      'Iona'
+    ],
     poezii: [
       'Singurătatea',
       'Poeme',
       'Lansete',
-      'Tinerete fără bătrânețe',
-      'Poezii'
+      'Tinerețe fără bătrânețe',
+      'Suflete bune',
+      'Descântece',
+      'La lilieci'
     ],
-    proza: [
-      'Proză',
-      'Schițe',
-      'Momente'
-    ],
-    critica: [
-      'Articole literare',
-      'Studii critice',
-      'Note despre poezie'
+    teatru: [
+      'Paracliserul',
+      'Matca',
+      'A treia țeapă',
+      'Racul'
     ]
   },
   'voiculescu': {
+    'opere de BAC': [
+      'Zahei Orbul'
+    ],
     poezii: [
-      'Poezii',
-      'Versuri',
-      'Balade'
+      'Poeme cu îngeri',
+      'Ultimele sonete',
+      'Poezii'
     ],
     proza: [
-      'Proză',
-      'Schițe',
-      'Momente'
+      'Povestiri',
+      'Capcanele timpului'
+    ]
+  },
+  'maiorescu': {
+    'opere de BAC': [
+      'Critice'
     ],
     critica: [
-      'Articole literare',
-      'Studii critice',
-      'Note despre poezie'
+      'În contra direcției de astăzi în literatura română',
+      'Despre poezia română',
+      'Direcția nouă în poezia și proza română',
+      'Junimea literară'
+    ],
+    politica: [
+      'Discursuri parlamentare',
+      'Istoria contemporană a României'
+    ]
+  },
+  'pillat': {
+    'opere de BAC': [
+      'Pe Argeș în sus'
+    ],
+    poezii: [
+      'Grădina cu statui',
+      'Poeme într-un vers',
+      'Cea de-a patra dimensiune',
+      'Visuri în vuiet'
+    ],
+    traduceri: [
+      'Faust - Goethe (traducere)',
+      'Poezii din literatura universală'
+    ]
+  },
+  'negruzzi': {
+    'opere de BAC': [
+      'Alexandru Lăpușneanu'
+    ],
+    proza: [
+      'Amintiri din Junimea',
+      'Scrisori și însemnări'
+    ]
+  },
+  'veronica': {
+    poezii: [
+      'Poezii',
+      'Versuri dedicate lui Eminescu'
+    ],
+    traduceri: [
+      'Traduceri din literatura germană'
     ]
   }
 };

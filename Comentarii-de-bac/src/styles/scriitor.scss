@@ -348,6 +348,34 @@
       }
     }
   }
+
+  .scriitor-friends-view-all {
+    margin-top: 15px;
+    text-align: center;
+
+    .scriitor-friends-view-all-btn {
+      background: #a97c50;
+      color: #fff;
+      border: none;
+      border-radius: 25px;
+      padding: 10px 20px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 0 2px 8px 0 rgba(124, 79, 43, 0.15);
+
+      &:hover {
+        background: #8b6a3f;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px 0 rgba(124, 79, 43, 0.25);
+      }
+
+      &:active {
+        transform: translateY(0);
+      }
+    }
+  }
 }
 
 .scriitor-right-column {
@@ -709,6 +737,10 @@
   outline: none;
   transition: none;
   padding: 0;
+  outline: none !important;
+  &:focus{
+    outline: none !important;
+  }
 }
 
 .scriitor-modal-nav-btn {
@@ -1101,6 +1133,7 @@
   display: flex;
   flex-direction: column;
   position: relative;
+  margin-top: 10px;
 }
 
 .scriitor-readall-header {
@@ -1538,5 +1571,97 @@
   .searchbar-input-inside-bar {
     font-size: 0.95rem;
     height: 32px;
+  }
+}
+
+// Friends modal styles
+.scriitor-modal-overlay-friends {
+  .scriitor-friends-modal {
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 8px 32px 0 rgba(60, 40, 20, 0.25);
+    max-width: 90vw;
+    max-height: 90vh;
+    width: 800px;
+    overflow: hidden;
+    position: relative;
+
+    .scriitor-friends-modal-header {
+      background: #a97c50;
+      color: #fff;
+      padding: 20px 25px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+      h2 {
+        margin: 0;
+        font-size: 1.4rem;
+        font-weight: 700;
+      }
+
+      // .scriitor-modal-close-btn {
+      //   position: static;
+      //   width: 40px;
+      //   height: 40px;
+      //   font-size: 28px;
+      //   color: #fff;
+      //   background: rgba(255, 255, 255, 0.1);
+      //   border-radius: 50%;
+      //   transition: background 0.2s;
+
+      //   &:hover {
+      //     background: rgba(255, 255, 255, 0.2);
+      //   }
+      // }
+    }
+
+    .scriitor-friends-modal-content {
+      padding: 25px;
+      max-height: 70vh;
+      overflow-y: auto;
+
+      .scriitor-friends-modal-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 15px;
+        max-width: 100%;
+
+        .scriitor-friends-modal-item {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          cursor: pointer;
+          transition: transform 0.2s;
+          border-radius: 12px;
+          padding: 10px;
+          background: #f8f8f8;
+
+          &:hover {
+            transform: translateY(-2px);
+            background: #f0f0f0;
+          }
+
+          img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 8px;
+            border: 3px solid #fff;
+            box-shadow: 0 2px 8px 0 rgba(124, 79, 43, 0.15);
+          }
+
+          .scriitor-friends-modal-name {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #333;
+            text-align: center;
+            line-height: 1.2;
+          }
+        }
+      }
+    }
   }
 }

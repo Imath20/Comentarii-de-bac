@@ -25,6 +25,16 @@ const creanga = {
       key: 'maiorescu',
       img: '/scriitori/titu_maiorescu (2).png',
     },
+    {
+      name: 'Costache Negruzzi',
+      key: 'negruzzi',
+      img: '/scriitori/costache-negruzzi.png',
+    },
+    {
+      name: 'Veronica Micle',
+      key: 'veronica',
+      img: '/Profile ganditorimea/Veronica Micle.png',
+    },
   ],
   gallery: [
     '/Banner/creanga.jpg',

@@ -2,19 +2,19 @@ const veronica = {
   nume: 'Veronica Micle',
   date: '1850 – 1889',
   img: '/Profile ganditorimea/Veronica Micle.png',
-  banner: '/Banner/veronica_banner.png',
+  banner: '/Banner/micle.png',
   color: 'rgba(255,179,71,0.82)',
   friends: [
     { key: 'eminescu', name: 'Mihai Eminescu', img: '/scriitori/eminescu_mihai.png' },
     { key: 'caragiale', name: 'I.L. Caragiale', img: '/scriitori/il-caragiale.png' },
     { key: 'creanga', name: 'Ion Creangă', img: '/scriitori/creanga_ion.png' },    
     { key: 'slavici', name: 'Ioan Slavici', img: '/scriitori/ioan_slavici.png' },
+    { key: 'maiorescu', name: 'Titu Maiorescu', img: '/scriitori/titu_maiorescu (2).png' },
+    { key: 'negruzzi', name: 'Costache Negruzzi', img: '/scriitori/costache-negruzzi.png' },
   ],
   gallery: [
-    '/opere/veronica_poezie1.png',
-    '/opere/veronica_poezie2.png',
-    '/opere/veronica_poezie3.png',
-    '/opere/veronica_poezie4.png'
+    '/Banner/micle.png',
+    '/Profile ganditorimea/Veronica Micle.png',
   ],
   posts: [
     {

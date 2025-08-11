@@ -102,7 +102,7 @@ const opereList = [
         titlu: 'Eu nu strivesc corola de minuni a lumii',
         autor: 'Lucian Blaga',
         data: 'Redactare: 1919',
-        img: '/public/opere/corola-minuni.png',
+        img: '/public/opere/corola_minuni.png',
         categorie: 'poezie',
         canonic: true
     },

@@ -100,6 +100,11 @@ const Scriitor = () => {
     setExpandedPoems((prev) => ({ ...prev, [postId]: !prev[postId] }));
   };
 
+  // Pentru modalul cu toți prietenii
+  const [showAllFriendsModal, setShowAllFriendsModal] = useState(false);
+  const openAllFriendsModal = () => setShowAllFriendsModal(true);
+  const closeAllFriendsModal = () => setShowAllFriendsModal(false);
+
   // Pentru modal preview poezie
   const [poemPreviewModal, setPoemPreviewModal] = useState({ open: false, post: null });
   const openPoemPreview = (post) => {
@@ -213,7 +218,7 @@ const Scriitor = () => {
          className={`scriitor-banner ${isFullScreen ? 'fullscreen' : ''} ${name}`}
          style={{
            background: `url(${data.banner}) center center/cover no-repeat`,
-           backgroundPosition: name === 'eminescu' ? 'center 30%' : name === 'caragiale' ? 'center 20%' : name === 'slavici' ? 'center 20%' : name === 'rebreanu' ? 'center 20%' : name === 'calinescu' ? 'center 20%' : 'center',
+           backgroundPosition: name === 'eminescu' ? 'center 30%' : name === 'preda' ? 'center 50%' : name === 'sorescu' ? 'center 50%' : name === 'voiculescu' ? 'center 80%' : 'center 20%',
          }}
        >
         {/* AvatarSearchBar pe stânga sus, doar dacă nu e fullscreen */}
@@ -354,7 +359,7 @@ const Scriitor = () => {
               {friendsCount} prieteni
             </div>
             <div className="scriitor-friends-grid">
-              {friends.map((friend, idx) => (
+              {friends.slice(0, 9).map((friend, idx) => (
                 <div
                   key={friend.key}
                   className="scriitor-friend-item"
@@ -370,6 +375,17 @@ const Scriitor = () => {
                 </div>
               ))}
             </div>
+            {/* Buton "Vezi toți prietenii" când sunt mai mult de 9 */}
+            {friendsCount > 9 && (
+              <div className="scriitor-friends-view-all">
+                <button 
+                  className="scriitor-friends-view-all-btn"
+                  onClick={openAllFriendsModal}
+                >
+                  Vezi toți prietenii ({friendsCount})
+                </button>
+              </div>
+            )}
           </div>
         </div>
         {/* Dreapta: postări */}
@@ -821,40 +837,91 @@ const Scriitor = () => {
             <div className="scriitor-readall-content">
               {(() => {
                 const opere = getScriitorOpere(name);
+                
+                // Definim ordinea și numele categoriilor pentru afișare
+                const categoriiOrdonat = [
+                  { key: 'opere de BAC', nume: 'Opere de BAC' },
+                  { key: 'poezii', nume: 'Poezii' },
+                  { key: 'proza', nume: 'Proză' },
+                  { key: 'teatru', nume: 'Teatru' },
+                  { key: 'critica', nume: 'Critică literară' },
+                  { key: 'filosofie', nume: 'Filosofie' },
+                  { key: 'matematica', nume: 'Matematică' },
+                  { key: 'studii', nume: 'Studii' },
+                  { key: 'traduceri', nume: 'Traduceri' },
+                  { key: 'politica', nume: 'Politică' }
+                ];
+                
                 return (
                   <>
-                    <div className="scriitor-readall-section">
-                      <h3>Poezii</h3>
-                      <ul>
-                        {opere.poezii.map((opera, index) => (
-                          <li key={index}>{opera}</li>
-                        ))}
-                      </ul>
-                    </div>
-                    
-                    <div className="scriitor-readall-section">
-                      <h3>Proză</h3>
-                      <ul>
-                        {opere.proza.map((opera, index) => (
-                          <li key={index}>{opera}</li>
-                        ))}
-                      </ul>
-                    </div>
-                    
-                    <div className="scriitor-readall-section">
-                      <h3>Critică literară</h3>
-                      <ul>
-                        {opere.critica.map((opera, index) => (
-                          <li key={index}>{opera}</li>
-                        ))}
-                      </ul>
-                    </div>
+                    {categoriiOrdonat.map(({ key, nume }) => {
+                      const opereleCategorie = opere[key];
+                      if (!opereleCategorie || opereleCategorie.length === 0) return null;
+                      
+                      return (
+                        <div key={key} className="scriitor-readall-section">
+                          <h3>{nume}</h3>
+                          <ul>
+                            {opereleCategorie.map((opera, index) => (
+                              <li key={index}>{opera}</li>
+                            ))}
+                          </ul>
+                        </div>
+                      );
+                    })}
                   </>
                 );
               })()}
             </div>
             
 
+          </div>
+        </div>
+      )}
+      
+      {/* Modal cu toți prietenii */}
+      {showAllFriendsModal && (
+        <div
+          className="scriitor-modal-overlay scriitor-modal-overlay-friends"
+          onClick={closeAllFriendsModal}
+        >
+          <div
+            className="scriitor-friends-modal"
+            onClick={e => e.stopPropagation()}
+          >
+            <div className="scriitor-friends-modal-header">
+              <h2>Toți prietenii - {data.nume}</h2>
+              <button
+                onClick={closeAllFriendsModal}
+                className="scriitor-modal-close-btn"
+                title="Închide"
+              >
+                ×
+              </button>
+            </div>
+            
+            <div className="scriitor-friends-modal-content">
+              <div className="scriitor-friends-modal-grid">
+                {friends.map((friend, idx) => (
+                  <div
+                    key={friend.key}
+                    className="scriitor-friends-modal-item"
+                    onClick={() => {
+                      closeAllFriendsModal();
+                      goToScriitor(friend.key);
+                    }}
+                  >
+                    <img
+                      src={friend.img}
+                      alt={friend.name}
+                    />
+                    <div className="scriitor-friends-modal-name">
+                      {friend.name}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       )}

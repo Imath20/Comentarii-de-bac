@@ -6,6 +6,7 @@ import Subiecte from './pages/subiecte';
 import Opre from './pages/opere';
 import Scriitoripage from './pages/Scriitor';
 import BookReader from './pages/BookReader';
+import Videoclipuri from './pages/videoclipuri';
 import './styles/style.scss';
 
 export default function App() {
@@ -16,6 +17,7 @@ export default function App() {
       <Route path="/subiecte" element={<Subiecte />} />
       <Route path="/opere" element={<Opre />} />
       <Route path="/scriitor" element={<Scriitoripage />} />
+      <Route path="/videoclipuri" element={<Videoclipuri />} />
       <Route path="/carte/*" element={<BookReader />} />
     </Routes>
   );

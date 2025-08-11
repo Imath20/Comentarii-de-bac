@@ -152,6 +152,42 @@ export const scriitoriPrezentare = {
       'Printre cele mai cunoscute opere se numără volumele de poezii și multe alte scrieri care explorează teme precum existența, moartea și spiritualitatea.',
       'Stilul său se caracterizează prin profunditate filosofică, prin folosirea unui limbaj meditativ și prin faptul că a reușit să integreze experiența medicală în poezie într-un mod unic.'
     ]
+  },
+  'maiorescu': {
+    titlu: 'Titu Maiorescu - Criticul și Teoreticianul',
+    paragrafe: [
+      'Titu Maiorescu a fost unul dintre cei mai importanți critici literari și teoreticieni români, fondatorul și liderul societății literare "Junimea".',
+      'Născut în 1840 în Craiova, Maiorescu a fost critic literar, estetician, politician și profesor, activând în perioada de formare a literaturii române moderne.',
+      'Printre cele mai cunoscute opere se numără "Critice", "Istoria contemporană a României", "Discursuri parlamentare" și numeroase studii de estetică și critică literară.',
+      'Teoria sa estetică se bazează pe principiul "formei fără fond", susținând că arta trebuie să aibă o valoare estetică intrinsecă, independent de mesajul social sau politic. A promovat literatura de calitate și a contribuit decisiv la formarea gustului estetic român.'
+    ]
+  },
+  'pillat': {
+    titlu: 'Ion Pillat - Poetul Tradiționalist',
+    paragrafe: [
+      'Ion Pillat a fost un poet român important, reprezentant al curentului tradiționalist în literatura română, cunoscut pentru poezia sa descriptivă și patriotică.',
+      'Născut în 1891 în București, Pillat a fost poet, traducător și diplomat, activând într-o perioadă de afirmare a valorilor naționale în literatură.',
+      'Printre cele mai cunoscute opere se numără "Pe Argeș în sus", "Grădina cu statui", "Poeme într-un vers" și numeroase traduceri din literatura universală.',
+      'Stilul său se caracterizează prin clasicism, prin folosirea unui limbaj elegant și prin faptul că a reușit să îmbine tradiția poetică română cu influențele literaturii europene, creând o poezie de mare rafinament artistic.'
+    ]
+  },
+  'negruzzi': {
+    titlu: 'Costache Negruzzi - Precursorul Prozei Moderne',
+    paragrafe: [
+      'Costache Negruzzi a fost un prozator și om politic român, considerat unul dintre precursorii prozei moderne românești și fondator al societății "Junimea".',
+      'Născut în 1808 în Hermeziu, Negruzzi a fost scriitor, politician și om de cultură, activând în perioada de formare a literaturii române moderne.',
+      'Printre cele mai cunoscute opere se numără "Alexandru Lăpușneanu", "Amintiri din Junimea", numeroase nuvele istorice și memorii.',
+      'Stilul său se caracterizează prin realism istoric, prin portretizarea psihologică a personajelor și prin faptul că a reușit să creeze primul roman psihologic român, influențând decisiv dezvoltarea prozei românești moderne.'
+    ]
+  },
+  'veronica': {
+    titlu: 'Veronica Micle - Poeta Iubirii',
+    paragrafe: [
+      'Veronica Micle a fost o poetă română importantă, cunoscută pentru relația sa cu Mihai Eminescu și pentru poezia sa pasională și melancolică.',
+      'Născută în 1850 în Năsăud, Veronica Micle a fost poetă și traducătoare, trăind o poveste de dragoste legendară cu Mihai Eminescu care a marcat profund literatura română.',
+      'Printre cele mai cunoscute opere se numără volumele de poezii "Poezii", numeroase traduceri din literatura germană și corespondența cu Eminescu.',
+      'Stilul său se caracterizează prin sensibilitate, prin folosirea unui limbaj emotiv și prin faptul că a reușit să exprime cu sinceritate sentimentele feminine într-o epocă în care vocea femeii în literatură era rară și prețioasă.'
+    ]
   }
 };
 

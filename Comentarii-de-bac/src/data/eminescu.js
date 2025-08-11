@@ -30,6 +30,11 @@ const eminescu = {
       key: 'veronica',
       img: '/Profile ganditorimea/Veronica Micle.png',
     },
+    {
+      name: 'Costache Negruzzi',
+      key: 'negruzzi',
+      img: '/scriitori/costache-negruzzi.png',
+    },
   ],
   gallery: [
     '/Banner/eminescu.png',
