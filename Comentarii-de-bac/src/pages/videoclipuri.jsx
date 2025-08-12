@@ -28,7 +28,7 @@ const filmeList = [
   {
     id: '3',
     titlu: 'Liviu Rebreanu - Ion',
-    descriere: 'Blestemul Pamantului',
+    descriere: 'Blestemul Pământului',
     videoId: 'C4eED--KNTQ',
     categorie: 'roman',
     durata: '1:47:49',
@@ -60,7 +60,106 @@ const filmeList = [
     categorie: 'roman',
     durata: '1:42:41',
     autor: 'Mihail Sadoveanu',
-  }
+  },
+  {
+    id: '7',
+    titlu: 'IL Caragiale - O scrisoare pierdută',
+    descriere: 'O scrisoare pierdută',
+    videoId: 'HnQPMYJNud8',
+    categorie: 'comedie',
+    durata: '2:13:08',
+    autor: 'IL Caragiale',
+  },
+  {
+    id: '8',
+    titlu: 'Mihai Eminescu - Luceafărul',
+    descriere: 'Luceafărul',
+    videoId: '5X_COpZg01Q',
+    categorie: 'poezie',
+    durata: '15:40',
+    autor: 'Mihai Eminescu',
+  },
+  {
+    id: '9',
+    titlu: 'George Bacovia - Plumb',
+    descriere: 'Plumb',
+    videoId: 'mW0EjMrbjcY',
+    categorie: 'poezie',
+    durata: '1:06',
+    autor: 'George Bacovia',
+  },
+  {
+    id: '10',
+    titlu: 'Camil Petrescu',
+    descriere: 'Ultima noapte de dragoste, întâia noapte de război',
+    videoId: 'x5O2NGuucIs',
+    categorie: 'roman',
+    durata: '1:39:15',
+    autor: 'Camil Petrescu',
+  },
+  {
+    id: '11',
+    titlu: 'Marin Preda - Moromeții',
+    descriere: 'Morometii - Vol. 1',
+    videoId: 'NHaNm-Acmx8',
+    categorie: 'roman',
+    durata: '2:28:04',
+    autor: 'Marin Preda',
+  },
+  {
+    id: '12',
+    titlu: 'Marin Preda - Moromeții',
+    descriere: 'Morometii - Vol. 2',
+    videoId: '9Eb1tKL3AJU',
+    categorie: 'roman',
+    durata: '1:47:27',
+    autor: 'Marin Preda',
+  },
+  {
+    id: '13',
+    titlu: 'Marin Sorescu - Iona',
+    descriere: 'Iona',
+    videoId: 'rxHq37u_7-I',
+    categorie: 'teatru',
+    durata: '50:35',
+    autor: 'Marin Sorescu',
+  },
+  {
+    id: '14',
+    titlu: 'Ion Creangă - Amintiri din copilărie',
+    descriere: 'Amintiri din copilărie',
+    videoId: 'KdG_IcX_npA',
+    categorie: 'proza',
+    durata: '1:11:28',
+    autor: 'Ion Creangă',
+  },
+  {
+    id: '15',
+    titlu: 'Liviu Rebreanu - Răscoala',
+    descriere: 'Rascoala',
+    videoId: 'K1Dh96vnSwY',
+    categorie: 'roman',
+    durata: '1:32:44',
+    autor: 'Liviu Rebreanu',
+  },
+  {
+    id: '16',
+    titlu: 'Costache Negruzzi',
+    descriere: 'Alexandru Lăpușneanu',
+    videoId: 'TU-HD71VJxQ',
+    categorie: 'roman',
+    durata: '2:21:48',
+    autor: 'Costache Negruzzi',
+  },
+  {
+    id: '18',
+    titlu: 'IL Caragiale - O noapte furtunoasă',
+    descriere: 'O noapte furtunoasă',
+    videoId: 'aEoCaq7RGmc',
+    categorie: 'teatru',
+    durata: '1:09:39',
+    autor: 'IL Caragiale',
+  },
 ];
 
 // Categorii pentru filtrare
@@ -71,7 +170,8 @@ const categorii = [
   { id: 'roman', nume: 'Roman' },
   { id: 'comedie', nume: 'Comedie' },
   { id: 'basm', nume: 'Basme' },
-  { id: 'nuvela', nume: 'Nuvelă' }
+  { id: 'nuvela', nume: 'Nuvelă' },
+  { id: 'teatru', nume: 'Teatru' }
 ];
 
 // Opțiuni pentru dropdown-ul de categorii
@@ -82,7 +182,8 @@ const genOptions = [
   { value: 'roman', label: 'Roman' },
   { value: 'comedie', label: 'Comedie' },
   { value: 'basm', label: 'Basme' },
-  { value: 'nuvela', label: 'Nuvelă' }
+  { value: 'nuvela', label: 'Nuvelă' },
+  { value: 'teatru', label: 'Teatru' }
 ];
 
 // Stiluri pentru react-select
@@ -99,12 +200,19 @@ const customSelectStyles = (darkTheme) => ({
     fontWeight: 500,
     fontSize: '1.13rem',
     boxShadow: 'none',
+    cursor: 'pointer',
+    transition: 'background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease',
     '&:hover': {
       borderColor: darkTheme ? '#ffd591' : '#a97c50',
+      background: darkTheme ? '#5a341e' : '#ffffff',
+      boxShadow: '0 6px 18px rgba(0, 0, 0, 0.12)',
+      transform: 'translateY(-1px)',
+      cursor: 'pointer',
     },
     '&:focus-within': {
       borderColor: darkTheme ? '#ffd591' : '#a97c50',
       boxShadow: `0 0 0 1px ${darkTheme ? '#ffd591' : '#a97c50'}`,
+      cursor: 'pointer',
     },
   }),
   option: (provided, state) => ({
@@ -120,8 +228,12 @@ const customSelectStyles = (darkTheme) => ({
     padding: '12px 16px',
     fontSize: '1rem',
     fontWeight: 500,
+    cursor: 'pointer',
+    transition: 'background-color 0.15s ease, transform 0.1s ease',
     '&:hover': {
-      backgroundColor: darkTheme ? '#3a2312' : '#f7f8fa',
+      backgroundColor: darkTheme ? '#3a2312' : '#f0f2f5',
+      transform: 'translateX(2px)',
+      cursor: 'pointer',
     },
   }),
   singleValue: (provided) => ({
@@ -166,9 +278,12 @@ const customSelectStyles = (darkTheme) => ({
     ...provided,
     color: darkTheme ? '#ffd591' : '#a97c50',
     padding: '8px',
-    transition: 'color 0.2s',
+    transition: 'color 0.2s, transform 0.15s ease',
+    cursor: 'pointer',
     '&:hover': {
       color: darkTheme ? '#ffd591' : '#a97c50',
+      transform: 'scale(1.08)',
+      cursor: 'pointer',
     },
   }),
 });

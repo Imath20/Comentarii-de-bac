@@ -17,7 +17,12 @@
   min-width: 200px;
   flex-shrink: 0;
   position: relative;
+  cursor: pointer !important;
   z-index: 100;
+
+  &:hover {
+    cursor: pointer !important;
+  }
 
   // Stiluri pentru react-select
   .videoclipuri-select {
@@ -33,28 +38,34 @@
       font-size: 1.13rem !important;
       box-shadow: none !important;
       transition: all 0.3s !important;
+      cursor: pointer !important;
 
       &:hover {
         border-color: #a97c50 !important;
+        cursor: pointer !important;
       }
 
       &--is-focused {
         border-color: #a97c50 !important;
         box-shadow: 0 0 0 1px #a97c50 !important;
+        cursor: pointer !important;
       }
 
       &.dark-theme {
         border-color: #a97c50 !important;
         background: #4e2e1e !important;
         color: rgba(255, 255, 255, 0.95) !important;
+        cursor: pointer !important;
 
         &:hover {
           border-color: #ffd591 !important;
+          cursor: pointer !important;
         }
 
         &--is-focused {
           border-color: #ffd591 !important;
           box-shadow: 0 0 0 1px #ffd591 !important;
+          cursor: pointer !important;
         }
       }
     }
@@ -117,16 +128,20 @@
       height: 56px !important;
       position: absolute !important;
       right: 1.5rem !important;
+      cursor: pointer !important;
 
       &:hover {
         color: #a97c50 !important;
+        cursor: pointer !important;
       }
 
       &.dark-theme {
         color: #ffd591 !important;
+        cursor: pointer !important;
 
         &:hover {
           color: #ffd591 !important;
+          cursor: pointer !important;
         }
       }
     }
