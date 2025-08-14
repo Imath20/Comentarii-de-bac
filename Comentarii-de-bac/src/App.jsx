@@ -7,6 +7,7 @@ import Opre from './pages/opere';
 import Scriitoripage from './pages/Scriitor';
 import BookReader from './pages/BookReader';
 import Videoclipuri from './pages/videoclipuri';
+import AI from './pages/ai';
 import './styles/style.scss';
 
 export default function App() {
@@ -18,6 +19,7 @@ export default function App() {
       <Route path="/opere" element={<Opre />} />
       <Route path="/scriitor" element={<Scriitoripage />} />
       <Route path="/videoclipuri" element={<Videoclipuri />} />
+      <Route path="/ai" element={<AI />} />
       <Route path="/carte/*" element={<BookReader />} />
     </Routes>
   );
