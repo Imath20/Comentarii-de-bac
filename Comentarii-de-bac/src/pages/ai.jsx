@@ -255,15 +255,17 @@ export default function AI() {
                 <label className="ai-field-label">
                   Barem de corectare
                 </label>
-                <textarea
-                  name="rubric"
-                  value={formData.rubric}
-                  onChange={handleInputChange}
-                  placeholder="Lipește aici baremul oficial..."
-                  className={`ai-field-textarea ${darkTheme ? 'dark-theme' : ''}`}
-                  rows="8"
-                  required
-                />
+                <div className="ai-input-container">
+                  <textarea
+                    name="rubric"
+                    value={formData.rubric}
+                    onChange={handleInputChange}
+                    placeholder="Lipește aici baremul oficial..."
+                    className={`ai-field-textarea ${darkTheme ? 'dark-theme' : ''}`}
+                    rows="8"
+                    required
+                  />
+                </div>
                 <p className="ai-field-description">
                   Introduceți baremul complet pentru o evaluare cât mai corectă.
                 </p>

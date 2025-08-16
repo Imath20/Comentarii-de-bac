@@ -179,8 +179,8 @@
 .ai-input-container {
   position: relative;
   min-height: 200px;
-  overflow: hidden;
-  max-width: 1200px;
+  overflow: visible;
+  width: 100%;
 }
 
 .ai-field-textarea {
@@ -199,6 +199,7 @@
   opacity: 1;
   transform: translateY(0);
   position: relative;
+  box-sizing: border-box;
 
   &::placeholder {
     color: rgba(60, 40, 20, 0.4);
@@ -238,11 +239,7 @@
     pointer-events: auto;
   }
 
-  // Specific styling for rubric textarea
-  &[name="rubric"] {
-    max-width: 1050px;
-    margin: 0 auto;
-  }
+
 }
 
 .ai-field-description {
