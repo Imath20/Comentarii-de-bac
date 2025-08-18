@@ -225,6 +225,9 @@
   color: #222;
   outline: none;
   transition: all 0.3s;
+  box-shadow: 0 2px 8px 0 rgba(60, 40, 20, 0.08);
+  font-weight: 500;
+  letter-spacing: 0.01em;
 
   &::placeholder {
     color: rgba(60, 40, 20, 0.45);
@@ -233,66 +236,77 @@
   &:focus {
     border-color: #a3a3a3;
     background: #fff;
+
+    &.dark-theme {
+      border-color: #ffd591;
+      background: #6a4322;
+    }
+  }
+
+  &:blur {
+    border-color: #ececec;
+    background: #f7f8fa;
+
+    &.dark-theme {
+      border-color: #a97c50;
+      background: #4e2e1e;
+    }
   }
 
   &.dark-theme {
     background: #4e2e1e;
     border-color: #a97c50;
     color: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 2px 12px 0 rgba(60, 40, 20, 0.18);
 
     &::placeholder {
       color: rgba(180, 180, 180, 0.55);
-    }
-
-    &:focus {
-      border-color: #ffd591;
-      background: #6a4322;
     }
   }
 }
 
 .videoclipuri-filter-buttons {
   display: flex;
+  gap: 0.9rem;
   justify-content: flex-start;
-  gap: 1rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
   flex-wrap: wrap;
-  margin-left: 12%;
+  width: 100%;
+  max-width: 1300px;
+  margin: 0 auto 1.5rem auto;
+  padding: 0 1.5rem;
+  align-items: center;
 
   .videoclipuri-filter-button {
-    padding: 0.8rem 1.5rem;
-    border: 1.5px solid #a97c50;
-    border-radius: 2.2rem;
-    background: transparent;
-    color: #4e2e1e;
+    padding: 0.7rem 1.5rem;
+    border-radius: 2rem;
+    border: 2px solid #ececec;
+    background: #f7f8fa;
+    color: #222;
     font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s;
     font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: none;
+    outline: none;
 
-    &:hover {
-      background: #a97c50;
-      color: #fff;
-      transform: translateY(-2px);
+    &.dark-theme {
+      border-color: #a97c50;
+      background: #4e2e1e;
+      color: rgba(255, 255, 255, 0.95);
     }
 
     &.selected {
-      background: #a97c50;
-      color: #fff;
-    }
+      border-color: #4e2e1e;
+      background: #ffd591;
+      color: #222;
+      font-weight: 700;
+      box-shadow: 0 2px 8px rgba(60, 40, 20, 0.10);
 
-    &.dark-theme {
-      border-color: #ffd591;
-      color: #ffd591;
-
-      &:hover {
-        background: #ffd591;
-        color: #2a170a;
-      }
-
-      &.selected {
-        background: #ffd591;
-        color: #2a170a;
+      &.dark-theme {
+        border-color: #4e2e1e;
+        background: #a97c50;
+        color: #4e2e1e;
       }
     }
   }

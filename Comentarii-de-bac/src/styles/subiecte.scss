@@ -123,83 +123,103 @@
   max-width: 1800px;
   min-width: 1200px;
   margin: 0 auto;
-  padding: 2rem 0;
+  padding: 1rem 0;
   display: flex;
   flex-direction: column;
   gap: 3rem;
 }
+.subiecte-search-icon {
+  position: absolute;
+  left: 1.2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.25rem;
+  color: rgba(60, 40, 20, 0.45);
+  z-index: 2;
+  pointer-events: none; // nu capturează click/focus
 
+  &.dark-theme {
+    color: rgba(180, 180, 180, 0.55);
+  }
+}
 // Search section
 .subiecte-search-section {
   display: flex;
-  gap: 1.5rem;
+  gap: 1.25rem; // spațiu clar între elemente
   align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin-bottom: 2rem;
+  justify-content: flex-start; // aliniere la stânga
+  flex-wrap: nowrap; // ține elementele pe un singur rând când spațiul permite
+  margin-bottom: 1rem;
   padding: 0 1rem;
 }
 
 .subiecte-search-container {
   position: relative;
-  min-width: 280px;
-  max-width: 350px;
-  flex-shrink: 0;
+  flex: 1;
+  min-width: 0;
+  max-width: 100%;
 }
 
 .subiecte-search-input {
-  width: 100%;
-  height: 56px;
-  padding: 0 1.5rem;
-  border: 1.5px solid #ececec;
+  width: 90%;
+  padding: 1.1rem 1.5rem 1.1rem 3.2rem;
+  font-size: 1.13rem;
   border-radius: 2.2rem;
+  border: 1.5px solid #ececec;
   background: #f7f8fa;
   color: #222;
-  font-size: 1.13rem;
-  font-weight: 500;
   outline: none;
-  transition: all 0.3s ease;
-
-  &::placeholder {
-    color: #666;
-    font-weight: 500;
-  }
-
-  &:focus {
-    border-color: #a3a3a3;
-    background: #fff;
-    box-shadow: 0 0 0 2px #a3a3a3;
-  }
+  transition: all 0.3s;
+  box-shadow: 0 2px 8px 0 rgba(60, 40, 20, 0.08);
+  font-weight: 500;
+  letter-spacing: 0.01em;
 
   &.dark-theme {
     border-color: #a97c50;
     background: #4e2e1e;
     color: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 2px 12px 0 rgba(60, 40, 20, 0.18);
+  }
 
-    &::placeholder {
-      color: rgba(255, 255, 255, 0.6);
-    }
+  &:focus {
+    border-color: #a3a3a3;
+    background: #fff;
 
-    &:focus {
+    &.dark-theme {
       border-color: #ffd591;
       background: #6a4322;
-      box-shadow: 0 0 0 2px #ffd591;
+    }
+  }
+
+  &:blur {
+    border-color: #ececec;
+    background: #f7f8fa;
+
+    &.dark-theme {
+      border-color: #a97c50;
+      background: #4e2e1e;
     }
   }
 }
 
 .subiecte-select-container {
   position: relative;
-  flex-shrink: 0;
+  flex: 0 0 240px; // dropdown mai îngust
+  min-width: 200px;
+  max-width: 240px;
 }
+
+// Elimină orice lipire nedorită între input și primul dropdown
+.subiecte-search-section > .subiecte-search-container { margin-right: 1.25rem; }
+.subiecte-search-section > .subiecte-select-container:first-of-type { margin-left: 0; }
 
 // Filter buttons
 .subiecte-filter-buttons {
   display: flex;
   gap: 1rem;
-  justify-content: center;
+  justify-content: flex-start;
   flex-wrap: wrap;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   padding: 0 1rem;
 }
 
@@ -250,7 +270,7 @@
 // Grid container
 .subiecte-grid-container {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
   gap: 2rem;
   padding: 1rem;
 }
@@ -259,7 +279,7 @@
 .subiecte-card {
   position: relative;
   height: auto; // Schimbat de la 420px fix la auto pentru a se adapta la conținut
-  min-height: 420px; // Adăugat min-height pentru a menține aspectul minim
+  min-height: 300px; // Adăugat min-height pentru a menține aspectul minim
   border-radius: 24px;
   overflow: visible; // Schimbat de la hidden la visible pentru a permite textul să iasă
   cursor: pointer;
@@ -292,6 +312,7 @@
   right: 0;
   bottom: 0;
   background: linear-gradient(135deg, #f8d68c81 0%, #ffd59140 100%);
+  border-radius: 24px;
   opacity: 0.8;
 
   &.dark-theme {
@@ -306,6 +327,7 @@
   display: flex;
   flex-direction: column;
   padding: 2rem;
+  gap: 0.75rem;
   color: #4e2e1e;
 
   .dark-theme & {
@@ -329,11 +351,11 @@
   font-size: 1rem;
   line-height: 1.5;
   color: #7a5c3a;
-  flex-grow: 1;
-  margin-bottom: 1.5rem;
-  overflow: visible; // Schimbat de la hidden la visible
+  flex: 0 0 auto; // nu mai împinge footer-ul în partea de jos
+  margin-bottom: 0.75rem;
+  overflow: visible; 
   word-wrap: break-word;
-  hyphens: auto; // Adăugat pentru a împărți cuvintele când e necesar
+  hyphens: auto; 
 
   .dark-theme & {
     color: #c4a484;
@@ -344,8 +366,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: auto;
-  padding-top: 0.5rem; // Adăugat padding-top pentru mai mult spațiu
+  margin-top: 0.5rem; // mută badge-urile mai sus în card
+  padding-top: 0.5rem;
 }
 
 .subiecte-card-date {
