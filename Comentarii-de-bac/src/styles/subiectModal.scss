@@ -1,0 +1,209 @@
+.subiecte-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(2px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  z-index: 1000;
+}
+
+.subiecte-modal {
+  position: relative;
+  width: 100%;
+  max-width: 1400px;
+  height: 86vh;
+  background: linear-gradient(135deg, #f7f8fa 0%, #ffffff 100%);
+  border: 1px solid rgba(169, 124, 80, 0.2);
+  border-radius: 24px;
+  box-shadow: 0 24px 80px rgba(60, 40, 20, 0.35);
+  overflow: hidden;
+
+  &.dark-theme {
+    background: linear-gradient(135deg, #4e2e1e 0%, #3a2312 100%);
+    border-color: rgba(255, 213, 145, 0.25);
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.55);
+  }
+}
+
+.subiecte-modal-close {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid rgba(169, 124, 80, 0.35);
+  background: rgba(255, 213, 145, 0.15);
+  color: #2a170a;
+  font-size: 24px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.15s ease, background 0.2s ease, box-shadow 0.2s ease;
+  z-index: 2;
+
+  &:hover {
+    transform: scale(1.05);
+    background: rgba(255, 213, 145, 0.3);
+    box-shadow: 0 8px 24px rgba(124, 79, 43, 0.25);
+  }
+
+  &.dark-theme {
+    border-color: rgba(255, 213, 145, 0.35);
+    background: rgba(255, 213, 145, 0.12);
+    color: #ffd591;
+  }
+}
+
+.subiecte-modal-content {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  height: 100%;
+}
+
+.subiecte-modal-left {
+  padding: 2rem;
+  overflow-y: auto;
+}
+
+.subiecte-modal-header {
+  margin-bottom: 1rem;
+}
+
+.subiecte-modal-title {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #4e2e1e;
+
+  .dark-theme & {
+    color: #ffd591;
+  }
+}
+
+.subiecte-modal-meta {
+  margin-top: .25rem;
+  font-size: .95rem;
+  font-weight: 700;
+  color: #7a5c3a;
+
+  .dark-theme & {
+    color: #c4a484;
+  }
+}
+
+.subiecte-modal-text {
+  margin-top: 1rem;
+  padding-right: 1rem;
+  color: #2a170a;
+  line-height: 1.75;
+
+  p + p { margin-top: .9rem; }
+
+  &.dark-theme {
+    color: rgba(255, 255, 255, 0.9);
+  }
+}
+
+.subiecte-modal-right {
+  border-left: 1px solid rgba(169, 124, 80, 0.2);
+  background: linear-gradient(180deg, rgba(255, 213, 145, 0.08), rgba(255, 213, 145, 0));
+  padding: 1.75rem 1.25rem 1.25rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  .dark-theme & {
+    border-color: rgba(255, 213, 145, 0.25);
+    background: linear-gradient(180deg, rgba(255, 213, 145, 0.10), rgba(0,0,0,0));
+  }
+}
+
+.subiecte-cerinte-header {
+  font-size: 1.15rem;
+  font-weight: 900;
+  letter-spacing: .02em;
+  color: #4e2e1e;
+
+  .dark-theme & { color: #ffd591; }
+}
+
+.subiecte-cerinte-list {
+  margin: 0;
+  padding-left: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: .6rem;
+  color: #2a170a;
+
+  li { line-height: 1.55; }
+
+  &.dark-theme { color: rgba(255, 255, 255, 0.9); }
+}
+
+.subiecte-modal-actions {
+  margin-top: auto;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.subiecte-ai-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  padding: .9rem 1.2rem;
+  border-radius: 1.4rem;
+  border: 1.5px solid #a97c50;
+  background: #a97c50;
+  color: #fff;
+  font-weight: 800;
+  letter-spacing: .02em;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(169, 124, 80, 0.35);
+  transition: transform .12s ease, box-shadow .2s ease, background .2s ease;
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 26px rgba(169, 124, 80, 0.45);
+    background: #b8895e;
+  }
+
+  &.dark-theme {
+    border-color: #ffd591;
+    background: #ffd591;
+    color: #2a170a;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+
+    &:hover {
+      background: #ffe0ad;
+      box-shadow: 0 10px 26px rgba(0,0,0,0.45);
+    }
+  }
+}
+
+@media (max-width: 1200px) {
+  .subiecte-modal-content {
+    grid-template-columns: 1.4fr 1fr;
+  }
+}
+
+@media (max-width: 900px) {
+  .subiecte-modal {
+    height: 92vh;
+  }
+
+  .subiecte-modal-content {
+    grid-template-columns: 1fr;
+  }
+
+  .subiecte-modal-right {
+    border-left: none;
+    border-top: 1px solid rgba(169, 124, 80, 0.2);
+  }
+}
+
+

@@ -1,110 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import SubiectModal from '../assets/SubiectModal';
 import Navbar from '../assets/Navbar';
 import Footer from '../assets/Footer';
 import '../styles/style.scss';
 import '../styles/subiecte.scss';
 import Select from 'react-select';
-
-// Lista completă cu subiecte
-const subiecteList = [
-    {
-        titlu: 'Analiza unui text literar',
-        descriere: 'Analizează un text literar din perspectiva tematică, stilistică și a compoziției. Identifică elementele specifice genului literar și argumentează cu exemple din text.',
-        numarSubiect: 1,
-        data: '2024',
-        an: 2024,
-        tip: 'analiza'
-    },
-    {
-        titlu: 'Compoziția pe o temă dată',
-        descriere: 'Scrie o compoziție pe o temă dată, folosind exemple din literatura română și universală. Demonstrează cunoștințele literare și capacitatea de argumentare.',
-        numarSubiect: 2,
-        data: '2024',
-        an: 2024,
-        tip: 'compozitie'
-    },
-    {
-        titlu: 'Analiza comparativă',
-        descriere: 'Realizează o analiză comparativă între două opere literare, evidențiind asemănările și deosebirile din perspectiva tematică, stilistică și a compoziției.',
-        numarSubiect: 3,
-        data: '2024',
-        an: 2024,
-        tip: 'comparativ'
-    },
-    {
-        titlu: 'Analiza unui text literar',
-        descriere: 'Analizează un text literar din perspectiva tematică, stilistică și a compoziției. Identifică elementele specifice genului literar și argumentează cu exemple din text.',
-        numarSubiect: 1,
-        data: '2023',
-        an: 2023,
-        tip: 'analiza'
-    },
-    {
-        titlu: 'Compoziția pe o temă dată',
-        descriere: 'Scrie o compoziție pe o temă dată, folosind exemple din literatura română și universală. Demonstrează cunoștințele literare și capacitatea de argumentare.',
-        numarSubiect: 2,
-        data: '2023',
-        an: 2023,
-        tip: 'compozitie'
-    },
-    {
-        titlu: 'Analiza comparativă',
-        descriere: 'Realizează o analiză comparativă între două opere literare, evidențiind asemănările și deosebirile din perspectiva tematică, stilistică și a compoziției.',
-        numarSubiect: 3,
-        data: '2023',
-        an: 2023,
-        tip: 'comparativ'
-    },
-    {
-        titlu: 'Analiza unui text literar',
-        descriere: 'Analizează un text literar din perspectiva tematică, stilistică și a compoziției. Identifică elementele specifice genului literar și argumentează cu exemple din text.',
-        numarSubiect: 1,
-        data: '2022',
-        an: 2022,
-        tip: 'analiza'
-    },
-    {
-        titlu: 'Compoziția pe o temă dată',
-        descriere: 'Scrie o compoziție pe o temă dată, folosind exemple din literatura română și universală. Demonstrează cunoștințele literare și capacitatea de argumentare.',
-        numarSubiect: 2,
-        data: '2022',
-        an: 2022,
-        tip: 'compozitie'
-    },
-    {
-        titlu: 'Analiza comparativă',
-        descriere: 'Realizează o analiză comparativă între două opere literare, evidențiind asemănările și deosebirile din perspectiva tematică, stilistică și a compoziției.',
-        numarSubiect: 3,
-        data: '2022',
-        an: 2022,
-        tip: 'comparativ'
-    },
-    {
-        titlu: 'Analiza unui text literar',
-        descriere: 'Analizează un text literar din perspectiva tematică, stilistică și a compoziției. Identifică elementele specifice genului literar și argumentează cu exemple din text.',
-        numarSubiect: 1,
-        data: '2021',
-        an: 2021,
-        tip: 'analiza'
-    },
-    {
-        titlu: 'Compoziția pe o temă dată',
-        descriere: 'Scrie o compoziție pe o temă dată, folosind exemple din literatura română și universală. Demonstrează cunoștințele literare și capacitatea de argumentare.',
-        numarSubiect: 2,
-        data: '2021',
-        an: 2021,
-        tip: 'compozitie'
-    },
-    {
-        titlu: 'Analiza comparativă',
-        descriere: 'Realizează o analiză comparativă între două opere literare, evidențiind asemănările și deosebirile din perspectiva tematică, stilistică și a compoziției.',
-        numarSubiect: 3,
-        data: '2021',
-        an: 2021,
-        tip: 'comparativ'
-    }
-];
-
+import subiecteList from '../data/subiecte';
 const tipuriSubiecte = [
     { id: 'toate', nume: 'Toate subiectele' },
     { id: '1', nume: 'Subiect 1' },
@@ -114,6 +15,7 @@ const tipuriSubiecte = [
 
 const ani = [
     { id: 'toate', nume: 'Toți anii' },
+    { id: '2025', nume: '2025' },
     { id: '2024', nume: '2024' },
     { id: '2023', nume: '2023' },
     { id: '2022', nume: '2022' },
@@ -125,6 +27,11 @@ const ani = [
 // Opțiuni pentru react-select
 const tipOptions = tipuriSubiecte.map(tip => ({ value: tip.id, label: tip.nume }));
 const anOptions = ani.map(an => ({ value: an.id, label: an.nume }));
+// Opțiuni subpunct pentru Subiectul 1 (A/B scurt)
+const subpunctOptions = [
+    { value: 'A', label: 'A' },
+    { value: 'B', label: 'B' }
+];
 
 const customSelectStyles = (darkTheme) => ({
     control: (provided, state) => ({
@@ -218,6 +125,10 @@ export default function Subiecte() {
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedTip, setSelectedTip] = useState('toate');
     const [selectedAn, setSelectedAn] = useState('toate');
+    const [selectedSubpunct, setSelectedSubpunct] = useState(null);
+    const [selectedProfil, setSelectedProfil] = useState('uman');
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [activeSubiect, setActiveSubiect] = useState(null);
 
     useEffect(() => {
         document.body.classList.toggle('dark-theme', darkTheme);
@@ -230,15 +141,42 @@ export default function Subiecte() {
         return () => window.removeEventListener('scroll', onScroll);
     }, []);
 
+    // Resetează subpunctul când nu este selectat Subiectul 1
+    useEffect(() => {
+        if (selectedTip !== '1') {
+            setSelectedSubpunct(null);
+        }
+    }, [selectedTip]);
+
     // Filtrare subiecte
     const filteredSubiecte = subiecteList.filter(subiect => {
         const matchesSearch = subiect.titlu.toLowerCase().includes(searchTerm.toLowerCase()) ||
             subiect.descriere.toLowerCase().includes(searchTerm.toLowerCase());
         const matchesTip = selectedTip === 'toate' || subiect.numarSubiect.toString() === selectedTip;
         const matchesAn = selectedAn === 'toate' || subiect.an.toString() === selectedAn;
+        // dacă este Subiectul 1 și există un subpunct selectat, filtrează și după subpunct
+        const matchesSubpunct = selectedTip === '1' && selectedSubpunct
+            ? subiect.subpunct === selectedSubpunct
+            : true;
+        // filtrează după profil (Uman/Real) pentru toate subiectele care au profil definit
+        const matchesProfil = subiect.profil
+            ? subiect.profil === selectedProfil
+            : true;
 
-        return matchesSearch && matchesTip && matchesAn;
+        return matchesSearch && matchesTip && matchesAn && matchesSubpunct && matchesProfil;
     });
+
+    const openSubiectModal = (subiect) => {
+        setActiveSubiect(subiect);
+        setIsModalOpen(true);
+        document.body.style.overflow = 'hidden';
+    };
+
+    const closeSubiectModal = () => {
+        setIsModalOpen(false);
+        setActiveSubiect(null);
+        document.body.style.overflow = '';
+    };
 
     return (
         <>
@@ -306,12 +244,38 @@ export default function Subiecte() {
                             })}
                         />
                     </div>
+                    {/* Dropdown Subpunct doar pentru Subiectul 1 */}
+                    {selectedTip === '1' && (
+                        <div className="subiecte-select-container">
+                            <Select
+                                options={subpunctOptions}
+                                value={subpunctOptions.find(opt => opt.value === selectedSubpunct) || null}
+                                onChange={opt => setSelectedSubpunct(opt?.value ?? null)}
+                                styles={customSelectStyles(darkTheme)}
+                                isSearchable={false}
+                                menuPlacement="auto"
+                                placeholder="A/B"
+                                theme={theme => ({
+                                    ...theme,
+                                    borderRadius: 20,
+                                    colors: {
+                                        ...theme.colors,
+                                        primary25: darkTheme ? '#3a2312' : '#f7f8fa',
+                                        primary: darkTheme ? '#ffd591' : '#a97c50',
+                                        neutral0: darkTheme ? '#2a170a' : '#fffbeee',
+                                        neutral80: darkTheme ? '#ffd591' : '#4e2e1e',
+                                    },
+                                })}
+                            />
+                        </div>
+                    )}
                     {/* Dropdown An cu react-select */}
                     <div className="subiecte-select-container">
                         <Select
                             options={anOptions}
                             value={anOptions.find(opt => opt.value === selectedAn)}
                             onChange={opt => setSelectedAn(opt.value)}
+                            classNamePrefix="subiecte-an"
                             styles={customSelectStyles(darkTheme)}
                             isSearchable={false}
                             menuPlacement="auto"
@@ -329,6 +293,7 @@ export default function Subiecte() {
                             })}
                         />
                     </div>
+                    
                 </div>
 
                 {/* Butoane tipuri subiecte sub search bar */}
@@ -342,14 +307,40 @@ export default function Subiecte() {
                             {tip.nume}
                         </button>
                     ))}
+                    <div
+                        className={`subiecte-segmented ${darkTheme ? 'dark-theme' : ''} ${selectedProfil === 'uman' ? 'opt-uman' : 'opt-real'}`}
+                        role="tablist"
+                        aria-label="Profil"
+                    >
+                        <div className="seg-thumb" aria-hidden="true" />
+                        <button
+                            type="button"
+                            className="seg-option left"
+                            role="tab"
+                            aria-selected={selectedProfil === 'uman'}
+                            onClick={() => setSelectedProfil('uman')}
+                        >
+                            Uman
+                        </button>
+                        <button
+                            type="button"
+                            className="seg-option right"
+                            role="tab"
+                            aria-selected={selectedProfil === 'real'}
+                            onClick={() => setSelectedProfil('real')}
+                        >
+                            Real
+                        </button>
+                    </div>
                 </div>
 
                 {/* Grid Subiecte */}
                 <div className="subiecte-grid-container">
                     {filteredSubiecte.map((subiect, idx) => (
                         <div
-                            key={`${subiect.numarSubiect}-${subiect.an}`}
+                            key={`${subiect.numarSubiect}-${subiect.an}-${subiect.profil || 'P'}-${subiect.subpunct || 'N'}`}
                             className={`subiecte-card ${darkTheme ? 'dark-theme' : ''}`}
+                            onClick={() => openSubiectModal(subiect)}
                             onMouseOver={e => {
                                 e.currentTarget.style.transform = 'scale(1.055)';
                                 e.currentTarget.style.boxShadow = '0 8px 32px 0 rgba(60,40,20,0.22)';
@@ -365,6 +356,10 @@ export default function Subiecte() {
                             <div className={`subiecte-card-bg ${darkTheme ? 'dark-theme' : ''}`} />
                             {/* Content */}
                             <div className="subiecte-card-content">
+                                {/* Badge profil în colțul dreapta-sus */}
+                                <div className={`subiecte-card-profil ${darkTheme ? 'dark-theme' : ''}`}>
+                                    {subiect.profil ? subiect.profil.toUpperCase() : ''}
+                                </div>
                                 <div className="subiecte-card-title">{subiect.titlu}</div>
                                 <div className="subiecte-card-description">{subiect.descriere}</div>
                                 <div className="subiecte-card-footer">
@@ -372,7 +367,9 @@ export default function Subiecte() {
                                         {subiect.data}
                                     </div>
                                     <div className={`subiecte-card-number ${darkTheme ? 'dark-theme' : ''}`}>
-                                        Subiect {subiect.numarSubiect}
+                                        {subiect.numarSubiect === 1
+                                            ? `Subiect 1 - ${subiect.subpunct}`
+                                            : `Subiect ${subiect.numarSubiect}`}
                                     </div>
                                 </div>
                             </div>
@@ -388,6 +385,13 @@ export default function Subiecte() {
                 )}
             </div>
         </div >
+
+            <SubiectModal
+                isOpen={isModalOpen}
+                subiect={activeSubiect}
+                darkTheme={darkTheme}
+                onClose={closeSubiectModal}
+            />
             <Footer darkTheme={darkTheme} />
         </>
     );

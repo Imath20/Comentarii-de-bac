@@ -428,7 +428,10 @@
   cursor: pointer;
   letter-spacing: 0.04em;
   transition: background 0.18s, box-shadow 0.18s, transform 0.18s cubic-bezier(.4,1.4,.6,1);
-
+  outline: none;
+  &:focus{
+    outline: none;
+  }
   &:hover {
     background: #ffd591;
     box-shadow: 0 4px 24px 0 rgba(124,79,43,0.18);
@@ -456,7 +459,10 @@
   cursor: pointer;
   letter-spacing: 0.04em;
   transition: border 0.18s, color 0.18s, background 0.18s, transform 0.18s cubic-bezier(.4,1.4,.6,1);
-
+  outline: none;
+  &:focus{
+    outline: none;
+  }
   &:hover {
     background: #fffbe6;
     color: #7a3a00;

@@ -242,6 +242,7 @@
   margin: 0 auto 1.5rem auto;
   padding: 0 1.5rem;
   align-items: center;
+  
 }
 
 .opere-filter-button {
@@ -256,7 +257,9 @@
   transition: all 0.2s;
   box-shadow: none;
   outline: none;
-
+  &:focus{
+    outline: none;
+  }
   &.dark-theme {
     border-color: #a97c50;
     background: #4e2e1e;
