@@ -15,7 +15,49 @@ const BOOKS = {
     bookmarkKey: "harap_alb_bookmark",
     maxWidth: "670px",
     width: "80vw"
-  }
+  },
+  "ion": {
+    path: "/src/data/opere/ion.json",
+    title: "Ion",
+    bookmarkKey: "ion_bookmark",
+    maxWidth: "490px",
+    width: "80vw"
+  },
+  "mara": {
+    path: "/src/data/opere/mara.json",
+    title: "Mara",
+    bookmarkKey: "mara_bookmark",
+    maxWidth: "920px",
+    width: "80vw"
+  },
+  "baltagul": {
+    path: "/src/data/opere/baltagul.json",
+    title: "Baltagul",
+    bookmarkKey: "baltagul_bookmark",
+    maxWidth: "860px",
+    width: "80vw"
+  },
+  "moara-cu-noroc": {
+    path: "/src/data/opere/moara-cu-noroc.json",
+    title: "Moara cu noroc",
+    bookmarkKey: "moara_cu_noroc_bookmark",
+    maxWidth: "920px",
+    width: "80vw"
+  },
+  "o-scrisoare-pierduta": {
+    path: "/src/data/opere/o_scrisoare_pierduta.json",
+    title: "O scrisoare pierdută",
+    bookmarkKey: "o_scrisoare_pierduta_bookmark",
+    maxWidth: "920px",
+    width: "80vw"
+  },
+  "ultima-noapte-dragoste": {
+    path: "/src/data/opere/ultima-noapte-dragoste.json",
+    title: "Ultima noapte de dragoste, intiia noapte de razboi",
+    bookmarkKey: "ultima_noapte_dragoste_bookmark",
+    maxWidth: "600px",
+    width: "80vw"
+  },
 };
 
 export default function BookReader() {
