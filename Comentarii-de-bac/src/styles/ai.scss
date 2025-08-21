@@ -200,6 +200,14 @@
   transform: translateY(0);
   position: relative;
   box-sizing: border-box;
+  overflow: auto; /* keep scrolling */
+  scrollbar-width: none; /* Firefox - hide scrollbar */
+  -ms-overflow-style: none; /* IE and old Edge */
+
+  &::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
 
   &::placeholder {
     color: rgba(60, 40, 20, 0.4);

@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import Navbar from '../assets/Navbar';
 import Footer from '../assets/Footer';
 import '../styles/style.scss';
 import '../styles/ai.scss';
 
 export default function AI() {
+  const location = useLocation();
   const [darkTheme, setDarkTheme] = useState(() => localStorage.getItem('theme') === 'dark');
   const [scrolled, setScrolled] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -26,6 +28,21 @@ export default function AI() {
     window.addEventListener('scroll', onScroll);
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
+
+  // Prefill via navigation state (from SubiectModal "Verifică cu AI")
+  useEffect(() => {
+    const prefill = location && location.state && location.state.prefill ? location.state.prefill : null;
+    if (!prefill) return;
+
+    if (prefill.inputType) {
+      setInputType(prefill.inputType);
+    }
+
+    setFormData(prev => ({
+      ...prev,
+      rubric: prefill.rubric || prev.rubric,
+    }));
+  }, [location]);
 
   const handleInputTypeChange = (newType) => {
     if (newType === inputType || isTransitioning) return;
@@ -151,7 +168,11 @@ export default function AI() {
           [field]: event.target.result
         }));
       };
-      reader.readAsText(file);
+      if (file.type && file.type.startsWith('image/')) {
+        reader.readAsDataURL(file);
+      } else {
+        reader.readAsText(file);
+      }
     }
   };
 
@@ -244,6 +265,7 @@ export default function AI() {
                         id="solution-image"
                         accept="image/*"
                         className="ai-file-input"
+                        onChange={(e) => handleFileUpload(e, 'solution')}
                       />
                     </div>
                   )}

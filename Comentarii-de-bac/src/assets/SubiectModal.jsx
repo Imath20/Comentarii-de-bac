@@ -28,6 +28,12 @@ export default function SubiectModal({ isOpen, subiect, darkTheme, onClose }) {
         return [];
     };
 
+    const getPunctaj = (s) => {
+        if (!s) return [];
+        if (Array.isArray(s.punctaj) && s.punctaj.length > 0) return s.punctaj;
+        return [];
+    };
+
     if (!isOpen) return null;
 
     return (
@@ -57,11 +63,51 @@ export default function SubiectModal({ isOpen, subiect, darkTheme, onClose }) {
                                 <li key={i}>{c}</li>
                             ))}
                         </ol>
+                        {getPunctaj(subiect).length > 0 && (
+                            <>
+                                <div className="subiecte-punctaj-header">Punctaj</div>
+                                <ol className={`subiecte-punctaj-list ${darkTheme ? 'dark-theme' : ''}`}>
+                                    {getPunctaj(subiect).map((p, i) => (
+                                        <li key={i}>{p} puncte</li>
+                                    ))}
+                                </ol>
+                            </>
+                        )}
                         <div className="subiecte-modal-actions">
                             <button
                                 className={`subiecte-ai-btn ${darkTheme ? 'dark-theme' : ''}`}
                                 onClick={() => {
-                                    navigate('/ai');
+                                    // Construim un barem precompletat din cerințe și punctaj
+                                    const cerinte = getCerințe(subiect);
+                                    const punctaj = getPunctaj(subiect);
+                                    const cerinteText = cerinte.length
+                                        ? cerinte
+                                            .map((c, idx) => {
+                                                const pts = punctaj[idx] != null ? ` - ${punctaj[idx]} puncte` : '';
+                                                return `${idx + 1}. ${c.trim()}${pts}`;
+                                            })
+                                            .join('\n')
+                                        : '';
+
+                                    const longText = getLongText(subiect)?.trim?.() || '';
+
+                                    const rubricText = [
+                                        cerinteText ? `Cerințe și punctaj:\n${cerinteText}` : '',
+                                        longText ? `\n\nText pentru context:\n${longText}` : ''
+                                    ]
+                                        .filter(Boolean)
+                                        .join('');
+
+                                    navigate('/ai', {
+                                        state: {
+                                            prefill: {
+                                                inputType: 'image',
+                                                rubric: rubricText,
+                                                // Trimitem și obiectul complet pentru extensii viitoare
+                                                subiect
+                                            }
+                                        }
+                                    });
                                 }}
                             >
                                 Verifică cu AI
