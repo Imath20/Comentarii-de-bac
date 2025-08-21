@@ -252,7 +252,7 @@ const Index = () => {
                 'Cerinte de înțelegere și analiză',
                 'Argumentare pe baza textului'
               ],
-              link: '/subiecte#subiectul1',
+              link: '/subiecte?tip=1',
             },
             {
               nr: 'II',
@@ -262,7 +262,7 @@ const Index = () => {
                 'Temă literară sau tip de text',
                 'Exemple din opere studiate'
               ],
-              link: '/subiecte#subiectul2',
+              link: '/subiecte?tip=2',
             },
             {
               nr: 'III',
@@ -272,7 +272,7 @@ const Index = () => {
                 'Opere literare la alegere',
                 'Structură liberă, argumentare personală'
               ],
-              link: '/subiecte#subiectul3',
+              link: '/subiecte?tip=3',
             },
           ].map((sub, idx) => (
             <div

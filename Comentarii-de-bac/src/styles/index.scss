@@ -395,6 +395,10 @@
   margin-left: auto;
   margin-right: auto;
   display: block;
+  outline: none;
+  &:focus{
+    outline: none;
+  }
 
   &:hover {
     background: #ffd591;

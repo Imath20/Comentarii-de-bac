@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import SubiectModal from '../assets/SubiectModal';
 import Navbar from '../assets/Navbar';
 import Footer from '../assets/Footer';
@@ -120,6 +121,7 @@ const customSelectStyles = (darkTheme) => ({
 });
 
 export default function Subiecte() {
+    const location = useLocation();
     const [darkTheme, setDarkTheme] = useState(() => localStorage.getItem('theme') === 'dark');
     const [scrolled, setScrolled] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
@@ -140,6 +142,40 @@ export default function Subiecte() {
         window.addEventListener('scroll', onScroll);
         return () => window.removeEventListener('scroll', onScroll);
     }, []);
+
+    // Preia filtrele din URL (query sau hash) și setează filtrele inițiale
+    useEffect(() => {
+        const params = new URLSearchParams(location.search);
+        let tip = params.get('tip');
+        let an = params.get('an');
+        let profil = params.get('profil');
+        let subpunct = params.get('subpunct');
+
+        // Backward-compat: suport pentru hash vechi (#subiectul1 etc.)
+        if (!tip && location.hash) {
+            if (location.hash.includes('subiectul1')) tip = '1';
+            else if (location.hash.includes('subiectul2')) tip = '2';
+            else if (location.hash.includes('subiectul3')) tip = '3';
+        }
+
+        if (tip && ['1', '2', '3', 'toate'].includes(tip)) {
+            setSelectedTip(tip);
+        }
+
+        if (an && (anOptions.some(o => o.value === an))) {
+            setSelectedAn(an);
+        } else if (an === 'toate') {
+            setSelectedAn('toate');
+        }
+
+        if (profil && (profil === 'uman' || profil === 'real')) {
+            setSelectedProfil(profil);
+        }
+
+        if ((tip === '1') && (subpunct === 'A' || subpunct === 'B')) {
+            setSelectedSubpunct(subpunct);
+        }
+    }, [location.search, location.hash]);
 
     // Resetează subpunctul când nu este selectat Subiectul 1
     useEffect(() => {
