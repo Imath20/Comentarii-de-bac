@@ -128,7 +128,7 @@ export default function Subiecte() {
     const [selectedTip, setSelectedTip] = useState('toate');
     const [selectedAn, setSelectedAn] = useState('toate');
     const [selectedSubpunct, setSelectedSubpunct] = useState(null);
-    const [selectedProfil, setSelectedProfil] = useState('uman');
+    const [selectedProfil, setSelectedProfil] = useState('real');
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [activeSubiect, setActiveSubiect] = useState(null);
 
@@ -344,7 +344,7 @@ export default function Subiecte() {
                         </button>
                     ))}
                     <div
-                        className={`subiecte-segmented ${darkTheme ? 'dark-theme' : ''} ${selectedProfil === 'uman' ? 'opt-uman' : 'opt-real'}`}
+                        className={`subiecte-segmented ${darkTheme ? 'dark-theme' : ''} ${selectedProfil === 'real' ? 'opt-uman' : 'opt-real'}`}
                         role="tablist"
                         aria-label="Profil"
                     >
@@ -353,19 +353,19 @@ export default function Subiecte() {
                             type="button"
                             className="seg-option left"
                             role="tab"
-                            aria-selected={selectedProfil === 'uman'}
-                            onClick={() => setSelectedProfil('uman')}
+                            aria-selected={selectedProfil === 'real'}
+                            onClick={() => setSelectedProfil('real')}
                         >
-                            Uman
+                            Real
                         </button>
                         <button
                             type="button"
                             className="seg-option right"
                             role="tab"
-                            aria-selected={selectedProfil === 'real'}
-                            onClick={() => setSelectedProfil('real')}
+                            aria-selected={selectedProfil === 'uman'}
+                            onClick={() => setSelectedProfil('uman')}
                         >
-                            Real
+                            Uman
                         </button>
                     </div>
                 </div>
