@@ -6,10 +6,12 @@ import ExamPaperIcon from './icons/ExamPaperIcon';
 import AiIcon from './icons/AiIcon';
 import VideoIcon from './icons/VideoIcon';
 import OpereIcon from './icons/OpereIcon';
+import BookIcon from './icons/BookIcon';
 
 const NAV_CATEGORIES = [
   { name: 'Acasa', href: '/', icon: <HomeIcon className="nav-icon" /> },
   { name: 'Opere', href: '/opere', icon: <OpereIcon className="nav-icon" /> },
+  { name: 'Cărți', href: '/carti', icon: <BookIcon className="nav-icon" /> },
   { name: 'Scriitori', href: '/scriitori', icon: <PenPaperIcon className="nav-icon" /> },
   { name: 'Subiecte', href: '/subiecte', icon: <ExamPaperIcon className="nav-icon" /> },
   { name: 'Videoclipuri', href: '/videoclipuri', icon: <VideoIcon className="nav-icon" /> },
