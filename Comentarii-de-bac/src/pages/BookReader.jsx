@@ -58,6 +58,13 @@ const BOOKS = {
     maxWidth: "600px",
     width: "80vw"
   },
+  "luceafarul": {
+    path: "/src/data/opere/luceafarul.json",
+    title: "Lucefarul",
+    bookmarkKey: "luceafarul_bookmark",
+    maxWidth: "600px",
+    width: "80vw"
+  },
 };
 
 export default function BookReader() {

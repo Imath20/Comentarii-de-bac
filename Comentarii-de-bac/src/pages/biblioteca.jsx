@@ -35,7 +35,7 @@ const cartiList = [
         img: '/opere/scrisoare-pierduta.png',
         categorie: 'comedie',
         canonic: true,
-        jsonFile: 'o_scrisoare_pierduta',
+        jsonFile: 'o-scrisoare-pierduta',
         tip: 'opera'
     },
     {
@@ -88,21 +88,22 @@ const cartiList = [
         categorie: 'roman',
         romanSubcategorie: 'roman-autobiografic',
         canonic: false,
-        jsonFile: 'amintiri_copilarie',
+        jsonFile: 'amintiri-din-copilarie',
         tip: 'opera'
     },
-    
-    // Opere fără fișiere JSON (afișate dar fără acces la conținut)
-    {
+        {
         titlu: 'Luceafărul',
         autor: 'Mihai Eminescu',
         data: 'Redactare: 1883',
         img: '/opere/Luceafarul.png',
         categorie: 'poezie',
         canonic: true,
-        jsonFile: null,
+        jsonFile: 'luceafarul',
         tip: 'opera'
     },
+
+    // Opere fără fișiere JSON (afișate dar fără acces la conținut)
+
     {
         titlu: 'Enigma Otiliei',
         autor: 'George Călinescu',
@@ -381,7 +382,7 @@ export default function Carti() {
             <Navbar darkTheme={darkTheme} setDarkTheme={setDarkTheme} scrolled={scrolled} />
             <div className="page-hero">
                 <h1 className="page-title">{
-                    'Cărți'.split(' ').map((word, wi) => (
+                    'Bibliotecă'.split(' ').map((word, wi) => (
                         <span className="page-title-word" key={wi}>
                             {word.split('').map((l, i) => <span key={i}>{l}</span>)}
                         </span>
