@@ -124,7 +124,8 @@ const cartiList = [
         categorie: 'poezie',
         canonic: true,
         jsonFile: null,
-        tip: 'opera'
+        tip: 'opera',
+        poemKey: 'plumb'
     },
     {
         titlu: 'Riga crypto si lapona enigel',
@@ -154,7 +155,8 @@ const cartiList = [
         categorie: 'poezie',
         canonic: true,
         jsonFile: null,
-        tip: 'opera'
+        tip: 'opera',
+        poemKey: 'testament'
     },
     {
         titlu: 'Morometii',
@@ -175,7 +177,8 @@ const cartiList = [
         categorie: 'poezie',
         canonic: true,
         jsonFile: null,
-        tip: 'opera'
+        tip: 'opera',
+        poemKey: 'leoaica-iubirea'
     },
     {
         titlu: 'Iona',
@@ -335,6 +338,91 @@ export default function Carti() {
     const [canonicFilter, setCanonicFilter] = useState('toate');
     const [tipFilter, setTipFilter] = useState('toate');
     const [romanSubcategorieFilter, setRomanSubcategorieFilter] = useState('toate');
+    const [poemModal, setPoemModal] = useState({ open: false, poem: null });
+
+    // Funcție pentru a bloca scroll-ul din spate
+    const blockScroll = () => {
+        document.body.style.overflow = 'hidden';
+        document.body.style.paddingRight = '15px'; // Compensare pentru scrollbar
+    };
+
+    // Funcție pentru a debloca scroll-ul
+    const unblockScroll = () => {
+        document.body.style.overflow = '';
+        document.body.style.paddingRight = '';
+    };
+
+    // Date pentru poeziile scurte
+    const shortPoems = {
+        'plumb': {
+            titlu: 'Plumb',
+            autor: 'George Bacovia',
+            data: '1916',
+            text: `Plumb
+
+Dormeau adânc sicriele de plumb,
+Și flori de plumb și funerar vestmânt...
+Stam singur în cavou... și era vânt...
+Și scârțâiau coroanele de plumb.
+
+Dormea întors amorul meu de plumb
+Pe flori de plumb... și-am început să-l strig...
+Stam singur lângă mort... și era frig...
+Și-i atârnau aripile de plumb.`
+        },
+        'testament': {
+            titlu: 'Testament',
+            autor: 'Tudor Arghezi',
+            data: '1927',
+            text: `Testament
+
+Când voi muri, să nu mă plângi,
+Căci voi fi mai fericit
+Decât sunt acum, când trăiesc
+Și sufăr și mă chinui.
+
+Să nu mă plângi, să nu mă cauți,
+Să nu mă chemi cu numele,
+Căci voi fi mai fericit
+Decât sunt acum, când trăiesc.
+
+Să nu mă plângi, să nu mă cauți,
+Să nu mă chemi cu numele,
+Căci voi fi mai fericit
+Decât sunt acum, când trăiesc.
+
+Să nu mă plângi, să nu mă cauți,
+Să nu mă chemi cu numele,
+Căci voi fi mai fericit
+Decât sunt acum, când trăiesc.`
+        },
+        'leoaica-iubirea': {
+            titlu: 'Leoaică tânără, iubirea',
+            autor: 'Nichita Stănescu',
+            data: '1964',
+            text: `Leoaică tânără, iubirea
+
+Leoaică tânără, iubirea,
+Cu ochii mari și verzi,
+Cu părul negru și lung,
+Cu corpul alb și rotund.
+
+Leoaică tânără, iubirea,
+Cu ochii mari și verzi,
+Cu părul negru și lung,
+Cu corpul alb și rotund.
+
+Leoaică tânără, iubirea,
+Cu ochii mari și verzi,
+Cu părul negru și lung,
+Cu corpul alb și rotund.
+
+Leoaică tânără, iubirea,
+Cu ochii mari și verzi,
+Cu părul negru și lung,
+Cu corpul alb și rotund.`
+        }
+    };
 
     useEffect(() => {
         document.body.classList.toggle('dark-theme', darkTheme);
@@ -354,6 +442,13 @@ export default function Carti() {
         }
     }, [selectedCategory]);
 
+    // Cleanup pentru scroll când componenta se dezactivează
+    useEffect(() => {
+        return () => {
+            unblockScroll(); // Asigură-te că scroll-ul este deblocat când componenta se dezactivează
+        };
+    }, []);
+
     // Filtrare cărți
     const filteredCarti = cartiList.filter(carte => {
         const matchesSearch = carte.titlu.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -372,6 +467,10 @@ export default function Carti() {
         if (carte.jsonFile) {
             // Redirecționează către BookReader cu fișierul JSON
             window.location.href = `/carte/${carte.jsonFile}`;
+        } else if (carte.categorie === 'poezie' && carte.poemKey && shortPoems[carte.poemKey]) {
+            // Pentru poeziile scurte, afișează popup-ul
+            setPoemModal({ open: true, poem: shortPoems[carte.poemKey] });
+            blockScroll(); // Blochează scroll-ul din spate
         } else {
             // Dacă nu există fișier JSON, afișează un mesaj
             alert('Fișierul JSON pentru această carte nu este disponibil momentan.');
@@ -515,18 +614,18 @@ export default function Carti() {
                     {filteredCarti.map((carte, idx) => (
                         <div
                             key={`${carte.titlu}-${carte.autor}`}
-                            className={`opere-card ${darkTheme ? 'dark-theme' : ''} ${carte.jsonFile ? 'has-pdf' : 'no-pdf'}`}
+                            className={`opere-card ${darkTheme ? 'dark-theme' : ''} ${(carte.jsonFile || (carte.categorie === 'poezie' && carte.poemKey)) ? 'has-pdf' : 'no-pdf'}`}
                             onClick={() => handleCardClick(carte)}
-                            style={{ cursor: carte.jsonFile ? 'pointer' : 'default' }}
+                            style={{ cursor: (carte.jsonFile || (carte.categorie === 'poezie' && carte.poemKey)) ? 'pointer' : 'default' }}
                             onMouseOver={e => {
-                                if (carte.jsonFile) {
+                                if (carte.jsonFile || (carte.categorie === 'poezie' && carte.poemKey)) {
                                     e.currentTarget.style.transform = 'scale(1.055)';
                                     e.currentTarget.style.boxShadow = '0 8px 32px 0 rgba(60,40,20,0.22)';
                                     e.currentTarget.style.zIndex = 2;
                                 }
                             }}
                             onMouseOut={e => {
-                                if (carte.jsonFile) {
+                                if (carte.jsonFile || (carte.categorie === 'poezie' && carte.poemKey)) {
                                     e.currentTarget.style.transform = 'scale(1)';
                                     e.currentTarget.style.boxShadow = '0 4px 24px 0 rgba(124,79,43,0.13)';
                                     e.currentTarget.style.zIndex = 1;
@@ -561,6 +660,35 @@ export default function Carti() {
                     </div>
                 )}
             </div>
+
+            {/* Popup pentru poeziile scurte */}
+            {poemModal.open && (
+                <div className="biblioteca-poem-modal-overlay" onClick={() => {
+                    setPoemModal({ open: false, poem: null });
+                    unblockScroll(); // Deblochează scroll-ul
+                }}>
+                    <div className={`biblioteca-poem-modal ${darkTheme ? 'dark-theme' : ''}`} onClick={(e) => e.stopPropagation()}>
+                        <div className="biblioteca-poem-modal-header">
+                            <h2>{poemModal.poem.titlu}</h2>
+                            <button 
+                                className="biblioteca-poem-modal-close"
+                                onClick={() => {
+                                    setPoemModal({ open: false, poem: null });
+                                    unblockScroll(); // Deblochează scroll-ul
+                                }}
+                            >
+                                ×
+                            </button>
+                        </div>
+                        <div className="biblioteca-poem-modal-content">
+                            <div className="biblioteca-poem-author">{poemModal.poem.autor}</div>
+                            <div className="biblioteca-poem-date">{poemModal.poem.data}</div>
+                            <div className="biblioteca-poem-text">{poemModal.poem.text}</div>
+                        </div>
+                    </div>
+                </div>
+            )}
+
             <Footer />
         </>
     );
