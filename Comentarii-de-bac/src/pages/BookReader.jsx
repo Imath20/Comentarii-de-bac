@@ -65,6 +65,13 @@ const BOOKS = {
     maxWidth: "600px",
     width: "80vw"
   },
+  "enigma-otiliei": {
+    path: "/src/data/opere/enigma-otiliei.json",
+    title: "Enigma Otiliei",
+    bookmarkKey: "enigma-otiliei_bookmark",
+    maxWidth: "600px",
+    width: "80vw"
+  },
 };
 
 export default function BookReader() {

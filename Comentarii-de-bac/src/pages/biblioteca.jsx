@@ -102,7 +102,6 @@ const cartiList = [
         tip: 'opera'
     },
 
-    // Opere fără fișiere JSON (afișate dar fără acces la conținut)
 
     {
         titlu: 'Enigma Otiliei',
@@ -112,9 +111,11 @@ const cartiList = [
         categorie: 'roman',
         romanSubcategorie: 'roman-balzacian',
         canonic: true,
-        jsonFile: null,
+        jsonFile: 'enigma-otiliei',
         tip: 'opera'
     },
+    // Opere fără fișiere JSON (afișate dar fără acces la conținut)
+
     {
         titlu: 'Plumb',
         autor: 'George Bacovia',
