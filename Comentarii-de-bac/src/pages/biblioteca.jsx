@@ -114,8 +114,6 @@ const cartiList = [
         jsonFile: 'enigma-otiliei',
         tip: 'opera'
     },
-    // Opere fără fișiere JSON (afișate dar fără acces la conținut)
-
     {
         titlu: 'Plumb',
         autor: 'George Bacovia',
@@ -134,7 +132,7 @@ const cartiList = [
         img: '/opere/riga-crypto.png',
         categorie: 'poezie',
         canonic: true,
-        jsonFile: null,
+        jsonFile: 'riga-crypto',
         tip: 'opera'
     },
     {
@@ -145,7 +143,8 @@ const cartiList = [
         categorie: 'poezie',
         canonic: true,
         jsonFile: null,
-        tip: 'opera'
+        tip: 'opera',
+        poemKey: 'eu-nu-strivesc-corola'
     },
     {
         titlu: 'Testament',
@@ -166,7 +165,7 @@ const cartiList = [
         categorie: 'roman',
         romanSubcategorie: 'roman-autobiografic',
         canonic: true,
-        jsonFile: null,
+        jsonFile: 'morometii',
         tip: 'opera'
     },
     {
@@ -187,7 +186,7 @@ const cartiList = [
         img: '/opere/iona.png',
         categorie: 'comedie',
         canonic: true,
-        jsonFile: null,
+        jsonFile: 'iona',
         tip: 'opera'
     },
     {
@@ -197,8 +196,228 @@ const cartiList = [
         img: '/opere/formele.png',
         categorie: 'critica',
         canonic: true,
-        jsonFile: null,
+        jsonFile: 'critice',
         tip: 'opera'
+    },
+    {
+        titlu: 'Alexandru Lăpușneanu',
+        autor: 'Costache Negruzzi',
+        data: 'Redactare: 1840',
+        img: '/opere/lapusneanu.png',
+        categorie: 'roman',
+        romanSubcategorie: 'roman-istoric',
+        canonic: false,
+        jsonFile: 'lapusneanu',
+        tip: 'opera'
+    },
+    {
+        titlu: 'Răscoala',
+        autor: 'Liviu Rebreanu',
+        data: 'Redactare: 1932',
+        img: '/opere/rascoala.png',
+        categorie: 'roman',
+        romanSubcategorie: 'roman-social',
+        canonic: false,
+        jsonFile: 'rascoala',
+        tip: 'opera'
+    },
+    {
+        titlu: 'Hanul Ancuţei',
+        autor: 'Mihail Sadoveanu',
+        data: 'Redactare: 1928',
+        img: '/opere/hanul-ancutei.png',
+        categorie: 'nuvela',
+        canonic: false,
+        jsonFile: 'hanul-ancutei',
+        tip: 'opera'
+    },
+    {
+        titlu: 'Maytreyi',
+        autor: 'Mircea Eliade',
+        data: 'Redactare: 1933',
+        img: '/opere/maytreyi.png',
+        categorie: 'roman',
+        romanSubcategorie: 'roman-autobiografic',
+        canonic: false,
+        jsonFile: 'maitreyi',
+        tip: 'opera'
+    },
+    {
+        titlu: 'Aci sosi pe vremuri',
+        autor: 'Ion Pillat',
+        data: 'Redactare: 1923',
+        img: '/opere/aci-sosi.png',
+        categorie: 'poezie',
+        canonic: false,
+        jsonFile: null,
+        tip: 'opera',
+        poemKey: 'aci-sosi'
+    },
+    {
+        titlu: 'În Grădina Ghetsimani',
+        autor: 'Vasile Voiculescu',
+        data: 'Redactare: 1921',
+        img: '/opere/gradina-ghetsimani.png',
+        categorie: 'poezie',
+        canonic: false,
+        jsonFile: null,
+        tip: 'opera',
+        poemKey: 'gradina-ghetsimani'
+    }
+    ,
+    {
+        titlu: 'Amintiri de la Junimea din Iași',
+        autor: 'G. Panu',
+        data: 'Redactare: 1908',
+        img: '/opere/amintiri-panu.png',
+        categorie: 'memorii',
+        canonic: false,
+        jsonFile: 'amintiri-de-la-junimea-din-iasi',
+        tip: 'carte'
+    },
+    {
+        titlu: 'Amintiri din Junimea',
+        autor: 'Iacob Negruzzi',
+        data: 'Redactare: 1889',
+        img: '/opere/amintiri-negruzzi.png',
+        categorie: 'memorii',
+        canonic: false,
+        jsonFile: 'amintiri-din-junimea',
+        tip: 'carte'
+    },
+    {
+        titlu: 'Bubico',
+        autor: 'I.L. Caragiale',
+        data: 'Redactare: 1903',
+        img: '/opere/bubico.png',
+        categorie: 'schita',
+        canonic: false,
+        jsonFile: 'bubico',
+        tip: 'opera'
+    },
+    {
+        titlu: 'Capra cu trei iezi',
+        autor: 'Ion Creangă',
+        data: 'Redactare: 1875',
+        img: '/opere/capra-trei-iezi.png',
+        categorie: 'basm',
+        canonic: false,
+        jsonFile: 'capra-cu-trei-iezi',
+        tip: 'opera'
+    },
+    {
+        titlu: 'Dănilă Prepeleac',
+        autor: 'Ion Creangă',
+        data: 'Redactare: 1876',
+        img: '/opere/danila-prepeleac.png',
+        categorie: 'basm',
+        canonic: false,
+        jsonFile: 'danila-prepeleac',
+        tip: 'opera'
+    },
+    {
+        titlu: 'Dl. Goe',
+        autor: 'I.L. Caragiale',
+        data: 'Redactare: 1900',
+        img: '/opere/dl-goe.png',
+        categorie: 'schita',
+        canonic: false,
+        jsonFile: 'i-l-caragiale-dl-goe',
+        tip: 'opera'
+    },
+    {
+        titlu: 'Vizită',
+        autor: 'I.L. Caragiale',
+        data: 'Redactare: 1900',
+        img: '/opere/vizita.png',
+        categorie: 'schita',
+        canonic: false,
+        jsonFile: 'i-l-caragiale-vizita',
+        tip: 'opera'
+    },
+    {
+        titlu: 'La Țigănci',
+        autor: 'Mircea Eliade',
+        data: 'Redactare: 1959',
+        img: '/opere/la-tiganci.png',
+        categorie: 'nuvela',
+        canonic: false,
+        jsonFile: 'la-tiganci',
+        tip: 'opera'
+    },
+    {
+        titlu: 'O noapte furtunoasă',
+        autor: 'I.L. Caragiale',
+        data: 'Redactare: 1879',
+        img: '/opere/noapte-furtunoasa.png',
+        categorie: 'comedie',
+        canonic: true,
+        jsonFile: 'o-noapte-furtunoasa',
+        tip: 'opera'
+    },
+    {
+        titlu: 'Pădurea spânzuraților',
+        autor: 'Liviu Rebreanu',
+        data: 'Redactare: 1922',
+        img: '/opere/padure-spanzurati.png',
+        categorie: 'roman',
+        romanSubcategorie: 'roman-de-razboi',
+        canonic: true,
+        jsonFile: 'padurea-spanzuratilor',
+        tip: 'opera'
+    },
+    {
+        titlu: 'Patul lui Procust',
+        autor: 'Camil Petrescu',
+        data: 'Redactare: 1933',
+        img: '/opere/patul-procust.png',
+        categorie: 'roman',
+        romanSubcategorie: 'roman-subiectiv',
+        canonic: false,
+        jsonFile: 'patul-lui-procust',
+        tip: 'opera'
+    },
+    {
+        titlu: 'Popa Tanda',
+        autor: 'Ioan Slavici',
+        data: 'Redactare: 1875',
+        img: '/opere/popa-tanda.png',
+        categorie: 'nuvela',
+        canonic: false,
+        jsonFile: 'popa-tanda',
+        tip: 'opera'
+    },
+    {
+        titlu: 'Ursul păcălit de vulpe',
+        autor: 'Ion Creangă',
+        data: 'Redactare: 1875',
+        img: '/opere/ursul-pacalit.png',
+        categorie: 'poveste',
+        canonic: false,
+        jsonFile: 'ursul-pacalit-de-vulpe',
+        tip: 'opera'
+    },
+    {
+        titlu: 'Viață ca o pradă',
+        autor: 'Marin Preda',
+        data: 'Redactare: 1977',
+        img: '/opere/viata-prada.png',
+        categorie: 'roman',
+        romanSubcategorie: 'roman-autobiografic',
+        canonic: false,
+        jsonFile: 'viata-ca-o-prada',
+        tip: 'carte'
+    },
+    {
+        titlu: 'Nuntă în cer',
+        autor: 'Mircea Eliade',
+        data: 'Redactare: 1938',
+        img: '/opere/nunta-cer.png',
+        categorie: 'roman',
+        romanSubcategorie: 'roman-psihologic',
+        canonic: false,
+        jsonFile: 'nunta-in-cer',
+        tip: 'carte'
     }
 ];
 
@@ -210,7 +429,9 @@ const categorii = [
     { id: 'basm', nume: 'Basm' },
     { id: 'nuvela', nume: 'Nuvelă' },
     { id: 'critica', nume: 'Critică literară' },
-    { id: 'memorii', nume: 'Memorii' }
+    { id: 'memorii', nume: 'Memorii' },
+    { id: 'poveste', nume: 'Poveste'},
+    { id: 'schita', nume: 'Schiţă'}
 ];
 
 // Opțiuni pentru react-select
@@ -375,53 +596,206 @@ Stam singur lângă mort... și era frig...
             autor: 'Tudor Arghezi',
             data: '1927',
             text: `Testament
+Nu-ţi voi lăsa drept bunuri, după moarte,
+Decât un nume adunat pe o carte,
+În seara răzvrătită care vine
+De la străbunii mei până la tine,
+Prin râpi şi gropi adânci
+Suite de bătrânii mei pe brânci
+Şi care, tânăr, să le urci te-aşteaptă
+Cartea mea-i, fiule, o treaptă.
 
-Când voi muri, să nu mă plângi,
-Căci voi fi mai fericit
-Decât sunt acum, când trăiesc
-Și sufăr și mă chinui.
+Aşeaz-o cu credinţă căpătâi.
+Ea e hrisovul vostru cel dintâi.
+Al robilor cu saricile, pline
+De osemintele vărsate-n mine.
 
-Să nu mă plângi, să nu mă cauți,
-Să nu mă chemi cu numele,
-Căci voi fi mai fericit
-Decât sunt acum, când trăiesc.
+Ca să schimbăm, acum, întâia oară
+Sapa-n condei şi brazda-n calimară
+Bătrânii au adunat, printre plăvani,
+Sudoarea muncii sutelor de ani.
+Din graiul lor cu-ndemnuri pentru vite
+Eu am ivit cuvinte potrivite
+Şi leagăne urmaşilor stăpâni.
+Şi, frământate mii de săptămâni
+Le-am prefăcut în versuri şi-n icoane,
+Făcui din zdrenţe muguri şi coroane.
+Veninul strâns l-am preschimbat în miere,
+Lăsând întreagă dulcea lui putere.
 
-Să nu mă plângi, să nu mă cauți,
-Să nu mă chemi cu numele,
-Căci voi fi mai fericit
-Decât sunt acum, când trăiesc.
+Am luat ocara, şi torcând uşure
+Am pus-o când să-mbie, când să-njure.
+Am luat cenuşa morţilor din vatră
+Şi am făcut-o Dumnezeu de piatră,
+Hotar înalt, cu două lumi pe poale,
+Păzind în piscul datoriei tale.
 
-Să nu mă plângi, să nu mă cauți,
-Să nu mă chemi cu numele,
-Căci voi fi mai fericit
-Decât sunt acum, când trăiesc.`
+Durerea noastră surdă şi amară
+O grămădii pe-o singură vioară,
+Pe care ascultând-o a jucat
+Stăpânul, ca un ţap înjunghiat.
+Din bube, mucegaiuri şi noroi
+Iscat-am frumuseţi şi preţuri noi.
+Biciul răbdat se-ntoarce în cuvinte
+Si izbăveşte-ncet pedesitor
+Odrasla vie-a crimei tuturor.
+E-ndreptăţirea ramurei obscure
+Ieşită la lumină din padure
+Şi dând în vârf, ca un ciorchin de negi
+Rodul durerii de vecii întregi.
+
+Întinsă leneşă pe canapea,
+Domniţa suferă în cartea mea.
+Slova de foc şi slova faurită
+Împărechiate-n carte se mărită,
+Ca fierul cald îmbrăţişat în cleşte.
+Robul a scris-o, Domnul o citeşte,
+Făr-a cunoaşte ca-n adâncul ei
+Zace mania bunilor mei.`
+        },
+        'eu-nu-strivesc-corola': {
+           titlu : 'Eu nu strivesc corola de minuni a lumii',
+           autor:   'Lucian Blaga',
+           data:  '1919',
+           text: `Eu nu strivesc corola de minuni a lumii
+şi nu ucid
+cu mintea tainele, ce le-ntâlnesc
+în calea mea
+în flori, în ochi, pe buze ori morminte.
+Lumina altora
+sugrumă vraja nepătrunsului ascuns
+în adâncimi de întuneric,
+dar eu,
+eu cu lumina mea sporesc a lumii taină -
+şi-ntocmai cum cu razele ei albe luna
+nu micşorează, ci tremurătoare
+măreşte şi mai tare taina nopţii,
+aşa îmbogăţesc şi eu întunecata zare
+cu largi fiori de sfânt mister
+şi tot ce-i neînţeles
+se schimbă-n neînţelesuri şi mai mari
+sub ochii mei-
+căci eu iubesc
+şi flori şi ochi şi buze şi morminte.`
         },
         'leoaica-iubirea': {
             titlu: 'Leoaică tânără, iubirea',
             autor: 'Nichita Stănescu',
             data: '1964',
             text: `Leoaică tânără, iubirea
+mi-a sarit în faţă.
+Mă pândise-n încordare
+mai demult.
+Colţii albi mi i-a înfipt în faţă,
+m-a muşcat leoaica, azi, de faţă.
+Şi deodata-n jurul meu, natura
+se făcu un cerc, de-a-dura,
+când mai larg, când mai aproape,
+ca o strîngere de ape.
+Şi privirea-n sus ţîşni,
+curcubeu tăiat în două,
+şi auzul o-ntîlni
+tocmai lângă ciorcârlii.
 
-Leoaică tânără, iubirea,
-Cu ochii mari și verzi,
-Cu părul negru și lung,
-Cu corpul alb și rotund.
+Mi-am dus mâna la sprînceană,
+la timplă şi la bărbie,
+dar mâna nu le mai ştie.
+Şi alunecă-n neştire
+pe-un deşert în strălucire,
+peste care trece-alene
+o leoaică aramie
+cu mişcările viclene,
+incă-o vreme,
+si-ncă-o vreme..`
+        },
+        'aci-sosi':{
+            titlu: 'Aci sosi pe vremuri',
+            autor: 'Ion Pillat',
+            data: '1923',
+            text: `La casa amintirii cu-obloane si pridvor,
+Paienjeni zabrelira si poarta, si zavor.
 
-Leoaică tânără, iubirea,
-Cu ochii mari și verzi,
-Cu părul negru și lung,
-Cu corpul alb și rotund.
+Iar hornul nu mai trage alene din ciubuc
+De când luptara-n codru si poteri, si haiduc.
 
-Leoaică tânără, iubirea,
-Cu ochii mari și verzi,
-Cu părul negru și lung,
-Cu corpul alb și rotund.
+În drumul lor spre zare îmbatrânira plopii.
+Aci sosi pe vremuri bunica-mi Calyopi.
 
-Leoaică tânără, iubirea,
-Cu ochii mari și verzi,
-Cu părul negru și lung,
-Cu corpul alb și rotund.`
+Nerabdator bunicul pândise de la scara
+Berlina leganata prin lanuri de secara.
+
+Pie-atunci nu erau trenuri ca azi, si din berlina
+Sari, subtire, -o fata în larga crinolina.
+
+Privind cu ea sub luna câmpia ca un lac,
+Bunicul meu desigur i-a recitat Le lac.
+
+Iar când deasupra casei ca umbre berze cad,
+Îi spuse Sburatorul de-un tânar Eliad.
+
+Ea-l asculta tacuta, cu ochi de peruzea…
+Si totul ce romantic, ca-n basme, se urzea.
+
+Si cum sedeau… departe, un clopot a sunat,
+De nunta sau de moarte, în turnul vechi din sat.
+
+Dar ei, în clipa asta simteau ca-o sa ramâna…
+De mult e mort bunicul, bunica e batrâna…
+
+Ce straniu lucru: vremea! Deodata pe perete
+Te vezi aievea numai în stersele portrete.
+
+Te recunosti în ele, dar nu si-n fata ta,
+Caci trupul tau te uita, dar tu nu-l poti uita….
+
+Ca ieri sosi bunica… si vii acuma tu:
+Pe urmele berlinei trasura ta statu.
+
+Acelasi drum te-aduse prin lanul de secara.
+Ca dânsa tragi, în dreptul pridvorului, la scara.
+
+Subtire, calci nisipul pe care ea sari.
+Cu berzele într-ânsul amurgul se opri….
+
+Si m-ai gasit, zâmbindu-mi, ca prea naiv eram
+Când ti-am soptit poeme de bunul Francis Jammes.
+
+Iar când în noapte câmpul fu lac întins sub luna
+Si-am spus Balada lunei de Horia Furtuna,.
+
+M-ai ascultat pe gânduri, cu ochi de ametist,
+Si ti-am parut romantic si poate simbolist.
+
+Si cum sedeam… departe, un clopot a sunat,
+Acelasi clopot poate, în turnul vechi din sat….
+
+De nunta sau de moarte, în turnul vechi din sat.`
+        },
+        'gradina-ghetsimani':{
+            titlu: 'În Grădina Ghetsimani',
+            autor: 'Vasile Voiculescu',
+            data: '1921',
+            text: `Iisus lupta cu soarta și nu primea paharul...
+Căzut pe brânci în iarbă, se-mpotrivea îtruna.
+Curgeau sudori de sânge pe chipu-i alb ca varul
+Și-amarnica-i strigare stârnea în slăvi furtuna.
+
+O mâna nendurată, ținând grozava cupă,
+Se coboară-miindu-l și i-o ducea la gură...
+Și-o sete uriașă stă sufletul să-i rupă...
+Dar nu voia s-atingă infama băutură.
+
+În apa ei verzuie jucau sterlici de miere
+Și sub veninul groaznic simțea că e dulceață...
+Dar fălcile-nclestându-și, cu ultima putere
+Bătându-se cu moartea, uitase de viață!
+
+Deasupra fără tihnă, se frământau măslinii,
+Păreau că vor să fugă din loc, să nu-l mai vadă...
+Treceau bătăi de aripi prin vraiștea grădinii
+Și uliii de seară dau roate dupa pradă.`
         }
+
     };
 
     useEffect(() => {
@@ -610,11 +984,11 @@ Cu corpul alb și rotund.`
                 </div>
 
                 {/* Grid Cărți */}
-                <div className="opere-grid-container">
+                <div className={`biblioteca-grid-container ${filteredCarti.length === 1 ? 'single-result' : ''}`}>
                     {filteredCarti.map((carte, idx) => (
                         <div
                             key={`${carte.titlu}-${carte.autor}`}
-                            className={`opere-card ${darkTheme ? 'dark-theme' : ''} ${(carte.jsonFile || (carte.categorie === 'poezie' && carte.poemKey)) ? 'has-pdf' : 'no-pdf'}`}
+                            className={`biblioteca-card ${darkTheme ? 'dark-theme' : ''} ${(carte.jsonFile || (carte.categorie === 'poezie' && carte.poemKey)) ? 'has-pdf' : 'no-pdf'}`}
                             onClick={() => handleCardClick(carte)}
                             style={{ cursor: (carte.jsonFile || (carte.categorie === 'poezie' && carte.poemKey)) ? 'pointer' : 'default' }}
                             onMouseOver={e => {
@@ -635,19 +1009,21 @@ Cu corpul alb și rotund.`
                             <img
                                 src={carte.img}
                                 alt={carte.titlu}
+                                className="biblioteca-card-img"
                             />
                             {/* Gradient overlay for readability */}
-                            <div className={`opere-card-overlay ${darkTheme ? 'dark-theme' : ''}`} />
+                            <div className={`biblioteca-card-overlay ${darkTheme ? 'dark-theme' : ''}`} />
                             
                             {/* Content overlay */}
-                            <div className="opere-card-content">
-                                <div className="opere-card-title">{carte.titlu}</div>
-                                <div className="opere-card-author">{carte.autor}</div>
-                                <div className={`opere-card-date ${darkTheme ? 'dark-theme' : ''}`}>
+                            <div className="biblioteca-card-content">
+                                <div className="biblioteca-card-title">{carte.titlu}</div>
+                                <div className="biblioteca-card-author">{carte.autor}</div>
+                                <div className={`biblioteca-card-date ${darkTheme ? 'dark-theme' : ''}`}>
                                     {carte.data.replace('Redactare: ', '')}
                                 </div>
-                                
-                                
+                                <div className={`biblioteca-card-category ${darkTheme ? 'dark-theme' : ''}`}>
+                                    {carte.categorie}
+                                </div>
                             </div>
                         </div>
                     ))}
@@ -655,7 +1031,7 @@ Cu corpul alb și rotund.`
 
                 {/* Mesaj când nu sunt rezultate */}
                 {filteredCarti.length === 0 && (
-                    <div className={`opere-no-results ${darkTheme ? 'dark-theme' : ''}`}>
+                    <div className={`biblioteca-no-results ${darkTheme ? 'dark-theme' : ''}`}>
                         Nu s-au găsit cărți care să corespundă criteriilor de căutare.
                     </div>
                 )}

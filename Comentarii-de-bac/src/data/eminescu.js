@@ -51,7 +51,20 @@ const eminescu = {
       author: 'Mihai Eminescu',
       text: 'Astăzi am publicat "Luceafărul". O poezie la care am lucrat ani de zile.',
       image: '/opere/Luceafarul.png',
-      link: '/poezie/luceafarul',
+      pinnedActions: [
+        {
+          type: 'comentariu',
+          text: 'Comentariul operei',
+          link: '#', // Link gol pentru pagina care nu există încă
+          icon: '📝'
+        },
+        {
+          type: 'opera',
+          text: 'Citește opera',
+          link: '/carte/luceafarul', // Link către BookReader pentru Luceafărul
+          icon: '📖'
+        }
+      ],
       likes: 1883,
       reactions: [
         { friendKey: 'veronica', reaction: 'ador' },

@@ -35,40 +35,60 @@ const eliade = {
       key: 'petrescu',
       img: '/scriitori/camil_rezerva.png',
     },
-    {
-      name: 'Mihail Sadoveanu',
-      key: 'sadoveanu',
-      img: '/scriitori/mihail-sadoveanu-3.png',
-    },
-    {
-      name: 'Marin Preda',
-      key: 'preda',
-      img: '/scriitori/marin_preda.png',
-    },
-    {
-      name: 'Marin Sorescu',
-      key: 'sorescu',
-      img: '/scriitori/marin_sorescu.png',
-    },
-    {
-      name: 'Nichita Stănescu',
-      key: 'stanescu',
-      img: '/scriitori/nichita_stanescu_rezerva.png',
-    },
-    {
-      name: 'Vasile Voiculescu',
-      key: 'voiculescu',
-      img: '/scriitori/vasile_voiculescu.png',
-    },
-    {
-      name: 'George Călinescu',
-      key: 'calinescu',
-      img: '/scriitori/george_calinescu.png',
-    },
   ],
   gallery: [
     '/Banner/eliade.png',
     '/scriitori/mircea-eliade.png',
+  ],
+  posts: [
+    {
+      id: 1,
+      pin: true,
+      date: '15 martie 1933',
+      author: 'Mircea Eliade',
+      text: 'Am publicat "Maitreyi" - un roman care să exploreze dragostea și spiritualitatea indiană. Fiecare pagină este o călătorie prin India, fiecare personaj este o reprezentare a filosofiei orientale.',
+      image: '/opere/maytreyi.png',
+      pinnedActions: [
+        {
+          type: 'comentariu',
+          text: 'Comentariul operei',
+          link: '#', // Link gol pentru pagina care nu există încă
+          icon: '📝'
+        },
+        {
+          type: 'opera',
+          text: 'Citește opera',
+          link: '/carte/maitreyi', // Link către BookReader pentru Maitreyi
+          icon: '📖'
+        }
+      ],
+      likes: 1933,
+      reactions: [
+        { friendKey: 'arghezi', reaction: 'ador' },
+        { friendKey: 'blaga', reaction: 'love' },
+        { friendKey: 'barbu', reaction: 'strengh' },
+        { friendKey: 'bacovia', reaction: 'cool' },
+        { friendKey: 'rebreanu', reaction: 'fire' },
+        { friendKey: 'petrescu', reaction: 'clap' },
+      ],
+      comments: [
+        {
+          author: 'Tudor Arghezi',
+          key: 'arghezi',
+          text: 'Minunat roman, Mircea! Ai prins perfect mitologia românească!',
+        },
+        {
+          author: 'Lucian Blaga',
+          key: 'blaga',
+          text: 'Felicitări! Ai reușit să capturezi esența spiritualității!',
+        },
+        {
+          author: 'Ion Barbu',
+          key: 'barbu',
+          text: 'Excelentă lucrare! Romanul tău este o capodoperă mitologică!',
+        },
+      ],
+    },
   ],
 };
 

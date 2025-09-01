@@ -35,45 +35,60 @@ const calinescu = {
       key: 'petrescu',
       img: '/scriitori/camil_rezerva.png',
     },
-    {
-      name: 'Mihail Sadoveanu',
-      key: 'sadoveanu',
-      img: '/scriitori/mihail-sadoveanu-3.png',
-    },
-    {
-      name: 'Ion Pillat',
-      key: 'pillat',
-      img: '/scriitori/ion_pillat.png',
-    },
-    {
-      name: 'Marin Preda',
-      key: 'preda',
-      img: '/scriitori/marin_preda.png',
-    },
-    {
-      name: 'Marin Sorescu',
-      key: 'sorescu',
-      img: '/scriitori/marin_sorescu.png',
-    },
-    {
-      name: 'Nichita Stănescu',
-      key: 'stanescu',
-      img: '/scriitori/nichita_stanescu_rezerva.png',
-    },
-    {
-      name: 'Vasile Voiculescu',
-      key: 'voiculescu',
-      img: '/scriitori/vasile_voiculescu.png',
-    },
-    {
-      name: 'Mircea Eliade',
-      key: 'eliade',
-      img: '/scriitori/mircea-eliade.png',
-    },
   ],
   gallery: [
     '/Banner/calinescu.png',
     '/scriitori/george_calinescu.png',
+  ],
+  posts: [
+    {
+      id: 1,
+      pin: true,
+      date: '15 martie 1938',
+      author: 'George Călinescu',
+      text: 'Am publicat "Enigma Otiliei" - un roman care să exploreze viața intelectuală românească din perioada interbelică. Fiecare pagină este o frescă a societății românești, fiecare personaj este un tip social autentic.',
+      image: '/opere/enigma-otiliei.png',
+      pinnedActions: [
+        {
+          type: 'comentariu',
+          text: 'Comentariul operei',
+          link: '#', // Link gol pentru pagina care nu există încă
+          icon: '📝'
+        },
+        {
+          type: 'opera',
+          text: 'Citește opera',
+          link: '/carte/enigma-otiliei', // Link către BookReader pentru Enigma Otiliei
+          icon: '📖'
+        }
+      ],
+      likes: 1938,
+      reactions: [
+        { friendKey: 'arghezi', reaction: 'ador' },
+        { friendKey: 'blaga', reaction: 'love' },
+        { friendKey: 'barbu', reaction: 'strengh' },
+        { friendKey: 'bacovia', reaction: 'cool' },
+        { friendKey: 'rebreanu', reaction: 'fire' },
+        { friendKey: 'petrescu', reaction: 'clap' },
+      ],
+      comments: [
+        {
+          author: 'Tudor Arghezi',
+          key: 'arghezi',
+          text: 'Minunat roman, George! Ai prins perfect spiritul epocii!',
+        },
+        {
+          author: 'Lucian Blaga',
+          key: 'blaga',
+          text: 'Felicitări! Ai reușit să capturezi esența societății românești!',
+        },
+        {
+          author: 'Ion Barbu',
+          key: 'barbu',
+          text: 'Excelentă lucrare! Romanul tău este o capodoperă socială!',
+        },
+      ],
+    },
   ],
 };
 

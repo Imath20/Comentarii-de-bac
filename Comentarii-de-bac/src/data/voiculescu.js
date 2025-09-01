@@ -35,40 +35,61 @@ const voiculescu = {
       key: 'petrescu',
       img: '/scriitori/camil_rezerva.png',
     },
-    {
-      name: 'Mihail Sadoveanu',
-      key: 'sadoveanu',
-      img: '/scriitori/mihail-sadoveanu-3.png',
-    },
-    {
-      name: 'Marin Preda',
-      key: 'preda',
-      img: '/scriitori/marin_preda.png',
-    },
-    {
-      name: 'Marin Sorescu',
-      key: 'sorescu',
-      img: '/scriitori/marin_sorescu.png',
-    },
-    {
-      name: 'Nichita Stănescu',
-      key: 'stanescu',
-      img: '/scriitori/nichita_stanescu_rezerva.png',
-    },
-    {
-      name: 'Mircea Eliade',
-      key: 'eliade',
-      img: '/scriitori/mircea-eliade.png',
-    },
-    {
-      name: 'George Călinescu',
-      key: 'calinescu',
-      img: '/scriitori/george_calinescu.png',
-    },
   ],
   gallery: [
     '/Banner/voiculescu.png',
     '/scriitori/vasile_voiculescu.png',
+  ],
+  posts: [
+    {
+      id: 1,
+      pin: true,
+      date: '15 martie 1921',
+      author: 'Vasile Voiculescu',
+      text: 'Am publicat "În Grădina Ghetsimani" - o poezie care să exploreze lupta cu soarta și suferința umană. Fiecare vers este o meditație asupra existenței, fiecare cuvânt este o expresie a condiției umane.',
+      image: '/opere/gradina-ghetsimani.png',
+      pinnedActions: [
+        {
+          type: 'comentariu',
+          text: 'Comentariul operei',
+          link: '#', // Link gol pentru pagina care nu există încă
+          icon: '📝'
+        },
+        {
+          type: 'opera',
+          text: 'Citește opera',
+          link: 'gradina-ghetsimani', // Link către popup pentru poezia În Grădina Ghetsimani
+          icon: '📖',
+          isPoem: true
+        }
+      ],
+      likes: 1921,
+      reactions: [
+        { friendKey: 'arghezi', reaction: 'ador' },
+        { friendKey: 'blaga', reaction: 'love' },
+        { friendKey: 'barbu', reaction: 'strengh' },
+        { friendKey: 'bacovia', reaction: 'cool' },
+        { friendKey: 'rebreanu', reaction: 'fire' },
+        { friendKey: 'petrescu', reaction: 'clap' },
+      ],
+      comments: [
+        {
+          author: 'Tudor Arghezi',
+          key: 'arghezi',
+          text: 'Minunată colecție, Vasile! Poeziile tale sunt adevărate bijuterii patriotice!',
+        },
+        {
+          author: 'Lucian Blaga',
+          key: 'blaga',
+          text: 'Felicitări! Ai reușit să capturezi esența frumuseții românești!',
+        },
+        {
+          author: 'Ion Barbu',
+          key: 'barbu',
+          text: 'Excelentă lucrare! Poeziile tale au o forță patriotică extraordinară!',
+        },
+      ],
+    },
   ],
 };
 

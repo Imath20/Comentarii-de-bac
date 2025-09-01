@@ -438,6 +438,62 @@
     font-size: 1.18rem;
     margin-bottom: 8px;
   }
+
+  .scriitor-pinned-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+
+    .scriitor-pinned-action-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      border: none;
+      border-radius: 25px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+      box-shadow: 0 2px 8px 0 rgba(124, 79, 43, 0.15);
+
+      .scriitor-pinned-action-icon {
+        font-size: 1.1rem;
+      }
+
+      .scriitor-pinned-action-text {
+        white-space: nowrap;
+      }
+
+      &.scriitor-pinned-action-comentariu {
+        background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+        color: white;
+
+        &:hover {
+          background: linear-gradient(135deg, #357abd 0%, #2d5a8a 100%);
+          transform: translateY(-2px);
+          box-shadow: 0 4px 16px 0 rgba(74, 144, 226, 0.3);
+        }
+      }
+
+      &.scriitor-pinned-action-opera {
+        background: linear-gradient(135deg, #a97c50 0%, #8b6a3f 100%);
+        color: white;
+
+        &:hover {
+          background: linear-gradient(135deg, #8b6a3f 0%, #7c5a35 100%);
+          transform: translateY(-2px);
+          box-shadow: 0 4px 16px 0 rgba(169, 124, 80, 0.3);
+        }
+      }
+
+      &:active {
+        transform: translateY(0);
+      }
+    }
+  }
 }
 
 .scriitor-poem-container {

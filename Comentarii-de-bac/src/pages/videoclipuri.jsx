@@ -160,6 +160,15 @@ const filmeList = [
     durata: '1:09:39',
     autor: 'IL Caragiale',
   },
+  {
+    id: '19',
+    titlu: 'Ion Creangă - Dănilă Prepeleac',
+    descriere: 'Dănilă Prepeleac',
+    videoId: 'vQ1l6vsXHwc',
+    categorie: 'proza',
+    durata: '1:08:14',
+    autor: 'Ion Creangă',
+  }
 ];
 
 // Categorii pentru filtrare

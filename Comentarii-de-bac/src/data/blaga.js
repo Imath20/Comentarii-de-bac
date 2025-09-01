@@ -2,7 +2,7 @@ const blaga = {
   nume: 'Lucian Blaga',
   // date: '1895 – 1961',
   img: '/scriitori/lucian_blaga.png',
-  color: 'rgba(122,58,0,0.82)',
+  color: 'rgba(255,179,71,0.82)',
   banner: '/Banner/blaga.png',
   friends: [
     {
@@ -35,45 +35,61 @@ const blaga = {
       key: 'calinescu',
       img: '/scriitori/george_calinescu.png',
     },
-    {
-      name: 'Mihail Sadoveanu',
-      key: 'sadoveanu',
-      img: '/scriitori/mihail-sadoveanu-3.png',
-    },
-    {
-      name: 'Ion Pillat',
-      key: 'pillat',
-      img: '/scriitori/ion_pillat.png',
-    },
-    {
-      name: 'Marin Preda',
-      key: 'preda',
-      img: '/scriitori/marin_preda.png',
-    },
-    {
-      name: 'Marin Sorescu',
-      key: 'sorescu',
-      img: '/scriitori/marin_sorescu.png',
-    },
-    {
-      name: 'Nichita Stănescu',
-      key: 'stanescu',
-      img: '/scriitori/nichita_stanescu_rezerva.png',
-    },
-    {
-      name: 'Vasile Voiculescu',
-      key: 'voiculescu',
-      img: '/scriitori/vasile_voiculescu.png',
-    },
-    {
-      name: 'Mircea Eliade',
-      key: 'eliade',
-      img: '/scriitori/mircea-eliade.png',
-    },
   ],
   gallery: [
     '/Banner/blaga.png',
     '/scriitori/lucian_blaga.png',
+  ],
+  posts: [
+    {
+      id: 1,
+      pin: true,
+      date: '15 aprilie 1921',
+      author: 'Lucian Blaga',
+      text: 'Am publicat "Eu nu strivesc corola de minuni a lumii" - o poezie care să exploreze misterul existenței prin prisma luminii divine. Fiecare vers este o căutare a adevărului, fiecare cuvânt este o fereastră către infinit.',
+      image: '/opere/corola_minuni.png',
+      pinnedActions: [
+        {
+          type: 'comentariu',
+          text: 'Comentariul operei',
+          link: '#', // Link gol pentru pagina care nu există încă
+          icon: '📝'
+        },
+        {
+          type: 'opera',
+          text: 'Citește opera',
+          link: 'eu-nu-strivesc-corola', // Link către popup pentru poezia Eu nu strivesc corola de minuni a lumii
+          icon: '📖',
+          isPoem: true
+        }
+      ],
+      likes: 1921,
+      reactions: [
+        { friendKey: 'arghezi', reaction: 'ador' },
+        { friendKey: 'barbu', reaction: 'love' },
+        { friendKey: 'bacovia', reaction: 'strengh' },
+        { friendKey: 'rebreanu', reaction: 'cool' },
+        { friendKey: 'petrescu', reaction: 'fire' },
+        { friendKey: 'calinescu', reaction: 'clap' },
+      ],
+      comments: [
+        {
+          author: 'Tudor Arghezi',
+          key: 'arghezi',
+          text: 'Minunată poezie, Luciane! "Eu nu strivesc corola de minuni a lumii" este o bijuterie filosofică!',
+        },
+        {
+          author: 'Ion Barbu',
+          key: 'barbu',
+          text: 'Felicitări! Ai reușit să capturezi esența misterului în versuri!',
+        },
+        {
+          author: 'George Bacovia',
+          key: 'bacovia',
+          text: 'Excelentă lucrare! Poeziile tale au o adâncime metafizică extraordinară!',
+        },
+      ],
+    },
   ],
 };
 

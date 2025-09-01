@@ -125,6 +125,10 @@ body.dark-theme .nav-icon {
   margin-left: 2.2rem;
   font-size: 1.4rem;
   box-shadow: 0 2px 8px 0 rgba(124, 79, 43, 0.08);
+  outline: none;
+  &:focus{
+    outline: none;
+  }
 }
 .theme-toggle:hover {
   box-shadow: 0 0 0 4px rgba(124, 79, 43, 0.10), 0 2px 8px 0 rgba(124, 79, 43, 0.08);

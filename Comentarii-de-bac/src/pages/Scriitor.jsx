@@ -7,6 +7,230 @@ import ScriitorChat from '../assets/ScriitorChat';
 import { getScriitorOpere } from '../data/scriitoriOpere';
 import { getScriitorPrezentare } from '../data/scriitoriPrezentare';
 
+// Date pentru poeziile scurte
+const shortPoems = {
+  'plumb': {
+    titlu: 'Plumb',
+    autor: 'George Bacovia',
+    data: '1916',
+    text: `Plumb
+
+Dormeau adânc sicriele de plumb,
+Și flori de plumb și funerar vestmânt...
+Stam singur în cavou... și era vânt...
+Și scârțâiau coroanele de plumb.
+
+Dormea întors amorul meu de plumb
+Pe flori de plumb... și-am început să-l strig...
+Stam singur lângă mort... și era frig...
+Și-i atârnau aripile de plumb.`
+  },
+  'testament': {
+    titlu: 'Testament',
+    autor: 'Tudor Arghezi',
+    data: '1927',
+    text: `Testament
+Nu-ţi voi lăsa drept bunuri, după moarte,
+Decât un nume adunat pe o carte,
+În seara răzvrătită care vine
+De la străbunii mei până la tine,
+Prin râpi şi gropi adânci
+Suite de bătrânii mei pe brânci
+Şi care, tânăr, să le urci te-aşteaptă
+Cartea mea-i, fiule, o treaptă.
+
+Aşeaz-o cu credinţă căpătâi.
+Ea e hrisovul vostru cel dintâi.
+Al robilor cu saricile, pline
+De osemintele vărsate-n mine.
+
+Ca să schimbăm, acum, întâia oară
+Sapa-n condei şi brazda-n calimară
+Bătrânii au adunat, printre plăvani,
+Sudoarea muncii sutelor de ani.
+Din graiul lor cu-ndemnuri pentru vite
+Eu am ivit cuvinte potrivite
+Şi leagăne urmaşilor stăpâni.
+Şi, frământate mii de săptămâni
+Le-am prefăcut în versuri şi-n icoane,
+Făcui din zdrenţe muguri şi coroane.
+Veninul strâns l-am preschimbat în miere,
+Lăsând întreagă dulcea lui putere.
+
+Am luat ocara, şi torcând uşure
+Am pus-o când să-mbie, când să-njure.
+Am luat cenuşa morţilor din vatră
+Şi am făcut-o Dumnezeu de piatră,
+Hotar înalt, cu două lumi pe poale,
+Păzind în piscul datoriei tale.
+
+Durerea noastră surdă şi amară
+O grămădii pe-o singură vioară,
+Pe care ascultând-o a jucat
+Stăpânul, ca un ţap înjunghiat.
+Din bube, mucegaiuri şi noroi
+Iscat-am frumuseţi şi preţuri noi.
+Biciul răbdat se-ntoarce în cuvinte
+Si izbăveşte-ncet pedesitor
+Odrasla vie-a crimei tuturor.
+E-ndreptăţirea ramurei obscure
+Ieşită la lumină din padure
+Şi dând în vârf, ca un ciorchin de negi
+Rodul durerii de vecii întregi.
+
+Întinsă leneşă pe canapea,
+Domniţa suferă în cartea mea.
+Slova de foc şi slova faurită
+Împărechiate-n carte se mărită,
+Ca fierul cald îmbrăţişat în cleşte.
+Robul a scris-o, Domnul o citeşte,
+Făr-a cunoaşte ca-n adâncul ei
+Zace mania bunilor mei.`
+  },
+  'eu-nu-strivesc-corola': {
+    titlu: 'Eu nu strivesc corola de minuni a lumii',
+    autor: 'Lucian Blaga',
+    data: '1919',
+    text: `Eu nu strivesc corola de minuni a lumii
+şi nu ucid
+cu mintea tainele, ce le-ntâlnesc
+în calea mea
+în flori, în ochi, pe buze ori morminte.
+Lumina altora
+sugrumă vraja nepătrunsului ascuns
+în adâncimi de întuneric,
+dar eu,
+eu cu lumina mea sporesc a lumii taină -
+şi-ntocmai cum cu razele ei albe luna
+nu micşorează, ci tremurătoare
+măreşte şi mai tare taina nopţii,
+aşa îmbogăţesc şi eu întunecata zare
+cu largi fiori de sfânt mister
+şi tot ce-i neînţeles
+se schimbă-n neînţelesuri şi mai mari
+sub ochii mei-
+căci eu iubesc
+şi flori şi ochi şi buze şi morminte.`
+  },
+  'leoaica-iubirea': {
+    titlu: 'Leoaică tânără, iubirea',
+    autor: 'Nichita Stănescu',
+    data: '1964',
+    text: `Leoaică tânără, iubirea
+mi-a sarit în faţă.
+Mă pândise-n încordare
+mai demult.
+Colţii albi mi i-a înfipt în faţă,
+m-a muşcat leoaica, azi, de faţă.
+Şi deodata-n jurul meu, natura
+se făcu un cerc, de-a-dura,
+când mai larg, când mai aproape,
+ca o strîngere de ape.
+Şi privirea-n sus ţîşni,
+curcubeu tăiat în două,
+şi auzul o-ntîlni
+tocmai lângă ciorcârlii.
+
+Mi-am dus mâna la sprînceană,
+la timplă şi la bărbie,
+dar mâna nu le mai ştie.
+Şi alunecă-n neştire
+pe-un deşert în strălucire,
+peste care trece-alene
+o leoaică aramie
+cu mişcările viclene,
+incă-o vreme,
+si-ncă-o vreme..`
+  },
+  'aci-sosi': {
+    titlu: 'Aci sosi pe vremuri',
+    autor: 'Ion Pillat',
+    data: '1923',
+    text: `La casa amintirii cu-obloane si pridvor,
+Paienjeni zabrelira si poarta, si zavor.
+
+Iar hornul nu mai trage alene din ciubuc
+De când luptara-n codru si poteri, si haiduc.
+
+În drumul lor spre zare îmbatrânira plopii.
+Aci sosi pe vremuri bunica-mi Calyopi.
+
+Nerabdator bunicul pândise de la scara
+Berlina leganata prin lanuri de secara.
+
+Pie-atunci nu erau trenuri ca azi, si din berlina
+Sari, subtire, -o fata în larga crinolina.
+
+Privind cu ea sub luna câmpia ca un lac,
+Bunicul meu desigur i-a recitat Le lac.
+
+Iar când deasupra casei ca umbre berze cad,
+Îi spuse Sburatorul de-un tânar Eliad.
+
+Ea-l asculta tacuta, cu ochi de peruzea…
+Si totul ce romantic, ca-n basme, se urzea.
+
+Si cum sedeau… departe, un clopot a sunat,
+De nunta sau de moarte, în turnul vechi din sat.
+
+Dar ei, în clipa asta simteau ca-o sa ramâna…
+De mult e mort bunicul, bunica e batrâna…
+
+Ce straniu lucru: vremea! Deodata pe perete
+Te vezi aievea numai în stersele portrete.
+
+Te recunosti în ele, dar nu si-n fata ta,
+Caci trupul tau te uita, dar tu nu-l poti uita….
+
+Ca ieri sosi bunica… si vii acuma tu:
+Pe urmele berlinei trasura ta statu.
+
+Acelasi drum te-aduse prin lanul de secara.
+Ca dânsa tragi, în dreptul pridvorului, la scara.
+
+Subtire, calci nisipul pe care ea sari.
+Cu berzele într-ânsul amurgul se opri….
+
+Si m-ai gasit, zâmbindu-mi, ca prea naiv eram
+Când ti-am soptit poeme de bunul Francis Jammes.
+
+Iar când în noapte câmpul fu lac întins sub luna
+Si-am spus Balada lunei de Horia Furtuna,.
+
+M-ai ascultat pe gânduri, cu ochi de ametist,
+Si ti-am parut romantic si poate simbolist.
+
+Si cum sedeam… departe, un clopot a sunat,
+Acelasi clopot poate, în turnul vechi din sat….
+
+De nunta sau de moarte, în turnul vechi din sat.`
+  },
+  'gradina-ghetsimani': {
+    titlu: 'În Grădina Ghetsimani',
+    autor: 'Vasile Voiculescu',
+    data: '1921',
+    text: `Iisus lupta cu soarta și nu primea paharul...
+Căzut pe brânci în iarbă, se-mpotrivea îtruna.
+Curgeau sudori de sânge pe chipu-i alb ca varul
+Și-amarnica-i strigare stârnea în slăvi furtuna.
+
+O mâna nendurată, ținând grozava cupă,
+Se coboară-miindu-l și i-o ducea la gură...
+Și-o sete uriașă stă sufletul să-i rupă...
+Dar nu voia s-atingă infama băutură.
+
+În apa ei verzuie jucau sterlici de miere
+Și sub veninul groaznic simțea că e dulceață...
+Dar fălcile-nclestându-și, cu ultima putere
+Bătându-se cu moartea, uitase de viață!
+
+Deasupra fără tihnă, se frământau măslinii,
+Păreau că vor să fugă din loc, să nu-l mai vadă...
+Treceau bătăi de aripi prin vraiștea grădinii
+Și uliii de seară dau roate dupa pradă.`
+  }
+};
+
 const REACTIONS = [
   { type: 'like', label: 'Like', emoji: '👍' },
   { type: 'love', label: 'Inimă', emoji: '❤️' },
@@ -100,6 +324,11 @@ const Scriitor = () => {
     setExpandedPoems((prev) => ({ ...prev, [postId]: !prev[postId] }));
   };
 
+  // Funcție pentru a obține textul poeziei
+  const getPoemText = (poemKey) => {
+    return shortPoems[poemKey]?.text || 'Poezia nu este disponibilă momentan.';
+  };
+
   // Pentru modalul cu toți prietenii
   const [showAllFriendsModal, setShowAllFriendsModal] = useState(false);
   const openAllFriendsModal = () => setShowAllFriendsModal(true);
@@ -108,7 +337,20 @@ const Scriitor = () => {
   // Pentru modal preview poezie
   const [poemPreviewModal, setPoemPreviewModal] = useState({ open: false, post: null });
   const openPoemPreview = (post) => {
-    setPoemPreviewModal({ open: true, post });
+    // Dacă este o poezie scurtă, creează un obiect post cu datele necesare
+    if (post.isPoem && shortPoems[post.poemTitle]) {
+      const poemData = shortPoems[post.poemTitle];
+      setPoemPreviewModal({ 
+        open: true, 
+        post: {
+          poemTitle: poemData.titlu,
+          poemText: poemData.text,
+          isPoem: true
+        }
+      });
+    } else {
+      setPoemPreviewModal({ open: true, post });
+    }
     // Blochează scroll-ul pe fundal
     document.body.style.overflow = 'hidden';
   };
@@ -393,10 +635,41 @@ const Scriitor = () => {
           <div className="scriitor-posts-title">Postări</div>
           <div className="scriitor-posts-container">
             {posts.map((post) => (
-              <div key={post.id} className={`scriitor-post ${post.pin ? 'pinned' : ''} ${post.link ? 'clickable' : ''}`} onClick={() => post.link && goToPoezie(post.link)}>
+              <div key={post.id} className={`scriitor-post ${post.pin ? 'pinned' : ''} ${post.link ? 'clickable' : ''}`} onClick={() => post.link && !post.pinnedActions && goToPoezie(post.link)}>
                 {post.pin && <div className="scriitor-post-pin">📌 Pin</div>}
                 <div className="scriitor-post-date">{post.date}</div>
                 <div className="scriitor-post-text">{post.text}</div>
+                
+                {/* Butoane pentru postările pinned */}
+                {post.pin && post.pinnedActions && (
+                  <div className="scriitor-pinned-actions">
+                    {post.pinnedActions.map((action, idx) => (
+                      <button
+                        key={idx}
+                        className={`scriitor-pinned-action-btn scriitor-pinned-action-${action.type}`}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          if (action.link === '#') {
+                            // Pentru comentariul operei (link gol)
+                            alert('Pagina cu comentariul operei va fi disponibilă în curând!');
+                          } else if (action.isPoem) {
+                            // Pentru poeziile scurte, afișează popup-ul
+                            openPoemPreview({
+                              poemTitle: action.link,
+                              isPoem: true
+                            });
+                          } else {
+                            // Pentru citirea operei
+                            window.location.href = action.link;
+                          }
+                        }}
+                      >
+                        <span className="scriitor-pinned-action-icon">{action.icon}</span>
+                        <span className="scriitor-pinned-action-text">{action.text}</span>
+                      </button>
+                    ))}
+                  </div>
+                )}
                 {post.isPoem ? (
                   <div className="scriitor-poem-container">
                     {/* Stânga: imagini poezie */}

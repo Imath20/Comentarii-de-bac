@@ -75,6 +75,57 @@ const arghezi = {
     '/Banner/arghezi.png',
     '/scriitori/tudor_arghezi.png',
   ],
+  posts: [
+    {
+      id: 1,
+      pin: true,
+      date: '15 martie 1927',
+      author: 'Tudor Arghezi',
+      text: 'Am publicat "Testament" - o poezie care să exploreze moștenirea spirituală și culturală a poporului român. Fiecare vers este o testamentare a valorilor noastre, fiecare cuvânt este o moștenire pentru generațiile viitoare.',
+      image: '/opere/testament.png',
+      pinnedActions: [
+        {
+          type: 'comentariu',
+          text: 'Comentariul operei',
+          link: '#', // Link gol pentru pagina care nu există încă
+          icon: '📝'
+        },
+        {
+          type: 'opera',
+          text: 'Citește opera',
+          link: 'testament', // Link către popup pentru poezia Testament
+          icon: '📖',
+          isPoem: true
+        }
+      ],
+      likes: 1927,
+      reactions: [
+        { friendKey: 'blaga', reaction: 'ador' },
+        { friendKey: 'barbu', reaction: 'love' },
+        { friendKey: 'bacovia', reaction: 'strengh' },
+        { friendKey: 'rebreanu', reaction: 'cool' },
+        { friendKey: 'petrescu', reaction: 'fire' },
+        { friendKey: 'calinescu', reaction: 'clap' },
+      ],
+      comments: [
+        {
+          author: 'Lucian Blaga',
+          key: 'blaga',
+          text: 'Excelentă colecție, Tudore! Poeziile tale sunt adevărate bijuterii literare!',
+        },
+        {
+          author: 'Ion Barbu',
+          key: 'barbu',
+          text: 'Felicitări! Ai reușit să capturezi esența vieții în versuri!',
+        },
+        {
+          author: 'George Bacovia',
+          key: 'bacovia',
+          text: 'Minunată lucrare! Poeziile tale au o forță expresivă extraordinară!',
+        },
+      ],
+    },
+  ],
 };
 
 export default arghezi; 

@@ -75,6 +75,56 @@ const barbu = {
     '/Banner/barbu.png',
     '/scriitori/barbu_ion.png',
   ],
+  posts: [
+    {
+      id: 1,
+      pin: true,
+      date: '10 mai 1930',
+      author: 'Ion Barbu',
+      text: 'Am publicat "Riga Crypto" - o poezie care să exploreze complexitatea existenței prin prisma matematicii și filosofiei. Fiecare vers este o ecuație poetică, fiecare cuvânt este o variabilă a vieții.',
+      image: '/opere/riga-crypto.png',
+      pinnedActions: [
+        {
+          type: 'comentariu',
+          text: 'Comentariul operei',
+          link: '#', // Link gol pentru pagina care nu există încă
+          icon: '📝'
+        },
+        {
+          type: 'opera',
+          text: 'Citește opera',
+          link: '/carte/riga-crypto', // Link către BookReader pentru Riga Crypto
+          icon: '📖'
+        }
+      ],
+      likes: 1930,
+      reactions: [
+        { friendKey: 'arghezi', reaction: 'ador' },
+        { friendKey: 'blaga', reaction: 'love' },
+        { friendKey: 'bacovia', reaction: 'strengh' },
+        { friendKey: 'rebreanu', reaction: 'cool' },
+        { friendKey: 'petrescu', reaction: 'fire' },
+        { friendKey: 'calinescu', reaction: 'clap' },
+      ],
+      comments: [
+        {
+          author: 'Tudor Arghezi',
+          key: 'arghezi',
+          text: 'Minunată poezie, Ioane! "Riga Crypto" este o bijuterie matematică!',
+        },
+        {
+          author: 'Lucian Blaga',
+          key: 'blaga',
+          text: 'Felicitări! Ai reușit să unifici poezia cu matematica!',
+        },
+        {
+          author: 'George Bacovia',
+          key: 'bacovia',
+          text: 'Excelentă lucrare! Poeziile tale au o precizie matematică extraordinară!',
+        },
+      ],
+    },
+  ],
 };
 
 export default barbu; 

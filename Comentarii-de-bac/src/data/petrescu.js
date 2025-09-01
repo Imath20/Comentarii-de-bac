@@ -2,7 +2,7 @@ const petrescu = {
   nume: 'Camil Petrescu',
   // date: '1894 – 1957',
   img: '/scriitori/camil_rezerva.png',
-  color: 'rgba(122,58,0,0.82)',
+  color: 'rgba(255,179,71,0.82)',
   banner: '/Banner/petrescu.png',
   friends: [
     {
@@ -31,39 +31,64 @@ const petrescu = {
       img: '/scriitori/liviu_rebreanu_nou.png',
     },
     {
-      name: 'Mihail Sadoveanu',
-      key: 'sadoveanu',
-      img: '/scriitori/mihail-sadoveanu-3.png',
-    },
-    {
       name: 'George Călinescu',
       key: 'calinescu',
       img: '/scriitori/george_calinescu.png',
-    },
-    {
-      name: 'Ion Pillat',
-      key: 'pillat',
-      img: '/scriitori/ion_pillat.png',
-    },
-    {
-      name: 'Marin Preda',
-      key: 'preda',
-      img: '/scriitori/marin_preda.png',
-    },
-    {
-      name: 'Vasile Voiculescu',
-      key: 'voiculescu',
-      img: '/scriitori/vasile_voiculescu.png',
-    },
-    {
-      name: 'Mircea Eliade',
-      key: 'eliade',
-      img: '/scriitori/mircea-eliade.png',
     },
   ],
   gallery: [
     '/Banner/petrescu.png',
     '/scriitori/camil_rezerva.png',
+  ],
+  posts: [
+    {
+      id: 1,
+      pin: true,
+      date: '15 martie 1930',
+      author: 'Camil Petrescu',
+      text: 'Am publicat "Ultima noapte de dragoste, întâia noapte de război" - un roman care să exploreze existențialismul și dragostea în timpul Primului Război Mondial. Fiecare pagină este o meditație asupra existenței, fiecare personaj este o reprezentare a condiției umane.',
+      image: '/opere/ultima-noapte.png',
+      pinnedActions: [
+        {
+          type: 'comentariu',
+          text: 'Comentariul operei',
+          link: '#', // Link gol pentru pagina care nu există încă
+          icon: '📝'
+        },
+        {
+          type: 'opera',
+          text: 'Citește opera',
+          link: '/carte/ultima-noapte-dragoste', // Link către BookReader pentru Ultima noapte de dragoste
+          icon: '📖'
+        }
+      ],
+      likes: 1930,
+      reactions: [
+        { friendKey: 'arghezi', reaction: 'ador' },
+        { friendKey: 'blaga', reaction: 'love' },
+        { friendKey: 'barbu', reaction: 'strengh' },
+        { friendKey: 'bacovia', reaction: 'cool' },
+        { friendKey: 'rebreanu', reaction: 'fire' },
+        { friendKey: 'calinescu', reaction: 'clap' },
+      ],
+      comments: [
+        {
+          author: 'Tudor Arghezi',
+          key: 'arghezi',
+          text: 'Minunat roman, Camil! "Ultima noapte de dragoste" este o capodoperă psihologică!',
+        },
+        {
+          author: 'Lucian Blaga',
+          key: 'blaga',
+          text: 'Felicitări! Ai reușit să capturezi esența sufletului uman!',
+        },
+        {
+          author: 'Ion Barbu',
+          key: 'barbu',
+          text: 'Excelentă lucrare! Romanul tău este o capodoperă psihologică!',
+        },
+      ],
+    },
   ],
 };
 

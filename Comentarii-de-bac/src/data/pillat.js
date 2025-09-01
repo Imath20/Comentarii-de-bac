@@ -2,7 +2,7 @@ const pillat = {
   nume: 'Ion Pillat',
   // date: '1891 – 1945',
   img: '/scriitori/ion_pillat.png',
-  color: 'rgba(122,58,0,0.82)',
+  color: 'rgba(255,179,71,0.82)',
   banner: '/Banner/pillat.png',
   friends: [
     {
@@ -35,25 +35,61 @@ const pillat = {
       key: 'petrescu',
       img: '/scriitori/camil_rezerva.png',
     },
-    {
-      name: 'Mihail Sadoveanu',
-      key: 'sadoveanu',
-      img: '/scriitori/mihail-sadoveanu-3.png',
-    },
-    {
-      name: 'George Călinescu',
-      key: 'calinescu',
-      img: '/scriitori/george_calinescu.png',
-    },
-    {
-      name: 'Mircea Eliade',
-      key: 'eliade',
-      img: '/scriitori/mircea-eliade.png',
-    },
   ],
   gallery: [
     '/Banner/pillat.png',
     '/scriitori/ion_pillat.png',
+  ],
+  posts: [
+    {
+      id: 1,
+      pin: true,
+      date: '8 decembrie 1923',
+      author: 'Ion Pillat',
+      text: 'Am publicat "Aci sosi pe vremuri" - o poezie care să exploreze frumusețea naturii românești și să exprime dragostea pentru țară. Fiecare vers este o declarație de iubire pentru România.',
+      image: '/opere/aci-sosi.png',
+      pinnedActions: [
+        {
+          type: 'comentariu',
+          text: 'Comentariul operei',
+          link: '#', // Link gol pentru pagina care nu există încă
+          icon: '📝'
+        },
+        {
+          type: 'opera',
+          text: 'Citește opera',
+          link: 'aci-sosi', // Link către popup pentru poezia Aci sosi pe vremuri
+          icon: '📖',
+          isPoem: true
+        }
+      ],
+      likes: 1923,
+      reactions: [
+        { friendKey: 'arghezi', reaction: 'ador' },
+        { friendKey: 'blaga', reaction: 'love' },
+        { friendKey: 'barbu', reaction: 'strengh' },
+        { friendKey: 'bacovia', reaction: 'cool' },
+        { friendKey: 'rebreanu', reaction: 'fire' },
+        { friendKey: 'petrescu', reaction: 'clap' },
+      ],
+      comments: [
+        {
+          author: 'Tudor Arghezi',
+          key: 'arghezi',
+          text: 'Minunată colecție, Ioane! Poeziile tale sunt adevărate bijuterii patriotice!',
+        },
+        {
+          author: 'Lucian Blaga',
+          key: 'blaga',
+          text: 'Felicitări! Ai reușit să capturezi esența frumuseții românești!',
+        },
+        {
+          author: 'Ion Barbu',
+          key: 'barbu',
+          text: 'Excelentă lucrare! Poeziile tale au o forță patriotică extraordinară!',
+        },
+      ],
+    },
   ],
 };
 

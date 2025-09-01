@@ -31,34 +31,64 @@ const rebreanu = {
       img: '/scriitori/camil_rezerva.png',
     },
     {
-      name: 'Mihail Sadoveanu',
-      key: 'sadoveanu',
-      img: '/scriitori/mihail-sadoveanu-3.png',
-    },
-    {
       name: 'George Călinescu',
       key: 'calinescu',
       img: '/scriitori/george_calinescu.png',
-    },
-    {
-      name: 'Ion Pillat',
-      key: 'pillat',
-      img: '/scriitori/ion_pillat.png',
-    },
-    {
-      name: 'Vasile Voiculescu',
-      key: 'voiculescu',
-      img: '/scriitori/vasile_voiculescu.png',
-    },
-    {
-      name: 'Mircea Eliade',
-      key: 'eliade',
-      img: '/scriitori/mircea-eliade.png',
     },
   ],
   gallery: [
     '/Banner/rebreanu.png',
     '/scriitori/liviu_rebreanu_nou.png',
+  ],
+  posts: [
+    {
+      id: 1,
+      pin: true,
+      date: '25 august 1922',
+      author: 'Liviu Rebreanu',
+      text: 'Am publicat "Ion" - un roman care să exploreze viața țăranilor români din Transilvania. Fiecare pagină este impregnată cu frumusețea naturii și cu înțelepciunea poporului nostru.',
+      image: '/opere/Ion.png',
+      pinnedActions: [
+        {
+          type: 'comentariu',
+          text: 'Comentariul operei',
+          link: '#', // Link gol pentru pagina care nu există încă
+          icon: '📝'
+        },
+        {
+          type: 'opera',
+          text: 'Citește opera',
+          link: '/carte/ion', // Link către BookReader pentru Ion
+          icon: '📖'
+        }
+      ],
+      likes: 1922,
+      reactions: [
+        { friendKey: 'arghezi', reaction: 'ador' },
+        { friendKey: 'blaga', reaction: 'love' },
+        { friendKey: 'barbu', reaction: 'strengh' },
+        { friendKey: 'bacovia', reaction: 'cool' },
+        { friendKey: 'petrescu', reaction: 'fire' },
+        { friendKey: 'calinescu', reaction: 'clap' },
+      ],
+      comments: [
+        {
+          author: 'Tudor Arghezi',
+          key: 'arghezi',
+          text: 'Minunat roman, Liviu! "Ion" este o capodoperă pastorală!',
+        },
+        {
+          author: 'Lucian Blaga',
+          key: 'blaga',
+          text: 'Felicitări! Ai reușit să capturezi esența suferinței umane!',
+        },
+        {
+          author: 'Ion Barbu',
+          key: 'barbu',
+          text: 'Excelentă lucrare! Romanul tău este o capodoperă literară!',
+        },
+      ],
+    },
   ],
 };
 

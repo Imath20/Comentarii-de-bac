@@ -49,7 +49,20 @@ const creanga = {
       author: 'Ion Creangă',
       text: 'Aha! Am scris povestea cu Harap-Alb! Să știi că era odată ca niciodată, un crai care avea trei fete... Și iată că am pus-o pe hârtie, să o poată citi toți copiii! Sunt foarte mulțumit de ea, drăgăliță-Doamne!',
       image: '/opere/Harap-Alb.png',
-      link: '/poveste/harap-alb',
+      pinnedActions: [
+        {
+          type: 'comentariu',
+          text: 'Comentariul operei',
+          link: '#', // Link gol pentru pagina care nu există încă
+          icon: '📝'
+        },
+        {
+          type: 'opera',
+          text: 'Citește opera',
+          link: '/carte/harap-alb', // Link către BookReader pentru Harap-Alb
+          icon: '📖'
+        }
+      ],
       likes: 1877,
       reactions: [
         { friendKey: 'eminescu', reaction: 'love' },
