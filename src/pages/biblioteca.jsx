@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Navbar from '../assets/Navbar';
 import Footer from '../assets/Footer';
 import '../styles/style.scss';
@@ -560,6 +561,7 @@ export default function Carti() {
     const [tipFilter, setTipFilter] = useState('toate');
     const [romanSubcategorieFilter, setRomanSubcategorieFilter] = useState('toate');
     const [poemModal, setPoemModal] = useState({ open: false, poem: null });
+    const navigate = useNavigate();
 
     // Funcție pentru a bloca scroll-ul din spate
     const blockScroll = () => {
@@ -840,7 +842,7 @@ Treceau bătăi de aripi prin vraiștea grădinii
     const handleCardClick = (carte) => {
         if (carte.jsonFile) {
             // Redirecționează către BookReader cu fișierul JSON
-            window.location.href = `/carte/${carte.jsonFile}`;
+            navigate(`/carte/${carte.jsonFile}`);
         } else if (carte.categorie === 'poezie' && carte.poemKey && shortPoems[carte.poemKey]) {
             // Pentru poeziile scurte, afișează popup-ul
             setPoemModal({ open: true, poem: shortPoems[carte.poemKey] });

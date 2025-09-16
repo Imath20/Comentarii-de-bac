@@ -399,12 +399,12 @@ const Scriitor = () => {
 
   // Navigare către alt scriitor
   const goToScriitor = (key) => {
-    window.location.href = `/scriitor?name=${key}`;
+    navigate(`/scriitor?name=${key}`);
   };
 
   // Navigare către poezie (placeholder)
   const goToPoezie = (link) => {
-    if (link) window.location.href = link;
+    if (link) navigate(link);
   };
 
   // Helper: get likes from friends with specific reactions
@@ -660,7 +660,7 @@ const Scriitor = () => {
                             });
                           } else {
                             // Pentru citirea operei
-                            window.location.href = action.link;
+                            navigate(action.link);
                           }
                         }}
                       >

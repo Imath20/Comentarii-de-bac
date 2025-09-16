@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 // 5 array-uri goale pentru contururi (fiecare contur = array de puncte [ [x, y], ... ])
 export const horaContours = [
@@ -64,6 +65,7 @@ const ScriitoriHoraCanvas = () => {
   const [debugPoints, setDebugPoints] = useState([]);
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const navigate = useNavigate();
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -137,7 +139,7 @@ const ScriitoriHoraCanvas = () => {
   // Click pe scriitor: deschide linkul din info
   const handleClick = (e) => {
     if (hoveredIndex !== null && scriitoriInfo[hoveredIndex]) {
-      window.location.href = scriitoriInfo[hoveredIndex].link;
+      navigate(scriitoriInfo[hoveredIndex].link);
       return;
     }
     // --- DEBUG adăugare puncte (dezactivat) ---
