@@ -154,7 +154,7 @@ const ScriitoriHoraCanvas = () => {
   return (
     <div style={{ position: 'relative', width: '100%', maxWidth: 900, margin: '0 auto' }}>
       <img
-        src="../../public/Hora.png"
+        src="/hora/Hora.png"
         alt="Hora scriitorilor"
         style={{ width: '100%', display: 'block', borderRadius: '16px' }}
       />
