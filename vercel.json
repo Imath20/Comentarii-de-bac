@@ -19,11 +19,7 @@
     }
   ],
   "rewrites": [
-    {
-      "source": "/(.*)",
-      "destination": "/index.html",
-      "missing": [ { "type": "filesystem" } ]
-    }
+    { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
 
