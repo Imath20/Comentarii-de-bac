@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import Navbar from '../assets/Navbar';
 import Footer from '../assets/Footer';
 import ScriitoriHoraCanvas from '../assets/ScriitoriHoraCanvas';
@@ -209,6 +210,7 @@ const Index = () => {
   const [pdfFallbackUrl, setPdfFallbackUrl] = useState(null);
   const [showPresentationModal, setShowPresentationModal] = useState(false);
   const cardSize = 320;
+  const navigate = useNavigate();
 
   // Culoare bandă tematică
   const bandaColor = darkTheme ? 'rgba(26,13,0,0.82)' : 'rgba(255,179,71,0.82)';
@@ -369,7 +371,7 @@ const Index = () => {
           ))}
         </div>
         <button
-          onClick={() => window.location.href = '/opere'}
+          onClick={() => navigate('/opere')}
           className={`index-primary-button ${darkTheme ? 'dark-theme' : ''}`}
           onMouseOver={e => {
             e.currentTarget.style.background = darkTheme ? 'rgba(80,40,0,0.98)' : '#ffd591';
@@ -401,7 +403,7 @@ const Index = () => {
               <div
                 key={`${carte.titlu}-${carte.autor}`}
                 className={`index-biblioteca-card ${darkTheme ? 'dark-theme' : ''}`}
-                onClick={() => window.location.href = '/biblioteca'}
+                onClick={() => navigate('/biblioteca')}
                 onMouseOver={e => {
                   e.currentTarget.style.transform = 'scale(1.055)';
                   e.currentTarget.style.boxShadow = '0 8px 32px 0 rgba(60,40,20,0.22)';
@@ -433,7 +435,7 @@ const Index = () => {
             ))}
           </div>
           <button
-            onClick={() => window.location.href = '/biblioteca'}
+            onClick={() => navigate('/biblioteca')}
             className={`index-primary-button ${darkTheme ? 'dark-theme' : ''}`}
             onMouseOver={e => {
               e.currentTarget.style.background = darkTheme ? 'rgba(80,40,0,0.98)' : '#ffd591';
@@ -457,9 +459,9 @@ const Index = () => {
           {scriitoriList.map((scriitor, idx) => {
             const key = getScriitorKey(scriitor.nume);
             return (
-              <a
+              <Link
                 key={scriitor.nume}
-                href={`/scriitor?name=${key}`}
+                to={`/scriitor?name=${key}`}
                 style={{ textDecoration: 'none', color: 'inherit' }}
               >
                 <div
@@ -482,12 +484,12 @@ const Index = () => {
                     <div className="index-scriitor-dates">{scriitor.date}</div>
                   </div>
                 </div>
-              </a>
+              </Link>
             );
           })}
         </div>
         <button
-          onClick={() => window.location.href = '/scriitori'}
+          onClick={() => navigate('/scriitori')}
           className={`index-primary-button ${darkTheme ? 'dark-theme' : ''}`}
           onMouseOver={e => {
             e.currentTarget.style.background = darkTheme ? 'rgba(80,40,0,0.98)' : '#ffd591';
@@ -561,7 +563,7 @@ const Index = () => {
                 ))}
               </ul>
               <button
-                onClick={e => { e.stopPropagation(); window.location.href = sub.link; }}
+                onClick={e => { e.stopPropagation(); navigate(sub.link); }}
                 className={`index-subiect-button ${darkTheme ? 'dark-theme' : ''}`}
                 onMouseOver={e => {
                   e.currentTarget.style.background = darkTheme ? '#ffd591' : '#ffd591';
@@ -579,7 +581,7 @@ const Index = () => {
         </div>
         <div className="index-button-container">
           <button
-            onClick={() => window.location.href = '/subiecte'}
+            onClick={() => navigate('/subiecte')}
             className={`index-secondary-button ${darkTheme ? 'dark-theme' : ''}`}
             onMouseOver={e => {
               e.currentTarget.style.background = darkTheme ? 'rgba(255,179,71,0.08)' : '#fffbe6';
@@ -597,7 +599,7 @@ const Index = () => {
             Vezi toate subiectele
           </button>
           <button
-            onClick={() => window.location.href = '/ai'}
+            onClick={() => navigate('/ai')}
             className={`index-primary-button ${darkTheme ? 'dark-theme' : ''}`}
             onMouseOver={e => {
               e.currentTarget.style.background = darkTheme ? 'rgba(80,40,0,0.98)' : '#ffd591';
@@ -630,7 +632,7 @@ const Index = () => {
               <div
                 key={film.id}
                 className={`index-videoclipuri-card ${darkTheme ? 'dark-theme' : 'light-theme'}`}
-                onClick={() => window.location.href = '/videoclipuri'}
+                onClick={() => navigate('/videoclipuri')}
                 onMouseOver={e => {
                   e.currentTarget.style.transform = 'scale(1.05)';
                   e.currentTarget.style.boxShadow = '0 8px 32px 0 rgba(60,40,20,0.22)';
@@ -667,7 +669,7 @@ const Index = () => {
             ))}
           </div>
           <button
-            onClick={() => window.location.href = '/videoclipuri'}
+            onClick={() => navigate('/videoclipuri')}
             className={`index-primary-button ${darkTheme ? 'dark-theme' : ''}`}
             onMouseOver={e => {
               e.currentTarget.style.background = darkTheme ? 'rgba(80,40,0,0.98)' : '#ffd591';
