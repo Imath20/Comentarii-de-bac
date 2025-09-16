@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Navbar from '../assets/Navbar';
-import Footer from '../assets/Footer';
+import Layout from '../assets/Layout';
 import '../styles/style.scss';
 import Select from 'react-select';
 import { useNavigate } from 'react-router-dom';
@@ -58,117 +57,9 @@ const filmeList = [
     descriere: 'Baltagul',
     videoId: 'MWKSkj0cBM8',
     categorie: 'roman',
-    durata: '1:42:41',
+    durata: '1:43:48',
     autor: 'Mihail Sadoveanu',
   },
-  {
-    id: '7',
-    titlu: 'IL Caragiale - O scrisoare pierdută',
-    descriere: 'O scrisoare pierdută',
-    videoId: 'HnQPMYJNud8',
-    categorie: 'comedie',
-    durata: '2:13:08',
-    autor: 'IL Caragiale',
-  },
-  {
-    id: '8',
-    titlu: 'Mihai Eminescu - Luceafărul',
-    descriere: 'Luceafărul',
-    videoId: '5X_COpZg01Q',
-    categorie: 'poezie',
-    durata: '15:40',
-    autor: 'Mihai Eminescu',
-  },
-  {
-    id: '9',
-    titlu: 'George Bacovia - Plumb',
-    descriere: 'Plumb',
-    videoId: 'mW0EjMrbjcY',
-    categorie: 'poezie',
-    durata: '1:06',
-    autor: 'George Bacovia',
-  },
-  {
-    id: '10',
-    titlu: 'Camil Petrescu',
-    descriere: 'Ultima noapte de dragoste, întâia noapte de război',
-    videoId: 'x5O2NGuucIs',
-    categorie: 'roman',
-    durata: '1:39:15',
-    autor: 'Camil Petrescu',
-  },
-  {
-    id: '11',
-    titlu: 'Marin Preda - Moromeții',
-    descriere: 'Morometii - Vol. 1',
-    videoId: 'NHaNm-Acmx8',
-    categorie: 'roman',
-    durata: '2:28:04',
-    autor: 'Marin Preda',
-  },
-  {
-    id: '12',
-    titlu: 'Marin Preda - Moromeții',
-    descriere: 'Morometii - Vol. 2',
-    videoId: '9Eb1tKL3AJU',
-    categorie: 'roman',
-    durata: '1:47:27',
-    autor: 'Marin Preda',
-  },
-  {
-    id: '13',
-    titlu: 'Marin Sorescu - Iona',
-    descriere: 'Iona',
-    videoId: 'rxHq37u_7-I',
-    categorie: 'teatru',
-    durata: '50:35',
-    autor: 'Marin Sorescu',
-  },
-  {
-    id: '14',
-    titlu: 'Ion Creangă - Amintiri din copilărie',
-    descriere: 'Amintiri din copilărie',
-    videoId: 'KdG_IcX_npA',
-    categorie: 'proza',
-    durata: '1:11:28',
-    autor: 'Ion Creangă',
-  },
-  {
-    id: '15',
-    titlu: 'Liviu Rebreanu - Răscoala',
-    descriere: 'Rascoala',
-    videoId: 'K1Dh96vnSwY',
-    categorie: 'roman',
-    durata: '1:32:44',
-    autor: 'Liviu Rebreanu',
-  },
-  {
-    id: '16',
-    titlu: 'Costache Negruzzi',
-    descriere: 'Alexandru Lăpușneanu',
-    videoId: 'TU-HD71VJxQ',
-    categorie: 'roman',
-    durata: '2:21:48',
-    autor: 'Costache Negruzzi',
-  },
-  {
-    id: '18',
-    titlu: 'IL Caragiale - O noapte furtunoasă',
-    descriere: 'O noapte furtunoasă',
-    videoId: 'aEoCaq7RGmc',
-    categorie: 'teatru',
-    durata: '1:09:39',
-    autor: 'IL Caragiale',
-  },
-  {
-    id: '19',
-    titlu: 'Ion Creangă - Dănilă Prepeleac',
-    descriere: 'Dănilă Prepeleac',
-    videoId: 'vQ1l6vsXHwc',
-    categorie: 'proza',
-    durata: '1:08:14',
-    autor: 'Ion Creangă',
-  }
 ];
 
 // Categorii pentru filtrare
@@ -325,8 +216,7 @@ export default function Videoclipuri() {
   });
 
   return (
-    <>
-      <Navbar darkTheme={darkTheme} setDarkTheme={setDarkTheme} scrolled={scrolled} />
+    <Layout darkTheme={darkTheme} scrolled={scrolled}>
       <div className="page-hero">
         <h1 className="page-title">{
           'Videoclipuri'.split(' ').map((word, wi) => (
@@ -423,8 +313,6 @@ export default function Videoclipuri() {
           </div>
         )}
       </div>
-
-      <Footer darkTheme={darkTheme} />
-    </>
+    </Layout>
   );
 }

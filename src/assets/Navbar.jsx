@@ -7,6 +7,7 @@ import AiIcon from './icons/AiIcon';
 import VideoIcon from './icons/VideoIcon';
 import OpereIcon from './icons/OpereIcon';
 import BookIcon from './icons/BookIcon';
+import Logo from './Logo';
 
 const NAV_CATEGORIES = [
   { name: 'Acasa', href: '/', icon: <HomeIcon className="nav-icon" /> },
@@ -51,7 +52,10 @@ export default function Navbar({ darkTheme, setDarkTheme, scrolled }) {
           : '1.5px solid rgba(255, 179, 71, 0.18)',
       } : {}}
     >
-      <div className="navbar-logo">LOGO</div>
+      <a href="/" className="navbar-logo">
+        <Logo size="medium" darkTheme={darkTheme} />
+        <span className="navbar-logo-text">Comentarii de BAC</span>
+      </a>
       <ul className="navbar-menu" ref={menuRef}>
         {NAV_CATEGORIES.map(cat => (
           <li key={cat.name}>

@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import SubiectModal from '../assets/SubiectModal';
-import Navbar from '../assets/Navbar';
-import Footer from '../assets/Footer';
+import Layout from '../assets/Layout';
 import '../styles/style.scss';
 import '../styles/subiecte.scss';
 import Select from 'react-select';
@@ -215,9 +214,7 @@ export default function Subiecte() {
     };
 
     return (
-        <>
-            <Navbar darkTheme={darkTheme} setDarkTheme={setDarkTheme} scrolled={scrolled} />
-
+        <Layout darkTheme={darkTheme} scrolled={scrolled}>
             <div className="page-hero">
                 <h1 className="page-title">
                     {'Subiecte de BAC'.split(' ').map((word, wi) => (
@@ -420,15 +417,17 @@ export default function Subiecte() {
                     </div>
                 )}
             </div>
-        </div >
+            </div>
 
-            <SubiectModal
-                isOpen={isModalOpen}
-                subiect={activeSubiect}
-                darkTheme={darkTheme}
-                onClose={closeSubiectModal}
-            />
-            <Footer darkTheme={darkTheme} />
-        </>
+            {/* Modal pentru subiect */}
+            {isModalOpen && (
+                <SubiectModal
+                    isOpen={isModalOpen}
+                    subiect={activeSubiect}
+                    darkTheme={darkTheme}
+                    onClose={closeSubiectModal}
+                />
+            )}
+        </Layout>
     );
 } 

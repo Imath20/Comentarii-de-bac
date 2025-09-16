@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import Navbar from '../assets/Navbar';
-import Footer from '../assets/Footer';
+import Layout from '../assets/Layout';
 import '../styles/style.scss';
 import '../styles/ai.scss';
 
@@ -177,8 +176,7 @@ export default function AI() {
   };
 
   return (
-    <>
-      <Navbar darkTheme={darkTheme} setDarkTheme={setDarkTheme} scrolled={scrolled} />
+    <Layout darkTheme={darkTheme} setDarkTheme={setDarkTheme} scrolled={scrolled}>
       
       <div className="page-hero">
         <h1 className="page-title">
@@ -385,7 +383,6 @@ export default function AI() {
         </div>
       </div>
 
-      <Footer darkTheme={darkTheme} />
-    </>
+    </Layout>
   );
 }

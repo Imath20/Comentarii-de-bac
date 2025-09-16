@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Navbar from '../assets/Navbar';
-import Footer from '../assets/Footer';
+import Layout from '../assets/Layout';
 import ScriitoriHoraCanvas from '../assets/ScriitoriHoraCanvas';
 import '../styles/style.scss';
 
@@ -309,7 +308,7 @@ const Index = () => {
 
   return (
     <div className="page-wrapper">
-      <Navbar darkTheme={darkTheme} setDarkTheme={setDarkTheme} scrolled={scrolled} />
+      <Layout darkTheme={darkTheme} setDarkTheme={setDarkTheme} scrolled={scrolled} />
       <main className="main-content">
         <div className="page-hero">
           <h1 className="page-title">{
@@ -987,7 +986,7 @@ const Index = () => {
         </div>
       )}
 
-      <Footer />
+      <Layout />
     </div>
   );
 };
