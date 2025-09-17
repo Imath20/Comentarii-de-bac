@@ -841,7 +841,7 @@ Treceau bătăi de aripi prin vraiștea grădinii
     const handleCardClick = (carte) => {
         if (carte.jsonFile) {
             // Redirecționează către BookReader cu fișierul JSON
-            navigate(`/carte/${carte.jsonFile}`);
+            navigate(`/carte/${carte.jsonFile}`, { state: { from: { pathname: '/biblioteca', scrollY: window.scrollY } } });
         } else if (carte.categorie === 'poezie' && carte.poemKey && shortPoems[carte.poemKey]) {
             // Pentru poeziile scurte, afișează popup-ul
             setPoemModal({ open: true, poem: shortPoems[carte.poemKey] });

@@ -53,7 +53,8 @@
   margin-left: 12px;
   white-space: nowrap;
   outline: none;
-  &:focus{
+
+  &:focus {
     outline: none;
   }
 }
@@ -79,20 +80,15 @@
   background: #fffbe9;
   border-radius: 12px;
   padding: 24px;
-  box-shadow: 0 4px 24px 0 rgba(124,79,43,0.13);
+  box-shadow: 0 4px 24px 0 rgba(124, 79, 43, 0.13);
   width: 100% !important;
   max-width: 100% !important;
   display: block !important;
 }
 
+/* legacy centered controls removed in favor of floating controls */
 .book-reader-controls {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 18px;
-  margin-top: 24px;
-  width: 100% !important;
-  max-width: 100% !important;
+  display: none;
 }
 
 .book-reader-page-input-form {
@@ -114,8 +110,9 @@
   background: none;
   outline: none;
   transition: all 0.2s;
-  
+
   /* Hide increment/decrement arrows */
+  appearance: textfield;
   -webkit-appearance: none;
   -moz-appearance: textfield;
 }
@@ -228,6 +225,160 @@
   z-index: 1000;
   font-size: 0.9rem;
   font-weight: 600;
+}
+
+/* Floating pagination bottom-left, not affecting layout */
+.book-reader-floating-controls {
+  position: fixed;
+  left: 24px;
+  bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255, 251, 233, 0.88);
+  border: 1.5px solid #a97c50;
+  border-radius: 28px;
+  padding: 8px 12px;
+  box-shadow: 0 6px 24px rgba(124, 79, 43, 0.18);
+  z-index: 1200;
+  backdrop-filter: blur(6px);
+  outline: none;
+
+}
+
+.br-float-btn {
+  background: none;
+  border: 2px solid #a97c50;
+  color: #a97c50;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.br-float-btn:hover:not(:disabled) {
+  background: #a97c50;
+  color: #fff;
+}
+
+.br-float-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.br-float-form {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.br-float-input-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  outline: none;
+}
+
+.br-float-input {
+  width: 48px;
+  height: 34px;
+  border: 2px solid #a97c50;
+  border-radius: 18px;
+  padding: 0 26px 0 10px;
+  /* extra right space for steppers */
+  text-align: center;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #7c4f2b;
+  background: #fff;
+  outline: none;
+
+  /* Hide default number input arrows */
+  -webkit-appearance: none;
+  -moz-appearance: textfield;
+  appearance: textfield;
+  
+}
+
+.br-float-input::-webkit-outer-spin-button,
+.br-float-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+  
+}
+
+.br-float-input:focus {
+  border-color: #7c4f2b;
+  box-shadow: 0 0 0 2px rgba(124, 79, 43, 0.2);
+  
+}
+
+.br-float-steppers {
+  position: absolute;
+  right: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  gap: 2px;
+  
+}
+
+.br-step {
+  width: 16px;
+  height: 12px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  position: relative;
+  transition: opacity 0.15s ease;
+  outline: none;
+  &:focus{
+    outline: none;
+  }
+}
+
+.br-step:before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 0;
+  height: 0;
+  transform: translate(-50%, -50%);
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+}
+
+.br-step-up:before {
+  border-bottom: 6px solid #a97c50;
+}
+
+.br-step-down:before {
+  border-top: 6px solid #a97c50;
+}
+
+.br-step:hover:not(:disabled) {
+  opacity: 0.8;
+}
+
+.br-step:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.br-float-total {
+  color: #7c4f2b;
+  font-weight: 700;
 }
 
 .bookmark-icon {

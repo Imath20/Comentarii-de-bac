@@ -399,7 +399,11 @@ const Scriitor = () => {
 
   // Navigare către alt scriitor
   const goToScriitor = (key) => {
-    navigate(`/scriitor?name=${key}`);
+    const fromState = {
+      pathname: '/scriitori',
+      scrollY: (location.state && location.state.from && typeof location.state.from.scrollY === 'number') ? location.state.from.scrollY : 0,
+    };
+    navigate(`/scriitor?name=${key}`, { state: { from: fromState } });
   };
 
   // Navigare către poezie (placeholder)
@@ -496,7 +500,10 @@ const Scriitor = () => {
         <div className="scriitor-left-column">
           {/* AvatarSearchBar eliminat de aici */}
           {/* Buton înapoi - stil ca fullscreen button */}
-                     <button onClick={() => navigate("/scriitori")}
+                     <button onClick={() => {
+            const y = (location.state && location.state.from && typeof location.state.from.scrollY === 'number') ? location.state.from.scrollY : 0;
+            navigate('/scriitori', { replace: true, state: { restoreScroll: y } });
+          }}
              className="scriitor-back-btn-inline"
              onMouseEnter={(e) => {
                e.target.style.transform = 'translateX(-8px)';

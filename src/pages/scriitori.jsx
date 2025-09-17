@@ -427,10 +427,10 @@ export default function Scriitori() {
           {filteredScriitori.map((scriitor, idx) => {
             const key = getScriitorKey(scriitor.nume);
             return (
-              <Link
+              <div
                 key={scriitor.nume}
-                to={`/scriitor?name=${key}`}
                 className={`scriitori-card ${darkTheme ? 'dark-theme' : ''}`}
+                onClick={() => navigate(`/scriitor?name=${key}`, { state: { from: { pathname: '/scriitori', scrollY: window.scrollY } } })}
                 onMouseOver={e => {
                   e.currentTarget.style.transform = 'scale(1.045)';
                   e.currentTarget.style.zIndex = 2;
@@ -448,7 +448,7 @@ export default function Scriitori() {
                   <div>{scriitor.nume}</div>
                   <div className="scriitori-card-dates">{scriitor.date}</div>
                 </div>
-              </Link>
+              </div>
             );
           })}
         </div>

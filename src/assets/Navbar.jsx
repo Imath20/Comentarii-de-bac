@@ -1,5 +1,5 @@
-import React, { useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useRef, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import HomeIcon from './icons/HomeIcon';
 import PenPaperIcon from './icons/PenPaperIcon';
 import SlideIcon from './icons/SlideIcon';
@@ -24,6 +24,25 @@ const NAV_CATEGORIES = [
 export default function Navbar({ darkTheme, setDarkTheme, scrolled }) {
   const menuRef = useRef(null);
   const [underline, setUnderline] = useState({ left: 0, width: 0, visible: false });
+  const location = useLocation();
+
+  const updateActiveUnderline = () => {
+    const menu = menuRef.current;
+    if (!menu) return;
+    const menuRect = menu.getBoundingClientRect();
+    const path = location.pathname || '/';
+    const activeIndex = NAV_CATEGORIES.findIndex(cat => (
+      cat.href === '/' ? path === '/' : path.startsWith(cat.href)
+    ));
+    const links = menu.querySelectorAll('a');
+    const activeLink = activeIndex >= 0 ? links[activeIndex] : null;
+    if (activeLink) {
+      const { left, width } = activeLink.getBoundingClientRect();
+      setUnderline({ left: left - menuRect.left, width, visible: true });
+    } else {
+      setUnderline(u => ({ ...u, visible: false }));
+    }
+  };
 
   const handleMouseEnter = (e) => {
     const item = e.currentTarget;
@@ -35,8 +54,17 @@ export default function Navbar({ darkTheme, setDarkTheme, scrolled }) {
     }
   };
   const handleMouseLeave = () => {
-    setUnderline(u => ({ ...u, visible: false }));
+    updateActiveUnderline();
   };
+
+  useEffect(() => {
+    updateActiveUnderline();
+    // Recalculate on window resize for responsive layouts
+    const onResize = () => updateActiveUnderline();
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.pathname]);
 
   return (
     <nav
@@ -53,10 +81,10 @@ export default function Navbar({ darkTheme, setDarkTheme, scrolled }) {
           : '1.5px solid rgba(255, 179, 71, 0.18)',
       } : {}}
     >
-      <a href="/" className="navbar-logo">
+      <Link to="/" className="navbar-logo">
         <Logo size="medium" darkTheme={darkTheme} />
         <span className="navbar-logo-text">Comentarii de BAC</span>
-      </a>
+      </Link>
       <ul className="navbar-menu" ref={menuRef}>
         {NAV_CATEGORIES.map(cat => (
           <li key={cat.name}>

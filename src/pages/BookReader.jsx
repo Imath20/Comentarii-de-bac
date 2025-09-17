@@ -343,7 +343,8 @@ export default function BookReader() {
 
   const goBack = () => {
     if (location.state && location.state.from) {
-      navigate(location.state.from);
+      const { pathname, scrollY } = location.state.from;
+      navigate(pathname || -1, { state: { restoreScroll: typeof scrollY === 'number' ? scrollY : 0 } });
     } else {
       navigate(-1);
     }
@@ -359,6 +360,8 @@ export default function BookReader() {
     if (pageNumber >= 0 && pageNumber < pages.length) {
       setPage(pageNumber);
       setPageInput("");
+      // Scroll to top on page change
+      window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
     }
   };
 
@@ -417,9 +420,20 @@ export default function BookReader() {
         <div className="book-reader-content">
           <div className="book-reader-page">{pages[page]}</div>
         </div>
-        <div className="book-reader-controls">
-          <button onClick={() => setPage(p => Math.max(0, p - 1))} disabled={page === 0}>Prev</button>
-          <form onSubmit={handlePageInputSubmit} className="book-reader-page-input-form">
+      </div>
+
+      {/* Floating pagination controls (bottom-left) */}
+      <div className="book-reader-floating-controls">
+        <button
+          className="br-float-btn"
+          onClick={() => { setPage(p => Math.max(0, p - 1)); window.scrollTo({ top: 0, left: 0, behavior: 'auto' }); }}
+          disabled={page === 0}
+          aria-label="Pagina anterioară"
+        >
+          ◀
+        </button>
+        <form onSubmit={handlePageInputSubmit} className="br-float-form">
+          <div className="br-float-input-wrap">
             <input
               type="number"
               min="1"
@@ -427,14 +441,36 @@ export default function BookReader() {
               value={pageInput}
               onChange={handlePageInputChange}
               placeholder={`${page + 1}`}
-              className="book-reader-page-input"
+              className="br-float-input"
+              aria-label="Număr pagină"
             />
-            <span className="book-reader-page-separator">/</span>
-            <span className="book-reader-total-pages">{pages.length}</span>
-            {/* <span className="book-reader-width-indicator">max-width: {getEffectiveMaxWidth(currentBook, page)}</span> */}
-          </form>
-          <button onClick={() => setPage(p => Math.min(pages.length - 1, p + 1))} disabled={page === pages.length - 1}>Next</button>
-        </div>
+            <div className="br-float-steppers" aria-hidden="false" role="group" aria-label="Schimbare pagină rapidă">
+              <button
+                type="button"
+                className="br-step br-step-up"
+                onClick={() => { setPage(p => Math.min(pages.length - 1, p + 1)); window.scrollTo({ top: 0, left: 0, behavior: 'auto' }); }}
+                disabled={page === pages.length - 1}
+                aria-label="Pagina următoare"
+              />
+              <button
+                type="button"
+                className="br-step br-step-down"
+                onClick={() => { setPage(p => Math.max(0, p - 1)); window.scrollTo({ top: 0, left: 0, behavior: 'auto' }); }}
+                disabled={page === 0}
+                aria-label="Pagina anterioară"
+              />
+            </div>
+          </div>
+          <span className="br-float-total">/ {pages.length}</span>
+        </form>
+        <button
+          className="br-float-btn"
+          onClick={() => { setPage(p => Math.min(pages.length - 1, p + 1)); window.scrollTo({ top: 0, left: 0, behavior: 'auto' }); }}
+          disabled={page === pages.length - 1}
+          aria-label="Pagina următoare"
+        >
+          ▶
+        </button>
       </div>
       
       {showBookmarkConfirm && (
