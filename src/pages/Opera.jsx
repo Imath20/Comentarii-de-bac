@@ -214,6 +214,7 @@ export default function Opera() {
   const [darkTheme, setDarkTheme] = useState(() => localStorage.getItem('theme') === 'dark');
   const [scrolled, setScrolled] = useState(false);
   const [activeTab, setActiveTab] = useState('prezentare');
+  const [showScrollButton, setShowScrollButton] = useState(false);
 
   useEffect(() => {
     document.body.classList.toggle('dark-theme', darkTheme);
@@ -221,9 +222,17 @@ export default function Opera() {
   }, [darkTheme]);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 10);
+    const onScroll = () => {
+      setScrolled(window.scrollY > 10);
+      setShowScrollButton(window.scrollY > 300);
+    };
     window.addEventListener('scroll', onScroll);
     return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  // Scroll to top when component mounts (when opening an opera)
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'instant' });
   }, []);
 
   const initialOpera = location.state && location.state.opera ? location.state.opera : null;
@@ -259,6 +268,17 @@ export default function Opera() {
     }
   };
 
+  const scrollToContent = () => {
+    const contentElement = document.getElementById('opera-content');
+    if (contentElement) {
+      contentElement.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   const bgImage = effectiveOpera.img ? effectiveOpera.img.replace('/public', '') : '';
 
   const renderTabContent = () => {
@@ -279,7 +299,7 @@ export default function Opera() {
               <h3>Descriere</h3>
               <p>{operaDetails.descriere}</p>
             </div>
-            
+
             <div className="opera-themes">
               <h3>Teme principale</h3>
               <ul>
@@ -324,18 +344,23 @@ export default function Opera() {
       case 'comentariu':
         return (
           <div className="opera-tab-content">
-            {bookSlug ? (
-              <iframe
-                title={`Comentariu ${effectiveOpera.titlu}`}
-                src={`/carte/${bookSlug}`}
-                className="opera-comment-frame"
-              />
-            ) : (
-              <div className="opera-comment-missing">
-                <h3>Comentariul nu este disponibil</h3>
-                <p>Comentariul pentru această operă nu este încă disponibil. Lucrăm la completarea resurselor educaționale.</p>
+            <div className="opera-comment-content">
+              <h3>Comentariu literar</h3>
+              <div className="comment-text">
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                </p>
+                <p>
+                  Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                </p>
+                <p>
+                  Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+                </p>
+                <p>
+                  Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet.
+                </p>
               </div>
-            )}
+            </div>
           </div>
         );
 
@@ -345,7 +370,10 @@ export default function Opera() {
   };
 
   return (
-    <Layout darkTheme={darkTheme} setDarkTheme={setDarkTheme} scrolled={scrolled} transparentOnTop>
+    // <Layout darkTheme={darkTheme} setDarkTheme={setDarkTheme} scrolled={scrolled} transparentOnTop>
+
+    // </Layout>
+    <>
       <section
         className="opere-hero-full"
         style={{ backgroundImage: bgImage ? `url(${bgImage})` : undefined }}
@@ -366,29 +394,29 @@ export default function Opera() {
             </div>
           )}
         </div>
-        <a href="#opera-content" className="opere-scroll-cue" aria-label="Derulează pentru conținut">
+        <button onClick={scrollToContent} className="opere-scroll-cue" aria-label="Derulează pentru conținut">
           <span>Derulează pentru conținut</span>
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <polyline points="6 9 12 15 18 9"></polyline>
           </svg>
-        </a>
+        </button>
       </section>
 
       <section id="opera-content" className="opera-content-container">
         <div className="opera-tabs">
-          <button 
+          <button
             className={`opera-tab ${activeTab === 'prezentare' ? 'active' : ''}`}
             onClick={() => setActiveTab('prezentare')}
           >
             Prezentare
           </button>
-          <button 
+          <button
             className={`opera-tab ${activeTab === 'analiza' ? 'active' : ''}`}
             onClick={() => setActiveTab('analiza')}
           >
             Analiză
           </button>
-          <button 
+          <button
             className={`opera-tab ${activeTab === 'comentariu' ? 'active' : ''}`}
             onClick={() => setActiveTab('comentariu')}
           >
@@ -412,7 +440,20 @@ export default function Opera() {
           </div>
         )}
       </section>
-    </Layout>
+
+      {/* Scroll to top button */}
+      {showScrollButton && (
+        <button
+          onClick={scrollToTop}
+          className="scroll-to-top-btn"
+          aria-label="Derulează în sus"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <polyline points="18 15 12 9 6 15"></polyline>
+          </svg>
+        </button>
+      )}
+    </>
   );
 }
 
