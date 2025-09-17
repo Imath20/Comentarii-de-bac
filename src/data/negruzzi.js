@@ -34,6 +34,7 @@ const negruzzi = {
   gallery: [
     '/Banner/negruzzi.webp',
     '/scriitori/costache-negruzzi.webp',
+    '/opere/lapusneanu.webp',
   ],
   posts: [
     {

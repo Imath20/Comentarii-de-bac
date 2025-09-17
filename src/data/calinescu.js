@@ -39,6 +39,7 @@ const calinescu = {
   gallery: [
     '/Banner/calinescu.webp',
     '/scriitori/george_calinescu.webp',
+    '/opere/enigma-otiliei.webp',
   ],
   posts: [
     {

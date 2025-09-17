@@ -39,6 +39,7 @@ const petrescu = {
   gallery: [
     '/Banner/petrescu.webp',
     '/scriitori/camil_rezerva.webp',
+    '/opere/ultima-noapte.webp',
   ],
   posts: [
     {

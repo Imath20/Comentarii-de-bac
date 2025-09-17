@@ -39,6 +39,7 @@ const stanescu = {
   gallery: [
     '/Banner/stanescu.webp',
     '/scriitori/nichita_stanescu_rezerva.webp',
+    '/opere/leoaica-iubirea.webp',
   ],
   posts: [
     {

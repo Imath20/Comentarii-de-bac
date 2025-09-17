@@ -34,6 +34,7 @@ const maiorescu = {
   gallery: [
     '/Banner/maiorescu.webp',
     '/scriitori/titu_maiorescu (2).webp',
+    '/opere/formele.webp',
   ],
   posts: [
     {

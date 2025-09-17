@@ -39,6 +39,7 @@ const caragiale = {
   gallery: [
     '/Banner/caragiale.webp',
     '/scriitori/il-caragiale.webp',
+    '/opere/scrisoare-pierduta.webp',
   ],
   posts: [
     {

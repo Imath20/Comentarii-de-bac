@@ -39,6 +39,7 @@ const bacovia = {
   gallery: [
     '/Banner/bacovia.webp',
     '/scriitori/bacovia_rezerva.webp',
+    '/opere/plumb.webp',
   ],
   posts: [
     {

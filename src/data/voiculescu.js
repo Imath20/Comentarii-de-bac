@@ -39,6 +39,7 @@ const voiculescu = {
   gallery: [
     '/Banner/voiculescu.webp',
     '/scriitori/vasile_voiculescu.webp',
+    '/opere/gradina-ghetsimani.webp',
   ],
   posts: [
     {

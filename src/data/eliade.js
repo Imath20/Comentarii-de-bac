@@ -39,6 +39,7 @@ const eliade = {
   gallery: [
     '/Banner/eliade.webp',
     '/scriitori/mircea-eliade.webp',
+    '/opere/maytreyi.webp',
   ],
   posts: [
     {

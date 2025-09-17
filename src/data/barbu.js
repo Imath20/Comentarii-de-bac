@@ -74,6 +74,7 @@ const barbu = {
   gallery: [
     '/Banner/barbu.webp',
     '/scriitori/barbu_ion.webp',
+    '/opere/riga-crypto.webp',
   ],
   posts: [
     {

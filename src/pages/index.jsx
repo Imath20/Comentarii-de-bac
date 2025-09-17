@@ -199,12 +199,18 @@ const videoclipuriList = [
 ];
 
 function getScriitorKey(nume) {
-  return nume
+  const normalized = nume
     .toLowerCase()
     .replace(/ă/g, 'a').replace(/â/g, 'a').replace(/î/g, 'i').replace(/ș/g, 's').replace(/ş/g, 's').replace(/ț/g, 't').replace(/ţ/g, 't')
-    .replace(/[^a-z0-9 ]/g, '')
-    .split(' ')[1] // prenumele (ex: Mihai Eminescu -> eminescu)
-    || nume.toLowerCase();
+    .replace(/[^a-z0-9 .-]/g, ' ');
+  const tokens = normalized.split(/\s+/).filter(Boolean);
+  // Prefer the last meaningful token (e.g., 'caragiale' from 'i.l. caragiale')
+  for (let i = tokens.length - 1; i >= 0; i--) {
+    const t = tokens[i].replace(/\.+/g, '');
+    if (t && t.length > 1 && /[a-z0-9]/.test(t)) return t;
+  }
+  // Fallback to whole normalized string if parsing failed
+  return normalized.replace(/\s+/g, '-');
 }
 
 const Index = () => {

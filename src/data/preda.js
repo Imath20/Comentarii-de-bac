@@ -39,6 +39,7 @@ const preda = {
   gallery: [
     '/Banner/preda.webp',
     '/scriitori/marin_preda.webp',
+    '/opere/morometii.webp',
   ],
   posts: [
     {

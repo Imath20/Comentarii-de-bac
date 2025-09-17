@@ -74,6 +74,7 @@ const arghezi = {
   gallery: [
     '/Banner/arghezi.webp',
     '/scriitori/tudor_arghezi.webp',
+    '/opere/testament.webp',
   ],
   posts: [
     {

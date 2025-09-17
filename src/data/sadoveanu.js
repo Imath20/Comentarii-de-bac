@@ -39,6 +39,7 @@ const sadoveanu = {
   gallery: [
     '/Banner/sadoveanu.webp',
     '/scriitori/mihail-sadoveanu-3.webp',
+    '/opere/baltagul.webp',
   ],
   posts: [
     {

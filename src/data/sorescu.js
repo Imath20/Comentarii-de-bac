@@ -39,6 +39,7 @@ const sorescu = {
   gallery: [
     '/Banner/sorescu.webp',
     '/scriitori/marin_sorescu.webp',
+    '/opere/iona.webp',
   ],
   posts: [
     {

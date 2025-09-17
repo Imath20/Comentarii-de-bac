@@ -39,6 +39,7 @@ const rebreanu = {
   gallery: [
     '/Banner/rebreanu.webp',
     '/scriitori/liviu_rebreanu_nou.webp',
+    '/opere/Ion.webp',
   ],
   posts: [
     {

@@ -39,6 +39,7 @@ const blaga = {
   gallery: [
     '/Banner/blaga.webp',
     '/scriitori/lucian_blaga.webp',
+    '/opere/corola_minuni.webp',
   ],
   posts: [
     {

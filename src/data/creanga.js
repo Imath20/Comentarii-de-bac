@@ -1,45 +1,46 @@
 const creanga = {
   nume: 'Ion Creangă',
   // date: '1837 – 1889',
-  img: '/scriitori/creanga_ion',
+  img: '/scriitori/creanga_ion.webp',
   color: 'rgba(255,179,71,0.82)',
-  banner: '/Banner/creanga.jpg',
+  banner: '/Banner/creanga.webp',
   friends: [
     {
       name: 'Mihai Eminescu',
       key: 'eminescu',
-      img: '/scriitori/eminescu_mihai',
+      img: '/scriitori/eminescu_mihai.webp',
     },
     {
       name: 'Ioan Slavici',
       key: 'slavici',
-      img: '/scriitori/ioan_slavici',
+      img: '/scriitori/ioan_slavici.webp',
     },
     {
       name: 'I.L. Caragiale',
       key: 'caragiale',
-      img: '/scriitori/il-caragiale',
+      img: '/scriitori/il-caragiale.webp',
     },
     {
       name: 'Titu Maiorescu',
       key: 'maiorescu',
-      img: '/scriitori/titu_maiorescu (2)',
+      img: '/scriitori/titu_maiorescu (2).webp',
     },
     {
       name: 'Costache Negruzzi',
       key: 'negruzzi',
-      img: '/scriitori/costache-negruzzi',
+      img: '/scriitori/costache-negruzzi.webp',
     },
     {
       name: 'Veronica Micle',
       key: 'veronica',
-      img: '/Profile ganditorimea/Veronica Micle',
+      img: '/Profile ganditorimea/Veronica Micle.webp',
     },
   ],
   gallery: [
-    '/Banner/creanga.jpg',
-    '/scriitori/creanga_ion',
-    '/opere/Harap-Alb',
+    '/Banner/creanga.webp',
+    '/scriitori/creanga_ion.webp',
+    '/opere/Harap-Alb.webp',
+    '/opere/amintiri-copil.webp',
   ],
   posts: [
     {
@@ -48,7 +49,7 @@ const creanga = {
       date: '15 martie 1877',
       author: 'Ion Creangă',
       text: 'Aha! Am scris povestea cu Harap-Alb! Să știi că era odată ca niciodată, un crai care avea trei fete... Și iată că am pus-o pe hârtie, să o poată citi toți copiii! Sunt foarte mulțumit de ea, drăgăliță-Doamne!',
-      image: '/opere/Harap-Alb',
+      image: '/opere/Harap-Alb.webp',
       pinnedActions: [
         {
           type: 'comentariu',
@@ -59,7 +60,7 @@ const creanga = {
         {
           type: 'opera',
           text: 'Citește opera',
-          link: '/carte/harap-alb', // Link către BookReader pentru Harap-Alb
+          link: '/carte/harap-alb.webp', // Link către BookReader pentru Harap-Alb
           icon: '📖'
         }
       ],
@@ -110,7 +111,7 @@ const creanga = {
       date: '1881',
       author: 'Ion Creangă',
       text: 'Am început să scriu "Amintiri din copilărie". Vreau să îmi amintesc vremurile frumoase de mic, să le pun pe hârtie pentru alții să le citească, drăgăliță-Doamne!',
-      image: '/opere/amintiri-copil',
+      image: '/opere/amintiri-copil.webp',
       likes: 1881,
       reactions: [
         { friendKey: 'eminescu', reaction: 'love' },
@@ -147,7 +148,7 @@ Apoi poftește pe moș Fotea că, dacă i-or mai pica ceva curele bune, să mai 
       date: '1885',
       author: 'Ion Creangă',
       text: 'Am publicat "Povești și povestiri"! Să știi că am adunat toate poveștile mele într-o carte frumoasă. Sunt foarte mulțumit că pot să fac oamenii să râdă și să se simtă bine cu poveștile mele, drăgăliță-Doamne!',
-      image: '/opere/Harap-Alb',
+      image: '/opere/Harap-Alb.webp',
       likes: 1885,
       reactions: [
         { friendKey: 'eminescu', reaction: 'cool' },

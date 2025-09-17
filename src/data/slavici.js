@@ -34,6 +34,7 @@ const slavici = {
   gallery: [
     '/Banner/slavici.webp',
     '/scriitori/ioan_slavici.webp',
+    '/opere/moara-cu-noroc.webp',
   ],
   posts: [
     {

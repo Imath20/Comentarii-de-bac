@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Layout from '../assets/Layout';
 import '../styles/style.scss';
 import Select from 'react-select';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 // Lista completă cu scriitorii și categorii
 const scriitoriList = [
@@ -427,9 +427,9 @@ export default function Scriitori() {
           {filteredScriitori.map((scriitor, idx) => {
             const key = getScriitorKey(scriitor.nume);
             return (
-              <a
+              <Link
                 key={scriitor.nume}
-                href={`/scriitor?name=${key}`}
+                to={`/scriitor?name=${key}`}
                 className={`scriitori-card ${darkTheme ? 'dark-theme' : ''}`}
                 onMouseOver={e => {
                   e.currentTarget.style.transform = 'scale(1.045)';
@@ -448,7 +448,7 @@ export default function Scriitori() {
                   <div>{scriitor.nume}</div>
                   <div className="scriitori-card-dates">{scriitor.date}</div>
                 </div>
-              </a>
+              </Link>
             );
           })}
         </div>

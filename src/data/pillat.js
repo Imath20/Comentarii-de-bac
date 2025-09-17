@@ -39,6 +39,7 @@ const pillat = {
   gallery: [
     '/Banner/pillat.webp',
     '/scriitori/ion_pillat.webp',
+    '/opere/aci-sosi.webp',
   ],
   posts: [
     {

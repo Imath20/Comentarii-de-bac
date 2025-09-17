@@ -34,6 +34,7 @@ const veronica = {
   gallery: [
     '/Banner/micle.webp',
     '/Profile ganditorimea/Veronica Micle.webp',
+    '/opere/formele.webp',
   ],
   posts: [
     {
