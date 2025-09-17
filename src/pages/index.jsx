@@ -91,6 +91,7 @@ const bibliotecaList = [
     img: '/opere/moara-cu-noroc.webp',
     categorie: 'nuvela',
     canonic: true,
+    jsonFile: 'moara-cu-noroc',
   },
   {
     titlu: 'Ion',
@@ -99,6 +100,7 @@ const bibliotecaList = [
     img: '/opere/Ion.webp',
     categorie: 'roman',
     canonic: true,
+    jsonFile: 'ion',
   },
   {
     titlu: 'O scrisoare pierdută',
@@ -107,6 +109,7 @@ const bibliotecaList = [
     img: '/opere/scrisoare-pierduta.webp',
     categorie: 'comedie',
     canonic: true,
+    jsonFile: 'o-scrisoare-pierduta',
   },
   {
     titlu: 'Harap-Alb',
@@ -115,6 +118,7 @@ const bibliotecaList = [
     img: '/opere/Harap-Alb.webp',
     categorie: 'basm',
     canonic: true,
+    jsonFile: 'harap-alb',
   },
   {
     titlu: 'Baltagul',
@@ -123,6 +127,7 @@ const bibliotecaList = [
     img: '/opere/baltagul.webp',
     categorie: 'roman',
     canonic: true,
+    jsonFile: 'baltagul',
   },
   {
     titlu: 'Luceafărul',
@@ -131,6 +136,7 @@ const bibliotecaList = [
     img: '/opere/Luceafarul.webp',
     categorie: 'poezie',
     canonic: true,
+    jsonFile: 'luceafarul',
   },
 ];
 
@@ -402,7 +408,7 @@ const Index = () => {
               <div
                 key={`${carte.titlu}-${carte.autor}`}
                 className={`index-biblioteca-card ${darkTheme ? 'dark-theme' : ''}`}
-                onClick={() => navigate('/biblioteca')}
+                onClick={() => navigate(carte.jsonFile ? `/carte/${carte.jsonFile}` : '/biblioteca')}
                 onMouseOver={e => {
                   e.currentTarget.style.transform = 'scale(1.055)';
                   e.currentTarget.style.boxShadow = '0 8px 32px 0 rgba(60,40,20,0.22)';
