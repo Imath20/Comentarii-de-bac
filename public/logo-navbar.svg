@@ -1,0 +1,133 @@
+<svg width="80" height="80" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background circle with gradient -->
+  <defs>
+    <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stopColor="#4e2e1e" />
+      <stop offset="100%" stopColor="#7c4f2b" />
+    </linearGradient>
+    <linearGradient id="bookGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stopColor="#fbeec1" />
+      <stop offset="100%" stopColor="#d4af8a" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Main circle background -->
+  <circle
+    cx="40"
+    cy="40"
+    r="35"
+    fill="url(#logoGradient)"
+    stroke="#fbeec1"
+    strokeWidth="1.5"
+  />
+  
+  <!-- Book/Scroll element - representing literature -->
+  <rect
+    x="25"
+    y="15"
+    width="30"
+    height="50"
+    rx="2"
+    fill="url(#bookGradient)"
+    stroke="#4e2e1e"
+    strokeWidth="1"
+  />
+  
+  <!-- Book pages/spine -->
+  <rect
+    x="27"
+    y="17"
+    width="26"
+    height="46"
+    rx="1"
+    fill="#4e2e1e"
+    opacity="0.3"
+  />
+  
+  <!-- Text lines representing literature -->
+  <line
+    x1="32"
+    y1="28"
+    x2="48"
+    y2="28"
+    stroke="#4e2e1e"
+    strokeWidth="1.5"
+    strokeLinecap="round"
+  />
+  <line
+    x1="32"
+    y1="33"
+    x2="46"
+    y2="33"
+    stroke="#4e2e1e"
+    strokeWidth="1.5"
+    strokeLinecap="round"
+  />
+  <line
+    x1="32"
+    y1="38"
+    x2="50"
+    y2="38"
+    stroke="#4e2e1e"
+    strokeWidth="1.5"
+    strokeLinecap="round"
+  />
+  <line
+    x1="32"
+    y1="43"
+    x2="44"
+    y2="43"
+    stroke="#4e2e1e"
+    strokeWidth="1.5"
+    strokeLinecap="round"
+  />
+  
+  <!-- Quill pen - representing writing -->
+  <path
+    d="M50 25 L58 17 L55 14 L47 22"
+    fill="#4e2e1e"
+    stroke="#fbeec1"
+    strokeWidth="0.8"
+  />
+  
+  <!-- Feather details -->
+  <path
+    d="M58 17 L64 11 L61 8 L55 14"
+    fill="#4e2e1e"
+    stroke="#fbeec1"
+    strokeWidth="0.6"
+  />
+  
+  <!-- Ink drop -->
+  <ellipse
+    cx="50"
+    cy="30"
+    rx="1.5"
+    ry="2"
+    fill="#4e2e1e"
+    opacity="0.7"
+  />
+  
+  <!-- Decorative elements - Romanian cultural symbols -->
+  <!-- Small stars representing Romanian literature -->
+  <g fill="#4e2e1e" opacity="0.6">
+    <path d="M15 25 L16 28 L21 28 L17 31 L19 36 L15 33 L11 36 L13 31 L9 28 L14 28 Z" />
+    <path d="M61 55 L63 58 L68 58 L64 61 L66 66 L61 63 L56 66 L58 61 L54 58 L59 58 Z" />
+  </g>
+  
+  <!-- Small decorative flourishes -->
+  <path
+    d="M10 55 Q15 52 20 55"
+    stroke="#4e2e1e"
+    strokeWidth="1"
+    fill="none"
+    opacity="0.5"
+  />
+  <path
+    d="M60 10 Q65 7 70 10"
+    stroke="#4e2e1e"
+    strokeWidth="1"
+    fill="none"
+    opacity="0.5"
+  />
+</svg>

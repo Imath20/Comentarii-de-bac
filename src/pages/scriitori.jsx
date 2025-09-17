@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Navbar from '../assets/Navbar';
-import Footer from '../assets/Footer';
+import Layout from '../assets/Layout';
 import '../styles/style.scss';
 import Select from 'react-select';
 import { useNavigate } from 'react-router-dom';
@@ -323,8 +322,7 @@ export default function Scriitori() {
   }
 
   return (
-    <>
-      <Navbar darkTheme={darkTheme} setDarkTheme={setDarkTheme} scrolled={scrolled} />
+    <Layout darkTheme={darkTheme} setDarkTheme={setDarkTheme} scrolled={scrolled}>
       <div className="page-hero">
         <h1 className="page-title">{
           'Scriitori'.split(' ').map((word, wi) => (
@@ -462,7 +460,7 @@ export default function Scriitori() {
           </div>
         )}
       </div>
-      <Footer />
-    </>
+      
+    </Layout>
   );
 } 

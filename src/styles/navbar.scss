@@ -30,14 +30,50 @@ body.dark-theme .navbar.scrolled {
 }
 
 .navbar-logo {
-  font-size: 2.1rem;
-  font-weight: bold;
-  letter-spacing: 2.5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-left: -20px !important;
+  gap: 0.2rem;
+  transition: transform 0.2s ease;
+  text-decoration: none;
   color: inherit;
-  font-family: 'Caveat', cursive, sans-serif;
-  font-style: italic;
-  text-shadow: 0 2px 8px rgba(124, 79, 43, 0.10);
-  transition: font-size 0.2s;
+  cursor: pointer;
+  
+  &:hover {
+    transform: scale(1.02);
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  &:focus {
+    // outline: 2px solid rgba(124, 79, 43, 0.3);
+    // outline-offset: 2px;
+    // border-radius: 4px;
+  }
+  
+  .logo {
+    width: 45px;
+    height: 45px;
+    filter: drop-shadow(0 2px 8px rgba(124, 79, 43, 0.15));
+    transition: filter 0.2s ease;
+  }
+  
+  &:hover .logo {
+    filter: drop-shadow(0 4px 12px rgba(124, 79, 43, 0.25));
+  }
+  
+  .navbar-logo-text {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    color: inherit;
+    font-family: 'Caveat', cursive, sans-serif;
+    text-shadow: 0 1px 4px rgba(124, 79, 43, 0.10);
+    transition: color 0.2s ease;
+    white-space: nowrap;
+  }
 }
 
 .navbar-menu {
@@ -149,6 +185,38 @@ body.dark-theme .theme-toggle {
     margin-left: 1rem;
   }
   .navbar-logo {
-    font-size: 1.4rem;
+    margin-left: -15px !important;
+    .logo {
+      width: 40px;
+      height: 40px;
+    }
+    .navbar-logo-text {
+      font-size: 0.65rem;
+      letter-spacing: 0.4px;
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .navbar-logo {
+    margin-left: -10px !important;
+    .logo {
+      width: 35px;
+      height: 35px;
+    }
+    .navbar-logo-text {
+      font-size: 0.6rem;
+      letter-spacing: 0.3px;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar-logo {
+    margin-left: -5px !important;
+    .navbar-logo-text {
+      font-size: 0.55rem;
+      letter-spacing: 0.2px;
+    }
   }
 } 

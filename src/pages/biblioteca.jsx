@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import Layout from '../assets/Layout';
 import { useNavigate } from 'react-router-dom';
-import Navbar from '../assets/Navbar';
-import Footer from '../assets/Footer';
 import '../styles/style.scss';
 import Select from 'react-select';
 
@@ -854,8 +853,7 @@ Treceau bătăi de aripi prin vraiștea grădinii
     };
 
     return (
-        <>
-            <Navbar darkTheme={darkTheme} setDarkTheme={setDarkTheme} scrolled={scrolled} />
+        <Layout darkTheme={darkTheme} setDarkTheme={setDarkTheme} scrolled={scrolled}>
             <div className="page-hero">
                 <h1 className="page-title">{
                     'Bibliotecă'.split(' ').map((word, wi) => (
@@ -1066,8 +1064,6 @@ Treceau bătăi de aripi prin vraiștea grădinii
                     </div>
                 </div>
             )}
-
-            <Footer />
-        </>
+        </Layout>
     );
 }

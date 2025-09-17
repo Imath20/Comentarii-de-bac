@@ -1,0 +1,455 @@
+// Opera page styles
+
+// Fullscreen hero for opera page (scoped nesting)
+.opere-hero-full {
+  position: relative;
+  // width: calc(100vw - 85.58px) !important;
+  width: 100vw;
+  height: 100vh;
+  // height: calc(100vh - 85.58px) !important;
+  // padding-bottom: 85.58px !important;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  // margin-top: 85.58px;
+  flex: 0 0 100vw;
+  height: 100vh;
+  min-height: 540px;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .opere-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.4) 40%, rgba(0,0,0,0.75) 100%);
+  }
+
+  .opere-hero-content {
+    position: relative;
+    text-align: center;
+    color: #fff;
+    z-index: 1;
+    padding: 0 1.5rem;
+    max-width: 800px;
+
+    .opere-hero-title {
+      font-size: 3.2rem;
+      font-weight: 900;
+      letter-spacing: 0.04em;
+      text-shadow: 0 6px 24px rgba(0,0,0,0.45);
+      margin: 0 0 0.75rem 0;
+    }
+
+    .opere-hero-subtitle {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.92);
+      text-shadow: 0 4px 18px rgba(0,0,0,0.45);
+      margin: 0 0 1rem 0;
+    }
+
+    .opere-hero-meta {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+
+      .opera-category,
+      .opera-canonical {
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .opera-category {
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+      }
+
+      .opera-canonical {
+        background: rgba(255, 215, 0, 0.9);
+        color: #333;
+        border: 1px solid rgba(255, 215, 0, 1);
+      }
+    }
+  }
+
+  .opere-scroll-cue {
+    position: absolute;
+    // bottom: 28px;
+    // left: 50%;
+    // transform: translateX(-50%);
+    display: inline-flex;
+    gap: 10px;
+    align-items: center;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    padding: 10px 14px;
+    border-radius: 999px;
+    background: rgba(0,0,0,0.28);
+    border: 1px solid rgba(255,255,255,0.28);
+    backdrop-filter: blur(3px);
+    z-index: 2;
+    transition: transform 0.25s ease, background 0.25s ease;
+    animation: bounce 2s infinite;
+
+    &:hover {
+      transform: translateX(-50%) translateY(-2px);
+      background: rgba(0,0,0,0.36);
+    }
+  }
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateX(-50%) translateY(0);
+  }
+  40% {
+    transform: translateX(-50%) translateY(-10px);
+  }
+  60% {
+    transform: translateX(-50%) translateY(-5px);
+  }
+}
+
+@media (max-width: 900px) {
+  .opere-hero-full {
+    .opere-hero-content {
+      .opere-hero-title { font-size: 2.2rem; }
+      .opere-hero-subtitle { font-size: 1rem; }
+      .opere-hero-meta {
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+      }
+    }
+  }
+}
+
+// Opera content container (scoped nesting)
+.opera-content-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+
+  .opera-tabs {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+    border-bottom: 2px solid #e0e0e0;
+    padding-bottom: 1rem;
+
+    .opera-tab {
+      padding: 1rem 2rem;
+      border: none;
+      background: none;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #666;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      position: relative;
+
+      &:hover {
+        color: #a97c50;
+        background: rgba(169, 124, 80, 0.1);
+      }
+
+      &.active {
+        color: #a97c50;
+        background: rgba(169, 124, 80, 0.15);
+        box-shadow: 0 2px 8px rgba(169, 124, 80, 0.2);
+      }
+    }
+  }
+
+  .opera-tab-content-wrapper {
+    min-height: 400px;
+    background: #fff;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    border: 1px solid #f0f0f0;
+
+    .opera-tab-content {
+      h3 {
+        color: #a97c50;
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+
+        &:before {
+          content: "";
+          width: 4px;
+          height: 24px;
+          background: #a97c50;
+          border-radius: 2px;
+        }
+      }
+
+      p {
+        line-height: 1.8;
+        margin-bottom: 1.5rem;
+        color: #333;
+        font-size: 1.05rem;
+      }
+
+      ul {
+        list-style: none;
+        padding: 0;
+
+        li {
+          padding: 0.8rem 0;
+          border-bottom: 1px solid #f0f0f0;
+          position: relative;
+          padding-left: 2rem;
+          font-size: 1.05rem;
+          color: #444;
+          transition: all 0.2s ease;
+
+          &:hover {
+            background: rgba(169, 124, 80, 0.05);
+            padding-left: 2.2rem;
+          }
+
+          &:before {
+            content: "•";
+            color: #a97c50;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+            font-size: 1.2rem;
+          }
+
+          &:last-child {
+            border-bottom: none;
+          }
+        }
+      }
+
+      // Content sections
+      .opera-description,
+      .opera-themes,
+      .opera-characters,
+      .opera-analysis,
+      .opera-quotes {
+        margin-bottom: 2.5rem;
+        padding: 1.5rem;
+        background: #fafafa;
+        border-radius: 8px;
+        border-left: 4px solid #a97c50;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+
+      // Quotes styling
+      .quotes-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+
+      .opera-quote {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        padding: 2rem;
+        border-left: 4px solid #a97c50;
+        margin: 0;
+        font-style: italic;
+        font-size: 1.1rem;
+        line-height: 1.7;
+        border-radius: 0 12px 12px 0;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        position: relative;
+
+        &:before {
+          content: "";
+          font-size: 4rem;
+          color: #a97c50;
+          position: absolute;
+          top: -10px;
+          left: 15px;
+          opacity: 0.3;
+          font-family: serif;
+        }
+      }
+    }
+  }
+
+  // Actions section
+  .opera-actions {
+    margin-top: 3rem;
+    text-align: center;
+    padding: 2rem;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-radius: 12px;
+    border: 1px solid #e0e0e0;
+
+    .opera-read-btn {
+      background: linear-gradient(135deg, #a97c50 0%, #8b6b42 100%);
+      color: white;
+      border: none;
+      padding: 1.2rem 2.5rem;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.8rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(169, 124, 80, 0.3);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+
+      &:hover {
+        background: linear-gradient(135deg, #8b6b42 0%, #6d5233 100%);
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(169, 124, 80, 0.4);
+      }
+
+      &:active {
+        transform: translateY(-1px);
+      }
+
+      svg {
+        width: 20px;
+        height: 20px;
+      }
+    }
+  }
+
+  // No details and missing content
+  .opera-no-details,
+  .opera-comment-missing {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: #666;
+    background: #f8f9fa;
+    border-radius: 12px;
+    border: 2px dashed #ddd;
+
+    h3 {
+      color: #a97c50;
+      margin-bottom: 1rem;
+      font-size: 1.8rem;
+    }
+
+    p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+    }
+  }
+
+  // Comment frame
+  .opera-comment-frame {
+    width: 100%;
+    height: 600px;
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    background: #fff;
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .opera-content-container {
+    padding: 1rem;
+
+    .opera-tabs {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .opera-tabs .opera-tab {
+      padding: 0.8rem 1.5rem;
+      font-size: 1rem;
+    }
+
+    .opera-tab-content-wrapper {
+      padding: 1.5rem;
+
+      .opera-tab-content {
+        h3 { font-size: 1.3rem; }
+        p { font-size: 1rem; }
+        ul li { font-size: 1rem; padding: 0.6rem 0; }
+        .opera-quote { padding: 1.5rem; font-size: 1rem; }
+      }
+    }
+
+    .opera-actions {
+      .opera-read-btn {
+        padding: 1rem 2rem;
+        font-size: 1rem;
+      }
+    }
+  }
+}
+
+// Dark theme
+.dark-theme {
+  .opera-content-container {
+    .opera-tabs { border-bottom-color: #444; }
+    .opera-tabs .opera-tab {
+      color: #ccc;
+      &:hover { color: #ffd591; background: rgba(255, 213, 145, 0.1); }
+      &.active { color: #ffd591; background: rgba(255, 213, 145, 0.15); box-shadow: 0 2px 8px rgba(255, 213, 145, 0.2); }
+    }
+
+    .opera-tab-content-wrapper { background: #2a2a2a; border-color: #444; }
+
+    .opera-tab-content-wrapper .opera-tab-content {
+      h3 { color: #ffd591; &:before { background: #ffd591; } }
+      p { color: #e0e0e0; }
+      ul li {
+        border-bottom-color: #444;
+        color: #e0e0e0;
+        &:hover { background: rgba(255, 213, 145, 0.05); }
+      }
+
+      .opera-description,
+      .opera-themes,
+      .opera-characters,
+      .opera-analysis,
+      .opera-quotes { background: #333; border-left-color: #ffd591; }
+
+      .opera-quote {
+        background: linear-gradient(135deg, #333 0%, #444 100%);
+        color: #e0e0e0;
+        border-left-color: #ffd591;
+        &:before { color: #ffd591; }
+      }
+    }
+
+    .opera-actions { background: linear-gradient(135deg, #333 0%, #444 100%); border-color: #555; }
+    .opera-actions .opera-read-btn {
+      background: linear-gradient(135deg, #ffd591 0%, #ffb366 100%);
+      color: #333;
+      &:hover { background: linear-gradient(135deg, #ffb366 0%, #ff9f33 100%); }
+    }
+
+    .opera-no-details,
+    .opera-comment-missing {
+      background: #333; border-color: #555; color: #ccc;
+      h3 { color: #ffd591; }
+    }
+
+    .opera-comment-frame { background: #2a2a2a; }
+  }
+}

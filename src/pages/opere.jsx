@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import Navbar from '../assets/Navbar';
-import Footer from '../assets/Footer';
+import { useNavigate } from 'react-router-dom';
+import Layout from '../assets/Layout';
 import '../styles/style.scss';
 import Select from 'react-select';
 
@@ -330,6 +330,7 @@ const customSelectStyles = (darkTheme) => ({
 });
 
 export default function Opre() {
+    const navigate = useNavigate();
     const [darkTheme, setDarkTheme] = useState(() => localStorage.getItem('theme') === 'dark');
     const [scrolled, setScrolled] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
@@ -371,9 +372,21 @@ export default function Opre() {
     const cardSize = 320;
     const bandaColor = darkTheme ? 'rgba(26,13,0,0.82)' : 'rgba(255,179,71,0.82)';
 
+    const slugify = (text) => {
+        if (!text) return '';
+        return text
+            .toLowerCase()
+            .normalize('NFD')
+            .replace(/\p{Diacritic}/gu, '')
+            .replace(/[^a-z0-9\s-]/g, '')
+            .trim()
+            .replace(/\s+/g, '-')
+            .replace(/-+/g, '-');
+    };
+
     return (
         <>
-            <Navbar darkTheme={darkTheme} setDarkTheme={setDarkTheme} scrolled={scrolled} />
+            <Layout darkTheme={darkTheme} setDarkTheme={setDarkTheme} scrolled={scrolled} />
             <div className="page-hero">
                 <h1 className="page-title">{
                     'Opere'.split(' ').map((word, wi) => (
@@ -515,6 +528,10 @@ export default function Opre() {
                                 e.currentTarget.style.boxShadow = '0 4px 24px 0 rgba(124,79,43,0.13)';
                                 e.currentTarget.style.zIndex = 1;
                             }}
+                            onClick={() => {
+                                const slug = slugify(opera.titlu);
+                                navigate(`/opera/${slug}`, { state: { opera } });
+                            }}
                         >
                             <img
                                 src={opera.img}
@@ -541,7 +558,7 @@ export default function Opre() {
                     </div>
                 )}
             </div>
-            <Footer />
+            <Layout darkTheme={darkTheme} setDarkTheme={setDarkTheme} scrolled={scrolled} />
         </>
     );
 } 

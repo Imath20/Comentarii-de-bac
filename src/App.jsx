@@ -10,6 +10,7 @@ import BookReader from './pages/BookReader';
 import Videoclipuri from './pages/videoclipuri';
 import AI from './pages/ai';
 import Proiecte from './pages/proiecte';
+import Opera from './pages/Opera';
 import './styles/style.scss';
 
 export default function App() {
@@ -19,6 +20,7 @@ export default function App() {
       <Route path="/scriitori" element={<Scriitori />} />
       <Route path="/subiecte" element={<Subiecte />} />
       <Route path="/opere" element={<Opre />} />
+      <Route path="/opera/:slug" element={<Opera />} />
       <Route path="/biblioteca" element={<Biblioteca />} />
       <Route path="/scriitor" element={<Scriitoripage />} />
       <Route path="/videoclipuri" element={<Videoclipuri />} />
