@@ -1,44 +1,44 @@
 const pillat = {
   nume: 'Ion Pillat',
   // date: '1891 – 1945',
-  img: '/scriitori/ion_pillat.png',
+  img: '/scriitori/ion_pillat.webp',
   color: 'rgba(255,179,71,0.82)',
-  banner: '/Banner/pillat.png',
+  banner: '/Banner/pillat.webp',
   friends: [
     {
       name: 'Tudor Arghezi',
       key: 'arghezi',
-      img: '/scriitori/tudor_arghezi.png',
+      img: '/scriitori/tudor_arghezi.webp',
     },
     {
       name: 'Lucian Blaga',
       key: 'blaga',
-      img: '/scriitori/lucian_blaga.png',
+      img: '/scriitori/lucian_blaga.webp',
     },
     {
       name: 'Ion Barbu',
       key: 'barbu',
-      img: '/scriitori/barbu_ion.png',
+      img: '/scriitori/barbu_ion.webp',
     },
     {
       name: 'George Bacovia',
       key: 'bacovia',
-      img: '/scriitori/bacovia_rezerva.png',
+      img: '/scriitori/bacovia_rezerva.webp',
     },
     {
       name: 'Liviu Rebreanu',
       key: 'rebreanu',
-      img: '/scriitori/liviu_rebreanu_nou.png',
+      img: '/scriitori/liviu_rebreanu_nou.webp',
     },
     {
       name: 'Camil Petrescu',
       key: 'petrescu',
-      img: '/scriitori/camil_rezerva.png',
+      img: '/scriitori/camil_rezerva.webp',
     },
   ],
   gallery: [
-    '/Banner/pillat.png',
-    '/scriitori/ion_pillat.png',
+    '/Banner/pillat.webp',
+    '/scriitori/ion_pillat.webp',
   ],
   posts: [
     {
@@ -47,7 +47,7 @@ const pillat = {
       date: '8 decembrie 1923',
       author: 'Ion Pillat',
       text: 'Am publicat "Aci sosi pe vremuri" - o poezie care să exploreze frumusețea naturii românești și să exprime dragostea pentru țară. Fiecare vers este o declarație de iubire pentru România.',
-      image: '/opere/aci-sosi.png',
+      image: '/opere/aci-sosi.webp',
       pinnedActions: [
         {
           type: 'comentariu',

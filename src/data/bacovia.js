@@ -1,44 +1,44 @@
 const bacovia = {
   nume: 'George Bacovia',
   // date: '1881 – 1957',
-  img: '/scriitori/bacovia_rezerva.png',
+  img: '/scriitori/bacovia_rezerva.webp',
   color: 'rgba(255,179,71,0.82)',
-  banner: '/Banner/bacovia.png',
+  banner: '/Banner/bacovia.webp',
   friends: [
     {
       name: 'Tudor Arghezi',
       key: 'arghezi',
-      img: '/scriitori/tudor_arghezi.png',
+      img: '/scriitori/tudor_arghezi.webp',
     },
     {
       name: 'Lucian Blaga',
       key: 'blaga',
-      img: '/scriitori/lucian_blaga.png',
+      img: '/scriitori/lucian_blaga.webp',
     },
     {
       name: 'Ion Barbu',
       key: 'barbu',
-      img: '/scriitori/barbu_ion.png',
+      img: '/scriitori/barbu_ion.webp',
     },
     {
       name: 'Liviu Rebreanu',
       key: 'rebreanu',
-      img: '/scriitori/liviu_rebreanu_nou.png',
+      img: '/scriitori/liviu_rebreanu_nou.webp',
     },
     {
       name: 'Camil Petrescu',
       key: 'petrescu',
-      img: '/scriitori/camil_rezerva.png',
+      img: '/scriitori/camil_rezerva.webp',
     },
     {
       name: 'George Călinescu',
       key: 'calinescu',
-      img: '/scriitori/george_calinescu.png',
+      img: '/scriitori/george_calinescu.webp',
     },
   ],
   gallery: [
-    '/Banner/bacovia.png',
-    '/scriitori/bacovia_rezerva.png',
+    '/Banner/bacovia.webp',
+    '/scriitori/bacovia_rezerva.webp',
   ],
   posts: [
     {
@@ -47,7 +47,7 @@ const bacovia = {
       date: '15 martie 1916',
       author: 'George Bacovia',
       text: 'Am publicat "Plumb" - o poezie care să exploreze melancolia și singurătatea existenței urbane. Fiecare vers este o picătură de plumb, fiecare cuvânt este o expresie a stării de spirit moderne.',
-      image: '/opere/plumb.png',
+      image: '/opere/plumb.webp',
       pinnedActions: [
         {
           type: 'comentariu',

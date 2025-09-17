@@ -1,44 +1,44 @@
 const blaga = {
   nume: 'Lucian Blaga',
   // date: '1895 – 1961',
-  img: '/scriitori/lucian_blaga.png',
+  img: '/scriitori/lucian_blaga.webp',
   color: 'rgba(255,179,71,0.82)',
-  banner: '/Banner/blaga.png',
+  banner: '/Banner/blaga.webp',
   friends: [
     {
       name: 'Tudor Arghezi',
       key: 'arghezi',
-      img: '/scriitori/tudor_arghezi.png',
+      img: '/scriitori/tudor_arghezi.webp',
     },
     {
       name: 'Ion Barbu',
       key: 'barbu',
-      img: '/scriitori/barbu_ion.png',
+      img: '/scriitori/barbu_ion.webp',
     },
     {
       name: 'George Bacovia',
       key: 'bacovia',
-      img: '/scriitori/bacovia_rezerva.png',
+      img: '/scriitori/bacovia_rezerva.webp',
     },
     {
       name: 'Liviu Rebreanu',
       key: 'rebreanu',
-      img: '/scriitori/liviu_rebreanu_nou.png',
+      img: '/scriitori/liviu_rebreanu_nou.webp',
     },
     {
       name: 'Camil Petrescu',
       key: 'petrescu',
-      img: '/scriitori/camil_rezerva.png',
+      img: '/scriitori/camil_rezerva.webp',
     },
     {
       name: 'George Călinescu',
       key: 'calinescu',
-      img: '/scriitori/george_calinescu.png',
+      img: '/scriitori/george_calinescu.webp',
     },
   ],
   gallery: [
-    '/Banner/blaga.png',
-    '/scriitori/lucian_blaga.png',
+    '/Banner/blaga.webp',
+    '/scriitori/lucian_blaga.webp',
   ],
   posts: [
     {
@@ -47,7 +47,7 @@ const blaga = {
       date: '15 aprilie 1921',
       author: 'Lucian Blaga',
       text: 'Am publicat "Eu nu strivesc corola de minuni a lumii" - o poezie care să exploreze misterul existenței prin prisma luminii divine. Fiecare vers este o căutare a adevărului, fiecare cuvânt este o fereastră către infinit.',
-      image: '/opere/corola_minuni.png',
+      image: '/opere/corola_minuni.webp',
       pinnedActions: [
         {
           type: 'comentariu',

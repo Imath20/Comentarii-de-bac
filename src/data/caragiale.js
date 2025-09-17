@@ -1,44 +1,44 @@
 const caragiale = {
   nume: 'I.L. Caragiale',
   // date: '1852 – 1912',
-  img: '/scriitori/il-caragiale.png',
+  img: '/scriitori/il-caragiale.webp',
   color: 'rgba(255,179,71,0.82)',
-  banner: '/Banner/caragiale.png',
+  banner: '/Banner/caragiale.webp',
   friends: [
     {
       name: 'Mihai Eminescu',
       key: 'eminescu',
-      img: '/scriitori/eminescu_mihai.png',
+      img: '/scriitori/eminescu_mihai.webp',
     },
     {
       name: 'Ion Creangă',
       key: 'creanga',
-      img: '/scriitori/creanga_ion.png',
+      img: '/scriitori/creanga_ion.webp',
     },
     {
       name: 'Ioan Slavici',
       key: 'slavici',
-      img: '/scriitori/ioan_slavici.png',
+      img: '/scriitori/ioan_slavici.webp',
     },
     {
       name: 'Titu Maiorescu',
       key: 'maiorescu',
-      img: '/scriitori/titu_maiorescu (2).png',
+      img: '/scriitori/titu_maiorescu (2).webp',
     },
     {
       name: 'Costache Negruzzi',
       key: 'negruzzi',
-      img: '/scriitori/costache-negruzzi.png',
+      img: '/scriitori/costache-negruzzi.webp',
     },
     {
       name: 'Veronica Micle',
       key: 'veronica',
-      img: '/Profile ganditorimea/Veronica Micle.png',
+      img: '/Profile ganditorimea/Veronica Micle.webp',
     },
   ],
   gallery: [
-    '/Banner/caragiale.png',
-    '/scriitori/il-caragiale.png',
+    '/Banner/caragiale.webp',
+    '/scriitori/il-caragiale.webp',
   ],
   posts: [
     {
@@ -47,7 +47,7 @@ const caragiale = {
       date: '15 martie 1884',
       author: 'I.L. Caragiale',
       text: 'Astăzi am publicat "O scrisoare pierdută". O comedie care să exploreze viața politică românească prin prisma umorului și a satirii. Fiecare personaj este un tip social autentic, fiecare replică este o critică subtilă la adresa societății.',
-      image: '/opere/scrisoare-pierduta.png',
+      image: '/opere/scrisoare-pierduta.webp',
       pinnedActions: [
         {
           type: 'comentariu',

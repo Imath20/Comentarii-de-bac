@@ -476,7 +476,7 @@ const Scriitor = () => {
           title={isFullScreen ? "Ieși din full screen" : "Full screen banner"}
         >
           <img
-            src={isFullScreen ? '/utilitary/minimize.png' : '/utilitary/full-size.png'}
+            src={isFullScreen ? '/utilitary/minimize.webp' : '/utilitary/full-size.webp'}
             alt={isFullScreen ? 'Ieși din full screen' : 'Full screen'}
           />
         </button>

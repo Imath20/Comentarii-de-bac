@@ -1,47 +1,47 @@
 const eminescu = {
   nume: 'Mihai Eminescu',
   // date: '1850 – 1889',
-  img: '/scriitori/eminescu_mihai.png',
+  img: '/scriitori/eminescu_mihai.webp',
   color: 'rgba(122,58,0,0.82)',
-  banner: '/Banner/eminescu.png',
+  banner: '/Banner/eminescu.webp',
   friends: [
     {
       name: 'Ion Creangă',
       key: 'creanga',
-      img: '/scriitori/creanga_ion.png',
+      img: '/scriitori/creanga_ion.webp',
     },
     {
       name: 'Ioan Slavici',
       key: 'slavici',
-      img: '/scriitori/ioan_slavici.png',
+      img: '/scriitori/ioan_slavici.webp',
     },
     {
       name: 'I.L. Caragiale',
       key: 'caragiale',
-      img: '/scriitori/il-caragiale.png',
+      img: '/scriitori/il-caragiale.webp',
     },
     {
       name: 'Titu Maiorescu',
       key: 'maiorescu',
-      img: '/scriitori/titu_maiorescu (2).png',
+      img: '/scriitori/titu_maiorescu (2).webp',
     },
     {
       name: 'Veronica Micle',
       key: 'veronica',
-      img: '/Profile ganditorimea/Veronica Micle.png',
+      img: '/Profile ganditorimea/Veronica Micle.webp',
     },
     {
       name: 'Costache Negruzzi',
       key: 'negruzzi',
-      img: '/scriitori/costache-negruzzi.png',
+      img: '/scriitori/costache-negruzzi.webp',
     },
   ],
   gallery: [
-    '/Banner/eminescu.png',
-    '/scriitori/eminescu_mihai.png',
-    '/opere/Luceafarul.png',
-    '/opere scriitori/Glossa-1.png',
-    '/opere scriitori/Glossa-2.png',
+    '/Banner/eminescu.webp',
+    '/scriitori/eminescu_mihai.webp',
+    '/opere/Luceafarul.webp',
+    '/opere scriitori/Glossa-1.webp',
+    '/opere scriitori/Glossa-2.webp',
   ],
   posts: [
     {
@@ -50,7 +50,7 @@ const eminescu = {
       date: '15 ianuarie 1883',
       author: 'Mihai Eminescu',
       text: 'Astăzi am publicat "Luceafărul". O poezie la care am lucrat ani de zile.',
-      image: '/opere/Luceafarul.png',
+      image: '/opere/Luceafarul.webp',
       pinnedActions: [
         {
           type: 'comentariu',
@@ -112,7 +112,7 @@ const eminescu = {
       date: '1879',
       author: 'Mihai Eminescu',
       text: 'Am scris poezia "Glossă". Gânduri despre timp și viață.',
-      image: '/opere scriitori/Glosa.png', 
+      image: '/opere scriitori/Glosa.webp', 
       likes: 1879,
       reactions: [
         { friendKey: 'creanga', reaction: 'love' },
@@ -212,7 +212,7 @@ Te întreabă și socoate
 Ce e rău și ce e bine;
 Toate-s vechi și nouă toate:
 Vreme trece, vreme vine.`,
-      poemImages: ['/opere scriitori/Glossa-1.png', '/opere scriitori/Glossa-2.png']
+      poemImages: ['/opere scriitori/Glossa-1.webp', '/opere scriitori/Glossa-2.webp']
     },
   ],
 };

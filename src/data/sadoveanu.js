@@ -1,44 +1,44 @@
 const sadoveanu = {
   nume: 'Mihail Sadoveanu',
   // date: '1880 – 1961',
-  img: '/scriitori/mihail-sadoveanu-3.png',
+  img: '/scriitori/mihail-sadoveanu-3.webp',
   color: 'rgba(255,179,71,0.82)',
-  banner: '/Banner/sadoveanu.png',
+  banner: '/Banner/sadoveanu.webp',
   friends: [
     {
       name: 'Tudor Arghezi',
       key: 'arghezi',
-      img: '/scriitori/tudor_arghezi.png',
+      img: '/scriitori/tudor_arghezi.webp',
     },
     {
       name: 'Lucian Blaga',
       key: 'blaga',
-      img: '/scriitori/lucian_blaga.png',
+      img: '/scriitori/lucian_blaga.webp',
     },
     {
       name: 'Ion Barbu',
       key: 'barbu',
-      img: '/scriitori/barbu_ion.png',
+      img: '/scriitori/barbu_ion.webp',
     },
     {
       name: 'George Bacovia',
       key: 'bacovia',
-      img: '/scriitori/bacovia_rezerva.png',
+      img: '/scriitori/bacovia_rezerva.webp',
     },
     {
       name: 'Liviu Rebreanu',
       key: 'rebreanu',
-      img: '/scriitori/liviu_rebreanu_nou.png',
+      img: '/scriitori/liviu_rebreanu_nou.webp',
     },
     {
       name: 'Camil Petrescu',
       key: 'petrescu',
-      img: '/scriitori/camil_rezerva.png',
+      img: '/scriitori/camil_rezerva.webp',
     },
   ],
   gallery: [
-    '/Banner/sadoveanu.png',
-    '/scriitori/mihail-sadoveanu-3.png',
+    '/Banner/sadoveanu.webp',
+    '/scriitori/mihail-sadoveanu-3.webp',
   ],
   posts: [
     {
@@ -47,7 +47,7 @@ const sadoveanu = {
       date: '15 martie 1930',
       author: 'Mihail Sadoveanu',
       text: 'Am publicat "Baltagul" - un roman care să exploreze viața țăranilor români din Moldova. Fiecare pagină este impregnată cu frumusețea naturii și cu înțelepciunea poporului nostru.',
-      image: '/opere/baltagul.png',
+      image: '/opere/baltagul.webp',
       pinnedActions: [
         {
           type: 'comentariu',

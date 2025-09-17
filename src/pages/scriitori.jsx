@@ -10,7 +10,7 @@ const scriitoriList = [
   {
     nume: 'Ion Creangă',
     date: '1837 – 1889',
-    img: '/scriitori/creanga_ion.png',
+    img: '/scriitori/creanga_ion.webp',
     color: 'rgba(255,179,71,0.82)',
     categorie: 'basm',
     canonic: true
@@ -18,7 +18,7 @@ const scriitoriList = [
   {
     nume: 'Mihai Eminescu',
     date: '1850 – 1889',
-    img: '/scriitori/eminescu_mihai.png',
+    img: '/scriitori/eminescu_mihai.webp',
     color: 'rgba(122,58,0,0.82)',
     categorie: 'poezie',
     canonic: true
@@ -26,7 +26,7 @@ const scriitoriList = [
   {
     nume: 'I.L. Caragiale',
     date: '1852 – 1912',
-    img: '/scriitori/il-caragiale.png',
+    img: '/scriitori/il-caragiale.webp',
     color: 'rgba(255,179,71,0.82)',
     categorie: 'comedie',
     canonic: true
@@ -34,7 +34,7 @@ const scriitoriList = [
   {
     nume: 'Ioan Slavici',
     date: '1848 – 1925',
-    img: '/scriitori/ioan_slavici.png',
+    img: '/scriitori/ioan_slavici.webp',
     color: 'rgba(122,58,0,0.82)',
     categorie: 'roman',
     canonic: true
@@ -42,7 +42,7 @@ const scriitoriList = [
   {
     nume: 'Liviu Rebreanu',
     date: '1885 – 1944',
-    img: '/scriitori/liviu_rebreanu_nou.png',
+    img: '/scriitori/liviu_rebreanu_nou.webp',
     color: 'rgba(255,179,71,0.82)',
     categorie: 'roman',
     canonic: true
@@ -50,7 +50,7 @@ const scriitoriList = [
   {
     nume: 'George Călinescu',
     date: '1899 – 1965',
-    img: '/scriitori/george_calinescu.png',
+    img: '/scriitori/george_calinescu.webp',
     color: 'rgba(255,179,71,0.82)',
     categorie: 'roman',
     canonic: true
@@ -58,7 +58,7 @@ const scriitoriList = [
   {
     nume: 'Camil Petrescu',
     date: '1894 – 1957',
-    img: '/scriitori/camil_rezerva.png',
+    img: '/scriitori/camil_rezerva.webp',
     color: 'rgba(122,58,0,0.82)',
     categorie: 'roman',
     canonic: true
@@ -66,7 +66,7 @@ const scriitoriList = [
   {
     nume: 'Ion Barbu',
     date: '1895 – 1961',
-    img: '/scriitori/barbu_ion.png',
+    img: '/scriitori/barbu_ion.webp',
     color: 'rgba(255,179,71,0.82)',
     categorie: 'poezie',
     canonic: true
@@ -74,7 +74,7 @@ const scriitoriList = [
   {
     nume: 'Lucian Blaga',
     date: '1895 – 1961',
-    img: '/scriitori/lucian_blaga.png',
+    img: '/scriitori/lucian_blaga.webp',
     color: 'rgba(122,58,0,0.82)',
     categorie: 'poezie',
     canonic: true
@@ -82,7 +82,7 @@ const scriitoriList = [
   {
     nume: 'Tudor Arghezi',
     date: '1880 – 1967',
-    img: '/scriitori/tudor_arghezi.png',
+    img: '/scriitori/tudor_arghezi.webp',
     color: 'rgba(255,179,71,0.82)',
     categorie: 'poezie',
     canonic: true
@@ -90,7 +90,7 @@ const scriitoriList = [
   {
     nume: 'George Bacovia',
     date: '1881 – 1957',
-    img: '/scriitori/bacovia_rezerva.png',
+    img: '/scriitori/bacovia_rezerva.webp',
     color: 'rgba(122,58,0,0.82)',
     categorie: 'poezie',
     canonic: true
@@ -98,7 +98,7 @@ const scriitoriList = [
   {
     nume: 'Mihail Sadoveanu',
     date: '1880 – 1961',
-    img: '/scriitori/mihail-sadoveanu-3.png',
+    img: '/scriitori/mihail-sadoveanu-3.webp',
     color: 'rgba(255,179,71,0.82)',
     categorie: 'roman',
     canonic: true
@@ -106,7 +106,7 @@ const scriitoriList = [
   {
     nume: 'Marin Preda',
     date: '1922 – 1980',
-    img: '/scriitori/marin_preda.png',
+    img: '/scriitori/marin_preda.webp',
     color: 'rgba(122,58,0,0.82)',
     categorie: 'roman',
     canonic: true
@@ -114,7 +114,7 @@ const scriitoriList = [
   {
     nume: 'Nichita Stănescu',
     date: '1933 – 1983',
-    img: '/scriitori/nichita_stanescu_rezerva.png',
+    img: '/scriitori/nichita_stanescu_rezerva.webp',
     color: 'rgba(255,179,71,0.82)',
     categorie: 'poezie',
     canonic: true
@@ -122,7 +122,7 @@ const scriitoriList = [
   {
     nume: 'Marin Sorescu',
     date: '1936 – 1996',
-    img: '/scriitori/marin_sorescu.png',
+    img: '/scriitori/marin_sorescu.webp',
     color: 'rgba(122,58,0,0.82)',
     categorie: 'poezie',
     canonic: true
@@ -130,7 +130,7 @@ const scriitoriList = [
   {
     nume: 'Titu Maiorescu',
     date: '1840 – 1917',
-    img: '/scriitori/titu_maiorescu (2).png',
+    img: '/scriitori/titu_maiorescu (2).webp',
     color: 'rgba(122,58,0,0.82)',
     categorie: 'critica',
     canonic: true
@@ -138,7 +138,7 @@ const scriitoriList = [
   {
     nume: 'Mircea Eliade',
     date: '1907 – 1986',
-    img: '/scriitori/mircea-eliade.png',
+    img: '/scriitori/mircea-eliade.webp',
     color: 'rgba(255,179,71,0.82)',
     categorie: 'roman',
     canonic: false
@@ -146,7 +146,7 @@ const scriitoriList = [
   {
     nume: 'Costache Negruzzi',
     date: '1808 – 1868',
-    img: '/scriitori/costache-negruzzi.png',
+    img: '/scriitori/costache-negruzzi.webp',
     color: 'rgba(255,179,71,0.82)',
     categorie: 'roman',
     canonic: false
@@ -154,7 +154,7 @@ const scriitoriList = [
   {
     nume: 'Ion Pillat',
     date: '1891 – 1945',
-    img: '/scriitori/ion_pillat.png',
+    img: '/scriitori/ion_pillat.webp',
     color: 'rgba(122,58,0,0.82)',
     categorie: 'poezie',
     canonic: false
@@ -162,7 +162,7 @@ const scriitoriList = [
   {
     nume: 'Vasile Voiculescu',
     date: '1884 – 1963',
-    img: '/scriitori/vasile_voiculescu.png',
+    img: '/scriitori/vasile_voiculescu.webp',
     color: 'rgba(255,179,71,0.82)',
     categorie: 'poezie',
     canonic: false

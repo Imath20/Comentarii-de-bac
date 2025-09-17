@@ -1,7 +1,7 @@
 const scriitoriChatData = {
   eminescu: {
     nume: 'Mihai Eminescu',
-    avatar: '/scriitori/eminescu_mihai.png',
+    avatar: '/scriitori/eminescu_mihai.webp',
     stil: 'romantic, melancolic, filozofic',
     dataset: [
       {
@@ -100,7 +100,7 @@ const scriitoriChatData = {
   },
   caragiale: {
     nume: 'Ion Luca Caragiale',
-    avatar: '/scriitori/il-caragiale.png',
+    avatar: '/scriitori/il-caragiale.webp',
     stil: 'satiric, umoristic, observator social',
     dataset: [
       {
@@ -139,7 +139,7 @@ const scriitoriChatData = {
   },
   creanga: {
     nume: 'Ion Creangă',
-    avatar: '/scriitori/creanga_ion.png',
+    avatar: '/scriitori/creanga_ion.webp',
     stil: 'popular, narativ, folcloric',
     dataset: [
       {
@@ -178,7 +178,7 @@ const scriitoriChatData = {
   },
   rebreanu: {
     nume: 'Liviu Rebreanu',
-    avatar: '/scriitori/liviu_rebreanu.png',
+    avatar: '/scriitori/liviu_rebreanu.webp',
     stil: 'realist, psihologic, social',
     dataset: [
       {
@@ -217,7 +217,7 @@ const scriitoriChatData = {
   },
   arghezi: {
     nume: 'Tudor Arghezi',
-    avatar: '/scriitori/tudor_arghezi.png',
+    avatar: '/scriitori/tudor_arghezi.webp',
     stil: 'modernist, expresionist, filozofic',
     dataset: [
       {
@@ -256,7 +256,7 @@ const scriitoriChatData = {
   },
   bacovia: {
     nume: 'George Bacovia',
-    avatar: '/scriitori/george-bacovia.png',
+    avatar: '/scriitori/george-bacovia.webp',
     stil: 'simbolist, melancolic, urban',
     dataset: [
       {
@@ -295,7 +295,7 @@ const scriitoriChatData = {
   },
   blaga: {
     nume: 'Lucian Blaga',
-    avatar: '/scriitori/lucian_blaga.png',
+    avatar: '/scriitori/lucian_blaga.webp',
     stil: 'filozofic, mistic, liric',
     dataset: [
       {
