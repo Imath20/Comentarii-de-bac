@@ -1,44 +1,44 @@
 const preda = {
   nume: 'Marin Preda',
   // date: '1922 – 1980',
-  img: '/scriitori/marin_preda.png',
+  img: '/scriitori/marin_preda.webp',
   color: 'rgba(255,179,71,0.82)',
-  banner: '/Banner/preda.png',
+  banner: '/Banner/preda.webp',
   friends: [
     {
       name: 'Tudor Arghezi',
       key: 'arghezi',
-      img: '/scriitori/tudor_arghezi.png',
+      img: '/scriitori/tudor_arghezi.webp',
     },
     {
       name: 'Lucian Blaga',
       key: 'blaga',
-      img: '/scriitori/lucian_blaga.png',
+      img: '/scriitori/lucian_blaga.webp',
     },
     {
       name: 'Ion Barbu',
       key: 'barbu',
-      img: '/scriitori/barbu_ion.png',
+      img: '/scriitori/barbu_ion.webp',
     },
     {
       name: 'George Bacovia',
       key: 'bacovia',
-      img: '/scriitori/bacovia_rezerva.png',
+      img: '/scriitori/bacovia_rezerva.webp',
     },
     {
       name: 'Liviu Rebreanu',
       key: 'rebreanu',
-      img: '/scriitori/liviu_rebreanu_nou.png',
+      img: '/scriitori/liviu_rebreanu_nou.webp',
     },
     {
       name: 'Camil Petrescu',
       key: 'petrescu',
-      img: '/scriitori/camil_rezerva.png',
+      img: '/scriitori/camil_rezerva.webp',
     },
   ],
   gallery: [
-    '/Banner/preda.png',
-    '/scriitori/marin_preda.png',
+    '/Banner/preda.webp',
+    '/scriitori/marin_preda.webp',
   ],
   posts: [
     {
@@ -47,7 +47,7 @@ const preda = {
       date: '15 martie 1960',
       author: 'Marin Preda',
       text: 'Am publicat "Moromeții" - un roman care să exploreze viața țăranilor români în perioada interbelică și postbelică. Fiecare pagină este o frescă a societății românești, fiecare personaj este un tip social autentic.',
-      image: '/opere/morometii.png',
+      image: '/opere/morometii.webp',
       pinnedActions: [
         {
           type: 'comentariu',

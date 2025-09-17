@@ -1,44 +1,44 @@
 const eliade = {
   nume: 'Mircea Eliade',
   // date: '1907 – 1986',
-  img: '/scriitori/mircea-eliade.png',
+  img: '/scriitori/mircea-eliade.webp',
   color: 'rgba(255,179,71,0.82)',
-  banner: '/Banner/eliade.png',
+  banner: '/Banner/eliade.webp',
   friends: [
     {
       name: 'Tudor Arghezi',
       key: 'arghezi',
-      img: '/scriitori/tudor_arghezi.png',
+      img: '/scriitori/tudor_arghezi.webp',
     },
     {
       name: 'Lucian Blaga',
       key: 'blaga',
-      img: '/scriitori/lucian_blaga.png',
+      img: '/scriitori/lucian_blaga.webp',
     },
     {
       name: 'Ion Barbu',
       key: 'barbu',
-      img: '/scriitori/barbu_ion.png',
+      img: '/scriitori/barbu_ion.webp',
     },
     {
       name: 'George Bacovia',
       key: 'bacovia',
-      img: '/scriitori/bacovia_rezerva.png',
+      img: '/scriitori/bacovia_rezerva.webp',
     },
     {
       name: 'Liviu Rebreanu',
       key: 'rebreanu',
-      img: '/scriitori/liviu_rebreanu_nou.png',
+      img: '/scriitori/liviu_rebreanu_nou.webp',
     },
     {
       name: 'Camil Petrescu',
       key: 'petrescu',
-      img: '/scriitori/camil_rezerva.png',
+      img: '/scriitori/camil_rezerva.webp',
     },
   ],
   gallery: [
-    '/Banner/eliade.png',
-    '/scriitori/mircea-eliade.png',
+    '/Banner/eliade.webp',
+    '/scriitori/mircea-eliade.webp',
   ],
   posts: [
     {
@@ -47,7 +47,7 @@ const eliade = {
       date: '15 martie 1933',
       author: 'Mircea Eliade',
       text: 'Am publicat "Maitreyi" - un roman care să exploreze dragostea și spiritualitatea indiană. Fiecare pagină este o călătorie prin India, fiecare personaj este o reprezentare a filosofiei orientale.',
-      image: '/opere/maytreyi.png',
+      image: '/opere/maytreyi.webp',
       pinnedActions: [
         {
           type: 'comentariu',

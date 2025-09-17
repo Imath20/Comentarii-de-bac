@@ -1,44 +1,44 @@
 const stanescu = {
   nume: 'Nichita Stănescu',
   // date: '1933 – 1983',
-  img: '/scriitori/nichita_stanescu_rezerva.png',
+  img: '/scriitori/nichita_stanescu_rezerva.webp',
   color: 'rgba(255,179,71,0.82)',
-  banner: '/Banner/stanescu.png',
+  banner: '/Banner/stanescu.webp',
   friends: [
     {
       name: 'Tudor Arghezi',
       key: 'arghezi',
-      img: '/scriitori/tudor_arghezi.png',
+      img: '/scriitori/tudor_arghezi.webp',
     },
     {
       name: 'Lucian Blaga',
       key: 'blaga',
-      img: '/scriitori/lucian_blaga.png',
+      img: '/scriitori/lucian_blaga.webp',
     },
     {
       name: 'Ion Barbu',
       key: 'barbu',
-      img: '/scriitori/barbu_ion.png',
+      img: '/scriitori/barbu_ion.webp',
     },
     {
       name: 'George Bacovia',
       key: 'bacovia',
-      img: '/scriitori/bacovia_rezerva.png',
+      img: '/scriitori/bacovia_rezerva.webp',
     },
     {
       name: 'Liviu Rebreanu',
       key: 'rebreanu',
-      img: '/scriitori/liviu_rebreanu_nou.png',
+      img: '/scriitori/liviu_rebreanu_nou.webp',
     },
     {
       name: 'Camil Petrescu',
       key: 'petrescu',
-      img: '/scriitori/camil_rezerva.png',
+      img: '/scriitori/camil_rezerva.webp',
     },
   ],
   gallery: [
-    '/Banner/stanescu.png',
-    '/scriitori/nichita_stanescu_rezerva.png',
+    '/Banner/stanescu.webp',
+    '/scriitori/nichita_stanescu_rezerva.webp',
   ],
   posts: [
     {
@@ -47,7 +47,7 @@ const stanescu = {
       date: '10 mai 1966',
       author: 'Nichita Stănescu',
       text: 'Am publicat "Leoaică tânără, iubirea" - o poezie care să exploreze esența existenței prin prisma metaforei și a simbolului. Fiecare vers este o revelație, fiecare cuvânt este o fereastră către infinit.',
-      image: '/opere/leoaica-iubirea.png',
+      image: '/opere/leoaica-iubirea.webp',
       pinnedActions: [
         {
           type: 'comentariu',

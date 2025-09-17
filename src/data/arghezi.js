@@ -1,79 +1,79 @@
 const arghezi = {
   nume: 'Tudor Arghezi',
   // date: '1880 – 1967',
-  img: '/scriitori/tudor_arghezi.png',
+  img: '/scriitori/tudor_arghezi.webp',
   color: 'rgba(255,179,71,0.82)',
-  banner: '/Banner/arghezi.png',
+  banner: '/Banner/arghezi.webp',
   friends: [
     {
       name: 'Lucian Blaga',
       key: 'blaga',
-      img: '/scriitori/lucian_blaga.png',
+      img: '/scriitori/lucian_blaga.webp',
     },
     {
       name: 'Ion Barbu',
       key: 'barbu',
-      img: '/scriitori/barbu_ion.png',
+      img: '/scriitori/barbu_ion.webp',
     },
     {
       name: 'George Bacovia',
       key: 'bacovia',
-      img: '/scriitori/bacovia_rezerva.png',
+      img: '/scriitori/bacovia_rezerva.webp',
     },
     {
       name: 'Liviu Rebreanu',
       key: 'rebreanu',
-      img: '/scriitori/liviu_rebreanu_nou.png',
+      img: '/scriitori/liviu_rebreanu_nou.webp',
     },
     {
       name: 'Camil Petrescu',
       key: 'petrescu',
-      img: '/scriitori/camil_rezerva.png',
+      img: '/scriitori/camil_rezerva.webp',
     },
     {
       name: 'George Călinescu',
       key: 'calinescu',
-      img: '/scriitori/george_calinescu.png',
+      img: '/scriitori/george_calinescu.webp',
     },
     {
       name: 'Mihail Sadoveanu',
       key: 'sadoveanu',
-      img: '/scriitori/mihail-sadoveanu-3.png',
+      img: '/scriitori/mihail-sadoveanu-3.webp',
     },
     {
       name: 'Ion Pillat',
       key: 'pillat',
-      img: '/scriitori/ion_pillat.png',
+      img: '/scriitori/ion_pillat.webp',
     },
     {
       name: 'Marin Preda',
       key: 'preda',
-      img: '/scriitori/marin_preda.png',
+      img: '/scriitori/marin_preda.webp',
     },
     {
       name: 'Marin Sorescu',
       key: 'sorescu',
-      img: '/scriitori/marin_sorescu.png',
+      img: '/scriitori/marin_sorescu.webp',
     },
     {
       name: 'Nichita Stănescu',
       key: 'stanescu',
-      img: '/scriitori/nichita_stanescu_rezerva.png',
+      img: '/scriitori/nichita_stanescu_rezerva.webp',
     },
     {
       name: 'Vasile Voiculescu',
       key: 'voiculescu',
-      img: '/scriitori/vasile_voiculescu.png',
+      img: '/scriitori/vasile_voiculescu.webp',
     },
     {
       name: 'Mircea Eliade',
       key: 'eliade',
-      img: '/scriitori/mircea-eliade.png',
+      img: '/scriitori/mircea-eliade.webp',
     },
   ],
   gallery: [
-    '/Banner/arghezi.png',
-    '/scriitori/tudor_arghezi.png',
+    '/Banner/arghezi.webp',
+    '/scriitori/tudor_arghezi.webp',
   ],
   posts: [
     {
@@ -82,7 +82,7 @@ const arghezi = {
       date: '15 martie 1927',
       author: 'Tudor Arghezi',
       text: 'Am publicat "Testament" - o poezie care să exploreze moștenirea spirituală și culturală a poporului român. Fiecare vers este o testamentare a valorilor noastre, fiecare cuvânt este o moștenire pentru generațiile viitoare.',
-      image: '/opere/testament.png',
+      image: '/opere/testament.webp',
       pinnedActions: [
         {
           type: 'comentariu',

@@ -17,7 +17,7 @@ export default function AvatarSearchBar({ onSelect }) {
     <div className={`avatar-searchbar-banner-bar${focused ? ' focused' : ''}`}>
       <div className="avatar-main-inside-bar">
         <img
-          src="/utilitary/ganditorimea avatar.png"
+          src="/utilitary/ganditorimea avatar.webp"
           alt="Avatar principal"
           className="avatar-main-img-inside-bar"
         />

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Layout from '../assets/Layout';
+import { Link, useNavigate } from 'react-router-dom';
 import ScriitoriHoraCanvas from '../assets/ScriitoriHoraCanvas';
 import '../styles/style.scss';
 
@@ -7,37 +8,37 @@ const scriitoriList = [
   {
     nume: 'Ion Creangă',
     date: '1837 – 1889',
-    img: '/public/scriitori/creanga_ion.png',
+    img: '/scriitori/creanga_ion.webp',
     color: 'rgba(255,179,71,0.82)',
   },
   {
     nume: 'Mihai Eminescu',
     date: '1850 – 1889',
-    img: '/public/scriitori/eminescu_mihai.png',
+    img: '/scriitori/eminescu_mihai.webp',
     color: 'rgba(122,58,0,0.82)',
   },
   {
     nume: 'I.L. Caragiale',
     date: '1852 – 1912',
-    img: '/public/scriitori/il-caragiale.png',
+    img: '/scriitori/il-caragiale.webp',
     color: 'rgba(255,179,71,0.82)',
   },
   {
     nume: 'Ioan Slavici',
     date: '1848 – 1925',
-    img: '/public/scriitori/ioan_slavici.png',
+    img: '/scriitori/ioan_slavici.webp',
     color: 'rgba(122,58,0,0.82)',
   },
   {
     nume: 'Liviu Rebreanu',
     date: '1885 – 1944',
-    img: '/public/scriitori/liviu_rebreanu_nou.png',
+    img: '/scriitori/liviu_rebreanu_nou.webp',
     color: 'rgba(255,179,71,0.82)',
   },
   {
     nume: 'George Călinescu',
     date: '1899 – 1965',
-    img: '/public/scriitori/george_calinescu.png',
+    img: '/scriitori/george_calinescu.webp',
     color: 'rgba(255,179,71,0.82)',
   },
 ];
@@ -47,37 +48,37 @@ const opereList = [
     titlu: 'Moara cu noroc',
     autor: 'Ioan Slavici',
     data: 'Redactare: 1880',
-    img: '/public/opere/moara-cu-noroc.png',
+    img: '/opere/moara-cu-noroc.webp',
   },
   {
     titlu: 'Ion',
     autor: 'Liviu Rebreanu',
     data: 'Redactare: 1920',
-    img: '/public/opere/Ion.png',
+    img: '/opere/Ion.webp',
   },
   {
     titlu: 'O scrisoare pierdută',
     autor: 'I.L. Caragiale',
     data: 'Redactare: 1884',
-    img: '/public/opere/scrisoare-pierduta.png',
+    img: '/opere/scrisoare-pierduta.webp',
   },
   {
     titlu: 'Luceafărul',
     autor: 'Mihai Eminescu',
     data: 'Redactare: 1883',
-    img: '/public/opere/Luceafarul.png',
+    img: '/opere/Luceafarul.webp',
   },
   {
     titlu: 'Harap-Alb',
     autor: 'Ion Creangă',
     data: 'Redactare: 1877',
-    img: '/public/opere/Harap-Alb.png',
+    img: '/opere/Harap-Alb.webp',
   },
   {
     titlu: 'Enigma Otiliei',
     autor: 'George Călinescu',
     data: 'Redactare: 1938',
-    img: '/public/opere/enigma-otiliei.png',
+    img: '/opere/enigma-otiliei.webp',
   },
 ];
 
@@ -87,7 +88,7 @@ const bibliotecaList = [
     titlu: 'Moara cu noroc',
     autor: 'Ioan Slavici',
     data: 'Redactare: 1880',
-    img: '/opere/moara-cu-noroc.png',
+    img: '/opere/moara-cu-noroc.webp',
     categorie: 'nuvela',
     canonic: true,
   },
@@ -95,7 +96,7 @@ const bibliotecaList = [
     titlu: 'Ion',
     autor: 'Liviu Rebreanu',
     data: 'Redactare: 1920',
-    img: '/opere/Ion.png',
+    img: '/opere/Ion.webp',
     categorie: 'roman',
     canonic: true,
   },
@@ -103,7 +104,7 @@ const bibliotecaList = [
     titlu: 'O scrisoare pierdută',
     autor: 'I.L. Caragiale',
     data: 'Redactare: 1884',
-    img: '/opere/scrisoare-pierduta.png',
+    img: '/opere/scrisoare-pierduta.webp',
     categorie: 'comedie',
     canonic: true,
   },
@@ -111,7 +112,7 @@ const bibliotecaList = [
     titlu: 'Harap-Alb',
     autor: 'Ion Creangă',
     data: 'Redactare: 1877',
-    img: '/opere/Harap-Alb.png',
+    img: '/opere/Harap-Alb.webp',
     categorie: 'basm',
     canonic: true,
   },
@@ -119,7 +120,7 @@ const bibliotecaList = [
     titlu: 'Baltagul',
     autor: 'Mihail Sadoveanu',
     data: 'Redactare: 1930',
-    img: '/opere/baltagul.png',
+    img: '/opere/baltagul.webp',
     categorie: 'roman',
     canonic: true,
   },
@@ -127,7 +128,7 @@ const bibliotecaList = [
     titlu: 'Luceafărul',
     autor: 'Mihai Eminescu',
     data: 'Redactare: 1883',
-    img: '/opere/Luceafarul.png',
+    img: '/opere/Luceafarul.webp',
     categorie: 'poezie',
     canonic: true,
   },
@@ -208,6 +209,7 @@ const Index = () => {
   const [pdfFallbackUrl, setPdfFallbackUrl] = useState(null);
   const [showPresentationModal, setShowPresentationModal] = useState(false);
   const cardSize = 320;
+  const navigate = useNavigate();
 
   // Culoare bandă tematică
   const bandaColor = darkTheme ? 'rgba(26,13,0,0.82)' : 'rgba(255,179,71,0.82)';
@@ -368,7 +370,7 @@ const Index = () => {
           ))}
         </div>
         <button
-          onClick={() => window.location.href = '/opere'}
+          onClick={() => navigate('/opere')}
           className={`index-primary-button ${darkTheme ? 'dark-theme' : ''}`}
           onMouseOver={e => {
             e.currentTarget.style.background = darkTheme ? 'rgba(80,40,0,0.98)' : '#ffd591';
@@ -400,7 +402,7 @@ const Index = () => {
               <div
                 key={`${carte.titlu}-${carte.autor}`}
                 className={`index-biblioteca-card ${darkTheme ? 'dark-theme' : ''}`}
-                onClick={() => window.location.href = '/biblioteca'}
+                onClick={() => navigate('/biblioteca')}
                 onMouseOver={e => {
                   e.currentTarget.style.transform = 'scale(1.055)';
                   e.currentTarget.style.boxShadow = '0 8px 32px 0 rgba(60,40,20,0.22)';
@@ -432,7 +434,7 @@ const Index = () => {
             ))}
           </div>
           <button
-            onClick={() => window.location.href = '/biblioteca'}
+            onClick={() => navigate('/biblioteca')}
             className={`index-primary-button ${darkTheme ? 'dark-theme' : ''}`}
             onMouseOver={e => {
               e.currentTarget.style.background = darkTheme ? 'rgba(80,40,0,0.98)' : '#ffd591';
@@ -456,9 +458,9 @@ const Index = () => {
           {scriitoriList.map((scriitor, idx) => {
             const key = getScriitorKey(scriitor.nume);
             return (
-              <a
+              <Link
                 key={scriitor.nume}
-                href={`/scriitor?name=${key}`}
+                to={`/scriitor?name=${key}`}
                 style={{ textDecoration: 'none', color: 'inherit' }}
               >
                 <div
@@ -481,12 +483,12 @@ const Index = () => {
                     <div className="index-scriitor-dates">{scriitor.date}</div>
                   </div>
                 </div>
-              </a>
+              </Link>
             );
           })}
         </div>
         <button
-          onClick={() => window.location.href = '/scriitori'}
+          onClick={() => navigate('/scriitori')}
           className={`index-primary-button ${darkTheme ? 'dark-theme' : ''}`}
           onMouseOver={e => {
             e.currentTarget.style.background = darkTheme ? 'rgba(80,40,0,0.98)' : '#ffd591';
@@ -560,7 +562,7 @@ const Index = () => {
                 ))}
               </ul>
               <button
-                onClick={e => { e.stopPropagation(); window.location.href = sub.link; }}
+                onClick={e => { e.stopPropagation(); navigate(sub.link); }}
                 className={`index-subiect-button ${darkTheme ? 'dark-theme' : ''}`}
                 onMouseOver={e => {
                   e.currentTarget.style.background = darkTheme ? '#ffd591' : '#ffd591';
@@ -578,7 +580,7 @@ const Index = () => {
         </div>
         <div className="index-button-container">
           <button
-            onClick={() => window.location.href = '/subiecte'}
+            onClick={() => navigate('/subiecte')}
             className={`index-secondary-button ${darkTheme ? 'dark-theme' : ''}`}
             onMouseOver={e => {
               e.currentTarget.style.background = darkTheme ? 'rgba(255,179,71,0.08)' : '#fffbe6';
@@ -596,7 +598,7 @@ const Index = () => {
             Vezi toate subiectele
           </button>
           <button
-            onClick={() => window.location.href = '/ai'}
+            onClick={() => navigate('/ai')}
             className={`index-primary-button ${darkTheme ? 'dark-theme' : ''}`}
             onMouseOver={e => {
               e.currentTarget.style.background = darkTheme ? 'rgba(80,40,0,0.98)' : '#ffd591';
@@ -629,7 +631,7 @@ const Index = () => {
               <div
                 key={film.id}
                 className={`index-videoclipuri-card ${darkTheme ? 'dark-theme' : 'light-theme'}`}
-                onClick={() => window.location.href = '/videoclipuri'}
+                onClick={() => navigate('/videoclipuri')}
                 onMouseOver={e => {
                   e.currentTarget.style.transform = 'scale(1.05)';
                   e.currentTarget.style.boxShadow = '0 8px 32px 0 rgba(60,40,20,0.22)';
@@ -666,7 +668,7 @@ const Index = () => {
             ))}
           </div>
           <button
-            onClick={() => window.location.href = '/videoclipuri'}
+            onClick={() => navigate('/videoclipuri')}
             className={`index-primary-button ${darkTheme ? 'dark-theme' : ''}`}
             onMouseOver={e => {
               e.currentTarget.style.background = darkTheme ? 'rgba(80,40,0,0.98)' : '#ffd591';

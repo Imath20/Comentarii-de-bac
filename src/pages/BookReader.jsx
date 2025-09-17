@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
+// Bundle JSON content at build time to avoid runtime fetch issues on Vercel
+// Keys look like: '../data/opere/ion.json'
+const BOOK_MODULES = import.meta.glob('../data/opere/*.json', { eager: true });
+
 const BOOKS = {
   "amintiri-din-copilarie": {
     path: "/src/data/opere/amintiri_copilarie.json",
@@ -289,29 +293,46 @@ export default function BookReader() {
     const pathParts = location.pathname.split('/');
     const bookSlug = pathParts[pathParts.length - 1];
     const bookConfig = BOOKS[bookSlug];
-    
+
     if (!bookConfig) {
       console.error('Book not found:', bookSlug);
+      setLoading(false);
       return;
     }
 
     setCurrentBook(bookConfig);
 
-    fetch(bookConfig.path)
-      .then(res => res.json())
-      .then(data => {
-        setPages(data);
-        const saved = Number(localStorage.getItem(bookConfig.bookmarkKey));
-        if (!isNaN(saved) && saved >= 0 && saved < data.length) {
-          setPage(saved);
-          setBookmarkedPage(saved);
-        }
+    // Resolve module by filename from config.path
+    try {
+      const fileName = String(bookConfig.path).split('/').pop();
+      const moduleEntry = Object.entries(BOOK_MODULES).find(([key]) => key.endsWith(`/${fileName}`));
+
+      if (!moduleEntry) {
+        console.error('Book JSON module not found for', fileName);
         setLoading(false);
-      })
-      .catch(error => {
-        console.error('Error loading book:', error);
+        return;
+      }
+
+      const module = moduleEntry[1];
+      // Vite JSON modules export the parsed JSON as default
+      const data = module.default ?? module;
+      if (!Array.isArray(data)) {
+        console.error('Invalid JSON format for book', fileName);
         setLoading(false);
-      });
+        return;
+      }
+
+      setPages(data);
+      const saved = Number(localStorage.getItem(bookConfig.bookmarkKey));
+      if (!isNaN(saved) && saved >= 0 && saved < data.length) {
+        setPage(saved);
+        setBookmarkedPage(saved);
+      }
+      setLoading(false);
+    } catch (error) {
+      console.error('Error loading book module:', error);
+      setLoading(false);
+    }
   }, [location.pathname]);
 
   useEffect(() => {

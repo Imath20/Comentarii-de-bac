@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import HomeIcon from './icons/HomeIcon';
 import PenPaperIcon from './icons/PenPaperIcon';
 import SlideIcon from './icons/SlideIcon';
@@ -59,14 +60,14 @@ export default function Navbar({ darkTheme, setDarkTheme, scrolled }) {
       <ul className="navbar-menu" ref={menuRef}>
         {NAV_CATEGORIES.map(cat => (
           <li key={cat.name}>
-            <a
-              href={cat.href}
+            <Link
+              to={cat.href}
               onMouseEnter={handleMouseEnter}
               onMouseLeave={handleMouseLeave}
             >
               <span className="nav-icon-wrapper">{cat.icon}</span>
               {cat.name}
-            </a>
+            </Link>
           </li>
         ))}
         <div

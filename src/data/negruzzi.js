@@ -1,39 +1,39 @@
 const negruzzi = {
   nume: 'Costache Negruzzi',
   // date: '1808 – 1868',
-  img: '/scriitori/costache-negruzzi.png',
+  img: '/scriitori/costache-negruzzi.webp',
   color: 'rgba(255,179,71,0.82)',
-  banner: '/Banner/negruzzi.png',
+  banner: '/Banner/negruzzi.webp',
   friends: [
     {
       name: 'Mihai Eminescu',
       key: 'eminescu',
-      img: '/scriitori/eminescu_mihai.png',
+      img: '/scriitori/eminescu_mihai.webp',
     },
     {
       name: 'Ion Creangă',
       key: 'creanga',
-      img: '/scriitori/creanga_ion.png',
+      img: '/scriitori/creanga_ion.webp',
     },
     {
       name: 'I.L. Caragiale',
       key: 'caragiale',
-      img: '/scriitori/il-caragiale.png',
+      img: '/scriitori/il-caragiale.webp',
     },
     {
       name: 'Titu Maiorescu',
       key: 'maiorescu',
-      img: '/scriitori/titu_maiorescu (2).png',
+      img: '/scriitori/titu_maiorescu (2).webp',
     },
     {
       name: 'Veronica Micle',
       key: 'veronica',
-      img: '/Profile ganditorimea/Veronica Micle.png',
+      img: '/Profile ganditorimea/Veronica Micle.webp',
     },
   ],
   gallery: [
-    '/Banner/negruzzi.png',
-    '/scriitori/costache-negruzzi.png',
+    '/Banner/negruzzi.webp',
+    '/scriitori/costache-negruzzi.webp',
   ],
   posts: [
     {
@@ -42,7 +42,7 @@ const negruzzi = {
       date: '20 martie 1848',
       author: 'Costache Negruzzi',
       text: 'Am publicat "Alexandru Lăpușneanu" - o nuvelă istorică care să exploreze viața domnitorului Moldovei. Fiecare pagină este impregnată cu istoria noastră, fiecare personaj este o reprezentare a epocii.',
-      image: '/opere/lapusneanu.png',
+      image: '/opere/lapusneanu.webp',
       pinnedActions: [
         {
           type: 'comentariu',

@@ -1,44 +1,44 @@
 const petrescu = {
   nume: 'Camil Petrescu',
   // date: '1894 – 1957',
-  img: '/scriitori/camil_rezerva.png',
+  img: '/scriitori/camil_rezerva.webp',
   color: 'rgba(255,179,71,0.82)',
-  banner: '/Banner/petrescu.png',
+  banner: '/Banner/petrescu.webp',
   friends: [
     {
       name: 'Tudor Arghezi',
       key: 'arghezi',
-      img: '/scriitori/tudor_arghezi.png',
+      img: '/scriitori/tudor_arghezi.webp',
     },
     {
       name: 'Lucian Blaga',
       key: 'blaga',
-      img: '/scriitori/lucian_blaga.png',
+      img: '/scriitori/lucian_blaga.webp',
     },
     {
       name: 'Ion Barbu',
       key: 'barbu',
-      img: '/scriitori/barbu_ion.png',
+      img: '/scriitori/barbu_ion.webp',
     },
     {
       name: 'George Bacovia',
       key: 'bacovia',
-      img: '/scriitori/bacovia_rezerva.png',
+      img: '/scriitori/bacovia_rezerva.webp',
     },
     {
       name: 'Liviu Rebreanu',
       key: 'rebreanu',
-      img: '/scriitori/liviu_rebreanu_nou.png',
+      img: '/scriitori/liviu_rebreanu_nou.webp',
     },
     {
       name: 'George Călinescu',
       key: 'calinescu',
-      img: '/scriitori/george_calinescu.png',
+      img: '/scriitori/george_calinescu.webp',
     },
   ],
   gallery: [
-    '/Banner/petrescu.png',
-    '/scriitori/camil_rezerva.png',
+    '/Banner/petrescu.webp',
+    '/scriitori/camil_rezerva.webp',
   ],
   posts: [
     {
@@ -47,7 +47,7 @@ const petrescu = {
       date: '15 martie 1930',
       author: 'Camil Petrescu',
       text: 'Am publicat "Ultima noapte de dragoste, întâia noapte de război" - un roman care să exploreze existențialismul și dragostea în timpul Primului Război Mondial. Fiecare pagină este o meditație asupra existenței, fiecare personaj este o reprezentare a condiției umane.',
-      image: '/opere/ultima-noapte.png',
+      image: '/opere/ultima-noapte.webp',
       pinnedActions: [
         {
           type: 'comentariu',

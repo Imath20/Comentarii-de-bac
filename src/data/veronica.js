@@ -1,39 +1,39 @@
 const veronica = {
   nume: 'Veronica Micle',
   // date: '1850 – 1889',
-  img: '/Profile ganditorimea/Veronica Micle.png',
+  img: '/Profile ganditorimea/Veronica Micle.webp',
   color: 'rgba(255,179,71,0.82)',
-  banner: '/Banner/micle.png',
+  banner: '/Banner/micle.webp',
   friends: [
     {
       name: 'Mihai Eminescu',
       key: 'eminescu',
-      img: '/scriitori/eminescu_mihai.png',
+      img: '/scriitori/eminescu_mihai.webp',
     },
     {
       name: 'Ion Creangă',
       key: 'creanga',
-      img: '/scriitori/creanga_ion.png',
+      img: '/scriitori/creanga_ion.webp',
     },
     {
       name: 'I.L. Caragiale',
       key: 'caragiale',
-      img: '/scriitori/il-caragiale.png',
+      img: '/scriitori/il-caragiale.webp',
     },
     {
       name: 'Ioan Slavici',
       key: 'slavici',
-      img: '/scriitori/ioan_slavici.png',
+      img: '/scriitori/ioan_slavici.webp',
     },
     {
       name: 'Titu Maiorescu',
       key: 'maiorescu',
-      img: '/scriitori/titu_maiorescu (2).png',
+      img: '/scriitori/titu_maiorescu (2).webp',
     },
   ],
   gallery: [
-    '/Banner/micle.png',
-    '/Profile ganditorimea/Veronica Micle.png',
+    '/Banner/micle.webp',
+    '/Profile ganditorimea/Veronica Micle.webp',
   ],
   posts: [
     {
@@ -42,7 +42,7 @@ const veronica = {
       date: '20 august 1887',
       author: 'Veronica Micle',
       text: 'Am publicat "Rânduri pentru copil" - o colecție de poezii dedicate copilăriei și iubirii materne. Fiecare vers este impregnat cu dragostea pentru copii, fiecare cuvânt este o declarație de iubire pentru viață.',
-      image: '/opere/formele.png',
+      image: '/opere/formele.webp',
       link: '/poezie/randuri-pentru-copil',
       likes: 1887,
       reactions: [

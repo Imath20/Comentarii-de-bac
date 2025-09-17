@@ -10,7 +10,7 @@ const opereList = [
         titlu: 'Moara cu noroc',
         autor: 'Ioan Slavici',
         data: 'Redactare: 1880',
-        img: '/public/opere/moara-cu-noroc.png',
+        img: '/opere/moara-cu-noroc.webp',
         categorie: 'nuvela',
         canonic: true
     },
@@ -18,7 +18,7 @@ const opereList = [
         titlu: 'Ion',
         autor: 'Liviu Rebreanu',
         data: 'Redactare: 1920',
-        img: '/public/opere/Ion.png',
+        img: '/opere/Ion.webp',
         categorie: 'roman',
         romanSubcategorie: 'roman-social',
         canonic: true
@@ -27,7 +27,7 @@ const opereList = [
         titlu: 'O scrisoare pierdută',
         autor: 'I.L. Caragiale',
         data: 'Redactare: 1884',
-        img: '/public/opere/scrisoare-pierduta.png',
+        img: '/opere/scrisoare-pierduta.webp',
         categorie: 'comedie',
         canonic: true
     },
@@ -35,7 +35,7 @@ const opereList = [
         titlu: 'Luceafărul',
         autor: 'Mihai Eminescu',
         data: 'Redactare: 1883',
-        img: '/public/opere/Luceafarul.png',
+        img: '/opere/Luceafarul.webp',
         categorie: 'poezie',
         canonic: true
     },
@@ -43,7 +43,7 @@ const opereList = [
         titlu: 'Harap-Alb',
         autor: 'Ion Creangă',
         data: 'Redactare: 1877',
-        img: '/public/opere/Harap-Alb.png',
+        img: '/opere/Harap-Alb.webp',
         categorie: 'basm',
         canonic: true
     },
@@ -51,7 +51,7 @@ const opereList = [
         titlu: 'Enigma Otiliei',
         autor: 'George Călinescu',
         data: 'Redactare: 1938',
-        img: '/public/opere/enigma-otiliei.png',
+        img: '/opere/enigma-otiliei.webp',
         categorie: 'roman',
         romanSubcategorie: 'roman-balzacian',
         canonic: true
@@ -60,7 +60,7 @@ const opereList = [
         titlu: 'Baltagul',
         autor: 'Mihail Sadoveanu',
         data: 'Redactare: 1930',
-        img: '/public/opere/baltagul.png',
+        img: '/opere/baltagul.webp',
         categorie: 'roman',
         romanSubcategorie: 'roman-mitic',
         canonic: true
@@ -69,7 +69,7 @@ const opereList = [
         titlu: 'Plumb',
         autor: 'George Bacovia',
         data: 'Redactare: 1916',
-        img: '/public/opere/plumb.png',
+        img: '/opere/plumb.webp',
         categorie: 'poezie',
         canonic: true
     },
@@ -77,7 +77,7 @@ const opereList = [
         titlu: 'Mara',
         autor: 'Ioan Slavici',
         data: 'Redactare: 1894',
-        img: '/public/opere/mara.png',
+        img: '/opere/mara.webp',
         categorie: 'nuvela',
         canonic: true
     },
@@ -85,7 +85,7 @@ const opereList = [
         titlu: 'Ultima noapte de dragoste, întaia noapte de razboi',
         autor: 'Camil Petrescu',
         data: 'Redactare: 1930',
-        img: '/public/opere/ultima-noapte.png',
+        img: '/opere/ultima-noapte.webp',
         categorie: 'roman',
         romanSubcategorie: 'roman-subiectiv',
         canonic: true
@@ -94,7 +94,7 @@ const opereList = [
         titlu: 'Riga crypto si lapona enigel',
         autor: 'Ion Barbu',
         data: 'Redactare: 1930',
-        img: '/public/opere/riga-crypto.png',
+        img: '/opere/riga-crypto.webp',
         categorie: 'poezie',
         canonic: true
     },
@@ -102,7 +102,7 @@ const opereList = [
         titlu: 'Eu nu strivesc corola de minuni a lumii',
         autor: 'Lucian Blaga',
         data: 'Redactare: 1919',
-        img: '/public/opere/corola_minuni.png',
+        img: '/opere/corola_minuni.webp',
         categorie: 'poezie',
         canonic: true
     },
@@ -110,7 +110,7 @@ const opereList = [
         titlu: 'Testament',
         autor: 'Tudor Arghezi',
         data: 'Redactare: 1927',
-        img: '/public/opere/testament.png',
+        img: '/opere/testament.webp',
         categorie: 'poezie',
         canonic: true
     },
@@ -118,7 +118,7 @@ const opereList = [
         titlu: 'Morometii',
         autor: 'Marin Preda',
         data: 'Redactare: 1955/1967',
-        img: '/public/opere/morometii.png',
+        img: '/opere/morometii.webp',
         categorie: 'roman',
         romanSubcategorie: 'roman-autobiografic',
         canonic: true
@@ -127,7 +127,7 @@ const opereList = [
         titlu: 'Leoaică tânără, iubirea',
         autor: 'Nichita Stănescu',
         data: 'Redactare: 1964',
-        img: '/public/opere/leoaica-iubirea.png',
+        img: '/opere/leoaica-iubirea.webp',
         categorie: 'poezie',
         canonic: true
     },
@@ -135,7 +135,7 @@ const opereList = [
         titlu: 'Iona',
         autor: 'Marin Sorescu',
         data: 'Redactare: 1968',
-        img: '/public/opere/iona.png',
+        img: '/opere/iona.webp',
         categorie: 'comedie',
         canonic: true
     },
@@ -143,7 +143,7 @@ const opereList = [
         titlu: 'Formele fara fond',
         autor: 'Titu Maiorescu',
         data: 'Redactare: 1868',
-        img: '/public/opere/formele.png',
+        img: '/opere/formele.webp',
         categorie: 'critica',
         canonic: true
     },
@@ -151,7 +151,7 @@ const opereList = [
         titlu: 'Amintiri din copilărie',
         autor: 'Ion Creangă',
         data: 'Redactare: 1881-1892',
-        img: '/public/opere/amintiri-copil.png',
+        img: '/opere/amintiri-copil.webp',
         categorie: 'roman',
         romanSubcategorie: 'roman-autobiografic',
         canonic: false
@@ -160,7 +160,7 @@ const opereList = [
         titlu: 'Răscoala',
         autor: 'Liviu Rebreanu',
         data: 'Redactare: 1932',
-        img: '/public/opere/rascoala.png',
+        img: '/opere/rascoala.webp',
         categorie: 'roman',
         romanSubcategorie: 'roman-social',
         canonic: false
@@ -169,7 +169,7 @@ const opereList = [
         titlu: 'Hanul Ancuţei',
         autor: 'Mihail Sadoveanu',
         data: 'Redactare: 1928',
-        img: '/public/opere/hanul-ancutei.png',
+        img: '/opere/hanul-ancutei.webp',
         categorie: 'nuvela',
         canonic: false
     },
@@ -177,7 +177,7 @@ const opereList = [
         titlu: 'Maytreyi',
         autor: 'Mircea Eliade',
         data: 'Redactare: 1933',
-        img: '/public/opere/maytreyi.png',
+        img: '/opere/maytreyi.webp',
         categorie: 'roman',
         romanSubcategorie: 'roman-autobiografic',
         canonic: false
@@ -186,7 +186,7 @@ const opereList = [
         titlu: 'Alexandru Lăpușneanu',
         autor: 'Costache Negruzzi',
         data: 'Redactare: 1840',
-        img: '/public/opere/lapusneanu.png',
+        img: '/opere/lapusneanu.webp',
         categorie: 'roman',
         romanSubcategorie: 'roman-istoric',
         canonic: false
@@ -195,7 +195,7 @@ const opereList = [
         titlu: 'Aci sosi pe vremuri',
         autor: 'Ion Pillat',
         data: 'Redactare: 1923',
-        img: '/public/opere/aci-sosi.png',
+        img: '/opere/aci-sosi.webp',
         categorie: 'poezie',
         canonic: false
     },
@@ -203,7 +203,7 @@ const opereList = [
         titlu: 'În Grădina Ghetsimani',
         autor: 'Vasile Voiculescu',
         data: 'Redactare: 1921',
-        img: '/public/opere/gradina-ghetsimani.png',
+        img: '/opere/gradina-ghetsimani.webp',
         categorie: 'poezie',
         canonic: false
     },

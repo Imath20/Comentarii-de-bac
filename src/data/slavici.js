@@ -1,39 +1,39 @@
 const slavici = {
   nume: 'Ioan Slavici',
   // date: '1848 – 1925',
-  img: '/scriitori/ioan_slavici.png',
+  img: '/scriitori/ioan_slavici.webp',
   color: 'rgba(255,179,71,0.82)',
-  banner: '/Banner/slavici.png',
+  banner: '/Banner/slavici.webp',
   friends: [
     {
       name: 'Mihai Eminescu',
       key: 'eminescu',
-      img: '/scriitori/eminescu_mihai.png',
+      img: '/scriitori/eminescu_mihai.webp',
     },
     {
       name: 'Ion Creangă',
       key: 'creanga',
-      img: '/scriitori/creanga_ion.png',
+      img: '/scriitori/creanga_ion.webp',
     },
     {
       name: 'I.L. Caragiale',
       key: 'caragiale',
-      img: '/scriitori/il-caragiale.png',
+      img: '/scriitori/il-caragiale.webp',
     },
     {
       name: 'Titu Maiorescu',
       key: 'maiorescu',
-      img: '/scriitori/titu_maiorescu (2).png',
+      img: '/scriitori/titu_maiorescu (2).webp',
     },
     {
       name: 'Veronica Micle',
       key: 'veronica',
-      img: '/Profile ganditorimea/Veronica Micle.png',
+      img: '/Profile ganditorimea/Veronica Micle.webp',
     },
   ],
   gallery: [
-    '/Banner/slavici.png',
-    '/scriitori/ioan_slavici.png',
+    '/Banner/slavici.webp',
+    '/scriitori/ioan_slavici.webp',
   ],
   posts: [
     {
@@ -42,7 +42,7 @@ const slavici = {
       date: '15 martie 1880',
       author: 'Ioan Slavici',
       text: 'Astăzi am publicat "Moara cu noroc". O nuvelă care să exploreze viața țăranilor români din Transilvania. Fiecare pagină este impregnată cu frumusețea naturii și cu înțelepciunea poporului nostru.',
-      image: '/opere/moara-cu-noroc.png',
+      image: '/opere/moara-cu-noroc.webp',
       pinnedActions: [
         {
           type: 'comentariu',
@@ -84,7 +84,7 @@ const slavici = {
       date: '15 martie 1894',
       author: 'Ioan Slavici',
       text: 'Am publicat "Mara". O nuvelă care să exploreze viața femeilor române din Transilvania. Fiecare pagină este o poveste de dragoste și suferință, fiecare personaj este o reprezentare a condiției umane.',
-      image: '/opere/mara.png',
+      image: '/opere/mara.webp',
       pinnedActions: [
         {
           type: 'comentariu',

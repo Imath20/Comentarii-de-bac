@@ -1,44 +1,44 @@
 const voiculescu = {
   nume: 'Vasile Voiculescu',
   // date: '1884 – 1963',
-  img: '/scriitori/vasile_voiculescu.png',
+  img: '/scriitori/vasile_voiculescu.webp',
   color: 'rgba(255,179,71,0.82)',
-  banner: '/Banner/voiculescu.png',
+  banner: '/Banner/voiculescu.webp',
   friends: [
     {
       name: 'Tudor Arghezi',
       key: 'arghezi',
-      img: '/scriitori/tudor_arghezi.png',
+      img: '/scriitori/tudor_arghezi.webp',
     },
     {
       name: 'Lucian Blaga',
       key: 'blaga',
-      img: '/scriitori/lucian_blaga.png',
+      img: '/scriitori/lucian_blaga.webp',
     },
     {
       name: 'Ion Barbu',
       key: 'barbu',
-      img: '/scriitori/barbu_ion.png',
+      img: '/scriitori/barbu_ion.webp',
     },
     {
       name: 'George Bacovia',
       key: 'bacovia',
-      img: '/scriitori/bacovia_rezerva.png',
+      img: '/scriitori/bacovia_rezerva.webp',
     },
     {
       name: 'Liviu Rebreanu',
       key: 'rebreanu',
-      img: '/scriitori/liviu_rebreanu_nou.png',
+      img: '/scriitori/liviu_rebreanu_nou.webp',
     },
     {
       name: 'Camil Petrescu',
       key: 'petrescu',
-      img: '/scriitori/camil_rezerva.png',
+      img: '/scriitori/camil_rezerva.webp',
     },
   ],
   gallery: [
-    '/Banner/voiculescu.png',
-    '/scriitori/vasile_voiculescu.png',
+    '/Banner/voiculescu.webp',
+    '/scriitori/vasile_voiculescu.webp',
   ],
   posts: [
     {
@@ -47,7 +47,7 @@ const voiculescu = {
       date: '15 martie 1921',
       author: 'Vasile Voiculescu',
       text: 'Am publicat "În Grădina Ghetsimani" - o poezie care să exploreze lupta cu soarta și suferința umană. Fiecare vers este o meditație asupra existenței, fiecare cuvânt este o expresie a condiției umane.',
-      image: '/opere/gradina-ghetsimani.png',
+      image: '/opere/gradina-ghetsimani.webp',
       pinnedActions: [
         {
           type: 'comentariu',
