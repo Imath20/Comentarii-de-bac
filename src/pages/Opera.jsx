@@ -109,12 +109,12 @@ const OPERA_DETAILS = {
     ]
   },
   'harap-alb': {
-    titlu: 'Harap Alb',
+    titlu: 'Povestea lui Harap Alb',
     autor: 'Ion Creangă',
     data: '1877',
     categorie: 'basm',
     canonic: true,
-    descriere: 'Basmul "Harap Alb" este unul dintre cele mai frumoase basme populare românești. Povestește despre Harap Alb, fiul cel mai mic al împăratului, care pleacă în lume să-și caute norocul.',
+    descriere: 'Basmul "Povestea lui Harap Alb" este unul dintre cele mai frumoase basme populare românești. Povestește despre Harap Alb, fiul cel mai mic al împăratului, care pleacă în lume să-și caute norocul.',
     teme: ['călătoria inițiatică', 'înțelepciunea', 'bunătatea', 'dreptatea', 'magia'],
     personaje: ['Harap Alb', 'Împăratul Verde', 'Fata Împăratului', 'Baba Cloanța', 'Zmeul'],
     analiza: 'Basmul urmează structura clasică a basmului popular: eroul pleacă în călătorie, întâmpină obstacole, primește ajutor de la personaje magice și se întoarce victorios. Harap Alb reprezintă valorile pozitive ale poporului român.',

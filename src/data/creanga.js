@@ -48,7 +48,7 @@ const creanga = {
       pin: true,
       date: '15 martie 1877',
       author: 'Ion Creangă',
-      text: 'Aha! Am scris povestea cu Harap-Alb! Să știi că era odată ca niciodată, un crai care avea trei fete... Și iată că am pus-o pe hârtie, să o poată citi toți copiii! Sunt foarte mulțumit de ea, drăgăliță-Doamne!',
+      text: 'Aha! Am scris povestea lui Harap-Alb! Să știi că era odată ca niciodată, un crai care avea trei fete... Și iată că am pus-o pe hârtie, să o poată citi toți copiii! Sunt foarte mulțumit de ea, drăgăliță-Doamne!',
       image: '/opere/Harap-Alb.webp',
       pinnedActions: [
         {

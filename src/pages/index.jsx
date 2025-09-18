@@ -69,7 +69,7 @@ const opereList = [
     img: '/opere/Luceafarul.webp',
   },
   {
-    titlu: 'Harap-Alb',
+    titlu: 'Povestea lui Harap-Alb',
     autor: 'Ion Creangă',
     data: 'Redactare: 1877',
     img: '/opere/Harap-Alb.webp',
@@ -112,7 +112,7 @@ const bibliotecaList = [
     jsonFile: 'o-scrisoare-pierduta',
   },
   {
-    titlu: 'Harap-Alb',
+    titlu: 'Povestea lui Harap-Alb',
     autor: 'Ion Creangă',
     data: 'Redactare: 1877',
     img: '/opere/Harap-Alb.webp',
@@ -144,8 +144,8 @@ const bibliotecaList = [
 const videoclipuriList = [
   {
     id: '1',
-    titlu: 'Ion Creangă - Harap-Alb',
-    descriere: 'Harap-Alb',
+    titlu: 'Ion Creangă - Povestea lui Harap-Alb',
+    descriere: 'Povestea lui Harap-Alb',
     videoId: 'RMl6c8B0VvE',
     categorie: 'basm',
     durata: '37:28',

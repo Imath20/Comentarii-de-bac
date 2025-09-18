@@ -40,7 +40,7 @@ const opereList = [
         canonic: true
     },
     {
-        titlu: 'Harap-Alb',
+        titlu: 'Povestea lui Harap-Alb',
         autor: 'Ion Creangă',
         data: 'Redactare: 1877',
         img: '/opere/Harap-Alb.webp',
@@ -107,10 +107,18 @@ const opereList = [
         canonic: true
     },
     {
+        titlu: 'Flori de mucigai',
+        autor: 'Tudor Arghezi',
+        data: 'Redactare: 1919',
+        img: '/opere/flori-mucigai.webp',
+        categorie: 'poezie',
+        canonic: true
+    },
+    {
         titlu: 'Testament',
         autor: 'Tudor Arghezi',
         data: 'Redactare: 1927',
-        img: '/opere/testament.webp',
+        img: '/opere/testament-orizontala.webp',
         categorie: 'poezie',
         canonic: true
     },

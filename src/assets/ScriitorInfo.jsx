@@ -80,7 +80,7 @@ const ScriitorInfo = ({ name }) => {
       activitate: 'Redactor la "Bilete de papagal"',
       locNastere: 'Născut în București',
       perioada: '1880-1967',
-      opere: '"Cuvinte potrivite", "Flori de mucigai"'
+      opere: '"Flori de mucigai", "Testament"'
     },
     bacovia: {
       ocupatie: 'Poet simbolist',

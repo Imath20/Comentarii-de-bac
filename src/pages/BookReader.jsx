@@ -15,7 +15,7 @@ const BOOKS = {
   },
   "harap-alb": {
     path: "/src/data/opere/harap-alb.json",
-    title: "Harap-Alb",
+    title: "Povestea lui Harap-Alb",
     bookmarkKey: "harap_alb_bookmark",
     maxWidth: "670px",
     width: "80vw"

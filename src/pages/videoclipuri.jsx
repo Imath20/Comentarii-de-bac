@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 const filmeList = [
   {
     id: '1',
-    titlu: 'Ion Creangă - Harap-Alb',
+    titlu: 'Ion Creangă - Povestea lui Harap-Alb',
     descriere: 'Harap-Alb',
     videoId: 'RMl6c8B0VvE',
     categorie: 'basm',

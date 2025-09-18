@@ -709,12 +709,18 @@
   padding: 0.7rem 1rem;
 
   .scriitor-comment {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 8px;
+    display: grid;
+    grid-template-columns: 32px 1fr;
+    grid-template-areas:
+      'avatar author'
+      'avatar text';
+    column-gap: 10px;
+    row-gap: 2px;
+    align-items: start;
+    margin-bottom: 10px;
 
     img {
+      grid-area: avatar;
       width: 32px;
       height: 32px;
       border-radius: 50%;
@@ -724,12 +730,16 @@
     }
 
     .scriitor-comment-author {
+      grid-area: author;
+      display: block;
       font-weight: 600;
       color: #a97c50;
       cursor: pointer;
     }
 
     .scriitor-comment-text {
+      grid-area: text;
+      display: block;
       color: #444;
       font-weight: 500;
     }

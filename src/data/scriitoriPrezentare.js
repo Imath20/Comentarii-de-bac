@@ -14,7 +14,7 @@ export const scriitoriPrezentare = {
     paragrafe: [
       'Ion Creangă a fost unul dintre cei mai iubiți scriitori români, cunoscut pentru stilul său narativ autentic și pentru faptul că a adus în literatura română vocea și spiritul poporului.',
       'Născut în 1837 în Humulești, Neamț, Creangă a fost învățător și preot, dar și un povestitor natural care a captat esența vieții rurale românești.',
-      'Opera sa cuprinde "Amintiri din copilărie", o autobiografie literară de excepție, precum și povești populare precum "Harap-Alb", "Capra cu trei iezi", "Dănilă Prepeleac" și "Ivan Turbincă".',
+      'Opera sa cuprinde "Amintiri din copilărie", o autobiografie literară de excepție, precum și povești populare precum "POvestea lui Harap-Alb", "Capra cu trei iezi", "Dănilă Prepeleac" și "Ivan Turbincă".',
       'Stilul său se caracterizează prin folosirea unui limbaj popular autentic, prin umor și prin faptul că a reușit să păstreze farmecul și autenticitatea poveștilor tradiționale românești.'
     ]
   },
@@ -84,10 +84,10 @@ export const scriitoriPrezentare = {
   'arghezi': {
     titlu: 'Tudor Arghezi - Poetul Modernist',
     paragrafe: [
-      'Tudor Arghezi a fost un poet român important, reprezentant al modernismului în literatura română, cunoscut pentru volumul "Cuvinte potrivite" și pentru inovația sa poetică.',
-      'Născut în 1880 în București, Arghezi a fost poet, prozator și publicist, activând într-o perioadă de modernizare a literaturii române.',
-      'Printre cele mai cunoscute opere se numără "Cuvinte potrivite", "Flori de mucigai", "Cimitirul Buna-Vestire" și multe alte poezii și proze.',
-      'Stilul său se caracterizează prin inovație, prin folosirea unui limbaj neolog și prin faptul că a reușit să modernizeze poezia română prin experimente formale și tematice.'
+      'Tudor Arghezi (1880–1967) a fost unul dintre cei mai importanți poeți români, prozator și publicist, reprezentant al modernismului.',
+      'La tinerețe a intrat în monahism la Mănăstirea Cernica, experiență care i-a influențat profund viziunea spirituală.',
+      'Mai târziu, a fost deținut la închisoarea Văcărești, unde a scris volumul Flori de mucigai, inspirat din viața aspră trăită acolo. Printre operele sale de referință se numără Cuvinte potrivite, Flori de mucigai și Cimitirul Buna-Vestire.',
+      'Stilul său se remarcă prin inovație, prin îmbinarea neologismelor cu expresii populare și prin capacitatea de a aduce în poezie atât sacrul și purul, cât și grotescul și sordidul, transformându-l într-o voce esențială a literaturii române moderne.'
     ]
   },
   'sadoveanu': {

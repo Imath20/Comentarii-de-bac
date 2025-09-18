@@ -473,7 +473,7 @@
 }
 
 .biblioteca-poem-modal-header {
-  padding: 2.5rem 2.5rem 1.5rem 2.5rem;
+  padding: 2.5rem 2.5rem 2.7rem 2.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -492,6 +492,8 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    line-height: 1.28;
+    padding-bottom: 6px;
   }
 
   .biblioteca-poem-modal-close {

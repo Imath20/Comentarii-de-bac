@@ -40,7 +40,7 @@ export const scriitoriOpere = {
   'creanga': {
     'opere de BAC': [
       'Amintiri din copilărie',
-      'Harap-Alb'
+      'Povestea lui Harap-Alb'
     ],
     poezii: [
       'Poezii populare'

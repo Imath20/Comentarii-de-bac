@@ -87,6 +87,33 @@ Robul a scris-o, Domnul o citeşte,
 Făr-a cunoaşte ca-n adâncul ei
 Zace mania bunilor mei.`
   },
+  'flori-mucigai': {
+    titlu: 'Flori de mucigai',
+    autor: 'Tudor Arghezi',
+    data: '1919',
+    text: `Flori de mucigai
+Le-am scris cu unghia pe tencuială
+Pe un părete de firidă goală,
+Pe întuneric, în singurătate,
+Cu puterile neajutate
+Nici de taurul, nici de leul, nici de vulturul
+Care au lucrat împrejurul
+Lui Luca, lui Marcu şi lui Ioan.
+Sunt stihuri fără an,
+Stihuri de groapă,
+De sete de apă
+Şi de foame de scrum,
+Stihurile de acum.
+Când mi s-a tocit unghia îngerească
+Am lăsat-o să crească
+Şi nu mi-a crescut -
+Sau nu o mai am cunoscut.
+
+Era întuneric. Ploaia bătea departe, afară.
+Şi mă durea mâna ca o ghiară
+Neputincioasă să se strângă
+Şi m-am silit să scriu cu unghiile de la mâna stângă.`
+  },
   'eu-nu-strivesc-corola': {
     titlu: 'Eu nu strivesc corola de minuni a lumii',
     autor: 'Lucian Blaga',
