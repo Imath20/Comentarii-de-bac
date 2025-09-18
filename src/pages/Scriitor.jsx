@@ -284,9 +284,12 @@ const Scriitor = () => {
   const name = query.get('name');
   const data = scriitoriData[name];
   const bannerRef = useRef(null);
+  const profileImgRef = useRef(null);
   const [isFullScreen, setIsFullScreen] = useState(false);
+  const [fullscreenTarget, setFullscreenTarget] = useState(null); // 'banner' | 'profile' | null
   const [likesModal, setLikesModal] = useState({ open: false, postId: null });
   const [showChat, setShowChat] = useState(false);
+  const [profilePreviewOpen, setProfilePreviewOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -299,6 +302,7 @@ const Scriitor = () => {
       } else if (bannerRef.current.msRequestFullscreen) {
         bannerRef.current.msRequestFullscreen();
       }
+      setFullscreenTarget('banner');
     } else {
       if (document.exitFullscreen) {
         document.exitFullscreen();
@@ -314,10 +318,27 @@ const Scriitor = () => {
     }
   };
 
+  const handleProfileFullScreen = () => {
+    setProfilePreviewOpen(true);
+    document.body.style.overflow = 'hidden';
+  };
+
+  const closeProfilePreview = () => {
+    setProfilePreviewOpen(false);
+    document.body.style.overflow = 'unset';
+  };
+
   useEffect(() => {
     const handleChange = () => {
       const fsElement = document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement;
       setIsFullScreen(!!fsElement);
+      if (!fsElement) {
+        setFullscreenTarget(null);
+      } else if (fsElement === bannerRef.current) {
+        setFullscreenTarget('banner');
+      } else if (fsElement === profileImgRef.current) {
+        setFullscreenTarget('profile');
+      }
     };
     document.addEventListener('fullscreenchange', handleChange);
     document.addEventListener('webkitfullscreenchange', handleChange);
@@ -493,6 +514,8 @@ const Scriitor = () => {
            background: `url(${data.banner}) center center/cover no-repeat`,
            backgroundPosition: name === 'eminescu' ? 'center 30%' : name === 'preda' ? 'center 50%' : name === 'sorescu' ? 'center 50%' : name === 'voiculescu' ? 'center 80%' : 'center 20%',
          }}
+         onClick={handleFullScreen}
+         title={isFullScreen ? 'Ieși din full screen' : 'Click pentru full screen'}
        >
         {/* AvatarSearchBar pe stânga sus, doar dacă nu e fullscreen */}
         {!isFullScreen && (
@@ -500,23 +523,17 @@ const Scriitor = () => {
             <AvatarSearchBar onSelect={s => goToScriitor(Object.keys(scriitoriData).find(k => scriitoriData[k].nume === s.nume))} />
           </div>
         )}
-        {/* Buton full screen dreapta sus */}
-        <button
-          onClick={handleFullScreen}
-          className="scriitor-fullscreen-btn-inline"
-          title={isFullScreen ? "Ieși din full screen" : "Full screen banner"}
-        >
-          <img
-            src={isFullScreen ? '/utilitary/minimize.webp' : '/utilitary/full-size.webp'}
-            alt={isFullScreen ? 'Ieși din full screen' : 'Full screen'}
-          />
-        </button>
+        {/* Buton full screen eliminat conform cerinței */}
         {/* Poza de profil și info scriitor - ascunse în full screen */}
         {!isFullScreen && (
           <>
             {/* Poza de profil rotundă, centrată absolut peste banner */}
-            <div className="scriitor-profile-image">
-              <img src={data.img} alt={data.nume} />
+            <div
+              className="scriitor-profile-image"
+              onClick={(e) => { e.stopPropagation(); handleProfileFullScreen(); }}
+              title="Click pentru full screen"
+            >
+              <img ref={profileImgRef} src={data.img} alt={data.nume} />
             </div>
           </>
         )}
@@ -938,6 +955,29 @@ const Scriitor = () => {
                 ))}
               </div>
             )}
+          </div>
+        </div>
+      )}
+      {profilePreviewOpen && (
+        <div
+          className="scriitor-modal-overlay"
+          onClick={closeProfilePreview}
+        >
+          <div className="scriitor-gallery-modal">
+            <img
+              src={data.img}
+              alt={data.nume}
+              onClick={e => e.stopPropagation()}
+            />
+            <button
+              onClick={closeProfilePreview}
+              className="scriitor-modal-close-btn"
+              title="Închide"
+              tabIndex={0}
+              onMouseDown={e => e.preventDefault()}
+            >
+              ×
+            </button>
           </div>
         </div>
       )}

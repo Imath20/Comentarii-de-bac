@@ -78,7 +78,7 @@ const opereList = [
         autor: 'Ioan Slavici',
         data: 'Redactare: 1894',
         img: '/opere/mara.webp',
-        categorie: 'nuvela',
+        categorie: 'roman',
         canonic: true
     },
     {
