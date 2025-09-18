@@ -6,6 +6,7 @@ import AvatarSearchBar from '../assets/AvatarSearchBar';
 import ScriitorChat from '../assets/ScriitorChat';
 import { getScriitorOpere } from '../data/scriitoriOpere';
 import { getScriitorPrezentare } from '../data/scriitoriPrezentare';
+import { getScriitorBiografie } from '../data/biografie/index.js';
 
 // Date pentru poeziile scurte
 const shortPoems = {
@@ -419,6 +420,17 @@ const Scriitor = () => {
     document.body.style.overflow = 'unset';
   };
 
+  // Pentru modal Bibliografie (Citește tot descrierea)
+  const [bioModalOpen, setBioModalOpen] = useState(false);
+  const openBioModal = () => {
+    setBioModalOpen(true);
+    document.body.style.overflow = 'hidden';
+  };
+  const closeBioModal = () => {
+    setBioModalOpen(false);
+    document.body.style.overflow = 'unset';
+  };
+
   // Pentru galerie poezie
   const [poemGalleryModal, setPoemGalleryModal] = useState({ open: false, images: [], startIndex: 0 });
   const openPoemGallery = (images, startIndex = 0) => {
@@ -590,6 +602,32 @@ const Scriitor = () => {
                       <p key={index}>{paragraf}</p>
                     ));
                   })()}
+                </div>
+                {/* Buton Citește tot în același chenar */}
+                <div className="scriitor-presentation-actions">
+                  <button
+                    onClick={openBioModal}
+                    className="vezi-mai-mult"
+                    title="Citește toată bibliografia"
+                  >
+                    {/* <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                      <path
+                        d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                      <path
+                        d="M4 4h16v13H6.5A2.5 2.5 0 0 0 4 19.5V4z"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg> */}
+                    <span>Citește tot</span>
+                  </button>
                 </div>
               </div>
               {/* Butoane */}
@@ -1018,6 +1056,40 @@ const Scriitor = () => {
             {getFriendLikes(posts.find(p => p.id === likesModal.postId)).length === 0 && (
               <div className="scriitor-no-likes">Niciun prieten nu a reacționat încă.</div>
             )}
+          </div>
+        </div>
+      )}
+
+      {/* Modal Bibliografie - design ca la preview poezie */}
+      {bioModalOpen && (
+        <div
+          className="scriitor-modal-overlay scriitor-modal-overlay-poem"
+          onClick={closeBioModal}
+        >
+          <div
+            className="scriitor-poem-preview-modal bio"
+            onClick={e => e.stopPropagation()}
+          >
+            <div className="scriitor-poem-preview-header">
+              <h2>Biografie - {data.nume}</h2>
+              <button
+                onClick={closeBioModal}
+                className="scriitor-modal-close-btn-poem"
+                title="Închide"
+              >
+                ×
+              </button>
+            </div>
+
+            <div className="scriitor-poem-preview-content bio">
+              <div className="scriitor-poem-preview-text bio">
+                {(() => {
+                  const source = getScriitorBiografie(name) || (getScriitorPrezentare(name)?.bibliografie || '');
+                  const paragraphs = typeof source === 'string' ? source.split(/\n\s*\n/) : [];
+                  return paragraphs.map((p, idx) => (<p key={idx}>{p}</p>));
+                })()}
+              </div>
+            </div>
           </div>
         </div>
       )}

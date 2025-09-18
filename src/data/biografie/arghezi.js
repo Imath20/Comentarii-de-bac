@@ -1,0 +1,18 @@
+// Exportă textul biografiei pentru Tudor Arghezi
+const text = `Tudor Arghezi, pe numele său adevărat Ion N. Theodorescu, s-a născut în 1880 la București și a devenit unul dintre cei mai importanți poeți români ai secolului XX. Viața lui a fost la fel de zbuciumată ca opera sa, plină de contradicții, arestări, reabilitări și lupte continue pentru dreptul de a scrie. Încă din tinerețe a oscilat între chemarea monahală și dorința de libertate artistică. O vreme a fost chiar frate la mănăstirea Cernica, dar a părăsit viața călugărească pentru a se dedica literaturii, jurnalismului și polemicii, domenii în care s-a remarcat printr-un stil acid, ironic, tăios.
+
+În Primul Război Mondial, soarta i-a fost nefavorabilă. După ocuparea Bucureștiului de trupele germane, Arghezi a colaborat la Gazeta Bucureștilor, publicație controlată de administrația de ocupație. La finalul războiului, această alegere i-a fost reproșată dur. A fost judecat ca „trădător” și aruncat în închisoarea Văcărești. Lumea carcerală, cu ziduri reci, tencuieli umede și întuneric sufocant, l-a marcat profund. Acolo a descoperit că poezia nu se naște doar din frumusețe și armonie, ci poate răsări și din mizerie, ca o floare din mucegai. Din acea experiență amară s-a născut mai târziu volumul Flori de mucigai (1931), o carte-manifest în care estetica urâtului a devenit semnătura lui inconfundabilă.
+
+Anii ’30 și ’40 l-au găsit mereu în conflict cu puterea. Spiritul său pamfletar nu l-a lăsat să tacă. În 1943 a scris celebrul pamflet Baroane, o satiră acidă la adresa ambasadorului Germaniei naziste la București, von Killinger. Textul era de fapt un atac la dominația politică germană asupra României. Reacția autorităților nu a întârziat. Arghezi a fost considerat „dușman al statului” și internat la Târgu Jiu, în lagărul de deținuți politici. Și acolo a continuat să scrie, păstrându-și demnitatea și forța de a lupta prin cuvânt.
+
+După 1947, odată cu instaurarea regimului comunist, situația lui s-a schimbat din nou. La început a fost marginalizat, cenzurat și interzis. Noul regim îl acuza de „burghezie” și „decadență”. Volumele lui nu mai apăreau, iar numele i-a fost împins la marginea scenei culturale. Însă regimul avea nevoie de figuri literare mari pentru a-și consolida imaginea și, după câțiva ani, Arghezi a fost reabilitat. În anii ’50 a redevenit un poet aclamat, iar autoritățile i-au acordat Premiul de Stat și l-au primit în Academia Română. Dintr-un proscris, a ajuns din nou celebru, citit și apreciat, chiar dacă regimul îl folosea ca simbol oficial.
+
+Opera sa rămâne impresionantă prin diversitate și forță. De la poezia religioasă din Psalmii, la versurile dedicate copiilor (Cartea cu jucării, Zdreanță), de la pamfletele mușcătoare din presă, la capodoperele despre creație precum Flori de mucigai, Arghezi a arătat că limba română poate fi frământată, zgâriată, șlefuită, ridicată până la nivel de artă absolută.
+
+A trăit aproape un secol, până în 1967, și a rămas în istoria literaturii ca un poet al contrastelor. A scris despre Dumnezeu și păcat, despre puritate și urât, despre copilărie și temniță, despre frumusețea sublimă și despre mucegaiul care crește pe ziduri. A pătimit în închisori, a fost acuzat de trădare, de complot, de decadență, dar a reușit mereu să transforme toate aceste încercări în poezie. Viața lui a fost o luptă, iar scrisul – o formă de supraviețuire.
+
+Astăzi, citind Flori de mucigai, înțelegem mai bine ce a însemnat experiența Văcăreștiului: un poet care, fără hârtie și cerneală, zgâria cu unghia pe zid, dar continua să creeze. Dincolo de arestări și interdicții, Arghezi a rămas fidel convingerii că arta nu se stinge, oricât ar fi de apăsătoare întunericul și mizeria.`;
+
+export default text;
+
+

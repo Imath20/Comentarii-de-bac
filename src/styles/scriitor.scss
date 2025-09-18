@@ -288,6 +288,47 @@
       }
     }
   }
+
+  .scriitor-presentation-actions {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .scriitor-presentation-actions .vezi-mai-mult {
+    background: #ffffff;
+    border: 2px solid #a97c50;
+    color: #a97c50;
+    border-radius: 20px;
+    padding: 10px 22px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 0.95rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    outline: none;
+    &:focus{
+      outline: none;
+    }
+
+    svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    &:hover {
+      background: #8f6b3f;
+      border-color: #8f6b3f;
+      transform: translateY(-1px);
+      color: #fff;
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
 }
 
 .scriitor-gallery-grid {
@@ -471,6 +512,10 @@
       transition: all 0.2s;
       text-decoration: none;
       box-shadow: 0 2px 8px 0 rgba(124, 79, 43, 0.15);
+      outline: none;
+      &:focus{
+        outline: none;
+      }
 
       .scriitor-pinned-action-icon {
         font-size: 1.1rem;
@@ -976,6 +1021,11 @@
   display: flex;
   flex-direction: column;
 
+  &.bio {
+    width: 800px;
+    max-width: 96vw;
+  }
+
   .scriitor-poem-preview-header {
     padding: 2rem 2rem 1rem 2rem;
     display: flex;
@@ -1019,6 +1069,26 @@
       text-align: center;
       font-size: 1.3rem;
       font-weight: 500;
+    }
+
+    &.bio {
+      justify-content: flex-start;
+      align-items: flex-start;
+      padding: 2rem 2rem 2.5rem 2rem;
+    }
+
+    .scriitor-poem-preview-text.bio {
+      max-width: 760px;
+      font-style: normal;
+      text-align: left;
+      line-height: 1.5;
+      font-size: 1.3rem;
+      white-space: normal;
+
+      p {
+        margin: 0 0 1rem 0;
+        text-indent: 2em;
+      }
     }
 
     .scriitor-poem-preview-actions {
