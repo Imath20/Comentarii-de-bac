@@ -45,6 +45,12 @@ const scriitoriList = [
 
 const opereList = [
   {
+    titlu: 'Povestea lui Harap-Alb',
+    autor: 'Ion Creangă',
+    data: 'Redactare: 1877',
+    img: '/opere/Harap-Alb.webp',
+  },
+  {
     titlu: 'Moara cu noroc',
     autor: 'Ioan Slavici',
     data: 'Redactare: 1880',
@@ -57,10 +63,10 @@ const opereList = [
     img: '/opere/Ion.webp',
   },
   {
-    titlu: 'O scrisoare pierdută',
-    autor: 'I.L. Caragiale',
-    data: 'Redactare: 1884',
-    img: '/opere/scrisoare-pierduta.webp',
+    titlu: 'Enigma Otiliei',
+    autor: 'George Călinescu',
+    data: 'Redactare: 1938',
+    img: '/opere/enigma-otiliei.webp',
   },
   {
     titlu: 'Luceafărul',
@@ -69,48 +75,17 @@ const opereList = [
     img: '/opere/Luceafarul.webp',
   },
   {
-    titlu: 'Povestea lui Harap-Alb',
-    autor: 'Ion Creangă',
-    data: 'Redactare: 1877',
-    img: '/opere/Harap-Alb.webp',
-  },
-  {
-    titlu: 'Enigma Otiliei',
-    autor: 'George Călinescu',
-    data: 'Redactare: 1938',
-    img: '/opere/enigma-otiliei.webp',
-  },
+    titlu: 'Plumb',
+    autor: 'George Bacovia',
+    data: 'Redactare: 1916',
+    img: '/opere/plumb.webp',
+    categorie: 'poezie',
+    canonic: true
+},
 ];
 
 // Lista cu primele 6 cărți pentru bibliotecă
 const bibliotecaList = [
-  {
-    titlu: 'Moara cu noroc',
-    autor: 'Ioan Slavici',
-    data: 'Redactare: 1880',
-    img: '/opere/moara-cu-noroc.webp',
-    categorie: 'nuvela',
-    canonic: true,
-    jsonFile: 'moara-cu-noroc',
-  },
-  {
-    titlu: 'Ion',
-    autor: 'Liviu Rebreanu',
-    data: 'Redactare: 1920',
-    img: '/opere/Ion.webp',
-    categorie: 'roman',
-    canonic: true,
-    jsonFile: 'ion',
-  },
-  {
-    titlu: 'O scrisoare pierdută',
-    autor: 'I.L. Caragiale',
-    data: 'Redactare: 1884',
-    img: '/opere/scrisoare-pierduta.webp',
-    categorie: 'comedie',
-    canonic: true,
-    jsonFile: 'o-scrisoare-pierduta',
-  },
   {
     titlu: 'Povestea lui Harap-Alb',
     autor: 'Ion Creangă',
@@ -119,17 +94,41 @@ const bibliotecaList = [
     categorie: 'basm',
     canonic: true,
     jsonFile: 'harap-alb',
-  },
-  {
-    titlu: 'Baltagul',
-    autor: 'Mihail Sadoveanu',
-    data: 'Redactare: 1930',
-    img: '/opere/baltagul.webp',
-    categorie: 'roman',
+    tip: 'opera'
+},
+{
+    titlu: 'Moara cu noroc',
+    autor: 'Ioan Slavici',
+    data: 'Redactare: 1880',
+    img: '/opere/moara-cu-noroc.webp',
+    categorie: 'nuvela',
     canonic: true,
-    jsonFile: 'baltagul',
-  },
-  {
+    jsonFile: 'moara-cu-noroc',
+    tip: 'opera'
+},
+{
+    titlu: 'Ion',
+    autor: 'Liviu Rebreanu',
+    data: 'Redactare: 1920',
+    img: '/opere/Ion.webp',
+    categorie: 'roman',
+    romanSubcategorie: 'roman-social',
+    canonic: true,
+    jsonFile: 'ion',
+    tip: 'opera'
+},
+{
+    titlu: 'Enigma Otiliei',
+    autor: 'George Călinescu',
+    data: 'Redactare: 1938',
+    img: '/opere/enigma-otiliei.webp',
+    categorie: 'roman',
+    romanSubcategorie: 'roman-balzacian',
+    canonic: true,
+    jsonFile: 'enigma-otiliei',
+    tip: 'opera'
+},
+{
     titlu: 'Luceafărul',
     autor: 'Mihai Eminescu',
     data: 'Redactare: 1883',
@@ -137,7 +136,19 @@ const bibliotecaList = [
     categorie: 'poezie',
     canonic: true,
     jsonFile: 'luceafarul',
-  },
+    tip: 'opera'
+},
+{
+    titlu: 'Plumb',
+    autor: 'George Bacovia',
+    data: 'Redactare: 1916',
+    img: '/opere/plumb.webp',
+    categorie: 'poezie',
+    canonic: true,
+    jsonFile: null,
+    tip: 'opera',
+    poemKey: 'plumb'
+},
 ];
 
 // Lista cu primele 6 videoclipuri

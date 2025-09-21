@@ -7,6 +7,14 @@ import Select from 'react-select';
 // Lista completă cu opere și categorii
 const opereList = [
     {
+        titlu: 'Povestea lui Harap-Alb',
+        autor: 'Ion Creangă',
+        data: 'Redactare: 1877',
+        img: '/opere/Harap-Alb.webp',
+        categorie: 'basm',
+        canonic: true
+    },
+    {
         titlu: 'Moara cu noroc',
         autor: 'Ioan Slavici',
         data: 'Redactare: 1880',
@@ -24,11 +32,12 @@ const opereList = [
         canonic: true
     },
     {
-        titlu: 'O scrisoare pierdută',
-        autor: 'I.L. Caragiale',
-        data: 'Redactare: 1884',
-        img: '/opere/scrisoare-pierduta.webp',
-        categorie: 'comedie',
+        titlu: 'Enigma Otiliei',
+        autor: 'George Călinescu',
+        data: 'Redactare: 1938',
+        img: '/opere/enigma-otiliei.webp',
+        categorie: 'roman',
+        romanSubcategorie: 'roman-balzacian',
         canonic: true
     },
     {
@@ -40,20 +49,19 @@ const opereList = [
         canonic: true
     },
     {
-        titlu: 'Povestea lui Harap-Alb',
-        autor: 'Ion Creangă',
-        data: 'Redactare: 1877',
-        img: '/opere/Harap-Alb.webp',
-        categorie: 'basm',
+        titlu: 'Plumb',
+        autor: 'George Bacovia',
+        data: 'Redactare: 1916',
+        img: '/opere/plumb.webp',
+        categorie: 'poezie',
         canonic: true
     },
     {
-        titlu: 'Enigma Otiliei',
-        autor: 'George Călinescu',
-        data: 'Redactare: 1938',
-        img: '/opere/enigma-otiliei.webp',
-        categorie: 'roman',
-        romanSubcategorie: 'roman-balzacian',
+        titlu: 'O scrisoare pierdută',
+        autor: 'I.L. Caragiale',
+        data: 'Redactare: 1884',
+        img: '/opere/scrisoare-pierduta.webp',
+        categorie: 'comedie',
         canonic: true
     },
     {
@@ -66,22 +74,6 @@ const opereList = [
         canonic: true
     },
     {
-        titlu: 'Plumb',
-        autor: 'George Bacovia',
-        data: 'Redactare: 1916',
-        img: '/opere/plumb.webp',
-        categorie: 'poezie',
-        canonic: true
-    },
-    {
-        titlu: 'Mara',
-        autor: 'Ioan Slavici',
-        data: 'Redactare: 1894',
-        img: '/opere/mara.webp',
-        categorie: 'roman',
-        canonic: true
-    },
-    {
         titlu: 'Ultima noapte de dragoste, întaia noapte de razboi',
         autor: 'Camil Petrescu',
         data: 'Redactare: 1930',
@@ -91,10 +83,10 @@ const opereList = [
         canonic: true
     },
     {
-        titlu: 'Riga crypto si lapona enigel',
-        autor: 'Ion Barbu',
-        data: 'Redactare: 1930',
-        img: '/opere/riga-crypto.webp',
+        titlu: 'Flori de mucigai',
+        autor: 'Tudor Arghezi',
+        data: 'Redactare: 1919',
+        img: '/opere/flori-mucigai.webp',
         categorie: 'poezie',
         canonic: true
     },
@@ -107,18 +99,10 @@ const opereList = [
         canonic: true
     },
     {
-        titlu: 'Flori de mucigai',
-        autor: 'Tudor Arghezi',
-        data: 'Redactare: 1919',
-        img: '/opere/flori-mucigai.webp',
-        categorie: 'poezie',
-        canonic: true
-    },
-    {
-        titlu: 'Testament',
-        autor: 'Tudor Arghezi',
-        data: 'Redactare: 1927',
-        img: '/opere/testament-orizontala.webp',
+        titlu: 'Riga crypto si lapona enigel',
+        autor: 'Ion Barbu',
+        data: 'Redactare: 1930',
+        img: '/opere/riga-crypto.webp',
         categorie: 'poezie',
         canonic: true
     },
@@ -154,6 +138,22 @@ const opereList = [
         img: '/opere/formele.webp',
         categorie: 'critica',
         canonic: true
+    },
+    {
+        titlu: 'Mara',
+        autor: 'Ioan Slavici',
+        data: 'Redactare: 1894',
+        img: '/opere/mara.webp',
+        categorie: 'roman',
+        canonic: false
+    },
+    {
+        titlu: 'Testament',
+        autor: 'Tudor Arghezi',
+        data: 'Redactare: 1927',
+        img: '/opere/testament-orizontala.webp',
+        categorie: 'poezie',
+        canonic: false
     },
     {
         titlu: 'Amintiri din copilărie',

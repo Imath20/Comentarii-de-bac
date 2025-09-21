@@ -55,38 +55,6 @@ const scriitoriList = [
     canonic: true
   },
   {
-    nume: 'Camil Petrescu',
-    date: '1894 – 1957',
-    img: '/scriitori/camil_rezerva.webp',
-    color: 'rgba(122,58,0,0.82)',
-    categorie: 'roman',
-    canonic: true
-  },
-  {
-    nume: 'Ion Barbu',
-    date: '1895 – 1961',
-    img: '/scriitori/barbu_ion.webp',
-    color: 'rgba(255,179,71,0.82)',
-    categorie: 'poezie',
-    canonic: true
-  },
-  {
-    nume: 'Lucian Blaga',
-    date: '1895 – 1961',
-    img: '/scriitori/lucian_blaga.webp',
-    color: 'rgba(122,58,0,0.82)',
-    categorie: 'poezie',
-    canonic: true
-  },
-  {
-    nume: 'Tudor Arghezi',
-    date: '1880 – 1967',
-    img: '/scriitori/tudor_arghezi.webp',
-    color: 'rgba(255,179,71,0.82)',
-    categorie: 'poezie',
-    canonic: true
-  },
-  {
     nume: 'George Bacovia',
     date: '1881 – 1957',
     img: '/scriitori/bacovia_rezerva.webp',
@@ -100,6 +68,38 @@ const scriitoriList = [
     img: '/scriitori/mihail-sadoveanu-3.webp',
     color: 'rgba(255,179,71,0.82)',
     categorie: 'roman',
+    canonic: true
+  },
+  {
+    nume: 'Camil Petrescu',
+    date: '1894 – 1957',
+    img: '/scriitori/camil_rezerva.webp',
+    color: 'rgba(122,58,0,0.82)',
+    categorie: 'roman',
+    canonic: true
+  },
+  {
+    nume: 'Tudor Arghezi',
+    date: '1880 – 1967',
+    img: '/scriitori/tudor_arghezi.webp',
+    color: 'rgba(255,179,71,0.82)',
+    categorie: 'poezie',
+    canonic: true
+  },
+  {
+    nume: 'Lucian Blaga',
+    date: '1895 – 1961',
+    img: '/scriitori/lucian_blaga.webp',
+    color: 'rgba(122,58,0,0.82)',
+    categorie: 'poezie',
+    canonic: true
+  },
+  {
+    nume: 'Ion Barbu',
+    date: '1895 – 1961',
+    img: '/scriitori/barbu_ion.webp',
+    color: 'rgba(255,179,71,0.82)',
+    categorie: 'poezie',
     canonic: true
   },
   {

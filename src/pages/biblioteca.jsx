@@ -8,6 +8,16 @@ import Select from 'react-select';
 const cartiList = [
     // Opere canonice cu fișiere JSON
     {
+        titlu: 'Povestea lui Harap-Alb',
+        autor: 'Ion Creangă',
+        data: 'Redactare: 1877',
+        img: '/opere/Harap-Alb.webp',
+        categorie: 'basm',
+        canonic: true,
+        jsonFile: 'harap-alb',
+        tip: 'opera'
+    },
+    {
         titlu: 'Moara cu noroc',
         autor: 'Ioan Slavici',
         data: 'Redactare: 1880',
@@ -29,81 +39,6 @@ const cartiList = [
         tip: 'opera'
     },
     {
-        titlu: 'O scrisoare pierdută',
-        autor: 'I.L. Caragiale',
-        data: 'Redactare: 1884',
-        img: '/opere/scrisoare-pierduta.webp',
-        categorie: 'comedie',
-        canonic: true,
-        jsonFile: 'o-scrisoare-pierduta',
-        tip: 'opera'
-    },
-    {
-        titlu: 'Povestea lui Harap-Alb',
-        autor: 'Ion Creangă',
-        data: 'Redactare: 1877',
-        img: '/opere/Harap-Alb.webp',
-        categorie: 'basm',
-        canonic: true,
-        jsonFile: 'harap-alb',
-        tip: 'opera'
-    },
-    {
-        titlu: 'Baltagul',
-        autor: 'Mihail Sadoveanu',
-        data: 'Redactare: 1930',
-        img: '/opere/baltagul.webp',
-        categorie: 'roman',
-        romanSubcategorie: 'roman-mitic',
-        canonic: true,
-        jsonFile: 'baltagul',
-        tip: 'opera'
-    },
-    {
-        titlu: 'Mara',
-        autor: 'Ioan Slavici',
-        data: 'Redactare: 1894',
-        img: '/opere/mara.webp',
-        categorie: 'roman',
-        canonic: true,
-        jsonFile: 'mara',
-        tip: 'opera'
-    },
-    {
-        titlu: 'Ultima noapte de dragoste, întaia noapte de razboi',
-        autor: 'Camil Petrescu',
-        data: 'Redactare: 1930',
-        img: '/opere/ultima-noapte.webp',
-        categorie: 'roman',
-        romanSubcategorie: 'roman-subiectiv',
-        canonic: true,
-        jsonFile: 'ultima-noapte-dragoste',
-        tip: 'opera'
-    },
-    {
-        titlu: 'Amintiri din copilărie',
-        autor: 'Ion Creangă',
-        data: 'Redactare: 1881-1892',
-        img: '/opere/amintiri-copil.webp',
-        categorie: 'roman',
-        romanSubcategorie: 'roman-autobiografic',
-        canonic: false,
-        jsonFile: 'amintiri-din-copilarie',
-        tip: 'opera'
-    },
-        {
-        titlu: 'Luceafărul',
-        autor: 'Mihai Eminescu',
-        data: 'Redactare: 1883',
-        img: '/opere/Luceafarul.webp',
-        categorie: 'poezie',
-        canonic: true,
-        jsonFile: 'luceafarul',
-        tip: 'opera'
-    },
-
-
-    {
         titlu: 'Enigma Otiliei',
         autor: 'George Călinescu',
         data: 'Redactare: 1938',
@@ -112,6 +47,16 @@ const cartiList = [
         romanSubcategorie: 'roman-balzacian',
         canonic: true,
         jsonFile: 'enigma-otiliei',
+        tip: 'opera'
+    },
+    {
+        titlu: 'Luceafărul',
+        autor: 'Mihai Eminescu',
+        data: 'Redactare: 1883',
+        img: '/opere/Luceafarul.webp',
+        categorie: 'poezie',
+        canonic: true,
+        jsonFile: 'luceafarul',
         tip: 'opera'
     },
     {
@@ -126,25 +71,36 @@ const cartiList = [
         poemKey: 'plumb'
     },
     {
-        titlu: 'Riga crypto si lapona enigel',
-        autor: 'Ion Barbu',
-        data: 'Redactare: 1930',
-        img: '/opere/riga-crypto.webp',
-        categorie: 'poezie',
+        titlu: 'O scrisoare pierdută',
+        autor: 'I.L. Caragiale',
+        data: 'Redactare: 1884',
+        img: '/opere/scrisoare-pierduta.webp',
+        categorie: 'comedie',
         canonic: true,
-        jsonFile: 'riga-crypto',
+        jsonFile: 'o-scrisoare-pierduta',
         tip: 'opera'
     },
     {
-        titlu: 'Eu nu strivesc corola de minuni a lumii',
-        autor: 'Lucian Blaga',
-        data: 'Redactare: 1919',
-        img: '/opere/corola_minuni.webp',
-        categorie: 'poezie',
+        titlu: 'Baltagul',
+        autor: 'Mihail Sadoveanu',
+        data: 'Redactare: 1930',
+        img: '/opere/baltagul.webp',
+        categorie: 'roman',
+        romanSubcategorie: 'roman-mitic',
         canonic: true,
-        jsonFile: null,
-        tip: 'opera',
-        poemKey: 'eu-nu-strivesc-corola'
+        jsonFile: 'baltagul',
+        tip: 'opera'
+    },
+    {
+        titlu: 'Ultima noapte de dragoste, întaia noapte de razboi',
+        autor: 'Camil Petrescu',
+        data: 'Redactare: 1930',
+        img: '/opere/ultima-noapte.webp',
+        categorie: 'roman',
+        romanSubcategorie: 'roman-subiectiv',
+        canonic: true,
+        jsonFile: 'ultima-noapte-dragoste',
+        tip: 'opera'
     },
     {
         titlu: 'Flori de mucigai',
@@ -158,15 +114,25 @@ const cartiList = [
         poemKey: 'flori-mucigai'
     },
     {
-        titlu: 'Testament',
-        autor: 'Tudor Arghezi',
-        data: 'Redactare: 1927',
-        img: '/opere/testament-orizontala.webp',
+        titlu: 'Eu nu strivesc corola de minuni a lumii',
+        autor: 'Lucian Blaga',
+        data: 'Redactare: 1919',
+        img: '/opere/corola_minuni.webp',
         categorie: 'poezie',
         canonic: true,
         jsonFile: null,
         tip: 'opera',
-        poemKey: 'testament'
+        poemKey: 'eu-nu-strivesc-corola'
+    },
+    {
+        titlu: 'Riga crypto si lapona enigel',
+        autor: 'Ion Barbu',
+        data: 'Redactare: 1930',
+        img: '/opere/riga-crypto.webp',
+        categorie: 'poezie',
+        canonic: true,
+        jsonFile: 'riga-crypto',
+        tip: 'opera'
     },
     {
         titlu: 'Morometii',
@@ -211,6 +177,27 @@ const cartiList = [
         tip: 'opera'
     },
     {
+        titlu: 'Mara',
+        autor: 'Ioan Slavici',
+        data: 'Redactare: 1894',
+        img: '/opere/mara.webp',
+        categorie: 'roman',
+        canonic: false,
+        jsonFile: 'mara',
+        tip: 'opera'
+    },
+    {
+        titlu: 'Testament',
+        autor: 'Tudor Arghezi',
+        data: 'Redactare: 1927',
+        img: '/opere/testament-orizontala.webp',
+        categorie: 'poezie',
+        canonic: false,
+        jsonFile: null,
+        tip: 'opera',
+        poemKey: 'testament'
+    },
+    {
         titlu: 'Alexandru Lăpușneanu',
         autor: 'Costache Negruzzi',
         data: 'Redactare: 1840',
@@ -219,6 +206,17 @@ const cartiList = [
         romanSubcategorie: 'roman-istoric',
         canonic: false,
         jsonFile: 'lapusneanu',
+        tip: 'opera'
+    },
+    {
+        titlu: 'Amintiri din copilărie',
+        autor: 'Ion Creangă',
+        data: 'Redactare: 1881-1892',
+        img: '/opere/amintiri-copil.webp',
+        categorie: 'roman',
+        romanSubcategorie: 'roman-autobiografic',
+        canonic: false,
+        jsonFile: 'amintiri-din-copilarie',
         tip: 'opera'
     },
     {
