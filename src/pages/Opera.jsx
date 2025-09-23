@@ -395,9 +395,8 @@ export default function Opera() {
           )}
         </div>
         <button onClick={scrollToContent} className="opere-scroll-cue" aria-label="Derulează pentru conținut">
-          <span>Derulează pentru conținut</span>
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <polyline points="6 9 12 15 18 9"></polyline>
+          <svg width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <polyline points="4 8 12 16 20 8"></polyline>
           </svg>
         </button>
       </section>
