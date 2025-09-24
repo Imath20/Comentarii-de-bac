@@ -43,6 +43,21 @@ const KNOWN_BOOK_SLUGS = new Set([
   'viata-ca-o-prada'
 ]);
 
+// Map slug-uri alternative la cheile din OPERA_DETAILS
+const OPERA_SLUG_ALIASES = {
+  'povestea-lui-harap-alb': 'harap-alb',
+  'ultima-noapte-de-dragoste-intaia-noapte-de-razboi': 'ultima-noapte-dragoste',
+  'riga-crypto-si-lapona-enigel': 'riga-crypto',
+  'formele-fara-fond': 'critice',
+};
+
+const resolveOperaSlug = (rawSlug) => {
+  const slug = (rawSlug || '').toLowerCase();
+  if (OPERA_DETAILS[slug]) return slug;
+  if (OPERA_SLUG_ALIASES[slug]) return OPERA_SLUG_ALIASES[slug];
+  return slug;
+};
+
 // Date detaliate despre opere
 const OPERA_DETAILS = {
   'ion': {
@@ -259,8 +274,8 @@ export default function Opera() {
   }, [params.slug, effectiveOpera]);
 
   const operaDetails = useMemo(() => {
-    const slug = params.slug || '';
-    return OPERA_DETAILS[slug] || null;
+    const resolved = resolveOperaSlug(params.slug || '');
+    return OPERA_DETAILS[resolved] || null;
   }, [params.slug]);
 
   const handleRead = () => {
