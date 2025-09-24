@@ -679,15 +679,24 @@ export default function Opera() {
 
       <section id="opera-content" className="opera-content-container">
         <div className="opera-tabs">
-          {tabsOrder.map(key => (
-            <button
-              key={key}
-              className={`opera-tab ${activeTab === key ? 'active' : ''}`}
-              onClick={() => setActiveTab(key)}
-            >
-              {tabsLabels[key]}
-            </button>
-          ))}
+          <div className="opera-tabs-left">
+            {tabsOrder.map(key => (
+              <button
+                key={key}
+                className={`opera-tab ${activeTab === key ? 'active' : ''}`}
+                onClick={() => setActiveTab(key)}
+              >
+                {tabsLabels[key]}
+              </button>
+            ))}
+          </div>
+          <button
+            className="theme-toggle"
+            aria-label="Schimbă tema"
+            onClick={() => setDarkTheme(t => !t)}
+          >
+            {darkTheme ? '🌙' : '🌞'}
+          </button>
         </div>
 
         <div className="opera-tab-content-wrapper">
