@@ -357,6 +357,8 @@ export default function Opre() {
         return () => window.removeEventListener('scroll', onScroll);
     }, []);
 
+    // Scroll restoration handled globally by ScrollManager
+
     // Reset roman subcategory filter when category changes from roman
     useEffect(() => {
         if (selectedCategory !== 'roman') {
@@ -526,6 +528,8 @@ export default function Opre() {
                         <div
                             key={opera.titlu}
                             className={`opere-card ${darkTheme ? 'dark-theme' : ''}`}
+                            data-slug={slugify(opera.titlu)}
+                            id={`opere-${slugify(opera.titlu)}`}
                             onMouseOver={e => {
                                 e.currentTarget.style.transform = 'scale(1.055)';
                                 e.currentTarget.style.boxShadow = '0 8px 32px 0 rgba(60,40,20,0.22)';
@@ -538,7 +542,7 @@ export default function Opre() {
                             }}
                             onClick={() => {
                                 const slug = slugify(opera.titlu);
-                                navigate(`/opera/${slug}`, { state: { opera } });
+                                navigate(`/opera/${slug}`, { state: { opera, from: { pathname: '/opere', scrollY: window.scrollY } } });
                             }}
                         >
                             <img

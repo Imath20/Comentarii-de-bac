@@ -11,11 +11,19 @@ export default function ScrollManager() {
     const key = `scroll:${location.pathname}`;
     const stored = Number(sessionStorage.getItem(key));
 
-    const targetTop = explicitRestore !== null
+    const baseTop = explicitRestore !== null
       ? explicitRestore
       : navType === 'POP' && !Number.isNaN(stored)
         ? stored
         : 0;
+
+    // Dynamic offset (navbar height) for list pages
+    const isListPage = location.pathname.startsWith('/opere') || location.pathname.startsWith('/scriitori');
+    const getNavbarOffset = () => {
+      const nav = document.querySelector('.navbar');
+      return (nav && nav.offsetHeight) ? nav.offsetHeight + 8 : 56; // fallback
+    };
+    const targetTop = baseTop + (isListPage ? getNavbarOffset() : 0);
 
     const applyScroll = () => window.scrollTo({ top: targetTop, left: 0, behavior: 'auto' });
 
@@ -23,10 +31,71 @@ export default function ScrollManager() {
     const rafId = requestAnimationFrame(applyScroll);
     const timeoutId = setTimeout(applyScroll, 60);
 
+    // For dynamic grids/images (like Opere), re-apply after images/layout settle
+    let intervalId = null;
+    let mutationObserver = null;
+    const imgUnloaders = [];
+    const interactionUnloaders = [];
+    let pendingRestore = true;
+
+    const cancelRestore = () => {
+      pendingRestore = false;
+      if (intervalId) { clearInterval(intervalId); intervalId = null; }
+    };
+    const bindCancelOnUserInteraction = () => {
+      const cancelEvents = ['wheel', 'touchstart', 'keydown', 'mousedown'];
+      cancelEvents.forEach(evt => {
+        const handler = () => cancelRestore();
+        window.addEventListener(evt, handler, { passive: true, once: true });
+        interactionUnloaders.push(() => window.removeEventListener(evt, handler));
+      });
+      // Also cancel if user scrolls away significantly
+      const onScroll = () => {
+        if (Math.abs(window.scrollY - targetTop) > 8) cancelRestore();
+      };
+      window.addEventListener('scroll', onScroll, { passive: true });
+      interactionUnloaders.push(() => window.removeEventListener('scroll', onScroll));
+    };
+
+    if (location.pathname.startsWith('/opere')) {
+      bindCancelOnUserInteraction();
+      // Re-apply several times quickly, but stop once target reached or user interacts
+      let attempts = 0;
+      intervalId = setInterval(() => {
+        if (!pendingRestore) return;
+        const delta = Math.abs(window.scrollY - targetTop);
+        applyScroll();
+        attempts += 1;
+        if (delta <= 2 || attempts >= 20) {
+          cancelRestore();
+        }
+      }, 50);
+
+      // Apply on image load events while pendingRestore
+      const grid = document.querySelector('.opere-grid-container');
+      if (grid) {
+        const imgs = Array.from(grid.querySelectorAll('img'));
+        imgs.forEach((img) => {
+          if (img && !img.complete) {
+            const onLoad = () => { if (pendingRestore) applyScroll(); };
+            img.addEventListener('load', onLoad, { once: true });
+            imgUnloaders.push(() => img.removeEventListener('load', onLoad));
+          }
+        });
+        // Observe DOM changes that might affect layout
+        mutationObserver = new MutationObserver(() => { if (pendingRestore) applyScroll(); });
+        mutationObserver.observe(grid, { childList: true, subtree: true });
+      }
+    }
+
     return () => {
       cancelAnimationFrame(rafId);
       clearTimeout(timeoutId);
+      if (intervalId) clearInterval(intervalId);
+      if (mutationObserver) mutationObserver.disconnect();
+      imgUnloaders.forEach((un) => un());
       sessionStorage.setItem(key, String(window.scrollY || 0));
+      interactionUnloaders.forEach((un) => un());
     };
   }, [location.pathname, navType]);
 

@@ -415,7 +415,10 @@ export default function Opera() {
       {/* Back to Opere - persistent */}
       <button
         className="opera-back-btn"
-        onClick={() => navigate('/opere')}
+        onClick={() => {
+          const y = (location.state && location.state.from && typeof location.state.from.scrollY === 'number') ? location.state.from.scrollY : 0;
+          navigate('/opere', { replace: true, state: { restoreScroll: y } });
+        }}
         aria-label="Înapoi la Opere"
       >
         <span className="back-icon" aria-hidden="true">
