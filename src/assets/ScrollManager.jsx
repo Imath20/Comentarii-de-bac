@@ -17,19 +17,29 @@ export default function ScrollManager() {
         ? stored
         : 0;
 
-    // Dynamic offset (navbar height) for list pages
-    const isListPage = location.pathname.startsWith('/opere') || location.pathname.startsWith('/scriitori');
+    // Dynamic offset (navbar height) for list/landing pages
+    const isListPage = location.pathname === '/' || location.pathname.startsWith('/opere') || location.pathname.startsWith('/scriitori');
     const getNavbarOffset = () => {
       const nav = document.querySelector('.navbar');
       return (nav && nav.offsetHeight) ? nav.offsetHeight + 8 : 56; // fallback
     };
-    const targetTop = baseTop + (isListPage ? getNavbarOffset() : 0);
+    const targetTop = baseTop + (isListPage && explicitRestore === null ? getNavbarOffset() : 0);
 
     const applyScroll = () => window.scrollTo({ top: targetTop, left: 0, behavior: 'auto' });
 
     applyScroll();
     const rafId = requestAnimationFrame(applyScroll);
     const timeoutId = setTimeout(applyScroll, 60);
+    // When we have an explicit restore (e.g., coming from a detail page back to exact y), be extra sure
+    const extraTimeouts = [];
+    if (explicitRestore !== null) {
+      [120, 240, 400].forEach((ms) => {
+        extraTimeouts.push(setTimeout(applyScroll, ms));
+      });
+      const onLoad = () => applyScroll();
+      window.addEventListener('load', onLoad, { once: true });
+      extraTimeouts.push({ _isListener: true, handler: onLoad });
+    }
 
     // For dynamic grids/images (like Opere), re-apply after images/layout settle
     let intervalId = null;
@@ -57,7 +67,9 @@ export default function ScrollManager() {
       interactionUnloaders.push(() => window.removeEventListener('scroll', onScroll));
     };
 
-    if (location.pathname.startsWith('/opere')) {
+    const isOpere = location.pathname.startsWith('/opere');
+    const isHome = location.pathname === '/';
+    if (isOpere || isHome) {
       bindCancelOnUserInteraction();
       // Re-apply several times quickly, but stop once target reached or user interacts
       let attempts = 0;
@@ -66,31 +78,45 @@ export default function ScrollManager() {
         const delta = Math.abs(window.scrollY - targetTop);
         applyScroll();
         attempts += 1;
-        if (delta <= 2 || attempts >= 20) {
+        if (delta <= 2 || attempts >= 24) {
           cancelRestore();
         }
       }, 50);
 
       // Apply on image load events while pendingRestore
-      const grid = document.querySelector('.opere-grid-container');
-      if (grid) {
-        const imgs = Array.from(grid.querySelectorAll('img'));
-        imgs.forEach((img) => {
-          if (img && !img.complete) {
-            const onLoad = () => { if (pendingRestore) applyScroll(); };
-            img.addEventListener('load', onLoad, { once: true });
-            imgUnloaders.push(() => img.removeEventListener('load', onLoad));
+      const containerSelectors = isOpere
+        ? ['.opere-grid-container']
+        : ['.index-opere-grid', '.index-biblioteca-grid', '.index-scriitori-grid', '.index-videoclipuri-grid'];
+      containerSelectors.forEach((sel) => {
+        const container = document.querySelector(sel);
+        if (container) {
+          const imgs = Array.from(container.querySelectorAll('img'));
+          imgs.forEach((img) => {
+            if (img && !img.complete) {
+              const onLoad = () => { if (pendingRestore) applyScroll(); };
+              img.addEventListener('load', onLoad, { once: true });
+              imgUnloaders.push(() => img.removeEventListener('load', onLoad));
+            }
+          });
+          // Observe DOM changes that might affect layout
+          if (!mutationObserver) {
+            mutationObserver = new MutationObserver(() => { if (pendingRestore) applyScroll(); });
           }
-        });
-        // Observe DOM changes that might affect layout
-        mutationObserver = new MutationObserver(() => { if (pendingRestore) applyScroll(); });
-        mutationObserver.observe(grid, { childList: true, subtree: true });
-      }
+          mutationObserver.observe(container, { childList: true, subtree: true });
+        }
+      });
     }
 
     return () => {
       cancelAnimationFrame(rafId);
       clearTimeout(timeoutId);
+      extraTimeouts.forEach((t) => {
+        if (t && t._isListener) {
+          window.removeEventListener('load', t.handler);
+        } else if (t) {
+          clearTimeout(t);
+        }
+      });
       if (intervalId) clearInterval(intervalId);
       if (mutationObserver) mutationObserver.disconnect();
       imgUnloaders.forEach((un) => un());

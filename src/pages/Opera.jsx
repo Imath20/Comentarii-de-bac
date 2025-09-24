@@ -230,6 +230,32 @@ export default function Opera() {
   const [darkTheme, setDarkTheme] = useState(() => localStorage.getItem('theme') === 'dark');
   const [scrolled, setScrolled] = useState(false);
   const [activeTab, setActiveTab] = useState('prezentare');
+  const [prevTab, setPrevTab] = useState('prezentare');
+  const tabsOrder = [
+    'prezentare',
+    'analiza',
+    'comentariu',
+    'curent',
+    'titlu',
+    'rezumat',
+    'simboluri',
+    'videoclip',
+    'proiect',
+    'intrebari',
+  ];
+  const tabsLabels = {
+    prezentare: 'Prezentare',
+    analiza: 'Analiză',
+    comentariu: 'Comentariu',
+    curent: 'Curent',
+    titlu: 'Titlu',
+    rezumat: 'Rezumat',
+    simboluri: 'Simboluri',
+    videoclip: 'Videoclip',
+    proiect: 'Proiect',
+    intrebari: 'Întrebări',
+  };
+  const [slideDir, setSlideDir] = useState('slide-in-right');
   const [showScrollButton, setShowScrollButton] = useState(false);
 
   useEffect(() => {
@@ -245,6 +271,14 @@ export default function Opera() {
     window.addEventListener('scroll', onScroll);
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
+
+  useEffect(() => {
+    if (prevTab === activeTab) return;
+    const prevIdx = tabsOrder.indexOf(prevTab);
+    const nextIdx = tabsOrder.indexOf(activeTab);
+    setSlideDir(nextIdx > prevIdx ? 'slide-in-right' : 'slide-in-left');
+    setPrevTab(activeTab);
+  }, [activeTab]);
 
   // Scroll to top when component mounts (when opening an opera)
   useEffect(() => {
@@ -402,10 +436,189 @@ export default function Opera() {
           </div>
         );
 
+      case 'curent': {
+        const curentText = (() => {
+          const categorie = operaDetails.categorie || '';
+          if (categorie === 'roman') return 'Realism (roman), cu particularități specifice epocii/autorului.';
+          if (categorie === 'poezie') return 'Modernism / Simbolism (poezie), în funcție de autor și perioadă.';
+          if (categorie === 'nuvelă') return 'Realism (nuvelă), accent pe morală și tipologii.';
+          if (categorie === 'comedie') return 'Realism satiric (comedie), critică socială și politică.';
+          if (categorie === 'basm') return 'Romantism / tradiția basmului cult, motive folclorice.';
+          return 'Curent literar: în lucru.';
+        })();
+        return (
+          <div className="opera-tab-content">
+            <div className="opera-analysis">
+              <h3>Curent literar</h3>
+              <p>{curentText}</p>
+            </div>
+          </div>
+        );
+      }
+
+      case 'titlu':
+        return (
+          <div className="opera-tab-content">
+            <div className="opera-analysis">
+              <h3>Titlul și semnificația lui</h3>
+              <p>
+                Titlul „{effectiveOpera.titlu}” funcționează ca nucleu semantic al operei. Semnificația exactă diferă în
+                funcție de interpretare, dar indică motivele principale, direcția tematică și statutul personajelor.
+              </p>
+            </div>
+          </div>
+        );
+
+      case 'rezumat':
+        return (
+          <div className="opera-tab-content">
+            <div className="opera-analysis">
+              <h3>Rezumat</h3>
+              <p>Rezumatul detaliat va fi adăugat în curând. Între timp, consultă prezentarea și temele principale.</p>
+            </div>
+          </div>
+        );
+
+      case 'simboluri':
+        return (
+          <div className="opera-tab-content">
+            <div className="opera-analysis">
+              <h3>Simboluri și motive</h3>
+              <ul>
+                <li>Motive recurente și simboluri-cheie (în lucru).</li>
+                <li>Semnificații și rolul lor în structura operei.</li>
+                <li>Legătura cu titlul și temele centrale.</li>
+              </ul>
+            </div>
+          </div>
+        );
+
+      case 'videoclip': {
+        // Harta minimală titlu/opera -> videoId YouTube, inspirată din pagina Videoclipuri
+        const videoMap = {
+          'Ion': 'C4eED--KNTQ',
+          'Moara cu noroc': 'hNYSY47Ze38',
+          'Enigma Otiliei': '8hUf1le6N4A',
+          'Luceafărul': '5X_COpZg01Q',
+          'Baltagul': 'MWKSkj0cBM8',
+          'Povestea lui Harap Alb': 'RMl6c8B0VvE',
+          'O scrisoare pierdută': 'HnQPMYJNud8',
+          'Moromeții': 'NHaNm-Acmx8',
+          'Iona': 'rxHq37u_7-I',
+        };
+        const vid = videoMap[operaDetails.titlu] || null;
+        return (
+          <div className="opera-tab-content">
+            <div className="opera-analysis">
+              <h3>Videoclip</h3>
+              {vid ? (
+                <div className="opera-video-wrapper">
+                  <iframe
+                    src={`https://www.youtube.com/embed/${vid}`}
+                    title={`Video ${operaDetails.titlu}`}
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                </div>
+              ) : (
+                <p>Nu am găsit un videoclip asociat. Vezi mai multe în secțiunea Videoclipuri.</p>
+              )}
+            </div>
+          </div>
+        );
+      }
+
+      case 'proiect':
+        return (
+          <div className="opera-tab-content">
+            <div className="opera-analysis">
+              <h3>Proiect</h3>
+              <p>Vezi proiecte și idei creative inspirate de această operă.</p>
+              <div className="opera-actions">
+                <button className="opera-read-btn" onClick={() => navigate('/proiecte')}>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                  </svg>
+                  Deschide Proiecte
+                </button>
+              </div>
+            </div>
+          </div>
+        );
+
+      case 'intrebari': {
+        const questions = [
+          {
+            q: `Tema centrală în „${operaDetails.titlu}” este:`,
+            options: ['Dragostea', 'Destinul și moralitatea', 'Amintirile copilăriei'],
+            correct: 1,
+          },
+          {
+            q: 'Curentul literar asociat operei este cel mai aproape de:',
+            options: ['Romantism', 'Realism/Modernism (după caz)', 'Simbolism pur'],
+            correct: 1,
+          },
+          {
+            q: 'Titlul indică în primul rând:',
+            options: ['Locul acțiunii', 'Motivul/ideea centrală', 'Numele autorului'],
+            correct: 1,
+          },
+        ];
+        return (
+          <div className="opera-tab-content">
+            <div className="opera-quiz">
+              <h3>Întrebări grilă</h3>
+              <Quiz questions={questions} />
+            </div>
+          </div>
+        );
+      }
+
       default:
         return null;
     }
   };
+
+  function Quiz({ questions }) {
+    const [answers, setAnswers] = useState({});
+    const [checked, setChecked] = useState(false);
+    const correctCount = Object.entries(answers).reduce((acc, [idx, val]) => acc + (val === questions[idx].correct ? 1 : 0), 0);
+
+    return (
+      <div className="quiz-container">
+        {questions.map((q, idx) => (
+          <div key={idx} className="quiz-item">
+            <div className="quiz-question">{q.q}</div>
+            <div className="quiz-options">
+              {q.options.map((opt, oi) => {
+                const isChosen = answers[idx] === oi;
+                const isCorrect = checked && oi === q.correct;
+                const isWrong = checked && isChosen && oi !== q.correct;
+                return (
+                  <button
+                    key={oi}
+                    className={`quiz-option${isChosen ? ' chosen' : ''}${isCorrect ? ' correct' : ''}${isWrong ? ' wrong' : ''}`}
+                    onClick={() => !checked && setAnswers(a => ({ ...a, [idx]: oi }))}
+                  >
+                    {opt}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        ))}
+
+        <div className="quiz-actions">
+          {!checked ? (
+            <button className="quiz-submit" onClick={() => setChecked(true)}>Verifică</button>
+          ) : (
+            <div className="quiz-result">Corecte: {correctCount}/{questions.length}</div>
+          )}
+        </div>
+      </div>
+    );
+  }
 
   return (
     // <Layout darkTheme={darkTheme} setDarkTheme={setDarkTheme} scrolled={scrolled} transparentOnTop>
@@ -416,8 +629,9 @@ export default function Opera() {
       <button
         className="opera-back-btn"
         onClick={() => {
+          const fromPath = (location.state && location.state.from && location.state.from.pathname) || '/opere';
           const y = (location.state && location.state.from && typeof location.state.from.scrollY === 'number') ? location.state.from.scrollY : 0;
-          navigate('/opere', { replace: true, state: { restoreScroll: y } });
+          navigate(fromPath, { replace: true, state: { restoreScroll: y } });
         }}
         aria-label="Înapoi la Opere"
       >
@@ -465,28 +679,21 @@ export default function Opera() {
 
       <section id="opera-content" className="opera-content-container">
         <div className="opera-tabs">
-          <button
-            className={`opera-tab ${activeTab === 'prezentare' ? 'active' : ''}`}
-            onClick={() => setActiveTab('prezentare')}
-          >
-            Prezentare
-          </button>
-          <button
-            className={`opera-tab ${activeTab === 'analiza' ? 'active' : ''}`}
-            onClick={() => setActiveTab('analiza')}
-          >
-            Analiză
-          </button>
-          <button
-            className={`opera-tab ${activeTab === 'comentariu' ? 'active' : ''}`}
-            onClick={() => setActiveTab('comentariu')}
-          >
-            Comentariu
-          </button>
+          {tabsOrder.map(key => (
+            <button
+              key={key}
+              className={`opera-tab ${activeTab === key ? 'active' : ''}`}
+              onClick={() => setActiveTab(key)}
+            >
+              {tabsLabels[key]}
+            </button>
+          ))}
         </div>
 
         <div className="opera-tab-content-wrapper">
-          {renderTabContent()}
+          <div key={activeTab} className={`opera-tab-animated ${slideDir}`}>
+            {renderTabContent()}
+          </div>
         </div>
 
         {bookSlug && (
@@ -509,7 +716,7 @@ export default function Opera() {
           className="scroll-to-top-btn"
           aria-label="Derulează în sus"
         >
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.75" strokeLinecap="round" strokeLinejoin="round">
             <polyline points="18 15 12 9 6 15"></polyline>
           </svg>
         </button>

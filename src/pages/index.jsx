@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Layout from '../assets/Layout';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import ScriitoriHoraCanvas from '../assets/ScriitoriHoraCanvas';
 import '../styles/style.scss';
 
@@ -224,6 +224,18 @@ function getScriitorKey(nume) {
   return normalized.replace(/\s+/g, '-');
 }
 
+function slugify(text) {
+  if (!text) return '';
+  return String(text)
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/\p{Diacritic}/gu, '')
+    .replace(/[^a-z0-9\s-]/g, '')
+    .trim()
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-');
+}
+
 const Index = () => {
   const [darkTheme, setDarkTheme] = useState(() => localStorage.getItem('theme') === 'dark');
   const [scrolled, setScrolled] = useState(false);
@@ -233,6 +245,7 @@ const Index = () => {
   const [showPresentationModal, setShowPresentationModal] = useState(false);
   const cardSize = 320;
   const navigate = useNavigate();
+  const location = useLocation();
 
   // Culoare bandă tematică
   const bandaColor = darkTheme ? 'rgba(26,13,0,0.82)' : 'rgba(255,179,71,0.82)';
@@ -365,6 +378,7 @@ const Index = () => {
             <div
               key={opera.titlu}
               className={`index-opera-card ${darkTheme ? 'dark-theme' : ''}`}
+              onClick={() => navigate(`/opera/${slugify(opera.titlu)}`, { state: { opera, from: { pathname: location.pathname, scrollY: window.scrollY } } })}
               onMouseOver={e => {
                 e.currentTarget.style.transform = 'scale(1.055)';
                 e.currentTarget.style.boxShadow = '0 8px 32px 0 rgba(60,40,20,0.22)';
@@ -425,7 +439,7 @@ const Index = () => {
               <div
                 key={`${carte.titlu}-${carte.autor}`}
                 className={`index-biblioteca-card ${darkTheme ? 'dark-theme' : ''}`}
-                onClick={() => navigate(carte.jsonFile ? `/carte/${carte.jsonFile}` : '/biblioteca')}
+                onClick={() => navigate(carte.jsonFile ? `/carte/${carte.jsonFile}` : '/biblioteca', { state: { from: { pathname: location.pathname, scrollY: window.scrollY } } })}
                 onMouseOver={e => {
                   e.currentTarget.style.transform = 'scale(1.055)';
                   e.currentTarget.style.boxShadow = '0 8px 32px 0 rgba(60,40,20,0.22)';
@@ -484,6 +498,7 @@ const Index = () => {
               <Link
                 key={scriitor.nume}
                 to={`/scriitor?name=${key}`}
+                state={{ from: { pathname: location.pathname, scrollY: window.scrollY } }}
                 style={{ textDecoration: 'none', color: 'inherit' }}
               >
                 <div

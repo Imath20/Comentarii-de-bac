@@ -190,11 +190,8 @@
 
 // Persistent back button for Opera
 .opera-back-btn {
-  // position: fixed;
-  // top: 20px;
-  // left: 24px;
-  position: absolute;
-  top: 25px;
+  position: fixed;
+  top: 20px;
   left: 20px;  
   z-index: 50;
   display: inline-flex;
@@ -226,7 +223,7 @@
 }
 
 @media (max-width: 900px) {
-  .opera-back-btn { top: 16px; left: 16px; padding: 8px 12px; gap: 8px; }
+  .opera-back-btn { top: 72px; left: 16px; padding: 8px 12px; gap: 8px; }
 }
 
 .dark-theme {
@@ -247,6 +244,15 @@
   60% {
     transform: translateX(-50%) translateY(-6px);
   }
+}
+
+@keyframes operaSlideInRight {
+  from { opacity: 0; transform: translateX(24px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes operaSlideInLeft {
+  from { opacity: 0; transform: translateX(-24px); }
+  to { opacity: 1; transform: translateX(0); }
 }
 
 @media (max-width: 900px) {
@@ -279,36 +285,42 @@
     display: flex;
     gap: 0.5rem;
     margin-bottom: 2rem;
-    border-bottom: 2px solid #e0e0e0;
-    padding: 0.75rem 0 1rem 0;
+    padding: 8px 10px;
     position: sticky;
     top: 0;
     z-index: 10;
-    background: rgba(255,255,255,0.85);
+    background: rgba(255, 250, 241, 0.9);
+    border: 1px solid #f1e2c8;
+    border-radius: 16px;
+    box-shadow: 0 6px 24px rgba(124, 79, 43, 0.08);
     backdrop-filter: blur(6px) saturate(120%);
     -webkit-backdrop-filter: blur(6px) saturate(120%);
 
     .opera-tab {
-      padding: 1rem 2rem;
-      border: none;
-      background: none;
-      font-size: 1.1rem;
+      padding: 0.8rem 1.2rem;
+      border: 1px solid transparent;
+      background: transparent;
+      font-size: 1rem;
       font-weight: 600;
-      color: #666;
+      color: #6b5b4b;
       cursor: pointer;
-      border-radius: 8px;
-      transition: all 0.3s ease;
+      border-radius: 12px;
+        transition: all 0.25s ease;
       position: relative;
+      outline: none;
 
       &:hover {
         color: #a97c50;
-        background: rgba(169, 124, 80, 0.1);
+        background: rgba(169, 124, 80, 0.12);
+          border-color: #e8d7bd;
+          box-shadow: 0 6px 16px rgba(124, 79, 43, 0.12);
       }
 
       &.active {
         color: #a97c50;
-        background: rgba(169, 124, 80, 0.15);
-        box-shadow: 0 2px 8px rgba(169, 124, 80, 0.2);
+        background: linear-gradient(180deg, #ffffff 0%, #f8efe3 100%);
+        border-color: #e8d7bd;
+        box-shadow: 0 6px 18px rgba(124, 79, 43, 0.14);
       }
     }
   }
@@ -320,6 +332,17 @@
     padding: 2rem;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
     border: 1px solid #f0f0f0;
+
+    .opera-tab-animated {
+      animation-duration: 300ms;
+      animation-timing-function: ease;
+      &.slide-in-right {
+        animation-name: operaSlideInRight;
+      }
+      &.slide-in-left {
+        animation-name: operaSlideInLeft;
+      }
+    }
 
     .opera-tab-content {
       h3 {
@@ -392,10 +415,39 @@
         background: #fafafa;
         border-radius: 8px;
         border-left: 4px solid #a97c50;
+        transition: background 0.25s ease, box-shadow 0.25s ease;
 
         &:last-child {
           margin-bottom: 0;
         }
+
+        &:hover {
+          background: #f5efe7;
+          box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+        }
+      }
+
+      // Card-like list items for themes and characters
+      .opera-themes ul li,
+      .opera-characters ul li {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        margin: 0.5rem 0;
+        padding: 1rem 1.25rem;
+        border-left: 4px solid #a97c50;
+        border-radius: 0 12px 12px 0;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+        border-bottom: none;
+        padding-left: 1.25rem;
+      }
+      .opera-themes ul li:before,
+      .opera-characters ul li:before { display: none; }
+      .opera-themes ul li:hover,
+      .opera-characters ul li:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 26px rgba(0, 0, 0, 0.12);
+        background: linear-gradient(135deg, #ffffff 0%, #f1f3f5 100%);
+        border-left-color: #c28c52;
       }
 
       // Quotes styling
@@ -416,6 +468,7 @@
         border-radius: 0 12px 12px 0;
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
         position: relative;
+        transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease, border-color 0.25s ease;
 
         &:before {
           content: "\201C";
@@ -427,9 +480,73 @@
           opacity: 0.25;
           font-family: Georgia, Cambria, "Times New Roman", Times, serif;
         }
+
+        &:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 10px 26px rgba(0, 0, 0, 0.12);
+          background: linear-gradient(135deg, #ffffff 0%, #f1f3f5 100%);
+          border-left-color: #c28c52;
+        }
       }
     }
   }
+
+  // Video embed wrapper
+  .opera-video-wrapper {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 28px rgba(0,0,0,0.12);
+    border: 1px solid #eee;
+    iframe, video, embed {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  // Quiz styles
+  .quiz-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+  .quiz-item {
+    background: #fafafa;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    padding: 1rem;
+  }
+  .quiz-question { font-weight: 700; color: #6b5b4b; margin-bottom: 0.75rem; }
+  .quiz-options { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .quiz-option {
+    padding: 0.6rem 1rem;
+    border-radius: 999px;
+    border: 1px solid #e8d7bd;
+    background: #fff;
+    color: #6b5b4b;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .quiz-option:hover { background: rgba(169,124,80,0.08); }
+  .quiz-option.chosen { border-color: #a97c50; background: rgba(169,124,80,0.12); color: #8b6b42; }
+  .quiz-option.correct { border-color: #43aa8b; background: rgba(67,170,139,0.12); color: #2a6e5c; }
+  .quiz-option.wrong { border-color: #ff595e; background: rgba(255,89,94,0.12); color: #8a1c1f; }
+  .quiz-actions { margin-top: 0.5rem; }
+  .quiz-submit {
+    padding: 0.75rem 1.5rem;
+    border-radius: 999px;
+    border: none;
+    background: linear-gradient(135deg, #a97c50 0%, #8b6b42 100%);
+    color: #fff;
+    font-weight: 700;
+    box-shadow: 0 6px 18px rgba(169,124,80,0.25);
+    cursor: pointer;
+  }
+  .quiz-result { font-weight: 800; color: #8b6b42; }
 
   // Actions section
   .opera-actions {
@@ -545,11 +662,20 @@
 // Dark theme
 .dark-theme {
   .opera-content-container {
-    .opera-tabs { border-bottom-color: #444; background: rgba(26,26,26,0.8); }
+    .opera-tabs {
+      background: rgba(26, 13, 0, 0.82);
+      border-color: rgba(255, 213, 145, 0.18);
+      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
+    }
     .opera-tabs .opera-tab {
-      color: #ccc;
-      &:hover { color: #ffd591; background: rgba(255, 213, 145, 0.1); }
-      &.active { color: #ffd591; background: rgba(255, 213, 145, 0.15); box-shadow: 0 2px 8px rgba(255, 213, 145, 0.2); }
+      color: rgba(255,255,255,0.85);
+      &:hover { color: #ffd591; background: rgba(255, 213, 145, 0.08); border-color: rgba(255, 213, 145, 0.25); box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25); }
+      &.active {
+        color: #ffd591;
+        background: linear-gradient(180deg, rgba(78, 46, 30, 0.85) 0%, rgba(42, 23, 10, 0.85) 100%);
+        border-color: rgba(255, 213, 145, 0.25);
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+      }
     }
 
     .opera-tab-content-wrapper { background: #2a2a2a; border-color: #444; }
@@ -568,14 +694,44 @@
       .opera-themes,
       .opera-characters,
       .opera-analysis,
-      .opera-quotes { background: #333; border-left-color: #ffd591; }
+      .opera-quotes { background: #333; border-left-color: #ffd591; transition: background 0.25s ease, box-shadow 0.25s ease; }
+      .opera-description:hover,
+      .opera-themes:hover,
+      .opera-characters:hover,
+      .opera-analysis:hover,
+      .opera-quotes:hover { background: #2f2a26; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35); }
 
       .opera-quote {
         background: linear-gradient(135deg, #333 0%, #444 100%);
         color: #e0e0e0;
         border-left-color: #ffd591;
         &:before { color: #ffd591; }
+        transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+        &:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45); background: linear-gradient(135deg, #3a3a3a 0%, #4a4a4a 100%); border-left-color: #ffb366; }
       }
+
+      // Card-like list items for themes and characters (dark)
+      .opera-themes ul li,
+      .opera-characters ul li {
+        background: linear-gradient(135deg, #333 0%, #3c3c3c 100%);
+        margin: 0.5rem 0;
+        padding: 1rem 1.25rem;
+        border-left: 4px solid #ffd591;
+        border-radius: 0 12px 12px 0;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+        transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+        border-bottom: none;
+        color: #e0e0e0;
+      }
+      .opera-themes ul li:hover,
+      .opera-characters ul li:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 28px rgba(0, 0, 0, 0.5);
+        background: linear-gradient(135deg, #3a3a3a 0%, #4a4a4a 100%);
+        border-left-color: #ffb366;
+      }
+      .opera-themes ul li:before,
+      .opera-characters ul li:before { display: none; }
     }
 
     .opera-actions { background: linear-gradient(135deg, #333 0%, #444 100%); border-color: #555; }
@@ -596,5 +752,45 @@
   .opere-hero-full {
     .opera-author-avatar { border-color: rgba(255,213,145,0.9); background: rgba(0,0,0,0.25); }
     .opera-author-avatar:hover { border-color: #ffb366; }
+  }
+}
+
+// Scroll to top button - fixed bottom-right corner
+.scroll-to-top-btn {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 1px solid rgba(169, 124, 80, 0.35);
+  background: linear-gradient(135deg, rgba(255, 213, 145, 0.95) 0%, rgba(255, 179, 102, 0.95) 100%);
+  color: #4e2e1e;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 26px rgba(169, 124, 80, 0.35);
+  cursor: pointer;
+  z-index: 60;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease, background 0.2s ease;
+  outline: none;
+  &:focus { outline: none; }
+
+  svg { pointer-events: none; width: 28px; height: 28px; stroke-width: 5; }
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 34px rgba(169, 124, 80, 0.45);
+  }
+
+  &:active { transform: translateY(0); }
+}
+
+.dark-theme {
+  .scroll-to-top-btn {
+    border-color: rgba(255, 213, 145, 0.35);
+    background: linear-gradient(135deg, rgba(255, 213, 145, 0.85) 0%, rgba(255, 179, 102, 0.85) 100%);
+    color: #2a170a;
+    box-shadow: 0 10px 26px rgba(0, 0, 0, 0.45);
   }
 }

@@ -459,11 +459,8 @@ const Scriitor = () => {
 
   // Navigare către alt scriitor
   const goToScriitor = (key) => {
-    const fromState = {
-      pathname: '/scriitori',
-      scrollY: (location.state && location.state.from && typeof location.state.from.scrollY === 'number') ? location.state.from.scrollY : 0,
-    };
-    navigate(`/scriitor?name=${key}`, { state: { from: fromState } });
+    const prevFrom = (location.state && location.state.from) || { pathname: '/scriitori', scrollY: 0 };
+    navigate(`/scriitor?name=${key}`, { state: { from: prevFrom } });
   };
 
   // Navigare către poezie (placeholder)
@@ -558,7 +555,8 @@ const Scriitor = () => {
           {/* Buton înapoi - stil ca fullscreen button */}
                      <button onClick={() => {
             const y = (location.state && location.state.from && typeof location.state.from.scrollY === 'number') ? location.state.from.scrollY : 0;
-            navigate('/scriitori', { replace: true, state: { restoreScroll: y } });
+            const fromPath = (location.state && location.state.from && location.state.from.pathname) || '/scriitori';
+            navigate(fromPath, { replace: true, state: { restoreScroll: y } });
           }}
              className="scriitor-back-btn-inline"
              onMouseEnter={(e) => {
