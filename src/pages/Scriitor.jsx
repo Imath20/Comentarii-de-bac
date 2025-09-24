@@ -30,7 +30,7 @@ Stam singur lângă mort... și era frig...
     titlu: 'Testament',
     autor: 'Tudor Arghezi',
     data: '1927',
-    text: `Testament
+    text: `
 Nu-ţi voi lăsa drept bunuri, după moarte,
 Decât un nume adunat pe o carte,
 În seara răzvrătită care vine
@@ -92,7 +92,7 @@ Zace mania bunilor mei.`
     titlu: 'Flori de mucigai',
     autor: 'Tudor Arghezi',
     data: '1919',
-    text: `Flori de mucigai
+    text: `
 Le-am scris cu unghia pe tencuială
 Pe un părete de firidă goală,
 Pe întuneric, în singurătate,

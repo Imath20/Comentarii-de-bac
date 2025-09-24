@@ -154,7 +154,7 @@ const arghezi = {
       isPoem: true,
       poemImages: ['/opere/testament-verticala.webp', '/opere/textament-poza-1.webp'],
       poemTitle: 'Testament',
-      poemText: `Testament
+      poemText: `
 Nu-ţi voi lăsa drept bunuri, după moarte,
 Decât un nume adunat pe o carte,
 În seara răzvrătită care vine

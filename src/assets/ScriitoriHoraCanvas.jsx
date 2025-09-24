@@ -172,6 +172,7 @@ const ScriitoriHoraCanvas = () => {
           height: '100%',
           pointerEvents: 'auto',
           background: 'transparent',
+          cursor: 'pointer'
         }}
         onClick={handleClick}
         onMouseMove={handleMouseMove}

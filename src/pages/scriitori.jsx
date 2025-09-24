@@ -135,6 +135,14 @@ const scriitoriList = [
     canonic: true
   },
   {
+    nume: 'Eugen Lovinescu',
+    date: '1881 – 1943',
+    img: '/scriitori/eugen_lovinescu.webp',
+    color: 'rgba(122,58,0,0.82)',
+    categorie: 'critica',
+    canonic: true
+  },
+  {
     nume: 'Mircea Eliade',
     date: '1907 – 1986',
     img: '/scriitori/mircea-eliade.webp',

@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import Layout from '../assets/Layout';
+import scriitoriData from '../scriitoriData';
 import '../styles/style.scss';
 
 const slugify = (text) => {
@@ -281,6 +282,28 @@ export default function Opera() {
 
   const bgImage = effectiveOpera.img ? effectiveOpera.img.replace('/public', '') : '';
 
+  // Găsește profilul autorului (cheie și poză) după nume
+  const authorProfile = useMemo(() => {
+    const authorName = (operaDetails && operaDetails.autor) || (effectiveOpera && effectiveOpera.autor) || '';
+    if (!authorName) return null;
+
+    const normalize = (text) =>
+      (text || '')
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/\p{Diacritic}/gu, '')
+        .trim();
+
+    const normalizedTarget = normalize(authorName);
+
+    for (const [key, data] of Object.entries(scriitoriData)) {
+      if (normalize(data.nume) === normalizedTarget) {
+        return { key, img: data.img, nume: data.nume };
+      }
+    }
+    return null;
+  }, [operaDetails, effectiveOpera]);
+
   const renderTabContent = () => {
     if (!operaDetails) {
       return (
@@ -374,25 +397,43 @@ export default function Opera() {
 
     // </Layout>
     <>
+      {/* Back to Opere - persistent */}
+      <button
+        className="opera-back-btn"
+        onClick={() => navigate('/opere')}
+        aria-label="Înapoi la Opere"
+      >
+        <span className="back-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </span>
+        <span className="back-text">Înapoi</span>
+      </button>
       <section
         className="opere-hero-full"
         style={{ backgroundImage: bgImage ? `url(${bgImage})` : undefined }}
       >
         <div className="opere-hero-overlay" />
+        {authorProfile && (
+          <button
+            className="opera-author-avatar"
+            onClick={() => navigate(`/scriitor?name=${authorProfile.key}`)}
+            aria-label={`Deschide profilul lui ${authorProfile.nume}`}
+          >
+            <img src={authorProfile.img} alt={authorProfile.nume} />
+            <div className="avatar-overlay" />
+            <div className="avatar-label">{authorProfile.nume}</div>
+          </button>
+        )}
         <div className="opere-hero-content">
           <h1 className="opere-hero-title">{effectiveOpera.titlu || 'Operă'}</h1>
-          {(effectiveOpera.autor || effectiveOpera.data) && (
+          {effectiveOpera.data && (
             <p className="opere-hero-subtitle">
-              {(effectiveOpera.autor || '').trim()}
-              {effectiveOpera.data ? ` • ${effectiveOpera.data.replace('Redactare: ', '')}` : ''}
+              {effectiveOpera.data.replace('Redactare: ', '')}
             </p>
           )}
-          {operaDetails && (
-            <div className="opere-hero-meta">
-              <span className="opera-category">{operaDetails.categorie}</span>
-              {operaDetails.canonic && <span className="opera-canonical">Canonică</span>}
-            </div>
-          )}
+          {/* Meta info (categorie, canonic) intentionally removed */}
         </div>
         <button onClick={scrollToContent} className="opere-scroll-cue" aria-label="Derulează pentru conținut">
           <svg width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
