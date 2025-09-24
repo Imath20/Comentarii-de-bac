@@ -29,10 +29,12 @@
 
   .opera-author-avatar {
     position: absolute;
-    top: 24px;
-    left: 24px;
-    width: 88px;
-    height: 88px;
+    top: 210px;
+    // left: 170px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 125px;
+    height: 125px;
     border-radius: 50%;
     padding: 0;
     border: 3px solid rgba(255,255,255,0.85);
@@ -102,7 +104,7 @@
       font-weight: 900;
       letter-spacing: 0.04em;
       text-shadow: 0 6px 24px rgba(0,0,0,0.45);
-      margin: 0 0 0.75rem 0;
+      margin: 80px 0 0.75rem 0;
     }
 
     .opere-hero-subtitle {
@@ -111,6 +113,15 @@
       color: rgba(255,255,255,0.92);
       text-shadow: 0 4px 18px rgba(0,0,0,0.45);
       margin: 0 0 1rem 0;
+    }
+
+    .opere-hero-desc {
+      font-size: 1.05rem;
+      line-height: 1.7;
+      color: rgba(255,255,255,0.92);
+      text-shadow: 0 4px 18px rgba(0,0,0,0.4);
+      margin: 0 auto 1.25rem auto;
+      max-width: 720px;
     }
 
     .opere-hero-meta {
@@ -146,7 +157,7 @@
 
   .opere-scroll-cue {
     position: absolute;
-    bottom: 28px;
+    bottom: 15px;
     left: 50%;
     transform: translateX(-50%);
     display: inline-flex;
@@ -178,11 +189,15 @@
 
 // Persistent back button for Opera
 .opera-back-btn {
-  position: fixed;
-  top: 20px;
-  right: 24px;
+  // position: fixed;
+  // top: 20px;
+  // left: 24px;
+  position: absolute;
+  top: 25px;
+  left: 20px;  
   z-index: 50;
   display: inline-flex;
+  // background-color: red !important;
   align-items: center;
   gap: 10px;
   padding: 10px 16px;
@@ -210,7 +225,7 @@
 }
 
 @media (max-width: 900px) {
-  .opera-back-btn { top: 16px; right: 16px; padding: 8px 12px; gap: 8px; }
+  .opera-back-btn { top: 16px; left: 16px; padding: 8px 12px; gap: 8px; }
 }
 
 .dark-theme {
@@ -235,7 +250,7 @@
 
 @media (max-width: 900px) {
   .opere-hero-full {
-    .opera-author-avatar { width: 68px; height: 68px; top: 16px; left: 16px; border-width: 2px; }
+    .opera-author-avatar { width: 68px; height: 68px; top: 16px; left: 88px; border-width: 2px; }
     .opere-hero-content {
       .opere-hero-title { font-size: 2.2rem; }
       .opere-hero-subtitle { font-size: 1rem; }
@@ -246,6 +261,11 @@
       }
     }
   }
+}
+
+// On very small screens, compact the back button by hiding text
+@media (max-width: 480px) {
+  .opera-back-btn .back-text { display: none; }
 }
 
 // Opera content container (scoped nesting)
@@ -259,7 +279,13 @@
     gap: 0.5rem;
     margin-bottom: 2rem;
     border-bottom: 2px solid #e0e0e0;
-    padding-bottom: 1rem;
+    padding: 0.75rem 0 1rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(6px) saturate(120%);
+    -webkit-backdrop-filter: blur(6px) saturate(120%);
 
     .opera-tab {
       padding: 1rem 2rem;
@@ -339,17 +365,18 @@
           }
 
           &:before {
-            content: "•";
-            color: #a97c50;
-            font-weight: bold;
+            content: "";
             position: absolute;
             left: 0;
-            font-size: 1.2rem;
+            top: 0.95rem;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #a97c50;
+            box-shadow: 0 0 0 3px rgba(169, 124, 80, 0.15);
           }
 
-          &:last-child {
-            border-bottom: none;
-          }
+          &:last-child { border-bottom: none; }
         }
       }
 
@@ -390,14 +417,14 @@
         position: relative;
 
         &:before {
-          content: "";
-          font-size: 4rem;
+          content: "\201C";
+          font-size: 3rem;
           color: #a97c50;
           position: absolute;
-          top: -10px;
-          left: 15px;
-          opacity: 0.3;
-          font-family: serif;
+          top: -12px;
+          left: 12px;
+          opacity: 0.25;
+          font-family: Georgia, Cambria, "Times New Roman", Times, serif;
         }
       }
     }
@@ -517,7 +544,7 @@
 // Dark theme
 .dark-theme {
   .opera-content-container {
-    .opera-tabs { border-bottom-color: #444; }
+    .opera-tabs { border-bottom-color: #444; background: rgba(26,26,26,0.8); }
     .opera-tabs .opera-tab {
       color: #ccc;
       &:hover { color: #ffd591; background: rgba(255, 213, 145, 0.1); }
@@ -533,6 +560,7 @@
         border-bottom-color: #444;
         color: #e0e0e0;
         &:hover { background: rgba(255, 213, 145, 0.05); }
+        &:before { background: #ffd591; box-shadow: 0 0 0 3px rgba(255,213,145,0.15); }
       }
 
       .opera-description,

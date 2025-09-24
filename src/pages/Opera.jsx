@@ -66,7 +66,7 @@ const OPERA_DETAILS = {
     data: '1920',
     categorie: 'roman',
     canonic: true,
-    descriere: 'Romanul "Ion" este considerat primul roman modern românesc și una dintre cele mai importante opere ale literaturii române. Povestește despre iubirea pentru pământ și dorința de proprietate a țăranului Ion Glanetasu.',
+    descriere: 'Primul mare roman modern românesc, urmărește destinul lui Ion Glanetașu, obsedat de dorința de a avea pământ, care îl împinge spre alegeri dramatice și sfârșit tragic.',
     teme: ['iubirea pentru pământ', 'dorința de proprietate', 'conflictul social', 'destinul omului simplu'],
     personaje: ['Ion Glanetasu', 'Ana Baciu', 'Florica', 'Vasile Baciu', 'George Bulbuc'],
     analiza: 'Romanul explorează tema iubirii pentru pământ ca forță motrice a existenței umane. Ion Glanetasu este un personaj complex, dominat de dorința de a avea pământ, care îl determină să facă alegeri care îi schimbă viața.',
@@ -82,7 +82,7 @@ const OPERA_DETAILS = {
     data: '1883',
     categorie: 'poezie',
     canonic: true,
-    descriere: 'Poezia "Luceafărul" este considerată capodopera lirică a lui Eminescu și una dintre cele mai frumoase poezii ale literaturii universale. Povestește despre dragostea imposibilă dintre Luceafărul și o fată de împărat.',
+    descriere: 'Capodoperă a poeziei românești, ilustrează iubirea imposibilă dintre Hyperion și Cătălina, opunând nemurirea idealului condiției efemere a omului.',
     teme: ['dragostea imposibilă', 'nemurirea vs. murirea', 'sacrificiul pentru dragoste', 'conflictul dintre cer și pământ'],
     personaje: ['Luceafărul (Hyperion)', 'Fata de împărat', 'Cătălin', 'Cătălina'],
     analiza: 'Poezia explorează tema dragostei imposibile între nemurire și murire. Luceafărul este personificarea idealului artistic și filosofic, iar fata reprezintă frumusețea efemeră a lumii pământești.',
@@ -98,7 +98,7 @@ const OPERA_DETAILS = {
     data: '1881',
     categorie: 'nuvelă',
     canonic: true,
-    descriere: 'Nuvela "Moara cu noroc" este o operă realistă care prezintă degradarea morală a omului sub influența baniului și a puterii. Povestește despre Ghiță, cârciumarul de la Moara cu noroc, care se împrietenește cu Lică Sămădăul.',
+    descriere: 'Nuvelă realistă ce arată cum dorința de îmbogățire îl duce pe Ghiță la degradare morală și pierderea familiei, sub influența lui Lică Sămădăul.',
     teme: ['degradarea morală', 'puterea baniului', 'corupția', 'consecințele alegerilor greșite'],
     personaje: ['Ghiță', 'Ana', 'Lică Sămădăul', 'Pintea căprarul', 'Bătrâna'],
     analiza: 'Nuvela explorează cum dorința de avere și putere poate corupe moralitatea omului. Ghiță începe ca un om cinstit, dar se lasă corupt de Lică Sămădăul, ajungând să-și sacrifice familia și principiile.',
@@ -114,7 +114,7 @@ const OPERA_DETAILS = {
     data: '1884',
     categorie: 'comedie',
     canonic: true,
-    descriere: 'Comedia "O scrisoare pierdută" este o satiră ascuțită a vieții politice românești din perioada post-unionistă. Povestește despre o scrisoare compromițătoare care dispare și cauzează panică în cercurile politice.',
+    descriere: 'Comedie satirică despre corupția și ridicolul vieții politice românești, declanșată de pierderea unei scrisori compromițătoare.',
     teme: ['corupția politică', 'ipocrizia socială', 'satira', 'comedia de situație'],
     personaje: ['Ștefan Tipătescu', 'Zoe Trahanache', 'Nae Cațavencu', 'Ștefan Petică', 'Farfuridi'],
     analiza: 'Caragiale creează o comedie perfectă despre corupția politică și ipocrizia socială. Fiecare personaj reprezintă un tip social specific, iar intriga se bazează pe o situație comică generată de dispariția scrisorii.',
@@ -130,7 +130,7 @@ const OPERA_DETAILS = {
     data: '1877',
     categorie: 'basm',
     canonic: true,
-    descriere: 'Basmul "Povestea lui Harap Alb" este unul dintre cele mai frumoase basme populare românești. Povestește despre Harap Alb, fiul cel mai mic al împăratului, care pleacă în lume să-și caute norocul.',
+    descriere: 'Basm cult inițiatic care urmărește drumul de maturizare al eroului, pus la încercare prin probe și aventuri fantastice. Harap Alb învinge obstacolele cu ajutorul inteligenței, al prietenilor fabuloși și al bunătății, devenind un model de omenie și curaj.',
     teme: ['călătoria inițiatică', 'înțelepciunea', 'bunătatea', 'dreptatea', 'magia'],
     personaje: ['Harap Alb', 'Împăratul Verde', 'Fata Împăratului', 'Baba Cloanța', 'Zmeul'],
     analiza: 'Basmul urmează structura clasică a basmului popular: eroul pleacă în călătorie, întâmpină obstacole, primește ajutor de la personaje magice și se întoarce victorios. Harap Alb reprezintă valorile pozitive ale poporului român.',
@@ -146,7 +146,7 @@ const OPERA_DETAILS = {
     data: '1930',
     categorie: 'roman',
     canonic: true,
-    descriere: 'Romanul "Baltagul" este o operă realistă care prezintă viața țăranilor din Moldova la începutul secolului XX. Povestește despre Vitoria Lipan care pleacă să-și caute soțul dispărut.',
+    descriere: 'Romanul căutării și al dreptății, în care Vitoria Lipan pornește hotărâtă să-și găsească soțul dispărut, într-o lume guvernată de tradiții și credință.',
     teme: ['iubirea conjugală', 'datoria', 'perseverența', 'viața țărănească', 'destinul femeii'],
     personaje: ['Vitoria Lipan', 'Ghiță Lipan', 'Nechifor Lipan', 'Baba Cloanța'],
     analiza: 'Sadoveanu creează un portret puternic al femeii țărănești prin personajul Vitoriei. Romanul explorează tema iubirii conjugale și a datoriei, Vitoria fiind gata să facă orice pentru a-și găsi soțul.',
@@ -162,7 +162,7 @@ const OPERA_DETAILS = {
     data: '1894',
     categorie: 'roman',
     canonic: true,
-    descriere: 'Romanul "Mara" prezintă viața unei femei simple din Transilvania, Mara, care luptă pentru supraviețuire și respectarea valorilor tradiționale în fața modernizării societății.',
+    descriere: 'Portret al unei femei transilvănene întreprinzătoare, prinsă între valorile tradiționale și noile schimbări sociale, într-o luptă pentru supraviețuire.',
     teme: ['viața femeii', 'tradițiile', 'modernizarea', 'lupta pentru supraviețuire', 'valorile morale'],
     personaje: ['Mara', 'Popa Toma', 'Ilie Glanetasu', 'Ana'],
     analiza: 'Slavici creează un portret autentic al femeii transilvănene prin personajul Marei. Romanul explorează conflictul dintre tradiție și modernitate, Mara reprezentând valorile tradiționale în fața schimbărilor sociale.',
@@ -178,7 +178,7 @@ const OPERA_DETAILS = {
     data: '1930',
     categorie: 'roman',
     canonic: true,
-    descriere: 'Romanul "Ultima noapte de dragoste, întâia noapte de război" este o operă modernistă care explorează psihologia personajelor în contextul Primului Război Mondial.',
+    descriere: 'Roman modernist de analiză psihologică, urmărește frământările lui Ștefan Gheorghidiu între gelozie și experiența dură a frontului.',
     teme: ['psihologia personajelor', 'războiul', 'dragostea', 'modernismul', 'interiorul uman'],
     personaje: ['Ștefan Gheorghidiu', 'Eliza', 'Camil Petrescu'],
     analiza: 'Petrescu creează un roman psihologic complex, explorând interiorul uman în contextul războiului. Opera se caracterizează prin tehnici narrative moderne și analiza profundă a psihologiei personajelor.',
@@ -194,7 +194,7 @@ const OPERA_DETAILS = {
     data: '1938',
     categorie: 'roman',
     canonic: true,
-    descriere: 'Romanul "Enigma Otiliei" este o operă realistă care prezintă viața societății bucureștene din perioada interbelică prin prisma unei povești de dragoste complexe.',
+    descriere: 'Roman realist-balzacian care surprinde moravurile burgheziei bucureștene interbelice, prin destinul lui Felix și enigma feminină reprezentată de Otilia.',
     teme: ['dragostea', 'societatea interbelică', 'psihologia personajelor', 'realismul', 'Bucureștiul'],
     personaje: ['Otilia Mărculescu', 'Felix Sima', 'Agnes', 'Costache Giurgiuveanu'],
     analiza: 'Călinescu creează un roman realist complex, explorând psihologia personajelor și atmosfera societății interbelice. Otilia reprezintă enigma feminității moderne, iar Felix este tipul intelectualului confuz.',
@@ -210,7 +210,7 @@ const OPERA_DETAILS = {
     data: '1955',
     categorie: 'roman',
     canonic: true,
-    descriere: 'Romanul "Moromeții" prezintă viața unei familii de țărani din Oltenia în perioada interbelică și postbelică, explorând transformările sociale și politice ale epocii.',
+    descriere: 'Cronică rurală care surprinde viața familiei Moromete și schimbările sociale ce zdruncină echilibrul satului românesc în pragul modernizării.',
     teme: ['viața țărănească', 'transformările sociale', 'familia', 'politica', 'tradițiile'],
     personaje: ['Ilie Moromete', 'Catrina', 'Niculae', 'Paraschiv'],
     analiza: 'Preda creează un roman epic despre transformările societății românești prin prisma familiei Moromeților. Opera explorează conflictul dintre tradiție și modernitate, între vechi și nou.',
@@ -447,6 +447,9 @@ export default function Opera() {
             <p className="opere-hero-subtitle">
               {effectiveOpera.data.replace('Redactare: ', '')}
             </p>
+          )}
+          {operaDetails && operaDetails.descriere && (
+            <p className="opere-hero-desc">{operaDetails.descriere}</p>
           )}
           {/* Meta info (categorie, canonic) intentionally removed */}
         </div>
