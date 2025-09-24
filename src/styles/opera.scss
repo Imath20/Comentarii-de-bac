@@ -24,7 +24,7 @@
   .opere-hero-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.4) 40%, rgba(0,0,0,0.75) 100%);
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.4) 40%, rgba(0, 0, 0, 0.75) 100%);
   }
 
   .opera-author-avatar {
@@ -37,9 +37,9 @@
     height: 125px;
     border-radius: 50%;
     padding: 0;
-    border: 3px solid rgba(255,255,255,0.85);
+    border: 3px solid rgba(255, 255, 255, 0.85);
     background: none;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
     overflow: hidden;
     cursor: pointer;
     display: inline-flex;
@@ -72,8 +72,8 @@
       font-size: 0.85rem;
       font-weight: 700;
       color: #fff;
-      text-shadow: 0 2px 8px rgba(0,0,0,0.6);
-      background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0, 0, 0, 0.082) 100%);
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.082) 100%);
       opacity: 0;
       transform: translateY(4px);
       transition: opacity 0.2s ease, transform 0.2s ease;
@@ -81,15 +81,25 @@
 
     &:hover {
       // transform: translateY(-2px) scale(1.03);
-      box-shadow: 0 12px 32px rgba(0,0,0,0.45);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
       // box-shadow: 0 12px 32px rgb(0, 0, 0);
       border-color: #ffd591;
-      .avatar-overlay { background: none; }
-      .avatar-label { opacity: 1; transform: translateY(0); }
+
+      .avatar-overlay {
+        background: none;
+      }
+
+      .avatar-label {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
       // img { opacity: 90%; }
     }
 
-    &:focus { outline: none; }
+    &:focus {
+      outline: none;
+    }
   }
 
   .opere-hero-content {
@@ -104,23 +114,23 @@
       font-size: 3.2rem;
       font-weight: 900;
       letter-spacing: 0.04em;
-      text-shadow: 0 6px 24px rgba(0,0,0,0.45);
+      text-shadow: 0 6px 24px rgba(0, 0, 0, 0.45);
       margin: 80px 0 0.75rem 0;
     }
 
     .opere-hero-subtitle {
       font-size: 1.25rem;
       font-weight: 600;
-      color: rgba(255,255,255,0.92);
-      text-shadow: 0 4px 18px rgba(0,0,0,0.45);
+      color: rgba(255, 255, 255, 0.92);
+      text-shadow: 0 4px 18px rgba(0, 0, 0, 0.45);
       margin: 0 0 1rem 0;
     }
 
     .opere-hero-desc {
       font-size: 1.05rem;
       line-height: 1.7;
-      color: rgba(255,255,255,0.92);
-      text-shadow: 0 4px 18px rgba(0,0,0,0.4);
+      color: rgba(255, 255, 255, 0.92);
+      text-shadow: 0 4px 18px rgba(0, 0, 0, 0.4);
       margin: 0 auto 1.25rem auto;
       max-width: 720px;
     }
@@ -170,20 +180,24 @@
     border-radius: 50%;
     background: transparent;
     border: none;
-    color: rgba(255,255,255,0.35);
+    color: rgba(255, 255, 255, 0.35);
     z-index: 2;
     transition: transform 0.25s ease, color 0.25s ease;
     animation: bounce-bottom 2s infinite;
     cursor: pointer;
     outline: none;
+
     &:focus {
       outline: none;
     }
-    svg { opacity: 0.55; }
+
+    svg {
+      opacity: 0.55;
+    }
 
     &:hover {
       transform: translateX(-50%) translateY(-2px);
-      color: rgba(255,255,255,0.6);
+      color: rgba(255, 255, 255, 0.6);
     }
   }
 }
@@ -192,7 +206,7 @@
 .opera-back-btn {
   position: fixed;
   top: 20px;
-  left: 20px;  
+  left: 20px;
   z-index: 50;
   display: inline-flex;
   // background-color: red !important;
@@ -200,67 +214,124 @@
   gap: 10px;
   padding: 10px 16px;
   border-radius: 999px;
-  border: 1px solid rgba(255,255,255,0.7);
+  border: 1px solid rgba(255, 255, 255, 0.7);
   color: #fff;
-  background: rgba(0,0,0,0.35);
+  background: rgba(0, 0, 0, 0.35);
   backdrop-filter: saturate(120%) blur(6px);
   -webkit-backdrop-filter: saturate(120%) blur(6px);
-  box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+  outline: none;
+  &:focus{
+    outline: none;
+  }
 
-  .back-icon { display: inline-flex; }
-  .back-text { font-weight: 700; letter-spacing: 0.3px; }
+  .back-icon {
+    display: inline-flex;
+  }
+
+  .back-text {
+    font-weight: 700;
+    letter-spacing: 0.3px;
+  }
 
   &:hover {
     transform: translateY(-1px);
-    background: rgba(0,0,0,0.5);
+    background: rgba(0, 0, 0, 0.5);
     border-color: #ffd591;
-    box-shadow: 0 12px 28px rgba(0,0,0,0.35);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
   }
 
-  &:active { transform: translateY(0); }
+  &:active {
+    transform: translateY(0);
+  }
 }
 
 @media (max-width: 900px) {
-  .opera-back-btn { top: 72px; left: 16px; padding: 8px 12px; gap: 8px; }
+  .opera-back-btn {
+    top: 72px;
+    left: 16px;
+    padding: 8px 12px;
+    gap: 8px;
+  }
 }
 
 .dark-theme {
   .opera-back-btn {
-    border-color: rgba(255,213,145,0.8);
-    background: rgba(0,0,0,0.4);
+    border-color: rgba(255, 213, 145, 0.8);
+    background: rgba(0, 0, 0, 0.4);
     color: #ffd591;
-    &:hover { background: rgba(0,0,0,0.6); border-color: #ffb366; }
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.6);
+      border-color: #ffb366;
+    }
   }
 }
+
 @keyframes bounce-bottom {
-  0%, 20%, 50%, 80%, 100% {
+
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
     transform: translateX(-50%) translateY(0);
   }
+
   40% {
     transform: translateX(-50%) translateY(-12px);
   }
+
   60% {
     transform: translateX(-50%) translateY(-6px);
   }
 }
 
 @keyframes operaSlideInRight {
-  from { opacity: 0; transform: translateX(24px); }
-  to { opacity: 1; transform: translateX(0); }
+  from {
+    opacity: 0;
+    transform: translateX(24px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
+
 @keyframes operaSlideInLeft {
-  from { opacity: 0; transform: translateX(-24px); }
-  to { opacity: 1; transform: translateX(0); }
+  from {
+    opacity: 0;
+    transform: translateX(-24px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 @media (max-width: 900px) {
   .opere-hero-full {
-    .opera-author-avatar { width: 68px; height: 68px; top: 16px; left: 88px; border-width: 2px; }
+    .opera-author-avatar {
+      width: 68px;
+      height: 68px;
+      top: 16px;
+      left: 88px;
+      border-width: 2px;
+    }
+
     .opere-hero-content {
-      .opere-hero-title { font-size: 2.2rem; }
-      .opere-hero-subtitle { font-size: 1rem; }
+      .opere-hero-title {
+        font-size: 2.2rem;
+      }
+
+      .opere-hero-subtitle {
+        font-size: 1rem;
+      }
+
       .opere-hero-meta {
         flex-direction: column;
         align-items: center;
@@ -272,7 +343,9 @@
 
 // On very small screens, compact the back button by hiding text
 @media (max-width: 480px) {
-  .opera-back-btn .back-text { display: none; }
+  .opera-back-btn .back-text {
+    display: none;
+  }
 }
 
 // Opera content container (scoped nesting)
@@ -305,15 +378,15 @@
       color: #6b5b4b;
       cursor: pointer;
       border-radius: 12px;
-        transition: all 0.25s ease;
+      transition: all 0.25s ease;
       position: relative;
       outline: none;
 
       &:hover {
         color: #a97c50;
         background: rgba(169, 124, 80, 0.12);
-          border-color: #e8d7bd;
-          box-shadow: 0 6px 16px rgba(124, 79, 43, 0.12);
+        border-color: #e8d7bd;
+        box-shadow: 0 6px 16px rgba(124, 79, 43, 0.12);
       }
 
       &.active {
@@ -336,9 +409,11 @@
     .opera-tab-animated {
       animation-duration: 300ms;
       animation-timing-function: ease;
+
       &.slide-in-right {
         animation-name: operaSlideInRight;
       }
+
       &.slide-in-left {
         animation-name: operaSlideInLeft;
       }
@@ -400,7 +475,9 @@
             box-shadow: 0 0 0 3px rgba(169, 124, 80, 0.15);
           }
 
-          &:last-child { border-bottom: none; }
+          &:last-child {
+            border-bottom: none;
+          }
         }
       }
 
@@ -440,8 +517,12 @@
         border-bottom: none;
         padding-left: 1.25rem;
       }
+
       .opera-themes ul li:before,
-      .opera-characters ul li:before { display: none; }
+      .opera-characters ul li:before {
+        display: none;
+      }
+
       .opera-themes ul li:hover,
       .opera-characters ul li:hover {
         transform: translateY(-2px);
@@ -498,9 +579,16 @@
     padding-top: 56.25%;
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 8px 28px rgba(0,0,0,0.12);
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.12);
     border: 1px solid #eee;
-    iframe, video, embed {
+    outline: none;
+    &:focus{
+      outline: none;
+    }
+
+    iframe,
+    video,
+    embed {
       position: absolute;
       inset: 0;
       width: 100%;
@@ -514,14 +602,26 @@
     flex-direction: column;
     gap: 1.25rem;
   }
+
   .quiz-item {
     background: #fafafa;
     border: 1px solid #eee;
     border-radius: 10px;
     padding: 1rem;
   }
-  .quiz-question { font-weight: 700; color: #6b5b4b; margin-bottom: 0.75rem; }
-  .quiz-options { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+
+  .quiz-question {
+    font-weight: 700;
+    color: #6b5b4b;
+    margin-bottom: 0.75rem;
+  }
+
+  .quiz-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
   .quiz-option {
     padding: 0.6rem 1rem;
     border-radius: 999px;
@@ -530,12 +630,38 @@
     color: #6b5b4b;
     cursor: pointer;
     transition: all 0.2s ease;
+    outline: none;
+    &:focus{
+      outline: none;
+    }
   }
-  .quiz-option:hover { background: rgba(169,124,80,0.08); }
-  .quiz-option.chosen { border-color: #a97c50; background: rgba(169,124,80,0.12); color: #8b6b42; }
-  .quiz-option.correct { border-color: #43aa8b; background: rgba(67,170,139,0.12); color: #2a6e5c; }
-  .quiz-option.wrong { border-color: #ff595e; background: rgba(255,89,94,0.12); color: #8a1c1f; }
-  .quiz-actions { margin-top: 0.5rem; }
+
+  .quiz-option:hover {
+    background: rgba(169, 124, 80, 0.08);
+  }
+
+  .quiz-option.chosen {
+    border-color: #a97c50;
+    background: rgba(169, 124, 80, 0.12);
+    color: #8b6b42;
+  }
+
+  .quiz-option.correct {
+    border-color: #43aa8b;
+    background: rgba(67, 170, 139, 0.12);
+    color: #2a6e5c;
+  }
+
+  .quiz-option.wrong {
+    border-color: #ff595e;
+    background: rgba(255, 89, 94, 0.12);
+    color: #8a1c1f;
+  }
+
+  .quiz-actions {
+    margin-top: 0.5rem;
+  }
+
   .quiz-submit {
     padding: 0.75rem 1.5rem;
     border-radius: 999px;
@@ -543,19 +669,27 @@
     background: linear-gradient(135deg, #a97c50 0%, #8b6b42 100%);
     color: #fff;
     font-weight: 700;
-    box-shadow: 0 6px 18px rgba(169,124,80,0.25);
+    box-shadow: 0 6px 18px rgba(169, 124, 80, 0.25);
     cursor: pointer;
+    outline: none;
+    &:focus{
+      outline: none;
+    }
   }
-  .quiz-result { font-weight: 800; color: #8b6b42; }
+
+  .quiz-result {
+    font-weight: 800;
+    color: #8b6b42;
+  }
 
   // Actions section
   .opera-actions {
     margin-top: 3rem;
     text-align: center;
     padding: 2rem;
-    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-    border-radius: 12px;
-    border: 1px solid #e0e0e0;
+    // background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    // border-radius: 12px;
+    // border: 1px solid #e0e0e0;
 
     .opera-read-btn {
       background: linear-gradient(135deg, #a97c50 0%, #8b6b42 100%);
@@ -573,6 +707,10 @@
       box-shadow: 0 4px 15px rgba(169, 124, 80, 0.3);
       text-transform: uppercase;
       letter-spacing: 0.5px;
+      outline: none;
+      &:focus{
+        outline: none;
+      }
 
       &:hover {
         background: linear-gradient(135deg, #8b6b42 0%, #6d5233 100%);
@@ -643,10 +781,23 @@
       padding: 1.5rem;
 
       .opera-tab-content {
-        h3 { font-size: 1.3rem; }
-        p { font-size: 1rem; }
-        ul li { font-size: 1rem; padding: 0.6rem 0; }
-        .opera-quote { padding: 1.5rem; font-size: 1rem; }
+        h3 {
+          font-size: 1.3rem;
+        }
+
+        p {
+          font-size: 1rem;
+        }
+
+        ul li {
+          font-size: 1rem;
+          padding: 0.6rem 0;
+        }
+
+        .opera-quote {
+          padding: 1.5rem;
+          font-size: 1rem;
+        }
       }
     }
 
@@ -667,9 +818,17 @@
       border-color: rgba(255, 213, 145, 0.18);
       box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
     }
+
     .opera-tabs .opera-tab {
-      color: rgba(255,255,255,0.85);
-      &:hover { color: #ffd591; background: rgba(255, 213, 145, 0.08); border-color: rgba(255, 213, 145, 0.25); box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25); }
+      color: rgba(255, 255, 255, 0.85);
+
+      &:hover {
+        color: #ffd591;
+        background: rgba(255, 213, 145, 0.08);
+        border-color: rgba(255, 213, 145, 0.25);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+      }
+
       &.active {
         color: #ffd591;
         background: linear-gradient(180deg, rgba(78, 46, 30, 0.85) 0%, rgba(42, 23, 10, 0.85) 100%);
@@ -678,36 +837,77 @@
       }
     }
 
-    .opera-tab-content-wrapper { background: #2a2a2a; border-color: #444; }
+    .opera-tab-content-wrapper {
+      background: #2a2a2a;
+      border-color: #444;
+    }
 
     .opera-tab-content-wrapper .opera-tab-content {
-      h3 { color: #ffd591; &:before { background: #ffd591; } }
-      p { color: #e0e0e0; }
+      h3 {
+        color: #ffd591;
+
+        &:before {
+          background: #ffd591;
+        }
+      }
+
+      p {
+        color: #e0e0e0;
+      }
+
       ul li {
         border-bottom-color: #444;
         color: #e0e0e0;
-        &:hover { background: rgba(255, 213, 145, 0.05); }
-        &:before { background: #ffd591; box-shadow: 0 0 0 3px rgba(255,213,145,0.15); }
+
+        &:hover {
+          background: rgba(255, 213, 145, 0.05);
+        }
+
+        &:before {
+          background: #ffd591;
+          box-shadow: 0 0 0 3px rgba(255, 213, 145, 0.15);
+        }
       }
 
       .opera-description,
       .opera-themes,
       .opera-characters,
       .opera-analysis,
-      .opera-quotes { background: #333; border-left-color: #ffd591; transition: background 0.25s ease, box-shadow 0.25s ease; }
+      .opera-quotes {
+        background: #333;
+        border-left-color: #ffd591;
+        transition: background 0.25s ease, box-shadow 0.25s ease;
+      }
+
       .opera-description:hover,
       .opera-themes:hover,
       .opera-characters:hover,
       .opera-analysis:hover,
-      .opera-quotes:hover { background: #2f2a26; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35); }
+      .opera-quotes:hover {
+        background: #2f2a26;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+      }
 
       .opera-quote {
         background: linear-gradient(135deg, #333 0%, #444 100%);
         color: #e0e0e0;
         border-left-color: #ffd591;
-        &:before { color: #ffd591; }
-        transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease, border-color 0.25s ease;
-        &:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45); background: linear-gradient(135deg, #3a3a3a 0%, #4a4a4a 100%); border-left-color: #ffb366; }
+
+        &:before {
+          color: #ffd591;
+        }
+
+        transition: transform 0.25s ease,
+        box-shadow 0.25s ease,
+        background 0.25s ease,
+        border-color 0.25s ease;
+
+        &:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45);
+          background: linear-gradient(135deg, #3a3a3a 0%, #4a4a4a 100%);
+          border-left-color: #ffb366;
+        }
       }
 
       // Card-like list items for themes and characters (dark)
@@ -723,6 +923,7 @@
         border-bottom: none;
         color: #e0e0e0;
       }
+
       .opera-themes ul li:hover,
       .opera-characters ul li:hover {
         transform: translateY(-2px);
@@ -730,28 +931,52 @@
         background: linear-gradient(135deg, #3a3a3a 0%, #4a4a4a 100%);
         border-left-color: #ffb366;
       }
+
       .opera-themes ul li:before,
-      .opera-characters ul li:before { display: none; }
+      .opera-characters ul li:before {
+        display: none;
+      }
     }
 
-    .opera-actions { background: linear-gradient(135deg, #333 0%, #444 100%); border-color: #555; }
+    .opera-actions {
+      background: linear-gradient(135deg, #333 0%, #444 100%);
+      border-color: #555;
+    }
+
     .opera-actions .opera-read-btn {
       background: linear-gradient(135deg, #ffd591 0%, #ffb366 100%);
       color: #333;
-      &:hover { background: linear-gradient(135deg, #ffb366 0%, #ff9f33 100%); }
+
+      &:hover {
+        background: linear-gradient(135deg, #ffb366 0%, #ff9f33 100%);
+      }
     }
 
     .opera-no-details,
     .opera-comment-missing {
-      background: #333; border-color: #555; color: #ccc;
-      h3 { color: #ffd591; }
+      background: #333;
+      border-color: #555;
+      color: #ccc;
+
+      h3 {
+        color: #ffd591;
+      }
     }
 
-    .opera-comment-frame { background: #2a2a2a; }
+    .opera-comment-frame {
+      background: #2a2a2a;
+    }
   }
+
   .opere-hero-full {
-    .opera-author-avatar { border-color: rgba(255,213,145,0.9); background: rgba(0,0,0,0.25); }
-    .opera-author-avatar:hover { border-color: #ffb366; }
+    .opera-author-avatar {
+      border-color: rgba(255, 213, 145, 0.9);
+      background: rgba(0, 0, 0, 0.25);
+    }
+
+    .opera-author-avatar:hover {
+      border-color: #ffb366;
+    }
   }
 }
 
@@ -774,16 +999,26 @@
   z-index: 60;
   transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease, background 0.2s ease;
   outline: none;
-  &:focus { outline: none; }
 
-  svg { pointer-events: none; width: 28px; height: 28px; stroke-width: 5; }
+  &:focus {
+    outline: none;
+  }
+
+  svg {
+    pointer-events: none;
+    width: 28px;
+    height: 28px;
+    stroke-width: 5;
+  }
 
   &:hover {
     transform: translateY(-2px);
     box-shadow: 0 14px 34px rgba(169, 124, 80, 0.45);
   }
 
-  &:active { transform: translateY(0); }
+  &:active {
+    transform: translateY(0);
+  }
 }
 
 .dark-theme {
