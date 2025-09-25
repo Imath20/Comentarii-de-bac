@@ -250,10 +250,7 @@ const Index = () => {
   // Culoare bandă tematică
   const bandaColor = darkTheme ? 'rgba(26,13,0,0.82)' : 'rgba(255,179,71,0.82)';
 
-  useEffect(() => {
-    document.body.classList.toggle('dark-theme', darkTheme);
-    localStorage.setItem('theme', darkTheme ? 'dark' : 'light');
-  }, [darkTheme]);
+  // Theme application is centralized in Layout; avoid duplicating body class/localStorage here
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
@@ -346,8 +343,7 @@ const Index = () => {
 
   return (
     <div className="page-wrapper">
-      <Layout darkTheme={darkTheme} setDarkTheme={setDarkTheme} scrolled={scrolled} />
-      <main className="main-content">
+      <Layout darkTheme={darkTheme} setDarkTheme={setDarkTheme} scrolled={scrolled}>
         <div className="page-hero">
           <h1 className="page-title">{
             'Comentarii de BAC'.split(' ').map((word, wi) => (
@@ -359,7 +355,6 @@ const Index = () => {
           <p className="page-desc">Platforma ta pentru comentarii, resurse și inspirații de BAC.</p>
           <ScriitoriHoraCanvas />
         </div>
-      </main>
       <section className={`index-welcome-section ${darkTheme ? 'dark-theme' : ''}`}>
         <h2 className={`index-welcome-title ${darkTheme ? 'dark-theme' : ''}`}>Bine ați venit !</h2>
         <p className={`index-welcome-text ${darkTheme ? 'dark-theme' : ''}`}>
@@ -1025,8 +1020,7 @@ const Index = () => {
           </div>
         </div>
       )}
-
-      <Layout />
+      </Layout>
     </div>
   );
 };
