@@ -287,23 +287,13 @@ const customSelectStyles = (darkTheme) => ({
 });
 
 export default function Scriitori() {
-  const [darkTheme, setDarkTheme] = useState(() => localStorage.getItem('theme') === 'dark');
-  const [scrolled, setScrolled] = useState(false);
+  const [darkTheme, setDarkTheme] = useState(() => document.body.classList.contains('dark-theme'));
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('toate');
   const [canonicFilter, setCanonicFilter] = useState('toate'); // 'toate', 'canonic', 'necanonic'
   const navigate = useNavigate();
 
-  useEffect(() => {
-    document.body.classList.toggle('dark-theme', darkTheme);
-    localStorage.setItem('theme', darkTheme ? 'dark' : 'light');
-  }, [darkTheme]);
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 10);
-    window.addEventListener('scroll', onScroll);
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
+  // Theme is applied globally by Layout; do not toggle body/localStorage here
 
   // Filtrare scriitori
   const filteredScriitori = scriitoriList.filter(scriitor => {
@@ -330,7 +320,7 @@ export default function Scriitori() {
   }
 
   return (
-    <Layout darkTheme={darkTheme} setDarkTheme={setDarkTheme} scrolled={scrolled}>
+    <Layout darkTheme={darkTheme} setDarkTheme={setDarkTheme}>
       <div className="page-hero">
         <h1 className="page-title">{
           'Scriitori'.split(' ').map((word, wi) => (

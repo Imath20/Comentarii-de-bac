@@ -17,13 +17,8 @@ export default function ScrollManager() {
         ? stored
         : 0;
 
-    // Dynamic offset (navbar height) for list/landing pages
-    const isListPage = location.pathname === '/' || location.pathname.startsWith('/opere') || location.pathname.startsWith('/scriitori');
-    const getNavbarOffset = () => {
-      const nav = document.querySelector('.navbar');
-      return (nav && nav.offsetHeight) ? nav.offsetHeight + 8 : 56; // fallback
-    };
-    const targetTop = baseTop + (isListPage && explicitRestore === null ? getNavbarOffset() : 0);
+    // Scroll exactly to baseTop (no extra offset)
+    const targetTop = baseTop;
 
     const applyScroll = () => window.scrollTo({ top: targetTop, left: 0, behavior: 'auto' });
 

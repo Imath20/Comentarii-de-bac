@@ -26,6 +26,8 @@ export default function Layout({
       localStorage.setItem('theme', darkThemeInternal ? 'dark' : 'light');
     } else {
       document.body.classList.toggle('dark-theme', darkTheme);
+      // Keep localStorage in sync even when theme is controlled by parent
+      localStorage.setItem('theme', darkTheme ? 'dark' : 'light');
     }
   }, [darkTheme, darkThemeInternal, controlsTheme]);
 
