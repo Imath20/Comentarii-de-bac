@@ -268,46 +268,33 @@ const slugify = (text) => {
     .replace(/-+/g, '-');
 };
 
-const KNOWN_BOOK_SLUGS = new Set([
-  'moara-cu-noroc',
-  'ion',
-  'o-scrisoare-pierduta',
-  'harap-alb',
-  'baltagul',
-  'mara',
-  'ultima-noapte-dragoste',
-  'luceafarul',
-  'enigma-otiliei',
-  'riga-crypto',
-  'morometii',
-  'iona',
-  'critice',
-  'lapusneanu',
-  'rascoala',
-  'hanul-ancutei',
-  'maitreyi',
-  'nunta-in-cer',
-  'amintiri-din-copilarie',
-  'padurea-spanzuratilor',
-  'patul-lui-procust',
-  'popa-tanda',
-  'ursul-pacalit-de-vulpe',
-  'viata-ca-o-prada'
-]);
-
-// Map slug-uri alternative la cheile din OPERA_DETAILS
-const OPERA_SLUG_ALIASES = {
-  'povestea-lui-harap-alb': 'harap-alb',
-  'ultima-noapte-de-dragoste-intaia-noapte-de-razboi': 'ultima-noapte-dragoste',
-  'riga-crypto-si-lapona-enigel': 'riga-crypto',
-  'formele-fara-fond': 'critice',
-};
-
-const resolveOperaSlug = (rawSlug) => {
-  const slug = (rawSlug || '').toLowerCase();
-  if (OPERA_DETAILS[slug]) return slug;
-  if (OPERA_SLUG_ALIASES[slug]) return OPERA_SLUG_ALIASES[slug];
-  return slug;
+// Mapare simplă titlu -> jsonFile (ca în bibliotecă)
+const OPERA_JSON_FILES = {
+  'Povestea lui Harap-Alb': 'harap-alb',
+  'Povestea lui Harap Alb': 'harap-alb',
+  'Moara cu noroc': 'moara-cu-noroc',
+  'Ion': 'ion',
+  'O scrisoare pierdută': 'o-scrisoare-pierduta',
+  'Baltagul': 'baltagul',
+  'Mara': 'mara',
+  'Ultima noapte de dragoste, întaia noapte de razboi': 'ultima-noapte-dragoste',
+  'Luceafărul': 'luceafarul',
+  'Enigma Otiliei': 'enigma-otiliei',
+  'Riga crypto si lapona enigel': 'riga-crypto',
+  'Morometii': 'morometii',
+  'Iona': 'iona',
+  'Formele fara fond': 'critice',
+  'Alexandru Lăpușneanu': 'lapusneanu',
+  'Răscoala': 'rascoala',
+  'Hanul Ancuţei': 'hanul-ancutei',
+  'Maytreyi': 'maitreyi',
+  'Nunta in cer': 'nunta-in-cer',
+  'Amintiri din copilărie': 'amintiri-din-copilarie',
+  'Pădurea spânzuraților': 'padurea-spanzuratilor',
+  'Patul lui Procust': 'patul-lui-procust',
+  'Popa Tanda': 'popa-tanda',
+  'Ursul păcălit de vulpe': 'ursul-pacalit-de-vulpe',
+  'Viață ca o pradă': 'viata-ca-o-prada'
 };
 
 // Date detaliate despre opere
@@ -583,6 +570,102 @@ const OPERA_DETAILS = {
       '"Dar nu voia s-atingă infama băutură"',
       '"Bătându-se cu moartea, uitase de viață!"'
     ]
+  },
+  'riga-crypto': {
+    titlu: 'Riga Crypto și lapona Enigel',
+    autor: 'Ion Barbu',
+    data: '1933',
+    categorie: 'roman',
+    canonic: true,
+    descriere: 'Roman fantastic care explorează teme ale inițierii și ale călătoriei interioare prin aventurile lui Riga Crypto și ale laponei Enigel.',
+    teme: ['inițierea', 'călătoria interioară', 'fantasticul', 'misterul', 'transformarea'],
+    personaje: ['Riga Crypto', 'Enigel', 'personaje fantastice'],
+    analiza: 'Eliade creează un roman despre inițierea și călătoria interioară prin prisma fantasticului. Opera explorează tema transformării și a descoperirii de sine prin aventuri fantastice.',
+    citate: [
+      '"Riga Crypto, călătorul misterios"',
+      '"Enigel, lapona magică"',
+      '"Călătoria interioară începe aici"'
+    ]
+  },
+  'lapusneanu': {
+    titlu: 'Alexandru Lăpușneanu',
+    autor: 'Costache Negruzzi',
+    data: '1840',
+    categorie: 'nuvelă',
+    canonic: true,
+    descriere: 'Nuvelă istorică despre domnitorul Alexandru Lăpușneanu, explorând teme ale puterii, corupției și ale alegerilor morale în contextul istoric al Moldovei.',
+    teme: ['puterea', 'corupția', 'alegearea morală', 'istoria Moldovei', 'domnitorul'],
+    personaje: ['Alexandru Lăpușneanu', 'personaje istorice'],
+    analiza: 'Negruzzi creează o nuvelă istorică despre complexitatea puterii și alegerilor morale. Opera explorează tema corupției și a responsabilității în exercitarea puterii.',
+    citate: [
+      '"Alexandru Lăpușneanu, domnitorul"',
+      '"Puterea corupe, dar și responsabilizează"',
+      '"Alegerile morale definesc destinul"'
+    ]
+  },
+  'maitreyi': {
+    titlu: 'Maitreyi',
+    autor: 'Mircea Eliade',
+    data: '1933',
+    categorie: 'roman',
+    canonic: true,
+    descriere: 'Roman autobiografic despre dragostea imposibilă dintre un tânăr român și o tânără indiană, explorând teme ale iubirii, diferențelor culturale și ale inițierii.',
+    teme: ['dragostea imposibilă', 'diferențele culturale', 'inițierea', 'autobiografia', 'India'],
+    personaje: ['Allan', 'Maitreyi', 'personaje indiene'],
+    analiza: 'Eliade creează un roman despre dragostea imposibilă și inițierea prin prisma diferențelor culturale. Opera explorează tema iubirii ca experiență de transformare și descoperire.',
+    citate: [
+      '"Maitreyi, dragostea imposibilă"',
+      '"India, țara inițierii"',
+      '"Diferențele culturale nu pot fi depășite"'
+    ]
+  },
+  'critice': {
+    titlu: 'Formele fără fond',
+    autor: 'Tudor Arghezi',
+    data: '1930',
+    categorie: 'critică literară',
+    canonic: true,
+    descriere: 'Colecție de articole critice în care Arghezi analizează literatura română și universală, oferind perspective asupra formei și conținutului în artă.',
+    teme: ['critica literară', 'forma și conținutul', 'literatura română', 'estetica', 'analiza literară'],
+    personaje: ['Naratorul critic'],
+    analiza: 'Arghezi creează o lucrare de critică literară despre relația dintre formă și conținut în artă. Opera explorează tema esteticii și a analizei literare prin prisma criticii.',
+    citate: [
+      '"Formele fără fond sunt goale"',
+      '"Critica literară descoperă adevărul"',
+      '"Arta are nevoie de substanță"'
+    ]
+  },
+  'morometii': {
+    titlu: 'Moromeții',
+    autor: 'Marin Preda',
+    data: '1955',
+    categorie: 'roman',
+    canonic: true,
+    descriere: 'Cronică rurală care surprinde viața familiei Moromete și schimbările sociale ce zdruncină echilibrul satului românesc în pragul modernizării.',
+    teme: ['viața țărănească', 'transformările sociale', 'familia', 'politica', 'tradițiile'],
+    personaje: ['Ilie Moromete', 'Catrina', 'Niculae', 'Paraschiv'],
+    analiza: 'Preda creează un roman epic despre transformările societății românești prin prisma familiei Moromeților. Opera explorează conflictul dintre tradiție și modernitate, între vechi și nou.',
+    citate: [
+      '"Ilie Moromete, țăranul înțelept"',
+      '"Catrina, femeia puternică"',
+      '"Tradițiile se schimbă"'
+    ]
+  },
+  'hanul-ancutei': {
+    titlu: 'Hanul Ancuței',
+    autor: 'Mihail Sadoveanu',
+    data: '1928',
+    categorie: 'nuvelă',
+    canonic: true,
+    descriere: 'Nuvelă care surprinde atmosfera unui han din Moldova, explorând teme ale tradițiilor, ale vieții rurale și ale schimbărilor sociale.',
+    teme: ['tradițiile rurale', 'viața de han', 'schimbările sociale', 'Moldova', 'atmosfera'],
+    personaje: ['Ancuța', 'personaje de han', 'călători'],
+    analiza: 'Sadoveanu creează o nuvelă despre atmosfera unui han moldovenesc și despre tradițiile rurale. Opera explorează tema schimbărilor sociale prin prisma unui han tradițional.',
+    citate: [
+      '"Hanul Ancuței, locul întâlnirilor"',
+      '"Tradițiile se păstrează în han"',
+      '"Schimbările vin greu la țară"'
+    ]
   }
 };
 
@@ -666,16 +749,29 @@ export default function Opera() {
   }, [initialOpera, params.slug]);
 
   const bookSlug = useMemo(() => {
-    const fromSlug = params.slug || '';
-    if (KNOWN_BOOK_SLUGS.has(fromSlug)) return fromSlug;
-    const fromTitle = slugify(effectiveOpera && effectiveOpera.titlu ? effectiveOpera.titlu : '');
-    return KNOWN_BOOK_SLUGS.has(fromTitle) ? fromTitle : null;
-  }, [params.slug, effectiveOpera]);
+    const operaTitle = effectiveOpera && effectiveOpera.titlu ? effectiveOpera.titlu : '';
+    return OPERA_JSON_FILES[operaTitle] || null;
+  }, [effectiveOpera]);
 
   const operaDetails = useMemo(() => {
-    const resolved = resolveOperaSlug(params.slug || '');
-    return OPERA_DETAILS[resolved] || null;
-  }, [params.slug]);
+    const operaTitle = effectiveOpera && effectiveOpera.titlu ? effectiveOpera.titlu : '';
+    const jsonFile = OPERA_JSON_FILES[operaTitle];
+    
+    // Pentru poezii, nu avem jsonFile, dar avem detalii în OPERA_DETAILS
+    if (!jsonFile) {
+      // Caută direct în OPERA_DETAILS după titlu
+      for (const [key, details] of Object.entries(OPERA_DETAILS)) {
+        if (details.titlu === operaTitle) return details;
+      }
+      return null;
+    }
+    
+    // Caută în OPERA_DETAILS după jsonFile
+    for (const [key, details] of Object.entries(OPERA_DETAILS)) {
+      if (key === jsonFile) return details;
+    }
+    return null;
+  }, [effectiveOpera]);
 
   const handleRead = () => {
     if (isPoemWithPopup) {
@@ -720,11 +816,11 @@ export default function Opera() {
 
   // Check if current opera is a poem that should show popup
   const isPoemWithPopup = useMemo(() => {
-    if (!operaDetails) return false;
     const poemKeys = ['plumb', 'testament', 'flori-de-mucigai', 'eu-nu-strivesc-corola-de-minuni-a-lumii', 'leoaica-tanara-iubirea', 'aci-sosi-pe-vremuri', 'in-gradina-ghetsimani'];
-    const operaTitle = operaDetails.titlu?.toLowerCase() || '';
     
-    // Check by title matching
+    // Verifică prin titlul din effectiveOpera
+    const operaTitle = effectiveOpera && effectiveOpera.titlu ? effectiveOpera.titlu.toLowerCase() : '';
+    
     for (const key of poemKeys) {
       const poem = shortPoems[key];
       if (poem && poem.titlu.toLowerCase() === operaTitle) {
@@ -732,14 +828,19 @@ export default function Opera() {
       }
     }
     
-    // Check by slug matching
-    const resolvedSlug = resolveOperaSlug(params.slug || '');
-    if (poemKeys.includes(resolvedSlug)) {
-      return resolvedSlug;
+    // Verifică prin operaDetails dacă există
+    if (operaDetails && operaDetails.titlu) {
+      const detailsTitle = operaDetails.titlu.toLowerCase();
+      for (const key of poemKeys) {
+        const poem = shortPoems[key];
+        if (poem && poem.titlu.toLowerCase() === detailsTitle) {
+          return key;
+        }
+      }
     }
     
     return false;
-  }, [operaDetails, params.slug]);
+  }, [effectiveOpera, operaDetails]);
 
   const bgImage = effectiveOpera.img ? effectiveOpera.img.replace('/public', '') : '';
 
@@ -960,8 +1061,9 @@ export default function Opera() {
         );
 
       case 'intrebari': {
-        const resolvedSlug = resolveOperaSlug(params.slug || '');
-        const specificQuestions = getQuestionsForOpera(resolvedSlug);
+        const operaTitle = effectiveOpera && effectiveOpera.titlu ? effectiveOpera.titlu : '';
+        const jsonFile = OPERA_JSON_FILES[operaTitle];
+        const specificQuestions = getQuestionsForOpera(jsonFile || '');
         const questions = specificQuestions.length > 0 ? specificQuestions : getGenericQuestions(operaDetails);
         
         return (
