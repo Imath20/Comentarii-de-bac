@@ -2,7 +2,259 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import Layout from '../assets/Layout';
 import scriitoriData from '../scriitoriData';
+import { getQuestionsForOpera, getGenericQuestions } from '../data/operaQuestions';
 import '../styles/style.scss';
+
+// Date pentru poeziile scurte (copiate din Scriitor.jsx)
+const shortPoems = {
+  'plumb': {
+    titlu: 'Plumb',
+    autor: 'George Bacovia',
+    data: '1916',
+    text: `Plumb
+
+Dormeau adânc sicriele de plumb,
+Și flori de plumb și funerar vestmânt...
+Stam singur în cavou... și era vânt...
+Și scârțâiau coroanele de plumb.
+
+Dormea întors amorul meu de plumb
+Pe flori de plumb... și-am început să-l strig...
+Stam singur lângă mort... și era frig...
+Și-i atârnau aripile de plumb.`
+  },
+  'testament': {
+    titlu: 'Testament',
+    autor: 'Tudor Arghezi',
+    data: '1927',
+    text: `
+Nu-ţi voi lăsa drept bunuri, după moarte,
+Decât un nume adunat pe o carte,
+În seara răzvrătită care vine
+De la străbunii mei până la tine,
+Prin râpi şi gropi adânci
+Suite de bătrânii mei pe brânci
+Şi care, tânăr, să le urci te-aşteaptă
+Cartea mea-i, fiule, o treaptă.
+
+Aşeaz-o cu credinţă căpătâi.
+Ea e hrisovul vostru cel dintâi.
+Al robilor cu saricile, pline
+De osemintele vărsate-n mine.
+
+Ca să schimbăm, acum, întâia oară
+Sapa-n condei şi brazda-n calimară
+Bătrânii au adunat, printre plăvani,
+Sudoarea muncii sutelor de ani.
+Din graiul lor cu-ndemnuri pentru vite
+Eu am ivit cuvinte potrivite
+Şi leagăne urmaşilor stăpâni.
+Şi, frământate mii de săptămâni
+Le-am prefăcut în versuri şi-n icoane,
+Făcui din zdrenţe muguri şi coroane.
+Veninul strâns l-am preschimbat în miere,
+Lăsând întreagă dulcea lui putere.
+
+Am luat ocara, şi torcând uşure
+Am pus-o când să-mbie, când să-njure.
+Am luat cenuşa morţilor din vatră
+Şi am făcut-o Dumnezeu de piatră,
+Hotar înalt, cu două lumi pe poale,
+Păzind în piscul datoriei tale.
+
+Durerea noastră surdă şi amară
+O grămădii pe-o singură vioară,
+Pe care ascultând-o a jucat
+Stăpânul, ca un ţap înjunghiat.
+Din bube, mucegaiuri şi noroi
+Iscat-am frumuseţi şi preţuri noi.
+Biciul răbdat se-ntoarce în cuvinte
+Si izbăveşte-ncet pedesitor
+Odrasla vie-a crimei tuturor.
+E-ndreptăţirea ramurei obscure
+Ieşită la lumină din padure
+Şi dând în vârf, ca un ciorchin de negi
+Rodul durerii de vecii întregi.
+
+Întinsă leneşă pe canapea,
+Domniţa suferă în cartea mea.
+Slova de foc şi slova faurită
+Împărechiate-n carte se mărită,
+Ca fierul cald îmbrăţişat în cleşte.
+Robul a scris-o, Domnul o citeşte,
+Făr-a cunoaşte ca-n adâncul ei
+Zace mania bunilor mei.`
+  },
+  'flori-de-mucigai': {
+    titlu: 'Flori de mucigai',
+    autor: 'Tudor Arghezi',
+    data: '1919',
+    text: `
+Le-am scris cu unghia pe tencuială
+Pe un părete de firidă goală,
+Pe întuneric, în singurătate,
+Cu puterile neajutate
+Nici de taurul, nici de leul, nici de vulturul
+Care au lucrat împrejurul
+Lui Luca, lui Marcu şi lui Ioan.
+Sunt stihuri fără an,
+Stihuri de groapă,
+De sete de apă
+Şi de foame de scrum,
+Stihurile de acum.
+Când mi s-a tocit unghia îngerească
+Am lăsat-o să crească
+Şi nu mi-a crescut -
+Sau nu o mai am cunoscut.
+
+Era întuneric. Ploaia bătea departe, afară.
+Şi mă durea mâna ca o ghiară
+Neputincioasă să se strângă
+Şi m-am silit să scriu cu unghiile de la mâna stângă.`
+  },
+  'eu-nu-strivesc-corola-de-minuni-a-lumii': {
+    titlu: 'Eu nu strivesc corola de minuni a lumii',
+    autor: 'Lucian Blaga',
+    data: '1919',
+    text: `Eu nu strivesc corola de minuni a lumii
+şi nu ucid
+cu mintea tainele, ce le-ntâlnesc
+în calea mea
+în flori, în ochi, pe buze ori morminte.
+Lumina altora
+sugrumă vraja nepătrunsului ascuns
+în adâncimi de întuneric,
+dar eu,
+eu cu lumina mea sporesc a lumii taină -
+şi-ntocmai cum cu razele ei albe luna
+nu micşorează, ci tremurătoare
+măreşte şi mai tare taina nopţii,
+aşa îmbogăţesc şi eu întunecata zare
+cu largi fiori de sfânt mister
+şi tot ce-i neînţeles
+se schimbă-n neînţelesuri şi mai mari
+sub ochii mei-
+căci eu iubesc
+şi flori şi ochi şi buze şi morminte.`
+  },
+  'leoaica-tanara-iubirea': {
+    titlu: 'Leoaică tânără, iubirea',
+    autor: 'Nichita Stănescu',
+    data: '1964',
+    text: `Leoaică tânără, iubirea
+mi-a sarit în faţă.
+Mă pândise-n încordare
+mai demult.
+Colţii albi mi i-a înfipt în faţă,
+m-a muşcat leoaica, azi, de faţă.
+Şi deodata-n jurul meu, natura
+se făcu un cerc, de-a-dura,
+când mai larg, când mai aproape,
+ca o strîngere de ape.
+Şi privirea-n sus ţîşni,
+curcubeu tăiat în două,
+şi auzul o-ntîlni
+tocmai lângă ciorcârlii.
+
+Mi-am dus mâna la sprînceană,
+la timplă şi la bărbie,
+dar mâna nu le mai ştie.
+Şi alunecă-n neştire
+pe-un deşert în strălucire,
+peste care trece-alene
+o leoaică aramie
+cu mişcările viclene,
+incă-o vreme,
+si-ncă-o vreme..`
+  },
+  'aci-sosi-pe-vremuri': {
+    titlu: 'Aci sosi pe vremuri',
+    autor: 'Ion Pillat',
+    data: '1923',
+    text: `La casa amintirii cu-obloane si pridvor,
+Paienjeni zabrelira si poarta, si zavor.
+
+Iar hornul nu mai trage alene din ciubuc
+De când luptara-n codru si poteri, si haiduc.
+
+În drumul lor spre zare îmbatrânira plopii.
+Aci sosi pe vremuri bunica-mi Calyopi.
+
+Nerabdator bunicul pândise de la scara
+Berlina leganata prin lanuri de secara.
+
+Pie-atunci nu erau trenuri ca azi, si din berlina
+Sari, subtire, -o fata în larga crinolina.
+
+Privind cu ea sub luna câmpia ca un lac,
+Bunicul meu desigur i-a recitat Le lac.
+
+Iar când deasupra casei ca umbre berze cad,
+Îi spuse Sburatorul de-un tânar Eliad.
+
+Ea-l asculta tacuta, cu ochi de peruzea…
+Si totul ce romantic, ca-n basme, se urzea.
+
+Si cum sedeau… departe, un clopot a sunat,
+De nunta sau de moarte, în turnul vechi din sat.
+
+Dar ei, în clipa asta simteau ca-o sa ramâna…
+De mult e mort bunicul, bunica e batrâna…
+
+Ce straniu lucru: vremea! Deodata pe perete
+Te vezi aievea numai în stersele portrete.
+
+Te recunosti în ele, dar nu si-n fata ta,
+Caci trupul tau te uita, dar tu nu-l poti uita….
+
+Ca ieri sosi bunica… si vii acuma tu:
+Pe urmele berlinei trasura ta statu.
+
+Acelasi drum te-aduse prin lanul de secara.
+Ca dânsa tragi, în dreptul pridvorului, la scara.
+
+Subtire, calci nisipul pe care ea sari.
+Cu berzele într-ânsul amurgul se opri….
+
+Si m-ai gasit, zâmbindu-mi, ca prea naiv eram
+Când ti-am soptit poeme de bunul Francis Jammes.
+
+Iar când în noapte câmpul fu lac întins sub luna
+Si-am spus Balada lunei de Horia Furtuna,.
+
+M-ai ascultat pe gânduri, cu ochi de ametist,
+Si ti-am parut romantic si poate simbolist.
+
+Si cum sedeam… departe, un clopot a sunat,
+Acelasi clopot poate, în turnul vechi din sat….
+
+De nunta sau de moarte, în turnul vechi din sat.`
+  },
+  'in-gradina-ghetsimani': {
+    titlu: 'În Grădina Ghetsimani',
+    autor: 'Vasile Voiculescu',
+    data: '1921',
+    text: `Iisus lupta cu soarta și nu primea paharul...
+Căzut pe brânci în iarbă, se-mpotrivea îtruna.
+Curgeau sudori de sânge pe chipu-i alb ca varul
+Și-amarnica-i strigare stârnea în slăvi furtuna.
+
+O mâna nendurată, ținând grozava cupă,
+Se coboară-miindu-l și i-o ducea la gură...
+Și-o sete uriașă stă sufletul să-i rupă...
+Dar nu voia s-atingă infama băutură.
+
+În apa ei verzuie jucau sterlici de miere
+Și sub veninul groaznic simțea că e dulceață...
+Dar fălcile-nclestându-și, cu ultima putere
+Bătându-se cu moartea, uitase de viață!
+
+Deasupra fără tihnă, se frământau măslinii,
+Păreau că vor să fugă din loc, să nu-l mai vadă...
+Treceau bătăi de aripi prin vraiștea grădinii
+Și uliii de seară dau roate dupa pradă.`
+  }
+};
 
 const slugify = (text) => {
   if (!text) return '';
@@ -219,6 +471,118 @@ const OPERA_DETAILS = {
       '"Catrina, femeia puternică"',
       '"Tradițiile se schimbă"'
     ]
+  },
+  'plumb': {
+    titlu: 'Plumb',
+    autor: 'George Bacovia',
+    data: '1916',
+    categorie: 'poezie',
+    canonic: true,
+    descriere: 'Poezie simbolistă care explorează melancolia și singurătatea existenței urbane prin metafora plumbului, creând o atmosferă de greutate și tristețe.',
+    teme: ['melancolia', 'singurătatea', 'moartea', 'greutatea existenței', 'simbolismul'],
+    personaje: ['Naratorul', 'Amorul de plumb'],
+    analiza: 'Bacovia creează o atmosferă de melancolie profundă prin metafora plumbului, care sugerează greutatea și monotonia existenței. Poezia explorează tema singurătății și a tristeții prin imagini concrete și simbolice.',
+    citate: [
+      '"Dormeau adânc sicriele de plumb"',
+      '"Stam singur în cavou... și era vânt"',
+      '"Și-i atârnau aripile de plumb"'
+    ]
+  },
+  'testament': {
+    titlu: 'Testament',
+    autor: 'Tudor Arghezi',
+    data: '1927',
+    categorie: 'poezie',
+    canonic: true,
+    descriere: 'Poezie epică în care Arghezi își lasă moștenirea literară urmașilor, descriind transformarea durerei și muncii în artă și literatură.',
+    teme: ['moștenirea literară', 'transformarea durerei în artă', 'identitatea națională', 'rolul poetului', 'tradiția'],
+    personaje: ['Naratorul poet', 'Urmașii', 'Străbunii'],
+    analiza: 'Arghezi creează o poezie-manifest despre rolul poetului în societate și despre transformarea experienței dureroase în artă. Opera explorează tema moștenirii culturale și a responsabilității artistului.',
+    citate: [
+      '"Nu-ți voi lăsa drept bunuri, după moarte"',
+      '"Cartea mea-i, fiule, o treaptă"',
+      '"Din bube, mucegaiuri și noroi / Iscat-am frumuseți și prețuri noi"'
+    ]
+  },
+  'flori-de-mucigai': {
+    titlu: 'Flori de mucigai',
+    autor: 'Tudor Arghezi',
+    data: '1919',
+    categorie: 'poezie',
+    canonic: true,
+    descriere: 'Poezie care explorează estetica urâtului și transformarea mizeriei în artă, scrisă în condiții extreme de închisoare.',
+    teme: ['estetica urâtului', 'creația în condiții extreme', 'transformarea mizeriei în artă', 'puterea creatoare', 'condițiile de creație'],
+    personaje: ['Naratorul poet'],
+    analiza: 'Arghezi creează o poezie despre puterea creatoare care poate transforma chiar și mizeria în artă. Opera explorează tema creației artistice în condiții extreme și a transformării experienței dureroase în frumusețe.',
+    citate: [
+      '"Le-am scris cu unghia pe tencuială"',
+      '"Sunt stihuri fără an, / Stihuri de groapă"',
+      '"Și m-am silit să scriu cu unghiile de la mâna stângă"'
+    ]
+  },
+  'eu-nu-strivesc-corola-de-minuni-a-lumii': {
+    titlu: 'Eu nu strivesc corola de minuni a lumii',
+    autor: 'Lucian Blaga',
+    data: '1919',
+    categorie: 'poezie',
+    canonic: true,
+    descriere: 'Poezie filosofică care explorează misterul existenței prin prisma luminii divine și a tainei universale.',
+    teme: ['misterul existenței', 'lumina divină', 'taina universală', 'rolul poetului', 'frumusețea naturii'],
+    personaje: ['Naratorul poet'],
+    analiza: 'Blaga creează o poezie despre rolul poetului în descoperirea misterului existenței. Opera explorează tema tainei universale și a modului în care poezia poate dezvălui misterul lumii.',
+    citate: [
+      '"Eu nu strivesc corola de minuni a lumii"',
+      '"eu cu lumina mea sporesc a lumii taină"',
+      '"căci eu iubesc / și flori și ochi și buze și morminte"'
+    ]
+  },
+  'leoaica-tanara-iubirea': {
+    titlu: 'Leoaică tânără, iubirea',
+    autor: 'Nichita Stănescu',
+    data: '1964',
+    categorie: 'poezie',
+    canonic: true,
+    descriere: 'Poezie modernă care explorează iubirea ca forță primitivă și transformatoare, folosind metafore animalice și imagini senzoriale.',
+    teme: ['iubirea ca forță primitivă', 'transformarea prin iubire', 'natura și iubirea', 'experiența senzorială', 'metaforele animalice'],
+    personaje: ['Naratorul', 'Leoaica iubirea'],
+    analiza: 'Stănescu creează o poezie despre iubire ca forță primitivă și transformatoare. Opera explorează tema iubirii prin metafore animalice și imagini senzoriale puternice.',
+    citate: [
+      '"Leoaică tânără, iubirea / mi-a sărit în față"',
+      '"m-a mușcat leoaica, azi, de față"',
+      '"o leoaică aramie / cu mișcările viclene"'
+    ]
+  },
+  'aci-sosi-pe-vremuri': {
+    titlu: 'Aci sosi pe vremuri',
+    autor: 'Ion Pillat',
+    data: '1923',
+    categorie: 'poezie',
+    canonic: true,
+    descriere: 'Poezie lirică care explorează tema amintirii și a legăturii cu trecutul prin povestea bunicii Calyopi și a tradițiilor familiale.',
+    teme: ['amintirea', 'tradițiile familiale', 'legătura cu trecutul', 'frumusețea naturii', 'romantismul'],
+    personaje: ['Naratorul', 'Bunica Calyopi', 'Bunicul'],
+    analiza: 'Pillat creează o poezie despre amintire și tradiții familiale. Opera explorează tema legăturii cu trecutul și a frumuseții naturii românești prin povestea bunicii.',
+    citate: [
+      '"Aci sosi pe vremuri bunica-mi Calyopi"',
+      '"Privind cu ea sub luna câmpia ca un lac"',
+      '"Si totul ce romantic, ca-n basme, se urzea"'
+    ]
+  },
+  'in-gradina-ghetsimani': {
+    titlu: 'În Grădina Ghetsimani',
+    autor: 'Vasile Voiculescu',
+    data: '1921',
+    categorie: 'poezie',
+    canonic: true,
+    descriere: 'Poezie religioasă care recreează momentul din Grădina Ghetsimani când Iisus se luptă cu soarta și refuză paharul amărăciunii.',
+    teme: ['lupta cu soarta', 'sacrificiul', 'refuzul răului', 'puterea divină', 'simbolismul religios'],
+    personaje: ['Iisus', 'Mâna nendurată'],
+    analiza: 'Voiculescu creează o poezie despre lupta dintre bine și rău, despre sacrificiul și refuzul răului. Opera explorează tema puterii divine și a alegerii morale.',
+    citate: [
+      '"Iisus lupta cu soarta și nu primea paharul"',
+      '"Dar nu voia s-atingă infama băutură"',
+      '"Bătându-se cu moartea, uitase de viață!"'
+    ]
   }
 };
 
@@ -231,6 +595,7 @@ export default function Opera() {
   const [scrolled, setScrolled] = useState(false);
   const [activeTab, setActiveTab] = useState('prezentare');
   const [prevTab, setPrevTab] = useState('prezentare');
+  const [poemModal, setPoemModal] = useState({ open: false, poem: null });
   const tabsOrder = [
     'prezentare',
     'analiza',
@@ -313,7 +678,10 @@ export default function Opera() {
   }, [params.slug]);
 
   const handleRead = () => {
-    if (bookSlug) {
+    if (isPoemWithPopup) {
+      // For poems, show popup instead of navigating
+      openPoemModal(isPoemWithPopup);
+    } else if (bookSlug) {
       navigate(`/carte/${bookSlug}`);
     }
   };
@@ -328,6 +696,50 @@ export default function Opera() {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
+
+  // Functions for poem modal
+  const blockScroll = () => {
+    document.body.style.overflow = 'hidden';
+  };
+
+  const unblockScroll = () => {
+    document.body.style.overflow = 'unset';
+  };
+
+  const openPoemModal = (poemKey) => {
+    if (shortPoems[poemKey]) {
+      setPoemModal({ open: true, poem: shortPoems[poemKey] });
+      blockScroll();
+    }
+  };
+
+  const closePoemModal = () => {
+    setPoemModal({ open: false, poem: null });
+    unblockScroll();
+  };
+
+  // Check if current opera is a poem that should show popup
+  const isPoemWithPopup = useMemo(() => {
+    if (!operaDetails) return false;
+    const poemKeys = ['plumb', 'testament', 'flori-de-mucigai', 'eu-nu-strivesc-corola-de-minuni-a-lumii', 'leoaica-tanara-iubirea', 'aci-sosi-pe-vremuri', 'in-gradina-ghetsimani'];
+    const operaTitle = operaDetails.titlu?.toLowerCase() || '';
+    
+    // Check by title matching
+    for (const key of poemKeys) {
+      const poem = shortPoems[key];
+      if (poem && poem.titlu.toLowerCase() === operaTitle) {
+        return key;
+      }
+    }
+    
+    // Check by slug matching
+    const resolvedSlug = resolveOperaSlug(params.slug || '');
+    if (poemKeys.includes(resolvedSlug)) {
+      return resolvedSlug;
+    }
+    
+    return false;
+  }, [operaDetails, params.slug]);
 
   const bgImage = effectiveOpera.img ? effectiveOpera.img.replace('/public', '') : '';
 
@@ -548,23 +960,10 @@ export default function Opera() {
         );
 
       case 'intrebari': {
-        const questions = [
-          {
-            q: `Tema centrală în „${operaDetails.titlu}” este:`,
-            options: ['Dragostea', 'Destinul și moralitatea', 'Amintirile copilăriei'],
-            correct: 1,
-          },
-          {
-            q: 'Curentul literar asociat operei este cel mai aproape de:',
-            options: ['Romantism', 'Realism/Modernism (după caz)', 'Simbolism pur'],
-            correct: 1,
-          },
-          {
-            q: 'Titlul indică în primul rând:',
-            options: ['Locul acțiunii', 'Motivul/ideea centrală', 'Numele autorului'],
-            correct: 1,
-          },
-        ];
+        const resolvedSlug = resolveOperaSlug(params.slug || '');
+        const specificQuestions = getQuestionsForOpera(resolvedSlug);
+        const questions = specificQuestions.length > 0 ? specificQuestions : getGenericQuestions(operaDetails);
+        
         return (
           <div className="opera-tab-content">
             <div className="opera-quiz">
@@ -606,6 +1005,11 @@ export default function Opera() {
                 );
               })}
             </div>
+            {checked && q.explanation && (
+              <div className="quiz-explanation">
+                <strong>Explicație:</strong> {q.explanation}
+              </div>
+            )}
           </div>
         ))}
 
@@ -705,14 +1109,14 @@ export default function Opera() {
           </div>
         </div>
 
-        {bookSlug && (
+        {(bookSlug || isPoemWithPopup) && (
           <div className="opera-actions">
             <button className="opera-read-btn" onClick={handleRead}>
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
                 <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
               </svg>
-              Citește opera completă
+              {isPoemWithPopup ? 'Citește poezia' : 'Citește opera completă'}
             </button>
           </div>
         )}
@@ -729,6 +1133,26 @@ export default function Opera() {
             <polyline points="18 15 12 9 6 15"></polyline>
           </svg>
         </button>
+      )}
+
+      {/* Poem Modal */}
+      {poemModal.open && (
+        <div className="opera-poem-modal-overlay" onClick={closePoemModal}>
+          <div className={`opera-poem-modal ${darkTheme ? 'dark-theme' : ''}`} onClick={(e) => e.stopPropagation()}>
+            <div className="opera-poem-modal-header">
+              <h2>{poemModal.poem.titlu}</h2>
+              <button 
+                className="opera-poem-modal-close"
+                onClick={closePoemModal}
+              >
+                ×
+              </button>
+            </div>
+            <div className="opera-poem-modal-content">
+              <div className="opera-poem-text">{poemModal.poem.text}</div>
+            </div>
+          </div>
+        </div>
       )}
     </>
   );

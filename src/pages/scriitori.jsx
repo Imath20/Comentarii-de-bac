@@ -291,6 +291,13 @@ export default function Scriitori() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('toate');
   const [canonicFilter, setCanonicFilter] = useState('toate'); // 'toate', 'canonic', 'necanonic'
+  const [sortOption, setSortOption] = useState('none');
+  const sortOptions = [
+    { value: 'none', label: 'Fără sortare' },
+    { value: 'cronologic-asc', label: 'Cronologic ↑' },
+    { value: 'cronologic-desc', label: 'Cronologic ↓' },
+    { value: 'az', label: 'Ordine A–Z' },
+  ];
   const navigate = useNavigate();
 
   // Theme is applied globally by Layout; do not toggle body/localStorage here
@@ -303,6 +310,35 @@ export default function Scriitori() {
                           (canonicFilter === 'canonic' && scriitor.canonic) ||
                           (canonicFilter === 'necanonic' && !scriitor.canonic);
     return matchesSearch && matchesCategory && matchesCanonic;
+  });
+
+  const getYears = (dateStr) => {
+    if (!dateStr) return { start: NaN, end: NaN };
+    const matches = String(dateStr).match(/(\d{4}).*(\d{4})/);
+    if (matches) {
+      return { start: parseInt(matches[1], 10), end: parseInt(matches[2], 10) };
+    }
+    const single = String(dateStr).match(/(\d{4})/);
+    return { start: single ? parseInt(single[1], 10) : NaN, end: NaN };
+  };
+
+  const sortedScriitori = [...filteredScriitori].sort((a, b) => {
+    switch (sortOption) {
+      case 'cronologic-asc': {
+        const ay = getYears(a.date).start;
+        const by = getYears(b.date).start;
+        return ay - by;
+      }
+      case 'cronologic-desc': {
+        const ay = getYears(a.date).start;
+        const by = getYears(b.date).start;
+        return by - ay;
+      }
+      case 'az':
+        return a.nume.localeCompare(b.nume, 'ro', { sensitivity: 'base' });
+      default:
+        return 0;
+    }
   });
 
   // Banda colorată ca pe landing
@@ -334,10 +370,10 @@ export default function Scriitori() {
 
       <div className="container">
         {/* Search Bar și Dropdown-uri */}
-        <div className="scriitori-filters-container">
+        <div className="opere-filters-container">
           {/* Search Bar */}
-          <div className="scriitori-search-container">
-            <div className={`scriitori-search-icon ${darkTheme ? 'dark-theme' : ''}`}>
+          <div className="opere-search-container">
+            <div className={`opere-search-icon ${darkTheme ? 'dark-theme' : ''}`}>
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <circle cx="11" cy="11" r="8"></circle>
                 <path d="m21 21-4.35-4.35"></path>
@@ -348,7 +384,7 @@ export default function Scriitori() {
               placeholder="Caută scriitori..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className={`scriitori-search-input ${darkTheme ? 'dark-theme' : ''}`}
+              className={`opere-search-input ${darkTheme ? 'dark-theme' : ''}`}
               onFocus={e => {
                 e.target.style.borderColor = darkTheme ? '#ffd591' : '#a3a3a3';
                 e.target.style.background = darkTheme ? '#6a4322' : '#fff';
@@ -360,7 +396,7 @@ export default function Scriitori() {
             />
           </div>
           {/* Dropdown Gen cu react-select */}
-          <div className="scriitori-select-container">
+          <div className="opere-select-container">
             <Select
               options={genOptions}
               value={genOptions.find(opt => opt.value === selectedCategory)}
@@ -383,7 +419,7 @@ export default function Scriitori() {
             />
           </div>
           {/* Dropdown Canonic cu react-select */}
-          <div className="scriitori-select-container">
+          <div className="opere-select-container">
             <Select
               options={canonicOptions}
               value={canonicOptions.find(opt => opt.value === canonicFilter)}
@@ -392,6 +428,29 @@ export default function Scriitori() {
               isSearchable={false}
               menuPlacement="auto"
               placeholder="Canonici"
+              theme={theme => ({
+                ...theme,
+                borderRadius: 20,
+                colors: {
+                  ...theme.colors,
+                  primary25: darkTheme ? '#3a2312' : '#f7f8fa',
+                  primary: darkTheme ? '#ffd591' : '#a97c50',
+                  neutral0: darkTheme ? '#2a170a' : '#fffbeee',
+                  neutral80: darkTheme ? '#ffd591' : '#4e2e1e',
+                },
+              })}
+            />
+          </div>
+          {/* Dropdown Sortare */}
+          <div className="opere-select-container">
+            <Select
+              options={sortOptions}
+              value={sortOptions.find(opt => opt.value === sortOption)}
+              onChange={opt => setSortOption(opt.value)}
+              styles={customSelectStyles(darkTheme)}
+              isSearchable={false}
+              menuPlacement="auto"
+              placeholder="Sortează"
               theme={theme => ({
                 ...theme,
                 borderRadius: 20,
@@ -422,7 +481,7 @@ export default function Scriitori() {
 
         {/* Grid Scriitori */}
         <div className="scriitori-grid-container">
-          {filteredScriitori.map((scriitor, idx) => {
+          {sortedScriitori.map((scriitor, idx) => {
             const key = getScriitorKey(scriitor.nume);
             return (
               <div
