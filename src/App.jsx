@@ -12,6 +12,7 @@ import AI from './pages/ai';
 import Proiecte from './pages/proiecte';
 import Opera from './pages/Opera';
 import './styles/style.scss';
+import Curente from './pages/curente';
 
 export default function App() {
   return (
@@ -27,6 +28,7 @@ export default function App() {
       <Route path="/proiecte" element={<Proiecte />} />
       <Route path="/ai" element={<AI />} />
       <Route path="/carte/*" element={<BookReader />} />
+      <Route path="/curente" element={<Curente />} />
     </Routes>
   );
 }

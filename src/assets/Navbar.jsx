@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { ChevronDown } from 'lucide-react';
 import HomeIcon from './icons/HomeIcon';
 import PenPaperIcon from './icons/PenPaperIcon';
 import SlideIcon from './icons/SlideIcon';
@@ -8,22 +9,33 @@ import AiIcon from './icons/AiIcon';
 import VideoIcon from './icons/VideoIcon';
 import OpereIcon from './icons/OpereIcon';
 import BookIcon from './icons/BookIcon';
+import ResurseIcon from './icons/ResurseIcon';
+import CurenteIcon from './icons/CurenteIcon';
 import Logo from './Logo';
 
 const NAV_CATEGORIES = [
   { name: 'Acasa', href: '/', icon: <HomeIcon className="nav-icon" /> },
   { name: 'Opere', href: '/opere', icon: <OpereIcon className="nav-icon" /> },
-  { name: 'Bibliotecă', href: '/biblioteca', icon: <BookIcon className="nav-icon" /> },
+  { 
+    name: 'Resurse', 
+    href: '#', 
+    icon: <ResurseIcon className="nav-icon" />,
+    dropdown: [
+      { name: 'Bibliotecă', href: '/biblioteca', icon: <BookIcon className="nav-icon" /> },
+      { name: 'Videoclipuri', href: '/videoclipuri', icon: <VideoIcon className="nav-icon" /> },
+      { name: 'Proiecte', href: '/proiecte', icon: <SlideIcon className="nav-icon" /> },
+      { name: 'Curente', href: '/curente', icon: <CurenteIcon className="nav-icon" /> },
+    ]
+  },
   { name: 'Scriitori', href: '/scriitori', icon: <PenPaperIcon className="nav-icon" /> },
   { name: 'Subiecte', href: '/subiecte', icon: <ExamPaperIcon className="nav-icon" /> },
-  { name: 'Videoclipuri', href: '/videoclipuri', icon: <VideoIcon className="nav-icon" /> },
-  { name: 'Proiecte', href: '/proiecte', icon: <SlideIcon className="nav-icon" /> },
   { name: 'AI', href: '/ai', icon: <AiIcon className="nav-icon" /> },
 ];
 
 export default function Navbar({ darkTheme, setDarkTheme, scrolled }) {
   const menuRef = useRef(null);
   const [underline, setUnderline] = useState({ left: 0, width: 0, visible: false });
+  const [activeDropdown, setActiveDropdown] = useState(null);
   const location = useLocation();
 
   const updateActiveUnderline = () => {
@@ -31,6 +43,26 @@ export default function Navbar({ darkTheme, setDarkTheme, scrolled }) {
     if (!menu) return;
     const menuRect = menu.getBoundingClientRect();
     const path = location.pathname || '/';
+    
+    // Check for active dropdown items first
+    const dropdownItem = NAV_CATEGORIES.find(cat => 
+      cat.dropdown && cat.dropdown.some(item => 
+        item.href === '/' ? path === '/' : path.startsWith(item.href)
+      )
+    );
+    
+    if (dropdownItem) {
+      const dropdownIndex = NAV_CATEGORIES.findIndex(cat => cat.name === dropdownItem.name);
+      const links = menu.querySelectorAll('a');
+      const dropdownLink = dropdownIndex >= 0 ? links[dropdownIndex] : null;
+      if (dropdownLink) {
+        const { left, width } = dropdownLink.getBoundingClientRect();
+        setUnderline({ left: left - menuRect.left, width, visible: true });
+      }
+      return;
+    }
+    
+    // Check for regular items
     const activeIndex = NAV_CATEGORIES.findIndex(cat => (
       cat.href === '/' ? path === '/' : path.startsWith(cat.href)
     ));
@@ -53,8 +85,17 @@ export default function Navbar({ darkTheme, setDarkTheme, scrolled }) {
       setUnderline({ left: left - menuLeft, width, visible: true });
     }
   };
+  
   const handleMouseLeave = () => {
     updateActiveUnderline();
+  };
+
+  const handleDropdownEnter = (categoryName) => {
+    setActiveDropdown(categoryName);
+  };
+
+  const handleDropdownLeave = () => {
+    setActiveDropdown(null);
   };
 
   useEffect(() => {
@@ -87,15 +128,34 @@ export default function Navbar({ darkTheme, setDarkTheme, scrolled }) {
       </Link>
       <ul className="navbar-menu" ref={menuRef}>
         {NAV_CATEGORIES.map(cat => (
-          <li key={cat.name}>
+          <li 
+            key={cat.name}
+            className={cat.dropdown ? 'dropdown-container' : ''}
+            onMouseEnter={cat.dropdown ? () => handleDropdownEnter(cat.name) : undefined}
+            onMouseLeave={cat.dropdown ? handleDropdownLeave : undefined}
+          >
             <Link
               to={cat.href}
               onMouseEnter={handleMouseEnter}
               onMouseLeave={handleMouseLeave}
+              className={cat.dropdown ? 'dropdown-trigger' : ''}
             >
               <span className="nav-icon-wrapper">{cat.icon}</span>
               {cat.name}
+              {cat.dropdown && <ChevronDown className="dropdown-arrow" size={20} />}
             </Link>
+            {cat.dropdown && (
+              <ul className={`dropdown-menu ${activeDropdown === cat.name ? 'active' : ''}`}>
+                {cat.dropdown.map(item => (
+                  <li key={item.name}>
+                    <Link to={item.href}>
+                      <span className="nav-icon-wrapper">{item.icon}</span>
+                      {item.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            )}
           </li>
         ))}
         <div

@@ -59,11 +59,6 @@ body.dark-theme .navbar.scrolled {
     color: inherit;
   }
   
-  &:focus {
-    // outline: 2px solid rgba(124, 79, 43, 0.3);
-    // outline-offset: 2px;
-    // border-radius: 4px;
-  }
   
   .logo {
     width: 45px;
@@ -159,6 +154,104 @@ body.dark-theme .nav-icon {
   color: #fbeec1;
 }
 
+/* Dropdown styles */
+.dropdown-container {
+  position: relative;
+}
+
+.dropdown-trigger {
+  position: relative;
+}
+
+.dropdown-arrow {
+  margin-left: 0.5rem;
+  transition: transform 0.2s ease;
+  color: #7c4f2b;
+  stroke-width: 3.5;
+}
+
+.dropdown-container:hover .dropdown-arrow {
+  transform: rotate(180deg);
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: rgba(251, 238, 193, 0.95);
+  backdrop-filter: blur(12px);
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(124, 79, 43, 0.15);
+  border: 1px solid rgba(124, 79, 43, 0.1);
+  list-style: none;
+  margin: 0;
+  padding: 0.5rem 0;
+  min-width: 200px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1001;
+  margin-top: 0.5rem;
+}
+
+.dropdown-menu.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.dropdown-menu li {
+  margin: 0;
+}
+
+.dropdown-menu li a {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1.25rem;
+  color: #7c4f2b;
+  text-decoration: none;
+  font-size: 1.18rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  border-radius: 0;
+  position: relative;
+}
+
+.dropdown-menu li a:hover {
+  // background: rgba(124, 79, 43, 0.08);
+  color: #5a3a1f;
+  transform: translateX(4px);
+}
+
+.dropdown-menu li a .nav-icon-wrapper {
+  margin-right: 0.7em;
+}
+
+.dropdown-menu li a .nav-icon {
+  width: 1.35em;
+  height: 1.35em;
+}
+
+/* Dark theme dropdown */
+body.dark-theme .dropdown-menu {
+  background: rgba(78, 46, 30, 0.95);
+  border-color: rgba(251, 238, 193, 0.1);
+}
+
+body.dark-theme .dropdown-menu li a {
+  color: #fbeec1;
+}
+
+body.dark-theme .dropdown-menu li a:hover {
+  // background: rgba(251, 238, 193, 0.08);
+  color: #fff8e1;
+}
+
+body.dark-theme .dropdown-arrow {
+  color: #fbeec1;
+}
+
 .theme-toggle {
   background: none;
   border: 2px solid #7c4f2b;
@@ -206,6 +299,15 @@ body.dark-theme .theme-toggle {
       font-size: 0.65rem;
       letter-spacing: 0.4px;
     }
+  }
+  
+  .dropdown-menu {
+    min-width: 180px;
+  }
+  
+  .dropdown-menu li a {
+    padding: 0.6rem 1rem;
+    font-size: 1rem;
   }
 }
 

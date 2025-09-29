@@ -20,6 +20,9 @@
 html {
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
+    //added with curente
+    overflow-x: hidden; /* previne scroll orizontal al paginii */
+    overscroll-behavior-x: none; /* blochează glow-ul/bounce lateral */
 }
 html::-webkit-scrollbar {
     display: none;
@@ -38,6 +41,10 @@ body {
     background: var(--color-light-bg);
     color: #3e2723;
     transition: background 0.3s, color 0.3s;
+    //added with curente
+    overflow-x: hidden; /* previne pan orizontal global */
+    touch-action: pan-y; /* permite doar scroll vertical la nivel de pagină */
+    overscroll-behavior-x: none; /* fără rubber-band lateral */
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */

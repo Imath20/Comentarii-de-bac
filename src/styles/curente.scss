@@ -1,0 +1,214 @@
+.curente-page {
+  position: relative;
+  z-index: 0;
+}
+
+.curente-page .page-hero {
+  margin: 3.3rem 0 0.6rem 0; /* coboară titlul ca să nu intre sub navbar */
+  position: relative;
+  z-index: 0; /* asigură că stă sub popover */
+}
+
+.curente-page .page-title {
+  letter-spacing: 0.38em;
+  position: relative;
+  z-index: 0; /* stă sub timeline */
+  pointer-events: none; /* să nu interfereze la hover */
+}
+
+.curente-page .page-desc {
+  margin-bottom: 0.2rem;
+}
+
+.curente-timeline-wrapper {
+  position: relative;
+  margin: 20px 0 36px; /* spațiu mai mic până la footer */
+  z-index: 50; /* peste hero */
+}
+/* Nu mai există overlay vizual pentru cue; folosim auto-nudge pe timeline */
+
+.curente-timeline-wrapper.dark-theme {
+  --axis: rgba(255, 213, 145, 0.55);
+  --card-bg: #4e2e1e;
+  --text: rgba(255,255,255,0.95);
+  --muted: rgba(255,255,255,0.75);
+  --button-bg: rgba(47,24,0,0.92);
+  --button-fg: #ffd591;
+}
+
+.curente-timeline-wrapper:not(.dark-theme) {
+  --axis: rgba(124, 79, 43, 0.35);
+  --card-bg: #fff;
+  --text: #2a170a;
+  --muted: #5a4639;
+  --button-bg: rgba(255,179,71,0.92);
+  --button-fg: #2a170a;
+}
+
+.curente-timeline-axis {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--axis);
+  top: 232px; /* recalculat pentru diametru 150px (padding-top 155px + 75px radius + mic offset) */
+  border-radius: 2px;
+  z-index: 0; /* în spatele bulinelor */
+}
+
+.curente-timeline-scroll {
+  overflow-x: hidden; /* ascundem scroll-ul orizontal, folosim drag/swipe */
+  overflow-y: visible; /* permite popoverelor să iasă în sus */
+  cursor: grab;
+  touch-action: none; /* vom bloca/permite manual în handler ca să evităm scroll simultan */
+  overscroll-behavior-x: contain; /* previne bounce / glow lateral */
+}
+
+.curente-timeline-scroll.dragging {
+  cursor: grabbing;
+}
+
+.curente-timeline-track {
+  display: inline-flex;
+  gap: 100px; /* spațiu mai mare între buline */
+  padding: 155px 16px 120px; /* micșorăm spațiul de sub timeline */
+  min-width: 100%;
+}
+
+.curente-item {
+  width: 260px; /* lățime mai mare pentru conținut */
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.curente-checkpoint {
+  width: 150px;
+  height: 150px; /* buline mai mari */
+  border-radius: 50%;
+  background: #111;
+  display: grid;
+  place-items: center;
+  position: relative;
+  transition: transform 0.2s ease;
+  z-index: 2; /* peste axă */
+}
+
+.curente-checkpoint:hover {
+  transform: scale(1.06);
+}
+
+.curente-checkpoint-img {
+  width: 130px;
+  height: 130px; /* imagine mai mare în bulină */
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(255,255,255,0.85);
+}
+
+/* Popover deasupra bulinei la hover */
+.curente-popover {
+  position: absolute;
+  /* implicit DEASUPRA bulinei */
+  bottom: 106%;
+  left: 50%;
+  transform: translateX(-50%) translateY(8px);
+  background: var(--card-bg);
+  color: var(--text);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.28);
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 14px;
+  padding: 16px 18px;
+  width: 340px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s ease, transform 0.18s ease;
+  z-index: 1000; /* sigur peste hero și navbar */
+}
+
+.curente-checkpoint:hover .curente-popover {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+
+.curente-popover-title {
+  font-weight: 800;
+  margin-bottom: 4px;
+}
+
+.curente-popover-date {
+  font-size: 0.95rem;
+  opacity: 0.8;
+  margin-bottom: 8px;
+}
+
+.curente-popover-authors {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.curente-author {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.curente-author img {
+  width: 28px;
+  height: 28px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 1px solid rgba(0,0,0,0.15);
+}
+
+.curente-year {
+  margin-top: 14px;
+  font-weight: 800;
+  color: var(--text);
+}
+
+.curente-desc {
+  margin-top: 6px;
+  text-align: center;
+  color: var(--muted);
+  min-height: 52px;
+  max-width: 300px;
+}
+
+.curente-button {
+  margin-top: 10px;
+  background: var(--button-bg);
+  color: var(--button-fg);
+  border: none;
+  padding: 10px 16px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: 700;
+  box-shadow: 0 2px 16px 0 rgba(124, 79, 43, 0.10);
+  transition: transform 0.15s ease, background 0.2s ease, box-shadow 0.2s ease;
+  outline: none;
+  &:focus{
+    outline: none;
+  }
+}
+
+.curente-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 24px 0 rgba(124,79,43,0.18);
+}
+
+/* Ascundem scrollbar vizual, păstrăm funcționalitatea pentru tastatură */
+.curente-timeline-scroll::-webkit-scrollbar {
+  height: 0;
+}
+
+@media (max-width: 768px) {
+  .curente-item { width: 260px; }
+  .curente-popover { width: 300px; bottom: 122%; }
+}
+
+
