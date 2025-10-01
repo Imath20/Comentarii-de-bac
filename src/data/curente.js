@@ -31,7 +31,7 @@ const CURENTE = [
     glowColor: 'rgba(255,179,71,0.85)',
     descriere: 'Echilibru, rațiune, reguli stricte. Influență franceză.',
     autori: [
-      { nume: 'Nicolas Boileau', slug: null, img: '/scriitori/george_calinescu.webp' },
+      { nume: 'Nicolas Boileau', slug: null, img: '/scriitori/boileau.webp' },
     ],
   },
   {
@@ -76,7 +76,7 @@ const CURENTE = [
     glowColor: 'rgba(255, 215, 0, 0.9)',
     descriere: 'Reflectă fidel realitatea socială. În RO: Rebreanu, Călinescu.',
     autori: [
-      { nume: 'Liviu Rebreanu', slug: 'rebreanu', img: '/scriitori/rebreanu.webp' },
+      { nume: 'Liviu Rebreanu', slug: 'rebreanu', img: '/scriitori/liviu_rebreanu_nou.webp' },
       { nume: 'George Călinescu', slug: 'calinescu', img: '/scriitori/george_calinescu.webp' },
     ],
   },
@@ -89,7 +89,7 @@ const CURENTE = [
     glowColor: 'rgba(103, 58, 183, 0.9)',
     descriere: 'Sugestie, muzicalitate, corespondențe. În RO: Bacovia.',
     autori: [
-      { nume: 'George Bacovia', slug: 'bacovia', img: '/scriitori/bacovia.webp' },
+      { nume: 'George Bacovia', slug: 'bacovia', img: '/scriitori/bacovia_rezerva.webp' },
     ],
   },
   {
@@ -131,8 +131,8 @@ const CURENTE = [
     glowColor: 'rgba(0, 188, 212, 0.9)',
     descriere: 'Inovație formală, introspecție, urban. În RO: Arghezi, Blaga.',
     autori: [
-      { nume: 'Tudor Arghezi', slug: 'arghezi', img: '/scriitori/arghezi.webp' },
-      { nume: 'Lucian Blaga', slug: 'blaga', img: '/scriitori/blaga.webp' },
+      { nume: 'Tudor Arghezi', slug: 'arghezi', img: '/scriitori/tudor_arghezi.webp' },
+      { nume: 'Lucian Blaga', slug: 'blaga', img: '/scriitori/lucian_blaga.webp' },
     ],
   },
   {

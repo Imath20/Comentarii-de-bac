@@ -92,22 +92,20 @@ export default function Curent() {
                 </div>
               </div>
             </div>
-          </div>
 
-          <div className="curent-right scriitor-right-column">
-            <section className="posts-section">
-              <div className="posts-header">
-                <h3>Autori reprezentativi</h3>
-              </div>
-              <div className="friends-grid">
+            <div className="scriitor-friends">
+              <div className="scriitor-section-title">Scriitori reprezentativi</div>
+              <div className="scriitor-friends-grid">
                 {curent.autori && curent.autori.length > 0 ? (
                   curent.autori.map((a, i) => (
-                    <button key={i} className="friend-card" onClick={() => goToScriitor(a.slug)}>
-                      <div className="friend-avatar">
-                        <img src={a.img} alt={a.nume} />
-                      </div>
-                      <div className="friend-name">{a.nume}</div>
-                    </button>
+                    <div
+                      key={i}
+                      className="scriitor-friend-item"
+                      onClick={() => goToScriitor(a.slug)}
+                    >
+                      <img src={a.img} alt={a.nume} />
+                      <div className="scriitor-friend-name">{a.nume}</div>
+                    </div>
                   ))
                 ) : (
                   <div className="empty-state">
@@ -115,7 +113,11 @@ export default function Curent() {
                   </div>
                 )}
               </div>
-            </section>
+            </div>
+          </div>
+
+          <div className="curent-right scriitor-right-column">
+            {/* rezervat pentru alte secțiuni viitoare */}
           </div>
         </div>
       </div>
