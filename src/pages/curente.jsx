@@ -1,102 +1,15 @@
 import React, { useMemo, useRef, useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import Layout from '../assets/Layout';
 import '../styles/style.scss';
+import CURENTE from '../data/curente';
 
-// Date de exemplu pentru curente. Fiecare punct are glowColor, an, descriere, imagine și autori remarcați pentru tooltip.
-const CURENTE_DATA = [
-  {
-    id: 'classic',
-    nume: 'Clasicismul',
-    interval: 'sec. XVII–XVIII',
-    an: 1700,
-    img: '/Banner/10.webp',
-    glowColor: 'rgba(255,179,71,0.85)',
-    descriere: 'Echilibru, rațiune, reguli stricte. Influență franceză.',
-    autori: [
-      { nume: 'Nicolas Boileau', img: '/scriitori/george_calinescu.webp' },
-    ],
-  },
-  {
-    id: 'romantic',
-    nume: 'Romantismul',
-    interval: 'cca. 1800–1870',
-    an: 1830,
-    img: '/opere/Luceafarul.webp',
-    glowColor: 'rgba(122,58,0,0.9)',
-    descriere: 'Sentiment, imaginație, natura și individul. În RO: Eminescu.',
-    autori: [
-      { nume: 'Mihai Eminescu', img: '/scriitori/eminescu_mihai.webp' },
-      { nume: 'Vasile Alecsandri', img: '/scriitori/alecsandri.webp' },
-    ],
-  },
-  {
-    id: 'realist',
-    nume: 'Realismul',
-    interval: 'cca. 1830–1900',
-    an: 1880,
-    img: '/opere/enigma-otiliei.webp',
-    glowColor: 'rgba(255, 215, 0, 0.9)',
-    descriere: 'Reflectă fidel realitatea socială. În RO: Rebreanu, Călinescu.',
-    autori: [
-      { nume: 'Liviu Rebreanu', img: '/scriitori/rebreanu.webp' },
-      { nume: 'George Călinescu', img: '/scriitori/george_calinescu.webp' },
-    ],
-  },
-  {
-    id: 'symbol',
-    nume: 'Simbolismul',
-    interval: 'cca. 1886–1910',
-    an: 1895,
-    img: '/opere/plumb.webp',
-    glowColor: 'rgba(103, 58, 183, 0.9)',
-    descriere: 'Sugestie, muzicalitate, corespondențe. În RO: Bacovia.',
-    autori: [
-      { nume: 'George Bacovia', img: '/scriitori/bacovia.webp' },
-    ],
-  },
-  {
-    id: 'modern',
-    nume: 'Modernismul',
-    interval: 'cca. 1900–1945',
-    an: 1925,
-    img: '/opere/testament.webp',
-    glowColor: 'rgba(0, 188, 212, 0.9)',
-    descriere: 'Inovație formală, introspecție, urban. În RO: Arghezi, Blaga.',
-    autori: [
-      { nume: 'Tudor Arghezi', img: '/scriitori/arghezi.webp' },
-      { nume: 'Lucian Blaga', img: '/scriitori/blaga.webp' },
-    ],
-  },
-  {
-    id: 'avangarda',
-    nume: 'Avangarda',
-    interval: 'cca. 1910–1930',
-    an: 1920,
-    img: '/opere/riga-crypto.webp',
-    glowColor: 'rgba(244, 67, 54, 0.9)',
-    descriere: 'Ruperea convențiilor: dadaism, suprarealism. În RO: Tzara.',
-    autori: [
-      { nume: 'Tristan Tzara', img: '/scriitori/stanescu.webp' },
-    ],
-  },
-  {
-    id: 'postbelic',
-    nume: 'Postbelic/Contemporan',
-    interval: '1945–prezent',
-    an: 1970,
-    img: '/opere/morometii.webp',
-    glowColor: 'rgba(76, 175, 80, 0.9)',
-    descriere: 'Diversitate stilistică, teme sociale. În RO: Preda, Sorescu.',
-    autori: [
-      { nume: 'Marin Preda', img: '/scriitori/preda.webp' },
-      { nume: 'Marin Sorescu', img: '/scriitori/sorescu.webp' },
-    ],
-  },
-];
 
 const clamp = (val, min, max) => Math.min(Math.max(val, min), max);
 
 export default function Curente() {
+  const navigate = useNavigate();
+  const location = useLocation();
   const [darkTheme, setDarkTheme] = useState(() => document.body.classList.contains('dark-theme'));
 
   // Timeline horizontal state
@@ -344,6 +257,15 @@ export default function Curente() {
     return () => window.removeEventListener('resize', computeOffset);
   }, []);
 
+  // Restore horizontal scroll position if coming back from detail
+  useEffect(() => {
+    const container = containerRef.current;
+    const fromState = location.state && location.state.restoreCurenteScroll;
+    if (container && typeof fromState === 'number') {
+      container.scrollLeft = fromState;
+    }
+  }, [location.state]);
+
   // title as on other pages
   return (
     <Layout darkTheme={darkTheme} setDarkTheme={setDarkTheme}>
@@ -363,7 +285,7 @@ export default function Curente() {
         <div className={`curente-timeline-wrapper ${darkTheme ? 'dark-theme' : ''}`}>
           <div className="curente-timeline-scroll" ref={containerRef}>
             <div className="curente-timeline-track" ref={trackRef} style={{ paddingLeft: startOffset }}>
-              {CURENTE_DATA.map((c, index) => (
+              {CURENTE.map((c, index) => (
                 <div className="curente-item" key={c.id}>
                   <div
                     className="curente-checkpoint"
@@ -385,7 +307,13 @@ export default function Curente() {
                   </div>
                   <div className="curente-year">{c.an}</div>
                   <div className="curente-desc">{c.descriere}</div>
-                  <button className={`curente-button ${darkTheme ? 'dark-theme' : ''}`}>Vezi mai multe</button>
+                  <button className={`curente-button ${darkTheme ? 'dark-theme' : ''}`}
+                    onClick={() => {
+                      const container = containerRef.current;
+                      const left = container ? container.scrollLeft : 0;
+                      navigate(`/curent/${c.id}`, { state: { from: { pathname: '/curente', scrollY: window.scrollY }, curenteScrollLeft: left } });
+                    }}
+                  >Vezi mai multe</button>
                 </div>
               ))}
             </div>

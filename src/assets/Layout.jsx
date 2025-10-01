@@ -8,6 +8,7 @@ export default function Layout({
   setDarkTheme: setDarkThemeProp,
   scrolled: scrolledProp,
   transparentOnTop = false,
+  hideNavbar = false,
 }) {
   const controlsTheme = typeof setDarkThemeProp === 'function';
   const [darkThemeInternal, setDarkThemeInternal] = useState(() => {
@@ -40,7 +41,9 @@ export default function Layout({
 
   return (
     <>
-      <Navbar darkTheme={darkTheme} setDarkTheme={setDarkTheme} scrolled={scrolled} transparentOnTop={transparentOnTop} />
+      {!hideNavbar && (
+        <Navbar darkTheme={darkTheme} setDarkTheme={setDarkTheme} scrolled={scrolled} transparentOnTop={transparentOnTop} />
+      )}
       <main>
         {children}
       </main>

@@ -166,7 +166,7 @@ body.dark-theme .nav-icon {
 .dropdown-arrow {
   margin-left: 0.5rem;
   transition: transform 0.2s ease;
-  color: #7c4f2b;
+  color: currentColor;
   stroke-width: 3.5;
 }
 
@@ -250,6 +250,14 @@ body.dark-theme .dropdown-menu li a:hover {
 
 body.dark-theme .dropdown-arrow {
   color: #fbeec1;
+}
+
+/* Ensure dropdown text color stays consistent on light theme, even on scroll */
+body:not(.dark-theme) .navbar .dropdown-menu li a {
+  color: #7c4f2b !important;
+}
+body:not(.dark-theme) .navbar .dropdown-menu li a:hover {
+  color: #5a3a1f !important;
 }
 
 .theme-toggle {

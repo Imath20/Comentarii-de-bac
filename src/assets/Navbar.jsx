@@ -16,6 +16,7 @@ import Logo from './Logo';
 const NAV_CATEGORIES = [
   { name: 'Acasa', href: '/', icon: <HomeIcon className="nav-icon" /> },
   { name: 'Opere', href: '/opere', icon: <OpereIcon className="nav-icon" /> },
+  { name: 'Scriitori', href: '/scriitori', icon: <PenPaperIcon className="nav-icon" /> },
   { 
     name: 'Resurse', 
     href: '#', 
@@ -27,7 +28,6 @@ const NAV_CATEGORIES = [
       { name: 'Curente', href: '/curente', icon: <CurenteIcon className="nav-icon" /> },
     ]
   },
-  { name: 'Scriitori', href: '/scriitori', icon: <PenPaperIcon className="nav-icon" /> },
   { name: 'Subiecte', href: '/subiecte', icon: <ExamPaperIcon className="nav-icon" /> },
   { name: 'AI', href: '/ai', icon: <AiIcon className="nav-icon" /> },
 ];
