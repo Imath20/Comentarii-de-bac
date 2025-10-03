@@ -53,7 +53,8 @@ export default function Navbar({ darkTheme, setDarkTheme, scrolled }) {
     
     if (dropdownItem) {
       const dropdownIndex = NAV_CATEGORIES.findIndex(cat => cat.name === dropdownItem.name);
-      const links = menu.querySelectorAll('a');
+      // Only consider top-level nav links to avoid indexing into dropdown items
+      const links = menu.querySelectorAll(':scope > li > a');
       const dropdownLink = dropdownIndex >= 0 ? links[dropdownIndex] : null;
       if (dropdownLink) {
         const { left, width } = dropdownLink.getBoundingClientRect();
@@ -66,7 +67,8 @@ export default function Navbar({ darkTheme, setDarkTheme, scrolled }) {
     const activeIndex = NAV_CATEGORIES.findIndex(cat => (
       cat.href === '/' ? path === '/' : path.startsWith(cat.href)
     ));
-    const links = menu.querySelectorAll('a');
+    // Only consider top-level nav links to avoid indexing into dropdown items
+    const links = menu.querySelectorAll(':scope > li > a');
     const activeLink = activeIndex >= 0 ? links[activeIndex] : null;
     if (activeLink) {
       const { left, width } = activeLink.getBoundingClientRect();
