@@ -1,5 +1,44 @@
-// Exportă textul biografiei pentru Tudor Arghezi
-const text = `Aici poți adăuga biografia completă pentru Tudor Arghezi.
-Poți pune paragrafe multiple, liste, etc. Păstrează doar text simplu.`;
+// Exportă textul biografiei pentru Mihail Sadoveanu
+const text = `Mihail Sadoveanu, născut în 1880 la Pașcani, a devenit unul dintre cei mai importanți și prolifici prozatori români din prima jumătate a secolului al XX-lea, având o carieră de cincizeci de ani. Viața lui a fost o călătorie extraordinară de la copilăria modestă la statutul de academician și politician, un om care a reușit să transforme pasiunea pentru literatură într-o operă vastă care a influențat generații întregi de cititori și scriitori.
+
+Copilăria și-a petrecut-o într-o situație familială complexă. Născut dintr-o relație extraconjugală ca fiu al avocatului Alexandru Sadoveanu din Oltenia și al Profirei Ursache, fată de răzeși analfabeți din localitatea Verșeni. Părinții nefiind căsătoriți, paternitatea scriitorului și a fratelui său Dimitrie au fost recunoscute abia în anul 1891. Familia își avea originile în Sadova, conform numelui ales, adoptat de aceasta abia în 1891.
+
+Formarea sa intelectuală a fost una excepțională, marcată de întâlniri cruciale cu personalități care i-au modelat gândirea. Începând cu anul 1887, Sadoveanu face școala primară la Pașcani, unde profesorul său preferat, Dl. Busuioc, l-a inspirat să scrie colecția de povești "Domnu Trandafir". În timpul liber, tânărul Sadoveanu obișnuia să exploreze regiunea natală mergând pe jos, la vânătoare, pescuind, sau doar pentru a contempla natura. A urmat gimnaziul "Alecu Alecsandru Donici" la Fălticeni și Liceului Național din Iași, unde a fost coleg cu viitorii scriitori Eugen Lovinescu și Ion Dragoslav.
+
+Primele încercări literare au început în 1896, la vârsta de 16 ani, când a intenționat să alcătuiască, împreună cu un coleg, o monografie asupra domnitorului Ștefan cel Mare. A debutat în revista bucureșteană Dracu în 1897 cu schița "Domnișoara M din Fălticeni", pe care îl semnează cu pseudonimul Mihai din Pașcani. În 1898 începe să colaboreze la foaia Viața nouă a lui Ovid Densusianu, alături de Gala Galaction, N.D. Cocea, Tudor Arghezi, semnând cu numele său, dar și cu pseudonimul M.S. Cobuz.
+
+În 1900 pleacă la București cu intenția de a studia dreptul la Universitatea din București, renunțând însă la scurt timp, pentru a se dedica literaturii. A început să frecventeze societatea boemă a Capitalei, hotărând în această perioadă să abandoneze poezia și să scrie numai proză realistă. În 1901, se căsătorește cu Ecaterina Bâlu, cu care s-a stabilit la Fălticeni, unde începe să lucreze la primele nuvele și se decide să trăiască din cariera de scriitor.
+
+La invitația poetului Ștefan Octavian Iosif, în 1903, Sadoveanu contribuie cu lucrări la revista tradiționalistă Sămănătorul, condusă la acea vreme de istoricul și criticul Nicolae Iorga. A mai colaborat la ziarul Voința Națională, publicat de Partidul Național Liberal și condus de politicianul Vintilă Brătianu. La începutul lunii decembrie a aceluiași an, în acest ziar va fi publicat "Șoimii", primul său roman, o variantă dezvoltată a povestirii "Frații Potcoavă", cu o introducere de istoricul Vasile Pârvan.
+
+1904 a fost anul în care Sadoveanu a debutat efectiv, publicând patru volume: "Șoimii", "Povestiri", "Dureri înăbușite" și "Crâșma lui Moș Petcu", volume în care Sadoveanu abordează cu precădere teme istorice. Acestea au marcat începutul unei cariere prolifice în literatură, care avea să dureze pentru mai mult de jumătate de secol și o lungă colaborare cu editura Minerva. Nicolae Iorga va numi anul 1904 "anul Sadoveanu", în timp ce criticul Titu Maiorescu a făcut o recenzie pozitivă volumului "Povestiri", propunându-l totodată la premiile Academiei Române din 1906.
+
+În 1921 devine membru al Academiei Române. Doi ani mai târziu, își ține discursul de recepție, în care face aprecieri pozitive față de folclorul românesc în general și de poezia populară în special. Reîncepe colaborarea la revista Viața românească, alăturându-se nucleului de redactori din perioadă interbelică, din care face parte și Garabet Ibrăileanu.
+
+În 1926 intră în Partidul Poporului, în care era deja membru prietenul său Octavian Goga. Acesta își formează ulterior propriul Partid Agrar, la care va trece și Sadoveanu. În timpul alegerilor din 1927, câștigă un loc de deputat din partea județului Bihor. După alegerile din 1931, ocupă un loc de senator din partea județului Iași. În perioada cabinetului țărănist, condus de Nicolae Iorga, Sadoveanu este președinte al Senatului României.
+
+În anul 1928 devine Mare Maestru al Marii Loji Naționale Masonice din România. A fost Venerabilul Lojii masonice ieșene "Dimitrie Cantemir" între 1927 și 1930, iar din 1932 al Lojii "Moldova", din același orient. Între 1930 și 1935 a îndeplinit următoarele demnități masonice: Mare Maestru Adjunct al Marii Loji Naționale din România, Pro Mare Maestru al MLNR, Mare Maestru al MLNR și Mare Maestru al Franc-Masoneriei Române Unite.
+
+În anii '30, pe vremea când era la conducerea Adevărului, Sadoveanu a fost ținta atacurilor unor redactori ai unui ziar de dreapta, care susținea că el a ales să-și abandoneze prerogative sale naționaliste. Astfel, Sadoveanu devine ținta unei campanii de presă antisemite și fasciste, avându-l ca adversar pe Nichifor Crainic de la Sfarmă-Piatră și jurnaliștii care aveau legătură cu Garda de Fier.
+
+La sfârșitul anilor '30 se retrage din viața politică, din cauza dictaturilor de dreapta prin care trecea România, dar revine la începutul anilor '40, oferindu-și sprijinul Regelui României Carol al II-lea și formațiunii politice înființate de acesta, Front al Renașterii Naționale. În 1940, Editura Fundațiilor Regale îi publică primul volum de "Opere".
+
+După preluarea puterii de către sistemul comunist, Sadoveanu a sprijinit noile autorități, trecând de la propria versiune de realism la doctrina comunistă a realismului socialist. A devenit președinte al "secției literare și filosofice" a ARLUS și în 1945 a călătorit prin Uniunea Sovietică împreună cu profesorii Parhon, Săvulescu, sociologul Dimitrie Gusti, lingvistul Iorgu Iordan, și matematicianul Simion Stoilow.
+
+În timpul alegerilor măsluite din 1946, Sadoveanu a fost candidat al Blocului Partidelor Democratice în colegiile din București, câștigând un loc în noul Parlament al României. În prima sesiune, cea din decembrie 1946, este ales președintele Parlamentului. În 1948, după abdicarea Regelui Mihai și instalarea regimului comunist la putere, Sadoveanu primește cele mai înalte poziții care au fost acordate vreodată unui scriitor român.
+
+După ce Societatea Scriitorilor a fost reorganizată în Uniunea Scriitorilor din România în 1949, Sadoveanu devine președintele de onoare al acesteia. Apoi, în 1950, este numit președintele ei, înlocuindu-l pe Zaharia Stancu. În această perioadă, Sadoveanu publică mai multe volume realist-socialiste, printre care și "Mitrea Cocor", prin care se apreciau și încurajau politicile de colectivizare.
+
+În 1952, devine președinte al Consiliului Științific al Academiei, cel care va modifica alfabetul limbii române. Astfel, se renunță la litera â, fiind înlocuită cu î. A prezidat ședința secției Academiei pentru știința limbii, literatură și artă, care a refuzat ca sculpturile lui Constantin Brâncuși să-i rămână statului român.
+
+Între 7 și 11 ianuarie 1958, Sadoveanu, Ion Gheorghe Maurer și Anton Moisescu sunt președinții interimari ai Prezidiului Marii Adunări Naționale, funcție care îl propulsează vremelnic pe scriitor în poziția de șef al statului. Contribuțiile literare, dar și afinitățile sale politice, fac să i se acorde, în 1961, "Premiului Lenin pentru Pace".
+
+Suferă un infarct care îi afectează vorbirea și îl lasă aproape orb. Este îngrijit de o echipă de medici condusă de Nicolae Gh. Lupu. Familia Sadoveanu se retrage în zona Neamțului, locuind într-o vilă aflată în apropierea Schitului Vovidenia și a localității Vânători-Neamț. Mihail Sadoveanu a murit în 19 octombrie 1961, la ora 9 dimineața, la București și a fost înmormântat pe 21 octombrie la Cimitirul Bellu din București.
+
+Opera sa rămâne impresionantă prin diversitate și forță. De la romanele istorice "Șoimii", "Neamul Șoimăreștilor" și "Frații Jderi", la romanele de aventuri "Hanu Ancuței" și "Baltagul", de la romanele psihologice "Creanga de aur" și "Divanul persian" la romanele realist-socialiste "Mitrea Cocor" și "Nada Florilor", Sadoveanu a arătat că literatura română poate atinge înălțimi universale.
+
+A trăit 81 de ani și a rămas în istoria literaturii ca unul dintre cei mai importanți prozatori români. A scris despre țărani și boieri, despre natură și istorie, despre vânătoare și pescuit, despre dragoste și moarte. A pătimit în politică, a fost acuzat de colaboraționism, a fost marginalizat și apoi reabilitat, dar a reușit mereu să transforme toate aceste încercări în literatură. Viața lui a fost o luptă, iar scrisul - o formă de supraviețuire prin observație și umanitate.
+
+Astăzi, citind "Hanu Ancuței" sau "Baltagul", înțelegem mai bine ce a însemnat experiența lui Sadoveanu: un scriitor care, în ciuda tuturor dificultăților, a reușit să creeze o operă care transcende timpul și spațiul. Dincolo de arestări și procese, Sadoveanu a rămas fidel convingerii că literatura nu se stinge niciodată, oricât ar fi de apăsătoare întunericul și mizeria vremii.`;
 
 export default text;

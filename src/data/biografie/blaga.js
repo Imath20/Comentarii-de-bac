@@ -1,5 +1,22 @@
-// Exportă textul biografiei pentru Tudor Arghezi
-const text = `Aici poți adăuga biografia completă pentru Tudor Arghezi.
-Poți pune paragrafe multiple, liste, etc. Păstrează doar text simplu.`;
+// Exportă textul biografiei pentru Lucian Blaga
+const text = `Lucian Blaga s-a născut în 1895 la Lancrăm, lângă Sebeș, într-o familie de preoți și a devenit unul dintre cei mai originali gânditori români ai secolului XX. Viața lui a fost marcată de o copilărie misterioasă și de o căutare constantă a adevărului prin filosofie, poezie și dramă. Încă din fragedă copilărie a trăit o experiență tulburătoare: nu a putut vorbi până la vârsta de patru ani, aspect pe care l-a evocat mai târziu în versul celebru „Lucian Blaga e mut ca o lebădă". Această tăcere precoce a fost probabil primul semn al unei personalități complexe, care avea să exploreze misterul existenței prin cuvânt.
+
+Formarea sa intelectuală a fost neobișnuită și diversificată. A studiat la școala germană din Sebeș, apoi la Școalele Centrale Române din Brașov, unde unchiul său, Iosif Blaga, doctor în filosofie, îi insuflă dragostea pentru gândirea abstractă. A urmat Teologia la Sibiu și Oradea (1914-1917), dar nu din vocație religioasă, ci pentru a evita înrolarea în armata austriacă. Apoi s-a mutat la Viena, unde și-a luat doctoratul în filosofie cu teza „Cultură și cunoaștere" și a descoperit expresionismul german. Aici a cunoscut-o pe Cornelia Brediceanu, fiica omului politic din Banat, cea care îi va deveni soție și tovarășă de viață.
+
+Debutul său literar a fost modest dar semnificativ. În 1910 a publicat poezia „Pe țărm" în revista Tribuna, iar în 1919 a apărut prima sa carte de versuri, „Poemele luminii". Această lucrare a marcat începutul unei cariere literare impresionante, în care poezia se îmbină cu filosofia pentru a explora misterul lumii. Prima sa dramă, „Zamolxe", a apărut în 1921 și a fost premiată de Academia Română, marcând începutul unei activități dramatice bogate.
+
+Anii '20 și '30 l-au găsit în plină activitate diplomatică și literară. Între 1926-1939 a lucrat în diplomație, ocupând posturi în Varșovia, Praga, Lisabona, Berna și Viena. A fost ministru plenipotențiar în Portugalia, dar cariera sa diplomatică s-a încheiat brusc din cauza opoziției față de regimul carlist. Filosofia sa germanofilă și mistică era inacceptabilă pentru autoritățile vremii, care o considerau prea apropiată de extremismul Gărzii de Fier.
+
+În 1937 a fost ales membru al Academiei Române, iar în 1939 a devenit profesor de filosofie la Universitatea din Cluj. Aici și-a dezvoltat sistemul filosofic original, bazat pe conceptul de „spațiu mioritic" și pe cele trei trilogii: cunoașterea, cultura și valorile. Filosofia sa îmbină panteismul cu ortodoxia, creând o viziune unică asupra identității românești.
+
+După 1948, odată cu instaurarea regimului comunist, situația lui s-a schimbat dramatic. A fost îndepărtat de la catedră din motive politice și a fost exclus din Academie. Noul regim îl considera un „gânditor burghez" și „mistic reacționar". Volumele lui nu mai apăreau, iar numele i-a fost împins la marginea scenei culturale. A fost nevoit să lucreze ca bibliograf la Academia Română, o umilință pentru un om care fusese profesor universitar și academician.
+
+În această perioadă de marginalizare, Blaga s-a refugiat în traduceri. A tradus „Faust" de Goethe și „Natan înțeleptul" de Lessing, păstrându-și demnitatea prin munca intelectuală. A scris și opere care au fost publicate postum, inclusiv romanul autobiografic „Luntrea lui Caron". A murit în 1961 la Cluj, înainte să vadă reabilitarea sa oficială.
+
+Opera sa rămâne impresionantă prin originalitate și profunzime. De la poezia filosofică din „Poemele luminii" și „Nebănuitele trepte", la dramaturgia mistică din „Meșterul Manole" și „Zamolxe", de la sistemul filosofic original cu cele trei trilogii, la aforismele din „Pietre pentru templul meu", Blaga a arătat că gândirea românească poate atinge înălțimi metafizice.
+
+A trăit 66 de ani și a rămas în istoria literaturii ca un gânditor al misterului. A scris despre lumină și întuneric, despre tradiție și modernitate, despre identitatea națională și universalitatea spiritului uman. A pătimit marginalizarea, a fost acuzat de „misticism reacționar", dar a reușit mereu să transforme toate aceste încercări în gândire profundă. Viața lui a fost o căutare, iar scrisul – o formă de descoperire a adevărului.
+
+Astăzi, citind „Eu nu strivesc corola de minuni a lumii", înțelegem mai bine ce a însemnat experiența lui Blaga: un gânditor care, în ciuda marginalizării și interdicțiilor, continua să exploreze misterul existenței. Dincolo de persecuții și ignoranță, Blaga a rămas fidel convingerii că gândirea nu se stinge, oricât ar fi de apăsătoare întunericul și mizeria vremii.`;
 
 export default text;

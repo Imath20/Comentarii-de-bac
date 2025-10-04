@@ -188,6 +188,15 @@ export const scriitoriPrezentare = {
       'Printre cele mai cunoscute opere se numără volumele de poezii "Poezii", numeroase traduceri din literatura germană și corespondența cu Eminescu.',
       'Stilul său se caracterizează prin sensibilitate, prin folosirea unui limbaj emotiv și prin faptul că a reușit să exprime cu sinceritate sentimentele feminine într-o epocă în care vocea femeii în literatură era rară și prețioasă.'
     ]
+  },
+  'lovinescu': {
+    titlu: 'Eugen Lovinescu - Criticul și Teoreticianul Sincronismului',
+    paragrafe: [
+      'Eugen Lovinescu a fost unul dintre cei mai importanți critici literari și teoreticieni români, autorul teoriei Sincronismului și al Mutației valorilor estetice.',
+      'Născut în 1881 în Fălticeni, Lovinescu a fost critic literar, istoric al literaturii, romancier și memorialist, activând într-o perioadă de modernizare a literaturii române.',
+      'Printre cele mai cunoscute opere se numără "Istoria literaturii române contemporane", "Memorii", "Istoria civilizației române moderne" și numeroase studii critice și romane.',
+      'Teoria sa despre Sincronismul susține că societățile înapoiate se modernizează prin imitația formelor culturale occidentale, un proces pe care l-a numit "simularea" și "stimularea", considerându-l inevitabil și creator pentru dezvoltarea culturii române.'
+    ]
   }
 };
 

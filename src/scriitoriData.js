@@ -20,6 +20,7 @@ import negruzzi from './data/negruzzi.js';
 import pillat from './data/pillat.js';
 import voiculescu from './data/voiculescu.js';
 import veronica from './data/veronica.js';
+import lovinescu from './data/lovinescu.js';
 
 const scriitoriData = {
   eminescu,
@@ -43,6 +44,7 @@ const scriitoriData = {
   pillat,
   voiculescu,
   veronica,
+  lovinescu,
 };
 
 export default scriitoriData; 

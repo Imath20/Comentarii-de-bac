@@ -1,5 +1,34 @@
-// Exportă textul biografiei pentru Tudor Arghezi
-const text = `Aici poți adăuga biografia completă pentru Tudor Arghezi.
-Poți pune paragrafe multiple, liste, etc. Păstrează doar text simplu.`;
+// Exportă textul biografiei pentru Ion Pillat
+const text = `Ion Pillat, născut la 31 martie 1891 în București, a fost un eseist, poet tradiționalist, antologist, editor și publicist român, membru corespondent al Academiei Române din 1936. Pe linie maternă a fost înrudit cu familia Brătianu, bunicul său fiind cunoscutul politician Ion C. Brătianu, acesta fiind adesea evocat în poeme din volumul său cel mai cuprinzător din punct de vedere estetic, Pe Argeș în sus, în poeme precum Odaia bunicului, Odihna tatii sau Aci sosi pe vremuri.
+
+Și-a petrecut copilăria la moșiile Florica pe Argeș și Miorcani, pe râul Prut, într-un mediu rural care avea să-i influențeze profund viziunea poetică. După 1945 poezia sa va fi clasificată drept indezirabilă, evident din rațiuni strict politice. Fiul său, criticul și romancierul Dinu Pillat a fost îndepărtat de la Facultatea de Litere, unde era asistent al lui George Călinescu, fiind condamnat la temniță politică, iar manuscrisele i-au fost confiscate și distruse.
+
+Ion Pillat s-a născut la București în casa părinților săi din Calea Dorobanților 6. Tatăl său era moșier dintr-o veche familie de boieri de țară din ținutul Fălciului și parlamentar, iar mama sa, Maria Pillat, a fost a doua fiică, în ordinea vârstei, a lui Ion C. Brătianu. Primii ani ai copilăriei i-a petrecut pe moșia bunicului, Florica, Argeș unde a învățat în particular întreaga școală primară.
+
+A urmat cursurile școlii primare nr. 1 din Pitești, precum și primele trei clase ale cursului gimnazial, făcute la Pitești în particular, iar în 1905 a terminat clasa a VIII-a la Liceul Sfântul Sava din București. Mama sa l-a luat cu ea la Paris, împreună cu fratele Niculae și sora sa Pia, pentru a continua studiile acolo, la liceul „Henri IV", unde a fost înscris ca extern, luându-și bacalaureatul în 1909. Cu ocazia excursiei la Chartres, a descoperit arta gotică, care l-a inspirat pentru prima sa poezie, În catedrală.
+
+În 1910, s-a înscris ca student la Sorbona, unde a studiat în principal, litere, istoria și geografia, dar a făcut în paralel și dreptul. Titu Maiorescu i-a publicat în 1911, o parte din poezii în Convorbiri literare. În 1912, aflat în București în vacanță, l-a cunoscut pe Alexandru Macedonski, căruia i-a editat volumul Flori sacre. Ion Pillat, împreună cu Horia Furtună au înființat colecția Cărți albe, în care urmau să fie editați poeții epocii; volumul de debut al întregii colecții a fost Flori sacre.
+
+Tot în anul 1912, își editează la Paris volumul de poeme în proză Cel din urmă sfânt, iar în București, în același an - primul volum de versuri, Visări păgâne. În revista lui Ovid Densusianu, „Vieața nouă" apare o notiță despre Visări păgâne. Din acel an încheagă prietenii literare cu Tudor Vianu, N. Davidescu, Adrian Maniu, Eugeniu Speranția, Al. T. Stamatiad - din cercul lui Macedonski.
+
+În 1913 a obținut licența în litere la Paris și a participat la campania din Bulgaria, ca sublocotenent, în timpul Războiului Balcanic. A obținut în 1914 și licența în drept, apoi a revenit definitiv la București, unde a publicat volumul Eternități de-o clipă.
+
+S-a căsătorit în 1915, cu pictorița Maria Procopie-Dumitrescu, care își luase pseudonimul "Brateș". În 1916, a editat volumul Plumb al lui George Bacovia și a preluat conducerea revistei Flacăra, împreună cu Adrian Maniu și Horia Furtună. A participat la Conferința de pace de la Paris ca unul din secretarii lui Alexandru Vaida-Voievod, președintele delegației ardelene. În ziua semnării tratatului, a publicat într-o ediție restrânsă de lux, volumul Grădina dintre ziduri.
+
+În 1921 a apărut, sub îngrijirea sa, volumul Poezia toamnei, o antologie din versurile poeților români care au cântat toamna. În 1922, a scos, împreună cu Tudor Arghezi, revista Cuget românesc, iar în anul următor a publicat volumul de versuri care l-a consacrat ca poet original și tradiționalist, Pe Argeș în sus, în care două poeme celebre conțin portretele bunicilor săi, Bunicul și Bunica.
+
+În 1925, a publicat volumul Satul meu și a scos împreună cu criticul Perpessicius Antologia poeților de azi. În 1935 a descoperit Balcicul, destinația preferată a Reginei Maria a României, care atrăgea ca un magnet pictorii și poeții epocii, unde și-a construit o vilă. A publicat Poeme într-un vers (1935), influențate de haiku și tehnica poemelor într-un vers din literatura chineză și din literatura japoneză. În Poeme într-un vers, Pillat a văzut poezia pură.
+
+A primit în 1936 premiul național pentru literatură și a fost ales membru corespondent al Academiei Române. În 1937 a tradus din Charles Baudelaire și a publicat volumul Țărm pierdut. A publicat, în 1942, o antologie de traduceri din poezia germană și volumul de versuri Împlinire. A tradus poezii din Francis Jammes, Jean Moréas, Rainer Maria Rilke, Saint-John Perse, Carl Sandburg, Joachim du Bellay, Goethe, Schiller și Walt Whitman. În 1944, sub titul Poezii a apărut întreaga sa operă lirică, scrisă în perioada 1906 - 1941.
+
+Lirica sa de început stă sub semnul parnasianismului și simbolismului, dar mai târziu, al tradiționalismului. Poetul vede în creația folclorică cea mai elocventă expresie a „sufletului românesc". În consecință, consideră că o demonstrație a specificului național al liricii noastre moderne nu poate porni decât de la o analiză a poeziei populare. Numeroase citate din poezia noastră populară dovedesc o bună cunoaștere a acesteia de către Ion Pillat.
+
+Ion Pillat teoretizează, în expresie poetică, necesitatea legăturii cu trecutul și cu oamenii pământului, cu tradiția. Nu este un trist adio, ci o tonică reîntâlnire în care fiecare protagonist își afirmă el însuși credința în virtuțile continuității în tradiție. În Biserica de altădată (1926) prinde viață, propriu-zis, programul tradiționalist.
+
+George Călinescu, în Istoria literaturii îl califică diletant, ca urmare a variatelor sale activități și surse de inspirație. În perioada interbelică, până în 1938, a fost deputat și senator. A făcut frecvente călătorii peste hotare: ca membru al PEN-Clubului, cunoscuta asociație internațională a scriitorilor, precum și al Asociației pentru cooperarea intelectuală de pe lângă Liga Națiunilor, a participat la congresele și manifestările acestora. A călătorit în 1927 în Grecia, a ajuns în Spania (1929), a străbătut Italia (1931), a revenit în Grecia în 1932 și 1937.
+
+La data de 17 aprilie 1945 a suferit o congestie cerebrală în plină stradă; a fost transportat acasă (pe actuala stradă Alexandru Philippide, la nr. 9) în stare de inconștiență, iar în jurul orei 22 a decedat.
+
+A trăit 54 de ani și a rămas în istoria literaturii române ca unul dintre cei mai importanți poeți tradiționalisti, un antologist de excepție și un editor care a contribuit la promovarea literaturii române moderne. Opera sa, caracterizată prin legătura strânsă cu tradiția și cu pământul românesc, a demonstrat că poezia modernă poate fi în același timp națională și universală. Dincolo de realizările sale literare, Pillat a fost unul dintre cei care au contribuit la afirmarea identității culturale românești în perioada interbelică și la promovarea literaturii române pe plan internațional.`;
 
 export default text;

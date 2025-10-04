@@ -1,5 +1,40 @@
-// Exportă textul biografiei pentru Tudor Arghezi
-const text = `Aici poți adăuga biografia completă pentru Tudor Arghezi.
-Poți pune paragrafe multiple, liste, etc. Păstrează doar text simplu.`;
+// Exportă textul biografiei pentru Costache Negruzzi
+const text = `Costache Negruzzi, născut în 1808 la Trifeștii Vechi (astăzi Hermeziu), din apropierea Prutului, lângă Iași, a fost un om politic și scriitor român din perioada pașoptistă, fiul lui Dinu Negruț, de origine răzășească, ajuns boier în rang de paharnic, și al Sofiei Hermeziu, fiica logofătului dreptății Iorgu Hermeziu. În anul 1809 mama sa s-a stins din viață, lăsându-l să crească într-o lume marcată de schimbări politice și culturale profunde.
+
+Costache Negruzzi și-a început învățătura în greacă cu unul din dascălii greci mai cu renume pe atunci în Iași, iar să citească românește a învățat singur dintr-o carte a lui Petru Maior, precum însuși mărturisește într-un articol intitulat Cum am învățat românește, foarte interesant pentru detaliile pe care le dă asupra metodelor pedagogice întrebuințate de profesorii din acea vreme.
+
+Izbucnind revoluția din 1821, s-a refugiat în Basarabia cu tatăl său. La Chișinău face cunoștință cu poetul rus Pușkin, care-i trezește interesul pentru literatură și cu un emigrant francez de la care ia lecții de limba și literatura franceză. Din această perioadă datează primele sale încercări literare: Zăbavele mele din Basarabia în anii 1821, 1822. Această întâlnire cu Pușkin avea să-i influențeze profund viziunea literară și să-i deschidă orizonturile către literatura universală.
+
+După moartea tatălui său, intră copist la visterie, începând astfel viața politică, cum făceau mulți fii de boieri pe atunci. În acest timp publică câteva traduceri de poezii (Mnemon de Voltaire, Prostia Elenei de Marmontel), și câteva nuvele, care făcură mult efect. Îndemnat de scrierile patrioților de peste munți, studiază istoria și dă la lumină poemul Aprodul Purice ca un fel de protest indirect la adresa domnului și a boierilor din timpul său.
+
+Ales, în 1837, deputat de Iași în Obșteasca obișnuită adunare, instituită de Regulamentul Organic, apoi ca funcționar superior și ca director al teatrului (alături de Mihail Kogălniceanu și Vasile Alecsandri), se arată pătruns de idei liberale și doritor de progres. În 1840 era ales primar al orașului Iași, demonstrându-și capacitatea de conducere și implicarea în viața publică.
+
+Negruzzi nu ia parte la mișcarea din 1848 și mult timp rămâne retras din afacerile statului, reintrând mai târziu ca judecător, membru în Divanul domnesc (1857) și apoi, sub domnia lui Cuza, ca director al departamentului finanțelor, deputat și epitrop la Sf. Spiridon. Această poziție conservatoare, dar echilibrată, îi permite să-și păstreze influența în perioadele tulburi ale istoriei românești.
+
+Se stinge din viață la 24 august 1868 și este înmormântat în cimitirul bisericii din Trifeștii Vechi, lăsând în urmă o operă literară care a marcat definitiv literatura română.
+
+Activitatea sa literară debutează cu traducerea poeziei Șalul negru după Aleksandr Pușkin. Apoi întreprinde traducerea baladelor lui Victor Hugo, lucrare meritorie, pentru că a căutat să întrebuințeze un vers analog cu al poetului francez, vers greu de făcut în românește, mai ales în timpul când scria Negruzzi (ex. Pasul de arme al Regelui Ioan) și pentru că multe din ele exprimă foarte bine ideea autorului într-o românească curată. Dintre cele mai reușite se poate cita Uriașul.
+
+Negruzzi a scris și poezii originale, dar acestea nu sunt partea cea mai strălucită din opera lui. Cea mai însemnată lucrare în versuri e Aprodul Purice. Începutul e pastoral; tonul epic e păstrat cumva, dar interesul și calitățile poetice scad la un moment dat, și de aici încolo este numai o cronică rimată. Poemul începe prin a descrie starea liniștită a Moldovei, care scăpase de războaie, evocând o epocă de pace și prosperitate.
+
+Operele în proză sunt împărțite în trei grupe, botezate cu titlul general de Păcatele tinerețelor (1857). În prima intră Amintirile din junețe, câteva povestiri, din care unele cu caracter personal, de exemplu Zoe (1829) și O alergare de cai (1840), nuvele în care intriga e bine condusă și plină de interes, iar limba e românească și cu expresiuni nimerite. Fiziologia provințialului reprezintă poate cea mai bună fiziologie scrisă în limba română.
+
+Tot în această grupă intră și povestea Toderică, jucătorul de cărți (1844), imitată cu destulă libertate după Federico de Prosper Mérimée. E vorba aici de un jucător de cărți care pierduse toată averea, și găzduind odată pe Iisus Hristos și pe Sfântul Petru, a obținut ca răsplată trei lucruri: cărțile pe care le avea în mână au fost dăruite cu putere ca totdeauna să-i aducă câștig lui Toderică, pomul de la ușa lui să fie așa ca oricine se va sui să nu se poată coborî fără voia lui Toderică, în fine un scaun de asemenea fu blagoslovit ca oricine va sta pe el să nu se ridice fără voia lui Toderică.
+
+Această glumă nevinovată, despre care însuși Negruzzi ne spune că s-a tipărit mai mult ca să umple coloanele revistei decât cu vreo pretențiune literară, supără grozav clerul și administrația din acel timp - 1844 - încât îl trimiseră în exil la o mănăstire, iar revista Propășirea a fost suspendată. Acest episod demonstrează sensibilitatea vremii față de orice formă de critică sau satiră.
+
+Dintre fragmentele care alcătuiesc grupa a doua, cea mai însemnată lucrare este Alexandru Lăpușneanul, publicată în Dacia Literară în 1840, una din nuvelele de referință ale literaturii române. Nuvela se compune din patru părți, fiecare purtând un motto, care este tema ei. Iacob Eraclid, cunoscut sub numele de Despot Vodă, fusese ucis de Tomșa, care devenise domn al Moldovei; Alexandru Lăpușneanu, care mai domnise o dată, vine cu oști turcești ca să reintre în posesia tronului.
+
+A treia grupă din scrierile lui Negruzzi o formează Scrisorile, peste 30 de bucăți. În unele se găsesc observații critice și satirice asupra obiceiurilor societății; în alte notițe despre diferiți scriitori (Scavin, Alexandru Donici), în altele amintiri personale sau povestiri din istoria țării. Tonul este în genere glumeț, potrivit cu genul acesta chiar când tratează chestiuni serioase și tratează asemenea chestiuni cum sunt cele privitoare la ortografie și la limbă.
+
+Negruzzi ia parte la discuții cu Ion Heliade Rădulescu și cu ardelenii și înfățișează, chiar din primii ani ai acestei lupte, punctul de vedere cel mai cuminte. Scrisorile acestea sunt un bogat izvor de informații de tot felul, de care nu se poate lipsi cel care voiește să cunoască viața socială și culturală a epocii dintre 1838-39.
+
+Negruzzi s-a ocupat și de teatru. Știm că a fost unul din cei care au pornit mișcarea din 1840. Pentru aceasta a tradus din franceză și a scris și lucrări originale - slabe ca întocmire dramatică, dar cu pasaje satirice hazlii: Cârlanii, vodevil într-un act (1857) și Muza de la Burdujeni (1850), în care își propune să ridiculizeze pe puriști și neologiști.
+
+Gheorghe Sion a lăsat un portret spiritual memorabil a lui Negruzzi în lucrarea sa Din tinerețe, descriindu-l ca un adevărat enciclopedist, versat în cunoștințe nu numai literare, dar și istorice și filosofice, ajutat de o memorie prodigioasă și de cunoștința mai multor limbi străine. El, în adevăr, vorbea și scria grecește, franțuzește, nemțește și rusește, fără a menționa latina și italiana, ale căror literaturi nu-i erau străine.
+
+Costache Negruzzi a fost, pe timpul acela, unul din cei dintâi care făcuse minunea de a se introduce în societatea boierilor din clasa întâi, de a capătă funcțiunea de membru de Divan și rangul de postelnic, funcțiune și rang care erau ca apanagiu pentru familiile aristocratice. El, în adevăr, cu inteligenta sa superioară, cu cultura sa rară pe atuncea, cu manierele sale originale dar distinse, era nu numai bine primit, dar chiar invitat și tras cu stăruință în casele cele mari.
+
+A trăit 60 de ani și a rămas în istoria literaturii române ca unul dintre pionierii prozei moderne, un traducător de excepție și un om politic echilibrat. Opera sa, deși nu foarte vastă, a pus bazele nuvelei istorice românești și a demonstrat că limba română poate exprima orice nuanță literară. Dincolo de realizările sale literare, Negruzzi a fost unul dintre cei care au contribuit la modernizarea societății românești și la afirmarea identității culturale naționale.`;
 
 export default text;

@@ -320,13 +320,27 @@ const Scriitor = () => {
   };
 
   const handleProfileFullScreen = () => {
+    // Salvează poziția de scroll curentă
+    const currentScrollY = window.scrollY;
+    setScrollPosition(currentScrollY);
+    
     setProfilePreviewOpen(true);
+    // Previne scroll-ul pe body când modalul este deschis
     document.body.style.overflow = 'hidden';
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${currentScrollY}px`;
+    document.body.style.width = '100%';
   };
 
   const closeProfilePreview = () => {
     setProfilePreviewOpen(false);
+    // Restaurează scroll-ul pe body
     document.body.style.overflow = 'unset';
+    document.body.style.position = 'unset';
+    document.body.style.top = 'unset';
+    document.body.style.width = 'unset';
+    // Restaurează poziția de scroll
+    window.scrollTo(0, scrollPosition);
   };
 
   useEffect(() => {
@@ -386,6 +400,10 @@ const Scriitor = () => {
   // Pentru modal preview poezie
   const [poemPreviewModal, setPoemPreviewModal] = useState({ open: false, post: null });
   const openPoemPreview = (post) => {
+    // Salvează poziția de scroll curentă
+    const currentScrollY = window.scrollY;
+    setScrollPosition(currentScrollY);
+    
     // Dacă este o poezie scurtă, creează un obiect post cu datele necesare
     if (post.isPoem && shortPoems[post.poemTitle]) {
       const poemData = shortPoems[post.poemTitle];
@@ -400,48 +418,101 @@ const Scriitor = () => {
     } else {
       setPoemPreviewModal({ open: true, post });
     }
-    // Blochează scroll-ul pe fundal
+    // Previne scroll-ul pe body când modalul este deschis
     document.body.style.overflow = 'hidden';
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${currentScrollY}px`;
+    document.body.style.width = '100%';
   };
   const closePoemPreview = () => {
     setPoemPreviewModal({ open: false, post: null });
-    // Restabilește scroll-ul pe fundal
+    // Restaurează scroll-ul pe body
     document.body.style.overflow = 'unset';
+    document.body.style.position = 'unset';
+    document.body.style.top = 'unset';
+    document.body.style.width = 'unset';
+    // Restaurează poziția de scroll
+    window.scrollTo(0, scrollPosition);
   };
 
   // Pentru modal "Citește tot"
   const [readAllModal, setReadAllModal] = useState(false);
+  const [scrollPosition, setScrollPosition] = useState(0);
+  
   const openReadAllModal = () => {
+    // Salvează poziția de scroll curentă
+    const currentScrollY = window.scrollY;
+    setScrollPosition(currentScrollY);
+    
     setReadAllModal(true);
+    // Previne scroll-ul pe body când modalul este deschis
     document.body.style.overflow = 'hidden';
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${currentScrollY}px`;
+    document.body.style.width = '100%';
   };
+  
   const closeReadAllModal = () => {
     setReadAllModal(false);
+    // Restaurează scroll-ul pe body
     document.body.style.overflow = 'unset';
+    document.body.style.position = 'unset';
+    document.body.style.top = 'unset';
+    document.body.style.width = 'unset';
+    // Restaurează poziția de scroll
+    window.scrollTo(0, scrollPosition);
   };
 
   // Pentru modal Bibliografie (Citește tot descrierea)
   const [bioModalOpen, setBioModalOpen] = useState(false);
   const openBioModal = () => {
+    // Salvează poziția de scroll curentă
+    const currentScrollY = window.scrollY;
+    setScrollPosition(currentScrollY);
+    
     setBioModalOpen(true);
+    // Previne scroll-ul pe body când modalul este deschis
     document.body.style.overflow = 'hidden';
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${currentScrollY}px`;
+    document.body.style.width = '100%';
   };
   const closeBioModal = () => {
     setBioModalOpen(false);
+    // Restaurează scroll-ul pe body
     document.body.style.overflow = 'unset';
+    document.body.style.position = 'unset';
+    document.body.style.top = 'unset';
+    document.body.style.width = 'unset';
+    // Restaurează poziția de scroll
+    window.scrollTo(0, scrollPosition);
   };
 
   // Pentru galerie poezie
   const [poemGalleryModal, setPoemGalleryModal] = useState({ open: false, images: [], startIndex: 0 });
   const openPoemGallery = (images, startIndex = 0) => {
+    // Salvează poziția de scroll curentă
+    const currentScrollY = window.scrollY;
+    setScrollPosition(currentScrollY);
+    
     setPoemGalleryModal({ open: true, images, startIndex });
     setPoemGalleryCurrentIndex(startIndex);
+    // Previne scroll-ul pe body când modalul este deschis
     document.body.style.overflow = 'hidden';
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${currentScrollY}px`;
+    document.body.style.width = '100%';
   };
   const closePoemGallery = () => {
     setPoemGalleryModal({ open: false, images: [], startIndex: 0 });
     setPoemGalleryCurrentIndex(0);
+    // Restaurează scroll-ul pe body
     document.body.style.overflow = 'unset';
+    document.body.style.position = 'unset';
+    document.body.style.top = 'unset';
+    document.body.style.width = 'unset';
+    // Restaurează poziția de scroll
+    window.scrollTo(0, scrollPosition);
   };
   const [poemGalleryCurrentIndex, setPoemGalleryCurrentIndex] = useState(0);
 
@@ -528,15 +599,12 @@ const Scriitor = () => {
        >
         {/* AvatarSearchBar pe stânga sus, doar dacă nu e fullscreen */}
         {!isFullScreen && (
-          <div className="avatar-searchbar-banner-wrapper">
+          <div className="avatar-searchbar-banner-wrapper" onClick={(e) => e.stopPropagation()}>
             <AvatarSearchBar onSelect={s => goToScriitor(Object.keys(scriitoriData).find(k => scriitoriData[k].nume === s.nume))} />
           </div>
         )}
-        {/* Buton full screen eliminat conform cerinței */}
-        {/* Poza de profil și info scriitor - ascunse în full screen */}
         {!isFullScreen && (
           <>
-            {/* Poza de profil rotundă, centrată absolut peste banner */}
             <div
               className="scriitor-profile-image"
               onClick={(e) => { e.stopPropagation(); handleProfileFullScreen(); }}
@@ -847,7 +915,13 @@ const Scriitor = () => {
                                 readAllButtonLink: post.readAllButtonLink
                               } 
                             });
+                            // Salvează poziția de scroll curentă și previne scroll-ul pe body
+                            const currentScrollY = window.scrollY;
+                            setScrollPosition(currentScrollY);
                             document.body.style.overflow = 'hidden';
+                            document.body.style.position = 'fixed';
+                            document.body.style.top = `-${currentScrollY}px`;
+                            document.body.style.width = '100%';
                           }}
                         >
                           Vezi mai mult
@@ -1257,15 +1331,63 @@ const Scriitor = () => {
                 
                 // Definim ordinea și numele categoriilor pentru afișare
                 const categoriiOrdonat = [
+                  // Categorii principale pentru BAC (cele mai importante)
                   { key: 'opere de BAC', nume: 'Opere de BAC' },
+                  { key: 'opere de BAC necanonice', nume: 'Opere de BAC necanonice' },
                   { key: 'poezii', nume: 'Poezii' },
-                  { key: 'proza', nume: 'Proză' },
+                  { key: 'romane', nume: 'Romane' },
+                  { key: 'nuvele', nume: 'Nuvele' },
                   { key: 'teatru', nume: 'Teatru' },
+                  { key: 'proza', nume: 'Proză' },
+                  
+                  // Categorii literare secundare
+                  { key: 'povești', nume: 'Povești' },
+                  { key: 'povestiri', nume: 'Povestiri' },
+                  { key: 'momente', nume: 'Momente și schițe' },
+                  { key: 'literatura_copii', nume: 'Literatură copii'},
+                  
+                  // Categorii de non-ficțiune importante
                   { key: 'critica', nume: 'Critică literară' },
+                  { key: 'eseuri', nume: 'Eseuri' },
+                  { key: 'memorii', nume: 'Memorii' },
+                  { key: 'autobiografii', nume: 'Autobiografii' },
+                  { key: 'jurnal', nume: 'Jurnal intim' },
+                  { key: 'scrisori', nume: 'Scrisori' },
+                  
+                  // Categorii științifice și academice
                   { key: 'filosofie', nume: 'Filosofie' },
-                  { key: 'matematica', nume: 'Matematică' },
+                  { key: 'estetica', nume: 'Estetică' },
                   { key: 'studii', nume: 'Studii' },
+                  { key: 'matematica', nume: 'Matematică' },
+                  
+                  // Categorii de traduceri și studii
                   { key: 'traduceri', nume: 'Traduceri' },
+                  { key: 'antologii', nume: 'Antologii' },
+                  { key: 'literatura_universala', nume: 'Literatură universală' },
+                  { key: 'studii_straine', nume: 'Studii în limbi străine' },
+                  
+                  // Categorii de publicistică și jurnalism
+                  { key: 'publicistica', nume: 'Publicistică' },
+                  { key: 'reportaje', nume: 'Reportaje' },
+                  { key: 'note_calatorie', nume: 'Note de calatorie' },
+                  { key: 'conferinte', nume: 'Conferinţe'},
+                  
+                  // Categorii educaționale
+                  { key: 'manuale', nume: 'Manuale' },
+                  { key: 'lucrari_pedagogice', nume: 'Lucrări pedagogice' },
+                  { key: 'broșuri', nume: 'Broșuri' },
+                  
+                  // Categorii de reviste și publicații
+                  { key: 'reviste', nume: 'Reviste' },
+                  { key: 'jurnale', nume: 'Jurnale' },
+                  
+                  // Categorii specializate
+                  { key: 'parodii', nume: 'Parodii' },
+                  { key: 'manuscrise', nume: 'Manuscrise' },
+                  { key: 'discuri', nume: 'Discuri'},
+                  { key: 'ecranizari', nume: 'Ecranizări' },
+                  
+                  // Categorii politice și administrative
                   { key: 'politica', nume: 'Politică' }
                 ];
                 

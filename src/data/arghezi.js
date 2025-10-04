@@ -16,6 +16,11 @@ const arghezi = {
       img: '/scriitori/barbu_ion.webp',
     },
     {
+      name: 'Eugen Lovinescu',
+      key: 'lovinescu',
+      img: '/scriitori/lovinescu_eugen.webp',
+    },
+    {
       name: 'George Bacovia',
       key: 'bacovia',
       img: '/scriitori/bacovia_rezerva.webp',
