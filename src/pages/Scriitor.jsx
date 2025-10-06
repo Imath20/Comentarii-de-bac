@@ -519,6 +519,8 @@ const Scriitor = () => {
   // Galerie preview state
   const [galleryPreviewIdx, setGalleryPreviewIdx] = useState(null);
   const [galleryCurrentIndex, setGalleryCurrentIndex] = useState(0);
+  // Overview mode (show all thumbnails like a task view)
+  const [galleryOverviewOpen, setGalleryOverviewOpen] = useState(false);
   const openGalleryPreview = (idx) => {
     setGalleryPreviewIdx(idx);
     setGalleryCurrentIndex(idx);
@@ -527,6 +529,75 @@ const Scriitor = () => {
     setGalleryPreviewIdx(null);
     setGalleryCurrentIndex(0);
   };
+
+  // Keyboard navigation for gallery modals (left/right, A/D; Space/Enter => forward)
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      const key = e.key;
+
+      // Determine which gallery is active
+      const isImageGalleryOpen = galleryPreviewIdx !== null && Array.isArray(gallery) && gallery.length > 0;
+      const isPoemGalleryOpen = poemGalleryModal.open && Array.isArray(poemGalleryModal.images) && poemGalleryModal.images.length > 0;
+
+      if (!isImageGalleryOpen && !isPoemGalleryOpen) return;
+
+      const goPrev = () => {
+        if (isImageGalleryOpen) {
+          setGalleryCurrentIndex((prev) => (prev === 0 ? gallery.length - 1 : prev - 1));
+        } else if (isPoemGalleryOpen) {
+          setPoemGalleryCurrentIndex((prev) => (prev === 0 ? poemGalleryModal.images.length - 1 : prev - 1));
+        }
+      };
+
+      const goNext = () => {
+        if (isImageGalleryOpen) {
+          setGalleryCurrentIndex((prev) => (prev === gallery.length - 1 ? 0 : prev + 1));
+        } else if (isPoemGalleryOpen) {
+          setPoemGalleryCurrentIndex((prev) => (prev === poemGalleryModal.images.length - 1 ? 0 : prev + 1));
+        }
+      };
+
+      // Tab key opens overview (prevents default focus traversal)
+      if (key === 'Tab') {
+        e.preventDefault();
+        e.stopPropagation();
+        setGalleryOverviewOpen(true);
+        return;
+      }
+
+      // Close overview with Escape
+      if (key === 'Escape' && galleryOverviewOpen) {
+        e.preventDefault();
+        e.stopPropagation();
+        setGalleryOverviewOpen(false);
+        return;
+      }
+
+      // When overview is open, ignore next/prev handlers (selection via click)
+      if (galleryOverviewOpen) return;
+
+      // Map keys
+      const isPrevKey = key === 'ArrowLeft' || key === 'a' || key === 'A';
+      const isNextKey = key === 'ArrowRight' || key === 'd' || key === 'D' || key === ' ' || key === 'Enter';
+
+      if (isPrevKey || isNextKey) {
+        // Prevent page scroll on Space/Arrows while modal is open
+        e.preventDefault();
+        e.stopPropagation();
+      }
+
+      if (isPrevKey) {
+        goPrev();
+      } else if (isNextKey) {
+        goNext();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown, { passive: false });
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [galleryPreviewIdx, gallery, poemGalleryModal, setGalleryCurrentIndex, setPoemGalleryCurrentIndex, galleryOverviewOpen]);
 
   // Navigare către alt scriitor
   const goToScriitor = (key) => {
@@ -993,6 +1064,26 @@ const Scriitor = () => {
           onClick={closeGalleryPreview}
         >
           <div className="scriitor-gallery-modal">
+            {/* Overview overlay for main gallery */}
+            {galleryOverviewOpen && (
+              <div className="scriitor-gallery-overview" onClick={(e) => e.stopPropagation()}>
+                <div className="scriitor-gallery-overview-grid">
+                  {gallery.map((img, idx) => (
+                    <div
+                      key={idx}
+                      className={`scriitor-gallery-overview-item ${idx === galleryCurrentIndex ? 'active' : ''}`}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setGalleryCurrentIndex(idx);
+                        setGalleryOverviewOpen(false);
+                      }}
+                    >
+                      <img src={img} alt={`galerie ${idx + 1}`} />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
             <img
               src={gallery[galleryCurrentIndex]}
               alt="preview galerie"
@@ -1220,6 +1311,26 @@ const Scriitor = () => {
           onClick={closePoemGallery}
         >
           <div className="scriitor-gallery-modal">
+            {/* Overview overlay for poem gallery */}
+            {galleryOverviewOpen && (
+              <div className="scriitor-gallery-overview" onClick={(e) => e.stopPropagation()}>
+                <div className="scriitor-gallery-overview-grid">
+                  {poemGalleryModal.images.map((img, idx) => (
+                    <div
+                      key={idx}
+                      className={`scriitor-gallery-overview-item ${idx === poemGalleryCurrentIndex ? 'active' : ''}`}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setPoemGalleryCurrentIndex(idx);
+                        setGalleryOverviewOpen(false);
+                      }}
+                    >
+                      <img src={img} alt={`poezie ${idx + 1}`} />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
             <img
               src={poemGalleryModal.images[poemGalleryCurrentIndex]}
               alt="galerie poezie"
