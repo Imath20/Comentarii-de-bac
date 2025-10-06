@@ -495,6 +495,8 @@ const Scriitor = () => {
     const currentScrollY = window.scrollY;
     setScrollPosition(currentScrollY);
     
+    setGalleryOverviewOpen(false);
+    setOverviewIndex(startIndex);
     setPoemGalleryModal({ open: true, images, startIndex });
     setPoemGalleryCurrentIndex(startIndex);
     // Previne scroll-ul pe body când modalul este deschis
@@ -504,8 +506,10 @@ const Scriitor = () => {
     document.body.style.width = '100%';
   };
   const closePoemGallery = () => {
+    setGalleryOverviewOpen(false);
     setPoemGalleryModal({ open: false, images: [], startIndex: 0 });
     setPoemGalleryCurrentIndex(0);
+    setOverviewIndex(0);
     // Restaurează scroll-ul pe body
     document.body.style.overflow = 'unset';
     document.body.style.position = 'unset';
@@ -521,13 +525,32 @@ const Scriitor = () => {
   const [galleryCurrentIndex, setGalleryCurrentIndex] = useState(0);
   // Overview mode (show all thumbnails like a task view)
   const [galleryOverviewOpen, setGalleryOverviewOpen] = useState(false);
+  const [overviewIndex, setOverviewIndex] = useState(0);
+  const overviewGridRef = useRef(null);
   const openGalleryPreview = (idx) => {
+    setGalleryOverviewOpen(false);
     setGalleryPreviewIdx(idx);
     setGalleryCurrentIndex(idx);
+    setOverviewIndex(idx);
+    // Previne scroll-ul pe body când modalul este deschis
+    const currentScrollY = window.scrollY;
+    setScrollPosition(currentScrollY);
+    document.body.style.overflow = 'hidden';
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${currentScrollY}px`;
+    document.body.style.width = '100%';
   };
   const closeGalleryPreview = () => {
+    setGalleryOverviewOpen(false);
     setGalleryPreviewIdx(null);
     setGalleryCurrentIndex(0);
+    setOverviewIndex(0);
+    // Restaurează scroll-ul pe body și poziția
+    document.body.style.overflow = 'unset';
+    document.body.style.position = 'unset';
+    document.body.style.top = 'unset';
+    document.body.style.width = 'unset';
+    window.scrollTo(0, scrollPosition);
   };
 
   // Keyboard navigation for gallery modals (left/right, A/D; Space/Enter => forward)
@@ -561,6 +584,12 @@ const Scriitor = () => {
       if (key === 'Tab') {
         e.preventDefault();
         e.stopPropagation();
+        // Initialize selection to current image index depending on which gallery is open
+        if (isImageGalleryOpen) {
+          setOverviewIndex(galleryCurrentIndex);
+        } else if (isPoemGalleryOpen) {
+          setOverviewIndex(poemGalleryCurrentIndex);
+        }
         setGalleryOverviewOpen(true);
         return;
       }
@@ -573,8 +602,68 @@ const Scriitor = () => {
         return;
       }
 
-      // When overview is open, ignore next/prev handlers (selection via click)
-      if (galleryOverviewOpen) return;
+      // When overview is open, allow navigating selection with arrows and confirm with Enter
+      if (galleryOverviewOpen) {
+        if (key === 'ArrowLeft' || key === 'a' || key === 'A') {
+          e.preventDefault();
+          e.stopPropagation();
+          const total = isImageGalleryOpen ? gallery.length : poemGalleryModal.images.length;
+          setOverviewIndex((prev) => (prev === 0 ? total - 1 : prev - 1));
+          return;
+        }
+        if (key === 'ArrowRight' || key === 'd' || key === 'D') {
+          e.preventDefault();
+          e.stopPropagation();
+          const total = isImageGalleryOpen ? gallery.length : poemGalleryModal.images.length;
+          setOverviewIndex((prev) => (prev === total - 1 ? 0 : prev + 1));
+          return;
+        }
+        if (key === 'ArrowUp' || key === 'w' || key === 'W') {
+          e.preventDefault();
+          e.stopPropagation();
+          const total = isImageGalleryOpen ? gallery.length : poemGalleryModal.images.length;
+          let columns = 1;
+          if (overviewGridRef.current) {
+            const styles = window.getComputedStyle(overviewGridRef.current);
+            const cols = styles.getPropertyValue('grid-template-columns');
+            if (cols) columns = cols.trim().split(/\s+/).length;
+          }
+          setOverviewIndex((prev) => {
+            const next = prev - columns;
+            return next < 0 ? 0 : next;
+          });
+          return;
+        }
+        if (key === 'ArrowDown' || key === 's' || key === 'S') {
+          e.preventDefault();
+          e.stopPropagation();
+          const total = isImageGalleryOpen ? gallery.length : poemGalleryModal.images.length;
+          let columns = 1;
+          if (overviewGridRef.current) {
+            const styles = window.getComputedStyle(overviewGridRef.current);
+            const cols = styles.getPropertyValue('grid-template-columns');
+            if (cols) columns = cols.trim().split(/\s+/).length;
+          }
+          setOverviewIndex((prev) => {
+            const next = prev + columns;
+            return next > total - 1 ? total - 1 : next;
+          });
+          return;
+        }
+        if (key === 'Enter' || key === 'NumpadEnter') {
+          e.preventDefault();
+          e.stopPropagation();
+          if (isImageGalleryOpen) {
+            setGalleryCurrentIndex(overviewIndex);
+          } else if (isPoemGalleryOpen) {
+            setPoemGalleryCurrentIndex(overviewIndex);
+          }
+          setGalleryOverviewOpen(false);
+          return;
+        }
+        // Ignore other keys while overview is open
+        return;
+      }
 
       // Map keys
       const isPrevKey = key === 'ArrowLeft' || key === 'a' || key === 'A';
@@ -597,7 +686,17 @@ const Scriitor = () => {
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [galleryPreviewIdx, gallery, poemGalleryModal, setGalleryCurrentIndex, setPoemGalleryCurrentIndex, galleryOverviewOpen]);
+  }, [galleryPreviewIdx, gallery, poemGalleryModal, setGalleryCurrentIndex, setPoemGalleryCurrentIndex, galleryOverviewOpen, overviewIndex]);
+
+  // Ensure the selected overview item stays in view when navigating
+  useEffect(() => {
+    if (!galleryOverviewOpen || !overviewGridRef.current) return;
+    const items = overviewGridRef.current.querySelectorAll('.scriitor-gallery-overview-item');
+    const el = items[overviewIndex];
+    if (el && el.scrollIntoView) {
+      el.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+    }
+  }, [galleryOverviewOpen, overviewIndex]);
 
   // Navigare către alt scriitor
   const goToScriitor = (key) => {
@@ -1066,14 +1165,15 @@ const Scriitor = () => {
           <div className="scriitor-gallery-modal">
             {/* Overview overlay for main gallery */}
             {galleryOverviewOpen && (
-              <div className="scriitor-gallery-overview" onClick={(e) => e.stopPropagation()}>
-                <div className="scriitor-gallery-overview-grid">
+              <div className="scriitor-gallery-overview" onClick={(e) => { e.stopPropagation(); setGalleryOverviewOpen(false); }}>
+                <div className="scriitor-gallery-overview-grid" ref={overviewGridRef} onClick={(e) => e.stopPropagation()}>
                   {gallery.map((img, idx) => (
                     <div
                       key={idx}
-                      className={`scriitor-gallery-overview-item ${idx === galleryCurrentIndex ? 'active' : ''}`}
+                      className={`scriitor-gallery-overview-item ${idx === overviewIndex ? 'active' : ''}`}
                       onClick={(e) => {
                         e.stopPropagation();
+                        setOverviewIndex(idx);
                         setGalleryCurrentIndex(idx);
                         setGalleryOverviewOpen(false);
                       }}
@@ -1100,7 +1200,7 @@ const Scriitor = () => {
               ×
             </button>
                          {/* Buton stânga */}
-             {gallery.length > 1 && (
+              {gallery.length > 1 && !galleryOverviewOpen && (
                <button
                  onClick={(e) => {
                    e.stopPropagation();
@@ -1121,7 +1221,7 @@ const Scriitor = () => {
                </button>
              )}
                          {/* Buton dreapta */}
-             {gallery.length > 1 && (
+              {gallery.length > 1 && !galleryOverviewOpen && (
                <button
                  onClick={(e) => {
                    e.stopPropagation();
@@ -1313,14 +1413,15 @@ const Scriitor = () => {
           <div className="scriitor-gallery-modal">
             {/* Overview overlay for poem gallery */}
             {galleryOverviewOpen && (
-              <div className="scriitor-gallery-overview" onClick={(e) => e.stopPropagation()}>
-                <div className="scriitor-gallery-overview-grid">
+              <div className="scriitor-gallery-overview" onClick={(e) => { e.stopPropagation(); setGalleryOverviewOpen(false); }}>
+                <div className="scriitor-gallery-overview-grid" ref={overviewGridRef} onClick={(e) => e.stopPropagation()}>
                   {poemGalleryModal.images.map((img, idx) => (
                     <div
                       key={idx}
-                      className={`scriitor-gallery-overview-item ${idx === poemGalleryCurrentIndex ? 'active' : ''}`}
+                      className={`scriitor-gallery-overview-item ${idx === overviewIndex ? 'active' : ''}`}
                       onClick={(e) => {
                         e.stopPropagation();
+                        setOverviewIndex(idx);
                         setPoemGalleryCurrentIndex(idx);
                         setGalleryOverviewOpen(false);
                       }}
@@ -1347,7 +1448,7 @@ const Scriitor = () => {
               ×
             </button>
                          {/* Buton stânga */}
-             {poemGalleryModal.images.length > 1 && (
+              {poemGalleryModal.images.length > 1 && !galleryOverviewOpen && (
                <button
                  onClick={(e) => {
                    e.stopPropagation();
@@ -1368,7 +1469,7 @@ const Scriitor = () => {
                </button>
              )}
                          {/* Buton dreapta */}
-             {poemGalleryModal.images.length > 1 && (
+              {poemGalleryModal.images.length > 1 && !galleryOverviewOpen && (
                <button
                  onClick={(e) => {
                    e.stopPropagation();
