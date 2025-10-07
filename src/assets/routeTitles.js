@@ -1,6 +1,6 @@
 // Ordered list of [RegExp, title] pairs, matched against location.pathname
 export const ROUTE_TITLES = [
-  [/^\/$/, 'Home'],
+  [/^\/$/, 'Acasa'],
   [/^\/opere$/, 'Opere'],
   [/^\/opera\//, 'Opera'],
   [/^\/scriitori$/, 'Scriitori'],
@@ -12,7 +12,7 @@ export const ROUTE_TITLES = [
   [/^\/ai$/, 'AI'],
   [/^\/curente$/, 'Curente'],
   [/^\/curent\//, 'Curent'],
-  [/^\/carte(?:\b|\/|$)/, 'BookReader'],
+  [/^\/carte(?:\b|\/|$)/, 'Cititor de carte'],
 ];
 
 export function titleFromPath(pathname) {

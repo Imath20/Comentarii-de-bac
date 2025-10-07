@@ -76,11 +76,20 @@ body.tabs-revealed .tabs-bar {
   padding: 4px;
   border-radius: 4px;
   transition: all 0.2s ease;
+  outline: none;
+  &:focus{
+    outline: none;
+  }
+  /* nudge icon slightly lower to align visually */
+  display: inline-flex;
+  align-items: center;
+  line-height: 0;
+  transform: translateY(1px);
 }
 
 .tabs-hide:hover {
-  background: rgba(124, 79, 43, 0.1);
-  color: rgba(124, 79, 43, 0.9);
+  // background: rgba(124, 79, 43, 0.1);
+  color: rgba(126, 65, 15, 0.9);
 }
 
 .dark-theme .tabs-hide {
@@ -117,12 +126,21 @@ body.tabs-revealed .tabs-bar {
   border: 1px solid rgba(124, 79, 43, 0.14);
   transition: all 0.2s ease;
   position: relative;
+  user-select: none;
 }
 
 .tab-item:hover {
   background: rgba(124, 79, 43, 0.12);
   border-color: rgba(124, 79, 43, 0.2);
   transform: translateY(-1px);
+}
+
+.tab-item[draggable="true"] {
+  -webkit-user-drag: element;
+}
+
+.tab-item.dragging {
+  opacity: 0.75;
 }
 
 .dark-theme .tab-item {
@@ -216,7 +234,7 @@ body.tabs-revealed .tabs-bar {
 }
 
 .tab-close:hover, .tab-new:hover {
-  background: rgba(124, 79, 43, 0.1);
+  // background: rgba(124, 79, 43, 0.1);
   color: rgba(124, 79, 43, 0.9);
 }
 

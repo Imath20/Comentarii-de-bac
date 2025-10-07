@@ -7,7 +7,7 @@
   align-items: center;
   justify-content: center;
   padding: 2rem;
-  z-index: 1000;
+  z-index: 2001; /* above tabs-bar (1100) and navbar */
 }
 
 .subiecte-modal {
