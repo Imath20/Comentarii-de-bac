@@ -297,6 +297,36 @@ const OPERA_JSON_FILES = {
   'Viață ca o pradă': 'viata-ca-o-prada'
 };
 
+// Fallback imagine pentru opera (bazat pe titlu), folosită când navigarea prin taburi
+// pierde location.state și nu mai avem `effectiveOpera.img` în memorie
+const OPERA_IMAGES_BY_TITLE = {
+  'Povestea lui Harap-Alb': '/opere/Harap-Alb.webp',
+  'Moara cu noroc': '/opere/moara-cu-noroc.webp',
+  'Ion': '/opere/Ion.webp',
+  'Enigma Otiliei': '/opere/enigma-otiliei.webp',
+  'Luceafărul': '/opere/Luceafarul.webp',
+  'Plumb': '/opere/plumb.webp',
+  'O scrisoare pierdută': '/opere/scrisoare-pierduta.webp',
+  'Baltagul': '/opere/baltagul.webp',
+  'Ultima noapte de dragoste, întaia noapte de razboi': '/opere/ultima-noapte.webp',
+  'Flori de mucigai': '/opere/flori-mucigai.webp',
+  'Eu nu strivesc corola de minuni a lumii': '/opere/corola_minuni.webp',
+  'Riga crypto si lapona enigel': '/opere/riga-crypto.webp',
+  'Morometii': '/opere/morometii.webp',
+  'Leoaică tânără, iubirea': '/opere/leoaica-iubirea.webp',
+  'Iona': '/opere/iona.webp',
+  'Formele fara fond': '/opere/formele.webp',
+  'Mara': '/opere/mara.webp',
+  'Testament': '/opere/testament-orizontala.webp',
+  'Amintiri din copilărie': '/opere/amintiri-copil.webp',
+  'Răscoala': '/opere/rascoala.webp',
+  'Hanul Ancuţei': '/opere/hanul-ancutei.webp',
+  'Maytreyi': '/opere/maytreyi.webp',
+  'Alexandru Lăpușneanu': '/opere/lapusneanu.webp',
+  'Aci sosi pe vremuri': '/opere/aci-sosi.webp',
+  'În Grădina Ghetsimani': '/opere/gradina-ghetsimani.webp',
+};
+
 // Date detaliate despre opere
 const OPERA_DETAILS = {
   'ion': {
@@ -723,9 +753,38 @@ export default function Opera() {
 
   const initialOpera = location.state && location.state.opera ? location.state.opera : null;
 
+  // Slug din URL sau derivat din titlu
+  const currentSlug = useMemo(() => {
+    return (params && params.slug) ? params.slug : slugify(initialOpera && initialOpera.titlu ? initialOpera.titlu : '');
+  }, [params, initialOpera]);
+
+  // Detalii opera direct din slug (preferat când nu avem location.state)
+  const detailsFromSlug = useMemo(() => {
+    if (!currentSlug) return null;
+    // direct: cheia din OPERA_DETAILS egală cu slug
+    if (OPERA_DETAILS[currentSlug]) return OPERA_DETAILS[currentSlug];
+    // fallback: caută în OPERA_DETAILS după normalizarea titlului către slug
+    for (const [key, details] of Object.entries(OPERA_DETAILS)) {
+      const detSlug = slugify(details.titlu);
+      if (detSlug === currentSlug) return details;
+    }
+    return null;
+  }, [currentSlug]);
+
   const effectiveOpera = useMemo(() => {
     if (initialOpera) return initialOpera;
-    const titleFromSlug = params.slug ? params.slug.replace(/-/g, ' ') : '';
+    if (detailsFromSlug) {
+      const title = detailsFromSlug.titlu || 'Operă';
+      return {
+        titlu: title,
+        autor: detailsFromSlug.autor || '',
+        data: detailsFromSlug.data || '',
+        img: OPERA_IMAGES_BY_TITLE[title] || '',
+        categorie: detailsFromSlug.categorie || '',
+        canonic: detailsFromSlug.canonic,
+      };
+    }
+    const titleFromSlug = currentSlug ? currentSlug.replace(/-/g, ' ') : '';
     return {
       titlu: titleFromSlug ? titleFromSlug.replace(/\b\w/g, (m) => m.toUpperCase()) : 'Operă',
       autor: '',
@@ -734,32 +793,36 @@ export default function Opera() {
       categorie: '',
       canonic: undefined
     };
-  }, [initialOpera, params.slug]);
+  }, [initialOpera, detailsFromSlug, currentSlug]);
 
   const bookSlug = useMemo(() => {
+    // întâi din titlu mapat ca înainte
     const operaTitle = effectiveOpera && effectiveOpera.titlu ? effectiveOpera.titlu : '';
-    return OPERA_JSON_FILES[operaTitle] || null;
-  }, [effectiveOpera]);
+    const byTitle = OPERA_JSON_FILES[operaTitle] || null;
+    if (byTitle) return byTitle;
+    // apoi, dacă avem un slug care corespunde unei chei din detalii, folosește-l
+    if (detailsFromSlug) return currentSlug;
+    return null;
+  }, [effectiveOpera, detailsFromSlug, currentSlug]);
 
   const operaDetails = useMemo(() => {
+    // Preferă detalii obținute din slug
+    if (detailsFromSlug) return detailsFromSlug;
     const operaTitle = effectiveOpera && effectiveOpera.titlu ? effectiveOpera.titlu : '';
     const jsonFile = OPERA_JSON_FILES[operaTitle];
-    
-    // Pentru poezii, nu avem jsonFile, dar avem detalii în OPERA_DETAILS
+
     if (!jsonFile) {
-      // Caută direct în OPERA_DETAILS după titlu
       for (const [key, details] of Object.entries(OPERA_DETAILS)) {
         if (details.titlu === operaTitle) return details;
       }
       return null;
     }
-    
-    // Caută în OPERA_DETAILS după jsonFile
+
     for (const [key, details] of Object.entries(OPERA_DETAILS)) {
       if (key === jsonFile) return details;
     }
     return null;
-  }, [effectiveOpera]);
+  }, [detailsFromSlug, effectiveOpera]);
 
   const handleRead = () => {
     if (isPoemWithPopup) {
@@ -830,7 +893,33 @@ export default function Opera() {
     return false;
   }, [effectiveOpera, operaDetails]);
 
-  const bgImage = effectiveOpera.img ? effectiveOpera.img.replace('/public', '') : '';
+  // Asigură imaginea de fundal: preferă `effectiveOpera.img` (din navigation state),
+  // altfel folosește fallback după titlu
+  // Încarcă/salvează imaginea în sessionStorage pentru persistență între tab switch
+  const storedImg = useMemo(() => {
+    try {
+      return currentSlug ? (sessionStorage.getItem(`opera.img.${currentSlug}`) || '') : '';
+    } catch {
+      return '';
+    }
+  }, [currentSlug]);
+
+  useEffect(() => {
+    if (effectiveOpera && effectiveOpera.img && currentSlug) {
+      try { sessionStorage.setItem(`opera.img.${currentSlug}`, effectiveOpera.img); } catch {}
+    }
+  }, [effectiveOpera, currentSlug]);
+
+  const fallbackImg = (effectiveOpera && effectiveOpera.titlu) ? OPERA_IMAGES_BY_TITLE[effectiveOpera.titlu] : '';
+  const resolvedImg = effectiveOpera.img || storedImg || fallbackImg || '';
+  const bgImage = resolvedImg ? resolvedImg.replace('/public', '') : '';
+
+  // Preload pentru a reafișa rapid după revenirea în tab
+  useEffect(() => {
+    if (!bgImage) return;
+    const img = new Image();
+    img.src = bgImage;
+  }, [bgImage]);
 
   // Găsește profilul autorului (cheie și poză) după nume
   const authorProfile = useMemo(() => {
