@@ -208,6 +208,7 @@
   top: 20px;
   left: 20px;
   z-index: 50;
+  transition: top 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   display: inline-flex;
   // background-color: red !important;
   align-items: center;
@@ -248,12 +249,21 @@
   }
 }
 
+/* Shift back button when tabs are revealed */
+body.tabs-revealed .opera-back-btn {
+  top: calc(20px + var(--tabs-bar-height, 46px));
+}
+
 @media (max-width: 900px) {
   .opera-back-btn {
     top: 72px;
     left: 16px;
     padding: 8px 12px;
     gap: 8px;
+  }
+  
+  body.tabs-revealed .opera-back-btn {
+    top: calc(72px + var(--tabs-bar-height, 46px));
   }
 }
 

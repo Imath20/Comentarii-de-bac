@@ -19,19 +19,34 @@
   opacity: 1;
 }
 
-/* Push layout down when tabs are revealed */
-body.tabs-revealed .navbar {
-  transform: translateY(var(--tabs-bar-height, 46px));
-  transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+/* Push the entire body down when tabs are revealed */
+body.tabs-revealed {
+  padding-top: var(--tabs-bar-height, 46px);
+  transition: padding-top 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-body.tabs-revealed main {
-  margin-top: var(--tabs-bar-height, 46px);
-  transition: margin-top 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+/* Also shift fixed top UI (e.g., navbar) so nothing overlays the tabs */
+body.tabs-revealed .navbar {
+  top: var(--tabs-bar-height, 46px);
+  transition: top 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 body.tabs-revealed .tabs-bar {
   position: fixed;
+}
+
+/* Utilities to shift arbitrary UI when tabs are revealed */
+/* Add these classes to any element that should move with the tabs bar */
+body.tabs-revealed .shift-with-tabs-margin {
+  margin-top: var(--tabs-bar-height, 46px);
+}
+
+body.tabs-revealed .shift-with-tabs-top {
+  top: calc(var(--tabs-bar-height, 46px) + var(--shift-offset, 0px));
+}
+
+body.tabs-revealed .shift-with-tabs-transform {
+  transform: translateY(var(--tabs-bar-height, 46px));
 }
 
 .dark-theme .tabs-bar {

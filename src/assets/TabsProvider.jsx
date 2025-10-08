@@ -129,6 +129,8 @@ export function TabsProvider({ children }) {
 
   // Reveal logic: show when user pulls to very top and drags further up
   const lastScrollYRef = useRef(0);
+  const lastTopArrivalTimeRef = useRef(Date.now() - 5000); // Initialize to 5 seconds ago to allow immediate opening
+  const delay = 2800;
   useEffect(() => {
     const onScroll = () => {
       const y = window.scrollY;
@@ -137,6 +139,11 @@ export function TabsProvider({ children }) {
       if (atTop && lastScrollYRef.current === 0) {
         // noop, wait for wheel/touch to indicate pull
       }
+      // Record the moment when the user returns to the very top from below
+      if (atTop && lastScrollYRef.current > 0) {
+        lastTopArrivalTimeRef.current = Date.now();
+        console.log('User arrived at top, cooldown started');
+      }
       lastScrollYRef.current = y;
     };
     const isAnyModalOpen = () => {
@@ -144,7 +151,26 @@ export function TabsProvider({ children }) {
     };
     const onWheel = (e) => {
       if (isAnyModalOpen()) return;
+      const now = Date.now();
+      const timeSinceTopArrival = now - lastTopArrivalTimeRef.current;
+      
+      // Debug logging
+      console.log('Wheel event:', {
+        scrollY: window.scrollY,
+        deltaY: e.deltaY,
+        timeSinceTopArrival,
+        lastTopArrivalTime: lastTopArrivalTimeRef.current,
+        now
+      });
+      
+      // Block reveal for a short delay after arriving at top
+      if (timeSinceTopArrival < delay) {
+        console.log('Blocked by cooldown, time remaining:', delay - timeSinceTopArrival);
+        return;
+      }
+      
       if (window.scrollY <= 0 && e.deltaY < 0) {
+        console.log('Opening tabs via wheel');
         setTabs(s => ({ ...s, revealed: true }));
       }
     };
@@ -154,6 +180,9 @@ export function TabsProvider({ children }) {
     };
     const onTouchMove = (e) => {
       if (isAnyModalOpen()) return;
+      const now = Date.now();
+      // Block reveal for a short delay after arriving at top
+      if (now - lastTopArrivalTimeRef.current < delay) return;
       if (window.scrollY <= 0 && touchStartY != null) {
         const dy = e.touches[0].clientY - touchStartY;
         if (dy > 24) setTabs(s => ({ ...s, revealed: true }));
@@ -171,7 +200,11 @@ export function TabsProvider({ children }) {
     };
   }, []);
 
-  const hideTabs = useCallback(() => setTabs(s => ({ ...s, revealed: false })), []);
+  const hideTabs = useCallback(() => {
+    // Start cooldown when tabs are explicitly hidden to avoid immediate reopen
+    try { lastTopArrivalTimeRef.current = Date.now(); } catch {}
+    return setTabs(s => ({ ...s, revealed: false }));
+  }, []);
 
   // Auto-hide tabs after 3 seconds of inactivity
   const autoHideTimerRef = useRef(null);
@@ -207,12 +240,32 @@ export function TabsProvider({ children }) {
       return !!document.querySelector('.subiecte-modal-overlay, .modal, .popup, [role="dialog"], [aria-modal="true"]');
     };
 
+    let resizeObserver;
+    const syncTabsHeight = () => {
+      try {
+        const el = document.querySelector('.tabs-bar');
+        if (el) {
+          const height = el.getBoundingClientRect().height;
+          if (height && Number.isFinite(height)) {
+            body.style.setProperty('--tabs-bar-height', `${Math.round(height)}px`);
+          }
+        }
+      } catch {}
+    };
+
     if (tabs.revealed && !isAnyModalOpen()) {
+      // Set CSS var to actual height before shifting layout
+      syncTabsHeight();
+      // Keep CSS var in sync if the bar resizes (responsive, fonts, etc.)
+      try {
+        const el = document.querySelector('.tabs-bar');
+        if (el && 'ResizeObserver' in window) {
+          resizeObserver = new ResizeObserver(() => syncTabsHeight());
+          resizeObserver.observe(el);
+        }
+      } catch {}
+
       body.classList.add('tabs-revealed');
-      // Keep this in sync with the actual visual height of the tabs bar
-      if (!getComputedStyle(body).getPropertyValue('--tabs-bar-height')) {
-        body.style.setProperty('--tabs-bar-height', '46px');
-      }
       resetAutoHideTimer();
     } else {
       body.classList.remove('tabs-revealed');
@@ -225,6 +278,7 @@ export function TabsProvider({ children }) {
       if (autoHideTimerRef.current) {
         clearTimeout(autoHideTimerRef.current);
       }
+      try { if (resizeObserver) resizeObserver.disconnect(); } catch {}
     };
   }, [tabs.revealed, resetAutoHideTimer]);
 
@@ -271,6 +325,10 @@ export function TabsProvider({ children }) {
       }
       if (shiftKey && e.key === 'Tab') {
         e.preventDefault();
+        // When toggling with Shift+Tab, hide and start cooldown to prevent immediate reopen
+        if (tabs.revealed) {
+          try { lastTopArrivalTimeRef.current = Date.now(); } catch {}
+        }
         setTabs(s => ({ ...s, revealed: !s.revealed }));
         resetAutoHideTimer();
       }
