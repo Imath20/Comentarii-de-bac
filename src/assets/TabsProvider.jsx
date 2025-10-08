@@ -173,7 +173,7 @@ export function TabsProvider({ children }) {
 
   const hideTabs = useCallback(() => setTabs(s => ({ ...s, revealed: false })), []);
 
-  // Auto-hide tabs after 5 seconds of inactivity
+  // Auto-hide tabs after 3 seconds of inactivity
   const autoHideTimerRef = useRef(null);
   const resetAutoHideTimer = useCallback(() => {
     if (autoHideTimerRef.current) {
@@ -192,6 +192,13 @@ export function TabsProvider({ children }) {
       autoHideTimerRef.current = null;
     }
   }, []);
+
+  // Reset timer on any user interaction
+  const handleUserInteraction = useCallback(() => {
+    if (tabs.revealed) {
+      resetAutoHideTimer();
+    }
+  }, [tabs.revealed, resetAutoHideTimer]);
 
   // When revealed, push the whole page (including navbar) down by the tabs bar height
   useEffect(() => {
@@ -246,22 +253,26 @@ export function TabsProvider({ children }) {
     return () => observer.disconnect();
   }, [tabs.revealed]);
 
+  // Note: cooldown resets are scoped to explicit tab interactions (TabsBar) and keyboard shortcuts.
+
   // Hotkeys: Ctrl+M new tab, Ctrl+Q close current, Ctrl+~ toggle, Ctrl+Shift+1-9 switch, Ctrl+Left/Right navigate
   useEffect(() => {
     const onKeyDown = (e) => {
-      if (!e.ctrlKey) return;
-      
-      if (e.key.toLowerCase() === 'm') {
+      const shiftKey = e.shiftKey;
+      const ctrlKey = e.ctrlKey || e.metaKey; // Support both Ctrl and Cmd (Mac)
+
+      if (shiftKey && e.key.toLowerCase() === 'm') {
         e.preventDefault();
         openNewTab('/');
       }
-      if (e.key.toLowerCase() === 'q') {
+      if (shiftKey && e.key.toLowerCase() === 'q') {
         e.preventDefault();
         if (tabs.activeId) closeTab(tabs.activeId);
       }
-      if (e.key === '~' || e.key === '`') {
+      if (shiftKey && e.key === 'Tab') {
         e.preventDefault();
         setTabs(s => ({ ...s, revealed: !s.revealed }));
+        resetAutoHideTimer();
       }
       
       // Ctrl+Shift+Number keys 1-9 to switch to specific tab positions
@@ -270,31 +281,65 @@ export function TabsProvider({ children }) {
         e.preventDefault();
         const tabIndex = num - 1;
         if (tabIndex < tabs.tabs.length) {
+          // Show tabs if not revealed
+          if (!tabs.revealed) {
+            setTabs(s => ({ ...s, revealed: true }));
+          }
           activateTab(tabs.tabs[tabIndex].id);
+          resetAutoHideTimer();
         }
       }
       
-      // Arrow keys for tab navigation
-      if (e.key === 'ArrowLeft') {
+      // Arrow keys for tab navigation (Ctrl+Arrow or Shift+Arrow)
+      const isArrowKey = e.key === 'ArrowLeft' || e.key === 'ArrowRight';
+      const isTabNavigation = (ctrlKey || shiftKey) && isArrowKey;
+      
+      if (isTabNavigation) {
+        e.preventDefault();
+        
+        // Show tabs if not revealed
+        if (!tabs.revealed) {
+          setTabs(s => ({ ...s, revealed: true }));
+        }
+        
+        const currentIndex = tabs.tabs.findIndex(t => t.id === tabs.activeId);
+        let targetIndex;
+        
+        if (e.key === 'ArrowLeft') {
+          targetIndex = currentIndex > 0 ? currentIndex - 1 : tabs.tabs.length - 1;
+        } else { // ArrowRight
+          targetIndex = currentIndex < tabs.tabs.length - 1 ? currentIndex + 1 : 0;
+        }
+        
+        if (tabs.tabs[targetIndex]) {
+          activateTab(tabs.tabs[targetIndex].id);
+          resetAutoHideTimer();
+        }
+      }
+      
+      // Legacy arrow key navigation (only when tabs are already revealed)
+      if (!ctrlKey && !shiftKey && e.key === 'ArrowLeft' && tabs.revealed) {
         e.preventDefault();
         const currentIndex = tabs.tabs.findIndex(t => t.id === tabs.activeId);
         const prevIndex = currentIndex > 0 ? currentIndex - 1 : tabs.tabs.length - 1;
         if (tabs.tabs[prevIndex]) {
           activateTab(tabs.tabs[prevIndex].id);
+          resetAutoHideTimer();
         }
       }
-      if (e.key === 'ArrowRight') {
+      if (!ctrlKey && !shiftKey && e.key === 'ArrowRight' && tabs.revealed) {
         e.preventDefault();
         const currentIndex = tabs.tabs.findIndex(t => t.id === tabs.activeId);
         const nextIndex = currentIndex < tabs.tabs.length - 1 ? currentIndex + 1 : 0;
         if (tabs.tabs[nextIndex]) {
           activateTab(tabs.tabs[nextIndex].id);
+          resetAutoHideTimer();
         }
       }
     };
     window.addEventListener('keydown', onKeyDown);
     return () => window.removeEventListener('keydown', onKeyDown);
-  }, [openNewTab, closeTab, tabs.activeId, tabs.tabs, activateTab]);
+  }, [openNewTab, closeTab, tabs.activeId, tabs.tabs, activateTab, tabs.revealed]);
 
   const value = useMemo(() => ({
     tabs: tabs.tabs,
@@ -309,7 +354,8 @@ export function TabsProvider({ children }) {
     hideTabs,
     resetAutoHideTimer,
     cancelAutoHide,
-  }), [tabs, openNewTab, closeTab, activateTab, setTabTitle, reorderTabs, hideTabs, resetAutoHideTimer, cancelAutoHide]);
+    handleUserInteraction,
+  }), [tabs, openNewTab, closeTab, activateTab, setTabTitle, reorderTabs, hideTabs, resetAutoHideTimer, cancelAutoHide, handleUserInteraction]);
 
   return (
     <TabsContext.Provider value={value}>

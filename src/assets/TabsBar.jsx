@@ -3,7 +3,7 @@ import { ChevronDown } from 'lucide-react';
 import { useTabs } from './TabsProvider';
 
 export default function TabsBar() {
-  const { tabs, activeId, revealed, setRevealed, openNewTab, closeTab, activateTab, resetAutoHideTimer, cancelAutoHide, reorderTabs } = useTabs();
+  const { tabs, activeId, revealed, setRevealed, openNewTab, closeTab, activateTab, resetAutoHideTimer, cancelAutoHide, reorderTabs, handleUserInteraction } = useTabs();
   const dragIdRef = useRef(null);
 
   return (
@@ -18,9 +18,9 @@ export default function TabsBar() {
         <div
           className="tabs-list"
           role="tablist"
-          onClick={resetAutoHideTimer}
+          onClick={handleUserInteraction}
           onMouseEnter={cancelAutoHide}
-          onMouseLeave={resetAutoHideTimer}
+          onMouseLeave={handleUserInteraction}
         >
           {tabs.map((tab, index) => (
             <div
@@ -51,23 +51,23 @@ export default function TabsBar() {
               }}
               onDragEnd={() => {
                 dragIdRef.current = null;
-                resetAutoHideTimer();
+                handleUserInteraction();
                 const el = document.querySelector(`[data-tab-id="${tab.id}"]`);
                 if (el) el.classList.remove('dragging');
               }}
               onClick={(e) => {
                 e.stopPropagation();
                 activateTab(tab.id);
-                resetAutoHideTimer();
+                handleUserInteraction();
               }}
               title={`${tab.path} (Ctrl+Shift+${index + 1})`}
             >
               <span className="tab-number">{index + 1}</span>
               <span className="tab-title">{tab.title}</span>
-              <button className="tab-close" aria-label="Închide fila" onClick={(e) => { e.stopPropagation(); closeTab(tab.id); resetAutoHideTimer(); }}>✕</button>
+              <button className="tab-close" aria-label="Închide fila" onClick={(e) => { e.stopPropagation(); closeTab(tab.id); handleUserInteraction(); }}>✕</button>
             </div>
           ))}
-          <button className="tab-new" onClick={(e) => { e.stopPropagation(); openNewTab('/'); resetAutoHideTimer(); }} aria-label="Fila nouă (Ctrl+M)">＋</button>
+          <button className="tab-new" onClick={(e) => { e.stopPropagation(); openNewTab('/'); handleUserInteraction(); }} aria-label="Fila nouă (Ctrl+M)">＋</button>
         </div>
       </div>
     </div>
