@@ -182,7 +182,7 @@ export function TabsProvider({ children }) {
     if (tabs.revealed) {
       autoHideTimerRef.current = setTimeout(() => {
         setTabs(s => ({ ...s, revealed: false }));
-      }, 7000);
+      }, 3000);
     }
   }, [tabs.revealed]);
 
