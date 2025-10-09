@@ -315,13 +315,19 @@ export function TabsProvider({ children }) {
       const shiftKey = e.shiftKey;
       const ctrlKey = e.ctrlKey || e.metaKey; // Support both Ctrl and Cmd (Mac)
 
-      if (shiftKey && e.key.toLowerCase() === 'm') {
+      if (shiftKey && e.key.toLowerCase() === 't' && tabs.revealed) {
         e.preventDefault();
+        // Start cooldown when opening a new tab via Shift+M to prevent immediate reopen via scroll
+        try { lastTopArrivalTimeRef.current = Date.now(); } catch {}
         openNewTab('/');
+        resetAutoHideTimer();
       }
-      if (shiftKey && e.key.toLowerCase() === 'q') {
+      if (shiftKey && e.key.toLowerCase() === 'w' && tabs.revealed) {
         e.preventDefault();
+        // Start cooldown when closing via Shift+Q to prevent immediate reopen via scroll
+        try { lastTopArrivalTimeRef.current = Date.now(); } catch {}
         if (tabs.activeId) closeTab(tabs.activeId);
+        resetAutoHideTimer();
       }
       if (shiftKey && e.key === 'Tab') {
         e.preventDefault();

@@ -126,7 +126,15 @@ body.tabs-revealed .shift-with-tabs-transform {
   /* edge fade for overflow */
   mask-image: linear-gradient(90deg, #000 0, #000 calc(100% - 24px), rgba(0,0,0,0) 100%);
   -webkit-mask-image: linear-gradient(90deg, #000 0, #000 calc(100% - 24px), rgba(0,0,0,0) 100%);
-  scrollbar-width: thin;
+  /* hide scrollbar but keep scroll functional */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE 10+ */
+}
+
+/* hide scrollbar in WebKit-based browsers */
+.tabs-list::-webkit-scrollbar {
+  width: 0;
+  height: 0;
 }
 
 .tab-item {
