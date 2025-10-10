@@ -23,7 +23,7 @@ const rebreanu = {
     {
       name: 'Eugen Lovinescu',
       key: 'lovinescu',
-      img: '/scriitori/lovinescu_eugen.webp',
+      img: '/scriitori/eugen_lovinescu.webp',
     },
     {
       name: 'George Bacovia',
