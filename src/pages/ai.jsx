@@ -94,16 +94,12 @@ export default function AI() {
     setEvaluation(null);
 
     try {
-      // Try different approaches to avoid CORS
-      const response = await fetch('https://6000-firebase-studio-1755154591324.cluster-axf5tvtfjjfekvhwxwkkkzsk2y.cloudworkstations.dev/evaluate', {
+      const response = await fetch('https://romana-ai.vercel.app/evaluate', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
-          'Origin': window.location.origin,
         },
-        mode: 'cors',
-        credentials: 'omit',
         body: JSON.stringify({
           ...formData,
           inputType
@@ -118,29 +114,6 @@ export default function AI() {
       }
     } catch (error) {
       console.error('Error:', error);
-      
-      // Try alternative approach without CORS
-      try {
-        console.log('Trying alternative approach...');
-        const response2 = await fetch('https://6000-firebase-studio-1755154591324.cluster-axf5tvtfjjfekvhwxwkkkzsk2y.cloudworkstations.dev/evaluate', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            ...formData,
-            inputType
-          }),
-        });
-
-        if (response2.ok) {
-          const result = await response2.json();
-          setEvaluation(result);
-          return;
-        }
-      } catch (error2) {
-        console.error('Alternative approach also failed:', error2);
-      }
       
       // Check if it's a CORS error
       if (error.message.includes('CORS') || error.message.includes('Failed to fetch')) {
