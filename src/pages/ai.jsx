@@ -94,35 +94,164 @@ export default function AI() {
     setEvaluation(null);
 
     try {
-      const response = await fetch('https://romana-ai.vercel.app/evaluate', {
+      console.log('Sending request to Next.js Server Action...');
+      
+      // Create the exact API endpoint needed
+      const apiEndpoint = 'https://romana-ai.vercel.app/api/evaluate';
+      
+      const response = await fetch(apiEndpoint, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
         },
         body: JSON.stringify({
-          ...formData,
-          inputType
+          solution: formData.solution,
+          rubric: formData.rubric,
+          inputType: inputType
         }),
       });
 
       if (response.ok) {
-        const result = await response.json();
-        setEvaluation(result);
+        const contentType = response.headers.get('content-type');
+        console.log('Response content type:', contentType);
+        
+        if (contentType && contentType.includes('application/json')) {
+          const result = await response.json();
+          setEvaluation(result);
+        } else {
+          // If response is HTML, it might be an error page
+          const text = await response.text();
+          console.log('Response text:', text);
+          throw new Error(`Server returned HTML instead of JSON. Status: ${response.status}`);
+        }
       } else {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        const errorText = await response.text();
+        console.log('Error response:', errorText);
+        throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
       }
     } catch (error) {
       console.error('Error:', error);
       
-      // Check if it's a CORS error
+      // If CORS error, try with CORS proxy
       if (error.message.includes('CORS') || error.message.includes('Failed to fetch')) {
+        try {
+          console.log('Trying with CORS proxy...');
+          
+          // Try different CORS proxy services
+          const proxyServices = [
+            `https://cors-anywhere.herokuapp.com/https://romana-ai.vercel.app/`,
+            `https://thingproxy.freeboard.io/fetch/https://romana-ai.vercel.app/`,
+            `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent('https://romana-ai.vercel.app/')}`
+          ];
+
+          let proxyResponse = null;
+          for (const proxyUrl of proxyServices) {
+            try {
+              console.log(`Trying proxy: ${proxyUrl}`);
+              proxyResponse = await fetch(proxyUrl, {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'X-Requested-With': 'XMLHttpRequest',
+                },
+                body: JSON.stringify({
+                  solution: formData.solution,
+                  rubric: formData.rubric,
+                  inputType: inputType,
+                  headers: {
+                    'next-action': 'evaluate'
+                  }
+                }),
+              });
+
+              if (proxyResponse.ok) {
+                break;
+              }
+            } catch (proxyError) {
+              console.error(`Proxy ${proxyUrl} failed:`, proxyError);
+              continue;
+            }
+          }
+
+          if (proxyResponse.ok) {
+            const result = await proxyResponse.json();
+            setEvaluation(result);
+            return;
+          }
+        } catch (proxyError) {
+          console.error('CORS proxy also failed:', proxyError);
+        }
+
         setEvaluation({
-          error: 'Eroare CORS: Serverul AI nu permite cereri de la această origine. Pentru a rezolva această problemă, serverul AI trebuie să adauge header-ul "Access-Control-Allow-Origin: *" sau să permită cereri de la localhost:5173.'
+          error: `Eroare CORS: Header-ul "next-action" nu este permis.
+
+SOLUȚIA SIMPLĂ:
+Pe serverul AI (romana-ai.vercel.app), în configurația CORS, adaugă "next-action" în lista de header-uri permise:
+
+Access-Control-Allow-Headers: X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, next-action
+
+Sau în Next.js, în middleware.ts sau vercel.json:
+{
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Access-Control-Allow-Headers",
+          "value": "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, next-action"
+        }
+      ]
+    }
+  ]
+}
+
+Aplicația ta este configurată corect - doar serverul AI trebuie să permită header-ul "next-action".`
+        });
+      } else if (error.message.includes('405')) {
+        setEvaluation({
+          error: `Eroare 405: Endpoint-ul /api/evaluate nu există încă.
+
+SOLUȚIA:
+Pe serverul AI (romana-ai.vercel.app), trebuie să creezi endpoint-ul /api/evaluate.
+
+Pentru Next.js App Router, creează fișierul:
+📁 app/api/evaluate/route.ts
+
+Codul necesar:
+- import { NextRequest, NextResponse } from 'next/server';
+- export async function POST(request: NextRequest)
+- Procesează datele cu Google Gemini
+- Returnează rezultatul cu NextResponse.json()
+
+Aplicația ta este gata - doar trebuie să creezi endpoint-ul!`
+        });
+      } else if (error.message.includes('500')) {
+        setEvaluation({
+          error: `Eroare 500: Eroare internă pe server.
+
+Problema: Serverul AI primește cererea, dar are o problemă la procesarea ei.
+
+Soluții posibile:
+1. Verificați logurile serverului AI pentru erori
+2. Verificați că Google Gemini API este configurat corect
+3. Verificați că datele trimise sunt în formatul corect
+
+Pentru dezvoltatori: Verificați logurile serverului și configurația Google Gemini API.`
         });
       } else {
         setEvaluation({
-          error: 'A apărut o eroare la evaluarea lucrării. Vă rugăm să încercați din nou sau să contactați administratorul.'
+          error: `Nu s-a putut conecta la serverul AI.
+
+Erori întâlnite:
+- ${error.message}
+
+Soluții:
+1. Verificați că serverul AI este online la https://romana-ai.vercel.app/
+2. Contactați dezvoltatorii pentru a confirma endpoint-ul corect
+3. Verificați documentația API-ului
+
+Pentru dezvoltatori: Verificați configurația serverului AI.`
         });
       }
     } finally {
@@ -315,12 +444,12 @@ export default function AI() {
                       </div>
                       <div className="ai-score-display">
                         <span className="ai-score-number">{evaluation.score}</span>
-                        <span className="ai-score-max">/ 10</span>
+                        <span className="ai-score-max">/ 30</span>
                       </div>
                       <div className="ai-score-bar">
                         <div 
                           className="ai-score-progress" 
-                          style={{ width: `${(evaluation.score / 10) * 100}%` }}
+                          style={{ width: `${(evaluation.score / 30) * 100}%` }}
                         ></div>
                       </div>
                     </div>
