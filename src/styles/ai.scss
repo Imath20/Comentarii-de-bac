@@ -1,8 +1,8 @@
 // AI Page Styles - Beautiful Design
 
 .ai-container {
-  max-width: 1800px;
-  min-width: 1200px;
+  width: 1400px;
+  max-width: 1400px;
   margin: 0 auto;
   padding: 2rem 0;
   display: flex;
@@ -702,18 +702,22 @@
 // Responsive Design
 @media (max-width: 1600px) {
   .ai-container {
-    max-width: 1400px;
+    width: 1200px;
+    max-width: 1200px;
   }
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 1300px) {
   .ai-container {
+    width: 1000px;
     max-width: 1000px;
   }
 }
 
 @media (max-width: 768px) {
   .ai-container {
+    width: 100%;
+    max-width: 100%;
     padding: 1rem;
     gap: 2rem;
   }
