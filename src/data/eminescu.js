@@ -113,7 +113,6 @@ const eminescu = {
       author: 'Mihai Eminescu',
       text: 'Am scris poezia "Glossă". Gânduri despre timp și viață.',
       image: '/opere scriitori/Glosa.webp', 
-      likes: 1879,
       reactions: [
         { friendKey: 'creanga', reaction: 'love' },
         { friendKey: 'slavici', reaction: 'like' },

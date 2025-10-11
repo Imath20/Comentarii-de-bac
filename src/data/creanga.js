@@ -112,7 +112,6 @@ const creanga = {
       author: 'Ion Creangă',
       text: 'Am început să scriu "Amintiri din copilărie". Vreau să îmi amintesc vremurile frumoase de mic, să le pun pe hârtie pentru alții să le citească, drăgăliță-Doamne!',
       image: '/opere/amintiri-copil.webp',
-      likes: 1881,
       reactions: [
         { friendKey: 'eminescu', reaction: 'love' },
         { friendKey: 'slavici', reaction: 'like' },

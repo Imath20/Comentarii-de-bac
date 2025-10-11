@@ -96,6 +96,66 @@ const blaga = {
         },
       ],
     },
+    {
+      id: 2,
+      date: '1919',
+      author: 'Lucian Blaga',
+      text: '„Lumina ce-o simt năvălindu-mi în piept când te văd- minunato...”\nAzi am scris aceste versuri despre taina care se aprinde în om când iubirea devine rază.\nLumina nu doar luminează lumea, o face să existe. ✨',
+      image: '/opere scriitori/lumina.webp', 
+      reactions: [
+        { friendKey: 'arghezi', reaction: 'love' },
+        { friendKey: 'barbu', reaction: 'like' },
+        { friendKey: 'rebreanu', reaction: 'wow' },
+        { friendKey: 'lovinescu', reaction: 'clap' },
+        { friendKey: 'calinescu', reaction: 'cool' },
+        { friendKey: 'petrescu', reaction: 'ador' },
+        { friendKey: 'bacovia', reaction: 'fire' },
+      ],
+      comments: [
+        {
+          author: 'Ion Barbu',
+          key: 'barbu',
+          text: 'Formidabil cum ai transformat lumina în geometrie vie. E ca un cristal care respiră poezie.',
+        },
+        {
+          author: 'Eugen Lovinescu',
+          key: 'lovinescu',
+          text: 'În estetica ta se simte sinteza dintre tradiție și modernism. Poezia ta e o metafizică a luminii, o nouă direcție pentru lirica românească.',
+        },
+        {
+          author: 'George Calinescu',
+          key: 'calinescu',
+          text: 'Într-o lume în care lumina e doar fenomen fizic, tu o transformi în conștiință. Interesantă viziune, aproape filozofică.',
+        },
+      ],
+      isPoem: true,
+      poemTitle: 'Lumina',
+      poemText: `Lumina ce-o simt
+năvălindu-mi în piept când te vad,
+oare nu e un strop din lumina
+creată în ziua dintâi,
+din lumina aceea-nsetată adânc de viață?
+
+Nimicul zăcea-n agonie
+când singur plutea-ntuneric și dat-a
+un semn Nepătrunsul:
+"Să fie lumină!"
+
+O mare
+și-un vifor nebun de lumină
+facutu-s-a-n clipa:
+o sete era de pacate, de-aventuri, de doruri, de patimi,
+o sete de lume și soare.
+
+Dar unde-a pierit orbitoarea
+lumină de-atunci - cine știe?
+
+Lumina ce-o simt năvălindu-mi
+în piept când te vad - minunato,
+e poate ca ultimul strop
+din lumina creată în ziua dintâi.`,
+      poemImages: ['/opere scriitori/lumina.webp']
+    },
   ],
 };
 
