@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Layout from '../assets/Layout';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import ScriitoriHoraCanvas from '../assets/ScriitoriHoraCanvas';
+import CurenteWheel from '../assets/CurenteWheel';
 import '../styles/style.scss';
 
 const scriitoriList = [
@@ -537,6 +538,36 @@ const Index = () => {
           Vezi toți scriitorii
         </button>
       </section>
+
+      {/* Secțiunea Curente */}
+      <section className={`index-section ${darkTheme ? 'dark-theme' : ''}`}>
+        <h2 className={`index-section-title ${darkTheme ? 'dark-theme' : ''}`}>Curente</h2>
+        <div className={`index-curente-container ${darkTheme ? 'dark-theme' : ''}`}>
+          <div className="index-curente-header">
+            <div className={`index-curente-desc ${darkTheme ? 'dark-theme' : ''}`}>
+              Explorează curentele literare românești prin roata interactivă
+            </div>
+          </div>
+          <CurenteWheel darkTheme={darkTheme} />
+          <button
+            onClick={() => navigate('/curente')}
+            className={`index-primary-button ${darkTheme ? 'dark-theme' : ''}`}
+            onMouseOver={e => {
+              e.currentTarget.style.background = darkTheme ? 'rgba(80,40,0,0.98)' : '#ffd591';
+              e.currentTarget.style.boxShadow = '0 4px 24px 0 rgba(124,79,43,0.18)';
+              e.currentTarget.style.transform = 'scale(1.045)';
+            }}
+            onMouseOut={e => {
+              e.currentTarget.style.background = darkTheme ? 'rgba(47,24,0,0.92)' : 'rgba(255,179,71,0.92)';
+              e.currentTarget.style.boxShadow = '0 2px 16px 0 rgba(124, 79, 43, 0.10)';
+              e.currentTarget.style.transform = 'scale(1)';
+            }}
+          >
+            Vezi toate curentele
+          </button>
+        </div>
+      </section>
+
       <section className={`index-section ${darkTheme ? 'dark-theme' : ''}`}>
         <h2 className={`index-section-title ${darkTheme ? 'dark-theme' : ''}`}>Subiecte</h2>
         <div className="index-subiecte-grid">
