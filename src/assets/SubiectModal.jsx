@@ -7,13 +7,33 @@ export default function SubiectModal({ isOpen, subiect, darkTheme, onClose }) {
 
     useEffect(() => {
         if (isOpen) {
+            // Store current scroll position
+            const scrollY = window.scrollY;
+            
+            // Prevent background scroll by fixing the body
+            document.body.style.position = 'fixed';
+            document.body.style.top = `-${scrollY}px`;
+            document.body.style.width = '100%';
             document.body.style.overflow = 'hidden';
-        } else {
-            document.body.style.overflow = '';
+            
+            // Store scroll position for restoration
+            document.body.setAttribute('data-modal-scroll-y', scrollY.toString());
+            
+            return () => {
+                // Restore scroll position and body styles when modal closes
+                const savedScrollY = parseInt(document.body.getAttribute('data-modal-scroll-y') || '0');
+                
+                document.body.style.position = '';
+                document.body.style.top = '';
+                document.body.style.width = '';
+                document.body.style.overflow = '';
+                
+                document.body.removeAttribute('data-modal-scroll-y');
+                
+                // Restore scroll position
+                window.scrollTo(0, savedScrollY);
+            };
         }
-        return () => {
-            document.body.style.overflow = '';
-        };
     }, [isOpen]);
 
     const getLongText = (s) => {
@@ -57,22 +77,24 @@ export default function SubiectModal({ isOpen, subiect, darkTheme, onClose }) {
                         </div>
                     </div>
                     <div className="subiecte-modal-right">
-                        <div className="subiecte-cerinte-header">Cerințe</div>
-                        <ol className={`subiecte-cerinte-list ${darkTheme ? 'dark-theme' : ''}`}>
-                            {getCerințe(subiect).map((c, i) => (
-                                <li key={i}>{c}</li>
-                            ))}
-                        </ol>
-                        {getPunctaj(subiect).length > 0 && (
-                            <>
-                                <div className="subiecte-punctaj-header">Punctaj</div>
-                                <ol className={`subiecte-punctaj-list ${darkTheme ? 'dark-theme' : ''}`}>
-                                    {getPunctaj(subiect).map((p, i) => (
-                                        <li key={i}>{p} puncte</li>
-                                    ))}
-                                </ol>
-                            </>
-                        )}
+                        <div className="subiecte-modal-right-content">
+                            <div className="subiecte-cerinte-header">Cerințe</div>
+                            <ol className={`subiecte-cerinte-list ${darkTheme ? 'dark-theme' : ''}`}>
+                                {getCerințe(subiect).map((c, i) => (
+                                    <li key={i}>{c}</li>
+                                ))}
+                            </ol>
+                            {getPunctaj(subiect).length > 0 && (
+                                <>
+                                    <div className="subiecte-punctaj-header">Punctaj</div>
+                                    <ol className={`subiecte-punctaj-list ${darkTheme ? 'dark-theme' : ''}`}>
+                                        {getPunctaj(subiect).map((p, i) => (
+                                            <li key={i}>{p} puncte</li>
+                                        ))}
+                                    </ol>
+                                </>
+                            )}
+                        </div>
                         <div className="subiecte-modal-actions">
                             <button
                                 className={`subiecte-ai-btn ${darkTheme ? 'dark-theme' : ''}`}

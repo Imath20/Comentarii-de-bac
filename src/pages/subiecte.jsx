@@ -137,10 +137,15 @@ export default function Subiecte() {
     }, [darkTheme]);
 
     useEffect(() => {
-        const onScroll = () => setScrolled(window.scrollY > 10);
+        const onScroll = () => {
+            // Don't change navbar state when modal is open
+            if (!isModalOpen) {
+                setScrolled(window.scrollY > 10);
+            }
+        };
         window.addEventListener('scroll', onScroll);
         return () => window.removeEventListener('scroll', onScroll);
-    }, []);
+    }, [isModalOpen]);
 
     // Preia filtrele din URL (query sau hash) și setează filtrele inițiale
     useEffect(() => {
@@ -204,13 +209,11 @@ export default function Subiecte() {
     const openSubiectModal = (subiect) => {
         setActiveSubiect(subiect);
         setIsModalOpen(true);
-        document.body.style.overflow = 'hidden';
     };
 
     const closeSubiectModal = () => {
         setIsModalOpen(false);
         setActiveSubiect(null);
-        document.body.style.overflow = '';
     };
 
     return (
