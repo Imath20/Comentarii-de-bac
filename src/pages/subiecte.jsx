@@ -144,8 +144,15 @@ export default function Subiecte() {
     const [activeSubiect, setActiveSubiect] = useState(null);
 
     useEffect(() => {
+        // Add transition class for smooth theme change
+        document.body.classList.add('theme-transitioning');
         document.body.classList.toggle('dark-theme', darkTheme);
         localStorage.setItem('theme', darkTheme ? 'dark' : 'light');
+
+        // Remove transition class after animation completes
+        setTimeout(() => {
+            document.body.classList.remove('theme-transitioning');
+        }, 400);
     }, [darkTheme]);
 
     useEffect(() => {
@@ -206,11 +213,11 @@ export default function Subiecte() {
         const searchLower = searchTerm.toLowerCase();
         const titluLower = subiect.titlu ? subiect.titlu.toLowerCase() : '';
         const descriereLower = subiect.descriere ? subiect.descriere.toLowerCase() : '';
-        
-        const matchesSearch = !searchTerm || 
+
+        const matchesSearch = !searchTerm ||
             titluLower.includes(searchLower) ||
             descriereLower.includes(searchLower);
-            
+
         const matchesTip = selectedTip === 'toate' || subiect.numarSubiect.toString() === selectedTip;
         const matchesAn = selectedAn === 'toate' || subiect.an.toString() === selectedAn;
         const matchesSesiune = selectedSesiune === 'toate' || subiect.sesiune === selectedSesiune;
@@ -252,240 +259,242 @@ export default function Subiecte() {
 
     return (
         <Layout darkTheme={darkTheme} scrolled={scrolled}>
-            <div className="page-hero">
-                <h1 className="page-title">
-                    {'Subiecte de BAC'.split(' ').map((word, wi) => (
-                        <span className="page-title-word" key={wi}>
-                            {word.split('').map((l, i) => <span key={i}>{l}</span>)}
-                        </span>
-                    ))}
-                </h1>
-                <p className="page-desc">Explorează subiectele de la Bacalaureat din anii anteriori și familiarizează-te cu tipurile de cerințe</p>
-            </div>
-
-            <div className="container">
-                <div className="subiecte-container">
-                    {/* Search Bar și Filtre */}
-                    <div className="subiecte-search-section">
-                        {/* Search Bar */}
-                    <div className="subiecte-search-container">
-                        <div className={`subiecte-search-icon ${darkTheme ? 'dark-theme' : ''}`}>
-                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                <circle cx="11" cy="11" r="8"></circle>
-                                <path d="m21 21-4.35-4.35"></path>
-                            </svg>
-                        </div>
-                        <input
-                            type="text"
-                            placeholder="Caută subiecte..."
-                            value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
-                            className={`subiecte-search-input ${darkTheme ? 'dark-theme' : ''}`}
-                            onFocus={e => {
-                                e.target.style.borderColor = darkTheme ? '#ffd591' : '#a3a3a3';
-                                e.target.style.background = darkTheme ? '#6a4322' : '#fff';
-                            }}
-                            onBlur={e => {
-                                e.target.style.borderColor = darkTheme ? '#a97c50' : '#ececec';
-                                e.target.style.background = darkTheme ? '#4e2e1e' : '#f7f8fa';
-                            }}
-                        />
-                    </div>
-                    {/* Dropdown Tip cu react-select */}
-                    <div className="subiecte-select-container">
-                        <Select
-                            options={tipOptions}
-                            value={tipOptions.find(opt => opt.value === selectedTip)}
-                            onChange={opt => setSelectedTip(opt.value)}
-                            styles={customSelectStyles(darkTheme)}
-                            isSearchable={false}
-                            menuPlacement="auto"
-                            placeholder="Subiect"
-                            theme={theme => ({
-                                ...theme,
-                                borderRadius: 20,
-                                colors: {
-                                    ...theme.colors,
-                                    primary25: darkTheme ? '#3a2312' : '#f7f8fa',
-                                    primary: darkTheme ? '#ffd591' : '#a97c50',
-                                    neutral0: darkTheme ? '#2a170a' : '#fffbeee',
-                                    neutral80: darkTheme ? '#ffd591' : '#4e2e1e',
-                                },
-                            })}
-                        />
-                    </div>
-                    {/* Dropdown Subpunct doar pentru Subiectul 1 */}
-                    {selectedTip === '1' && (
-                        <div className="subiecte-select-container">
-                            <Select
-                                options={subpunctOptions}
-                                value={subpunctOptions.find(opt => opt.value === selectedSubpunct) || null}
-                                onChange={opt => setSelectedSubpunct(opt?.value ?? null)}
-                                styles={customSelectStyles(darkTheme)}
-                                isSearchable={false}
-                                menuPlacement="auto"
-                                placeholder="A/B"
-                                theme={theme => ({
-                                    ...theme,
-                                    borderRadius: 20,
-                                    colors: {
-                                        ...theme.colors,
-                                        primary25: darkTheme ? '#3a2312' : '#f7f8fa',
-                                        primary: darkTheme ? '#ffd591' : '#a97c50',
-                                        neutral0: darkTheme ? '#2a170a' : '#fffbeee',
-                                        neutral80: darkTheme ? '#ffd591' : '#4e2e1e',
-                                    },
-                                })}
-                            />
-                        </div>
-                    )}
-                    {/* Dropdown An cu react-select */}
-                    <div className="subiecte-select-container">
-                        <Select
-                            options={anOptions}
-                            value={anOptions.find(opt => opt.value === selectedAn)}
-                            onChange={opt => setSelectedAn(opt.value)}
-                            classNamePrefix="subiecte-an"
-                            styles={customSelectStyles(darkTheme)}
-                            isSearchable={false}
-                            menuPlacement="auto"
-                            placeholder="An"
-                            theme={theme => ({
-                                ...theme,
-                                borderRadius: 20,
-                                colors: {
-                                    ...theme.colors,
-                                    primary25: darkTheme ? '#3a2312' : '#f7f8fa',
-                                    primary: darkTheme ? '#ffd591' : '#a97c50',
-                                    neutral0: darkTheme ? '#2a170a' : '#fffbeee',
-                                    neutral80: darkTheme ? '#ffd591' : '#4e2e1e',
-                                },
-                            })}
-                        />
-                    </div>
-                    
+            <div className="subiecte-page">
+                <div className="page-hero">
+                    <h1 className="page-title">
+                        {'Subiecte de BAC'.split(' ').map((word, wi) => (
+                            <span className="page-title-word" key={wi}>
+                                {word.split('').map((l, i) => <span key={i}>{l}</span>)}
+                            </span>
+                        ))}
+                    </h1>
+                    <p className="page-desc">Explorează subiectele de la Bacalaureat din anii anteriori și familiarizează-te cu tipurile de cerințe</p>
                 </div>
 
-                {/* Butoane tipuri subiecte sub search bar */}
-                <div className="subiecte-filter-buttons">
-                    {tipuriSubiecte.filter(t => t.id !== 'toate').map(tip => (
-                        <button
-                            key={tip.id}
-                            onClick={() => setSelectedTip(tip.id)}
-                            className={`subiecte-filter-button ${darkTheme ? 'dark-theme' : ''} ${selectedTip === tip.id ? 'selected' : ''}`}
-                        >
-                            {tip.nume}
-                        </button>
-                    ))}
-                    
-                    {/* Dropdown Sesiune */}
-                    <div className="subiecte-select-container subiecte-sesiune-dropdown">
-                        <Select
-                            options={sesiuneOptions}
-                            value={sesiuneOptions.find(opt => opt.value === selectedSesiune)}
-                            onChange={opt => setSelectedSesiune(opt.value)}
-                            styles={customSelectStyles(darkTheme)}
-                            isSearchable={false}
-                            menuPlacement="auto"
-                            placeholder="Sesiune"
-                            classNamePrefix="subiecte-sesiune"
-                            theme={theme => ({
-                                ...theme,
-                                borderRadius: 20,
-                                colors: {
-                                    ...theme.colors,
-                                    primary25: darkTheme ? '#3a2312' : '#f7f8fa',
-                                    primary: darkTheme ? '#ffd591' : '#a97c50',
-                                    neutral0: darkTheme ? '#2a170a' : '#fffbeee',
-                                    neutral80: darkTheme ? '#ffd591' : '#4e2e1e',
-                                },
-                            })}
-                        />
-                    </div>
-                    
-                    <div
-                        className={`subiecte-segmented ${darkTheme ? 'dark-theme' : ''} ${selectedProfil === 'real' ? 'opt-uman' : 'opt-real'}`}
-                        role="tablist"
-                        aria-label="Profil"
-                    >
-                        <div className="seg-thumb" aria-hidden="true" />
-                        <button
-                            type="button"
-                            className="seg-option left"
-                            role="tab"
-                            aria-selected={selectedProfil === 'real'}
-                            onClick={() => setSelectedProfil('real')}
-                        >
-                            Real
-                        </button>
-                        <button
-                            type="button"
-                            className="seg-option right"
-                            role="tab"
-                            aria-selected={selectedProfil === 'uman'}
-                            onClick={() => setSelectedProfil('uman')}
-                        >
-                            Uman
-                        </button>
-                    </div>
-                </div>
+                <div className="container">
+                    <div className="subiecte-container">
+                        {/* Search Bar și Filtre */}
+                        <div className="subiecte-search-section">
+                            {/* Search Bar */}
+                            <div className="subiecte-search-container">
+                                <div className={`subiecte-search-icon ${darkTheme ? 'dark-theme' : ''}`}>
+                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                        <circle cx="11" cy="11" r="8"></circle>
+                                        <path d="m21 21-4.35-4.35"></path>
+                                    </svg>
+                                </div>
+                                <input
+                                    type="text"
+                                    placeholder="Caută subiecte..."
+                                    value={searchTerm}
+                                    onChange={(e) => setSearchTerm(e.target.value)}
+                                    className={`subiecte-search-input ${darkTheme ? 'dark-theme' : ''}`}
+                                    onFocus={e => {
+                                        e.target.style.borderColor = darkTheme ? '#ffd591' : '#a3a3a3';
+                                        e.target.style.background = darkTheme ? '#6a4322' : '#fff';
+                                    }}
+                                    onBlur={e => {
+                                        e.target.style.borderColor = darkTheme ? '#a97c50' : '#ececec';
+                                        e.target.style.background = darkTheme ? '#4e2e1e' : '#f7f8fa';
+                                    }}
+                                />
+                            </div>
+                            {/* Dropdown Tip cu react-select */}
+                            <div className="subiecte-select-container">
+                                <Select
+                                    options={tipOptions}
+                                    value={tipOptions.find(opt => opt.value === selectedTip)}
+                                    onChange={opt => setSelectedTip(opt.value)}
+                                    styles={customSelectStyles(darkTheme)}
+                                    isSearchable={false}
+                                    menuPlacement="auto"
+                                    placeholder="Subiect"
+                                    theme={theme => ({
+                                        ...theme,
+                                        borderRadius: 20,
+                                        colors: {
+                                            ...theme.colors,
+                                            primary25: darkTheme ? '#3a2312' : '#f7f8fa',
+                                            primary: darkTheme ? '#ffd591' : '#a97c50',
+                                            neutral0: darkTheme ? '#2a170a' : '#fffbeee',
+                                            neutral80: darkTheme ? '#ffd591' : '#4e2e1e',
+                                        },
+                                    })}
+                                />
+                            </div>
+                            {/* Dropdown Subpunct doar pentru Subiectul 1 */}
+                            {selectedTip === '1' && (
+                                <div className="subiecte-select-container">
+                                    <Select
+                                        options={subpunctOptions}
+                                        value={subpunctOptions.find(opt => opt.value === selectedSubpunct) || null}
+                                        onChange={opt => setSelectedSubpunct(opt?.value ?? null)}
+                                        styles={customSelectStyles(darkTheme)}
+                                        isSearchable={false}
+                                        menuPlacement="auto"
+                                        placeholder="A/B"
+                                        theme={theme => ({
+                                            ...theme,
+                                            borderRadius: 20,
+                                            colors: {
+                                                ...theme.colors,
+                                                primary25: darkTheme ? '#3a2312' : '#f7f8fa',
+                                                primary: darkTheme ? '#ffd591' : '#a97c50',
+                                                neutral0: darkTheme ? '#2a170a' : '#fffbeee',
+                                                neutral80: darkTheme ? '#ffd591' : '#4e2e1e',
+                                            },
+                                        })}
+                                    />
+                                </div>
+                            )}
+                            {/* Dropdown An cu react-select */}
+                            <div className="subiecte-select-container">
+                                <Select
+                                    options={anOptions}
+                                    value={anOptions.find(opt => opt.value === selectedAn)}
+                                    onChange={opt => setSelectedAn(opt.value)}
+                                    classNamePrefix="subiecte-an"
+                                    styles={customSelectStyles(darkTheme)}
+                                    isSearchable={false}
+                                    menuPlacement="auto"
+                                    placeholder="An"
+                                    theme={theme => ({
+                                        ...theme,
+                                        borderRadius: 20,
+                                        colors: {
+                                            ...theme.colors,
+                                            primary25: darkTheme ? '#3a2312' : '#f7f8fa',
+                                            primary: darkTheme ? '#ffd591' : '#a97c50',
+                                            neutral0: darkTheme ? '#2a170a' : '#fffbeee',
+                                            neutral80: darkTheme ? '#ffd591' : '#4e2e1e',
+                                        },
+                                    })}
+                                />
+                            </div>
 
-                {/* Grid Subiecte */}
-                <div className="subiecte-grid-container">
-                    {filteredSubiecte.map((subiect, idx) => (
-                        <div
-                            key={`subiect-${idx}-${subiect.numarSubiect}-${subiect.an}-${subiect.profil || 'P'}-${subiect.subpunct || 'N'}`}
-                            className={`subiecte-card ${darkTheme ? 'dark-theme' : ''}`}
-                            onClick={() => openSubiectModal(subiect)}
-                            onMouseOver={e => {
-                                e.currentTarget.style.transform = 'scale(1.055)';
-                                e.currentTarget.style.boxShadow = '0 8px 32px 0 rgba(60,40,20,0.22)';
-                                e.currentTarget.style.zIndex = 2;
-                            }}
-                            onMouseOut={e => {
-                                e.currentTarget.style.transform = 'scale(1)';
-                                e.currentTarget.style.boxShadow = '0 4px 24px 0 rgba(124,79,43,0.13)';
-                                e.currentTarget.style.zIndex = 1;
-                            }}
-                        >
-                            {/* Background gradient */}
-                            <div className={`subiecte-card-bg ${darkTheme ? 'dark-theme' : ''}`} />
-                            {/* Content */}
-                            <div className="subiecte-card-content">
-                                {/* Badge profil în colțul dreapta-sus */}
-                                <div className={`subiecte-card-profil ${darkTheme ? 'dark-theme' : ''}`}>
-                                    {subiect.profil ? subiect.profil.toUpperCase() : ''}
-                                </div>
-                                {/* Badge sesiune în stânga sus */}
-                                {subiect.sesiune && (
-                                    <div className={`subiecte-card-sesiune ${darkTheme ? 'dark-theme' : ''}`}>
-                                        {subiect.sesiune}
-                                    </div>
-                                )}
-                                <div className="subiecte-card-title">{subiect.titlu}</div>
-                                <div className="subiecte-card-description">{subiect.descriere}</div>
-                                <div className="subiecte-card-footer">
-                                    <div className={`subiecte-card-date ${darkTheme ? 'dark-theme' : ''}`}>
-                                        {subiect.data}
-                                    </div>
-                                    <div className={`subiecte-card-number ${darkTheme ? 'dark-theme' : ''}`}>
-                                        {subiect.numarSubiect === 1
-                                            ? `Subiect 1 - ${subiect.subpunct}`
-                                            : `Subiect ${subiect.numarSubiect}`}
-                                    </div>
-                                </div>
+                        </div>
+
+                        {/* Butoane tipuri subiecte sub search bar */}
+                        <div className="subiecte-filter-buttons">
+                            {tipuriSubiecte.filter(t => t.id !== 'toate').map(tip => (
+                                <button
+                                    key={tip.id}
+                                    onClick={() => setSelectedTip(tip.id)}
+                                    className={`subiecte-filter-button ${darkTheme ? 'dark-theme' : ''} ${selectedTip === tip.id ? 'selected' : ''}`}
+                                >
+                                    {tip.nume}
+                                </button>
+                            ))}
+
+                            {/* Dropdown Sesiune */}
+                            <div className="subiecte-select-container subiecte-sesiune-dropdown">
+                                <Select
+                                    options={sesiuneOptions}
+                                    value={sesiuneOptions.find(opt => opt.value === selectedSesiune)}
+                                    onChange={opt => setSelectedSesiune(opt.value)}
+                                    styles={customSelectStyles(darkTheme)}
+                                    isSearchable={false}
+                                    menuPlacement="auto"
+                                    placeholder="Sesiune"
+                                    classNamePrefix="subiecte-sesiune"
+                                    theme={theme => ({
+                                        ...theme,
+                                        borderRadius: 20,
+                                        colors: {
+                                            ...theme.colors,
+                                            primary25: darkTheme ? '#3a2312' : '#f7f8fa',
+                                            primary: darkTheme ? '#ffd591' : '#a97c50',
+                                            neutral0: darkTheme ? '#2a170a' : '#fffbeee',
+                                            neutral80: darkTheme ? '#ffd591' : '#4e2e1e',
+                                        },
+                                    })}
+                                />
+                            </div>
+
+                            <div
+                                className={`subiecte-segmented ${darkTheme ? 'dark-theme' : ''} ${selectedProfil === 'real' ? 'opt-uman' : 'opt-real'}`}
+                                role="tablist"
+                                aria-label="Profil"
+                            >
+                                <div className="seg-thumb" aria-hidden="true" />
+                                <button
+                                    type="button"
+                                    className="seg-option left"
+                                    role="tab"
+                                    aria-selected={selectedProfil === 'real'}
+                                    onClick={() => setSelectedProfil('real')}
+                                >
+                                    Real
+                                </button>
+                                <button
+                                    type="button"
+                                    className="seg-option right"
+                                    role="tab"
+                                    aria-selected={selectedProfil === 'uman'}
+                                    onClick={() => setSelectedProfil('uman')}
+                                >
+                                    Uman
+                                </button>
                             </div>
                         </div>
-                    ))}
-                </div>
 
-                {/* Mesaj când nu sunt rezultate */}
-                {filteredSubiecte.length === 0 && (
-                    <div className={`subiecte-no-results ${darkTheme ? 'dark-theme' : ''}`}>
-                        Nu s-au găsit subiecte care să corespundă criteriilor de căutare.
+                        {/* Grid Subiecte */}
+                        <div className="subiecte-grid-container">
+                            {filteredSubiecte.map((subiect, idx) => (
+                                <div
+                                    key={`subiect-${idx}-${subiect.numarSubiect}-${subiect.an}-${subiect.profil || 'P'}-${subiect.subpunct || 'N'}`}
+                                    className={`subiecte-card ${darkTheme ? 'dark-theme' : ''}`}
+                                    onClick={() => openSubiectModal(subiect)}
+                                    onMouseOver={e => {
+                                        e.currentTarget.style.transform = 'scale(1.055)';
+                                        e.currentTarget.style.boxShadow = '0 8px 32px 0 rgba(60,40,20,0.22)';
+                                        e.currentTarget.style.zIndex = 2;
+                                    }}
+                                    onMouseOut={e => {
+                                        e.currentTarget.style.transform = 'scale(1)';
+                                        e.currentTarget.style.boxShadow = '0 4px 24px 0 rgba(124,79,43,0.13)';
+                                        e.currentTarget.style.zIndex = 1;
+                                    }}
+                                >
+                                    {/* Background gradient */}
+                                    <div className={`subiecte-card-bg ${darkTheme ? 'dark-theme' : ''}`} />
+                                    {/* Content */}
+                                    <div className="subiecte-card-content">
+                                        {/* Badge profil în colțul dreapta-sus */}
+                                        <div className={`subiecte-card-profil ${darkTheme ? 'dark-theme' : ''}`}>
+                                            {subiect.profil ? subiect.profil.toUpperCase() : ''}
+                                        </div>
+                                        {/* Badge sesiune în stânga sus */}
+                                        {subiect.sesiune && (
+                                            <div className={`subiecte-card-sesiune ${darkTheme ? 'dark-theme' : ''}`}>
+                                                {subiect.sesiune}
+                                            </div>
+                                        )}
+                                        <div className="subiecte-card-title">{subiect.titlu}</div>
+                                        <div className="subiecte-card-description">{subiect.descriere}</div>
+                                        <div className="subiecte-card-footer">
+                                            <div className={`subiecte-card-date ${darkTheme ? 'dark-theme' : ''}`}>
+                                                {subiect.data}
+                                            </div>
+                                            <div className={`subiecte-card-number ${darkTheme ? 'dark-theme' : ''}`}>
+                                                {subiect.numarSubiect === 1
+                                                    ? `Subiect 1 - ${subiect.subpunct}`
+                                                    : `Subiect ${subiect.numarSubiect}`}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+
+                        {/* Mesaj când nu sunt rezultate */}
+                        {filteredSubiecte.length === 0 && (
+                            <div className={`subiecte-no-results ${darkTheme ? 'dark-theme' : ''}`}>
+                                Nu s-au găsit subiecte care să corespundă criteriilor de căutare.
+                            </div>
+                        )}
                     </div>
-                )}
-            </div>
+                </div>
             </div>
 
             {/* Modal pentru subiect */}
@@ -497,6 +506,16 @@ export default function Subiecte() {
                     onClose={closeSubiectModal}
                 />
             )}
+
+            {/* Floating Theme Toggle */}
+            <button
+                className="floating-theme-toggle"
+                onClick={() => setDarkTheme(!darkTheme)}
+                aria-label="Schimbă tema"
+                title={darkTheme ? 'Trece la tema luminoasă' : 'Trece la tema întunecată'}
+            >
+                {darkTheme ? '🌞' : '🌙'}
+            </button>
         </Layout>
     );
 } 

@@ -21,16 +21,16 @@
   border-radius: 0 0 1.5rem 1.5rem;
 }
 
-/* Light mode: when scrolled, make navbar text white for contrast */
+/* Light mode: when scrolled, keep navbar text normal dark color */
 :root body:not(.dark-theme) .navbar.scrolled .navbar-menu li a {
-  color: #f8f0d5;
+  color: #7c4f2b;
 }
 :root body:not(.dark-theme) .navbar.scrolled .navbar-menu li a:hover {
-  color:  #f8f0d5;
+  color: #5a3a1f;
 }
 
 :root body:not(.dark-theme) .navbar.scrolled .navbar-logo-text {
-  color:  #f8f0d5;
+  color: #7c4f2b;
 }
 
 body.dark-theme .navbar {
@@ -258,6 +258,11 @@ body:not(.dark-theme) .navbar .dropdown-menu li a {
 }
 body:not(.dark-theme) .navbar .dropdown-menu li a:hover {
   color: #5a3a1f !important;
+}
+
+/* Ensure navbar icons maintain proper color on scroll in light mode */
+:root body:not(.dark-theme) .navbar.scrolled .nav-icon {
+  color: #7c4f2b;
 }
 
 .theme-toggle {
