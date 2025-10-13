@@ -735,4 +735,46 @@
       font-size: 15px;
     }
   }
+}
+
+// Dark theme styles for biblioteca poem modal
+.dark-theme {
+  .biblioteca-poem-modal {
+    background: linear-gradient(135deg, #2a170a 0%, #1a0d00 100%);
+    border: 1px solid rgba(255, 179, 71, 0.2);
+    box-shadow: 0 25px 80px 0 rgba(0, 0, 0, 0.6);
+
+    .biblioteca-poem-modal-header {
+      background: linear-gradient(135deg, #4e2e1e 0%, #3a2312 100%);
+      border-bottom: 1px solid rgba(255, 179, 71, 0.2);
+
+      h2 {
+        color: #ffd591;
+      }
+
+      .biblioteca-poem-modal-close {
+        color: #ffd591;
+
+        &:hover {
+          color: #ffb347;
+        }
+      }
+    }
+
+    .biblioteca-poem-modal-content {
+      .biblioteca-poem-author {
+        color: #ffb347;
+      }
+
+      .biblioteca-poem-date {
+        color: rgba(255, 255, 255, 0.7);
+      }
+
+      .biblioteca-poem-text {
+        background: rgba(47, 24, 0, 0.3);
+        border: 1px solid rgba(255, 179, 71, 0.1);
+        color: rgba(255, 255, 255, 0.9);
+      }
+    }
+  }
 } 

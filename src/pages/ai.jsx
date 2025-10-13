@@ -4,6 +4,134 @@ import Layout from '../assets/Layout';
 import '../styles/style.scss';
 import '../styles/ai.scss';
 
+// Minimal, safe Markdown -> HTML converter (headings, lists, bold/italic, code, links)
+const escapeHtml = (str) =>
+  str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+
+const markdownToHtml = (md) => {
+  if (!md || typeof md !== 'string') return '';
+  let text = md.replace(/\r\n?/g, '\n');
+
+  // Inject totals based on known rubric maxima by matching each line
+  const RUBRIC_MAXIMA = [
+    // Conținut (ex: poezie/eseu) – câte 6 puncte
+    { pattern: /eviden[tț]ierea\s+a\s+dou[aă]\s+tr[ăa]s[ăa]turi/i, max: 6 },
+    { pattern: /comentarea\s+a\s+dou[aă]\s+imagini|idei\s+poetice/i, max: 6 },
+    { pattern: /analiza\s+a\s+dou[aă]\s+elemente\s+de\s+compozi[tț]ie|limbaj/i, max: 6 },
+
+    // Redactare
+    { pattern: /existen[tț]a\s+p[ăa]r[tț]ilor\s+componente/i, max: 1 },
+    { pattern: /logica\s+înl[ăa]n[tț]uirii\s+ideilor/i, max: 2 },
+    { pattern: /abilit[ăa][tț]i\s+de\s+analiz[ăa]\s+și\s+de\s+argumentare/i, max: 2 },
+    { pattern: /utilizarea\s+limbii\s+literare/i, max: 2 },
+    { pattern: /ortografia/i, max: 2 },
+    { pattern: /punctua[tț]ia/i, max: 2 },
+    { pattern: /a[sș]ezarea\s+în\s+pagin[ăa].*lizibilitatea/i, max: 1 },
+  ];
+
+  const annotateLine = (line) => {
+    // Numbered feedback items: convert (n puncte) -> (n/n puncte) if not already x/y
+    if (/^\s*\d+\.\s/.test(line) && !/\d\s*\/\s*\d/.test(line)) {
+      let updatedNumbered = line
+        .replace(/\(((?:\d+(?:[.,]\d+)?))\s*puncte?\)/i, (_, n) => `(${n}/${n} puncte)`)
+        .replace(/\(((?:\d+(?:[.,]\d+)?))\s*punct\)/i, (_, n) => `(${n}/${n} punct)`);
+      return updatedNumbered;
+    }
+
+    const found = RUBRIC_MAXIMA.find((r) => r.pattern.test(line));
+    if (!found) return line;
+    const max = found.max;
+    // Already formatted x/y?
+    if (/\d\s*\/\s*\d/.test(line)) return line;
+
+    // Replace parenthetical values
+    let updated = line
+      .replace(/\(((?:\d+(?:[.,]\d+)?))\s*puncte?\)/gi, (_, n) => `(${n}/${max} puncte)`)
+      .replace(/\(((?:\d+(?:[.,]\d+)?))\s*punct\)/gi, (_, n) => `(${n}/${max} punct)`);
+
+    // Replace trailing values after separators – - :
+    updated = updated
+      .replace(/([\-–:])\s*(\d+(?:[.,]\d+)?)(?!\s*\/)\s*puncte\b/gi, (_, sep, n) => `${sep} ${n}/${max} puncte`)
+      .replace(/([\-–:])\s*(\d+(?:[.,]\d+)?)(?!\s*\/)\s*punct\b/gi, (_, sep, n) => `${sep} ${n}/${max} punct`);
+
+    return updated;
+  };
+
+  text = text
+    .split('\n')
+    .map(annotateLine)
+    .join('\n');
+
+  // Handle fenced code blocks ```lang\n...\n```
+  text = text.replace(/```([\s\S]*?)```/g, (m, code) => {
+    return `<pre><code>${escapeHtml(code.trim())}</code></pre>`;
+  });
+
+  // Split into blocks by two or more newlines, but keep ordered lists contiguous
+  const blocks = text.split(/\n{2,}(?!\d+\.\s)/);
+  const htmlBlocks = blocks.map((block) => {
+    const lines = block.split('\n');
+
+    // Headings
+    if (/^#{1,6}\s/.test(block)) {
+      return block
+        .split('\n')
+        .map((line) => {
+          const m = line.match(/^(#{1,6})\s+(.*)$/);
+          if (!m) return '';
+          const level = m[1].length;
+          const content = m[2];
+          return `<h${level}>${inlineMd(content)}</h${level}>`;
+        })
+        .join('');
+    }
+
+    // Unordered lists (allow empty lines between items)
+    if (lines.filter((l) => l.trim() !== '').every((l) => /^\s*[-*]\s+/.test(l))) {
+      const items = lines
+        .filter((l) => l.trim() !== '')
+        .map((l) => l.replace(/^\s*[-*]\s+/, ''))
+        .map((content) => `<li>${inlineMd(content)}</li>`) 
+        .join('');
+      return `<ul>${items}</ul>`;
+    }
+
+    // Ordered lists (allow empty lines between items)
+    const nonEmpty = lines.filter((l) => l.trim() !== '');
+    if (nonEmpty.length > 0 && nonEmpty.every((l) => /^\s*\d+\.\s+/.test(l))) {
+      const items = nonEmpty
+        .map((l) => l.replace(/^\s*\d+\.\s+/, ''))
+        .map((content) => `<li>${inlineMd(content)}</li>`)
+        .join('');
+      return `<ol>${items}</ol>`;
+    }
+
+    // Fallback paragraph (preserve single newlines with <br>)
+    return `<p>${inlineMd(lines.join('\\n')).replace(/\n/g, '<br/>')}</p>`;
+  });
+
+  return htmlBlocks.join('\n');
+};
+
+const inlineMd = (s) => {
+  let t = escapeHtml(s);
+  // Links [text](url)
+  t = t.replace(/\[([^\]]+)\]\((https?:[^\s)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1<\/a>');
+  // Bold **text**
+  t = t.replace(/\*\*([^*]+)\*\*/g, '<strong>$1<\/strong>');
+  // Italic _text_ or *text*
+  t = t.replace(/(^|[^*])\*([^*]+)\*(?!\*)/g, '$1<em>$2<\/em>');
+  t = t.replace(/(^|[^_])_([^_]+)_(?!_)/g, '$1<em>$2<\/em>');
+  // Inline code `code`
+  t = t.replace(/`([^`]+)`/g, '<code>$1<\/code>');
+  return t;
+};
+
 export default function AI() {
   const location = useLocation();
   const [darkTheme, setDarkTheme] = useState(() => localStorage.getItem('theme') === 'dark');
@@ -16,6 +144,44 @@ export default function AI() {
     solution: '',
     rubric: ''
   });
+
+  // Derive score from breakdown text like "(6/6)" occurrences
+  const deriveScoreFromText = (text) => {
+    if (!text || typeof text !== 'string') return null;
+    let sum = 0;
+    const regex = /\((\d+)\s*\/\s*(\d+)\)/g;
+    let match = null;
+    while ((match = regex.exec(text)) !== null) {
+      const obtained = parseInt(match[1], 10);
+      if (!Number.isNaN(obtained)) sum += obtained;
+    }
+    if (sum === 0) return null;
+    // Clamp to 0..30 (BAC total)
+    return Math.max(0, Math.min(30, sum));
+  };
+
+  const coerceScore = (result) => {
+    if (!result) return result;
+    const candidates = [];
+    if (typeof result.score === 'number') candidates.push(result.score);
+    if (Array.isArray(result.scoreBreakdown)) {
+      const sum = result.scoreBreakdown
+        .map((v) => (typeof v === 'number' ? v : Number.parseFloat(v)))
+        .filter((n) => Number.isFinite(n))
+        .reduce((a, b) => a + b, 0);
+      if (Number.isFinite(sum) && sum > 0) candidates.push(sum);
+    }
+    const fromFeedback = deriveScoreFromText(result.feedback);
+    if (fromFeedback != null) candidates.push(fromFeedback);
+    const best = candidates.length ? Math.max(...candidates) : null;
+    if (best == null) return result;
+    const clamped = Math.max(0, Math.min(30, Math.round(best)));
+    // Only override if different to avoid unnecessary rerenders
+    if (result.score !== clamped) {
+      return { ...result, score: clamped };
+    }
+    return result;
+  };
 
   useEffect(() => {
     document.body.classList.toggle('dark-theme', darkTheme);
@@ -118,7 +284,7 @@ export default function AI() {
         
         if (contentType && contentType.includes('application/json')) {
           const result = await response.json();
-          setEvaluation(result);
+          setEvaluation(coerceScore(result));
         } else {
           // If response is HTML, it might be an error page
           const text = await response.text();
@@ -176,7 +342,7 @@ export default function AI() {
 
           if (proxyResponse.ok) {
             const result = await proxyResponse.json();
-            setEvaluation(result);
+            setEvaluation(coerceScore(result));
             return;
           }
         } catch (proxyError) {
@@ -461,9 +627,7 @@ Pentru dezvoltatori: Verificați configurația serverului AI.`
                         <h3 className="ai-feedback-title">Feedback detaliat</h3>
                         <div className="ai-section-icon">💡</div>
                       </div>
-                      <div className="ai-feedback-content">
-                        {evaluation.feedback}
-                      </div>
+                      <div className="ai-feedback-content" dangerouslySetInnerHTML={{ __html: markdownToHtml(evaluation.feedback) }} />
                     </div>
                   )}
                   
@@ -473,9 +637,7 @@ Pentru dezvoltatori: Verificați configurația serverului AI.`
                         <h3 className="ai-suggestions-title">Sugestii de îmbunătățire</h3>
                         <div className="ai-section-icon">🚀</div>
                       </div>
-                      <div className="ai-suggestions-content">
-                        {evaluation.suggestions}
-                      </div>
+                      <div className="ai-suggestions-content" dangerouslySetInnerHTML={{ __html: markdownToHtml(evaluation.suggestions) }} />
                     </div>
                   )}
                 </div>

@@ -45,6 +45,7 @@ const blaga = {
     '/Banner/blaga.webp',
     '/scriitori/lucian_blaga.webp',
     '/opere/corola_minuni.webp',
+    '/opere scriitori/lumina.webp'
   ],
   posts: [
     {
