@@ -24,9 +24,20 @@ const ani = [
     { id: '2019', nume: '2019' }
 ];
 
+const sesiuni = [
+    { id: 'toate', nume: 'Toate sesiunile' },
+    { id: 'sesiune de vară', nume: 'Sesiune de vară' },
+    { id: 'sesiune specială', nume: 'Sesiune specială' },
+    { id: 'sesiune de toamnă', nume: 'Sesiune de toamnă' },
+    { id: 'model', nume: 'Model' },
+    { id: 'rezervă', nume: 'Rezervă' },
+    { id: 'simulare', nume: 'Simulare' }
+];
+
 // Opțiuni pentru react-select
 const tipOptions = tipuriSubiecte.map(tip => ({ value: tip.id, label: tip.nume }));
 const anOptions = ani.map(an => ({ value: an.id, label: an.nume }));
+const sesiuneOptions = sesiuni.map(sesiune => ({ value: sesiune.id, label: sesiune.nume }));
 // Opțiuni subpunct pentru Subiectul 1 (A/B scurt)
 const subpunctOptions = [
     { value: 'A', label: 'A' },
@@ -126,6 +137,7 @@ export default function Subiecte() {
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedTip, setSelectedTip] = useState('toate');
     const [selectedAn, setSelectedAn] = useState('toate');
+    const [selectedSesiune, setSelectedSesiune] = useState('toate');
     const [selectedSubpunct, setSelectedSubpunct] = useState(null);
     const [selectedProfil, setSelectedProfil] = useState('real');
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -190,10 +202,18 @@ export default function Subiecte() {
 
     // Filtrare subiecte
     const filteredSubiecte = subiecteList.filter(subiect => {
-        const matchesSearch = subiect.titlu.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            subiect.descriere.toLowerCase().includes(searchTerm.toLowerCase());
+        // Search in title and description
+        const searchLower = searchTerm.toLowerCase();
+        const titluLower = subiect.titlu ? subiect.titlu.toLowerCase() : '';
+        const descriereLower = subiect.descriere ? subiect.descriere.toLowerCase() : '';
+        
+        const matchesSearch = !searchTerm || 
+            titluLower.includes(searchLower) ||
+            descriereLower.includes(searchLower);
+            
         const matchesTip = selectedTip === 'toate' || subiect.numarSubiect.toString() === selectedTip;
         const matchesAn = selectedAn === 'toate' || subiect.an.toString() === selectedAn;
+        const matchesSesiune = selectedSesiune === 'toate' || subiect.sesiune === selectedSesiune;
         // dacă este Subiectul 1 și există un subpunct selectat, filtrează și după subpunct
         const matchesSubpunct = selectedTip === '1' && selectedSubpunct
             ? subiect.subpunct === selectedSubpunct
@@ -203,7 +223,21 @@ export default function Subiecte() {
             ? subiect.profil === selectedProfil
             : true;
 
-        return matchesSearch && matchesTip && matchesAn && matchesSubpunct && matchesProfil;
+        // Debug logging
+        if (searchTerm) {
+            console.log('=== Debug Search ===');
+            console.log('Search term:', searchTerm);
+            console.log('Title:', subiect.titlu);
+            console.log('Description:', subiect.descriere);
+            console.log('Matches search:', matchesSearch);
+            console.log('Matches tip:', matchesTip);
+            console.log('Matches an:', matchesAn);
+            console.log('Matches sesiune:', matchesSesiune);
+            console.log('Matches profil:', matchesProfil);
+            console.log('Final result:', matchesSearch && matchesTip && matchesAn && matchesSesiune && matchesSubpunct && matchesProfil);
+        }
+
+        return matchesSearch && matchesTip && matchesAn && matchesSesiune && matchesSubpunct && matchesProfil;
     });
 
     const openSubiectModal = (subiect) => {
@@ -343,6 +377,32 @@ export default function Subiecte() {
                             {tip.nume}
                         </button>
                     ))}
+                    
+                    {/* Dropdown Sesiune */}
+                    <div className="subiecte-select-container subiecte-sesiune-dropdown">
+                        <Select
+                            options={sesiuneOptions}
+                            value={sesiuneOptions.find(opt => opt.value === selectedSesiune)}
+                            onChange={opt => setSelectedSesiune(opt.value)}
+                            styles={customSelectStyles(darkTheme)}
+                            isSearchable={false}
+                            menuPlacement="auto"
+                            placeholder="Sesiune"
+                            classNamePrefix="subiecte-sesiune"
+                            theme={theme => ({
+                                ...theme,
+                                borderRadius: 20,
+                                colors: {
+                                    ...theme.colors,
+                                    primary25: darkTheme ? '#3a2312' : '#f7f8fa',
+                                    primary: darkTheme ? '#ffd591' : '#a97c50',
+                                    neutral0: darkTheme ? '#2a170a' : '#fffbeee',
+                                    neutral80: darkTheme ? '#ffd591' : '#4e2e1e',
+                                },
+                            })}
+                        />
+                    </div>
+                    
                     <div
                         className={`subiecte-segmented ${darkTheme ? 'dark-theme' : ''} ${selectedProfil === 'real' ? 'opt-uman' : 'opt-real'}`}
                         role="tablist"
@@ -374,7 +434,7 @@ export default function Subiecte() {
                 <div className="subiecte-grid-container">
                     {filteredSubiecte.map((subiect, idx) => (
                         <div
-                            key={`${subiect.numarSubiect}-${subiect.an}-${subiect.profil || 'P'}-${subiect.subpunct || 'N'}`}
+                            key={`subiect-${idx}-${subiect.numarSubiect}-${subiect.an}-${subiect.profil || 'P'}-${subiect.subpunct || 'N'}`}
                             className={`subiecte-card ${darkTheme ? 'dark-theme' : ''}`}
                             onClick={() => openSubiectModal(subiect)}
                             onMouseOver={e => {
@@ -396,6 +456,12 @@ export default function Subiecte() {
                                 <div className={`subiecte-card-profil ${darkTheme ? 'dark-theme' : ''}`}>
                                     {subiect.profil ? subiect.profil.toUpperCase() : ''}
                                 </div>
+                                {/* Badge sesiune în stânga sus */}
+                                {subiect.sesiune && (
+                                    <div className={`subiecte-card-sesiune ${darkTheme ? 'dark-theme' : ''}`}>
+                                        {subiect.sesiune}
+                                    </div>
+                                )}
                                 <div className="subiecte-card-title">{subiect.titlu}</div>
                                 <div className="subiecte-card-description">{subiect.descriere}</div>
                                 <div className="subiecte-card-footer">
