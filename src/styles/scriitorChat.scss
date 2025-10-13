@@ -92,10 +92,11 @@
   align-items: center;
   justify-content: center;
   transition: background-color 0.2s;
-  
-  &:hover {
-    background: rgba(255, 255, 255, 0.2);
+  outline: none;
+  &:focus{
+    outline: none;
   }
+
 }
 
 .scriitor-chat-messages {
@@ -340,3 +341,93 @@
   outline: 2px solid #667eea;
   outline-offset: 2px;
 } 
+
+// Dark theme overrides
+body.dark-theme {
+  .scriitor-chat-overlay {
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(6px);
+  }
+
+  .scriitor-chat-container {
+    background: #3d2815; // matches dark surfaces used elsewhere
+    box-shadow: 0 24px 72px rgba(0, 0, 0, 0.55);
+    color: #fbeec1;
+  }
+
+  .scriitor-chat-header {
+    background: linear-gradient(135deg, #4e2e1e 0%, #7c4f2b 100%);
+  }
+
+  .scriitor-chat-messages {
+    background: #2b1a10;
+    scrollbar-color: #555 transparent;
+    
+    &::-webkit-scrollbar-thumb {
+      background: #555;
+    }
+  }
+
+  .scriitor-chat-message {
+    &.scriitor {
+      .scriitor-chat-message-content {
+        background: #3a2818;
+        color: #fbeec1;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+      }
+    }
+
+    &.user {
+      .scriitor-chat-message-content {
+        // keep gradient bubble for contrast on dark
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+      }
+    }
+  }
+
+  .scriitor-chat-message-content {
+    .scriitor-chat-message-time {
+      color: rgba(255, 255, 255, 0.7);
+    }
+  }
+
+  .scriitor-chat-typing span {
+    background: #b08e72;
+  }
+
+  .scriitor-chat-input-container {
+    background: #2f2116;
+    border-top: 1px solid #5a3a20;
+  }
+
+  .scriitor-chat-input-wrapper {
+    background: #2a1d14;
+    border-color: transparent;
+
+    &:focus-within {
+      border-color: #ffd591;
+    }
+  }
+
+  .scriitor-chat-input {
+    color: #fbeec1 !important;
+
+    &::placeholder {
+      color: #b08e72;
+    }
+  }
+
+  .scriitor-chat-send-btn {
+    background: linear-gradient(135deg, #b07a3f 0%, #ffd591 100%);
+    color: #3a2414;
+
+    &:hover:not(:disabled) {
+      box-shadow: 0 4px 14px rgba(255, 213, 145, 0.35);
+    }
+  }
+
+  .scriitor-chat-close {
+    color: #fbeec1;
+
+  }
+}

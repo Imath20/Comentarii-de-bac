@@ -291,6 +291,7 @@ const Scriitor = () => {
   const [likesModal, setLikesModal] = useState({ open: false, postId: null });
   const [showChat, setShowChat] = useState(false);
   const [profilePreviewOpen, setProfilePreviewOpen] = useState(false);
+  const [darkTheme, setDarkTheme] = useState(() => localStorage.getItem('theme') === 'dark');
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -364,6 +365,12 @@ const Scriitor = () => {
       document.removeEventListener('msfullscreenchange', handleChange);
     };
   }, []);
+
+  // Apply theme and persist
+  useEffect(() => {
+    document.body.classList.toggle('dark-theme', darkTheme);
+    localStorage.setItem('theme', darkTheme ? 'dark' : 'light');
+  }, [darkTheme]);
 
   if (!data) {
     return <div className="scriitor-not-found">Scriitorul nu a fost găsit.</div>;
@@ -771,6 +778,22 @@ const Scriitor = () => {
         {!isFullScreen && (
           <div className="avatar-searchbar-banner-wrapper" onClick={(e) => e.stopPropagation()}>
             <AvatarSearchBar onSelect={s => goToScriitor(Object.keys(scriitoriData).find(k => scriitoriData[k].nume === s.nume))} />
+          </div>
+        )}
+        {/* Theme toggle button - floating in banner top-right */}
+        {!isFullScreen && (
+          <div
+            style={{ position: 'absolute', top: 14, right: 14, zIndex: 2 }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              className="theme-toggle"
+              aria-label="Comută tema"
+              title={darkTheme ? 'Comută pe luminoasă' : 'Comută pe întunecată'}
+              onClick={() => setDarkTheme(v => !v)}
+            >
+              {darkTheme ? '☀️' : '🌙'}
+            </button>
           </div>
         )}
         {!isFullScreen && (
