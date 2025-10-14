@@ -316,8 +316,22 @@
   flex: 0 0 auto;
   min-width: 280px;
   max-width: 320px;
+  margin: 0 0.75rem;
+}
+
+// Grup centrat pentru Sesiune + Sortare
+.subiecte-sesiune-sort {
   margin-left: auto;
   margin-right: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.subiecte-sort-container {
+  min-width: 240px;
+  max-width: 280px;
+  margin: 0 0.75rem;
 }
 
 .subiecte-filter-button {

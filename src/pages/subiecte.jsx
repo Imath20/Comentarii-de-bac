@@ -140,6 +140,7 @@ export default function Subiecte() {
     const [selectedSesiune, setSelectedSesiune] = useState('toate');
     const [selectedSubpunct, setSelectedSubpunct] = useState(null);
     const [selectedProfil, setSelectedProfil] = useState('real');
+    const [sortOption, setSortOption] = useState('none');
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [activeSubiect, setActiveSubiect] = useState(null);
 
@@ -245,6 +246,29 @@ export default function Subiecte() {
         }
 
         return matchesSearch && matchesTip && matchesAn && matchesSesiune && matchesSubpunct && matchesProfil;
+    });
+
+    const sortOptions = [
+        { value: 'none', label: 'Fără sortare' },
+        { value: 'cronologic-asc', label: 'Cronologic ↑' },
+        { value: 'cronologic-desc', label: 'Cronologic ↓' },
+    ];
+
+    const getYear = (dataStr) => {
+        if (!dataStr) return NaN;
+        const match = String(dataStr).match(/(\d{4})/);
+        return match ? parseInt(match[1], 10) : NaN;
+    };
+
+    const sortedSubiecte = [...filteredSubiecte].sort((a, b) => {
+        switch (sortOption) {
+            case 'cronologic-asc':
+                return getYear(a.data) - getYear(b.data);
+            case 'cronologic-desc':
+                return getYear(b.data) - getYear(a.data);
+            default:
+                return 0;
+        }
     });
 
     const openSubiectModal = (subiect) => {
@@ -386,29 +410,53 @@ export default function Subiecte() {
                                 </button>
                             ))}
 
-                            {/* Dropdown Sesiune */}
-                            <div className="subiecte-select-container subiecte-sesiune-dropdown">
-                                <Select
-                                    options={sesiuneOptions}
-                                    value={sesiuneOptions.find(opt => opt.value === selectedSesiune)}
-                                    onChange={opt => setSelectedSesiune(opt.value)}
-                                    styles={customSelectStyles(darkTheme)}
-                                    isSearchable={false}
-                                    menuPlacement="auto"
-                                    placeholder="Sesiune"
-                                    classNamePrefix="subiecte-sesiune"
-                                    theme={theme => ({
-                                        ...theme,
-                                        borderRadius: 20,
-                                        colors: {
-                                            ...theme.colors,
-                                            primary25: darkTheme ? '#3a2312' : '#f7f8fa',
-                                            primary: darkTheme ? '#ffd591' : '#a97c50',
-                                            neutral0: darkTheme ? '#2a170a' : '#fffbeee',
-                                            neutral80: darkTheme ? '#ffd591' : '#4e2e1e',
-                                        },
-                                    })}
-                                />
+                            {/* Grup centrat: Sesiune + Sortare */}
+                            <div className="subiecte-sesiune-sort">
+                                <div className="subiecte-select-container subiecte-sesiune-dropdown">
+                                    <Select
+                                        options={sesiuneOptions}
+                                        value={sesiuneOptions.find(opt => opt.value === selectedSesiune)}
+                                        onChange={opt => setSelectedSesiune(opt.value)}
+                                        styles={customSelectStyles(darkTheme)}
+                                        isSearchable={false}
+                                        menuPlacement="auto"
+                                        placeholder="Sesiune"
+                                        classNamePrefix="subiecte-sesiune"
+                                        theme={theme => ({
+                                            ...theme,
+                                            borderRadius: 20,
+                                            colors: {
+                                                ...theme.colors,
+                                                primary25: darkTheme ? '#3a2312' : '#f7f8fa',
+                                                primary: darkTheme ? '#ffd591' : '#a97c50',
+                                                neutral0: darkTheme ? '#2a170a' : '#fffbeee',
+                                                neutral80: darkTheme ? '#ffd591' : '#4e2e1e',
+                                            },
+                                        })}
+                                    />
+                                </div>
+                                <div className="subiecte-select-container subiecte-sort-container">
+                                    <Select
+                                        options={sortOptions}
+                                        value={sortOptions.find(opt => opt.value === sortOption)}
+                                        onChange={opt => setSortOption(opt.value)}
+                                        styles={customSelectStyles(darkTheme)}
+                                        isSearchable={false}
+                                        menuPlacement="auto"
+                                        placeholder="Sortare"
+                                        theme={theme => ({
+                                            ...theme,
+                                            borderRadius: 20,
+                                            colors: {
+                                                ...theme.colors,
+                                                primary25: darkTheme ? '#3a2312' : '#f7f8fa',
+                                                primary: darkTheme ? '#ffd591' : '#a97c50',
+                                                neutral0: darkTheme ? '#2a170a' : '#fffbeee',
+                                                neutral80: darkTheme ? '#ffd591' : '#4e2e1e',
+                                            },
+                                        })}
+                                    />
+                                </div>
                             </div>
 
                             <div
@@ -440,7 +488,7 @@ export default function Subiecte() {
 
                         {/* Grid Subiecte */}
                         <div className="subiecte-grid-container">
-                            {filteredSubiecte.map((subiect, idx) => (
+                            {sortedSubiecte.map((subiect, idx) => (
                                 <div
                                     key={`subiect-${idx}-${subiect.numarSubiect}-${subiect.an}-${subiect.profil || 'P'}-${subiect.subpunct || 'N'}`}
                                     className={`subiecte-card ${darkTheme ? 'dark-theme' : ''}`}

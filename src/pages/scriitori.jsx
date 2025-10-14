@@ -441,8 +441,22 @@ export default function Scriitori() {
               })}
             />
           </div>
-          {/* Dropdown Sortare */}
-          <div className="opere-select-container">
+          {/* Sortarea a fost mutată mai jos, lângă prompturi */}
+        </div>
+
+        {/* Butoane categorii canonice sub search bar */}
+        <div className="scriitori-filter-buttons">
+          {categorii.filter(c => c.id !== 'toate').map(categorie => (
+            <button
+              key={categorie.id}
+              onClick={() => setSelectedCategory(categorie.id)}
+              className={`scriitori-filter-button ${darkTheme ? 'dark-theme' : ''} ${selectedCategory === categorie.id ? 'selected' : ''}`}
+            >
+              {categorie.nume}
+            </button>
+          ))}
+          {/* Dropdown Sortare - mutat aici pe același rând cu prompturile */}
+          <div className="scriitori-sort-container">
             <Select
               options={sortOptions}
               value={sortOptions.find(opt => opt.value === sortOption)}
@@ -464,19 +478,6 @@ export default function Scriitori() {
               })}
             />
           </div>
-        </div>
-
-        {/* Butoane categorii canonice sub search bar */}
-        <div className="scriitori-filter-buttons">
-          {categorii.filter(c => c.id !== 'toate').map(categorie => (
-            <button
-              key={categorie.id}
-              onClick={() => setSelectedCategory(categorie.id)}
-              className={`scriitori-filter-button ${darkTheme ? 'dark-theme' : ''} ${selectedCategory === categorie.id ? 'selected' : ''}`}
-            >
-              {categorie.nume}
-            </button>
-          ))}
         </div>
 
         {/* Grid Scriitori */}
