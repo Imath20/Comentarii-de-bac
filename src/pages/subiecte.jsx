@@ -507,15 +507,6 @@ export default function Subiecte() {
                 />
             )}
 
-            {/* Floating Theme Toggle */}
-            {/* <button
-                className="floating-theme-toggle"
-                onClick={() => setDarkTheme(!darkTheme)}
-                aria-label="Schimbă tema"
-                title={darkTheme ? 'Trece la tema luminoasă' : 'Trece la tema întunecată'}
-            >
-                {darkTheme ? '🌞' : '🌙'}
-            </button> */}
         </Layout>
     );
 } 

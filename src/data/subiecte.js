@@ -613,7 +613,7 @@ Alexandru Vlahuță, Sonet`,
         punctaj: [6, 6, 6]
     },
     {
-        titlu: 'Ioan Slavici, Scrietor, în volumul Amintiri',
+        titlu: 'Ioan Slavici, Scriitor, în volumul Amintiri',
         descriere: 'Citește următorul fragment al lui Ioan Slavici și rezolvă cerințele date.',
         numarSubiect: 1,
         subpunct: 'A',
