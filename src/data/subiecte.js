@@ -1021,6 +1021,208 @@ Liviu Rebreanu, Catastrofa
         ],
         punctaj: [6, 6, 6]
     },
+    {
+        titlu: 'G. Călinescu, Ion Creangă. Viața și opera',
+        descriere: 'Citește următorul fragment al lui G. Călinescu și rezolvă cerințele date.',
+        numarSubiect: 1,
+        subpunct: 'A',
+        profil: 'real',
+        data: '2023',
+        an: 2023,
+        sesiune: 'sesiune de vară',
+        tip: 'analiza',
+        text: `Ninsese și omătul era „de o palmă domnească” de gros. Dis-de-dimineață, pe la orele șase și jumătate, Creangă privi din arhondaricul* mănăstirii un curcubeu ivit la răsărit, semn, poate, pentru el, de schimbări în bine. E de bănuit că o superstiție caracteristică bolnavilor cuprinsese sufletul povestitorului, fiindcă de aici încolo el pare a urmări de aproape starea lui Eminescu. Va fi avut credința că, dacă poetul învinge boala, oarecum asemănătoare cu a lui, ar fi biruit-o și el.
+Eminescu plecă deocamdată la Botoșani, la Harieta, și Creangă rămase singur. Nemaicrezând în puterea apelor de la Slănic, și mai ales nemaicăpătând bilet gratuit de băi, începu să se tragă spre locurile copilăriei. Presimțea că n-are s-o mai ducă mult și, cu instinctul oamenilor simpli, voia să mai guste o dată din bucuriile vieții de sat. Poate că, sătul de leacurile doctorilor mari, care nu știau să spună nimic, cugetă să întrebe înțelepciunea poporului. În toamnă se duse pe la Târgu-Neamț. Zicea cum că el nu mai are mult de trăit și mai vrea să vadă o dată locurile copilăriei și neamurile. Pieptul îi era umflat de hârtii și, de acolo, scoase un exemplar din Povățuitor*, singurul pe care zicea că-l mai are, și-l dărui școlii unde învățase el împreună cu Conta și la vederea băncilor căreia va fi lăcrimat, scriind pe el: „Școalei primare de băieți No. 1, pentru bibliotecă”. Ruda cu care se-nvoia mai mult era cumintele și acum bătrânul popă Gheorghe. Pe acesta va fi căutat să-l ispitească asupra răspunsurilor bisericii la grozavele întrebări ale vieții și morții, însă părintele era om simplu, care nu pătrundea astfel de probleme. Poate că acum, încăpățânându-se într-o presimțire rea, Creangă voi să meargă și la biserica din Humulești, unde-l învățaseră carte bădița Vasile și părintele Ioan.
+„— Moșule – zise el către părintele Gheorghe – hai la Humulești, să vedem pe părintele Teofan Focșa!” [...]
+În 2 septembrie, la Iași sau la Neamț, după o vară secetoasă, la orele trei după-amiază, Creangă văzu pe cer la răsărit un alt curcubeu, care-i dădu poate o nouă alinare. De la Eminescu auzi iarăși știri bune. Însă peste câteva luni, prin februarie și mai 1888, fu din nou rău. Căderile îi erau grele, „asămine cu moartea”, și după aceea trupul mai era mișcat de convulsiuni.
+„Bădiță Gheorghe dragă și preaiubite verișoare Anetă și Elenuță – scria el părintelui Creangă în stil înlăcrimat – mă aflu acum puțin mai binișor, dar tot îmi tremură carnea pe mine și sunt trist și descurajat din această pricină.” Din trebuința de a se agăța de ceva în viață devenise mai afectuos [...]. Se pare că din 1887, de când își luase rămas-bun de la locurile copilăriei și plânsese [...], Creangă nu mai mersese pe la Târgu-Neamț. Nici peste vară nu se mai duse la Slănic, zicând că nu poate și necerând la vreme nici bilet de băi gratuit, fără de care nu-nțelegea să se urnească, deși abecedarul lui stă să iasă în cea de a douăzeci și una ediție, fiind el totodată institutor cu patru gradații, debitant* de tutun și proprietar asociat de tipografie. În iarna lui 1888, însă, Creangă se porni iar la București împreună cu tipograful I. S. Ionescu, asociatul său. De bună seamă, plecase să se întâlnească cu Constantin și să mai vadă un doctor pentru boala sa.
+G. Călinescu, Ion Creangă. Viața și opera
+*arhondaric – aripă a unei clădiri dintr-o mănăstire ortodoxă, rezervată oaspeților
+*Povățuitor – carte pentru uz didactic, realizată de Ion Creangă și de Gheorghe Enăchescu
+*debitant – proprietar al unei tutungerii`,
+        cerinte: [
+            'Indică sensul din text al secvenței de bună seamă.',
+            'Menționează două dintre sursele de venit ale lui Ion Creangă, utilizând informaţiile din textul dat.',
+            'Precizează o posibilă semnificație a curcubeului pentru Ion Creangă, justificându-ți răspunsul cu o secvență semnificativă din textul dat.',
+            'Explică un motiv pentru care Ion Creangă călătorește la Târgu-Neamț.',
+            'Prezintă, în 30 – 50 de cuvinte, o trăsătură morală a lui Ion Creangă, aşa cum reiese din textul dat.'
+        ],
+        punctaj: [6, 6, 6, 6, 6]
+    },
+    {
+        titlu: 'Redactează un text argumentativ',
+        descriere: 'Redactează un text de minimum 150 de cuvinte, în care să argumentezi dacă oamenii trebuie sau nu să exprime recunoștință față de școlile în care au fost formați.',
+        numarSubiect: 1,
+        subpunct: 'B',
+        profil: 'real',
+        data: '2023',
+        an: 2023,
+        sesiune: 'sesiune de vară',
+        tip: 'redactare',
+        text: `Ninsese și omătul era „de o palmă domnească” de gros. Dis-de-dimineață, pe la orele șase și jumătate, Creangă privi din arhondaricul* mănăstirii un curcubeu ivit la răsărit, semn, poate, pentru el, de schimbări în bine. E de bănuit că o superstiție caracteristică bolnavilor cuprinsese sufletul povestitorului, fiindcă de aici încolo el pare a urmări de aproape starea lui Eminescu. Va fi avut credința că, dacă poetul învinge boala, oarecum asemănătoare cu a lui, ar fi biruit-o și el.
+Eminescu plecă deocamdată la Botoșani, la Harieta, și Creangă rămase singur. Nemaicrezând în puterea apelor de la Slănic, și mai ales nemaicăpătând bilet gratuit de băi, începu să se tragă spre locurile copilăriei. Presimțea că n-are s-o mai ducă mult și, cu instinctul oamenilor simpli, voia să mai guste o dată din bucuriile vieții de sat. Poate că, sătul de leacurile doctorilor mari, care nu știau să spună nimic, cugetă să întrebe înțelepciunea poporului. În toamnă se duse pe la Târgu-Neamț. Zicea cum că el nu mai are mult de trăit și mai vrea să vadă o dată locurile copilăriei și neamurile. Pieptul îi era umflat de hârtii și, de acolo, scoase un exemplar din Povățuitor*, singurul pe care zicea că-l mai are, și-l dărui școlii unde învățase el împreună cu Conta și la vederea băncilor căreia va fi lăcrimat, scriind pe el: „Școalei primare de băieți No. 1, pentru bibliotecă”. Ruda cu care se-nvoia mai mult era cumintele și acum bătrânul popă Gheorghe. Pe acesta va fi căutat să-l ispitească asupra răspunsurilor bisericii la grozavele întrebări ale vieții și morții, însă părintele era om simplu, care nu pătrundea astfel de probleme. Poate că acum, încăpățânându-se într-o presimțire rea, Creangă voi să meargă și la biserica din Humulești, unde-l învățaseră carte bădița Vasile și părintele Ioan.
+„— Moșule – zise el către părintele Gheorghe – hai la Humulești, să vedem pe părintele Teofan Focșa!” [...]
+În 2 septembrie, la Iași sau la Neamț, după o vară secetoasă, la orele trei după-amiază, Creangă văzu pe cer la răsărit un alt curcubeu, care-i dădu poate o nouă alinare. De la Eminescu auzi iarăși știri bune. Însă peste câteva luni, prin februarie și mai 1888, fu din nou rău. Căderile îi erau grele, „asămine cu moartea”, și după aceea trupul mai era mișcat de convulsiuni.
+„Bădiță Gheorghe dragă și preaiubite verișoare Anetă și Elenuță – scria el părintelui Creangă în stil înlăcrimat – mă aflu acum puțin mai binișor, dar tot îmi tremură carnea pe mine și sunt trist și descurajat din această pricină.” Din trebuința de a se agăța de ceva în viață devenise mai afectuos [...]. Se pare că din 1887, de când își luase rămas-bun de la locurile copilăriei și plânsese [...], Creangă nu mai mersese pe la Târgu-Neamț. Nici peste vară nu se mai duse la Slănic, zicând că nu poate și necerând la vreme nici bilet de băi gratuit, fără de care nu-nțelegea să se urnească, deși abecedarul lui stă să iasă în cea de a douăzeci și una ediție, fiind el totodată institutor cu patru gradații, debitant* de tutun și proprietar asociat de tipografie. În iarna lui 1888, însă, Creangă se porni iar la București împreună cu tipograful I. S. Ionescu, asociatul său. De bună seamă, plecase să se întâlnească cu Constantin și să mai vadă un doctor pentru boala sa.
+G. Călinescu, Ion Creangă. Viața și opera
+*arhondaric – aripă a unei clădiri dintr-o mănăstire ortodoxă, rezervată oaspeților
+*Povățuitor – carte pentru uz didactic, realizată de Ion Creangă și de Gheorghe Enăchescu
+*debitant – proprietar al unei tutungerii`,
+        cerinte: [
+            'Cerințe totale: Redactează un text de minimum 150 de cuvinte, în care să argumentezi dacă oamenii trebuie sau nu să exprime recunoștință față de școlile în care au fost formați, raportându-te atât la informațiile din fragmentul extras din volumul Ion Creangă. Viața și opera de G. Călinescu, cât și la experiența personală sau culturală.',
+            'Sumar conținut: formularea unei opinii, două argumente dezvoltate și o concluzie pertinentă',
+            'Sumar redactare: conectori corecți, norme ale limbii literare, așezare în pagină, lizibilitate, respectarea numărului minim de cuvinte'
+        ],
+        punctaj: ['Total: 20', 'Sumar conținut: 14', 'Sumar redactare: 6']
+    },
+    {
+        titlu: 'Analiza unui text poetic',
+        descriere: 'Comentează, în minimum 50 de cuvinte, textul de mai jos, evidențiind relația dintre ideea poetică și mijloacele artistice.',
+        numarSubiect: 2,
+        profil: 'real',
+        data: '2023',
+        an: 2023,
+        sesiune: 'sesiune de vară',
+        tip: 'poezie',
+        text: `A mele visuri risipite!
+Ce-mi umplu inima de jale,
+Le văd în frunzele pălite
+Și-n pustiirea de pe vale.
+De-a pururi sta-vor troienite,
+Sub vremea ce s-așterne-n pale*,
+A mele visuri risipite,
+Ce-mi umplu inima de jale!
+Copac, când zile fericite
+Îți vor întoarce iar în cale
+Podoaba ramurilor tale,
+În noapte-or sta mai adâncite
+A mele visuri risipite!
+*pale – straturi
+Al. Vlahuță, A mele visuri...`,
+        cerinte: [
+            'Comentează, în minimum 50 de cuvinte, textul de mai jos, evidențiind relația dintre ideea poetică și mijloacele artistice.',
+            'Conținut: evidențiază relația dintre ideea poetică și mijloacele artistice',
+            'Redactare: limbă literară, logică, ortografie, punctuație'
+        ],
+        punctaj: [
+            'Total: 10',
+            'Conținut: 6',
+            'Redactare: 4'
+        ]
+    },
+    {
+        titlu: 'Redactează un eseu',
+        descriere: 'Redactează un eseu de minimum 400 de cuvinte, în care să prezinți particularități ale unui text narativ studiat, aparținând lui Liviu Rebreanu sau lui Camil Petrescu.',
+        numarSubiect: 3,
+        profil: 'real',
+        data: '2023',
+        an: 2023,
+        sesiune: 'sesiune de vară',
+        tip: 'eseu',
+        text: `Redactează un eseu de minimum 400 de cuvinte, în care să prezinți particularități ale unui text narativ studiat, aparținând lui Liviu Rebreanu sau lui Camil Petrescu. În elaborarea eseului, vei avea în vedere următoarele repere: – evidențierea a două trăsături care fac posibilă încadrarea textului narativ studiat într-o perioadă, într-un curent cultural/literar sau într-o orientare tematică; – comentarea a două episoade/secvențe relevante pentru tema textului narativ studiat; – analiza a două elemente de structură, de compoziție și/sau de limbaj, semnificative pentru textul narativ studiat (de exemplu: acțiune, conflict, relații temporale și spațiale, incipit, final, tehnici narative, instanțe ale comunicării narative, perspectivă narativă, registre stilistice, limbaj etc.).`,
+        cerinte: [
+            'Evidențiază două trăsături de încadrare a textului narativ',
+            'Comentează două episoade relevante pentru tema textului',
+            'Analizează două elemente de structură/compoziție/limbaj relevante'
+        ],
+        punctaj: [6, 6, 6]
+    },
+    ,
+    {
+        titlu: 'Maria Banuș, Însemnările mele',
+        descriere: 'Citește următorul fragment al Mariei Banuș și rezolvă cerințele date.',
+        numarSubiect: 1,
+        subpunct: 'A',
+        profil: 'real',
+        data: '2023',
+        an: 2023,
+        sesiune: 'sesiune de toamnă',
+        tip: 'analiza',
+        text: `București, joi 22 decembrie 1927 
+E prima zi de vacanță! Ce cuvinte miraculoase pentru o elevă! Cu toate astea, nu mă bucur. Așa sunt eu; aștept, aștept cu nerăbdare un lucru și după ce l-am căpătat nu mai îmi face nicio plăcere. Așa a fost și cu vacanța. Nu-i vorbă, nu mi se arată prea strălucită. Când mă gândesc că o să vină Bubi la București mi se face rău. O să-l am toată vacanța pe cap. N-ar trebui să scriu aceste cuvinte, căci e „un băiat foarte reușit” (cum îi zice mama). Știe mai multe limbi, face scrisori frumoase (cu stil), e primul în clasă, face sporturi, în fine, e un băiat model. Deși am scris în râs toate astea, văd că așa e. Nu știu de ce oare nu-l prea am eu la stomac. [...] Mă uit să văd ce am scris până acum [...]. În loc să spun ce am făcut azi, am înșirat vrute și nevrute. Așa, acuma să anunț marele eveniment care s-a săvârșit azi: am fost prima dată la patinaj. Mă înțelesesem cu Dida să vină să mă ia la 9½, dar a venit la 10¾, așa că până atunci m-am învârtit și am exersat la pian. Era să fac cunoștință cu băiatul lui Rusu (chiriașul nostru), dar nu l-am găsit acasă, plecase de la 7 dimineața. La patinaj. Parcă mă văd cu inima cât un purice și cu pieptul înainte, cum băteam la ușa lui Rusu. Orice aș face, tot timidă rămân cu străinii. În casă sunt obraznică și cu un străin mă fac mică, mică [...]. După cum am spus, la unsprezece a sosit Dida. Era foarte drăguță cu costumul ei de patinaj. Adică nu – am greșit – nu era drăguță cu costumul, ci cu figura ei. Are o față mică și simpatică, așa că o îmbracă bine orice pune. Și eu... când mă gândesc mi se strică toată buna dispoziție. [...] Deci îmi reiau firul povestirii, această persoană care nu e decât una și aceeași cu mine a plecat azi-dimineață la patinaj. Mai întâi am colindat câteva magazine ca să-și ia Dida patine și, după aceea, ne-am dus la Cișmigiu, la patinoarul din față. [...] 
+Tineri, tinere, toți petrec, patinează, beau, mănâncă... Numai inima mea se strânge și pocăie sărăcuța... Și stau, tremur, mă uit cum se duce și vine lumea, numai eu nu patinez. De ce? Mi-e frică! Ah! Frica asta în fața oricărui lucru mă omoară. Tare mi-e frică să nu dau înapoi și în fața evenimentelor mai însemnate din viață. A, da. Iar am scris: mi-e frică, se putea altfel? 
+După ce am dârdâit bine, de mi s-au făcut picioarele sloi, m-am avântat pe gheață „de brațul Didei”. N-am avut nicio altă senzație decât... frica. După ce-am mers puțin pe gheață, m-am dus iar în sală. Și iar tremuram de frig și iar mă simțeam oropsită, tare oropsită. Trecea atâta lume prin fața mea și toată mulțimea aceea era fericită... sau părea, cel puțin. Poate fiecare învățase să-și spuie că-i fericit. Cel puțin fața lor așa arăta. 
+Stam și mă gândeam: sunt fată sportivă, patinez, joc tenis, am să ajung o fată modernă! Eu? Nu, niciodată, simt că nu-s făcută eu pentru asta. Și Fanny care mă invidiază că pot merge la patinaj! Dacă aș putea, cu dragă inimă aș lăsa-o în locul meu. Dar nu se poate... fiecare trebuie să meargă cum îi dictează mediul în care trăiește, nu după înclinările sale.`,
+        cerinte: [
+            'Indică sensul din text al secvenței vrute și nevrute.',
+            'Menționează instrumentul muzical la care cânta Maria Banuș când era elevă, utilizând informaţiile din textul dat.',
+            'Precizează atitudinea Mariei Banuș față de Bubi, justificându-ți răspunsul cu o secvență semnificativă din textul dat.',
+            'Explică motivul pentru care, aflată la patinaj, eleva Maria Banuș se simte diferită de ceilalți.',
+            'Prezintă, în 30 – 50 de cuvinte, o trăsătură morală a Mariei Banuș, aşa cum reiese din primul paragraf al textului dat.'
+        ],
+        punctaj: [6, 6, 6, 6, 6]
+    },
+    {
+        titlu: 'Redactează un text argumentativ',
+        descriere: 'Redactează un text de minimum 150 de cuvinte, în care să argumentezi dacă emoțiile influențează sau nu comportamentul unei persoane.',
+        numarSubiect: 1,
+        subpunct: 'B',
+        profil: 'real',
+        data: '2023',
+        an: 2023,
+        sesiune: 'sesiune de toamnă',
+        tip: 'redactare',
+        text: `București, joi 22 decembrie 1927 
+E prima zi de vacanță! Ce cuvinte miraculoase pentru o elevă! Cu toate astea, nu mă bucur. Așa sunt eu; aștept, aștept cu nerăbdare un lucru și după ce l-am căpătat nu mai îmi face nicio plăcere. Așa a fost și cu vacanța. Nu-i vorbă, nu mi se arată prea strălucită. Când mă gândesc că o să vină Bubi la București mi se face rău. O să-l am toată vacanța pe cap. N-ar trebui să scriu aceste cuvinte, căci e „un băiat foarte reușit” (cum îi zice mama). Știe mai multe limbi, face scrisori frumoase (cu stil), e primul în clasă, face sporturi, în fine, e un băiat model. Deși am scris în râs toate astea, văd că așa e. Nu știu de ce oare nu-l prea am eu la stomac. [...] Mă uit să văd ce am scris până acum [...]. În loc să spun ce am făcut azi, am înșirat vrute și nevrute. Așa, acuma să anunț marele eveniment care s-a săvârșit azi: am fost prima dată la patinaj. Mă înțelesesem cu Dida să vină să mă ia la 9½, dar a venit la 10¾, așa că până atunci m-am învârtit și am exersat la pian. Era să fac cunoștință cu băiatul lui Rusu (chiriașul nostru), dar nu l-am găsit acasă, plecase de la 7 dimineața. La patinaj. Parcă mă văd cu inima cât un purice și cu pieptul înainte, cum băteam la ușa lui Rusu. Orice aș face, tot timidă rămân cu străinii. În casă sunt obraznică și cu un străin mă fac mică, mică [...]. După cum am spus, la unsprezece a sosit Dida. Era foarte drăguță cu costumul ei de patinaj. Adică nu – am greșit – nu era drăguță cu costumul, ci cu figura ei. Are o față mică și simpatică, așa că o îmbracă bine orice pune. Și eu... când mă gândesc mi se strică toată buna dispoziție. [...] Deci îmi reiau firul povestirii, această persoană care nu e decât una și aceeași cu mine a plecat azi-dimineață la patinaj. Mai întâi am colindat câteva magazine ca să-și ia Dida patine și, după aceea, ne-am dus la Cișmigiu, la patinoarul din față. [...] 
+Tineri, tinere, toți petrec, patinează, beau, mănâncă... Numai inima mea se strânge și pocăie sărăcuța... Și stau, tremur, mă uit cum se duce și vine lumea, numai eu nu patinez. De ce? Mi-e frică! Ah! Frica asta în fața oricărui lucru mă omoară. Tare mi-e frică să nu dau înapoi și în fața evenimentelor mai însemnate din viață. A, da. Iar am scris: mi-e frică, se putea altfel? 
+După ce am dârdâit bine, de mi s-au făcut picioarele sloi, m-am avântat pe gheață „de brațul Didei”. N-am avut nicio altă senzație decât... frica. După ce-am mers puțin pe gheață, m-am dus iar în sală. Și iar tremuram de frig și iar mă simțeam oropsită, tare oropsită. Trecea atâta lume prin fața mea și toată mulțimea aceea era fericită... sau părea, cel puțin. Poate fiecare învățase să-și spuie că-i fericit. Cel puțin fața lor așa arăta. 
+Stam și mă gândeam: sunt fată sportivă, patinez, joc tenis, am să ajung o fată modernă! Eu? Nu, niciodată, simt că nu-s făcută eu pentru asta. Și Fanny care mă invidiază că pot merge la patinaj! Dacă aș putea, cu dragă inimă aș lăsa-o în locul meu. Dar nu se poate... fiecare trebuie să meargă cum îi dictează mediul în care trăiește, nu după înclinările sale.`,
+        cerinte: [
+            'Cerințe totale: Redactează un text de minimum 150 de cuvinte, în care să argumentezi dacă emoțiile influențează sau nu comportamentul unei persoane, raportându-te atât la informațiile din fragmentul extras din volumul Însemnările mele de Maria Banuș, cât și la experiența personală sau culturală.',
+            'Sumar conținut: opinie, două argumente dezvoltate, concluzie pertinentă',
+            'Sumar redactare: conectori corecți, norme ale limbii literare, așezare în pagină, lizibilitate, număr minim de cuvinte'
+        ],
+        punctaj: ['Total: 20', 'Sumar conținut: 14', 'Sumar redactare: 6']
+    },
+    {
+        titlu: 'Analiza unui text poetic',
+        descriere: 'Comentează, în minimum 50 de cuvinte, textul de mai jos, evidențiind relația dintre ideea poetică și mijloacele artistice.',
+        numarSubiect: 2,
+        profil: 'real',
+        data: '2023',
+        an: 2023,
+        sesiune: 'sesiune de toamnă',
+        tip: 'poezie',
+        text: `Trecutu-l știm atât cât l-am aflat 
+C-a fost trăit și că s-a spulberat. 
+Acumul se trăiește tot la fel. 
+Se spulberă-n tăcere și nevăzut și el. 
+Nu-l înțeleg de noi cum se desparte, 
+Trăind cu noi și totuș mult departe. 
+Că viața-și pierde și văzută drumul, 
+Ca umbra și ca fumul. 
+Au fost frumoase și trăite toate. 
+Firește, zice gândul, și se poate. 
+Trăiește-ntr-adevăr tot ce se vede? 
+Tudor Arghezi, S-a spulberat`,
+        cerinte: [
+            'Comentează, în minimum 50 de cuvinte, textul de mai jos, evidențiind relația dintre ideea poetică și mijloacele artistice.',
+            'Conținut: evidențiază relația idee poetică – mijloace artistice',
+            'Redactare: limbă literară, logică, ortografie, punctuație'
+        ],
+        punctaj: [
+            'Total: 10',
+            'Conținut: 6',
+            'Redactare: 4'
+        ]
+    },
+    {
+        titlu: 'Redactează un eseu',
+        descriere: 'Redactează un eseu de minimum 400 de cuvinte, în care să prezinți particularități ale unui text narativ studiat, aparținând lui Mihail Sadoveanu sau lui G. Călinescu.',
+        numarSubiect: 3,
+        profil: 'real',
+        data: '2023',
+        an: 2023,
+        sesiune: 'sesiune de toamnă',
+        tip: 'eseu',
+        text: `Redactează un eseu de minimum 400 de cuvinte, în care să prezinți particularități ale unui text narativ studiat, aparținând lui Mihail Sadoveanu sau lui G. Călinescu. În elaborarea eseului, vei avea în vedere următoarele repere: – evidențierea a două trăsături care fac posibilă încadrarea textului narativ studiat într-o perioadă, într-un curent cultural/literar sau într-o orientare tematică; – comentarea a două episoade/secvențe relevante pentru tema textului narativ studiat; – analiza a două elemente de structură, de compoziție și/sau de limbaj, semnificative pentru textul narativ studiat (de exemplu: acțiune, conflict, relații temporale și spațiale, incipit, final, tehnici narative, instanțe ale comunicării narative, perspectivă narativă, registre stilistice, limbaj etc.).`,
+        cerinte: [
+            'Evidențiază două trăsături de încadrare a textului narativ',
+            'Comentează două episoade relevante pentru tema textului',
+            'Analizează două elemente de structură/compoziție/limbaj relevante'
+        ],
+        punctaj: [6, 6, 6]
+    }
 ];
 
 export default subiecteList;
