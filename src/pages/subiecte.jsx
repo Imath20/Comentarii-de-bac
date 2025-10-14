@@ -258,7 +258,7 @@ export default function Subiecte() {
     };
 
     return (
-        <Layout darkTheme={darkTheme} scrolled={scrolled}>
+        <Layout darkTheme={darkTheme} setDarkTheme={setDarkTheme} scrolled={scrolled}>
             <div className="subiecte-page">
                 <div className="page-hero">
                     <h1 className="page-title">
