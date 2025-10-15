@@ -9,6 +9,7 @@ const CurenteWheel = ({ darkTheme }) => {
   const [startAngle, setStartAngle] = useState(0);
   const [currentRotation, setCurrentRotation] = useState(0);
   const wheelRef = useRef(null);
+  const rotationRef = useRef(0);
   const navigate = useNavigate();
 
   // Calculează curentul activ bazat pe rotație (cel de sub săgeată)
@@ -59,6 +60,7 @@ const CurenteWheel = ({ darkTheme }) => {
     const newRotation = currentRotation + (angleDiff * 180 / Math.PI);
     
     setRotation(newRotation);
+    rotationRef.current = newRotation;
   };
 
   // Gestionează sfârșitul drag-ului
@@ -66,6 +68,26 @@ const CurenteWheel = ({ darkTheme }) => {
     e.preventDefault();
     e.stopPropagation();
     setIsDragging(false);
+
+    // Snap la cel mai apropiat curent (comportament general)
+    const totalCurente = CURENTE.length;
+    if (!totalCurente) return;
+    const anglePerCurent = 360 / totalCurente;
+
+    // Normalize current rotation to [0, 360) using latest ref
+    const currentRot = rotationRef.current;
+    const normalizedRotation = ((currentRot % 360) + 360) % 360;
+
+    // Compute nearest step used in active calculation
+    const t = Math.round((360 - normalizedRotation) / anglePerCurent);
+
+    // Align exactly to that step, then choose closest equivalent to current rotation
+    const normalizedSnap = 360 - t * anglePerCurent;
+    const turns = Math.round((currentRot - normalizedSnap) / 360);
+    const snapped = normalizedSnap + 360 * turns;
+
+    setRotation(snapped);
+    rotationRef.current = snapped;
   };
 
   // Adaugă event listeners pentru drag
