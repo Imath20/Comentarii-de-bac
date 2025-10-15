@@ -80,6 +80,11 @@
   &.active {
     z-index: 8;
     
+    // Enlarge the active circle beyond the default size
+    width: 120px;
+    height: 120px;
+    margin: -60px 0 0 -60px;
+
     .curent-circle-content {
       background: transparent;
       box-shadow: 
@@ -88,9 +93,9 @@
       border-color: var(--glow-color);
     }
 
-    // Enlarge active icon
+    // Slightly scale image for extra emphasis
     .curent-image {
-      transform: scale(1.18);
+      transform: scale(1.06);
     }
   }
 
@@ -258,6 +263,12 @@
     margin: -35px 0 0 -35px;
   }
 
+  .curent-circle.active {
+    width: 92px;
+    height: 92px;
+    margin: -46px 0 0 -46px;
+  }
+
   .curent-image {
     width: 55px;
     height: 55px;
@@ -303,6 +314,12 @@
     width: 60px;
     height: 60px;
     margin: -30px 0 0 -30px;
+  }
+
+  .curent-circle.active {
+    width: 80px;
+    height: 80px;
+    margin: -40px 0 0 -40px;
   }
 
   .curent-image {
