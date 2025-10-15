@@ -443,6 +443,9 @@ const categorii = [
     { id: 'schita', nume: 'Schiţă'}
 ];
 
+// Listează categoriile pentru butoanele de prompturi rapide (fără memorii, poveste, schiță)
+const categoriiQuick = categorii.filter(c => !['toate', 'memorii', 'poveste', 'schita'].includes(c.id));
+
 // Opțiuni pentru react-select
 const genOptions = categorii.map(categorie => ({ value: categorie.id, label: categorie.nume }));
 const canonicOptions = [
@@ -995,34 +998,12 @@ Treceau bătăi de aripi prin vraiștea grădinii
                             })}
                         />
                     </div>
-                    {/* Dropdown Sortare */}
-                    <div className="opere-select-container">
-                        <Select
-                            options={sortOptions}
-                            value={sortOptions.find(opt => opt.value === sortOption)}
-                            onChange={opt => setSortOption(opt.value)}
-                            styles={customSelectStyles(darkTheme)}
-                            isSearchable={false}
-                            menuPlacement="auto"
-                            placeholder="Sortează"
-                            theme={theme => ({
-                                ...theme,
-                                borderRadius: 20,
-                                colors: {
-                                    ...theme.colors,
-                                    primary25: darkTheme ? '#3a2312' : '#f7f8fa',
-                                    primary: darkTheme ? '#ffd591' : '#a97c50',
-                                    neutral0: darkTheme ? '#2a170a' : '#fffbeee',
-                                    neutral80: darkTheme ? '#ffd591' : '#4e2e1e',
-                                },
-                            })}
-                        />
-                    </div>
+                    {/* Sortarea a fost mutată mai jos, lângă prompturi */}
                 </div>
 
-                {/* Butoane categorii sub search bar */}
+                {/* Butoane categorii sub search bar (prompturi rapide) */}
                 <div className="opere-filter-buttons">
-                    {categorii.filter(c => c.id !== 'toate').map(categorie => (
+                    {categoriiQuick.map(categorie => (
                         <button
                             key={categorie.id}
                             onClick={() => setSelectedCategory(categorie.id)}
@@ -1057,6 +1038,30 @@ Treceau bătăi de aripi prin vraiștea grădinii
                             />
                         </div>
                     )}
+
+                    {/* Dropdown Sortare - mutat aici pe același rând cu prompturile */}
+                    <div className="opere-sort-container">
+                        <Select
+                            options={sortOptions}
+                            value={sortOptions.find(opt => opt.value === sortOption)}
+                            onChange={opt => setSortOption(opt.value)}
+                            styles={customSelectStyles(darkTheme)}
+                            isSearchable={false}
+                            menuPlacement="auto"
+                            placeholder="Sortează"
+                            theme={theme => ({
+                                ...theme,
+                                borderRadius: 20,
+                                colors: {
+                                    ...theme.colors,
+                                    primary25: darkTheme ? '#3a2312' : '#f7f8fa',
+                                    primary: darkTheme ? '#ffd591' : '#a97c50',
+                                    neutral0: darkTheme ? '#2a170a' : '#fffbeee',
+                                    neutral80: darkTheme ? '#ffd591' : '#4e2e1e',
+                                },
+                            })}
+                        />
+                    </div>
                 </div>
 
                 {/* Grid Cărți */}

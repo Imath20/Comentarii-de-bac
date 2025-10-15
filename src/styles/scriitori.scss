@@ -165,7 +165,11 @@
     overflow-y: auto;
   }
 }
-
+.scriitori-sort-container {
+  margin-left: auto;
+  min-width: 260px;
+  margin-right: 10rem;
+}
 // Search bar styles
 .scriitori-search-container {
   position: relative;

@@ -194,7 +194,7 @@ const genOptions = [
   { value: 'teatru', label: 'Teatru' }
 ];
 
-// Stiluri pentru react-select
+// Stiluri pentru react-select (aliniate cu Opere/Scriitori/Biblioteca)
 const customSelectStyles = (darkTheme) => ({
   control: (provided, state) => ({
     ...provided,
@@ -207,93 +207,84 @@ const customSelectStyles = (darkTheme) => ({
     color: darkTheme ? 'rgba(255,255,255,0.95)' : '#222',
     fontWeight: 500,
     fontSize: '1.13rem',
-    boxShadow: 'none',
+    boxShadow: state.isFocused ? `0 0 0 2px ${darkTheme ? '#ffd591' : '#a3a3a3'}` : 'none',
     cursor: 'pointer',
-    transition: 'background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease',
-    '&:hover': {
-      borderColor: darkTheme ? '#ffd591' : '#a97c50',
-      background: darkTheme ? '#5a341e' : '#ffffff',
-      boxShadow: '0 6px 18px rgba(0, 0, 0, 0.12)',
-      transform: 'translateY(-1px)',
-      cursor: 'pointer',
-    },
-    '&:focus-within': {
-      borderColor: darkTheme ? '#ffd591' : '#a97c50',
-      boxShadow: `0 0 0 1px ${darkTheme ? '#ffd591' : '#a97c50'}`,
-      cursor: 'pointer',
-    },
+    paddingLeft: 0,
+    paddingRight: 0,
+    transition: 'all 0.3s',
+    outline: 'none',
+    alignItems: 'center',
+    display: 'flex',
+    justifyContent: 'space-between',
+  }),
+  valueContainer: (provided) => ({
+    ...provided,
+    height: '56px',
+    padding: '0 1.5rem',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    flex: 1,
+    position: 'relative',
+  }),
+  menu: (provided) => ({
+    ...provided,
+    borderRadius: '2.2rem',
+    background: darkTheme ? '#4e2e1e' : '#f7f8fa',
+    color: darkTheme ? 'rgba(255,255,255,0.95)' : '#222',
+    boxShadow: '0 8px 32px 0 rgba(60,40,20,0.18)',
+    overflow: 'hidden',
+    zIndex: 10,
+    marginTop: 6,
   }),
   option: (provided, state) => ({
     ...provided,
-    backgroundColor: state.isSelected
-      ? (darkTheme ? '#ffd591' : '#a97c50')
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    textAlign: 'center',
+    color: darkTheme ? 'rgba(255,255,255,0.95)' : '#222',
+    background: state.isSelected
+      ? (darkTheme ? '#a97c50' : '#ffd591')
       : state.isFocused
-      ? (darkTheme ? '#3a2312' : '#f7f8fa')
-      : 'transparent',
-    color: state.isSelected
-      ? (darkTheme ? '#2a170a' : '#fff')
-      : (darkTheme ? '#ffd591' : '#4e2e1e'),
-    padding: '12px 16px',
-    fontSize: '1rem',
-    fontWeight: 500,
+        ? (darkTheme ? '#6a4322' : '#fff')
+        : (darkTheme ? '#4e2e1e' : '#f7f8fa'),
+    fontWeight: state.isSelected ? 700 : 500,
+    fontSize: '1.13rem',
     cursor: 'pointer',
-    transition: 'background-color 0.15s ease, transform 0.1s ease',
-    '&:hover': {
-      backgroundColor: darkTheme ? '#3a2312' : '#f0f2f5',
-      transform: 'translateX(2px)',
-      cursor: 'pointer',
-    },
+    borderRadius: 0,
+    padding: '0.7rem 0',
+    minHeight: 40,
   }),
   singleValue: (provided) => ({
     ...provided,
     color: darkTheme ? 'rgba(255,255,255,0.95)' : '#222',
+    textAlign: 'center',
     fontWeight: 500,
+    width: '100%',
     fontSize: '1.13rem',
-  }),
-  input: (provided) => ({
-    ...provided,
-    color: darkTheme ? 'rgba(255,255,255,0.95)' : '#222',
-  }),
-  menu: (provided) => ({
-    ...provided,
-    backgroundColor: darkTheme ? '#4e2e1e' : '#f7f8fa',
-    border: `1.5px solid ${darkTheme ? '#a97c50' : '#ececec'}`,
-    borderRadius: '1.1rem',
-    boxShadow: '0 4px 20px rgba(0,0,0,0.15)',
-    overflow: 'hidden',
-    zIndex: 200,
-  }),
-  menuList: (provided) => ({
-    ...provided,
-    padding: '8px 0',
-    '&::-webkit-scrollbar': {
-      width: '0px',
-      background: 'transparent',
-    },
-    '&::-webkit-scrollbar-track': {
-      background: 'transparent',
-    },
-    '&::-webkit-scrollbar-thumb': {
-      background: 'transparent',
-    },
-    scrollbarWidth: 'none',
-    msOverflowStyle: 'none',
-  }),
-  indicatorSeparator: () => ({
-    display: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    height: '56px',
+    position: 'absolute',
+    left: '1.5rem',
+    right: '1.5rem',
   }),
   dropdownIndicator: (provided) => ({
     ...provided,
     color: darkTheme ? '#ffd591' : '#a97c50',
-    padding: '8px',
-    transition: 'color 0.2s, transform 0.15s ease',
-    cursor: 'pointer',
-    '&:hover': {
-      color: darkTheme ? '#ffd591' : '#a97c50',
-      transform: 'scale(1.08)',
-      cursor: 'pointer',
-    },
+    padding: 8,
+    transition: 'color 0.2s',
+    alignItems: 'center',
+    justifyContent: 'center',
+    display: 'flex',
+    height: '56px',
+    position: 'absolute',
+    right: '1.5rem',
   }),
+  indicatorSeparator: () => ({ display: 'none' }),
+  input: (provided) => ({ ...provided, display: 'none' }),
+  menuList: (provided) => ({ ...provided, padding: 0, maxHeight: 'none', overflowY: 'auto' }),
 });
 
 export default function Videoclipuri() {
@@ -301,6 +292,7 @@ export default function Videoclipuri() {
   const [scrolled, setScrolled] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('toate');
+  const [sortOption, setSortOption] = useState('none');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -323,8 +315,45 @@ export default function Videoclipuri() {
     return matchesSearch && matchesCategory;
   });
 
+  const sortOptions = [
+    { value: 'none', label: 'Fără sortare' },
+    { value: 'durata-asc', label: 'Durată ↑' },
+    { value: 'durata-desc', label: 'Durată ↓' },
+    { value: 'az', label: 'A–Z' },
+    { value: 'za', label: 'Z–A' },
+  ];
+
+  const parseDurationToSeconds = (durata) => {
+    if (!durata) return 0;
+    const parts = String(durata).split(':').map(n => parseInt(n, 10));
+    if (parts.length === 3) {
+      const [h, m, s] = parts;
+      return (isNaN(h)?0:h) * 3600 + (isNaN(m)?0:m) * 60 + (isNaN(s)?0:s);
+    }
+    if (parts.length === 2) {
+      const [m, s] = parts;
+      return (isNaN(m)?0:m) * 60 + (isNaN(s)?0:s);
+    }
+    return 0;
+  };
+
+  const sortedFilme = [...filteredFilme].sort((a, b) => {
+    switch (sortOption) {
+      case 'durata-asc':
+        return parseDurationToSeconds(a.durata) - parseDurationToSeconds(b.durata);
+      case 'durata-desc':
+        return parseDurationToSeconds(b.durata) - parseDurationToSeconds(a.durata);
+      case 'az':
+        return a.titlu.localeCompare(b.titlu, 'ro', { sensitivity: 'base' });
+      case 'za':
+        return b.titlu.localeCompare(a.titlu, 'ro', { sensitivity: 'base' });
+      default:
+        return 0;
+    }
+  });
+
   return (
-    <Layout darkTheme={darkTheme} scrolled={scrolled}>
+    <Layout darkTheme={darkTheme} setDarkTheme={setDarkTheme} scrolled={scrolled}>
       <div className="page-hero">
         <h1 className="page-title">{
           'Videoclipuri'.split(' ').map((word, wi) => (
@@ -368,6 +397,18 @@ export default function Videoclipuri() {
                placeholder="Categorie"
              />
           </div>
+          {/* Dropdown Sortare */}
+          <div className="videoclipuri-select-container">
+            <Select
+              options={sortOptions}
+              value={sortOptions.find(opt => opt.value === sortOption)}
+              onChange={opt => setSortOption(opt.value)}
+              styles={customSelectStyles(darkTheme)}
+              isSearchable={false}
+              menuPlacement="auto"
+              placeholder="Sortează"
+            />
+          </div>
         </div>
 
         {/* Butoane categorii sub search bar */}
@@ -385,7 +426,7 @@ export default function Videoclipuri() {
 
         {/* Grid Filme */}
         <div className="videoclipuri-grid-container">
-          {filteredFilme.map((film) => (
+          {sortedFilme.map((film) => (
             <div
               key={film.id}
               className={`videoclipuri-card ${darkTheme ? 'dark-theme' : 'light-theme'}`}

@@ -497,29 +497,6 @@ export default function Opre() {
                             })}
                         />
                     </div>
-                    {/* Dropdown Sortare */}
-                    <div className="opere-select-container">
-                        <Select
-                            options={sortOptions}
-                            value={sortOptions.find(opt => opt.value === sortOption)}
-                            onChange={opt => setSortOption(opt.value)}
-                            styles={customSelectStyles(darkTheme)}
-                            isSearchable={false}
-                            menuPlacement="auto"
-                            placeholder="Sortează"
-                            theme={theme => ({
-                                ...theme,
-                                borderRadius: 20,
-                                colors: {
-                                    ...theme.colors,
-                                    primary25: darkTheme ? '#3a2312' : '#f7f8fa',
-                                    primary: darkTheme ? '#ffd591' : '#a97c50',
-                                    neutral0: darkTheme ? '#2a170a' : '#fffbeee',
-                                    neutral80: darkTheme ? '#ffd591' : '#4e2e1e',
-                                },
-                            })}
-                        />
-                    </div>
                 </div>
 
                 {/* Butoane categorii canonice sub search bar */}
@@ -559,6 +536,30 @@ export default function Opre() {
                             />
                         </div>
                     )}
+
+                    {/* Dropdown Sortare - mutat aici pe același rând cu prompturile */}
+                    <div className="opere-sort-container">
+                        <Select
+                            options={sortOptions}
+                            value={sortOptions.find(opt => opt.value === sortOption)}
+                            onChange={opt => setSortOption(opt.value)}
+                            styles={customSelectStyles(darkTheme)}
+                            isSearchable={false}
+                            menuPlacement="auto"
+                            placeholder="Sortează"
+                            theme={theme => ({
+                                ...theme,
+                                borderRadius: 20,
+                                colors: {
+                                    ...theme.colors,
+                                    primary25: darkTheme ? '#3a2312' : '#f7f8fa',
+                                    primary: darkTheme ? '#ffd591' : '#a97c50',
+                                    neutral0: darkTheme ? '#2a170a' : '#fffbeee',
+                                    neutral80: darkTheme ? '#ffd591' : '#4e2e1e',
+                                },
+                            })}
+                        />
+                    </div>
                 </div>
 
                 {/* Grid Opere */}
