@@ -2369,6 +2369,240 @@ George Topîrceanu, Șoapte`,
         ],
         punctaj: [6, 6, 6]
     },
+    {
+        titlu: 'Jean Bart, Mărturisiri literare',
+        descriere: 'Citește următorul fragment al lui Jean Bart și rezolvă cerințele date.',
+        numarSubiect: 1,
+        subpunct: 'A',
+        profil: 'real',
+        data: '2021',
+        an: 2021,
+        sesiune: 'simulare',
+        tip: 'analiza',
+        text: `Eu mă consider fiu al Iașului, pentru că acolo am crescut și m-am format, până am plecat în lume. 
+De Burdujeni nu-mi aduc aminte decât vag de tot; niște frânturi de amintiri. Prima imagine care mi-a rămas e din timpul războiului cu turcii, din 1877. Tatăl meu, fiind militar, a plecat în război și îmi amintesc jalea din casă cu ocazia acestui eveniment. Aceste lucruri le-am descris în Scrisorile tatii. 
+Pe urmă îmi aduc aminte cum ședeam cu toții ai casei în jurul unei lămpi cu abajur verde și făceam scamă*. Pe vremea aceea, nu era vată pentru pansamente, ca astăzi, ci scamă. Toți ai casei făceau scamă, ce se trimitea la Crucea Roșie. De atunci am o amintire pe care am descris-o, dar e bine s-o repet în două cuvinte: îmi aduc aminte cum poștașul aduce într-o zi un mic pachet. Îl primesc eu și-l duc mamei. Era în el ceasul tatii. Eu nu-mi dădeam seama, pentru că eram prea mic, dar o văd pe mama că începe să plângă: credea că a fost ucis în război și în acel pachet se trimiteau familiei lucrurile găsite la el. 
+A doua zi a venit o scrisoare de la tata și, natural, cu aceasta bucuria pentru întreaga familie. E o scenă care mi-a rămas din primii ani ai copilăriei. […] 
+Clasele primare le-am făcut bineînțeles la Iași și în clasa a doua primară am avut de profesor chiar pe celebrul scriitor Ion Creangă. Eram prea mic, dar mi-l aduc bine aminte: un om gros și gras, cu o pălărie mare gri; mișca mult, sufla greu și se ștergea mereu cu o batistă mare de popă. După cum știți, a fost și el preot și prieten cu preotul Enăchescu, cu care a lucrat împreună Învățătorul copiilor*. 
+Și ce mi-a rămas în minte știu că saluta pe copii, pe când ceilalți dascăli nici nu se uitau la ei. De câte ori îl salutam, el își scotea pălăria lui cea mare și noi, pentru asta, treceam de zece ori prin fața lui. 
+Îi plăceau copiii și știu asta pentru că prin clasa a patra primară nu-l mai aveam pe el – ședeam în Sărărie, pe când el ședea în Țicău. Pe panta aceea ne dădeam cu săniuța și treceam chiar prin fața casei lui. El ieșea în poartă îmbrăcat într-un fel de cațaveică* de vulpe și uneori se suia cu noi în sanie și ne arăta cum trebuie să cârmuim; nu se supăra deloc când se răsturna sania cu noi și cu el. […] 
+Domnilor, am trăit în mediul Iașului și cei care n-au trăit în Iași greu își pot da seama de acea atmosferă ieșeană. Am trecut și eu pe sub „plopii fără soț”. Am visat și eu la Grădina Copoului; chiar sub teiul lui Eminescu. Am văzut pe Eminescu; n-am vorbit cu el, pentru că eram copil. […] 
+Și astăzi când mă duc la Iași, când și când, cu adevărată voluptate cutreier străzile Iașului, oprindu-mă la fiecare colț, căci îmi aduc aminte locurile unde am copilărit și întreaga istorie a Iașului. 
+Jean Bart, Mărturisiri literare   
+*scamă – (învechit, cu sens colectiv) fire destrămate dintr-o pânză uzată, scămoșate și întrebuințate la pansamente 
+*Învățătorul copiilor – abecedar scris de Ion Creangă și de Gh. Enăchescu 
+*cațaveică – haină lungă`,
+        cerinte: [
+            'Indică sensul din text al secvenței în două cuvinte.',
+            'Menționează titlul lucrării în care Jean Bart evocă atmosfera din familia sa, ca urmare a plecării tatălui în război, utilizând informațiile din textul dat.',
+            'Precizează o stare trăită de autor la revenirea în Iași, justificându-ți răspunsul cu o secvență semnificativă din textul dat.',
+            'Explică motivul pentru care scrisoarea tatălui creează bucurie familiei.',
+            'Prezintă, în 30 – 50 de cuvinte, atitudinea lui Ion Creangă față de copii, aşa cum reiese din textul dat.'
+        ],
+        punctaj: [6, 6, 6, 6, 6]
+    },
+    {
+        titlu: 'Redactează un text argumentativ',
+        descriere: 'Redactează un text de minimum 150 de cuvinte, în care să argumentezi dacă e importantă sau nu implicarea civică în perioadele de criză.',
+        numarSubiect: 1,
+        subpunct: 'B',
+        profil: 'real',
+        data: '2021',
+        an: 2021,
+        sesiune: 'simulare',
+        tip: 'redactare',
+        text: `Eu mă consider fiu al Iașului, pentru că acolo am crescut și m-am format, până am plecat în lume. 
+De Burdujeni nu-mi aduc aminte decât vag de tot; niște frânturi de amintiri. Prima imagine care mi-a rămas e din timpul războiului cu turcii, din 1877. Tatăl meu, fiind militar, a plecat în război și îmi amintesc jalea din casă cu ocazia acestui eveniment. Aceste lucruri le-am descris în Scrisorile tatii. 
+Pe urmă îmi aduc aminte cum ședeam cu toții ai casei în jurul unei lămpi cu abajur verde și făceam scamă*. Pe vremea aceea, nu era vată pentru pansamente, ca astăzi, ci scamă. Toți ai casei făceau scamă, ce se trimitea la Crucea Roșie. De atunci am o amintire pe care am descris-o, dar e bine s-o repet în două cuvinte: îmi aduc aminte cum poștașul aduce într-o zi un mic pachet. Îl primesc eu și-l duc mamei. Era în el ceasul tatii. Eu nu-mi dădeam seama, pentru că eram prea mic, dar o văd pe mama că începe să plângă: credea că a fost ucis în război și în acel pachet se trimiteau familiei lucrurile găsite la el. 
+A doua zi a venit o scrisoare de la tata și, natural, cu aceasta bucuria pentru întreaga familie. E o scenă care mi-a rămas din primii ani ai copilăriei. […] 
+Clasele primare le-am făcut bineînțeles la Iași și în clasa a doua primară am avut de profesor chiar pe celebrul scriitor Ion Creangă. Eram prea mic, dar mi-l aduc bine aminte: un om gros și gras, cu o pălărie mare gri; mișca mult, sufla greu și se ștergea mereu cu o batistă mare de popă. După cum știți, a fost și el preot și prieten cu preotul Enăchescu, cu care a lucrat împreună Învățătorul copiilor*. 
+Și ce mi-a rămas în minte știu că saluta pe copii, pe când ceilalți dascăli nici nu se uitau la ei. De câte ori îl salutam, el își scotea pălăria lui cea mare și noi, pentru asta, treceam de zece ori prin fața lui. 
+Îi plăceau copiii și știu asta pentru că prin clasa a patra primară nu-l mai aveam pe el – ședeam în Sărărie, pe când el ședea în Țicău. Pe panta aceea ne dădeam cu săniuța și treceam chiar prin fața casei lui. El ieșea în poartă îmbrăcat într-un fel de cațaveică* de vulpe și uneori se suia cu noi în sanie și ne arăta cum trebuie să cârmuim; nu se supăra deloc când se răsturna sania cu noi și cu el. […] 
+Domnilor, am trăit în mediul Iașului și cei care n-au trăit în Iași greu își pot da seama de acea atmosferă ieșeană. Am trecut și eu pe sub „plopii fără soț”. Am visat și eu la Grădina Copoului; chiar sub teiul lui Eminescu. Am văzut pe Eminescu; n-am vorbit cu el, pentru că eram copil. […] 
+Și astăzi când mă duc la Iași, când și când, cu adevărată voluptate cutreier străzile Iașului, oprindu-mă la fiecare colț, căci îmi aduc aminte locurile unde am copilărit și întreaga istorie a Iașului. 
+Jean Bart, Mărturisiri literare   
+*scamă – (învechit, cu sens colectiv) fire destrămate dintr-o pânză uzată, scămoșate și întrebuințate la pansamente 
+*Învățătorul copiilor – abecedar scris de Ion Creangă și de Gh. Enăchescu 
+*cațaveică – haină lungă`,
+        cerinte: [
+            'Cerințe totale: Redactează un text de minimum 150 de cuvinte, în care să argumentezi dacă e importantă sau nu implicarea civică în perioadele de criză, raportându-te atât la informațiile din fragmentul extras din volumul Mărturisiri literare de Jean Bart, cât și la experiența personală sau culturală.',
+            'Sumar conținut: opinie, două argumente dezvoltate, concluzie pertinentă',
+            'Sumar redactare: conectori corecți, norme ale limbii literare, așezare în pagină, lizibilitate, număr minim de cuvinte'
+        ],
+        punctaj: ['Total: 20', 'Sumar conținut: 14', 'Sumar redactare: 6']
+    },
+    {
+        titlu: 'Analiza notațiilor autorului',
+        descriere: 'Prezintă, în minimum 50 de cuvinte, rolul notațiilor autorului în fragmentul de mai jos.',
+        numarSubiect: 2,
+        profil: 'real',
+        data: '2021',
+        an: 2021,
+        sesiune: 'simulare',
+        tip: 'drama',
+        text: `În București, la Leonida. 
+O odaie modestă de mahala. [...] la dreapta, o ușă; la stânga, o fereastră. De-o parte și de alta a scenei, câte un pat de culcare. În mijlocul odăii, o masă împrejurul căreia sunt așezate scaune de paie. Pe masă, o lampă cu gaz; pe globul lămpii un abat-jour* cusut pe canava*. În planul întâi, la stânga, o sobă cu ușa deschisă și cu câțiva tăciuni pâlpâind. Leonida e în halat, în papuci și cu scufia de noapte; Efimița în camizol*, fustă de flanelă roșie și legată la cap cu tulpan alb. Amândoi șed de vorbă la masă. 
+SCENA I 
+LEONIDA: Așa cum îți spusei, mă scol într-o dimineață și, știi obiceiul meu, pui mâna întâi și-ntâi pe Aurora democratică, să văz cum mai merge țara. O deschiz... și ce citesc? Uite, țin minte ca acuma: 
+„11/23 Făurar...”. 
+I. L. Caragiale, Conu Leonida față cu reacțiunea 
+*abat-jour – (în franceză, în original) abajur – dispozitiv fixat în jurul unei lămpi, destinat să dirijeze lumina într-o anumită direcție  
+*canava – țesătură rară din fire groase de bumbac, folosită pentru broderii 
+*camizol – haină de casă scurtă, cu mâneci, pe care o purtau femeile`,
+        cerinte: [
+            'Prezintă, în minimum 50 de cuvinte, rolul notațiilor autorului în fragmentul de mai jos.',
+            'Conținut: precizează rolul notațiilor autorului în fragmentul de mai jos',
+            'Redactare: utilizează corect conectorii; respectă normele limbii literare, așezarea în pagină și lizibilitatea'
+        ],
+        punctaj: [
+            'Total: 10',
+            'Conținut: 6',
+            'Redactare: 4'
+        ]
+    },
+    {
+        titlu: 'Redactează un eseu',
+        descriere: 'Redactează un eseu de minimum 400 de cuvinte, în care să prezinți particularități ale unui text narativ studiat, aparținând lui Ioan Slavici.',
+        numarSubiect: 3,
+        profil: 'real',
+        data: '2021',
+        an: 2021,
+        sesiune: 'simulare',
+        tip: 'eseu',
+        text: `Redactează un eseu de minimum 400 de cuvinte, în care să prezinți particularități ale unui text narativ studiat, aparținând lui Ioan Slavici. 
+În elaborarea eseului, vei avea în vedere următoarele repere: – evidențierea a două trăsături care fac posibilă încadrarea textului narativ studiat într-o perioadă, într-un curent cultural/literar sau într-o orientare tematică; – comentarea a două episoade/secvențe relevante pentru tema textului narativ studiat; – analiza a două elemente de structură, de compoziție și/sau de limbaj, semnificative pentru textul narativ studiat (de exemplu: acțiune, conflict, relații temporale și spațiale, incipit, final, tehnici narative, instanțe ale comunicării narative, perspectivă narativă, registre stilistice, limbaj etc.).`,
+        cerinte: [
+            'Evidențiază două trăsături care fac posibilă încadrarea textului narativ în contextul său',
+            'Comentează două episoade relevante pentru tema textului',
+            'Analizează două elemente de structură/compoziție/limbaj relevante'
+        ],
+        punctaj: [6, 6, 6]
+    },
+    {
+        titlu: 'Dinu & Nelli Pillat, Biruința unei iubiri',
+        descriere: 'Citește următorul fragment al lui Dinu & Nelli Pillat și rezolvă cerințele date.',
+        numarSubiect: 1,
+        subpunct: 'A',
+        profil: 'real',
+        data: '2021',
+        an: 2021,
+        sesiune: 'model',
+        tip: 'analiza',
+        text: `14 iulie 1943, Predeal 
+Dinu drag, 
+Sunt fericită că-mi scrii despre noile revelații pe care le ai în legătură cu romanul tău. Aceasta mă face să reînnoiesc ceea ce ți-am spus într-o zi, că niciodată să nu disperi atunci când întruchiparea ideilor tale întârzie să vină, căci timpul și viața trăită la rând îți măresc puterea de înțelegere, îmbogățindu-ți sufletul, dându-i mereu posibilitatea altor renașteri și cuprinsul altor lumini. 
+Ți-am mărturisit mereu că mă încred deplin în talentul tău și afirmarea spuselor mele nu întârzie să vină. Aș prefera acum să ne plimbăm pe marginea lacurilor noastre și să-ți împărtășesc descoperirile și întrebările mele din ultimul timp. 
+Pentru că zilele acestea a plouat teribil, norii vătuindu-mi și munții, și pădurile, am fost nevoită să stau în casă, să fac focul în sobă și, instalată cât mai comod, să citesc ca să uit de timp. Am început bineînțeles cu L'Idiot*. Probabil că vei fi dezamăgit de felul în care am înțeles această carte și de ecourile pe care le-a putut găsi în sufletul meu. Este totuși foarte natural să fie așa. 
+Senzația pe care am simțit-o în decursul lecturii a fost aceea de chin, înăbușire, apăsare. Deseori simțeam nevoia să deschid fereastra și să respir cât mai mult aer. Dostoievski probabil a coborât în iad să-și adune personagiile, le-a botezat creștinește și apoi le-a dat drumul în lume. Și recunosc că iadul este și pe pământ și că de cele mai multe ori îl descopăr și în sufletul meu. 
+Prințul Mîșkin nu a reușit decât în parte să-mi elibereze sufletul de înlănțuirea suferinței și a păcatelor celorlalte personagii. Și aceasta din următoarele motive:  
+I. Am înțeles prea mult suferința și structura sufletească a celorlalte personagii principale, Nastasia Philipovna și Aglae, pentru ca să nu le aprob acțiunile. [...]  
+De Mîșkin cred că m-aș fi îndrăgostit și eu nebunește, dacă aș fi luat parte la acțiunea romanului lui Dostoievski. 
+II. În legătură cu Mîșkin am să-ți pun câteva întrebări pe care nu știu dacă am dreptul să ți le pun. 
+Dacă Mîșkin ar fi posedat o inteligență mai complexă decât inteligența sufletească, ar fi putut fi tot așa cum era? 
+Ce folos și ce mângâiere au adus Mîșkin și sacrificiul său sufletelor chinuite de celelalte personaje? 
+De ce Mîșkin și toți eroii romanului au trebuit să sfârșească așa cum au sfârșit? 
+Probabil că nici Dostoievski nu a crezut în posibilitatea vreunei îndreptări sau a unui alt sfârșit pentru sufletul omenesc. [...] Are o forță și o putere de pătrundere de parcă ar fi Dumnezeu. 
+Probabil că ceea ce ți-am scris te va îndurera. Îmi pare teribil de rău că am simțit și înțeles astfel romanul lui Dostoievski. De fapt, bănuiesc că nu l-am înțeles deloc și mă întreb dacă voi ajunge să-l pătrund cu alt suflet și altă minte vreodată.  
+Nelli 
+Dinu & Nelli Pillat, Biruința unei iubiri   
+*L'Idiot (limba franceză) – Idiotul, roman scris de F. M. Dostoievski. Ca majoritatea intelectualilor epocii, Nelli citește mai 
+ales în limba franceză și folosește ortografia franceză a numelor.`,
+        cerinte: [
+            'Indică sensul din text al secvenței decât în parte.',
+            'Menționează numele a două personaje din romanul Idiotul de Dostoievski, utilizând informațiile din textul dat.',
+            'Precizează efectul pe care îl are lectura romanului asupra lui Nelli, justificându-ți răspunsul cu o secvență semnificativă din textul dat.',
+            'Explică motivul pentru care impasul creator nu ar trebui să-l descurajeze pe Dinu, în viziunea lui Nelli.',
+            'Prezintă, în 30 – 50 de cuvinte, o trăsătură a expeditoarei scrisorii, aşa cum reiese din textul dat.'
+        ],
+        punctaj: [6, 6, 6, 6, 6]
+    },
+    {
+        titlu: 'Redactează un text argumentativ',
+        descriere: 'Redactează un text de minimum 150 de cuvinte, în care să argumentezi dacă lectura este sau nu o modalitate de a te detașa de realitate.',
+        numarSubiect: 1,
+        subpunct: 'B',
+        profil: 'real',
+        data: '2021',
+        an: 2021,
+        sesiune: 'model',
+        tip: 'redactare',
+        text: `14 iulie 1943, Predeal 
+Dinu drag, 
+Sunt fericită că-mi scrii despre noile revelații pe care le ai în legătură cu romanul tău. Aceasta mă face să reînnoiesc ceea ce ți-am spus într-o zi, că niciodată să nu disperi atunci când întruchiparea ideilor tale întârzie să vină, căci timpul și viața trăită la rând îți măresc puterea de înțelegere, îmbogățindu-ți sufletul, dându-i mereu posibilitatea altor renașteri și cuprinsul altor lumini. 
+Ți-am mărturisit mereu că mă încred deplin în talentul tău și afirmarea spuselor mele nu întârzie să vină. Aș prefera acum să ne plimbăm pe marginea lacurilor noastre și să-ți împărtășesc descoperirile și întrebările mele din ultimul timp. 
+Pentru că zilele acestea a plouat teribil, norii vătuindu-mi și munții, și pădurile, am fost nevoită să stau în casă, să fac focul în sobă și, instalată cât mai comod, să citesc ca să uit de timp. Am început bineînțeles cu L'Idiot*. Probabil că vei fi dezamăgit de felul în care am înțeles această carte și de ecourile pe care le-a putut găsi în sufletul meu. Este totuși foarte natural să fie așa. 
+Senzația pe care am simțit-o în decursul lecturii a fost aceea de chin, înăbușire, apăsare. Deseori simțeam nevoia să deschid fereastra și să respir cât mai mult aer. Dostoievski probabil a coborât în iad să-și adune personagiile, le-a botezat creștinește și apoi le-a dat drumul în lume. Și recunosc că iadul este și pe pământ și că de cele mai multe ori îl descopăr și în sufletul meu. 
+Prințul Mîșkin nu a reușit decât în parte să-mi elibereze sufletul de înlănțuirea suferinței și a păcatelor celorlalte personagii. Și aceasta din următoarele motive:  
+I. Am înțeles prea mult suferința și structura sufletească a celorlalte personagii principale, Nastasia Philipovna și Aglae, pentru ca să nu le aprob acțiunile. [...]  
+De Mîșkin cred că m-aș fi îndrăgostit și eu nebunește, dacă aș fi luat parte la acțiunea romanului lui Dostoievski. 
+II. În legătură cu Mîșkin am să-ți pun câteva întrebări pe care nu știu dacă am dreptul să ți le pun. 
+Dacă Mîșkin ar fi posedat o inteligență mai complexă decât inteligența sufletească, ar fi putut fi tot așa cum era? 
+Ce folos și ce mângâiere au adus Mîșkin și sacrificiul său sufletelor chinuite de celelalte personaje? 
+De ce Mîșkin și toți eroii romanului au trebuit să sfârșească așa cum au sfârșit? 
+Probabil că nici Dostoievski nu a crezut în posibilitatea vreunei îndreptări sau a unui alt sfârșit pentru sufletul omenesc. [...] Are o forță și o putere de pătrundere de parcă ar fi Dumnezeu. 
+Probabil că ceea ce ți-am scris te va îndurera. Îmi pare teribil de rău că am simțit și înțeles astfel romanul lui Dostoievski. De fapt, bănuiesc că nu l-am înțeles deloc și mă întreb dacă voi ajunge să-l pătrund cu alt suflet și altă minte vreodată.  
+Nelli 
+Dinu & Nelli Pillat, Biruința unei iubiri   
+*L'Idiot (limba franceză) – Idiotul, roman scris de F. M. Dostoievski. Ca majoritatea intelectualilor epocii, Nelli citește mai 
+ales în limba franceză și folosește ortografia franceză a numelor.`,
+        cerinte: [
+            'Cerințe totale: Redactează un text de minimum 150 de cuvinte, în care să argumentezi dacă lectura este sau nu o modalitate de a te detașa de realitate, raportându-te atât la informațiile din fragmentul extras din volumul Biruința unei iubiri de Dinu & Nelli Pillat, cât și la experiența personală sau culturală.',
+            'Sumar conținut: opinie, două argumente dezvoltate, concluzie pertinentă',
+            'Sumar redactare: conectori corecți, norme ale limbii literare, așezare în pagină, lizibilitate, număr minim de cuvinte'
+        ],
+        punctaj: ['Total: 20', 'Sumar conținut: 14', 'Sumar redactare: 6']
+    },
+    {
+        titlu: 'Analiza unui text poetic',
+        descriere: 'Comentează textul de mai jos, în minimum 50 de cuvinte, evidențiind relația dintre ideea poetică și mijloacele artistice.',
+        numarSubiect: 2,
+        profil: 'real',
+        data: '2021',
+        an: 2021,
+        sesiune: 'model',
+        tip: 'poezie',
+        text: `Sunt solitarul pustiilor piețe 
+Cu tristele becuri cu pală lumină – 
+Când sună arama în noaptea deplină, 
+Sunt solitarul pustiilor piețe. 
+Tovarăș mi-i râsul hidos, și cu umbra 
+Ce sperie câinii pribegi prin canale; 
+Sub tristele becuri cu razele pale, 
+Tovarăș mi-i râsul hidos, și cu umbra. 
+Sunt solitarul pustiilor piețe 
+Cu jocuri de umbră ce dau nebunie; 
+Pălind în tăcere și-n paralizie, – 
+Sunt solitarul pustiilor piețe... 
+George Bacovia, Pălind`,
+        cerinte: [
+            'Comentează textul de mai jos, în minimum 50 de cuvinte, evidențiind relația dintre ideea poetică și mijloacele artistice.',
+            'Conținut: evidențiază relația dintre ideea poetică și mijloacele artistice',
+            'Redactare: limbă literară, logică a ideilor, ortografie, punctuație'
+        ],
+        punctaj: [
+            'Total: 10',
+            'Conținut: 6',
+            'Redactare: 4'
+        ]
+    },
+    {
+        titlu: 'Redactează un eseu',
+        descriere: 'Redactează un eseu de minimum 400 de cuvinte, în care să prezinți particularități de construcție a unui personaj dintr-un basm cult studiat.',
+        numarSubiect: 3,
+        profil: 'real',
+        data: '2021',
+        an: 2021,
+        sesiune: 'model',
+        tip: 'eseu',
+        text: `Redactează un eseu de minimum 400 de cuvinte, în care să prezinți particularități de construcție a unui personaj dintr-un basm cult studiat. 
+În elaborarea eseului, vei avea în vedere următoarele repere: – prezentarea statutului social, psihologic, moral etc. al personajului ales; – evidențierea unei trăsături a personajului ales, prin două episoade/secvențe comentate; –analiza a două elemente de structură, de compoziție și de limbaj ale basmului cult studiat, semnificative pentru construcția personajului ales (de exemplu: acțiune, conflict, modalități de caracterizare, incipit, final, tehnici narative, perspectivă narativă, registre stilistice, limbaj etc.).`,
+        cerinte: [
+            'Prezintă statutul social, psihologic, moral etc. al personajului ales',
+            'Evidențiază o trăsătură a personajului prin două episoade/secvențe comentate',
+            'Analizează două elemente de structură/compoziție/limbaj semnificative pentru construcția personajului'
+        ],
+        punctaj: [6, 6, 6]
+    }
 ];
 
 export default subiecteList;
