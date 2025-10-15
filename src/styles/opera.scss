@@ -425,6 +425,124 @@ body.tabs-revealed .opera-back-btn {
     }
   }
 
+  // Comment dropdowns (above tabs)
+  .opera-comment-dropdowns {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+
+    // Custom select component
+    .opera-custom-select {
+      position: relative;
+    }
+
+    .ocs-button {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border-radius: 12px;
+      border: 1px solid #f1e2c8;
+      background: linear-gradient(180deg, #ffffff 0%, #f8efe3 100%);
+      color: #6b5b4b;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      outline: none;
+      box-shadow: 0 6px 14px rgba(124, 79, 43, 0.08);
+      cursor: pointer;
+      transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease, transform 0.08s ease;
+      
+
+      &:hover {
+        border-color: #e8d7bd;
+        box-shadow: 0 8px 18px rgba(124, 79, 43, 0.12);
+        color: #8b6b42;
+      }
+
+      &:focus {
+        border-color: #c28c52;
+        box-shadow: 0 0 0 3px rgba(194, 140, 82, 0.2);
+      }
+
+      &.open {
+        border-color: #c28c52;
+        box-shadow: 0 0 0 3px rgba(194, 140, 82, 0.2);
+      }
+    }
+
+    .ocs-label {
+      flex: 1 1 auto;
+      text-align: left;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .ocs-label.selected {
+      color: #8b6b42;
+    }
+
+    .ocs-caret {
+      width: 18px;
+      height: 18px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%236b5b4b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+      background-size: 18px 18px;
+      background-repeat: no-repeat;
+      background-position: center;
+      flex: 0 0 18px;
+    }
+
+    .ocs-panel {
+      position: absolute;
+      top: calc(100% + 6px);
+      left: 0;
+      right: 0;
+      background: #fffdf7;
+      border: 1px solid #f1e2c8;
+      border-radius: 12px;
+      box-shadow: 0 12px 28px rgba(124, 79, 43, 0.18);
+      padding: 6px;
+      z-index: 20;
+    }
+
+    .ocs-option {
+      width: 100%;
+      text-align: left;
+      background: transparent;
+      border: none;
+      border-radius: 10px;
+      padding: 0.65rem 0.75rem;
+      color: #6b5b4b;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s ease, color 0.15s ease, transform 0.08s ease;
+      outline: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+  
+      &:focus{
+        outline: none;
+      }
+
+      &:hover {
+        background: rgba(169, 124, 80, 0.12);
+        color: #8b6b42;
+      }
+
+      &.active {
+        background: linear-gradient(180deg, #ffffff 0%, #f8efe3 100%);
+        border: 1px solid #e8d7bd;
+      }
+    }
+  }
+
   .opera-tab-content-wrapper {
     min-height: 400px;
     background: #fff;
@@ -486,8 +604,12 @@ body.tabs-revealed .opera-back-btn {
           transition: all 0.2s ease;
 
           &:hover {
-            background: rgba(169, 124, 80, 0.05);
+            li {
+              padding-left: 5rem;
+            }
+            // background: rgba(169, 124, 80, 0.05);
             padding-left: 2.2rem;
+            cursor: pointer;
           }
 
           &:before {
@@ -826,6 +948,10 @@ body.tabs-revealed .opera-back-btn {
       font-size: 1rem;
     }
 
+    .opera-comment-dropdowns {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
     .opera-tab-content-wrapper {
       padding: 1.5rem;
 
@@ -859,9 +985,89 @@ body.tabs-revealed .opera-back-btn {
   }
 }
 
+@media (max-width: 480px) {
+  .opera-content-container {
+    .opera-comment-dropdowns {
+      grid-template-columns: 1fr;
+    }
+  }
+}
+
 // Dark theme
 .dark-theme {
   .opera-content-container {
+    .opera-comment-dropdowns {
+      // Custom select in dark theme
+      .ocs-button {
+        background: linear-gradient(180deg, rgba(78, 46, 30, 0.85) 0%, rgba(42, 23, 10, 0.85) 100%);
+        color: #ffd591;
+        border-color: rgba(255, 213, 145, 0.25);
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+
+        &:hover {
+          color: #ffd591;
+          background: rgba(255, 213, 145, 0.08);
+          border-color: rgba(255, 213, 145, 0.35);
+          box-shadow: 0 8px 22px rgba(0, 0, 0, 0.4);
+        }
+
+        &:focus,
+        &.open {
+          border-color: #ffb366;
+          box-shadow: 0 0 0 3px rgba(255, 179, 102, 0.2);
+        }
+      }
+
+      .ocs-caret {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23ffd591' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+      }
+
+      .ocs-panel {
+        background: #3d2815;
+        border-color: #5a3a20;
+        box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45);
+      }
+
+      .ocs-option {
+        color: #ffd591;
+
+        &:hover {
+          background: rgba(255, 213, 145, 0.08);
+          color: #ffd591;
+        }
+
+        &.active {
+          background: linear-gradient(180deg, rgba(78, 46, 30, 0.85) 0%, rgba(42, 23, 10, 0.85) 100%);
+          border: 1px solid rgba(255, 213, 145, 0.25);
+        }
+      }
+    }
+    .opera-comment-dropdowns {
+      select {
+        background: linear-gradient(180deg, rgba(78, 46, 30, 0.85) 0%, rgba(42, 23, 10, 0.85) 100%);
+        color: #ffd591;
+        border-color: rgba(255, 213, 145, 0.25);
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23ffd591' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+
+        &:hover {
+          color: #ffd591;
+          background: rgba(255, 213, 145, 0.08);
+          border-color: rgba(255, 213, 145, 0.35);
+          box-shadow: 0 8px 22px rgba(0, 0, 0, 0.4);
+        }
+
+        &:focus {
+          border-color: #ffb366;
+          box-shadow: 0 0 0 3px rgba(255, 179, 102, 0.2);
+        }
+
+        option {
+          color: #ffd591;
+          background: #3d2815;
+        }
+      }
+    }
     .opera-tabs {
       background: rgba(61, 40, 21, 0.85);
       border-color: rgba(255, 213, 145, 0.25);
@@ -912,9 +1118,9 @@ body.tabs-revealed .opera-back-btn {
         border-bottom-color: #444;
         color: #e0e0e0;
 
-        &:hover {
-          background: rgba(255, 213, 145, 0.05);
-        }
+        // &:hover {
+        //   // background: rgba(255, 213, 145, 0.05);
+        // }
 
         &:before {
           background: #ffd591;

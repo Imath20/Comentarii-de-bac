@@ -712,7 +712,7 @@ export default function Opera() {
   const tabsLabels = {
     prezentare: 'Prezentare',
     analiza: 'Analiză',
-    comentariu: 'Comentariu',
+    comentariu: 'Comentarii',
     curent: 'Curent',
     titlu: 'Titlu',
     rezumat: 'Rezumat',
@@ -723,6 +723,8 @@ export default function Opera() {
   };
   const [slideDir, setSlideDir] = useState('slide-in-right');
   const [showScrollButton, setShowScrollButton] = useState(false);
+  const [selectedCommentPack, setSelectedCommentPack] = useState(null); // 'gratis' | 'basic' | 'pro' | 'premium'
+  const [selectedCommentIndex, setSelectedCommentIndex] = useState(null); // 1..4 | 'all'
 
   useEffect(() => {
     document.body.classList.toggle('dark-theme', darkTheme);
@@ -1003,25 +1005,31 @@ export default function Opera() {
           </div>
         );
 
-      case 'comentariu':
+      case 'comentariu': 
         return (
           <div className="opera-tab-content">
             <div className="opera-comment-content">
-              <h3>Comentariu literar</h3>
-              <div className="comment-text">
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                </p>
-                <p>
-                  Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                </p>
-                <p>
-                  Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
-                </p>
-                <p>
-                  Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet.
-                </p>
-              </div>
+              <h3>Comentarii {selectedCommentPack}</h3>
+              {selectedCommentPack && selectedCommentIndex ? (
+                selectedCommentIndex === 'all' ? (
+                  <div className="comment-text">
+                    <ul>
+                      {[1,2,3,4].map((idx) => (
+                        <li addkey={idx}>{`Comentariu ${idx} — Comentariu ${selectedCommentPack}`}</li>
+                      ))}
+                    </ul>
+                  </div>
+                ) : (
+                  <div className="comment-text">
+                  </div>
+                )
+              ) : (
+                <div className="comment-text">
+                  <p>
+                    Alege un comentariu din dropdown-urile de deasupra pentru a-l afișa aici.
+                  </p>
+                </div>
+              )}
             </div>
           </div>
         );
@@ -1158,6 +1166,74 @@ export default function Opera() {
     }
   };
 
+  // Accessible custom select for consistent styled dropdown options
+  function CustomSelect({ placeholder, selectedIndex, onSelect, ariaLabel, packLabel }) {
+    const [open, setOpen] = useState(false);
+
+    useEffect(() => {
+      const onKey = (e) => {
+        if (e.key === 'Escape') setOpen(false);
+      };
+      if (open) document.addEventListener('keydown', onKey);
+      return () => document.removeEventListener('keydown', onKey);
+    }, [open]);
+
+    useEffect(() => {
+      const onClick = (e) => {
+        if (!e.target.closest('.opera-custom-select')) setOpen(false);
+      };
+      if (open) document.addEventListener('click', onClick);
+      return () => document.removeEventListener('click', onClick);
+    }, [open]);
+
+    const label = selectedIndex ? (selectedIndex === 'all' ? `Comentarii ${packLabel}` : `Comentariu ${selectedIndex}`) : placeholder;
+
+    return (
+      <div className="opera-custom-select">
+        <button
+          type="button"
+          className={`ocs-button${open ? ' open' : ''}`}
+          aria-haspopup="listbox"
+          aria-expanded={open ? 'true' : 'false'}
+          aria-label={ariaLabel}
+          onClick={() => setOpen((v) => !v)}
+        >
+          <span className={`ocs-label${selectedIndex ? ' selected' : ''}`}>{label}</span>
+          <span className="ocs-caret" aria-hidden="true" />
+        </button>
+        {open && (
+          <div className="ocs-panel" role="listbox">
+            <button
+              role="option"
+              aria-selected={selectedIndex === 'all'}
+              className={`ocs-option${selectedIndex === 'all' ? ' active' : ''}`}
+              onClick={() => {
+                onSelect('all');
+                setOpen(false);
+              }}
+            >
+              {`Toate comentariile`}
+            </button>
+            {[1, 2, 3, 4].map((idx) => (
+              <button
+                key={idx}
+                role="option"
+                aria-selected={selectedIndex === idx}
+                className={`ocs-option${selectedIndex === idx ? ' active' : ''}`}
+                onClick={() => {
+                  onSelect(idx);
+                  setOpen(false);
+                }}
+              >
+                {`Comentariu ${idx}`}
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
+    );
+  }
+
   function Quiz({ questions }) {
     const [answers, setAnswers] = useState({});
     const [checked, setChecked] = useState(false);
@@ -1261,6 +1337,53 @@ export default function Opera() {
       </section>
 
       <section id="opera-content" className="opera-content-container">
+        {/* Dropdown-uri comentarii – custom, deasupra navbarului */}
+        <div className="opera-comment-dropdowns">
+          <CustomSelect
+            placeholder="Comentarii gratis"
+            ariaLabel="Comentarii gratis"
+            packLabel="gratis"
+            selectedIndex={selectedCommentPack === 'gratis' ? selectedCommentIndex : null}
+            onSelect={(idx) => {
+              setSelectedCommentPack('gratis');
+              setSelectedCommentIndex(idx);
+              setActiveTab('comentariu');
+            }}
+          />
+          <CustomSelect
+            placeholder="Comentarii basic"
+            ariaLabel="Comentarii basic"
+            packLabel="basic"
+            selectedIndex={selectedCommentPack === 'basic' ? selectedCommentIndex : null}
+            onSelect={(idx) => {
+              setSelectedCommentPack('basic');
+              setSelectedCommentIndex(idx);
+              setActiveTab('comentariu');
+            }}
+          />
+          <CustomSelect
+            placeholder="Comentarii pro"
+            ariaLabel="Comentarii pro"
+            packLabel="pro"
+            selectedIndex={selectedCommentPack === 'pro' ? selectedCommentIndex : null}
+            onSelect={(idx) => {
+              setSelectedCommentPack('pro');
+              setSelectedCommentIndex(idx);
+              setActiveTab('comentariu');
+            }}
+          />
+          <CustomSelect
+            placeholder="Comentarii premium"
+            ariaLabel="Comentarii premium"
+            packLabel="premium"
+            selectedIndex={selectedCommentPack === 'premium' ? selectedCommentIndex : null}
+            onSelect={(idx) => {
+              setSelectedCommentPack('premium');
+              setSelectedCommentIndex(idx);
+              setActiveTab('comentariu');
+            }}
+          />
+        </div>
         <div className="opera-tabs">
           <div className="opera-tabs-left">
             {tabsOrder.map(key => (
