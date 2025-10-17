@@ -11,11 +11,13 @@ import OpereIcon from './icons/OpereIcon';
 import BookIcon from './icons/BookIcon';
 import ResurseIcon from './icons/ResurseIcon';
 import CurenteIcon from './icons/CurenteIcon';
+import CommentIcon from './icons/CommentIcon';
 import Logo from './Logo';
 
 const NAV_CATEGORIES = [
   { name: 'Acasa', href: '/', icon: <HomeIcon className="nav-icon" /> },
   { name: 'Opere', href: '/opere', icon: <OpereIcon className="nav-icon" /> },
+  { name: 'Comentarii', href: '/comentarii', icon: <CommentIcon className="nav-icon" /> },
   { name: 'Scriitori', href: '/scriitori', icon: <PenPaperIcon className="nav-icon" /> },
   { 
     name: 'Resurse', 

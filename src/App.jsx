@@ -4,6 +4,7 @@ import Home from './pages/index';
 import Scriitori from './pages/scriitori';
 import Subiecte from './pages/subiecte';
 import Opre from './pages/opere';
+import Comentarii from './pages/comentarii';
 import Biblioteca from './pages/biblioteca';
 import Scriitoripage from './pages/Scriitor';
 import BookReader from './pages/BookReader';
@@ -21,6 +22,7 @@ export default function App() {
       <Route path="/" element={<Home />} />
       <Route path="/scriitori" element={<Scriitori />} />
       <Route path="/subiecte" element={<Subiecte />} />
+      <Route path="/comentarii" element={<Comentarii />} />
       <Route path="/opere" element={<Opre />} />
       <Route path="/opera/:slug" element={<Opera />} />
       <Route path="/biblioteca" element={<Biblioteca />} />

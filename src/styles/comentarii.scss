@@ -1,0 +1,376 @@
+
+// Container principal
+.comentarii-container {
+    max-width: 1800px;
+    min-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+  }
+  
+  .comentarii-search-icon {
+    position: absolute;
+    left: 1.2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.25rem;
+    color: rgba(60, 40, 20, 0.45);
+    z-index: 2;
+    pointer-events: none; // nu capturează click/focus
+  
+    &.dark-theme {
+      color: rgba(180, 180, 180, 0.55);
+    }
+  }
+  
+  // Search section
+  .comentarii-search-section {
+    display: flex;
+    gap: 1.25rem; // spațiu clar între elemente
+    align-items: center;
+    justify-content: flex-start; // aliniere la stânga
+    flex-wrap: wrap; // permite să așezăm și o secțiune pe rândul următor
+    margin-bottom: 1rem;
+    padding: 0 1rem;
+  }
+  
+  .comentarii-search-container {
+    position: relative;
+    flex: 1;
+    min-width: 0;
+    max-width: 100%;
+  }
+
+.comentarii-search-input {
+    width: 90%;
+    padding: 1.1rem 1.5rem 1.1rem 3.2rem;
+    font-size: 1.13rem;
+    border-radius: 2.2rem;
+    border: 1.5px solid #ececec;
+    background: #f7f8fa;
+    color: #222;
+    outline: none;
+    transition: all 0.3s;
+    box-shadow: 0 2px 8px 0 rgba(60, 40, 20, 0.08);
+    font-weight: 500;
+    letter-spacing: 0.01em;
+  
+    &.dark-theme {
+      border-color: #a97c50;
+      background: #4e2e1e;
+      color: rgba(255, 255, 255, 0.95);
+      box-shadow: 0 2px 12px 0 rgba(60, 40, 20, 0.18);
+    }
+  
+    &:focus {
+      border-color: #a3a3a3;
+      background: #fff;
+  
+      &.dark-theme {
+        border-color: #ffd591;
+        background: #6a4322;
+      }
+    }
+  
+    &:blur {
+      border-color: #ececec;
+      background: #f7f8fa;
+  
+      &.dark-theme {
+        border-color: #a97c50;
+        background: #4e2e1e;
+      }
+    }
+  }
+  
+
+// Grid container
+.comentarii-grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 2rem;
+    padding: 1rem;
+  }
+  
+  // Card styles
+  .comentarii-card {
+    position: relative;
+    height: auto; // Schimbat de la 420px fix la auto pentru a se adapta la conținut
+    min-height: 300px; // Adăugat min-height pentru a menține aspectul minim
+    border-radius: 24px;
+    overflow: visible; // Schimbat de la hidden la visible pentru a permite textul să iasă
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 24px 0 rgba(124, 79, 43, 0.13);
+    background: linear-gradient(135deg, #f7f8fa 0%, #ffffff 100%);
+    border: 1px solid rgba(169, 124, 80, 0.1);
+  
+    &:hover {
+      transform: scale(1.055);
+      box-shadow: 0 8px 32px 0 rgba(60, 40, 20, 0.22);
+      z-index: 2;
+    }
+  
+    &.dark-theme {
+      background: linear-gradient(135deg, #4e2e1e 0%, #3a2312 100%);
+      border-color: rgba(255, 213, 145, 0.2);
+      box-shadow: 0 4px 24px 0 rgba(0, 0, 0, 0.3);
+  
+      &:hover {
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+      }
+    }
+  }
+  
+  .comentarii-card-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, #f8d68c81 0%, #ffd59140 100%);
+    border-radius: 24px;
+    opacity: 0.8;
+  
+    &.dark-theme {
+      background: linear-gradient(135deg, #a97c5040 0%, #ffd59120 100%);
+    }
+  }
+  
+  .comentarii-card-content {
+    position: relative;
+    z-index: 2;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    gap: 0.75rem;
+    color: #4e2e1e;
+  
+    .dark-theme & {
+      color: #ffd591;
+    }
+  }
+  
+  // Badge profil (dreapta sus)
+  .comentarii-card-profil {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    padding: 0.35rem 0.75rem;
+    font-weight: 900;
+    letter-spacing: 0.04em;
+    font-size: 0.95rem;
+    border-radius: 0.75rem;
+    background: rgba(255, 213, 145, 0.88);
+    color: #2a170a;
+    box-shadow: 0 2px 8px rgba(124, 79, 43, 0.16);
+  
+    &.dark-theme {
+      background: rgba(255, 213, 145, 0.92);
+      color: #2a170a;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    }
+  }
+  
+  // Badge sesiune (stânga sus, deasupra titlului)
+  .comentarii-card-sesiune {
+    margin-bottom: 0.5rem;
+    padding: 0.4rem 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    font-size: 0.85rem;
+    border-radius: 0.6rem;
+    background: rgba(169, 124, 80, 0.15);
+    color: #7a5c3a;
+    text-transform: uppercase;
+    width: fit-content;
+  
+    &.dark-theme {
+      background: rgba(255, 213, 145, 0.2);
+      color: #ffd591;
+    }
+  }
+  
+  .comentarii-card-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 1.2rem; // Mărit de la 1rem la 1.2rem
+    line-height: 1.3;
+    color: #4e2e1e;
+  
+    .dark-theme & {
+      color: #ffd591;
+    }
+  }
+  
+  .comentarii-card-description {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #7a5c3a;
+    flex: 0 0 auto; // nu mai împinge footer-ul în partea de jos
+    margin-bottom: 0.75rem;
+    overflow: visible;
+    word-wrap: break-word;
+    hyphens: auto;
+  
+    .dark-theme & {
+      color: #c4a484;
+    }
+  }
+  
+  .comentarii-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 0.5rem; // mută badge-urile mai sus în card
+    padding-top: 0.5rem;
+  }
+  
+  .comentarii-card-date {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #7a5c3a;
+    padding: 0.5rem 1rem;
+    background: rgba(169, 124, 80, 0.1);
+    border-radius: 1rem;
+  
+    &.dark-theme {
+      color: #c4a484;
+      background: rgba(255, 213, 145, 0.1);
+    }
+  }
+  
+  .comentarii-card-number {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #a97c50;
+    padding: 0.5rem 1rem;
+    background: rgba(169, 124, 80, 0.15);
+    border-radius: 1rem;
+  
+    &.dark-theme {
+      color: #ffd591;
+      background: rgba(255, 213, 145, 0.15);
+    }
+  }
+  // No results message
+.comentarii-no-results {
+    text-align: center;
+    padding: 3rem;
+    font-size: 1.1rem;
+    color: #7a5c3a;
+    background: linear-gradient(135deg, #f7f8fa 0%, #ffffff 100%);
+    border-radius: 24px;
+    border: 1px solid rgba(169, 124, 80, 0.1);
+  
+    &.dark-theme {
+      color: #c4a484;
+      background: linear-gradient(135deg, #4e2e1e 0%, #3a2312 100%);
+      border-color: rgba(255, 213, 145, 0.2);
+    }
+  }
+// Filter buttons styles
+.comentarii-filter-buttons {
+    display: flex;
+    gap: 0.9rem;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    width: 100%;
+    max-width: 1300px;
+    margin: 0 auto 1.5rem auto;
+    padding: 0 1.5rem;
+    display: flex;
+  }
+  .comentarii-filter-buttons-left {
+    flex: 0 1 auto; // keep buttons intrinsic width
+  }
+  
+  .comentarii-filter-button {
+    padding: 0.7rem 1.5rem;
+    border-radius: 2rem;
+    border: 2px solid #ececec;
+    background: #f7f8fa;
+    color: #222;
+    font-weight: 500;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: none;
+    outline: none;
+    // display: flex;
+    // justify-content: center;
+    // align-items: center;
+    
+    &:focus{
+      outline: none;
+    }
+    &.dark-theme {
+      border-color: #a97c50;
+      background: #4e2e1e;
+      color: rgba(255, 255, 255, 0.95);
+    }
+  
+    &.selected {
+      border-color: #4e2e1e;
+      background: #ffd591;
+      color: #222;
+      font-weight: 700;
+      box-shadow: 0 2px 8px rgba(60, 40, 20, 0.10);
+  
+      &.dark-theme {
+        border-color: #4e2e1e;
+        background: #a97c50;
+        color: #4e2e1e;
+      }
+    }
+  }
+  // Search and filter container
+  .comentarii-filters-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: 1300px;
+    margin: 0 auto 1.5rem auto;
+    padding: 0;
+    gap: 1.5rem;
+  }
+  .comentarii-select-container {
+    min-width: 200px;
+    flex-shrink: 0;
+    // display: flex;
+    // justify-content: center;
+    // align-items: ;
+
+    &.categories-select {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        outline: none;
+        word-wrap: nowrap;
+    }
+  } 
+  .comentarii-sort-container {
+    flex: 0 1 auto; // don't force growth; allow true centering via auto margins
+    display: flex;
+    justify-content: center;
+    min-width: 260px;
+    margin-left: auto;
+    margin-right: auto; // center within the overall row like on subiecte
+  }
+
+  // React-Select categories dropdown: hide scrollbar but allow scrolling
+  .categories__menu-list {
+    max-height: 260px; // keep a sensible height with scroll
+    overflow-y: auto;
+    scrollbar-width: none; // Firefox
+    -ms-overflow-style: none; // IE/Edge legacy
+  }
+  .categories__menu-list::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
