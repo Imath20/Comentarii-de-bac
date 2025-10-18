@@ -147,7 +147,7 @@ export function TabsProvider({ children }) {
       lastScrollYRef.current = y;
     };
     const isAnyModalOpen = () => {
-      return !!document.querySelector('.subiecte-modal-overlay, .scriitor-chat-overlay, .modal, .popup, [role="dialog"], [aria-modal="true"]');
+      return !!document.querySelector('.subiecte-modal-overlay, .comentarii-modal-overlay, .scriitor-modal-overlay, .scriitor-chat-overlay, .biblioteca-poem-modal-overlay, .opera-poem-modal-overlay, .index-proiecte-modal-overlay, .modal, .popup, [role="dialog"], [aria-modal="true"]');
     };
     const onWheel = (e) => {
       if (isAnyModalOpen()) return;
@@ -237,7 +237,7 @@ export function TabsProvider({ children }) {
   useEffect(() => {
     const body = document.body;
     const isAnyModalOpen = () => {
-      return !!document.querySelector('.subiecte-modal-overlay, .modal, .popup, [role="dialog"], [aria-modal="true"]');
+      return !!document.querySelector('.subiecte-modal-overlay, .comentarii-modal-overlay, .scriitor-modal-overlay, .scriitor-chat-overlay, .biblioteca-poem-modal-overlay, .opera-poem-modal-overlay, .index-proiecte-modal-overlay, .modal, .popup, [role="dialog"], [aria-modal="true"]');
     };
 
     let resizeObserver;
@@ -286,7 +286,7 @@ export function TabsProvider({ children }) {
   useEffect(() => {
     const body = document.body;
     const isAnyModalOpen = () => {
-      return !!document.querySelector('.subiecte-modal-overlay, .scriitor-chat-overlay, .modal, .popup, [role="dialog"], [aria-modal="true"]');
+      return !!document.querySelector('.subiecte-modal-overlay, .comentarii-modal-overlay, .scriitor-modal-overlay, .scriitor-chat-overlay, .biblioteca-poem-modal-overlay, .opera-poem-modal-overlay, .index-proiecte-modal-overlay, .modal, .popup, [role="dialog"], [aria-modal="true"]');
     };
     const syncBodyClass = () => {
       if (isAnyModalOpen()) {

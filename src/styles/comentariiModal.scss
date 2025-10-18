@@ -1,0 +1,250 @@
+.comentarii-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(2px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  z-index: 2001; /* above tabs-bar (1100) and navbar */
+  overflow-y: auto; /* Allow scrolling within the modal overlay */
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+  
+  /* Prevent body scroll when modal is open */
+  &:has(.comentarii-modal) {
+    /* This ensures the overlay captures all scroll events */
+    touch-action: none;
+    -webkit-overflow-scrolling: auto;
+  }
+}
+
+.comentarii-modal {
+  position: relative;
+  width: 100%;
+  max-width: 1200px; /* Larger than before */
+  height: 85vh; /* Fixed height for better scroll control */
+  max-height: 85vh;
+  background: linear-gradient(135deg, #f7f8fa 0%, #ffffff 100%);
+  border: 1px solid rgba(169, 124, 80, 0.2);
+  border-radius: 24px;
+  box-shadow: 0 24px 80px rgba(60, 40, 20, 0.35);
+  overflow: hidden;
+  margin: auto; /* Center the modal vertically and horizontally */
+  display: flex;
+  flex-direction: column;
+
+  &.dark-theme {
+    background: linear-gradient(135deg, #4e2e1e 0%, #3a2312 100%);
+    border-color: rgba(255, 213, 145, 0.25);
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.55);
+  }
+}
+
+.comentarii-modal-close {
+  position: absolute;
+  top: 12px;
+  right: 5px;
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: none;
+  color: #2a170a;
+  font-size: 36px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.15s ease, background 0.2s ease, box-shadow 0.2s ease;
+  z-index: 2;
+  outline: none !important;
+  &:focus{
+    outline: none !important;
+  }
+
+  &:hover {
+    transform: scale(1.05);
+    color: #2a170a86;
+  }
+
+  &.dark-theme {
+    border-color: rgba(255, 213, 145, 0.35);
+    color: #ffd591;
+  }
+}
+
+.comentarii-modal-content {
+  padding: 2rem;
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+
+  &::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
+
+  &::-webkit-scrollbar-track {
+    display: none;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    display: none;
+  }
+}
+
+.comentarii-modal-header {
+  margin-bottom: 1.5rem;
+  flex-shrink: 0; /* Prevent header from shrinking */
+}
+
+.comentarii-modal-title {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #4e2e1e;
+  line-height: 1.25;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* allow up to two lines */
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  word-break: normal;
+
+  .dark-theme & {
+    color: #ffd591;
+  }
+}
+
+.comentarii-modal-meta {
+  margin-top: .5rem;
+  font-size: .95rem;
+  font-weight: 700;
+  color: #7a5c3a;
+
+  .dark-theme & {
+    color: #c4a484;
+  }
+}
+
+.comentarii-modal-text {
+  margin-top: 1rem;
+  color: #2a170a;
+  line-height: 1.75;
+  text-align: justify;
+  text-justify: inter-word;
+  -webkit-hyphens: auto;
+  -ms-hyphens: auto;
+  hyphens: auto;
+
+  p {
+    margin: 0;
+    text-indent: 2em;
+  }
+
+  p + p { margin-top: 1rem; }
+
+  &.dark-theme {
+    color: rgba(255, 255, 255, 0.9);
+  }
+}
+
+.comentarii-modal-empty {
+  font-style: italic;
+  color: #7a5c3a;
+  text-align: center;
+  padding: 2rem;
+  
+  .dark-theme & {
+    color: #c4a484;
+  }
+}
+
+/* Tablet landscape */
+@media (max-width: 1400px) {
+  .comentarii-modal {
+    max-width: 1000px;
+  }
+}
+
+/* Tablet portrait */
+@media (max-width: 1200px) {
+  .comentarii-modal {
+    max-width: 900px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .comentarii-modal {
+    max-width: 800px;
+    height: 90vh;
+  }
+}
+
+/* Mobile landscape and small tablets */
+@media (max-width: 900px) {
+  .comentarii-modal {
+    max-width: 90vw;
+    max-height: 90vh;
+    margin: 1rem;
+  }
+}
+
+/* Mobile portrait */
+@media (max-width: 768px) {
+  .comentarii-modal-overlay {
+    padding: 1rem 0.5rem;
+    align-items: flex-start; /* Align to top on mobile */
+    padding-top: 2rem;
+  }
+  
+  .comentarii-modal {
+    max-width: 95vw;
+    max-height: 95vh;
+    margin: 0.5rem;
+    border-radius: 16px;
+  }
+  
+  .comentarii-modal-content {
+    padding: 1.5rem;
+  }
+  
+  .comentarii-modal-title {
+    font-size: 1.4rem;
+  }
+  
+  .comentarii-modal-meta {
+    font-size: 0.9rem;
+  }
+}
+
+/* Small mobile */
+@media (max-width: 480px) {
+  .comentarii-modal-overlay {
+    padding: 0.5rem 0.25rem;
+    align-items: flex-start; /* Align to top on small mobile */
+    padding-top: 1rem;
+  }
+  
+  .comentarii-modal {
+    max-width: 98vw;
+    max-height: 96vh;
+    margin: 0.25rem;
+    border-radius: 12px;
+  }
+  
+  .comentarii-modal-content {
+    padding: 1.25rem;
+  }
+  
+  .comentarii-modal-title {
+    font-size: 1.3rem;
+  }
+  
+  .comentarii-modal-meta {
+    font-size: 0.85rem;
+  }
+}

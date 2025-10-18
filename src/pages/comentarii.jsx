@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import Layout from '../assets/Layout';
 import Select from 'react-select';
+import ComentariiModal from '../assets/ComentariiModal';
 import '../styles/style.scss';
 import '../styles/comentarii.scss'
 import comentariiList from '../data/comentarii';
@@ -138,6 +139,8 @@ export default function Comentarii() {
     const [selectedCategorie, setSelectedCategorie] = useState('toate');
     const [selectedPlan, setSelectedPlan] = useState('toate');
     const [sortOption, setSortOption] = useState('none');
+    const [selectedComentariu, setSelectedComentariu] = useState(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
         document.body.classList.add('theme-transitioning');
@@ -176,6 +179,16 @@ export default function Comentarii() {
                 return arr;
         }
     }, [filtered, sortOption]);
+
+    const handleComentariuClick = (comentariu) => {
+        setSelectedComentariu(comentariu);
+        setIsModalOpen(true);
+    };
+
+    const handleCloseModal = () => {
+        setIsModalOpen(false);
+        setSelectedComentariu(null);
+    };
 
     return (
         <Layout darkTheme={darkTheme} setDarkTheme={setDarkTheme} scrolled={scrolled}>
@@ -275,7 +288,11 @@ export default function Comentarii() {
 
                         <div className="comentarii-grid-container">
                             {sorted.map((c) => (
-                                <div key={c.id} className={`comentarii-card ${darkTheme ? 'dark-theme' : ''}`}>
+                                <div 
+                                    key={c.id} 
+                                    className={`comentarii-card ${darkTheme ? 'dark-theme' : ''}`}
+                                    onClick={() => handleComentariuClick(c)}
+                                >
                                     <div className={`comentarii-card-bg ${darkTheme ? 'dark-theme' : ''}`} />
                                     <div className="comentarii-card-content">
                                         <div className={`comentarii-card-profil ${darkTheme ? 'dark-theme' : ''}`}>
@@ -304,6 +321,13 @@ export default function Comentarii() {
                     </div>
                 </div>
             </div>
+
+            <ComentariiModal 
+                isOpen={isModalOpen}
+                comentariu={selectedComentariu}
+                darkTheme={darkTheme}
+                onClose={handleCloseModal}
+            />
         </Layout>
     );
 }
