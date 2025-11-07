@@ -17,8 +17,34 @@ const FINAL_PROFILE_SIZE = 300;
 const EditProfile = () => {
   const { currentUser, userProfile, updateUserProfileData, profileLoading } = useAuth();
   const navigate = useNavigate();
-  const [darkTheme] = useState(() => localStorage.getItem('theme') === 'dark');
+  const [darkTheme, setDarkTheme] = useState(() => localStorage.getItem('theme') === 'dark');
   const [loading, setLoading] = useState(true);
+
+  // Sync with theme changes from localStorage (when changed via Navbar)
+  useEffect(() => {
+    const checkTheme = () => {
+      const isDark = document.body.classList.contains('dark-theme') || localStorage.getItem('theme') === 'dark';
+      setDarkTheme(isDark);
+    };
+    
+    // Check on mount
+    checkTheme();
+    
+    // Observe body class changes
+    const observer = new MutationObserver(checkTheme);
+    observer.observe(document.body, {
+      attributes: true,
+      attributeFilter: ['class']
+    });
+    
+    // Also listen to storage changes (for cross-tab sync)
+    window.addEventListener('storage', checkTheme);
+    
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('storage', checkTheme);
+    };
+  }, []);
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState('');
@@ -376,7 +402,7 @@ const EditProfile = () => {
   if (!currentUser || loading) {
     return (
       <div className="page-wrapper">
-        <Layout darkTheme={darkTheme} setDarkTheme={() => {}}>
+        <Layout darkTheme={darkTheme} setDarkTheme={setDarkTheme}>
           <div className={`edit-profile-loading ${darkTheme ? 'dark-theme' : ''}`}>
             <div className="edit-profile-loading-text">
               Se încarcă...

@@ -368,11 +368,11 @@
 .edit-profile-container.dark-theme {
   .edit-profile-header {
     .edit-profile-back-button {
-      background: rgba(255, 179, 71, 0.1);
+      background: none;
       color: #ffb347;
 
       &:hover {
-        background: rgba(255, 179, 71, 0.2);
+        background: none;
       }
     }
 
@@ -507,6 +507,7 @@
         cursor: pointer;
         color: #7a3a00;
         padding: 0.5rem;
+        padding-right: 0 !important;
         border-radius: 8px;
         transition: all 0.2s ease;
         display: flex;
@@ -636,9 +637,13 @@
 
         .edit-profile-crop-modal-close {
           color: #ffb347;
+          outline: none !important;
+          &:focus {
+            outline: none !important;
+          }
 
           &:hover:not(:disabled) {
-            background: rgba(255, 179, 71, 0.2);
+            background: none;
           }
         }
       }
