@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { ChevronDown } from 'lucide-react';
 import HomeIcon from './icons/HomeIcon';
 import PenPaperIcon from './icons/PenPaperIcon';
@@ -13,6 +13,7 @@ import ResurseIcon from './icons/ResurseIcon';
 import CurenteIcon from './icons/CurenteIcon';
 import CommentIcon from './icons/CommentIcon';
 import Logo from './Logo';
+import { useAuth } from '../firebase/AuthContext';
 
 const NAV_CATEGORIES = [
   { name: 'Acasa', href: '/', icon: <HomeIcon className="nav-icon" /> },
@@ -39,6 +40,8 @@ export default function Navbar({ darkTheme, setDarkTheme, scrolled }) {
   const [underline, setUnderline] = useState({ left: 0, width: 0, visible: false });
   const [activeDropdown, setActiveDropdown] = useState(null);
   const location = useLocation();
+  const navigate = useNavigate();
+  const { currentUser, userProfile, logout } = useAuth();
 
   const updateActiveUnderline = () => {
     const menu = menuRef.current;
@@ -171,13 +174,162 @@ export default function Navbar({ darkTheme, setDarkTheme, scrolled }) {
           }}
         />
       </ul>
-      <button
-        className="theme-toggle"
-        aria-label="Schimbă tema"
-        onClick={() => setDarkTheme(t => !t)}
-      >
-        {darkTheme ? '🌙' : '🌞'}
-      </button>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+        {currentUser ? (
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+            {/* Profile Image - Clickable */}
+            <Link
+              to="/profil"
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                textDecoration: 'none',
+                cursor: 'pointer',
+                position: 'relative',
+                transition: 'transform 0.3s ease',
+              }}
+              onMouseOver={(e) => {
+                e.currentTarget.style.transform = 'scale(1.1)';
+              }}
+              onMouseOut={(e) => {
+                e.currentTarget.style.transform = 'scale(1)';
+              }}
+            >
+              {(userProfile?.photoURL || currentUser.photoURL) ? (
+                <img
+                  src={userProfile?.photoURL || currentUser.photoURL}
+                  alt={userProfile?.displayName || currentUser.displayName || 'User'}
+                  style={{
+                    width: '40px',
+                    height: '40px',
+                    borderRadius: '50%',
+                    objectFit: 'cover',
+                    border: darkTheme
+                      ? '2px solid rgba(255, 213, 145, 0.3)'
+                      : '2px solid rgba(255, 179, 71, 0.3)',
+                    transition: 'all 0.3s ease',
+                    boxShadow: darkTheme
+                      ? '0 2px 8px rgba(0, 0, 0, 0.2)'
+                      : '0 2px 8px rgba(124, 79, 43, 0.15)',
+                  }}
+                  onError={(e) => {
+                    e.target.style.display = 'none';
+                    if (e.target.nextSibling) {
+                      e.target.nextSibling.style.display = 'flex';
+                    }
+                  }}
+                />
+              ) : null}
+              <div
+                style={{
+                  width: '40px',
+                  height: '40px',
+                  borderRadius: '50%',
+                  background: darkTheme
+                    ? 'rgba(255, 213, 145, 0.1)'
+                    : 'rgba(255, 179, 71, 0.1)',
+                  display: (userProfile?.photoURL || currentUser.photoURL) ? 'none' : 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  border: darkTheme
+                    ? '2px solid rgba(255, 213, 145, 0.3)'
+                    : '2px solid rgba(255, 179, 71, 0.3)',
+                  fontSize: '1.2rem',
+                  fontWeight: 'bold',
+                  color: darkTheme ? '#ffd591' : '#7a3a00',
+                  transition: 'all 0.3s ease',
+                  boxShadow: darkTheme
+                    ? '0 2px 8px rgba(0, 0, 0, 0.2)'
+                    : '0 2px 8px rgba(124, 79, 43, 0.15)',
+                }}
+              >
+                {(userProfile?.displayName || currentUser.displayName || 'U').charAt(0).toUpperCase()}
+              </div>
+            </Link>
+            <button
+              onClick={async () => {
+                try {
+                  await logout();
+                } catch (error) {
+                  console.error('Error logging out:', error);
+                }
+              }}
+              className="navbar-logout-button"
+              style={{
+                padding: '0.5rem 1rem',
+                fontSize: '0.9rem',
+                fontWeight: '500',
+                borderRadius: '6px',
+                cursor: 'pointer',
+                background: darkTheme
+                  ? 'rgba(255, 87, 87, 0.1)'
+                  : 'rgba(255, 87, 87, 0.1)',
+                color: darkTheme ? '#ff5757' : '#ff5757',
+                border: darkTheme
+                  ? '1px solid rgba(255, 87, 87, 0.3)'
+                  : '1px solid rgba(255, 87, 87, 0.3)',
+                transition: 'all 0.3s ease',
+              }}
+              onMouseOver={(e) => {
+                e.currentTarget.style.background = darkTheme
+                  ? 'rgba(255, 87, 87, 0.2)'
+                  : 'rgba(255, 87, 87, 0.15)';
+                e.currentTarget.style.transform = 'scale(1.05)';
+              }}
+              onMouseOut={(e) => {
+                e.currentTarget.style.background = darkTheme
+                  ? 'rgba(255, 87, 87, 0.1)'
+                  : 'rgba(255, 87, 87, 0.1)';
+                e.currentTarget.style.transform = 'scale(1)';
+              }}
+            >
+              Deconectare
+            </button>
+          </div>
+        ) : (
+          <button
+            onClick={() => navigate('/login')}
+            className="navbar-login-button"
+            style={{
+              padding: '0.5rem 1rem',
+              fontSize: '0.9rem',
+              fontWeight: '500',
+              borderRadius: '6px',
+              cursor: 'pointer',
+              background: darkTheme
+                ? 'rgba(255, 179, 71, 0.1)'
+                : 'rgba(255, 179, 71, 0.92)',
+              color: darkTheme ? '#ffb347' : '#7a3a00',
+              border: darkTheme
+                ? '1px solid rgba(255, 179, 71, 0.3)'
+                : '1px solid rgba(122, 58, 0, 0.2)',
+              transition: 'all 0.3s ease',
+            }}
+            onMouseOver={(e) => {
+              e.currentTarget.style.background = darkTheme
+                ? 'rgba(255, 179, 71, 0.2)'
+                : '#ffd591';
+              e.currentTarget.style.transform = 'scale(1.05)';
+            }}
+            onMouseOut={(e) => {
+              e.currentTarget.style.background = darkTheme
+                ? 'rgba(255, 179, 71, 0.1)'
+                : 'rgba(255, 179, 71, 0.92)';
+              e.currentTarget.style.transform = 'scale(1)';
+            }}
+          >
+            Autentificare
+          </button>
+        )}
+        <button
+          className="theme-toggle"
+          aria-label="Schimbă tema"
+          onClick={() => setDarkTheme(t => !t)}
+        >
+          {darkTheme ? '🌙' : '🌞'}
+        </button>
+      </div>
     </nav>
   );
 } 

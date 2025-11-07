@@ -12,6 +12,9 @@ import Videoclipuri from './pages/videoclipuri';
 import AI from './pages/ai';
 import Proiecte from './pages/proiecte';
 import Opera from './pages/Opera';
+import Login from './pages/login';
+import Profile from './pages/profile';
+import EditProfile from './pages/editProfile';
 import './styles/style.scss';
 import Curente from './pages/curente';
 import Curent from './pages/Curent';
@@ -20,6 +23,9 @@ export default function App() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/profil" element={<Profile />} />
+      <Route path="/profil/edit" element={<EditProfile />} />
       <Route path="/scriitori" element={<Scriitori />} />
       <Route path="/subiecte" element={<Subiecte />} />
       <Route path="/comentarii" element={<Comentarii />} />

@@ -142,7 +142,7 @@ export function TabsProvider({ children }) {
       // Record the moment when the user returns to the very top from below
       if (atTop && lastScrollYRef.current > 0) {
         lastTopArrivalTimeRef.current = Date.now();
-        console.log('User arrived at top, cooldown started');
+        // console.log('User arrived at top, cooldown started');
       }
       lastScrollYRef.current = y;
     };
@@ -155,22 +155,22 @@ export function TabsProvider({ children }) {
       const timeSinceTopArrival = now - lastTopArrivalTimeRef.current;
       
       // Debug logging
-      console.log('Wheel event:', {
-        scrollY: window.scrollY,
-        deltaY: e.deltaY,
-        timeSinceTopArrival,
-        lastTopArrivalTime: lastTopArrivalTimeRef.current,
-        now
-      });
+      // console.log('Wheel event:', {
+      //   scrollY: window.scrollY,
+      //   deltaY: e.deltaY,
+      //   timeSinceTopArrival,
+      //   lastTopArrivalTime: lastTopArrivalTimeRef.current,
+      //   now
+      // });
       
       // Block reveal for a short delay after arriving at top
       if (timeSinceTopArrival < delay) {
-        console.log('Blocked by cooldown, time remaining:', delay - timeSinceTopArrival);
+        // console.log('Blocked by cooldown, time remaining:', delay - timeSinceTopArrival);
         return;
       }
       
       if (window.scrollY <= 0 && e.deltaY < 0) {
-        console.log('Opening tabs via wheel');
+        // console.log('Opening tabs via wheel');
         setTabs(s => ({ ...s, revealed: true }));
       }
     };

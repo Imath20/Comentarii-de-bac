@@ -5,6 +5,7 @@ import ComentariiModal from '../assets/ComentariiModal';
 import '../styles/style.scss';
 import '../styles/comentarii.scss'
 import comentariiList from '../data/comentarii';
+import { fetchComentarii } from '../firebase/comentariiService';
 
 // Genuri aliniate cu pagina Biblioteca
 const categorii = [
@@ -160,15 +161,36 @@ export default function Comentarii() {
 
     const categorieOptions = useMemo(() => genOptions, []);
 
+    const [comentarii, setComentarii] = useState(comentariiList);
+    const [loading, setLoading] = useState(true);
+    const [loadError, setLoadError] = useState(null);
+
+    useEffect(() => {
+        let mounted = true;
+        (async () => {
+            try {
+                const data = await fetchComentarii();
+                if (mounted && Array.isArray(data) && data.length) {
+                    setComentarii(data);
+                }
+            } catch (e) {
+                if (mounted) setLoadError(e?.message || 'Eroare la încărcarea datelor');
+            } finally {
+                if (mounted) setLoading(false);
+            }
+        })();
+        return () => { mounted = false; };
+    }, []);
+
     const filtered = useMemo(() => {
         const q = searchTerm.trim().toLowerCase();
-        return comentariiList.filter(c => {
+        return comentarii.filter(c => {
             const matchesSearch = !q || c.titlu.toLowerCase().includes(q) || (c.descriere || '').toLowerCase().includes(q) || (c.categorie || '').toLowerCase().includes(q);
             const matchesCategorie = selectedCategorie === 'toate' || c.categorie === selectedCategorie;
             const matchesPlan = selectedPlan === 'toate' || c.plan === selectedPlan;
             return matchesSearch && matchesCategorie && matchesPlan;
         });
-    }, [searchTerm, selectedCategorie, selectedPlan]);
+    }, [comentarii, searchTerm, selectedCategorie, selectedPlan]);
 
     const sorted = useMemo(() => {
         const arr = [...filtered];
@@ -287,6 +309,12 @@ export default function Comentarii() {
                         {/* Eliminat duplicatul de sortare de jos */}
 
                         <div className="comentarii-grid-container">
+                            {loading && sorted.length === 0 && (
+                                <div className={`comentarii-loading ${darkTheme ? 'dark-theme' : ''}`}>Se încarcă...</div>
+                            )}
+                            {!loading && loadError && (
+                                <div className={`comentarii-error ${darkTheme ? 'dark-theme' : ''}`}>Nu s-au putut încărca comentariile din cloud. Se afișează lista locală.</div>
+                            )}
                             {sorted.map((c) => (
                                 <div 
                                     key={c.id} 
