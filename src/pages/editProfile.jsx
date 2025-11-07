@@ -4,6 +4,7 @@ import { useAuth } from '../firebase/AuthContext';
 import Layout from '../assets/Layout';
 import { Save, ArrowLeft, User, Mail, MapPin, School, FileText } from 'lucide-react';
 import '../styles/style.scss';
+import '../styles/editProfile.scss';
 
 const EditProfile = () => {
   const { currentUser, userProfile, updateUserProfileData, profileLoading } = useAuth();
@@ -79,16 +80,8 @@ const EditProfile = () => {
     return (
       <div className="page-wrapper">
         <Layout darkTheme={darkTheme} setDarkTheme={() => {}}>
-          <div style={{
-            minHeight: 'calc(100vh - 200px)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}>
-            <div style={{
-              fontSize: '1.2rem',
-              color: darkTheme ? '#ffd591' : '#7a3a00',
-            }}>
+          <div className={`edit-profile-loading ${darkTheme ? 'dark-theme' : ''}`}>
+            <div className="edit-profile-loading-text">
               Se încarcă...
             </div>
           </div>
@@ -100,140 +93,45 @@ const EditProfile = () => {
   return (
     <div className="page-wrapper">
       <Layout darkTheme={darkTheme} setDarkTheme={() => {}}>
-        <div className="edit-profile-container" style={{
-          minHeight: 'calc(100vh - 200px)',
-          padding: '2rem',
-          maxWidth: '700px',
-          margin: '0 auto',
-        }}>
+        <div className={`edit-profile-container ${darkTheme ? 'dark-theme' : ''}`}>
           {/* Header */}
-          <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '1rem',
-            marginBottom: '2rem',
-          }}>
+          <div className="edit-profile-header">
             <Link
               to="/profil"
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                width: '40px',
-                height: '40px',
-                borderRadius: '8px',
-                background: darkTheme
-                  ? 'rgba(255, 179, 71, 0.1)'
-                  : 'rgba(255, 179, 71, 0.1)',
-                color: darkTheme ? '#ffb347' : '#7a3a00',
-                textDecoration: 'none',
-                transition: 'all 0.3s ease',
-              }}
-              onMouseOver={(e) => {
-                e.currentTarget.style.background = darkTheme
-                  ? 'rgba(255, 179, 71, 0.2)'
-                  : 'rgba(255, 179, 71, 0.2)';
-              }}
-              onMouseOut={(e) => {
-                e.currentTarget.style.background = darkTheme
-                  ? 'rgba(255, 179, 71, 0.1)'
-                  : 'rgba(255, 179, 71, 0.1)';
-              }}
+              className="edit-profile-back-button"
             >
               <ArrowLeft size={20} />
             </Link>
-            <h1 style={{
-              fontSize: '2rem',
-              fontWeight: 'bold',
-              color: darkTheme ? '#ffd591' : '#7a3a00',
-            }}>
+            <h1 className="edit-profile-title">
               Editează profilul
             </h1>
           </div>
 
           {/* Form Card */}
-          <div className={`edit-profile-card ${darkTheme ? 'dark-theme' : ''}`} style={{
-            background: darkTheme
-              ? 'rgba(47, 24, 0, 0.92)'
-              : 'rgba(255, 255, 255, 0.95)',
-            borderRadius: '16px',
-            padding: '2rem',
-            boxShadow: darkTheme
-              ? '0 8px 32px 0 rgba(0, 0, 0, 0.3)'
-              : '0 8px 32px 0 rgba(124, 79, 43, 0.2)',
-            border: darkTheme
-              ? '1px solid rgba(122, 58, 0, 0.3)'
-              : '1px solid rgba(255, 179, 71, 0.3)',
-          }}>
+          <div className="edit-profile-card">
             <form onSubmit={handleSubmit}>
               {/* Profile Image Preview */}
-              <div style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                marginBottom: '2rem',
-              }}>
-                <div style={{
-                  position: 'relative',
-                  marginBottom: '1rem',
-                }}>
+              <div className="edit-profile-image-preview">
+                <div className="edit-profile-image-wrapper">
                   {formData.photoURL ? (
                     <img
                       src={formData.photoURL}
                       alt="Profile preview"
-                      style={{
-                        width: '120px',
-                        height: '120px',
-                        borderRadius: '50%',
-                        objectFit: 'cover',
-                        border: darkTheme
-                          ? '3px solid rgba(255, 213, 145, 0.3)'
-                          : '3px solid rgba(255, 179, 71, 0.3)',
-                        boxShadow: darkTheme
-                          ? '0 4px 16px rgba(0, 0, 0, 0.3)'
-                          : '0 4px 16px rgba(124, 79, 43, 0.2)',
-                      }}
+                      className="edit-profile-image"
                       onError={(e) => {
-                        e.target.style.display = 'none';
+                        e.target.classList.add('hidden');
                         if (e.target.nextSibling) {
-                          e.target.nextSibling.style.display = 'flex';
+                          e.target.nextSibling.classList.remove('hidden');
                         }
                       }}
                     />
                   ) : null}
-                  <div
-                    style={{
-                      width: '120px',
-                      height: '120px',
-                      borderRadius: '50%',
-                      background: darkTheme
-                        ? 'rgba(255, 213, 145, 0.1)'
-                        : 'rgba(255, 179, 71, 0.1)',
-                      display: formData.photoURL ? 'none' : 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      border: darkTheme
-                        ? '3px solid rgba(255, 213, 145, 0.3)'
-                        : '3px solid rgba(255, 179, 71, 0.3)',
-                      fontSize: '3rem',
-                      color: darkTheme ? '#ffd591' : '#7a3a00',
-                    }}
-                  >
+                  <div className={`edit-profile-image-placeholder ${formData.photoURL ? 'hidden' : ''}`}>
                     {formData.displayName.charAt(0).toUpperCase() || 'U'}
                   </div>
                 </div>
-                <label style={{
-                  display: 'block',
-                  width: '100%',
-                  maxWidth: '400px',
-                }}>
-                  <span style={{
-                    display: 'block',
-                    fontSize: '0.9rem',
-                    fontWeight: '500',
-                    marginBottom: '0.5rem',
-                    color: darkTheme ? 'rgba(255, 213, 145, 0.8)' : 'rgba(122, 58, 0, 0.8)',
-                  }}>
+                <label className="edit-profile-image-label">
+                  <span className="edit-profile-image-label-text">
                     URL imagine profil
                   </span>
                   <input
@@ -242,68 +140,28 @@ const EditProfile = () => {
                     value={formData.photoURL}
                     onChange={handleChange}
                     placeholder="https://example.com/image.jpg"
-                    style={{
-                      width: '100%',
-                      padding: '0.75rem',
-                      fontSize: '1rem',
-                      borderRadius: '8px',
-                      border: darkTheme
-                        ? '1px solid rgba(122, 58, 0, 0.3)'
-                        : '1px solid rgba(122, 58, 0, 0.2)',
-                      background: darkTheme
-                        ? 'rgba(26, 13, 0, 0.5)'
-                        : '#ffffff',
-                      color: darkTheme ? '#ffd591' : '#7a3a00',
-                      outline: 'none',
-                    }}
+                    className="edit-profile-input"
                   />
                 </label>
               </div>
 
               {/* Error/Success Messages */}
               {error && (
-                <div style={{
-                  background: 'rgba(255, 87, 87, 0.1)',
-                  border: '1px solid rgba(255, 87, 87, 0.3)',
-                  borderRadius: '8px',
-                  padding: '1rem',
-                  marginBottom: '1.5rem',
-                  color: '#ff5757',
-                  fontSize: '0.9rem',
-                }}>
+                <div className="edit-profile-message error">
                   {error}
                 </div>
               )}
 
               {success && (
-                <div style={{
-                  background: 'rgba(76, 175, 80, 0.1)',
-                  border: '1px solid rgba(76, 175, 80, 0.3)',
-                  borderRadius: '8px',
-                  padding: '1rem',
-                  marginBottom: '1.5rem',
-                  color: '#4caf50',
-                  fontSize: '0.9rem',
-                }}>
+                <div className="edit-profile-message success">
                   {success}
                 </div>
               )}
 
               {/* Form Fields */}
-              <div style={{
-                display: 'grid',
-                gap: '1.5rem',
-              }}>
-                <label>
-                  <div style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.5rem',
-                    fontSize: '0.9rem',
-                    fontWeight: '500',
-                    marginBottom: '0.5rem',
-                    color: darkTheme ? 'rgba(255, 213, 145, 0.8)' : 'rgba(122, 58, 0, 0.8)',
-                  }}>
+              <div className="edit-profile-form-fields">
+                <label className="edit-profile-field">
+                  <div className="edit-profile-field-label">
                     <User size={16} />
                     Nume complet
                   </div>
@@ -313,33 +171,12 @@ const EditProfile = () => {
                     value={formData.displayName}
                     onChange={handleChange}
                     required
-                    style={{
-                      width: '100%',
-                      padding: '0.75rem',
-                      fontSize: '1rem',
-                      borderRadius: '8px',
-                      border: darkTheme
-                        ? '1px solid rgba(122, 58, 0, 0.3)'
-                        : '1px solid rgba(122, 58, 0, 0.2)',
-                      background: darkTheme
-                        ? 'rgba(26, 13, 0, 0.5)'
-                        : '#ffffff',
-                      color: darkTheme ? '#ffd591' : '#7a3a00',
-                      outline: 'none',
-                    }}
+                    className="edit-profile-input"
                   />
                 </label>
 
-                <label>
-                  <div style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.5rem',
-                    fontSize: '0.9rem',
-                    fontWeight: '500',
-                    marginBottom: '0.5rem',
-                    color: darkTheme ? 'rgba(255, 213, 145, 0.8)' : 'rgba(122, 58, 0, 0.8)',
-                  }}>
+                <label className="edit-profile-field">
+                  <div className="edit-profile-field-label">
                     <Mail size={16} />
                     Email
                   </div>
@@ -350,42 +187,15 @@ const EditProfile = () => {
                     onChange={handleChange}
                     required
                     disabled
-                    style={{
-                      width: '100%',
-                      padding: '0.75rem',
-                      fontSize: '1rem',
-                      borderRadius: '8px',
-                      border: darkTheme
-                        ? '1px solid rgba(122, 58, 0, 0.3)'
-                        : '1px solid rgba(122, 58, 0, 0.2)',
-                      background: darkTheme
-                        ? 'rgba(26, 13, 0, 0.3)'
-                        : 'rgba(122, 58, 0, 0.05)',
-                      color: darkTheme ? 'rgba(255, 213, 145, 0.6)' : 'rgba(122, 58, 0, 0.6)',
-                      outline: 'none',
-                      cursor: 'not-allowed',
-                    }}
+                    className="edit-profile-input edit-profile-input-disabled"
                   />
-                  <small style={{
-                    display: 'block',
-                    marginTop: '0.25rem',
-                    fontSize: '0.8rem',
-                    color: darkTheme ? 'rgba(255, 213, 145, 0.6)' : 'rgba(122, 58, 0, 0.6)',
-                  }}>
+                  <small className="edit-profile-field-help">
                     Email-ul nu poate fi modificat
                   </small>
                 </label>
 
-                <label>
-                  <div style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.5rem',
-                    fontSize: '0.9rem',
-                    fontWeight: '500',
-                    marginBottom: '0.5rem',
-                    color: darkTheme ? 'rgba(255, 213, 145, 0.8)' : 'rgba(122, 58, 0, 0.8)',
-                  }}>
+                <label className="edit-profile-field">
+                  <div className="edit-profile-field-label">
                     <FileText size={16} />
                     Despre mine
                   </div>
@@ -395,35 +205,12 @@ const EditProfile = () => {
                     onChange={handleChange}
                     rows={4}
                     placeholder="Spune-ne ceva despre tine..."
-                    style={{
-                      width: '100%',
-                      padding: '0.75rem',
-                      fontSize: '1rem',
-                      borderRadius: '8px',
-                      border: darkTheme
-                        ? '1px solid rgba(122, 58, 0, 0.3)'
-                        : '1px solid rgba(122, 58, 0, 0.2)',
-                      background: darkTheme
-                        ? 'rgba(26, 13, 0, 0.5)'
-                        : '#ffffff',
-                      color: darkTheme ? '#ffd591' : '#7a3a00',
-                      outline: 'none',
-                      resize: 'vertical',
-                      fontFamily: 'inherit',
-                    }}
+                    className="edit-profile-textarea"
                   />
                 </label>
 
-                <label>
-                  <div style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.5rem',
-                    fontSize: '0.9rem',
-                    fontWeight: '500',
-                    marginBottom: '0.5rem',
-                    color: darkTheme ? 'rgba(255, 213, 145, 0.8)' : 'rgba(122, 58, 0, 0.8)',
-                  }}>
+                <label className="edit-profile-field">
+                  <div className="edit-profile-field-label">
                     <MapPin size={16} />
                     Locație
                   </div>
@@ -433,33 +220,12 @@ const EditProfile = () => {
                     value={formData.location}
                     onChange={handleChange}
                     placeholder="Oraș, Țară"
-                    style={{
-                      width: '100%',
-                      padding: '0.75rem',
-                      fontSize: '1rem',
-                      borderRadius: '8px',
-                      border: darkTheme
-                        ? '1px solid rgba(122, 58, 0, 0.3)'
-                        : '1px solid rgba(122, 58, 0, 0.2)',
-                      background: darkTheme
-                        ? 'rgba(26, 13, 0, 0.5)'
-                        : '#ffffff',
-                      color: darkTheme ? '#ffd591' : '#7a3a00',
-                      outline: 'none',
-                    }}
+                    className="edit-profile-input"
                   />
                 </label>
 
-                <label>
-                  <div style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.5rem',
-                    fontSize: '0.9rem',
-                    fontWeight: '500',
-                    marginBottom: '0.5rem',
-                    color: darkTheme ? 'rgba(255, 213, 145, 0.8)' : 'rgba(122, 58, 0, 0.8)',
-                  }}>
+                <label className="edit-profile-field">
+                  <div className="edit-profile-field-label">
                     <School size={16} />
                     Școală
                   </div>
@@ -469,82 +235,21 @@ const EditProfile = () => {
                     value={formData.school}
                     onChange={handleChange}
                     placeholder="Numele școlii"
-                    style={{
-                      width: '100%',
-                      padding: '0.75rem',
-                      fontSize: '1rem',
-                      borderRadius: '8px',
-                      border: darkTheme
-                        ? '1px solid rgba(122, 58, 0, 0.3)'
-                        : '1px solid rgba(122, 58, 0, 0.2)',
-                      background: darkTheme
-                        ? 'rgba(26, 13, 0, 0.5)'
-                        : '#ffffff',
-                      color: darkTheme ? '#ffd591' : '#7a3a00',
-                      outline: 'none',
-                    }}
+                    className="edit-profile-input"
                   />
                 </label>
               </div>
 
               {/* Submit Button */}
-              <div style={{
-                display: 'flex',
-                gap: '1rem',
-                marginTop: '2rem',
-              }}>
+              <div className="edit-profile-submit-container">
                 <button
                   type="submit"
                   disabled={saving || profileLoading}
-                  style={{
-                    flex: 1,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: '0.5rem',
-                    padding: '0.75rem 1.5rem',
-                    fontSize: '1rem',
-                    fontWeight: '500',
-                    borderRadius: '8px',
-                    border: 'none',
-                    cursor: (saving || profileLoading) ? 'not-allowed' : 'pointer',
-                    background: darkTheme
-                      ? 'rgba(255, 179, 71, 0.1)'
-                      : 'rgba(255, 179, 71, 0.92)',
-                    color: darkTheme ? '#ffb347' : '#7a3a00',
-                    border: darkTheme
-                      ? '1px solid rgba(255, 179, 71, 0.3)'
-                      : '1px solid rgba(122, 58, 0, 0.2)',
-                    transition: 'all 0.3s ease',
-                    opacity: (saving || profileLoading) ? 0.6 : 1,
-                  }}
-                  onMouseOver={(e) => {
-                    if (!saving && !profileLoading) {
-                      e.currentTarget.style.background = darkTheme
-                        ? 'rgba(255, 179, 71, 0.2)'
-                        : '#ffd591';
-                      e.currentTarget.style.transform = 'scale(1.02)';
-                    }
-                  }}
-                  onMouseOut={(e) => {
-                    if (!saving && !profileLoading) {
-                      e.currentTarget.style.background = darkTheme
-                        ? 'rgba(255, 179, 71, 0.1)'
-                        : 'rgba(255, 179, 71, 0.92)';
-                      e.currentTarget.style.transform = 'scale(1)';
-                    }
-                  }}
+                  className="edit-profile-submit-button"
                 >
                   {saving || profileLoading ? (
                     <>
-                      <div style={{
-                        width: '16px',
-                        height: '16px',
-                        border: `2px solid ${darkTheme ? 'rgba(255, 179, 71, 0.3)' : 'rgba(122, 58, 0, 0.3)'}`,
-                        borderTop: `2px solid ${darkTheme ? '#ffb347' : '#7a3a00'}`,
-                        borderRadius: '50%',
-                        animation: 'spin 0.8s linear infinite',
-                      }} />
+                      <div className="edit-profile-spinner" />
                       <span>Se salvează...</span>
                     </>
                   ) : (
@@ -556,13 +261,6 @@ const EditProfile = () => {
                 </button>
               </div>
             </form>
-
-            <style>{`
-              @keyframes spin {
-                0% { transform: rotate(0deg); }
-                100% { transform: rotate(360deg); }
-              }
-            `}</style>
           </div>
         </div>
       </Layout>
