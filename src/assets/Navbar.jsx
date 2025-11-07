@@ -14,6 +14,7 @@ import CurenteIcon from './icons/CurenteIcon';
 import CommentIcon from './icons/CommentIcon';
 import Logo from './Logo';
 import { useAuth } from '../firebase/AuthContext';
+import { getProfileImageUrl } from '../utils/cloudinary';
 
 const NAV_CATEGORIES = [
   { name: 'Acasa', href: '/', icon: <HomeIcon className="nav-icon" /> },
@@ -198,7 +199,7 @@ export default function Navbar({ darkTheme, setDarkTheme, scrolled }) {
             >
               {(userProfile?.photoURL || currentUser.photoURL) ? (
                 <img
-                  src={userProfile?.photoURL || currentUser.photoURL}
+                  src={getProfileImageUrl(userProfile?.photoURL || currentUser.photoURL)}
                   alt={userProfile?.displayName || currentUser.displayName || 'User'}
                   style={{
                     width: '40px',

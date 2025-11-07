@@ -7,6 +7,7 @@ import {
 } from 'firebase/auth';
 import { auth, googleProvider } from './firebase';
 import { getUserProfile, saveUserProfile } from './profileService';
+import { getProfileImageUrl } from '../utils/cloudinary';
 
 const AuthContext = createContext({});
 
@@ -33,11 +34,14 @@ export const AuthProvider = ({ children }) => {
       const existingProfile = await getUserProfile(user.uid);
       const isNewUser = !existingProfile;
       
+      // Transform Google profile image with Cloudinary
+      const transformedPhotoURL = user.photoURL ? getProfileImageUrl(user.photoURL) : '';
+
       // Create or update user profile in Firestore
       const profileData = {
         displayName: user.displayName || '',
         email: user.email || '',
-        photoURL: user.photoURL || '',
+        photoURL: transformedPhotoURL,
         uid: user.uid, // Store UID for reference
       };
       
@@ -77,13 +81,20 @@ export const AuthProvider = ({ children }) => {
         delete dataToUpdate.email;
       }
       
+      // Transform photoURL with Cloudinary if it's being updated
+      let transformedPhotoURL = updates.photoURL;
+      if (updates.photoURL && updates.photoURL !== currentUser.photoURL) {
+        transformedPhotoURL = getProfileImageUrl(updates.photoURL);
+        updates.photoURL = transformedPhotoURL;
+      }
+
       // Update Firebase Auth profile if displayName or photoURL changed
       const authUpdates = {};
       if (updates.displayName !== undefined && updates.displayName !== currentUser.displayName) {
         authUpdates.displayName = updates.displayName;
       }
-      if (updates.photoURL !== undefined && updates.photoURL !== currentUser.photoURL) {
-        authUpdates.photoURL = updates.photoURL;
+      if (transformedPhotoURL !== undefined && transformedPhotoURL !== currentUser.photoURL) {
+        authUpdates.photoURL = transformedPhotoURL;
       }
       
       if (Object.keys(authUpdates).length > 0) {

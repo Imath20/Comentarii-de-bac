@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../firebase/AuthContext';
 import Layout from '../assets/Layout';
 import { Edit, Mail, Calendar, User } from 'lucide-react';
+import { getProfileImageUrl } from '../utils/cloudinary';
 import '../styles/style.scss';
 import '../styles/profile.scss';
 
@@ -79,7 +80,7 @@ const Profile = () => {
               <div className="profile-image-wrapper">
                 {photoURL ? (
                   <img
-                    src={photoURL}
+                    src={getProfileImageUrl(photoURL)}
                     alt={displayName}
                     className="profile-image"
                     onError={(e) => {
