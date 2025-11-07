@@ -130,7 +130,7 @@ const EditProfile = () => {
                     {formData.displayName.charAt(0).toUpperCase() || 'U'}
                   </div>
                 </div>
-                <label className="edit-profile-image-label">
+                {/* <label className="edit-profile-image-label">
                   <span className="edit-profile-image-label-text">
                     URL imagine profil
                   </span>
@@ -142,7 +142,7 @@ const EditProfile = () => {
                     placeholder="https://example.com/image.jpg"
                     className="edit-profile-input"
                   />
-                </label>
+                </label> */}
               </div>
 
               {/* Error/Success Messages */}
