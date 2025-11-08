@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../firebase/AuthContext';
 import Layout from '../assets/Layout';
-import { Edit, Mail, Calendar, User } from 'lucide-react';
+import { Edit, Mail, Calendar, User, Shield } from 'lucide-react';
 import { getProfileImageUrl } from '../utils/cloudinary';
 import '../styles/style.scss';
 import '../styles/profile.scss';
@@ -66,6 +66,7 @@ const Profile = () => {
   const bio = userProfile?.bio || '';
   const location = userProfile?.location || '';
   const school = userProfile?.school || '';
+  const isAdmin = userProfile?.isAdmin === true;
 
   const formatDate = (dateString) => {
     if (!dateString) return 'N/A';
@@ -122,9 +123,17 @@ const Profile = () => {
 
               {/* Profile Info */}
               <div className="profile-info">
-                <h1 className="profile-name">
-                  {displayName}
-                </h1>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
+                  <h1 className="profile-name">
+                    {displayName}
+                  </h1>
+                  {isAdmin && (
+                    <div className="profile-admin-badge" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '4px 12px', borderRadius: '20px', background: darkTheme ? '#a97c50' : '#ffd591', color: darkTheme ? '#fff' : '#4e2e1e', fontSize: '0.9rem', fontWeight: 600 }}>
+                      <Shield size={14} />
+                      <span>Admin</span>
+                    </div>
+                  )}
+                </div>
                 <div className="profile-email">
                   <Mail size={16} />
                   <span>{email}</span>

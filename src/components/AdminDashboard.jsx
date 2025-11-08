@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { addComentariu } from '../firebase/comentariiService';
 import { addSubiect } from '../firebase/subiecteService';
+import RichTextEditor from './RichTextEditor';
 import '../styles/admin.scss';
 
 const AdminDashboard = ({ darkTheme, onLogout }) => {
@@ -16,7 +17,7 @@ const AdminDashboard = ({ darkTheme, onLogout }) => {
     categorie: '',
     plan: 'free',
     descriere: '',
-    text: '',
+    content: [], // Changed from text to content (array of blocks)
   });
 
   // Subiect form state
@@ -46,6 +47,19 @@ const AdminDashboard = ({ darkTheme, onLogout }) => {
     setMessage({ type: '', text: '' });
 
     try {
+      // Validate content - at least one paragraph must have text
+      if (!comentariuForm.content || comentariuForm.content.length === 0) {
+        throw new Error('Trebuie să adaugi cel puțin un paragraf cu text');
+      }
+
+      const hasText = comentariuForm.content.some(block => 
+        block.text && block.text.trim().length > 0
+      );
+
+      if (!hasText) {
+        throw new Error('Trebuie să adaugi text în cel puțin un paragraf');
+      }
+
       // Generate ID if not provided
       const id = comentariuForm.id || 
         `${comentariuForm.autor.toLowerCase().replace(/\s+/g, '-')}-${comentariuForm.titlu.toLowerCase().replace(/\s+/g, '-')}`;
@@ -63,7 +77,7 @@ const AdminDashboard = ({ darkTheme, onLogout }) => {
         categorie: '',
         plan: 'free',
         descriere: '',
-        text: '',
+        content: [],
       });
     } catch (error) {
       console.error('Error adding comentariu:', error);
@@ -238,15 +252,11 @@ const AdminDashboard = ({ darkTheme, onLogout }) => {
           </div>
 
           <div className="admin-form-group">
-            <label htmlFor="comentariu-text">Text complet *</label>
-            <textarea
-              id="comentariu-text"
-              value={comentariuForm.text}
-              onChange={(e) => setComentariuForm({ ...comentariuForm, text: e.target.value })}
-              placeholder="Textul complet al comentariului..."
-              required
-              rows={10}
-              className="admin-textarea"
+            <label htmlFor="comentariu-content">Text complet *</label>
+            <RichTextEditor
+              value={comentariuForm.content}
+              onChange={(content) => setComentariuForm({ ...comentariuForm, content })}
+              darkTheme={darkTheme}
             />
           </div>
 

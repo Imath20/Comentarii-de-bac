@@ -212,6 +212,22 @@ export default function Comentarii() {
         setSelectedComentariu(null);
     };
 
+    const handleDeleteComentariu = async (comentariuId) => {
+        // Remove from local state immediately for better UX
+        setComentarii(prev => prev.filter(c => c.id !== comentariuId));
+        
+        // Optionally reload from server to ensure sync
+        try {
+            const data = await fetchComentarii();
+            if (Array.isArray(data) && data.length) {
+                setComentarii(data);
+            }
+        } catch (e) {
+            console.error('Error refreshing comentarii after delete:', e);
+            // Keep the local state change even if refresh fails
+        }
+    };
+
     return (
         <Layout darkTheme={darkTheme} setDarkTheme={setDarkTheme} scrolled={scrolled}>
             <div className="comentarii-page">
@@ -355,6 +371,7 @@ export default function Comentarii() {
                 comentariu={selectedComentariu}
                 darkTheme={darkTheme}
                 onClose={handleCloseModal}
+                onDelete={handleDeleteComentariu}
             />
         </Layout>
     );

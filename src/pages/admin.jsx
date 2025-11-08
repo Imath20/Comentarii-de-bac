@@ -2,48 +2,53 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../assets/Layout';
 import AdminDashboard from '../components/AdminDashboard';
+import { useAuth } from '../firebase/AuthContext';
 import '../styles/style.scss';
 import '../styles/admin.scss';
 
 const Admin = () => {
-  const [password, setPassword] = useState('');
+  const { currentUser, userProfile, loadUserProfile } = useAuth();
   const [error, setError] = useState('');
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [darkTheme, setDarkTheme] = useState(() => localStorage.getItem('theme') === 'dark');
   const navigate = useNavigate();
 
-  // Check if already authenticated (stored in sessionStorage)
+  // Force reload profile when accessing admin page to ensure isAdmin is up to date
   useEffect(() => {
-    const adminAuth = sessionStorage.getItem('adminAuthenticated');
-    if (adminAuth === 'true') {
-      setIsAuthenticated(true);
+    if (currentUser) {
+      loadUserProfile(currentUser.uid, false).catch(error => {
+        console.error('Error reloading profile:', error);
+      });
     }
-  }, []);
+  }, [currentUser, loadUserProfile]);
 
-  const handlePasswordSubmit = (e) => {
-    e.preventDefault();
-    setError('');
-
-    const adminPassword = import.meta.env.VITE_ADMIN_PASSWORD;
-    
-    if (!adminPassword) {
-      setError('Parola admin nu este configurată. Contactează administratorul.');
-      return;
+  // Check if user is admin
+  useEffect(() => {
+    if (currentUser && userProfile) {
+      const isAdmin = userProfile.isAdmin === true;
+      if (isAdmin) {
+        setIsAuthenticated(true);
+        setError('');
+      } else {
+        setError('Nu ai permisiuni de administrator.');
+        setIsAuthenticated(false);
+      }
+    } else if (currentUser && !userProfile) {
+      // Profile is still loading, wait a bit
+      const timer = setTimeout(() => {
+        if (!userProfile) {
+          setError('Se încarcă profilul...');
+        }
+      }, 2000);
+      return () => clearTimeout(timer);
+    } else if (!currentUser) {
+      setError('Trebuie să te autentifici pentru a accesa panoul de administrare.');
+      setIsAuthenticated(false);
     }
-
-    if (password === adminPassword) {
-      setIsAuthenticated(true);
-      sessionStorage.setItem('adminAuthenticated', 'true');
-    } else {
-      setError('Parolă incorectă. Încearcă din nou.');
-      setPassword('');
-    }
-  };
+  }, [currentUser, userProfile]);
 
   const handleLogout = () => {
     setIsAuthenticated(false);
-    sessionStorage.removeItem('adminAuthenticated');
-    setPassword('');
     navigate('/');
   };
 
@@ -65,44 +70,63 @@ const Admin = () => {
     );
   }
 
-  return (
-    <Layout darkTheme={darkTheme} setDarkTheme={setDarkTheme}>
-      <div className="admin-login-container">
-        <div className="admin-login-card">
-          <h1 className="admin-login-title">Panou de Administrare</h1>
-          <p className="admin-login-subtitle">
-            Introdu parola pentru a accesa panoul de administrare
-          </p>
+  if (!currentUser) {
+    return (
+      <Layout darkTheme={darkTheme} setDarkTheme={setDarkTheme}>
+        <div className="admin-login-container">
+          <div className="admin-login-card">
+            <h1 className="admin-login-title">Panou de Administrare</h1>
+            <p className="admin-login-subtitle">
+              Trebuie să te autentifici pentru a accesa panoul de administrare
+            </p>
 
-          {error && (
-            <div className="admin-login-error">
-              {error}
-            </div>
-          )}
+            {error && (
+              <div className="admin-login-error">
+                {error}
+              </div>
+            )}
 
-          <form onSubmit={handlePasswordSubmit} className="admin-login-form">
-            <div className="admin-form-group">
-              <label htmlFor="admin-password">Parolă</label>
-              <input
-                type="password"
-                id="admin-password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Introdu parola"
-                required
-                className="admin-input"
-                autoFocus
-              />
-            </div>
-
-            <button type="submit" className="admin-submit-button">
-              Accesează panoul
+            <button 
+              onClick={() => navigate('/login')} 
+              className="admin-submit-button"
+            >
+              Autentifică-te
             </button>
-          </form>
+          </div>
         </div>
-      </div>
-    </Layout>
-  );
+      </Layout>
+    );
+  }
+
+  if (!isAuthenticated) {
+    return (
+      <Layout darkTheme={darkTheme} setDarkTheme={setDarkTheme}>
+        <div className="admin-login-container">
+          <div className="admin-login-card">
+            <h1 className="admin-login-title">Panou de Administrare</h1>
+            <p className="admin-login-subtitle">
+              Nu ai permisiuni de administrator
+            </p>
+
+            {error && (
+              <div className="admin-login-error">
+                {error}
+              </div>
+            )}
+
+            <button 
+              onClick={() => navigate('/')} 
+              className="admin-submit-button"
+            >
+              Înapoi la pagina principală
+            </button>
+          </div>
+        </div>
+      </Layout>
+    );
+  }
+
+  return null;
 };
 
 export default Admin;

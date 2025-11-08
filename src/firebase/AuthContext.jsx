@@ -10,6 +10,7 @@ import {
 import { auth, googleProvider } from './firebase';
 import { getUserProfile, saveUserProfile } from './profileService';
 import { getProfileImageUrl } from '../utils/cloudinary';
+import { isAdminEmail } from '../utils/adminUtils';
 
 const AuthContext = createContext({});
 
@@ -42,6 +43,7 @@ export const AuthProvider = ({ children }) => {
         email: user.email || '',
         photoURL: user.photoURL || '',
         uid: user.uid,
+        isAdmin: isAdminEmail(user.email || ''),
       };
       
       // Save to database - preserve createdAt if user already exists
@@ -70,6 +72,7 @@ export const AuthProvider = ({ children }) => {
         email: user.email || '',
         photoURL: '',
         uid: user.uid,
+        isAdmin: isAdminEmail(user.email || ''),
       };
       
       await saveUserProfile(user.uid, profileData, true);
@@ -99,6 +102,7 @@ export const AuthProvider = ({ children }) => {
         email: user.email || '',
         photoURL: transformedPhotoURL,
         uid: user.uid, // Store UID for reference
+        isAdmin: isAdminEmail(user.email || ''),
       };
       
       // Save to database - preserve createdAt if user already exists
@@ -144,6 +148,11 @@ export const AuthProvider = ({ children }) => {
         updates.photoURL = transformedPhotoURL;
       }
 
+      // Update isAdmin status based on email (don't allow manual changes)
+      if (currentUser.email) {
+        dataToUpdate.isAdmin = isAdminEmail(currentUser.email);
+      }
+
       // Update Firebase Auth profile if displayName or photoURL changed
       const authUpdates = {};
       if (updates.displayName !== undefined && updates.displayName !== currentUser.displayName) {
@@ -181,6 +190,25 @@ export const AuthProvider = ({ children }) => {
         setProfileLoading(true);
       }
       const profile = await getUserProfile(userId);
+      
+      // Check if user is admin and update profile if needed
+      if (profile && profile.email) {
+        const shouldBeAdmin = isAdminEmail(profile.email);
+        const isCurrentlyAdmin = profile.isAdmin === true;
+        
+        // If email is admin but profile doesn't have isAdmin set, update it
+        if (shouldBeAdmin && !isCurrentlyAdmin) {
+          console.log('🔄 Updating user profile: setting isAdmin to true for', profile.email);
+          await saveUserProfile(userId, { isAdmin: true }, false);
+          profile.isAdmin = true;
+        } else if (!shouldBeAdmin && isCurrentlyAdmin) {
+          // If email is not admin but profile says it is, update it
+          console.log('🔄 Updating user profile: setting isAdmin to false for', profile.email);
+          await saveUserProfile(userId, { isAdmin: false }, false);
+          profile.isAdmin = false;
+        }
+      }
+      
       setUserProfile(profile);
     } catch (error) {
       console.error('Error loading user profile:', error);
@@ -190,7 +218,7 @@ export const AuthProvider = ({ children }) => {
         setProfileLoading(false);
       }
     }
-  }, []);
+  }, [saveUserProfile]);
 
   useEffect(() => {
     // Set loading to false immediately to allow app to render

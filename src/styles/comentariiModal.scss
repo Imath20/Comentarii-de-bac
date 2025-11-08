@@ -133,6 +133,7 @@
 .comentarii-modal-text {
   margin-top: 1rem;
   color: #2a170a;
+  font-size: 1.15rem;
   line-height: 1.75;
   text-align: justify;
   text-justify: inter-word;
@@ -143,12 +144,108 @@
   p {
     margin: 0;
     text-indent: 2em;
+    font-size: inherit;
   }
 
   p + p { margin-top: 1rem; }
 
   &.dark-theme {
     color: rgba(255, 255, 255, 0.9);
+  }
+}
+
+.comentarii-content-block {
+  margin-bottom: 1.5rem;
+  overflow: hidden; // Clear floats
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  &.has-image-left {
+    display: flex;
+    flex-direction: row;
+    gap: 1.5rem;
+    align-items: flex-start;
+
+    .comentarii-content-image {
+      flex-shrink: 0;
+    }
+
+    .comentarii-content-paragraph {
+      flex: 1;
+    }
+  }
+
+  &.has-image-right {
+    display: flex;
+    flex-direction: row;
+    gap: 1.5rem;
+    align-items: flex-start;
+
+    .comentarii-content-image {
+      flex-shrink: 0;
+      order: 2;
+    }
+
+    .comentarii-content-paragraph {
+      flex: 1;
+      order: 1;
+    }
+  }
+
+  // Mobile: stack images and text
+  @media (max-width: 768px) {
+    &.has-image-left,
+    &.has-image-right {
+      flex-direction: column;
+    }
+
+    .comentarii-content-image {
+      width: 100%;
+      margin-bottom: 1rem;
+    }
+  }
+}
+
+.comentarii-content-image {
+  margin-bottom: 0;
+  max-width: 100%;
+  flex-shrink: 0;
+
+  img {
+    max-width: 300px;
+    max-height: 300px;
+    width: auto;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    object-fit: contain;
+  }
+
+  // Mobile: images should stack
+  @media (max-width: 768px) {
+    img {
+      max-width: 100%;
+      width: 100%;
+      max-height: none;
+    }
+  }
+}
+
+.comentarii-content-paragraph {
+  margin: 0;
+  text-indent: 2em;
+  overflow: hidden; // Ensure text wraps around images
+  font-size: 1.15rem;
+  line-height: 1.75;
+
+  span {
+    padding: 0;
+    margin: 0;
+    display: inline;
+    line-height: inherit;
+    font-size: inherit;
   }
 }
 

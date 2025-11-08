@@ -60,7 +60,7 @@ export default function TabsBar() {
                 activateTab(tab.id);
                 handleUserInteraction();
               }}
-              title={`${tab.path} (Ctrl+Shift+${index + 1})`}
+              // title={`${tab.path} (Ctrl+Shift+${index + 1})`}
             >
               <span className="tab-number">{index + 1}</span>
               <span className="tab-title">{tab.title}</span>
