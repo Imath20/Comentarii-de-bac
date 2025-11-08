@@ -27,6 +27,14 @@ export function TabsProvider({ children }) {
     return { tabs: [DEFAULT_TAB], activeId: DEFAULT_TAB.id, revealed: false };
   });
 
+  const [tabOpeningEnabled, setTabOpeningEnabled] = useState(() => {
+    const stored = localStorage.getItem('tabs.openingEnabled');
+    return stored !== null ? stored === 'true' : true; // Default to enabled
+  });
+
+  const [notification, setNotification] = useState(null);
+  const notificationTimeoutRef = useRef(null);
+
   const activeIndex = tabs.tabs.findIndex(t => t.id === tabs.activeId);
   const activeTab = activeIndex >= 0 ? tabs.tabs[activeIndex] : tabs.tabs[0];
 
@@ -58,6 +66,11 @@ export function TabsProvider({ children }) {
   const ensureTitle = useCallback((path) => titleFromPath(path), []);
 
   const openNewTab = useCallback((path = '/') => {
+    if (!tabOpeningEnabled) {
+      // If tab opening is disabled, just navigate in the current tab
+      navigate(path);
+      return;
+    }
     const id = `tab-${Date.now()}`;
     const title = ensureTitle(path);
     setTabs(s => ({
@@ -67,7 +80,7 @@ export function TabsProvider({ children }) {
       revealed: true,
     }));
     navigate(path);
-  }, [ensureTitle, navigate]);
+  }, [ensureTitle, navigate, tabOpeningEnabled]);
 
   const closeTab = useCallback((id) => {
     setTabs(s => {
@@ -170,6 +183,8 @@ export function TabsProvider({ children }) {
       }
       
       if (window.scrollY <= 0 && e.deltaY < 0) {
+        // Prevent opening tabs bar if tab opening is disabled
+        if (!tabOpeningEnabled) return;
         // console.log('Opening tabs via wheel');
         setTabs(s => ({ ...s, revealed: true }));
       }
@@ -184,6 +199,8 @@ export function TabsProvider({ children }) {
       // Block reveal for a short delay after arriving at top
       if (now - lastTopArrivalTimeRef.current < delay) return;
       if (window.scrollY <= 0 && touchStartY != null) {
+        // Prevent opening tabs bar if tab opening is disabled
+        if (!tabOpeningEnabled) return;
         const dy = e.touches[0].clientY - touchStartY;
         if (dy > 24) setTabs(s => ({ ...s, revealed: true }));
       }
@@ -198,7 +215,7 @@ export function TabsProvider({ children }) {
       window.removeEventListener('touchstart', onTouchStart);
       window.removeEventListener('touchmove', onTouchMove);
     };
-  }, []);
+  }, [tabOpeningEnabled]);
 
   const hideTabs = useCallback(() => {
     // Start cooldown when tabs are explicitly hidden to avoid immediate reopen
@@ -309,11 +326,51 @@ export function TabsProvider({ children }) {
 
   // Note: cooldown resets are scoped to explicit tab interactions (TabsBar) and keyboard shortcuts.
 
-  // Hotkeys: Ctrl+M new tab, Ctrl+Q close current, Ctrl+~ toggle, Ctrl+Shift+1-9 switch, Ctrl+Left/Right navigate
+  // Save tabOpeningEnabled to localStorage when it changes
+  useEffect(() => {
+    localStorage.setItem('tabs.openingEnabled', String(tabOpeningEnabled));
+  }, [tabOpeningEnabled]);
+
+  // Cleanup notification timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (notificationTimeoutRef.current) {
+        clearTimeout(notificationTimeoutRef.current);
+      }
+    };
+  }, []);
+
+  // Hotkeys: Ctrl+M new tab, Ctrl+Q close current, Ctrl+~ toggle, Ctrl+Shift+1-9 switch, Ctrl+Left/Right navigate, Ctrl+G toggle tab opening
   useEffect(() => {
     const onKeyDown = (e) => {
       const shiftKey = e.shiftKey;
       const ctrlKey = e.ctrlKey || e.metaKey; // Support both Ctrl and Cmd (Mac)
+
+      // Ctrl+G to toggle tab opening
+      if (ctrlKey && !shiftKey && e.key.toLowerCase() === 'g') {
+        e.preventDefault();
+        // Clear any existing notification timeout
+        if (notificationTimeoutRef.current) {
+          clearTimeout(notificationTimeoutRef.current);
+        }
+        setTabOpeningEnabled(prev => {
+          const newValue = !prev;
+          // Show notification
+          setNotification({
+            message: newValue 
+              ? 'Dropdown-urile sunt activate' 
+              : 'Dropdown-urile sunt dezactivate',
+            enabled: newValue
+          });
+          // Auto-hide notification after 2 seconds
+          notificationTimeoutRef.current = setTimeout(() => {
+            setNotification(null);
+            notificationTimeoutRef.current = null;
+          }, 2000);
+          return newValue;
+        });
+        return;
+      }
 
       if (shiftKey && e.key.toLowerCase() === 't' && tabs.revealed) {
         e.preventDefault();
@@ -331,6 +388,10 @@ export function TabsProvider({ children }) {
       }
       if (shiftKey && e.key === 'Tab') {
         e.preventDefault();
+        // Prevent opening tabs bar if tab opening is disabled
+        if (!tabOpeningEnabled && !tabs.revealed) {
+          return;
+        }
         // When toggling with Shift+Tab, hide and start cooldown to prevent immediate reopen
         if (tabs.revealed) {
           try { lastTopArrivalTimeRef.current = Date.now(); } catch {}
@@ -343,6 +404,10 @@ export function TabsProvider({ children }) {
       const num = parseInt(e.key);
       if (e.shiftKey && num >= 1 && num <= 9) {
         e.preventDefault();
+        // Prevent opening tabs bar if tab opening is disabled
+        if (!tabOpeningEnabled && !tabs.revealed) {
+          return;
+        }
         const tabIndex = num - 1;
         if (tabIndex < tabs.tabs.length) {
           // Show tabs if not revealed
@@ -361,6 +426,10 @@ export function TabsProvider({ children }) {
       if (isTabNavigation) {
         e.preventDefault();
         
+        // Prevent opening tabs bar if tab opening is disabled
+        if (!tabOpeningEnabled && !tabs.revealed) {
+          return;
+        }
         // Show tabs if not revealed
         if (!tabs.revealed) {
           setTabs(s => ({ ...s, revealed: true }));
@@ -403,13 +472,19 @@ export function TabsProvider({ children }) {
     };
     window.addEventListener('keydown', onKeyDown);
     return () => window.removeEventListener('keydown', onKeyDown);
-  }, [openNewTab, closeTab, tabs.activeId, tabs.tabs, activateTab, tabs.revealed]);
+  }, [openNewTab, closeTab, tabs.activeId, tabs.tabs, activateTab, tabs.revealed, setTabOpeningEnabled, resetAutoHideTimer, tabOpeningEnabled]);
 
   const value = useMemo(() => ({
     tabs: tabs.tabs,
     activeId: tabs.activeId,
     revealed: tabs.revealed,
-    setRevealed: (v) => setTabs(s => ({ ...s, revealed: v })),
+    setRevealed: (v) => {
+      // Prevent opening tabs bar if tab opening is disabled
+      if (v && !tabOpeningEnabled) {
+        return;
+      }
+      setTabs(s => ({ ...s, revealed: v }));
+    },
     openNewTab,
     closeTab,
     activateTab,
@@ -419,11 +494,20 @@ export function TabsProvider({ children }) {
     resetAutoHideTimer,
     cancelAutoHide,
     handleUserInteraction,
-  }), [tabs, openNewTab, closeTab, activateTab, setTabTitle, reorderTabs, hideTabs, resetAutoHideTimer, cancelAutoHide, handleUserInteraction]);
+    tabOpeningEnabled,
+    setTabOpeningEnabled,
+  }), [tabs, openNewTab, closeTab, activateTab, setTabTitle, reorderTabs, hideTabs, resetAutoHideTimer, cancelAutoHide, handleUserInteraction, tabOpeningEnabled]);
 
   return (
     <TabsContext.Provider value={value}>
       {children}
+      {notification && (
+        <div className="tabs-notification">
+          <div className={`tabs-notification-content ${notification.enabled ? 'enabled' : 'disabled'}`}>
+            {notification.message}
+          </div>
+        </div>
+      )}
     </TabsContext.Provider>
   );
 }

@@ -292,4 +292,59 @@ body.tabs-revealed .shift-with-tabs-transform {
   background: rgba(255, 179, 71, 0.1);
 }
 
+// Notification popup
+.tabs-notification {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  z-index: 1200; // above tabs bar (1100)
+  pointer-events: none;
+  animation: tabs-notification-slide-in 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.tabs-notification-content {
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  box-shadow: 0 8px 24px rgba(124, 79, 43, 0.2);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(124, 79, 43, 0.2);
+  white-space: nowrap;
+  letter-spacing: 0.3px;
+}
+
+.tabs-notification-content.enabled {
+  background: rgba(76, 175, 80, 0.95);
+  color: white;
+  border-color: rgba(76, 175, 80, 0.3);
+}
+
+.tabs-notification-content.disabled {
+  background: rgba(244, 67, 54, 0.95);
+  color: white;
+  border-color: rgba(244, 67, 54, 0.3);
+}
+
+.dark-theme .tabs-notification-content.enabled {
+  background: rgba(56, 142, 60, 0.95);
+  border-color: rgba(56, 142, 60, 0.4);
+}
+
+.dark-theme .tabs-notification-content.disabled {
+  background: rgba(198, 40, 40, 0.95);
+  border-color: rgba(198, 40, 40, 0.4);
+}
+
+@keyframes tabs-notification-slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
 
