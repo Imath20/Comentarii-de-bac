@@ -15,6 +15,7 @@ export const ROUTE_TITLES = [
   [/^\/carte(?:\b|\/|$)/, 'Cititor de carte'],
   [/^\/profil(?:\b|\/|$)/, 'Profil'],
   [/^\/login$/, 'Autentificare'],
+  [/^\/admin$/, 'Admin'],
 ];
 
 export function titleFromPath(pathname) {

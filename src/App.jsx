@@ -18,6 +18,7 @@ import EditProfile from './pages/editProfile';
 import './styles/style.scss';
 import Curente from './pages/curente';
 import Curent from './pages/Curent';
+import Admin from './pages/admin';
 
 export default function App() {
   return (
@@ -39,6 +40,7 @@ export default function App() {
       <Route path="/carte/*" element={<BookReader />} />
       <Route path="/curente" element={<Curente />} />
       <Route path="/curent/:id" element={<Curent />} />
+      <Route path="/admin" element={<Admin />} />
     </Routes>
   );
 }

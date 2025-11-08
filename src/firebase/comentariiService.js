@@ -1,4 +1,4 @@
-import { collection, getDocs, query, orderBy } from 'firebase/firestore';
+import { collection, getDocs, query, orderBy, doc, setDoc } from 'firebase/firestore';
 import { db } from './firebase';
 
 export async function fetchComentarii() {
@@ -19,6 +19,33 @@ export async function fetchComentarii() {
       ...data,
     };
   });
+}
+
+/**
+ * Add a new comentariu to Firestore
+ * @param {Object} comentariuData - The comentariu data to add
+ * @returns {Promise<void>}
+ */
+export async function addComentariu(comentariuData) {
+  try {
+    if (!comentariuData.id) {
+      throw new Error('ID-ul comentariului este obligatoriu');
+    }
+
+    const comentariuRef = doc(db, 'comentarii', comentariuData.id);
+    
+    const dataToSave = {
+      ...comentariuData,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    };
+
+    await setDoc(comentariuRef, dataToSave, { merge: true });
+    console.log('✅ Comentariu adăugat cu succes:', comentariuData.id);
+  } catch (error) {
+    console.error('❌ Eroare la adăugarea comentariului:', error);
+    throw error;
+  }
 }
 
 
