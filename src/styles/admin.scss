@@ -152,6 +152,10 @@ body.dark-theme .admin-login-subtitle {
   color: #ffffff;
   transition: all 0.3s ease;
   margin-bottom: 1rem;
+  outline: none;
+  &:focus{
+    outline: none;
+  }
 
   &:disabled {
     cursor: not-allowed;
@@ -217,6 +221,10 @@ body.dark-theme .admin-login-subtitle {
   background: rgba(255, 87, 87, 0.1);
   color: #ff5757;
   transition: all 0.3s ease;
+  outline: none;
+  &:focus{
+    outline: none;
+  }
 
   &:hover {
     background: rgba(255, 87, 87, 0.2);
@@ -258,6 +266,10 @@ body.dark-theme .admin-login-subtitle {
   border-bottom: 3px solid transparent;
   transition: all 0.3s ease;
   margin-bottom: -2px;
+  outline: none;
+  &:focus{
+    outline: none;
+  }
 
   &:hover {
     color: #7a3a00;

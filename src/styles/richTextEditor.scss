@@ -96,6 +96,10 @@
   padding: 0.25rem 0.5rem;
   border-radius: 4px;
   transition: background 0.2s;
+  outline: none;
+  &:focus{
+    outline: none;
+  }
 
   &:hover {
     background: rgba(122, 58, 0, 0.1);
@@ -246,6 +250,10 @@
   font-weight: bold;
   transition: all 0.2s;
   min-width: 40px;
+  outline: none;
+  &:focus{
+    outline: none;
+  }
 
   &:hover {
     background: rgba(122, 58, 0, 0.1);
@@ -353,9 +361,13 @@
   cursor: pointer;
   transition: all 0.2s;
   padding: 0;
+  outline: none;
+  &:focus{
+    outline: none;
+  }
 
   &.highlight {
-    border-bottom: 2px solid rgba(122, 58, 0, 0.3);
+    border: 2px solid rgba(122, 58, 0, 0.3);
   }
 
   &.text-color {
@@ -367,6 +379,10 @@
     border: none;
     border-bottom: 3px solid;
     border-radius: 0;
+    &:hover {
+      transform: scale(1.2);
+      box-shadow: none;
+    }
   }
 
   &:hover {
@@ -406,6 +422,10 @@
   color: #7a3a00;
   cursor: pointer;
   transition: all 0.3s;
+  outline: none;
+  &:focus{
+    outline: none;
+  }
 
   &:hover {
     border-color: #7a3a00;
@@ -531,6 +551,10 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   transition: transform 0.2s;
   padding: 0;
+  outline: none;
+  &:focus{
+    outline: none;
+  }
 
   &:hover {
     transform: scale(1.1);
@@ -553,6 +577,10 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   transition: transform 0.2s, background 0.2s;
   padding: 0;
+  outline: none;
+  &:focus{
+    outline: none;
+  }
 
   &:hover {
     transform: scale(1.1);
@@ -637,6 +665,10 @@
     color: #7a3a00;
     cursor: pointer;
     transition: all 0.2s;
+    outline: none;
+    &:focus{
+      outline: none;
+    }
 
     &.active {
       background: #7a3a00;
@@ -675,6 +707,10 @@
     cursor: pointer;
     font-weight: 600;
     transition: all 0.2s;
+    outline: none;
+    &:focus{
+      outline: none;
+    }
 
     &:first-child {
       background: rgba(122, 58, 0, 0.1);
