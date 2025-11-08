@@ -271,6 +271,10 @@ export default function Navbar({ darkTheme, setDarkTheme, scrolled }) {
                   ? '1px solid rgba(255, 87, 87, 0.3)'
                   : '1px solid rgba(255, 87, 87, 0.3)',
                 transition: 'all 0.3s ease',
+                outline: 'none',
+                '&:focus': {
+                  outline: 'none',
+                },
               }}
               onMouseOver={(e) => {
                 e.currentTarget.style.background = darkTheme
@@ -306,6 +310,10 @@ export default function Navbar({ darkTheme, setDarkTheme, scrolled }) {
                 ? '1px solid rgba(255, 179, 71, 0.3)'
                 : '1px solid rgba(122, 58, 0, 0.2)',
               transition: 'all 0.3s ease',
+              outline: 'none',
+              '&:focus': {
+                outline: 'none',
+              },
             }}
             onMouseOver={(e) => {
               e.currentTarget.style.background = darkTheme

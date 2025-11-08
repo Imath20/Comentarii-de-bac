@@ -7,7 +7,11 @@ import '../styles/style.scss';
 const Login = () => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const { loginWithGoogle, currentUser } = useAuth();
+  const [isSignUp, setIsSignUp] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [displayName, setDisplayName] = useState('');
+  const { loginWithGoogle, loginWithEmailPassword, signUpWithEmailPassword, currentUser } = useAuth();
   const navigate = useNavigate();
 
   // If user is already logged in, redirect to home
@@ -16,6 +20,40 @@ const Login = () => {
       navigate('/');
     }
   }, [currentUser, navigate]);
+
+  const handleEmailPasswordSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      setError('');
+      setLoading(true);
+      
+      if (isSignUp) {
+        await signUpWithEmailPassword(email, password, displayName);
+      } else {
+        await loginWithEmailPassword(email, password);
+      }
+      
+      navigate('/');
+    } catch (err) {
+      let errorMessage = 'A apărut o eroare la autentificare';
+      if (err.code === 'auth/user-not-found') {
+        errorMessage = 'Utilizatorul nu există. Încearcă să te înregistrezi.';
+      } else if (err.code === 'auth/wrong-password') {
+        errorMessage = 'Parolă incorectă.';
+      } else if (err.code === 'auth/email-already-in-use') {
+        errorMessage = 'Acest email este deja înregistrat. Conectează-te.';
+      } else if (err.code === 'auth/weak-password') {
+        errorMessage = 'Parola trebuie să aibă cel puțin 6 caractere.';
+      } else if (err.code === 'auth/invalid-email') {
+        errorMessage = 'Email invalid.';
+      } else if (err.message) {
+        errorMessage = err.message;
+      }
+      setError(errorMessage);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleGoogleLogin = async () => {
     try {
@@ -30,118 +68,115 @@ const Login = () => {
     }
   };
 
-  const [darkTheme] = useState(() => localStorage.getItem('theme') === 'dark');
+  const [darkTheme, setDarkTheme] = useState(() => localStorage.getItem('theme') === 'dark');
 
   return (
     <div className="page-wrapper">
-      <Layout darkTheme={darkTheme} setDarkTheme={() => {}}>
-        <div className="login-container" style={{
-          minHeight: 'calc(100vh - 200px)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          padding: '2rem',
-        }}>
-          <div className={`login-card ${darkTheme ? 'dark-theme' : ''}`} style={{
-            background: darkTheme 
-              ? 'rgba(47, 24, 0, 0.92)' 
-              : 'rgba(255, 255, 255, 0.95)',
-            borderRadius: '16px',
-            padding: '3rem',
-            boxShadow: darkTheme
-              ? '0 8px 32px 0 rgba(0, 0, 0, 0.3)'
-              : '0 8px 32px 0 rgba(124, 79, 43, 0.2)',
-            maxWidth: '450px',
-            width: '100%',
-            border: darkTheme
-              ? '1px solid rgba(122, 58, 0, 0.3)'
-              : '1px solid rgba(255, 179, 71, 0.3)',
-          }}>
-            <h1 className={`login-title ${darkTheme ? 'dark-theme' : ''}`} style={{
-              fontSize: '2rem',
-              fontWeight: 'bold',
-              marginBottom: '1rem',
-              color: darkTheme ? '#ffd591' : '#7a3a00',
-              textAlign: 'center',
-            }}>
+      <Layout darkTheme={darkTheme} setDarkTheme={setDarkTheme}>
+        <div className="login-container">
+          <div className="login-card">
+            <h1 className="login-title">
               Autentificare
             </h1>
-            <p className={`login-subtitle ${darkTheme ? 'dark-theme' : ''}`} style={{
-              fontSize: '1rem',
-              color: darkTheme ? 'rgba(255, 213, 145, 0.8)' : 'rgba(122, 58, 0, 0.8)',
-              textAlign: 'center',
-              marginBottom: '2rem',
-            }}>
+            <p className="login-subtitle">
               Conectează-te pentru a accesa toate funcționalitățile platformei
             </p>
 
             {error && (
-              <div className="login-error" style={{
-                background: 'rgba(255, 87, 87, 0.1)',
-                border: '1px solid rgba(255, 87, 87, 0.3)',
-                borderRadius: '8px',
-                padding: '1rem',
-                marginBottom: '1.5rem',
-                color: '#ff5757',
-                fontSize: '0.9rem',
-              }}>
+              <div className="login-error">
                 {error}
               </div>
             )}
 
+            <form onSubmit={handleEmailPasswordSubmit} className="login-email-form">
+              {isSignUp && (
+                <div className="login-form-group">
+                  <label htmlFor="displayName">Nume</label>
+                  <input
+                    type="text"
+                    id="displayName"
+                    value={displayName}
+                    onChange={(e) => setDisplayName(e.target.value)}
+                    placeholder="Introdu numele tău"
+                    disabled={loading}
+                    className="login-input"
+                  />
+                </div>
+              )}
+              
+              <div className="login-form-group">
+                <label htmlFor="email">Email</label>
+                <input
+                  type="email"
+                  id="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="introdu@email.com"
+                  required
+                  disabled={loading}
+                  className="login-input"
+                />
+              </div>
+
+              <div className="login-form-group">
+                <label htmlFor="password">Parolă</label>
+                <input
+                  type="password"
+                  id="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Introdu parola"
+                  required
+                  disabled={loading}
+                  className="login-input"
+                  minLength={6}
+                />
+              </div>
+
+              <button
+                type="submit"
+                disabled={loading}
+                className="login-email-button"
+              >
+                {loading ? (
+                  <>
+                    <div className="login-spinner" />
+                    <span>{isSignUp ? 'Se înregistrează...' : 'Se conectează...'}</span>
+                  </>
+                ) : (
+                  <span>{isSignUp ? 'Înregistrează-te' : 'Conectează-te'}</span>
+                )}
+              </button>
+
+              <div className="login-toggle">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsSignUp(!isSignUp);
+                    setError('');
+                  }}
+                  className="login-toggle-button"
+                  disabled={loading}
+                >
+                  {isSignUp 
+                    ? 'Ai deja cont? Conectează-te' 
+                    : 'Nu ai cont? Înregistrează-te'}
+                </button>
+              </div>
+            </form>
+
+            <div className="login-divider">
+              <span>sau</span>
+            </div>
+
             <button
               onClick={handleGoogleLogin}
               disabled={loading}
-              className={`login-google-button ${darkTheme ? 'dark-theme' : ''}`}
-              style={{
-                width: '100%',
-                padding: '1rem 1.5rem',
-                fontSize: '1rem',
-                fontWeight: '600',
-                borderRadius: '8px',
-                border: 'none',
-                cursor: loading ? 'not-allowed' : 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '0.75rem',
-                background: darkTheme
-                  ? 'rgba(255, 255, 255, 0.1)'
-                  : '#ffffff',
-                color: darkTheme ? '#ffd591' : '#7a3a00',
-                border: darkTheme
-                  ? '1px solid rgba(255, 213, 145, 0.3)'
-                  : '1px solid rgba(122, 58, 0, 0.2)',
-                transition: 'all 0.3s ease',
-                opacity: loading ? 0.6 : 1,
-              }}
-              onMouseOver={(e) => {
-                if (!loading) {
-                  e.currentTarget.style.background = darkTheme
-                    ? 'rgba(255, 255, 255, 0.15)'
-                    : '#f5f5f5';
-                  e.currentTarget.style.transform = 'scale(1.02)';
-                }
-              }}
-              onMouseOut={(e) => {
-                if (!loading) {
-                  e.currentTarget.style.background = darkTheme
-                    ? 'rgba(255, 255, 255, 0.1)'
-                    : '#ffffff';
-                  e.currentTarget.style.transform = 'scale(1)';
-                }
-              }}
+              className="login-google-button"
             >
               {loading ? (
                 <>
-                  <div style={{
-                    width: '20px',
-                    height: '20px',
-                    border: `3px solid ${darkTheme ? 'rgba(255, 213, 145, 0.3)' : 'rgba(122, 58, 0, 0.3)'}`,
-                    borderTop: `3px solid ${darkTheme ? '#ffd591' : '#7a3a00'}`,
-                    borderRadius: '50%',
-                    animation: 'spin 0.8s linear infinite',
-                  }} />
+                  <div className="login-spinner" />
                   <span>Se conectează...</span>
                 </>
               ) : (
@@ -168,13 +203,6 @@ const Login = () => {
                 </>
               )}
             </button>
-
-            <style>{`
-              @keyframes spin {
-                0% { transform: rotate(0deg); }
-                100% { transform: rotate(360deg); }
-              }
-            `}</style>
           </div>
         </div>
       </Layout>

@@ -3,7 +3,9 @@ import {
   signInWithPopup, 
   signOut, 
   onAuthStateChanged,
-  updateProfile
+  updateProfile,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword
 } from 'firebase/auth';
 import { auth, googleProvider } from './firebase';
 import { getUserProfile, saveUserProfile } from './profileService';
@@ -24,6 +26,60 @@ export const AuthProvider = ({ children }) => {
   const [userProfile, setUserProfile] = useState(null);
   const [loading, setLoading] = useState(true);
   const [profileLoading, setProfileLoading] = useState(false);
+
+  const loginWithEmailPassword = async (email, password) => {
+    try {
+      const result = await signInWithEmailAndPassword(auth, email, password);
+      const user = result.user;
+      
+      // Check if user already exists in database
+      const existingProfile = await getUserProfile(user.uid);
+      const isNewUser = !existingProfile;
+
+      // Create or update user profile in Firestore
+      const profileData = {
+        displayName: user.displayName || user.email?.split('@')[0] || '',
+        email: user.email || '',
+        photoURL: user.photoURL || '',
+        uid: user.uid,
+      };
+      
+      // Save to database - preserve createdAt if user already exists
+      await saveUserProfile(user.uid, profileData, isNewUser);
+      
+      console.log(isNewUser ? '✅ New user added to database' : '✅ Existing user updated in database');
+    } catch (error) {
+      console.error('❌ Error signing in with email/password:', error);
+      throw error;
+    }
+  };
+
+  const signUpWithEmailPassword = async (email, password, displayName) => {
+    try {
+      const result = await createUserWithEmailAndPassword(auth, email, password);
+      const user = result.user;
+      
+      // Update display name if provided
+      if (displayName) {
+        await updateProfile(user, { displayName });
+      }
+      
+      // Create user profile in Firestore
+      const profileData = {
+        displayName: displayName || user.email?.split('@')[0] || '',
+        email: user.email || '',
+        photoURL: '',
+        uid: user.uid,
+      };
+      
+      await saveUserProfile(user.uid, profileData, true);
+      
+      console.log('✅ New user created and added to database');
+    } catch (error) {
+      console.error('❌ Error signing up with email/password:', error);
+      throw error;
+    }
+  };
 
   const loginWithGoogle = async () => {
     try {
@@ -153,6 +209,8 @@ export const AuthProvider = ({ children }) => {
     currentUser,
     userProfile,
     loginWithGoogle,
+    loginWithEmailPassword,
+    signUpWithEmailPassword,
     logout,
     updateUserProfileData,
     loadUserProfile,
