@@ -180,9 +180,10 @@ body.dark-theme .admin-login-subtitle {
 
 // Admin Dashboard Styles
 .admin-dashboard {
+  // background-color: red;
   min-height: calc(100vh - 200px);
   padding: 2rem;
-  padding-top: 6.7rem;
+  padding-top: 7.5rem !important;
   max-width: 1200px;
   margin: 0 auto;
 }
