@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState, useCallback } from 'react';
 import { 
   signInWithPopup, 
   signOut, 
@@ -175,35 +175,43 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const loadUserProfile = async (userId) => {
+  const loadUserProfile = useCallback(async (userId, showLoading = true) => {
     try {
-      setProfileLoading(true);
+      if (showLoading) {
+        setProfileLoading(true);
+      }
       const profile = await getUserProfile(userId);
       setUserProfile(profile);
     } catch (error) {
       console.error('Error loading user profile:', error);
       setUserProfile(null);
     } finally {
-      setProfileLoading(false);
+      if (showLoading) {
+        setProfileLoading(false);
+      }
     }
-  };
+  }, []);
 
   useEffect(() => {
+    // Set loading to false immediately to allow app to render
+    setLoading(false);
+    
+    // Load authentication in background (non-blocking)
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       setCurrentUser(user);
       
       if (user) {
-        // Load user profile from Firestore
-        await loadUserProfile(user.uid);
+        // Load user profile from Firestore in background (non-blocking, no loading indicator)
+        loadUserProfile(user.uid, false).catch(error => {
+          console.error('Error loading user profile in background:', error);
+        });
       } else {
         setUserProfile(null);
       }
-      
-      setLoading(false);
     });
 
     return unsubscribe;
-  }, []);
+  }, [loadUserProfile]);
 
   const value = {
     currentUser,
@@ -220,7 +228,7 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider value={value}>
-      {!loading && children}
+      {children}
     </AuthContext.Provider>
   );
 };
