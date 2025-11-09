@@ -172,7 +172,7 @@
       flex-shrink: 0;
     }
 
-    .comentarii-content-paragraph {
+    .comentarii-content-text-wrapper {
       flex: 1;
     }
   }
@@ -188,7 +188,7 @@
       order: 2;
     }
 
-    .comentarii-content-paragraph {
+    .comentarii-content-text-wrapper {
       flex: 1;
       order: 1;
     }
@@ -230,6 +230,22 @@
       width: 100%;
       max-height: none;
     }
+  }
+}
+
+.comentarii-content-text-wrapper {
+  flex: 1;
+}
+
+.comentarii-content-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #4e2e1e;
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+
+  .dark-theme & {
+    color: #ffd591;
   }
 }
 

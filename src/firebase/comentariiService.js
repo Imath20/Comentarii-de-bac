@@ -50,6 +50,32 @@ export async function addComentariu(comentariuData) {
 }
 
 /**
+ * Update an existing comentariu in Firestore
+ * @param {Object} comentariuData - The comentariu data to update (must include id)
+ * @returns {Promise<void>}
+ */
+export async function updateComentariu(comentariuData) {
+  try {
+    if (!comentariuData.id) {
+      throw new Error('ID-ul comentariului este obligatoriu');
+    }
+
+    const comentariuRef = doc(db, 'comentarii', comentariuData.id);
+    
+    const dataToSave = {
+      ...comentariuData,
+      updatedAt: new Date().toISOString(),
+    };
+
+    await setDoc(comentariuRef, dataToSave, { merge: true });
+    console.log('✅ Comentariu actualizat cu succes:', comentariuData.id);
+  } catch (error) {
+    console.error('❌ Eroare la actualizarea comentariului:', error);
+    throw error;
+  }
+}
+
+/**
  * Delete a comentariu from Firestore
  * @param {string} comentariuId - The ID of the comentariu to delete
  * @returns {Promise<void>}

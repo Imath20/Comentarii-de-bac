@@ -59,6 +59,8 @@ const RichTextEditor = ({ value, onChange, darkTheme }) => {
       const initialContent = [{ 
         type: 'paragraph', 
         text: '', 
+        title: '',
+        titleFont: '',
         highlights: [], 
         underlines: [],
         textColor: '#000000' // Default black
@@ -120,6 +122,8 @@ const RichTextEditor = ({ value, onChange, darkTheme }) => {
     const newContent = [...content, { 
       type: 'paragraph', 
       text: '', 
+      title: '',
+      titleFont: '',
       highlights: [], 
       underlines: [],
       textColor: '#000000' // Default black
@@ -402,6 +406,20 @@ const RichTextEditor = ({ value, onChange, darkTheme }) => {
     onChange(newContent);
   };
 
+  const handleTitleChange = (index, title) => {
+    const newContent = [...content];
+    newContent[index].title = title;
+    setContent(newContent);
+    onChange(newContent);
+  };
+
+  const handleTitleFontChange = (index, font) => {
+    const newContent = [...content];
+    newContent[index].titleFont = font;
+    setContent(newContent);
+    onChange(newContent);
+  };
+
   const confirmImageUpload = async () => {
     if (!imagePreview || !imagePreview.file) return;
 
@@ -463,116 +481,132 @@ const RichTextEditor = ({ value, onChange, darkTheme }) => {
   };
 
   const renderTextWithFormatting = (block, index) => {
-    if (!block.text) return null;
-
     const textColor = block.textColor || '#000000';
-    
-    // Collect all breakpoints (start and end positions of all formats)
-    const breakpoints = new Set([0, block.text.length]);
-    
-    // Add breakpoints from highlights
-    (block.highlights || []).forEach(h => {
-      breakpoints.add(h.start);
-      breakpoints.add(h.end);
-    });
-    
-    // Add breakpoints from underlines
-    (block.underlines || []).forEach(u => {
-      breakpoints.add(u.start);
-      breakpoints.add(u.end);
-    });
-    
-    // Add breakpoints from formats
-    (block.formats || []).forEach(f => {
-      breakpoints.add(f.start);
-      breakpoints.add(f.end);
-    });
-    
-    // Convert to sorted array
-    const sortedBreakpoints = Array.from(breakpoints).sort((a, b) => a - b);
-    
-    // Build segments
-    const segments = [];
-    for (let i = 0; i < sortedBreakpoints.length - 1; i++) {
-      const start = sortedBreakpoints[i];
-      const end = sortedBreakpoints[i + 1];
-      
-      if (start >= end) continue;
-      
-      const segmentText = block.text.substring(start, end);
-      if (segmentText.length === 0) continue;
-      
-      // Collect all formats that apply to this segment
-      const formats = {
-        highlight: null,
-        underline: null,
-        bold: false,
-        italic: false,
-        color: null,
-        fontFamily: null,
-        fontSize: null,
-      };
-      
-      // Check highlights
-      (block.highlights || []).forEach(h => {
-        if (h.start < end && h.end > start) {
-          formats.highlight = h.color;
-        }
-      });
-      
-      // Check underlines
-      (block.underlines || []).forEach(u => {
-        if (u.start < end && u.end > start) {
-          formats.underline = u.color;
-        }
-      });
-      
-      // Check other formats
-      (block.formats || []).forEach(f => {
-        if (f.start < end && f.end > start) {
-          if (f.type === 'bold') formats.bold = true;
-          if (f.type === 'italic') formats.italic = true;
-          if (f.type === 'color') formats.color = f.value;
-          if (f.type === 'fontFamily') formats.fontFamily = f.value;
-          if (f.type === 'fontSize') formats.fontSize = f.value;
-        }
-      });
-      
-      segments.push({ text: segmentText, formats });
-    }
     
     return (
       <div className="rich-text-preview" style={{ color: textColor }}>
-        {segments.map((segment, i) => {
-          const styles = {
-            color: segment.formats.color || textColor,
-          };
-          
-          if (segment.formats.highlight) {
-            styles.backgroundColor = segment.formats.highlight;
-          }
-          if (segment.formats.underline) {
-            styles.borderBottom = `2px solid ${segment.formats.underline}`;
-          }
-          if (segment.formats.bold) {
-            styles.fontWeight = 'bold';
-          }
-          if (segment.formats.italic) {
-            styles.fontStyle = 'italic';
-          }
-          if (segment.formats.fontFamily) {
-            styles.fontFamily = segment.formats.fontFamily;
-          }
-          if (segment.formats.fontSize) {
-            styles.fontSize = segment.formats.fontSize;
-          }
-          
-          return (
-            <span key={i} style={styles}>
-              {segment.text}
-            </span>
-          );
-        })}
+        {block.title && (
+          <div 
+            className="rich-text-preview-title"
+            style={{
+              fontWeight: 'bold',
+              fontFamily: block.titleFont || 'inherit',
+              marginBottom: block.text ? '0.5rem' : '0',
+            }}
+          >
+            {block.title}
+          </div>
+        )}
+        {block.text && (
+          <>
+            {(() => {
+              // Collect all breakpoints (start and end positions of all formats)
+              const breakpoints = new Set([0, block.text.length]);
+              
+              // Add breakpoints from highlights
+              (block.highlights || []).forEach(h => {
+                breakpoints.add(h.start);
+                breakpoints.add(h.end);
+              });
+              
+              // Add breakpoints from underlines
+              (block.underlines || []).forEach(u => {
+                breakpoints.add(u.start);
+                breakpoints.add(u.end);
+              });
+              
+              // Add breakpoints from formats
+              (block.formats || []).forEach(f => {
+                breakpoints.add(f.start);
+                breakpoints.add(f.end);
+              });
+              
+              // Convert to sorted array
+              const sortedBreakpoints = Array.from(breakpoints).sort((a, b) => a - b);
+              
+              // Build segments
+              const segments = [];
+              for (let i = 0; i < sortedBreakpoints.length - 1; i++) {
+                const start = sortedBreakpoints[i];
+                const end = sortedBreakpoints[i + 1];
+                
+                if (start >= end) continue;
+                
+                const segmentText = block.text.substring(start, end);
+                if (segmentText.length === 0) continue;
+                
+                // Collect all formats that apply to this segment
+                const formats = {
+                  highlight: null,
+                  underline: null,
+                  bold: false,
+                  italic: false,
+                  color: null,
+                  fontFamily: null,
+                  fontSize: null,
+                };
+                
+                // Check highlights
+                (block.highlights || []).forEach(h => {
+                  if (h.start < end && h.end > start) {
+                    formats.highlight = h.color;
+                  }
+                });
+                
+                // Check underlines
+                (block.underlines || []).forEach(u => {
+                  if (u.start < end && u.end > start) {
+                    formats.underline = u.color;
+                  }
+                });
+                
+                // Check other formats
+                (block.formats || []).forEach(f => {
+                  if (f.start < end && f.end > start) {
+                    if (f.type === 'bold') formats.bold = true;
+                    if (f.type === 'italic') formats.italic = true;
+                    if (f.type === 'color') formats.color = f.value;
+                    if (f.type === 'fontFamily') formats.fontFamily = f.value;
+                    if (f.type === 'fontSize') formats.fontSize = f.value;
+                  }
+                });
+                
+                segments.push({ text: segmentText, formats });
+              }
+              
+              return segments.map((segment, i) => {
+                const styles = {
+                  color: segment.formats.color || textColor,
+                };
+                
+                if (segment.formats.highlight) {
+                  styles.backgroundColor = segment.formats.highlight;
+                }
+                if (segment.formats.underline) {
+                  styles.borderBottom = `2px solid ${segment.formats.underline}`;
+                }
+                if (segment.formats.bold) {
+                  styles.fontWeight = 'bold';
+                }
+                if (segment.formats.italic) {
+                  styles.fontStyle = 'italic';
+                }
+                if (segment.formats.fontFamily) {
+                  styles.fontFamily = segment.formats.fontFamily;
+                }
+                if (segment.formats.fontSize) {
+                  styles.fontSize = segment.formats.fontSize;
+                }
+                
+                return (
+                  <span key={i} style={styles}>
+                    {segment.text}
+                  </span>
+                );
+              });
+            })()}
+          </>
+        )}
       </div>
     );
   };
@@ -630,6 +664,38 @@ const RichTextEditor = ({ value, onChange, darkTheme }) => {
                 </button>
               )}
             </div>
+          </div>
+
+          <div className="rich-text-title-section">
+            <div className="rich-text-title-input-group">
+              <label htmlFor={`title-${index}`}>Titlu paragraf:</label>
+              <input
+                type="text"
+                id={`title-${index}`}
+                value={block.title || ''}
+                onChange={(e) => handleTitleChange(index, e.target.value)}
+                placeholder="Adaugă un titlu pentru paragraf..."
+                className="rich-text-title-input"
+              />
+            </div>
+            {block.title && (
+              <div className="rich-text-title-font-group">
+                <label htmlFor={`title-font-${index}`}>Font titlu:</label>
+                <select
+                  id={`title-font-${index}`}
+                  value={block.titleFont || ''}
+                  onChange={(e) => handleTitleFontChange(index, e.target.value)}
+                  className="rich-text-title-font-select"
+                >
+                  <option value="">Implicit</option>
+                  {FONT_FAMILIES.map((font) => (
+                    <option key={font.value} value={font.value}>
+                      {font.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            )}
           </div>
 
           <div className={`rich-text-content-wrapper ${block.image ? `has-image-${block.image?.alignment || 'left'}` : ''}`}>

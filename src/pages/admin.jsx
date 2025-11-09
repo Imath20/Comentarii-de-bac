@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import Layout from '../assets/Layout';
 import AdminDashboard from '../components/AdminDashboard';
 import { useAuth } from '../firebase/AuthContext';
@@ -12,6 +12,8 @@ const Admin = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [darkTheme, setDarkTheme] = useState(() => localStorage.getItem('theme') === 'dark');
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const [initialCommentData, setInitialCommentData] = useState(null);
 
   // Force reload profile when accessing admin page to ensure isAdmin is up to date
   useEffect(() => {
@@ -21,6 +23,23 @@ const Admin = () => {
       });
     }
   }, [currentUser, loadUserProfile]);
+
+  // Parse comment data from URL params
+  useEffect(() => {
+    const editParam = searchParams.get('edit');
+    if (editParam) {
+      try {
+        const decoded = decodeURIComponent(editParam);
+        const commentData = JSON.parse(decoded);
+        setInitialCommentData(commentData);
+      } catch (error) {
+        console.error('Error parsing comment data from URL:', error);
+        setInitialCommentData(null);
+      }
+    } else {
+      setInitialCommentData(null);
+    }
+  }, [searchParams]);
 
   // Check if user is admin
   useEffect(() => {
@@ -65,7 +84,11 @@ const Admin = () => {
   if (isAuthenticated) {
     return (
       <Layout darkTheme={darkTheme} setDarkTheme={setDarkTheme}>
-        <AdminDashboard darkTheme={darkTheme} onLogout={handleLogout} />
+        <AdminDashboard 
+          darkTheme={darkTheme} 
+          onLogout={handleLogout} 
+          initialCommentData={initialCommentData}
+        />
       </Layout>
     );
   }

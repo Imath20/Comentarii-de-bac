@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../firebase/AuthContext';
 import { deleteComentariu } from '../firebase/comentariiService';
-import { Trash2 } from 'lucide-react';
+import { Trash2, Edit } from 'lucide-react';
 import '../styles/comentariiModal.scss';
 
 export default function ComentariiModal({ isOpen, comentariu, darkTheme, onClose, onDelete }) {
   const { userProfile } = useAuth();
+  const navigate = useNavigate();
   const [isDeleting, setIsDeleting] = useState(false);
   const isAdmin = userProfile?.isAdmin === true;
 
@@ -28,6 +30,15 @@ export default function ComentariiModal({ isOpen, comentariu, darkTheme, onClose
     } finally {
       setIsDeleting(false);
     }
+  };
+
+  const handleEdit = () => {
+    if (!comentariu?.id) return;
+    
+    // Encode comment data as URL parameter
+    const commentData = encodeURIComponent(JSON.stringify(comentariu));
+    onClose();
+    navigate(`/admin?edit=${commentData}`);
   };
     const renderContent = () => {
         // Check if content is structured (new format) or plain text (old format)
@@ -156,12 +167,28 @@ export default function ComentariiModal({ isOpen, comentariu, darkTheme, onClose
                                     <img src={block.image.url} alt="Comentariu" />
                                 </div>
                             )}
-                            <p 
-                                className={`comentarii-content-paragraph ${block.image ? `text-${imageAlignment === 'left' ? 'right' : 'left'}` : ''}`}
-                                style={{ color: textColor }}
-                            >
-                                {renderTextWithFormatting()}
-                            </p>
+                            <div className={`comentarii-content-text-wrapper ${block.image ? `text-${imageAlignment === 'left' ? 'right' : 'left'}` : ''}`}>
+                                {block.title && (
+                                    <div 
+                                        className="comentarii-content-title"
+                                        style={{
+                                            fontWeight: 'bold',
+                                            fontFamily: block.titleFont || 'inherit',
+                                            marginBottom: block.text ? '0.5rem' : '0',
+                                        }}
+                                    >
+                                        {block.title}
+                                    </div>
+                                )}
+                                {block.text && (
+                                    <p 
+                                        className={`comentarii-content-paragraph`}
+                                        style={{ color: textColor }}
+                                    >
+                                        {renderTextWithFormatting()}
+                                    </p>
+                                )}
+                            </div>
                         </div>
                     );
                 }
@@ -228,8 +255,32 @@ export default function ComentariiModal({ isOpen, comentariu, darkTheme, onClose
                             paddingTop: '16px',
                             borderTop: `1px solid ${darkTheme ? '#6a4322' : '#e0e0e0'}`,
                             display: 'flex',
-                            justifyContent: 'flex-end'
+                            justifyContent: 'flex-end',
+                            gap: '12px'
                         }}>
+                            <button
+                                onClick={handleEdit}
+                                className={`comentarii-modal-edit ${darkTheme ? 'dark-theme' : ''}`}
+                                style={{
+                                    padding: '10px 20px',
+                                    borderRadius: '8px',
+                                    border: 'none',
+                                    background: darkTheme ? '#4e2e1e' : '#e3f2fd',
+                                    color: darkTheme ? '#64b5f6' : '#1976d2',
+                                    cursor: 'pointer',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '8px',
+                                    fontSize: '0.9rem',
+                                    fontWeight: 500,
+                                    transition: 'all 0.2s',
+                                    outline: 'none',
+                                }}
+                                title="Editează comentariul"
+                            >
+                                <Edit size={16} />
+                                Editează comentariul
+                            </button>
                             <button
                                 onClick={handleDelete}
                                 disabled={isDeleting}
@@ -247,7 +298,8 @@ export default function ComentariiModal({ isOpen, comentariu, darkTheme, onClose
                                     fontSize: '0.9rem',
                                     fontWeight: 500,
                                     opacity: isDeleting ? 0.6 : 1,
-                                    transition: 'all 0.2s'
+                                    transition: 'all 0.2s',
+                                    outline: 'none',
                                 }}
                                 title="Șterge comentariul"
                             >

@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
-import { addComentariu } from '../firebase/comentariiService';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { addComentariu, updateComentariu } from '../firebase/comentariiService';
 import { addSubiect } from '../firebase/subiecteService';
 import RichTextEditor from './RichTextEditor';
 import '../styles/admin.scss';
 
-const AdminDashboard = ({ darkTheme, onLogout }) => {
+const AdminDashboard = ({ darkTheme, onLogout, initialCommentData }) => {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('comentarii');
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState({ type: '', text: '' });
+  const [isEditing, setIsEditing] = useState(false);
 
   // Comentariu form state
   const [comentariuForm, setComentariuForm] = useState({
@@ -19,6 +22,23 @@ const AdminDashboard = ({ darkTheme, onLogout }) => {
     descriere: '',
     content: [], // Changed from text to content (array of blocks)
   });
+
+  // Populate form when initialCommentData is provided
+  useEffect(() => {
+    if (initialCommentData) {
+      setIsEditing(true);
+      setComentariuForm({
+        id: initialCommentData.id || '',
+        titlu: initialCommentData.titlu || '',
+        autor: initialCommentData.autor || '',
+        categorie: initialCommentData.categorie || '',
+        plan: initialCommentData.plan || 'free',
+        descriere: initialCommentData.descriere || '',
+        content: initialCommentData.content || (initialCommentData.text ? [{ type: 'paragraph', text: initialCommentData.text }] : []),
+      });
+      setActiveTab('comentarii');
+    }
+  }, [initialCommentData]);
 
   // Subiect form state
   const [subiectForm, setSubiectForm] = useState({
@@ -60,28 +80,52 @@ const AdminDashboard = ({ darkTheme, onLogout }) => {
         throw new Error('Trebuie să adaugi text în cel puțin un paragraf');
       }
 
-      // Generate ID if not provided
-      const id = comentariuForm.id || 
-        `${comentariuForm.autor.toLowerCase().replace(/\s+/g, '-')}-${comentariuForm.titlu.toLowerCase().replace(/\s+/g, '-')}`;
+      if (isEditing) {
+        // Update existing comentariu
+        if (!comentariuForm.id) {
+          throw new Error('ID-ul comentariului este obligatoriu pentru editare');
+        }
 
-      await addComentariu({
-        ...comentariuForm,
-        id,
-      });
+        await updateComentariu({
+          ...comentariuForm,
+        });
 
-      setMessage({ type: 'success', text: 'Comentariul a fost adăugat cu succes!' });
-      setComentariuForm({
-        id: '',
-        titlu: '',
-        autor: '',
-        categorie: '',
-        plan: 'free',
-        descriere: '',
-        content: [],
-      });
+        setMessage({ type: 'success', text: 'Comentariul a fost actualizat cu succes!' });
+        
+        // Navigate to comentarii page after successful update
+        setTimeout(() => {
+          navigate('/comentarii');
+        }, 500);
+      } else {
+        // Add new comentariu
+        // Generate ID if not provided
+        const id = comentariuForm.id || 
+          `${comentariuForm.autor.toLowerCase().replace(/\s+/g, '-')}-${comentariuForm.titlu.toLowerCase().replace(/\s+/g, '-')}`;
+
+        await addComentariu({
+          ...comentariuForm,
+          id,
+        });
+
+        setMessage({ type: 'success', text: 'Comentariul a fost adăugat cu succes!' });
+      }
+
+      // Reset form after successful submit (only if not editing, as we navigate away)
+      if (!isEditing) {
+        setComentariuForm({
+          id: '',
+          titlu: '',
+          autor: '',
+          categorie: '',
+          plan: 'free',
+          descriere: '',
+          content: [],
+        });
+        setIsEditing(false);
+      }
     } catch (error) {
-      console.error('Error adding comentariu:', error);
-      setMessage({ type: 'error', text: `Eroare: ${error.message || 'Nu s-a putut adăuga comentariul'}` });
+      console.error(`Error ${isEditing ? 'updating' : 'adding'} comentariu:`, error);
+      setMessage({ type: 'error', text: `Eroare: ${error.message || `Nu s-a putut ${isEditing ? 'actualiza' : 'adăuga'} comentariul`}` });
     } finally {
       setLoading(false);
     }
@@ -167,11 +211,11 @@ const AdminDashboard = ({ darkTheme, onLogout }) => {
 
       {activeTab === 'comentarii' && (
         <form onSubmit={handleComentariuSubmit} className="admin-form">
-          <h2>Adaugă Comentariu</h2>
+          <h2>{isEditing ? 'Editează Comentariu' : 'Adaugă Comentariu'}</h2>
           
           <div className="admin-form-row">
             <div className="admin-form-group">
-              <label htmlFor="comentariu-id">ID (opțional, se generează automat)</label>
+              <label htmlFor="comentariu-id">ID {isEditing ? '(nu poate fi modificat)' : '(opțional, se generează automat)'}</label>
               <input
                 type="text"
                 id="comentariu-id"
@@ -179,6 +223,8 @@ const AdminDashboard = ({ darkTheme, onLogout }) => {
                 onChange={(e) => setComentariuForm({ ...comentariuForm, id: e.target.value })}
                 placeholder="eminescu-luceafarul"
                 className="admin-input"
+                disabled={isEditing}
+                style={isEditing ? { opacity: 0.6, cursor: 'not-allowed' } : {}}
               />
             </div>
 
@@ -261,7 +307,7 @@ const AdminDashboard = ({ darkTheme, onLogout }) => {
           </div>
 
           <button type="submit" disabled={loading} className="admin-submit-button">
-            {loading ? 'Se adaugă...' : 'Adaugă Comentariu'}
+            {loading ? (isEditing ? 'Se actualizează...' : 'Se adaugă...') : (isEditing ? 'Actualizează Comentariu' : 'Adaugă Comentariu')}
           </button>
         </form>
       )}
