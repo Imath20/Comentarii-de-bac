@@ -133,7 +133,7 @@
 .comentarii-modal-text {
   margin-top: 1rem;
   color: #2a170a;
-  font-size: 1.15rem;
+  font-size: 1.2rem;
   line-height: 1.75;
   text-align: justify;
   text-justify: inter-word;
@@ -238,11 +238,12 @@
 }
 
 .comentarii-content-title {
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   font-weight: bold;
   color: #4e2e1e;
   margin-bottom: 0.5rem;
   line-height: 1.4;
+  text-indent: 2.2rem;
 
   .dark-theme & {
     color: #ffd591;
