@@ -120,7 +120,7 @@ export default function Footer({ darkTheme: darkThemeProp }) {
         <div className="footer-section footer-contact">
           <h3 className="footer-title">Contact</h3>
           <div className="footer-contact-info">
-            <a href="mailto:romanacoment@gmail.com" className="footer-email">
+            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=romanacoment@gmail.com" className="footer-email">
               <Mail size={18} />
               <span>romanacoment@gmail.com</span>
             </a>
