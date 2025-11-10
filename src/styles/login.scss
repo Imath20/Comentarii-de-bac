@@ -162,6 +162,10 @@ body.dark-theme .login-subtitle {
   color: #ffffff;
   transition: all 0.3s ease;
   margin-bottom: 1rem;
+  outline: none;
+  &:focus{
+    outline: none;
+  }
 
   &:disabled {
     cursor: not-allowed;
@@ -272,6 +276,10 @@ body.dark-theme .login-subtitle {
   color: #7a3a00;
   border: 1px solid rgba(122, 58, 0, 0.2);
   transition: all 0.3s ease;
+  outline: none;
+  &:focus{
+    outline: none;
+  }
 
   &:disabled {
     cursor: not-allowed;

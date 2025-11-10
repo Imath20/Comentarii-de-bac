@@ -415,7 +415,7 @@ const EditProfile = () => {
 
   return (
     <div className="page-wrapper">
-      <Layout darkTheme={darkTheme} setDarkTheme={() => {}}>
+      <Layout darkTheme={darkTheme} setDarkTheme={setDarkTheme}>
         <div className={`edit-profile-container ${darkTheme ? 'dark-theme' : ''}`}>
           {/* Header */}
           <div className="edit-profile-header">
