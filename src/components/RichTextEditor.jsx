@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { uploadImageToCloudinary } from '../utils/cloudinary';
 import '../styles/richTextEditor.scss';
 
@@ -49,9 +49,22 @@ const RichTextEditor = ({ value, onChange, darkTheme }) => {
   const [showColorPicker, setShowColorPicker] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
   const [uploadingImage, setUploadingImage] = useState(false);
+  const [cropShape, setCropShape] = useState('rectangle'); // 'rectangle', 'circle', 'oval', 'freehand'
+  const [isDrawing, setIsDrawing] = useState(false);
+  const [isMoving, setIsMoving] = useState(false);
+  const [isResizing, setIsResizing] = useState(false);
+  const [resizeHandle, setResizeHandle] = useState(null); // 'nw', 'ne', 'sw', 'se', 'n', 's', 'e', 'w'
+  const [moveOffset, setMoveOffset] = useState(null);
+  const [resizeStart, setResizeStart] = useState(null);
+  const [resizeStartCrop, setResizeStartCrop] = useState(null); // Original cropStart and cropEnd when resize starts
+  const [cropPath, setCropPath] = useState([]);
+  const [cropStart, setCropStart] = useState(null);
+  const [cropEnd, setCropEnd] = useState(null);
   const fileInputRef = useRef(null);
   const textareaRefs = useRef({});
   const imageRefs = useRef({});
+  const cropCanvasRef = useRef(null);
+  const previewImageRef = useRef(null);
 
   // Initialize with one empty paragraph if content is empty
   React.useEffect(() => {
@@ -390,6 +403,16 @@ const RichTextEditor = ({ value, onChange, darkTheme }) => {
         preview: event.target.result,
         alignment: 'left', // default
       });
+      // Reset crop state when new image is selected
+      setCropShape('rectangle');
+      setCropPath([]);
+      setCropStart(null);
+      setCropEnd(null);
+      setIsResizing(false);
+      setResizeHandle(null);
+      setResizeStart(null);
+      setResizeStartCrop(null);
+      previewImageRef.current = null; // Reset cached image
     };
     reader.readAsDataURL(file);
     e.target.value = ''; // Reset input
@@ -398,6 +421,544 @@ const RichTextEditor = ({ value, onChange, darkTheme }) => {
   const handleImageAlignmentChange = (alignment) => {
     setImagePreview({ ...imagePreview, alignment });
   };
+
+  // Get coordinates relative to canvas (accounting for CSS scaling)
+  const getCanvasCoordinates = (e, canvas) => {
+    const rect = canvas.getBoundingClientRect();
+    if (rect.width === 0 || rect.height === 0 || canvas.width === 0 || canvas.height === 0) {
+      return { x: 0, y: 0 };
+    }
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
+    return {
+      x: (e.clientX - rect.left) * scaleX,
+      y: (e.clientY - rect.top) * scaleY
+    };
+  };
+
+  // Draw crop overlay on canvas
+  const drawCropOverlay = () => {
+    if (!cropCanvasRef.current || !imagePreview?.preview) return;
+    
+    const canvas = cropCanvasRef.current;
+    const ctx = canvas.getContext('2d');
+    
+    // Use cached image if available, otherwise load it
+    const draw = (img) => {
+      // Calculate canvas size
+      const maxWidth = 600;
+      const maxHeight = 400;
+      let width = img.width;
+      let height = img.height;
+      
+      if (width > maxWidth) {
+        height = (height * maxWidth) / width;
+        width = maxWidth;
+      }
+      if (height > maxHeight) {
+        width = (width * maxHeight) / height;
+        height = maxHeight;
+      }
+      
+      // Set canvas size only if it changed
+      if (canvas.width !== width || canvas.height !== height) {
+        canvas.width = width;
+        canvas.height = height;
+      }
+      
+      // Clear and draw image
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(img, 0, 0, width, height);
+      
+      // Draw dark overlay
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      
+      if (cropShape === 'freehand' && cropPath.length > 2) {
+        // Draw freehand path
+        ctx.save();
+        ctx.globalCompositeOperation = 'destination-out';
+        ctx.beginPath();
+        ctx.moveTo(cropPath[0].x, cropPath[0].y);
+        for (let i = 1; i < cropPath.length; i++) {
+          ctx.lineTo(cropPath[i].x, cropPath[i].y);
+        }
+        ctx.closePath();
+        ctx.fill();
+        ctx.restore();
+        
+        // Draw outline
+        ctx.strokeStyle = '#00ff00';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(cropPath[0].x, cropPath[0].y);
+        for (let i = 1; i < cropPath.length; i++) {
+          ctx.lineTo(cropPath[i].x, cropPath[i].y);
+        }
+        ctx.closePath();
+        ctx.stroke();
+      } else if (cropStart && cropEnd) {
+        const startX = Math.min(cropStart.x, cropEnd.x);
+        const startY = Math.min(cropStart.y, cropEnd.y);
+        const width = Math.abs(cropEnd.x - cropStart.x);
+        const height = Math.abs(cropEnd.y - cropStart.y);
+        
+        if (width > 5 && height > 5) {
+          ctx.save();
+          ctx.globalCompositeOperation = 'destination-out';
+          
+          if (cropShape === 'circle') {
+            const radius = Math.min(width, height) / 2;
+            const centerX = startX + width / 2;
+            const centerY = startY + height / 2;
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
+            ctx.fill();
+          } else if (cropShape === 'oval') {
+            ctx.beginPath();
+            ctx.ellipse(startX + width / 2, startY + height / 2, width / 2, height / 2, 0, 0, Math.PI * 2);
+            ctx.fill();
+          } else {
+            // Rectangle
+            ctx.fillRect(startX, startY, width, height);
+          }
+          ctx.restore();
+          
+          // Draw outline
+          ctx.strokeStyle = '#00ff00';
+          ctx.lineWidth = 2;
+          if (cropShape === 'circle') {
+            const radius = Math.min(width, height) / 2;
+            const centerX = startX + width / 2;
+            const centerY = startY + height / 2;
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
+            ctx.stroke();
+          } else if (cropShape === 'oval') {
+            ctx.beginPath();
+            ctx.ellipse(startX + width / 2, startY + height / 2, width / 2, height / 2, 0, 0, Math.PI * 2);
+            ctx.stroke();
+          } else {
+            ctx.strokeRect(startX, startY, width, height);
+          }
+          
+          // Draw resize handles for rectangle shapes
+          if (cropShape === 'rectangle' || cropShape === 'circle' || cropShape === 'oval') {
+            const handleSize = 8;
+            const handles = [
+              { x: startX, y: startY }, // nw
+              { x: startX + width / 2, y: startY }, // n
+              { x: startX + width, y: startY }, // ne
+              { x: startX + width, y: startY + height / 2 }, // e
+              { x: startX + width, y: startY + height }, // se
+              { x: startX + width / 2, y: startY + height }, // s
+              { x: startX, y: startY + height }, // sw
+              { x: startX, y: startY + height / 2 }, // w
+            ];
+            
+            ctx.fillStyle = '#00ff00';
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 2;
+            
+            handles.forEach(handle => {
+              ctx.beginPath();
+              ctx.arc(handle.x, handle.y, handleSize, 0, Math.PI * 2);
+              ctx.fill();
+              ctx.stroke();
+            });
+          }
+        }
+      }
+    };
+    
+    if (previewImageRef.current && previewImageRef.current.complete) {
+      draw(previewImageRef.current);
+    } else {
+      const img = new Image();
+      img.onload = () => {
+        previewImageRef.current = img;
+        draw(img);
+      };
+      img.src = imagePreview.preview;
+    }
+  };
+
+  // Check if point is inside the crop shape
+  const isPointInShape = (point, shape, start, end, path) => {
+    if (shape === 'freehand' && path.length > 2) {
+      // Use ray casting algorithm for freehand polygon
+      let inside = false;
+      for (let i = 0, j = path.length - 1; i < path.length; j = i++) {
+        const xi = path[i].x;
+        const yi = path[i].y;
+        const xj = path[j].x;
+        const yj = path[j].y;
+        const intersect = ((yi > point.y) !== (yj > point.y)) &&
+          (point.x < (xj - xi) * (point.y - yi) / (yj - yi) + xi);
+        if (intersect) inside = !inside;
+      }
+      return inside;
+    } else if (start && end) {
+      const startX = Math.min(start.x, end.x);
+      const startY = Math.min(start.y, end.y);
+      const endX = Math.max(start.x, end.x);
+      const endY = Math.max(start.y, end.y);
+      
+      if (shape === 'circle') {
+        const centerX = (startX + endX) / 2;
+        const centerY = (startY + endY) / 2;
+        const radius = Math.min(endX - startX, endY - startY) / 2;
+        const dist = Math.sqrt(
+          Math.pow(point.x - centerX, 2) + Math.pow(point.y - centerY, 2)
+        );
+        return dist <= radius;
+      } else if (shape === 'oval') {
+        const centerX = (startX + endX) / 2;
+        const centerY = (startY + endY) / 2;
+        const radiusX = (endX - startX) / 2;
+        const radiusY = (endY - startY) / 2;
+        const dx = point.x - centerX;
+        const dy = point.y - centerY;
+        return (dx * dx) / (radiusX * radiusX) + (dy * dy) / (radiusY * radiusY) <= 1;
+      } else {
+        // Rectangle
+        return point.x >= startX && point.x <= endX && 
+               point.y >= startY && point.y <= endY;
+      }
+    }
+    return false;
+  };
+
+  // Get resize handle at point (for rectangle shapes only)
+  const getResizeHandle = (point, start, end, handleSize = 8) => {
+    if (!start || !end) return null;
+    
+    const startX = Math.min(start.x, end.x);
+    const startY = Math.min(start.y, end.y);
+    const endX = Math.max(start.x, end.x);
+    const endY = Math.max(start.y, end.y);
+    
+    // Check corners first
+    const corners = [
+      { handle: 'nw', x: startX, y: startY },
+      { handle: 'ne', x: endX, y: startY },
+      { handle: 'sw', x: startX, y: endY },
+      { handle: 'se', x: endX, y: endY },
+    ];
+    
+    for (const corner of corners) {
+      const dist = Math.sqrt(
+        Math.pow(point.x - corner.x, 2) + Math.pow(point.y - corner.y, 2)
+      );
+      if (dist <= handleSize) {
+        return corner.handle;
+      }
+    }
+    
+    // Check edges
+    if (Math.abs(point.x - startX) <= handleSize && point.y >= startY && point.y <= endY) {
+      return 'w';
+    }
+    if (Math.abs(point.x - endX) <= handleSize && point.y >= startY && point.y <= endY) {
+      return 'e';
+    }
+    if (Math.abs(point.y - startY) <= handleSize && point.x >= startX && point.x <= endX) {
+      return 'n';
+    }
+    if (Math.abs(point.y - endY) <= handleSize && point.x >= startX && point.x <= endX) {
+      return 's';
+    }
+    
+    return null;
+  };
+
+  // Get cursor style for resize handle
+  const getResizeCursor = (handle) => {
+    if (!handle) return 'default';
+    const cursors = {
+      'nw': 'nw-resize',
+      'ne': 'ne-resize',
+      'sw': 'sw-resize',
+      'se': 'se-resize',
+      'n': 'n-resize',
+      's': 's-resize',
+      'e': 'e-resize',
+      'w': 'w-resize',
+    };
+    return cursors[handle] || 'default';
+  };
+
+  // Handle mouse down on crop canvas
+  const handleCropMouseDown = (e) => {
+    if (!cropCanvasRef.current) return;
+    const coords = getCanvasCoordinates(e, cropCanvasRef.current);
+    
+    // Constrain coordinates to canvas bounds
+    coords.x = Math.max(0, Math.min(coords.x, cropCanvasRef.current.width || 0));
+    coords.y = Math.max(0, Math.min(coords.y, cropCanvasRef.current.height || 0));
+    
+    // Check for resize handle first (only for rectangle shapes)
+    if (cropStart && cropEnd && (cropShape === 'rectangle' || cropShape === 'circle' || cropShape === 'oval')) {
+      const handle = getResizeHandle(coords, cropStart, cropEnd, 10);
+      if (handle) {
+        setIsResizing(true);
+        setResizeHandle(handle);
+        setResizeStart({ ...coords });
+        setResizeStartCrop({ start: { ...cropStart }, end: { ...cropEnd } });
+        return;
+      }
+    }
+    
+    // Check if clicking on existing shape - if so, start moving
+    const hasExistingShape = (cropShape === 'freehand' && cropPath.length > 2) || 
+                            (cropStart && cropEnd);
+    
+    if (hasExistingShape && isPointInShape(coords, cropShape, cropStart, cropEnd, cropPath)) {
+      // Start moving the shape
+      setIsMoving(true);
+      if (cropShape === 'freehand' && cropPath.length > 2) {
+        // Calculate center of freehand path
+        const centerX = cropPath.reduce((sum, p) => sum + p.x, 0) / cropPath.length;
+        const centerY = cropPath.reduce((sum, p) => sum + p.y, 0) / cropPath.length;
+        setMoveOffset({
+          x: coords.x - centerX,
+          y: coords.y - centerY
+        });
+      } else if (cropStart && cropEnd) {
+        // Calculate center of rectangle/circle/oval
+        const centerX = (cropStart.x + cropEnd.x) / 2;
+        const centerY = (cropStart.y + cropEnd.y) / 2;
+        setMoveOffset({
+          x: coords.x - centerX,
+          y: coords.y - centerY
+        });
+      }
+      return;
+    }
+    
+    // Otherwise, start drawing a new shape
+    setIsDrawing(true);
+    setIsMoving(false);
+    setIsResizing(false);
+    setResizeHandle(null);
+    setMoveOffset(null);
+    
+    if (cropShape === 'freehand') {
+      setCropPath([coords]);
+    } else {
+      setCropStart(coords);
+      setCropEnd(coords);
+    }
+  };
+
+  // Handle mouse move on crop canvas
+  const handleCropMouseMove = (e) => {
+    if (!cropCanvasRef.current) return;
+    const coords = getCanvasCoordinates(e, cropCanvasRef.current);
+    
+    // Constrain coordinates to canvas bounds
+    coords.x = Math.max(0, Math.min(coords.x, cropCanvasRef.current.width || 0));
+    coords.y = Math.max(0, Math.min(coords.y, cropCanvasRef.current.height || 0));
+    
+    // Handle resizing
+    if (isResizing && resizeHandle && resizeStart && resizeStartCrop) {
+      const deltaX = coords.x - resizeStart.x;
+      const deltaY = coords.y - resizeStart.y;
+      
+      const origStart = resizeStartCrop.start;
+      const origEnd = resizeStartCrop.end;
+      
+      let newStartX = origStart.x;
+      let newStartY = origStart.y;
+      let newEndX = origEnd.x;
+      let newEndY = origEnd.y;
+      
+      const canvasWidth = cropCanvasRef.current.width || 0;
+      const canvasHeight = cropCanvasRef.current.height || 0;
+      const minSize = 20; // Minimum size for crop area
+      
+      // Apply resize based on handle
+      switch (resizeHandle) {
+        case 'nw':
+          newStartX = Math.max(0, Math.min(origStart.x + deltaX, origEnd.x - minSize));
+          newStartY = Math.max(0, Math.min(origStart.y + deltaY, origEnd.y - minSize));
+          break;
+        case 'ne':
+          newEndX = Math.min(canvasWidth, Math.max(origEnd.x + deltaX, origStart.x + minSize));
+          newStartY = Math.max(0, Math.min(origStart.y + deltaY, origEnd.y - minSize));
+          break;
+        case 'sw':
+          newStartX = Math.max(0, Math.min(origStart.x + deltaX, origEnd.x - minSize));
+          newEndY = Math.min(canvasHeight, Math.max(origEnd.y + deltaY, origStart.y + minSize));
+          break;
+        case 'se':
+          newEndX = Math.min(canvasWidth, Math.max(origEnd.x + deltaX, origStart.x + minSize));
+          newEndY = Math.min(canvasHeight, Math.max(origEnd.y + deltaY, origStart.y + minSize));
+          break;
+        case 'n':
+          newStartY = Math.max(0, Math.min(origStart.y + deltaY, origEnd.y - minSize));
+          break;
+        case 's':
+          newEndY = Math.min(canvasHeight, Math.max(origEnd.y + deltaY, origStart.y + minSize));
+          break;
+        case 'e':
+          newEndX = Math.min(canvasWidth, Math.max(origEnd.x + deltaX, origStart.x + minSize));
+          break;
+        case 'w':
+          newStartX = Math.max(0, Math.min(origStart.x + deltaX, origEnd.x - minSize));
+          break;
+      }
+      
+      setCropStart({ x: newStartX, y: newStartY });
+      setCropEnd({ x: newEndX, y: newEndY });
+      return;
+    }
+    
+    // Update cursor based on hover over resize handle (only when not actively resizing)
+    if (!isDrawing && !isMoving && !isResizing && cropCanvasRef.current) {
+      if (cropStart && cropEnd && (cropShape === 'rectangle' || cropShape === 'circle' || cropShape === 'oval')) {
+        const handle = getResizeHandle(coords, cropStart, cropEnd, 10);
+        if (handle) {
+          cropCanvasRef.current.style.cursor = getResizeCursor(handle);
+        } else if (isPointInShape(coords, cropShape, cropStart, cropEnd, cropPath)) {
+          cropCanvasRef.current.style.cursor = 'move';
+        } else {
+          cropCanvasRef.current.style.cursor = 'crosshair';
+        }
+      } else if ((cropShape === 'freehand' && cropPath.length > 2) || (cropStart && cropEnd)) {
+        if (isPointInShape(coords, cropShape, cropStart, cropEnd, cropPath)) {
+          cropCanvasRef.current.style.cursor = 'move';
+        } else {
+          cropCanvasRef.current.style.cursor = 'crosshair';
+        }
+      } else {
+        cropCanvasRef.current.style.cursor = 'crosshair';
+      }
+    } else if (isResizing && resizeHandle && cropCanvasRef.current) {
+      // During resize, keep the resize cursor
+      cropCanvasRef.current.style.cursor = getResizeCursor(resizeHandle);
+    }
+    
+    if (isMoving && moveOffset) {
+      // Move the existing shape
+      if (cropShape === 'freehand' && cropPath.length > 2) {
+        // Calculate new center and move all points
+        const newCenterX = coords.x - moveOffset.x;
+        const newCenterY = coords.y - moveOffset.y;
+        const oldCenterX = cropPath.reduce((sum, p) => sum + p.x, 0) / cropPath.length;
+        const oldCenterY = cropPath.reduce((sum, p) => sum + p.y, 0) / cropPath.length;
+        const deltaX = newCenterX - oldCenterX;
+        const deltaY = newCenterY - oldCenterY;
+        
+        setCropPath(prev => {
+          return prev.map(p => {
+            let newX = p.x + deltaX;
+            let newY = p.y + deltaY;
+            // Constrain to canvas bounds
+            newX = Math.max(0, Math.min(newX, cropCanvasRef.current.width || 0));
+            newY = Math.max(0, Math.min(newY, cropCanvasRef.current.height || 0));
+            return { x: newX, y: newY };
+          });
+        });
+      } else if (cropStart && cropEnd) {
+        // Move rectangle/circle/oval
+        const oldCenterX = (cropStart.x + cropEnd.x) / 2;
+        const oldCenterY = (cropStart.y + cropEnd.y) / 2;
+        const newCenterX = coords.x - moveOffset.x;
+        const newCenterY = coords.y - moveOffset.y;
+        const deltaX = newCenterX - oldCenterX;
+        const deltaY = newCenterY - oldCenterY;
+        
+        const width = Math.abs(cropEnd.x - cropStart.x);
+        const height = Math.abs(cropEnd.y - cropStart.y);
+        
+        let newStartX = cropStart.x + deltaX;
+        let newStartY = cropStart.y + deltaY;
+        let newEndX = cropEnd.x + deltaX;
+        let newEndY = cropEnd.y + deltaY;
+        
+        // Constrain to canvas bounds
+        const canvasWidth = cropCanvasRef.current.width || 0;
+        const canvasHeight = cropCanvasRef.current.height || 0;
+        
+        if (newStartX < 0) {
+          newEndX -= newStartX;
+          newStartX = 0;
+        }
+        if (newStartY < 0) {
+          newEndY -= newStartY;
+          newStartY = 0;
+        }
+        if (newEndX > canvasWidth) {
+          newStartX -= (newEndX - canvasWidth);
+          newEndX = canvasWidth;
+        }
+        if (newEndY > canvasHeight) {
+          newStartY -= (newEndY - canvasHeight);
+          newEndY = canvasHeight;
+        }
+        
+        setCropStart({ x: newStartX, y: newStartY });
+        setCropEnd({ x: newEndX, y: newEndY });
+      }
+      return;
+    }
+    
+    if (isDrawing) {
+      if (cropShape === 'freehand') {
+        setCropPath(prev => {
+          // Limit path length to prevent performance issues
+          const newPath = [...prev, coords];
+          return newPath.length > 500 ? newPath.slice(-500) : newPath;
+        });
+      } else {
+        setCropEnd(coords);
+      }
+    }
+  };
+
+  // Handle mouse up on crop canvas
+  const handleCropMouseUp = () => {
+    setIsDrawing(false);
+    setIsMoving(false);
+    setIsResizing(false);
+    setResizeHandle(null);
+    setResizeStart(null);
+    setResizeStartCrop(null);
+    setMoveOffset(null);
+  };
+
+  // Handle mouse leave to stop drawing/moving
+  const handleCropMouseLeave = () => {
+    setIsDrawing(false);
+    setIsMoving(false);
+    setIsResizing(false);
+    setResizeHandle(null);
+    setResizeStart(null);
+    setResizeStartCrop(null);
+    setMoveOffset(null);
+    if (cropCanvasRef.current) {
+      cropCanvasRef.current.style.cursor = 'crosshair';
+    }
+  };
+
+  // Clear crop selection
+  const clearCrop = () => {
+    setCropStart(null);
+    setCropEnd(null);
+    setCropPath([]);
+    setIsResizing(false);
+    setResizeHandle(null);
+    setResizeStart(null);
+    setResizeStartCrop(null);
+  };
+
+  // Update crop overlay when crop state changes
+  useEffect(() => {
+    if (imagePreview?.preview && cropCanvasRef.current) {
+      drawCropOverlay();
+    }
+  }, [imagePreview?.preview, cropStart, cropEnd, cropPath, cropShape, isDrawing, isMoving, isResizing]);
 
   const handleTextColorChange = (index, color) => {
     const newContent = [...content];
@@ -420,12 +981,152 @@ const RichTextEditor = ({ value, onChange, darkTheme }) => {
     onChange(newContent);
   };
 
+  // Crop image based on selected shape
+  const cropImage = async (imageFile, shape, start, end, path) => {
+    return new Promise((resolve) => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        
+        // Create a temporary canvas to draw the original image
+        const tempCanvas = document.createElement('canvas');
+        const tempCtx = tempCanvas.getContext('2d');
+        tempCanvas.width = img.width;
+        tempCanvas.height = img.height;
+        tempCtx.drawImage(img, 0, 0);
+        
+        let x, y, width, height;
+        
+        // Get canvas dimensions for scaling
+        const canvasWidth = cropCanvasRef.current?.width || img.width;
+        const canvasHeight = cropCanvasRef.current?.height || img.height;
+        const scaleX = img.width / canvasWidth;
+        const scaleY = img.height / canvasHeight;
+        
+        if (shape === 'freehand' && path.length > 2) {
+          // For freehand, calculate bounding box
+          const xs = path.map(p => p.x * scaleX);
+          const ys = path.map(p => p.y * scaleY);
+          x = Math.max(0, Math.min(...xs));
+          y = Math.max(0, Math.min(...ys));
+          const maxX = Math.min(img.width, Math.max(...xs));
+          const maxY = Math.min(img.height, Math.max(...ys));
+          width = maxX - x;
+          height = maxY - y;
+        } else if (start && end) {
+          // Scale coordinates from preview size to actual image size
+          const startX = Math.min(start.x, end.x) * scaleX;
+          const startY = Math.min(start.y, end.y) * scaleY;
+          const endX = Math.max(start.x, end.x) * scaleX;
+          const endY = Math.max(start.y, end.y) * scaleY;
+          
+          x = Math.max(0, startX);
+          y = Math.max(0, startY);
+          width = Math.min(endX - x, img.width - x);
+          height = Math.min(endY - y, img.height - y);
+        } else {
+          // No crop selected, return original image
+          canvas.width = img.width;
+          canvas.height = img.height;
+          ctx.drawImage(img, 0, 0);
+          canvas.toBlob((blob) => {
+            resolve(new File([blob], imageFile.name, { type: imageFile.type }));
+          }, imageFile.type);
+          return;
+        }
+        
+        // Ensure valid dimensions
+        if (width <= 0 || height <= 0) {
+          canvas.width = img.width;
+          canvas.height = img.height;
+          ctx.drawImage(img, 0, 0);
+          canvas.toBlob((blob) => {
+            resolve(new File([blob], imageFile.name, { type: imageFile.type }));
+          }, imageFile.type);
+          return;
+        }
+        
+        // Determine output format - PNG for transparent shapes, original for rectangle
+        const needsTransparency = shape === 'circle' || shape === 'oval' || shape === 'freehand';
+        const outputType = needsTransparency ? 'image/png' : imageFile.type;
+        
+        // Set canvas size based on shape
+        if (shape === 'circle') {
+          const size = Math.min(width, height);
+          canvas.width = size;
+          canvas.height = size;
+          // Clear canvas with transparent background
+          ctx.clearRect(0, 0, size, size);
+          ctx.save();
+          ctx.beginPath();
+          ctx.arc(size / 2, size / 2, size / 2, 0, Math.PI * 2);
+          ctx.clip();
+          ctx.drawImage(tempCanvas, x, y, size, size, 0, 0, size, size);
+          ctx.restore();
+        } else if (shape === 'oval') {
+          canvas.width = width;
+          canvas.height = height;
+          // Clear canvas with transparent background
+          ctx.clearRect(0, 0, width, height);
+          ctx.save();
+          ctx.beginPath();
+          ctx.ellipse(width / 2, height / 2, width / 2, height / 2, 0, 0, Math.PI * 2);
+          ctx.clip();
+          ctx.drawImage(tempCanvas, x, y, width, height, 0, 0, width, height);
+          ctx.restore();
+        } else if (shape === 'freehand' && path.length > 2) {
+          canvas.width = width;
+          canvas.height = height;
+          // Clear canvas with transparent background
+          ctx.clearRect(0, 0, width, height);
+          ctx.save();
+          ctx.beginPath();
+          const minX = Math.min(...path.map(p => p.x * scaleX));
+          const minY = Math.min(...path.map(p => p.y * scaleY));
+          ctx.moveTo((path[0].x * scaleX) - x, (path[0].y * scaleY) - y);
+          for (let i = 1; i < path.length; i++) {
+            ctx.lineTo((path[i].x * scaleX) - x, (path[i].y * scaleY) - y);
+          }
+          ctx.closePath();
+          ctx.clip();
+          ctx.drawImage(tempCanvas, x, y, width, height, 0, 0, width, height);
+          ctx.restore();
+        } else {
+          // Rectangle - can also be transparent if needed
+          canvas.width = width;
+          canvas.height = height;
+          ctx.clearRect(0, 0, width, height);
+          ctx.drawImage(tempCanvas, x, y, width, height, 0, 0, width, height);
+        }
+        
+        // Convert canvas to blob and then to File
+        // Use PNG for transparent images to preserve alpha channel
+        const fileName = needsTransparency 
+          ? imageFile.name.replace(/\.[^/.]+$/, '.png')
+          : imageFile.name;
+        canvas.toBlob((blob) => {
+          resolve(new File([blob], fileName, { type: outputType }));
+        }, outputType, 1.0); // Maximum quality for PNG
+      };
+      img.src = imagePreview.preview;
+    });
+  };
+
   const confirmImageUpload = async () => {
     if (!imagePreview || !imagePreview.file) return;
 
     setUploadingImage(true);
     try {
-      const uploadedUrl = await uploadImageToCloudinary(imagePreview.file, 'comentarii-images');
+      // Crop image if crop area is defined
+      let fileToUpload = imagePreview.file;
+      if (cropStart && cropEnd && cropShape !== 'freehand') {
+        fileToUpload = await cropImage(imagePreview.file, cropShape, cropStart, cropEnd, []);
+      } else if (cropShape === 'freehand' && cropPath.length > 0) {
+        fileToUpload = await cropImage(imagePreview.file, cropShape, null, null, cropPath);
+      }
+      
+      const uploadedUrl = await uploadImageToCloudinary(fileToUpload, 'comentarii-images');
       
       const newContent = [...content];
       const block = newContent[imagePreview.index];
@@ -440,6 +1141,15 @@ const RichTextEditor = ({ value, onChange, darkTheme }) => {
       setContent(newContent);
       onChange(newContent);
       setImagePreview(null);
+      // Reset crop state
+      setCropShape('rectangle');
+      setCropPath([]);
+      setCropStart(null);
+      setCropEnd(null);
+      setIsResizing(false);
+      setResizeHandle(null);
+      setResizeStart(null);
+      setResizeStartCrop(null);
     } catch (error) {
       console.error('Error uploading image:', error);
       alert('Eroare la încărcarea imaginii. Te rog încearcă din nou.');
@@ -932,8 +1642,81 @@ const RichTextEditor = ({ value, onChange, darkTheme }) => {
       {imagePreview && imagePreview.preview && (
         <div className="rich-text-image-modal">
           <div className="rich-text-image-modal-content">
-            <h3>Preview Imagine</h3>
-            <img src={imagePreview.preview} alt="Preview" />
+            <h3>Previzualizare și Decupare Imagine</h3>
+            
+            {/* Crop Shape Selector */}
+            <div className="rich-text-crop-shapes">
+              <label>Formă decupare:</label>
+              <div className="crop-shape-buttons">
+                <button
+                  type="button"
+                  className={`crop-shape-btn ${cropShape === 'rectangle' ? 'active' : ''}`}
+                  onClick={() => {
+                    setCropShape('rectangle');
+                    clearCrop();
+                  }}
+                  title="Dreptunghi"
+                >
+                  ⬜
+                </button>
+                <button
+                  type="button"
+                  className={`crop-shape-btn ${cropShape === 'circle' ? 'active' : ''}`}
+                  onClick={() => {
+                    setCropShape('circle');
+                    clearCrop();
+                  }}
+                  title="Cerc"
+                >
+                  ⭕
+                </button>
+                <button
+                  type="button"
+                  className={`crop-shape-btn ${cropShape === 'oval' ? 'active' : ''}`}
+                  onClick={() => {
+                    setCropShape('oval');
+                    clearCrop();
+                  }}
+                  title="Oval"
+                >
+                  ⚪
+                </button>
+                <button
+                  type="button"
+                  className={`crop-shape-btn ${cropShape === 'freehand' ? 'active' : ''}`}
+                  onClick={() => {
+                    setCropShape('freehand');
+                    clearCrop();
+                  }}
+                  title="Linie liberă"
+                >
+                  ✏️
+                </button>
+                {(cropStart || cropPath.length > 0) && (
+                  <button
+                    type="button"
+                    className="crop-shape-btn clear-crop"
+                    onClick={clearCrop}
+                    title="Șterge decupare"
+                  >
+                    🗑️
+                  </button>
+                )}
+              </div>
+            </div>
+
+            {/* Canvas Container for Image and Crop Overlay */}
+            <div className="rich-text-canvas-container">
+              <canvas
+                ref={cropCanvasRef}
+                className="rich-text-crop-canvas"
+                onMouseDown={handleCropMouseDown}
+                onMouseMove={handleCropMouseMove}
+                onMouseUp={handleCropMouseUp}
+                onMouseLeave={handleCropMouseLeave}
+              />
+            </div>
+
             <div className="rich-text-image-alignment">
               <label>Poziție:</label>
               <button
@@ -954,7 +1737,10 @@ const RichTextEditor = ({ value, onChange, darkTheme }) => {
             <div className="rich-text-image-modal-actions">
               <button
                 type="button"
-                onClick={() => setImagePreview(null)}
+                onClick={() => {
+                  setImagePreview(null);
+                  clearCrop();
+                }}
                 disabled={uploadingImage}
               >
                 Anulează
