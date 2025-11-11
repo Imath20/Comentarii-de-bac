@@ -1337,7 +1337,7 @@ export default function Opera() {
       </section>
 
       <section id="opera-content" className="opera-content-container">
-        {/* Dropdown-uri comentarii – custom, deasupra navbarului */}
+        {/* Dropdown-uri comentarii – custom, deasupra navbarului
         <div className="opera-comment-dropdowns">
           <CustomSelect
             placeholder="Comentarii gratis"
@@ -1383,14 +1383,29 @@ export default function Opera() {
               setActiveTab('comentariu');
             }}
           />
-        </div>
+        </div> */}
         <div className="opera-tabs">
           <div className="opera-tabs-left">
             {tabsOrder.map(key => (
               <button
                 key={key}
                 className={`opera-tab ${activeTab === key ? 'active' : ''}`}
-                onClick={() => setActiveTab(key)}
+                onClick={() => {
+                  if (key === 'comentariu') {
+                    const title =
+                      (operaDetails && operaDetails.titlu) ||
+                      (effectiveOpera && effectiveOpera.titlu) ||
+                      '';
+                    const author =
+                      (operaDetails && operaDetails.autor) ||
+                      (effectiveOpera && effectiveOpera.autor) ||
+                      '';
+                    const q = title || author || '';
+                    navigate(`/comentarii${q ? `?q=${encodeURIComponent(q)}` : ''}`);
+                    return;
+                  }
+                  setActiveTab(key);
+                }}
               >
                 {tabsLabels[key]}
               </button>

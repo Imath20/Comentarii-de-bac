@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import Layout from '../assets/Layout';
 import Select from 'react-select';
 import ComentariiModal from '../assets/ComentariiModal';
@@ -134,6 +135,7 @@ const Diamond = () => (
 );
 
 export default function Comentarii() {
+    const location = useLocation();
     const [darkTheme, setDarkTheme] = useState(() => localStorage.getItem('theme') === 'dark');
     const [scrolled, setScrolled] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
@@ -142,6 +144,18 @@ export default function Comentarii() {
     const [sortOption, setSortOption] = useState('none');
     const [selectedComentariu, setSelectedComentariu] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
+
+    // Prefill search from URL param ?q=...
+    useEffect(() => {
+        try {
+            const params = new URLSearchParams(location.search);
+            const q = params.get('q');
+            if (q && q !== searchTerm) {
+                setSearchTerm(q);
+            }
+        } catch {}
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [location.search]);
 
     useEffect(() => {
         document.body.classList.add('theme-transitioning');
