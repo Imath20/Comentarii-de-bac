@@ -254,6 +254,86 @@
   padding-top: 0.5rem; /* Add some space above button */
 }
 
+.subiecte-modal-admin-footer {
+  margin-top: 1rem;
+  padding-top: 1.25rem;
+  border-top: 2px solid rgba(169, 124, 80, 0.2);
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  flex-shrink: 0;
+
+  .dark-theme & {
+    border-top-color: rgba(255, 213, 145, 0.25);
+  }
+}
+
+.subiecte-modal-edit,
+.subiecte-modal-delete {
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.2s;
+  outline: none;
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+.subiecte-modal-edit {
+  background: #e3f2fd;
+  color: #1976d2;
+
+  &.dark-theme {
+    background: #4e2e1e;
+    color: #64b5f6;
+
+    &:hover {
+      background: #5a3828;
+    }
+  }
+
+  &:hover {
+    background: #bbdefb;
+  }
+}
+
+.subiecte-modal-delete {
+  background: #ffebee;
+  color: #c62828;
+
+  &.dark-theme {
+    background: #6a4322;
+    color: #ff6b6b;
+
+    &:hover {
+      background: #7a5232;
+    }
+  }
+
+  &:hover {
+    background: #ffcdd2;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none !important;
+  }
+}
+
 .subiecte-ai-btn {
   display: inline-flex;
   align-items: center;

@@ -14,6 +14,7 @@ const Admin = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [initialCommentData, setInitialCommentData] = useState(null);
+  const [initialSubjectData, setInitialSubjectData] = useState(null);
 
   // Force reload profile when accessing admin page to ensure isAdmin is up to date
   useEffect(() => {
@@ -38,6 +39,23 @@ const Admin = () => {
       }
     } else {
       setInitialCommentData(null);
+    }
+  }, [searchParams]);
+
+  // Parse subject data from URL params
+  useEffect(() => {
+    const editSubiectParam = searchParams.get('editSubiect');
+    if (editSubiectParam) {
+      try {
+        const decoded = decodeURIComponent(editSubiectParam);
+        const subjectData = JSON.parse(decoded);
+        setInitialSubjectData(subjectData);
+      } catch (error) {
+        console.error('Error parsing subject data from URL:', error);
+        setInitialSubjectData(null);
+      }
+    } else {
+      setInitialSubjectData(null);
     }
   }, [searchParams]);
 
@@ -88,6 +106,7 @@ const Admin = () => {
           darkTheme={darkTheme} 
           onLogout={handleLogout} 
           initialCommentData={initialCommentData}
+          initialSubjectData={initialSubjectData}
         />
       </Layout>
     );

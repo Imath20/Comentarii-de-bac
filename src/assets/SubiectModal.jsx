@@ -1,9 +1,54 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../firebase/AuthContext';
+import { deleteSubiect } from '../firebase/subiecteService';
+import { Trash2, Edit } from 'lucide-react';
 import '../styles/subiectModal.scss';
 
-export default function SubiectModal({ isOpen, subiect, darkTheme, onClose }) {
+export default function SubiectModal({ isOpen, subiect, darkTheme, onClose, onDelete }) {
     const navigate = useNavigate();
+    const { userProfile } = useAuth();
+    const [isDeleting, setIsDeleting] = useState(false);
+    // Butoanele admin sunt vizibile DOAR pentru utilizatorii cu isAdmin === true
+    const isAdmin = userProfile?.isAdmin === true;
+
+    const handleDelete = async () => {
+        if (!subiect?.id) {
+            // If subject doesn't have an ID (from static file), show error
+            alert('Acest subiect nu poate fi șters deoarece nu are un ID. Doar subiectele adăugate prin panoul de administrare pot fi șterse.');
+            return;
+        }
+        
+        const confirmed = window.confirm('Ești sigur că vrei să ștergi acest subiect? Această acțiune nu poate fi anulată.');
+        if (!confirmed) return;
+
+        setIsDeleting(true);
+        try {
+            await deleteSubiect(subiect.id);
+            if (onDelete) {
+                onDelete(subiect.id);
+            }
+            onClose();
+        } catch (error) {
+            console.error('Error deleting subiect:', error);
+            alert('Eroare la ștergerea subiectului. Te rog încearcă din nou.');
+        } finally {
+            setIsDeleting(false);
+        }
+    };
+
+    const handleEdit = () => {
+        if (!subiect?.id) {
+            // If subject doesn't have an ID, show error
+            alert('Acest subiect nu poate fi editat deoarece nu are un ID. Doar subiectele adăugate prin panoul de administrare pot fi editate.');
+            return;
+        }
+        
+        // Encode subject data as URL parameter
+        const subjectData = encodeURIComponent(JSON.stringify(subiect));
+        onClose();
+        navigate(`/admin?editSubiect=${subjectData}`);
+    };
 
     useEffect(() => {
         if (isOpen) {
@@ -135,6 +180,27 @@ export default function SubiectModal({ isOpen, subiect, darkTheme, onClose }) {
                                 Verifică cu AI
                             </button>
                         </div>
+                        {isAdmin && (
+                            <div className="subiecte-modal-admin-footer">
+                                <button
+                                    onClick={handleEdit}
+                                    className={`subiecte-modal-edit ${darkTheme ? 'dark-theme' : ''}`}
+                                    title="Editează subiectul"
+                                >
+                                    <Edit size={16} />
+                                    Editează subiectul
+                                </button>
+                                <button
+                                    onClick={handleDelete}
+                                    disabled={isDeleting}
+                                    className={`subiecte-modal-delete ${darkTheme ? 'dark-theme' : ''}`}
+                                    title="Șterge subiectul"
+                                >
+                                    <Trash2 size={16} />
+                                    {isDeleting ? 'Se șterge...' : 'Șterge subiectul'}
+                                </button>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>

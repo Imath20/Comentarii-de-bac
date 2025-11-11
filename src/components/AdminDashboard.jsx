@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { addComentariu, updateComentariu } from '../firebase/comentariiService';
-import { addSubiect } from '../firebase/subiecteService';
+import { addSubiect, updateSubiect } from '../firebase/subiecteService';
 import RichTextEditor from './RichTextEditor';
 import '../styles/admin.scss';
 
-const AdminDashboard = ({ darkTheme, onLogout, initialCommentData }) => {
+const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjectData }) => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('comentarii');
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState({ type: '', text: '' });
   const [isEditing, setIsEditing] = useState(false);
+  const [isEditingSubiect, setIsEditingSubiect] = useState(false);
 
   // Comentariu form state
   const [comentariuForm, setComentariuForm] = useState({
@@ -40,8 +41,36 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData }) => {
     }
   }, [initialCommentData]);
 
+  // Populate form when initialSubjectData is provided
+  useEffect(() => {
+    if (initialSubjectData) {
+      setIsEditingSubiect(true);
+      setSubiectForm({
+        id: initialSubjectData.id || '',
+        titlu: initialSubjectData.titlu || '',
+        descriere: initialSubjectData.descriere || '',
+        numarSubiect: initialSubjectData.numarSubiect?.toString() || '1',
+        subpunct: initialSubjectData.subpunct || '',
+        profil: initialSubjectData.profil || 'real',
+        data: initialSubjectData.data || '',
+        an: initialSubjectData.an?.toString() || new Date().getFullYear().toString(),
+        sesiune: initialSubjectData.sesiune || 'sesiune de vară',
+        tip: initialSubjectData.tip || 'analiza',
+        text: initialSubjectData.text || (typeof initialSubjectData.text === 'object' && initialSubjectData.text?.text ? initialSubjectData.text.text : ''),
+        cerinte: Array.isArray(initialSubjectData.cerinte) 
+          ? initialSubjectData.cerinte.join('\n')
+          : (initialSubjectData.cerinte || ''),
+        punctaj: Array.isArray(initialSubjectData.punctaj)
+          ? initialSubjectData.punctaj.join('\n')
+          : (initialSubjectData.punctaj || ''),
+      });
+      setActiveTab('subiecte');
+    }
+  }, [initialSubjectData]);
+
   // Subiect form state
   const [subiectForm, setSubiectForm] = useState({
+    id: '',
     titlu: '',
     descriere: '',
     numarSubiect: '1',
@@ -148,32 +177,53 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData }) => {
         .map(line => line.trim())
         .filter(line => line.length > 0);
 
-      await addSubiect({
+      const subiectData = {
         ...subiectForm,
         an: parseInt(subiectForm.an) || new Date().getFullYear(),
         numarSubiect: parseInt(subiectForm.numarSubiect) || 1,
         cerinte,
         punctaj,
-      });
+      };
 
-      setMessage({ type: 'success', text: 'Subiectul a fost adăugat cu succes!' });
-      setSubiectForm({
-        titlu: '',
-        descriere: '',
-        numarSubiect: '1',
-        subpunct: '',
-        profil: 'real',
-        data: '',
-        an: new Date().getFullYear(),
-        sesiune: 'sesiune de vară',
-        tip: 'analiza',
-        text: '',
-        cerinte: '',
-        punctaj: '',
-      });
+      if (isEditingSubiect) {
+        // Update existing subiect
+        if (!subiectForm.id) {
+          throw new Error('ID-ul subiectului este obligatoriu pentru editare');
+        }
+
+        await updateSubiect(subiectData);
+
+        setMessage({ type: 'success', text: 'Subiectul a fost actualizat cu succes!' });
+        
+        // Navigate to subiecte page after successful update
+        setTimeout(() => {
+          navigate('/subiecte');
+        }, 500);
+      } else {
+        // Add new subiect
+        await addSubiect(subiectData);
+
+        setMessage({ type: 'success', text: 'Subiectul a fost adăugat cu succes!' });
+        setSubiectForm({
+          id: '',
+          titlu: '',
+          descriere: '',
+          numarSubiect: '1',
+          subpunct: '',
+          profil: 'real',
+          data: '',
+          an: new Date().getFullYear(),
+          sesiune: 'sesiune de vară',
+          tip: 'analiza',
+          text: '',
+          cerinte: '',
+          punctaj: '',
+        });
+        setIsEditingSubiect(false);
+      }
     } catch (error) {
-      console.error('Error adding subiect:', error);
-      setMessage({ type: 'error', text: `Eroare: ${error.message || 'Nu s-a putut adăuga subiectul'}` });
+      console.error(`Error ${isEditingSubiect ? 'updating' : 'adding'} subiect:`, error);
+      setMessage({ type: 'error', text: `Eroare: ${error.message || `Nu s-a putut ${isEditingSubiect ? 'actualiza' : 'adăuga'} subiectul`}` });
     } finally {
       setLoading(false);
     }
@@ -314,7 +364,7 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData }) => {
 
       {activeTab === 'subiecte' && (
         <form onSubmit={handleSubiectSubmit} className="admin-form">
-          <h2>Adaugă Subiect</h2>
+          <h2>{isEditingSubiect ? 'Editează Subiect' : 'Adaugă Subiect'}</h2>
           
           <div className="admin-form-row">
             <div className="admin-form-group">
@@ -490,7 +540,7 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData }) => {
           </div>
 
           <button type="submit" disabled={loading} className="admin-submit-button">
-            {loading ? 'Se adaugă...' : 'Adaugă Subiect'}
+            {loading ? (isEditingSubiect ? 'Se actualizează...' : 'Se adaugă...') : (isEditingSubiect ? 'Actualizează Subiect' : 'Adaugă Subiect')}
           </button>
         </form>
       )}

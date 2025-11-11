@@ -281,6 +281,15 @@ export default function Subiecte() {
         setActiveSubiect(null);
     };
 
+    const handleSubiectDelete = (subiectId) => {
+        // If the deleted subject was the active one, close the modal
+        if (activeSubiect?.id === subiectId) {
+            closeSubiectModal();
+        }
+        // Note: Since subjects are loaded from a static file, we can't remove them from the list
+        // If subjects are loaded from Firebase in the future, we would refresh the list here
+    };
+
     return (
         <Layout darkTheme={darkTheme} setDarkTheme={setDarkTheme} scrolled={scrolled}>
             <div className="subiecte-page">
@@ -552,6 +561,7 @@ export default function Subiecte() {
                     subiect={activeSubiect}
                     darkTheme={darkTheme}
                     onClose={closeSubiectModal}
+                    onDelete={handleSubiectDelete}
                 />
             )}
 
