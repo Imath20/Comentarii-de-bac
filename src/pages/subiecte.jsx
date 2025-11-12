@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 import SubiectModal from '../assets/SubiectModal';
 import Layout from '../assets/Layout';
+import AdminAddButton from '../components/AdminAddButton';
 import '../styles/style.scss';
 import '../styles/subiecte.scss';
 import Select from 'react-select';
@@ -757,6 +758,7 @@ export default function Subiecte() {
                 />
             )}
 
+            <AdminAddButton darkTheme={darkTheme} type="subiecte" />
         </Layout>
     );
 } 

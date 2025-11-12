@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { addComentariu, updateComentariu } from '../firebase/comentariiService';
 import { addSubiect, updateSubiect } from '../firebase/subiecteService';
 import RichTextEditor from './RichTextEditor';
@@ -7,6 +7,7 @@ import '../styles/admin.scss';
 
 const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjectData }) => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const [activeTab, setActiveTab] = useState('comentarii');
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState({ type: '', text: '' });
@@ -23,6 +24,14 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
     descriere: '',
     content: [], // Changed from text to content (array of blocks)
   });
+
+  // Read tab from URL params on mount
+  useEffect(() => {
+    const tabParam = searchParams.get('tab');
+    if (tabParam === 'subiecte' || tabParam === 'comentarii') {
+      setActiveTab(tabParam);
+    }
+  }, [searchParams]);
 
   // Populate form when initialCommentData is provided
   useEffect(() => {

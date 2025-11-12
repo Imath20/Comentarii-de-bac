@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import Layout from '../assets/Layout';
 import Select from 'react-select';
 import ComentariiModal from '../assets/ComentariiModal';
+import AdminAddButton from '../components/AdminAddButton';
 import '../styles/style.scss';
 import '../styles/comentarii.scss'
 import comentariiList from '../data/comentarii';
@@ -387,6 +388,7 @@ export default function Comentarii() {
                 onClose={handleCloseModal}
                 onDelete={handleDeleteComentariu}
             />
+            <AdminAddButton darkTheme={darkTheme} type="comentarii" />
         </Layout>
     );
 }

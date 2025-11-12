@@ -2,7 +2,8 @@
 export const ADMIN_EMAILS = [
   'romanacoment@gmail.com',
   'matbajean@gmail.com',
-  'aleluianu09@gmail.com'
+  'aleluianu09@gmail.com',
+  'nicoletaconstantin8@yahoo.com'
 ];
 
 /**

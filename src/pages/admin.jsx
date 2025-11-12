@@ -86,7 +86,13 @@ const Admin = () => {
 
   const handleLogout = () => {
     setIsAuthenticated(false);
-    navigate('/');
+    // Navigate to the appropriate page based on the active tab
+    const tabParam = searchParams.get('tab');
+    if (tabParam === 'subiecte') {
+      navigate('/subiecte');
+    } else {
+      navigate('/comentarii');
+    }
   };
 
   useEffect(() => {
