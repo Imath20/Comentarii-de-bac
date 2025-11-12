@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 import SubiectModal from '../assets/SubiectModal';
 import Layout from '../assets/Layout';
@@ -6,6 +6,7 @@ import '../styles/style.scss';
 import '../styles/subiecte.scss';
 import Select from 'react-select';
 import subiecteList from '../data/subiecte';
+import { fetchSubiecteBatch } from '../firebase/subiecteService';
 const tipuriSubiecte = [
     { id: 'toate', nume: 'Toate subiectele' },
     { id: '1', nume: 'Subiect 1' },
@@ -132,6 +133,7 @@ const customSelectStyles = (darkTheme) => ({
 
 export default function Subiecte() {
     const location = useLocation();
+    const PAGE_SIZE = 12;
     const [darkTheme, setDarkTheme] = useState(() => localStorage.getItem('theme') === 'dark');
     const [scrolled, setScrolled] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
@@ -143,6 +145,14 @@ export default function Subiecte() {
     const [sortOption, setSortOption] = useState('none');
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [activeSubiect, setActiveSubiect] = useState(null);
+    const [subiecte, setSubiecte] = useState([]);
+    const [loadingSubiecte, setLoadingSubiecte] = useState(true);
+    const [fetchError, setFetchError] = useState(null);
+    const [lastFetchedDoc, setLastFetchedDoc] = useState(null);
+    const [hasMoreSubiecte, setHasMoreSubiecte] = useState(true);
+    const [isLoadingMore, setIsLoadingMore] = useState(false);
+    const [usingLocalFallback, setUsingLocalFallback] = useState(false);
+    const [localLoadedCount, setLocalLoadedCount] = useState(0);
 
     useEffect(() => {
         // Add transition class for smooth theme change
@@ -166,6 +176,56 @@ export default function Subiecte() {
         window.addEventListener('scroll', onScroll);
         return () => window.removeEventListener('scroll', onScroll);
     }, [isModalOpen]);
+
+    useEffect(() => {
+        let isMounted = true;
+
+        async function loadInitialSubiecte() {
+            setLoadingSubiecte(true);
+            setFetchError(null);
+
+            try {
+                const { items, lastDoc } = await fetchSubiecteBatch({ limit: PAGE_SIZE });
+                if (!isMounted) return;
+
+                if (Array.isArray(items) && items.length > 0) {
+                    setSubiecte(items);
+                    setLastFetchedDoc(lastDoc || null);
+                    setHasMoreSubiecte(items.length === PAGE_SIZE);
+                    setUsingLocalFallback(false);
+                    setLocalLoadedCount(items.length);
+                } else {
+                    setSubiecte([]);
+                    setLastFetchedDoc(null);
+                    setHasMoreSubiecte(false);
+                    setUsingLocalFallback(false);
+                    setLocalLoadedCount(0);
+                    setFetchError('Nu există subiecte în baza de date. Adaugă subiecte din consola de administrare.');
+                }
+            } catch (error) {
+                if (!isMounted) return;
+                console.error('❌ Eroare la încărcarea subiectelor din Firestore:', error);
+                setFetchError('Nu am reușit să preiau subiectele din baza de date. Se afișează varianta locală.');
+
+                const initialLocal = subiecteList.slice(0, PAGE_SIZE);
+                setSubiecte(initialLocal);
+                setLastFetchedDoc(null);
+                setHasMoreSubiecte(initialLocal.length < subiecteList.length);
+                setUsingLocalFallback(true);
+                setLocalLoadedCount(initialLocal.length);
+            } finally {
+                if (isMounted) {
+                    setLoadingSubiecte(false);
+                }
+            }
+        }
+
+        loadInitialSubiecte();
+
+        return () => {
+            isMounted = false;
+        };
+    }, [PAGE_SIZE]);
 
     // Preia filtrele din URL (query sau hash) și setează filtrele inițiale
     useEffect(() => {
@@ -208,45 +268,128 @@ export default function Subiecte() {
         }
     }, [selectedTip]);
 
-    // Filtrare subiecte
-    const filteredSubiecte = subiecteList.filter(subiect => {
-        // Search in title and description
-        const searchLower = searchTerm.toLowerCase();
-        const titluLower = subiect.titlu ? subiect.titlu.toLowerCase() : '';
-        const descriereLower = subiect.descriere ? subiect.descriere.toLowerCase() : '';
-
-        const matchesSearch = !searchTerm ||
-            titluLower.includes(searchLower) ||
-            descriereLower.includes(searchLower);
-
-        const matchesTip = selectedTip === 'toate' || subiect.numarSubiect.toString() === selectedTip;
-        const matchesAn = selectedAn === 'toate' || subiect.an.toString() === selectedAn;
-        const matchesSesiune = selectedSesiune === 'toate' || subiect.sesiune === selectedSesiune;
-        // dacă este Subiectul 1 și există un subpunct selectat, filtrează și după subpunct
-        const matchesSubpunct = selectedTip === '1' && selectedSubpunct
-            ? subiect.subpunct === selectedSubpunct
-            : true;
-        // filtrează după profil (Uman/Real) pentru toate subiectele care au profil definit
-        const matchesProfil = subiect.profil
-            ? subiect.profil === selectedProfil
-            : true;
-
-        // Debug logging
-        if (searchTerm) {
-            console.log('=== Debug Search ===');
-            console.log('Search term:', searchTerm);
-            console.log('Title:', subiect.titlu);
-            console.log('Description:', subiect.descriere);
-            console.log('Matches search:', matchesSearch);
-            console.log('Matches tip:', matchesTip);
-            console.log('Matches an:', matchesAn);
-            console.log('Matches sesiune:', matchesSesiune);
-            console.log('Matches profil:', matchesProfil);
-            console.log('Final result:', matchesSearch && matchesTip && matchesAn && matchesSesiune && matchesSubpunct && matchesProfil);
+    const loadMoreSubiecte = useCallback(async () => {
+        if (loadingSubiecte || isLoadingMore || !hasMoreSubiecte) {
+            return;
         }
 
-        return matchesSearch && matchesTip && matchesAn && matchesSesiune && matchesSubpunct && matchesProfil;
-    });
+        setIsLoadingMore(true);
+
+        try {
+            if (usingLocalFallback) {
+                const startIndex = localLoadedCount;
+                const nextItems = subiecteList.slice(startIndex, startIndex + PAGE_SIZE);
+
+                if (nextItems.length > 0) {
+                    setSubiecte(prev => [...prev, ...nextItems]);
+                    setLocalLoadedCount(prev => prev + nextItems.length);
+                }
+
+                if (startIndex + nextItems.length >= subiecteList.length) {
+                    setHasMoreSubiecte(false);
+                }
+            } else {
+                const { items, lastDoc } = await fetchSubiecteBatch({
+                    limit: PAGE_SIZE,
+                    cursor: lastFetchedDoc,
+                });
+
+                if (items.length > 0) {
+                    setSubiecte(prev => [...prev, ...items]);
+                }
+
+                setLastFetchedDoc(items.length > 0 ? lastDoc || null : null);
+
+                if (items.length < PAGE_SIZE) {
+                    setHasMoreSubiecte(false);
+                }
+            }
+        } catch (error) {
+            console.error('❌ Eroare la încărcarea subiectelor suplimentare:', error);
+            setHasMoreSubiecte(false);
+        } finally {
+            setIsLoadingMore(false);
+        }
+    }, [
+        loadingSubiecte,
+        isLoadingMore,
+        hasMoreSubiecte,
+        usingLocalFallback,
+        localLoadedCount,
+        PAGE_SIZE,
+        lastFetchedDoc,
+    ]);
+
+    const handleInfiniteScroll = useCallback(() => {
+        if (loadingSubiecte || isLoadingMore || !hasMoreSubiecte) {
+            return;
+        }
+
+        const scrollPosition = window.innerHeight + window.scrollY;
+        const threshold = document.documentElement.scrollHeight - 400;
+
+        if (scrollPosition >= threshold) {
+            loadMoreSubiecte();
+        }
+    }, [loadingSubiecte, isLoadingMore, hasMoreSubiecte, loadMoreSubiecte]);
+
+    useEffect(() => {
+        window.addEventListener('scroll', handleInfiniteScroll);
+        return () => {
+            window.removeEventListener('scroll', handleInfiniteScroll);
+        };
+    }, [handleInfiniteScroll]);
+
+    const filteredSubiecte = useMemo(() => {
+        const searchLower = searchTerm.trim().toLowerCase();
+
+        return subiecte.filter((subiect) => {
+            const titluLower = subiect.titlu ? subiect.titlu.toLowerCase() : '';
+            const descriereLower = subiect.descriere ? subiect.descriere.toLowerCase() : '';
+
+            const matchesSearch =
+                !searchLower ||
+                titluLower.includes(searchLower) ||
+                descriereLower.includes(searchLower);
+
+            const numar = subiect.numarSubiect ?? subiect.numar ?? null;
+            const matchesTip =
+                selectedTip === 'toate' || String(numar ?? '') === selectedTip;
+
+            const anValue = subiect.an ?? subiect.anul ?? null;
+            const matchesAn =
+                selectedAn === 'toate' ||
+                (anValue != null && String(anValue) === selectedAn);
+
+            const sesiuneValue = subiect.sesiune ?? subiect.sesiuneId ?? null;
+            const matchesSesiune =
+                selectedSesiune === 'toate' || sesiuneValue === selectedSesiune;
+
+            const subpunctValue = subiect.subpunct
+                ? String(subiect.subpunct).toUpperCase()
+                : null;
+            const matchesSubpunct =
+                selectedTip === '1' && selectedSubpunct
+                    ? subpunctValue === selectedSubpunct
+                    : true;
+
+            const profilValue = subiect.profil
+                ? String(subiect.profil).toLowerCase()
+                : null;
+            const matchesProfil = profilValue
+                ? profilValue === selectedProfil
+                : true;
+
+            return (
+                matchesSearch &&
+                matchesTip &&
+                matchesAn &&
+                matchesSesiune &&
+                matchesSubpunct &&
+                matchesProfil
+            );
+        });
+    }, [subiecte, searchTerm, selectedTip, selectedAn, selectedSesiune, selectedSubpunct, selectedProfil]);
 
     const sortOptions = [
         { value: 'none', label: 'Fără sortare' },
@@ -254,22 +397,44 @@ export default function Subiecte() {
         { value: 'cronologic-desc', label: 'Cronologic ↓' },
     ];
 
-    const getYear = (dataStr) => {
+    const extractYear = (subiect) => {
+        if (!subiect) return NaN;
+
+        if (subiect.an !== undefined && subiect.an !== null) {
+            const yearFromField = parseInt(subiect.an, 10);
+            if (!Number.isNaN(yearFromField)) {
+                return yearFromField;
+            }
+        }
+
+        const dataStr = subiect.data ?? '';
         if (!dataStr) return NaN;
         const match = String(dataStr).match(/(\d{4})/);
         return match ? parseInt(match[1], 10) : NaN;
     };
 
-    const sortedSubiecte = [...filteredSubiecte].sort((a, b) => {
-        switch (sortOption) {
-            case 'cronologic-asc':
-                return getYear(a.data) - getYear(b.data);
-            case 'cronologic-desc':
-                return getYear(b.data) - getYear(a.data);
-            default:
-                return 0;
+    const sortedSubiecte = useMemo(() => {
+        if (sortOption === 'none') {
+            return [...filteredSubiecte];
         }
-    });
+
+        return [...filteredSubiecte].sort((a, b) => {
+            const yearA = extractYear(a);
+            const yearB = extractYear(b);
+            const yearAFinite = Number.isFinite(yearA);
+            const yearBFinite = Number.isFinite(yearB);
+
+            if (!yearAFinite && !yearBFinite) return 0;
+            if (!yearAFinite) return 1;
+            if (!yearBFinite) return -1;
+
+            if (sortOption === 'cronologic-asc') {
+                return yearA - yearB;
+            }
+
+            return yearB - yearA;
+        });
+    }, [filteredSubiecte, sortOption]);
 
     const openSubiectModal = (subiect) => {
         setActiveSubiect(subiect);
@@ -286,8 +451,10 @@ export default function Subiecte() {
         if (activeSubiect?.id === subiectId) {
             closeSubiectModal();
         }
-        // Note: Since subjects are loaded from a static file, we can't remove them from the list
-        // If subjects are loaded from Firebase in the future, we would refresh the list here
+
+        setSubiecte((prevSubiecte) =>
+            prevSubiecte.filter((subiect) => subiect.id !== subiectId)
+        );
     };
 
     return (
@@ -495,59 +662,84 @@ export default function Subiecte() {
                             </div>
                         </div>
 
-                        {/* Grid Subiecte */}
-                        <div className="subiecte-grid-container">
-                            {sortedSubiecte.map((subiect, idx) => (
-                                <div
-                                    key={`subiect-${idx}-${subiect.numarSubiect}-${subiect.an}-${subiect.profil || 'P'}-${subiect.subpunct || 'N'}`}
-                                    className={`subiecte-card ${darkTheme ? 'dark-theme' : ''}`}
-                                    onClick={() => openSubiectModal(subiect)}
-                                    onMouseOver={e => {
-                                        e.currentTarget.style.transform = 'scale(1.055)';
-                                        e.currentTarget.style.boxShadow = '0 8px 32px 0 rgba(60,40,20,0.22)';
-                                        e.currentTarget.style.zIndex = 2;
-                                    }}
-                                    onMouseOut={e => {
-                                        e.currentTarget.style.transform = 'scale(1)';
-                                        e.currentTarget.style.boxShadow = '0 4px 24px 0 rgba(124,79,43,0.13)';
-                                        e.currentTarget.style.zIndex = 1;
-                                    }}
-                                >
-                                    {/* Background gradient */}
-                                    <div className={`subiecte-card-bg ${darkTheme ? 'dark-theme' : ''}`} />
-                                    {/* Content */}
-                                    <div className="subiecte-card-content">
-                                        {/* Badge profil în colțul dreapta-sus */}
-                                        <div className={`subiecte-card-profil ${darkTheme ? 'dark-theme' : ''}`}>
-                                            {subiect.profil ? subiect.profil.toUpperCase() : ''}
-                                        </div>
-                                        {/* Badge sesiune în stânga sus */}
-                                        {subiect.sesiune && (
-                                            <div className={`subiecte-card-sesiune ${darkTheme ? 'dark-theme' : ''}`}>
-                                                {subiect.sesiune}
-                                            </div>
-                                        )}
-                                        <div className="subiecte-card-title">{subiect.titlu}</div>
-                                        <div className="subiecte-card-description">{subiect.descriere}</div>
-                                        <div className="subiecte-card-footer">
-                                            <div className={`subiecte-card-date ${darkTheme ? 'dark-theme' : ''}`}>
-                                                {subiect.data}
-                                            </div>
-                                            <div className={`subiecte-card-number ${darkTheme ? 'dark-theme' : ''}`}>
-                                                {subiect.numarSubiect === 1
-                                                    ? `Subiect 1 - ${subiect.subpunct}`
-                                                    : `Subiect ${subiect.numarSubiect}`}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-
-                        {/* Mesaj când nu sunt rezultate */}
-                        {filteredSubiecte.length === 0 && (
+                        {fetchError && (
                             <div className={`subiecte-no-results ${darkTheme ? 'dark-theme' : ''}`}>
-                                Nu s-au găsit subiecte care să corespundă criteriilor de căutare.
+                                {fetchError}
+                            </div>
+                        )}
+
+                        {/* Grid Subiecte */}
+                        {loadingSubiecte ? (
+                            <div className="subiecte-loading-wrapper">
+                                <div className={`subiecte-spinner ${darkTheme ? 'dark-theme' : ''}`} aria-label="Se încarcă subiectele" />
+                            </div>
+                        ) : (
+                            <>
+                                <div className="subiecte-grid-container">
+                                    {sortedSubiecte.map((subiect, idx) => {
+                                        const numarSubiect = subiect.numarSubiect ?? subiect.numar;
+                                        const isSubiect1 = String(numarSubiect) === '1';
+
+                                        return (
+                                            <div
+                                                key={subiect.id || `subiect-${idx}-${numarSubiect ?? 'N'}-${subiect.an ?? 'NA'}-${subiect.profil || 'P'}-${subiect.subpunct || 'N'}`}
+                                                className={`subiecte-card ${darkTheme ? 'dark-theme' : ''}`}
+                                                onClick={() => openSubiectModal(subiect)}
+                                                onMouseOver={e => {
+                                                    e.currentTarget.style.transform = 'scale(1.055)';
+                                                    e.currentTarget.style.boxShadow = '0 8px 32px 0 rgba(60,40,20,0.22)';
+                                                    e.currentTarget.style.zIndex = 2;
+                                                }}
+                                                onMouseOut={e => {
+                                                    e.currentTarget.style.transform = 'scale(1)';
+                                                    e.currentTarget.style.boxShadow = '0 4px 24px 0 rgba(124,79,43,0.13)';
+                                                    e.currentTarget.style.zIndex = 1;
+                                                }}
+                                            >
+                                                {/* Background gradient */}
+                                                <div className={`subiecte-card-bg ${darkTheme ? 'dark-theme' : ''}`} />
+                                                {/* Content */}
+                                                <div className="subiecte-card-content">
+                                                    {/* Badge profil în colțul dreapta-sus */}
+                                                    <div className={`subiecte-card-profil ${darkTheme ? 'dark-theme' : ''}`}>
+                                                        {subiect.profil ? String(subiect.profil).toUpperCase() : ''}
+                                                    </div>
+                                                    {/* Badge sesiune în stânga sus */}
+                                                    {subiect.sesiune && (
+                                                        <div className={`subiecte-card-sesiune ${darkTheme ? 'dark-theme' : ''}`}>
+                                                            {subiect.sesiune}
+                                                        </div>
+                                                    )}
+                                                    <div className="subiecte-card-title">{subiect.titlu}</div>
+                                                    <div className="subiecte-card-description">{subiect.descriere}</div>
+                                                    <div className="subiecte-card-footer">
+                                                        <div className={`subiecte-card-date ${darkTheme ? 'dark-theme' : ''}`}>
+                                                            {subiect.data}
+                                                        </div>
+                                                        <div className={`subiecte-card-number ${darkTheme ? 'dark-theme' : ''}`}>
+                                                            {isSubiect1
+                                                                ? `Subiect 1 - ${subiect.subpunct}`
+                                                                : `Subiect ${numarSubiect}`}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+
+                                {/* Mesaj când nu sunt rezultate */}
+                                {sortedSubiecte.length === 0 && (
+                                    <div className={`subiecte-no-results ${darkTheme ? 'dark-theme' : ''}`}>
+                                        Nu s-au găsit subiecte care să corespundă criteriilor de căutare.
+                                    </div>
+                                )}
+                            </>
+                        )}
+
+                        {!loadingSubiecte && isLoadingMore && (
+                            <div className="subiecte-loading-wrapper">
+                                <div className={`subiecte-spinner ${darkTheme ? 'dark-theme' : ''}`} aria-label="Se încarcă mai multe subiecte" />
                             </div>
                         )}
                     </div>

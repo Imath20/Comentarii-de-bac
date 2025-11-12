@@ -622,6 +622,36 @@
   }
 }
 
+.subiecte-loading-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2.5rem 0;
+}
+
+.subiecte-spinner {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 3px solid rgba(169, 124, 80, 0.18);
+  border-top-color: #a97c50;
+  animation: subiecte-spin 0.8s linear infinite;
+
+  &.dark-theme {
+    border: 3px solid rgba(255, 213, 145, 0.16);
+    border-top-color: #ffd591;
+  }
+}
+
+@keyframes subiecte-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 // Responsive Design
 @media (max-width: 1600px) {
   .subiecte-container {

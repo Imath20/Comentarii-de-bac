@@ -1,4 +1,4 @@
-import { collection, addDoc, doc, setDoc, deleteDoc } from 'firebase/firestore';
+import { collection, addDoc, doc, setDoc, deleteDoc, getDocs, query, orderBy, limit as limitFn, startAfter } from 'firebase/firestore';
 import { db } from './firebase';
 
 /**
@@ -27,6 +27,57 @@ export async function addSubiect(subiectData) {
     }
   } catch (error) {
     console.error('❌ Eroare la adăugarea subiectului:', error);
+    throw error;
+  }
+}
+
+/**
+ * Fetch all subiecte from Firestore
+ * @returns {Promise<Array<Object>>}
+ */
+export async function getAllSubiecte() {
+  try {
+    const subiecteRef = collection(db, 'subiecte');
+    const snapshot = await getDocs(subiecteRef);
+
+    return snapshot.docs.map((docSnap) => ({
+      id: docSnap.id,
+      ...docSnap.data(),
+    }));
+  } catch (error) {
+    console.error('❌ Eroare la preluarea subiectelor:', error);
+    throw error;
+  }
+}
+
+/**
+ * Fetch subiecte in batched chunks ordered by createdAt (desc by default)
+ * @param {Object} options
+ * @param {number} [options.limit=12] - Number of documents to fetch
+ * @param {import('firebase/firestore').QueryDocumentSnapshot} [options.cursor] - Document snapshot to paginate from
+ * @returns {Promise<{ items: Array<Object>, lastDoc: import('firebase/firestore').QueryDocumentSnapshot | null }>}
+ */
+export async function fetchSubiecteBatch({ limit = 12, cursor = null } = {}) {
+  try {
+    const subiecteRef = collection(db, 'subiecte');
+    let subiecteQuery = query(subiecteRef, orderBy('createdAt', 'desc'), limitFn(limit));
+
+    if (cursor) {
+      subiecteQuery = query(subiecteRef, orderBy('createdAt', 'desc'), startAfter(cursor), limitFn(limit));
+    }
+
+    const snapshot = await getDocs(subiecteQuery);
+
+    const items = snapshot.docs.map((docSnap) => ({
+      id: docSnap.id,
+      ...docSnap.data(),
+    }));
+
+    const lastDoc = snapshot.docs.length > 0 ? snapshot.docs[snapshot.docs.length - 1] : null;
+
+    return { items, lastDoc };
+  } catch (error) {
+    console.error('❌ Eroare la încărcarea subiectelor în loturi:', error);
     throw error;
   }
 }
