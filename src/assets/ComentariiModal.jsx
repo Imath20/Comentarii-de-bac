@@ -48,8 +48,6 @@ export default function ComentariiModal({ isOpen, comentariu, darkTheme, onClose
                 if (block.type === 'paragraph') {
                     const renderTextWithFormatting = () => {
                         if (!block.text) return null;
-
-                        const textColor = block.textColor || '#000000';
                         
                         // Collect all breakpoints (start and end positions of all formats)
                         const breakpoints = new Set([0, block.text.length]);
@@ -126,9 +124,13 @@ export default function ComentariiModal({ isOpen, comentariu, darkTheme, onClose
                         }
                         
                         return segments.map((segment, i) => {
-                            const styles = {
-                                color: segment.formats.color || textColor,
-                            };
+                            const styles = {};
+                            
+                            // Only set color if explicitly specified in formats
+                            // Otherwise, let CSS handle it based on dark theme
+                            if (segment.formats.color) {
+                                styles.color = segment.formats.color;
+                            }
                             
                             if (segment.formats.highlight) {
                                 styles.backgroundColor = segment.formats.highlight;
@@ -157,7 +159,6 @@ export default function ComentariiModal({ isOpen, comentariu, darkTheme, onClose
                         });
                     };
 
-                    const textColor = block.textColor || '#000000';
                     const imageAlignment = block.image?.alignment || 'left';
                     
                     return (
@@ -182,8 +183,7 @@ export default function ComentariiModal({ isOpen, comentariu, darkTheme, onClose
                                 )}
                                 {block.text && (
                                     <p 
-                                        className={`comentarii-content-paragraph`}
-                                        style={{ color: textColor }}
+                                        className="comentarii-content-paragraph"
                                     >
                                         {renderTextWithFormatting()}
                                     </p>
