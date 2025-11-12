@@ -23,10 +23,10 @@
 
 /* Light mode: when scrolled, keep navbar text normal dark color */
 :root body:not(.dark-theme) .navbar.scrolled .navbar-menu li a {
-  color: #7c4f2b;
+  color: #522501;
 }
 :root body:not(.dark-theme) .navbar.scrolled .navbar-menu li a:hover {
-  color: #5a3a1f;
+  color: #603c1e;
 }
 
 :root body:not(.dark-theme) .navbar.scrolled .navbar-logo-text {
