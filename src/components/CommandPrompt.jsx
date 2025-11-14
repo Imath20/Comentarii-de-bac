@@ -103,7 +103,7 @@ export default function CommandPrompt() {
         }
         
         // Log element info to console
-        console.log('Inspecting element:', e.target);
+        console.log('Inspectarea elementului:', e.target);
         console.log('Element details:', {
           tag: e.target.tagName,
           id: e.target.id,
@@ -113,8 +113,8 @@ export default function CommandPrompt() {
         });
         
         const elementInfo = `${e.target.tagName.toLowerCase()}${e.target.id ? '#' + e.target.id : ''}${e.target.className ? '.' + e.target.className.split(' ').filter(c => c).join('.') : ''}`;
-        addOutput(`Inspected: ${elementInfo}`, 'success');
-        addOutput('Element details logged to console. Press F12 to view.', 'info');
+        addOutput(`Inspectat: ${elementInfo}`, 'success');
+        addOutput('Detalii elementului logate în consolă. Apasă F12 pentru a le vedea.', 'info');
         exitInspectMode();
       };
 
@@ -157,7 +157,7 @@ export default function CommandPrompt() {
     switch (command) {
       case 'goto':
         if (!args) {
-          addOutput('Usage: goto <path> (e.g., goto home, goto scriitori, goto opere)', 'error');
+          addOutput('Utilizare: goto <path> (ex: goto home, goto scriitori, goto opere)', 'error');
           break;
         }
         
@@ -189,9 +189,9 @@ export default function CommandPrompt() {
         
         try {
           navigate(route);
-          addOutput(`Navigated to: ${route}`, 'success');
+          addOutput(`Navigat la: ${route}`, 'success');
         } catch (error) {
-          addOutput(`Error navigating to: ${route}`, 'error');
+          addOutput(`Eroare la navigare la: ${route}`, 'error');
         }
         break;
 
@@ -212,13 +212,13 @@ export default function CommandPrompt() {
             // Fallback: use browser find
             if (window.find) {
               window.find(searchTerm);
-              addOutput(`Searching for: "${searchTerm}" (using browser find)`, 'success');
+              addOutput(`Caută: "${searchTerm}" (folosind funcția de căutare a browserului)`, 'success');
             } else {
-              addOutput('No search functionality found on this page', 'error');
+              addOutput('Nu s-a găsit funcționalitatea de căutare pe această pagină', 'error');
             }
           }
         } else {
-          addOutput('Usage: search "your search term"', 'error');
+          addOutput('Utilizare: search "termenul de căutare"', 'error');
         }
         break;
 
@@ -227,14 +227,14 @@ export default function CommandPrompt() {
           document.body.classList.add('dark-theme');
           localStorage.setItem('theme', 'dark');
           setDarkTheme(true);
-          addOutput('Theme changed to dark', 'success');
+          addOutput('Tema schimbată în întunecată', 'success');
         } else if (args === 'light') {
           document.body.classList.remove('dark-theme');
           localStorage.setItem('theme', 'light');
           setDarkTheme(false);
-          addOutput('Theme changed to light', 'success');
+          addOutput('Tema schimbată în luminoasă', 'success');
         } else {
-          addOutput('Usage: theme dark | theme light', 'error');
+          addOutput('Utilizare: theme dark | theme light', 'error');
         }
         break;
 
@@ -245,26 +245,26 @@ export default function CommandPrompt() {
       case 'show':
         if (args === 'logs') {
           // Open console
-          addOutput('Console logs are shown in browser DevTools. Press F12 to open.', 'info');
+          addOutput('Logurile consolei sunt afișate în DevTools-ul browserului. Apasă F12 pentru a le deschide.', 'info');
           // Try to programmatically open console (browser dependent)
           console.log('Command Prompt: Console opened');
         } else {
-          addOutput(`Unknown command: show ${args}`, 'error');
+          addOutput(`Comandă necunoscută: show ${args}`, 'error');
         }
         break;
 
       case 'inspect':
         setInspectMode(true);
-        addOutput('Inspect mode enabled. Hover over elements and click to inspect.', 'info');
-        addOutput('Press ESC or type "exit inspect" to exit inspect mode.', 'info');
+        addOutput('Modul de inspectare activat. Poți naviga peste elemente și să le examinezi.', 'info');
+        addOutput('Apasă ESC sau scrie "exit inspect" pentru a ieși din modul de inspectare.', 'info');
         break;
 
       case 'exit':
         if (args === 'inspect') {
           exitInspectMode();
-          addOutput('Inspect mode disabled', 'success');
+          addOutput('Modul de inspectare dezactivat', 'success');
         } else {
-          addOutput(`Unknown command: exit ${args}`, 'error');
+          addOutput(`Comandă necunoscută: exit ${args}`, 'error');
         }
         break;
 
@@ -272,7 +272,7 @@ export default function CommandPrompt() {
         if (!args) {
           // Clear command prompt output
           setOutput([]);
-          addOutput('Command prompt cleared', 'success');
+          addOutput('Linia de comandă ștearsă', 'success');
         } else if (args === 'cache') {
           // Clear browser cache
           if ('caches' in window) {
@@ -280,10 +280,10 @@ export default function CommandPrompt() {
               names.forEach((name) => {
                 caches.delete(name);
               });
-              addOutput('Cache cleared successfully', 'success');
+              addOutput('Cache șters cu succes', 'success');
             });
           } else {
-            addOutput('Cache API not available. Please clear cache manually from browser settings.', 'error');
+            addOutput('API-ul de cache nu este disponibil. Vă rugăm să ștergeți cache-ul manual din setările browserului.', 'error');
           }
         } else {
           addOutput(`Unknown command: clear ${args}`, 'error');
@@ -307,39 +307,39 @@ export default function CommandPrompt() {
       case 'delog':
         logout()
           .then(() => {
-            addOutput('Logged out successfully', 'success');
+            addOutput('Deconectat cu succes', 'success');
             navigate('/');
           })
           .catch((error) => {
-            addOutput(`Error logging out: ${error.message}`, 'error');
+            addOutput(`Eroare la deconectare: ${error.message}`, 'error');
           });
         break;
 
       case 'open':
         if (args === 'admin') {
           navigate('/admin');
-          addOutput('Navigated to admin panel', 'success');
+          addOutput('Navigat la panoul de administrare', 'success');
         } else {
-          addOutput(`Unknown destination: ${args}`, 'error');
+          addOutput(`Destinație necunoscută: ${args}`, 'error');
         }
         break;
 
       case 'help':
-        addOutput('Available commands:', 'info');
-        addOutput('  goto <path> - Navigate to page (e.g., goto home, goto scriitori)', 'info');
-        addOutput('  search "term" - Search for term on page', 'info');
-        addOutput('  theme dark/light - Change theme', 'info');
-        addOutput('  reload - Reload the page', 'info');
-        addOutput('  show logs - Show console logs info', 'info');
-        addOutput('  inspect - Enable inspect mode', 'info');
-        addOutput('  exit inspect - Disable inspect mode', 'info');
-        addOutput('  clear - Clear command prompt output', 'info');
-        addOutput('  clear cache - Clear browser cache', 'info');
-        addOutput('  time - Show current time and date', 'info');
-        addOutput('  delog - Logout from account', 'info');
-        addOutput('  open admin - Navigate to admin panel', 'info');
-        addOutput('  help - Show this help message', 'info');
-        addOutput('  exit/close - Close command prompt', 'info');
+        addOutput('Comenzi disponibile:', 'info');
+        addOutput('  goto <path> - Navighează la pagina (ex: goto home, goto scriitori)', 'info');
+        addOutput('  search "term" - Caută termenul pe pagina', 'info');
+        addOutput('  theme dark/light - Schimbă tema', 'info');
+        addOutput('  reload - Reîncarcă pagina', 'info');
+        addOutput('  show logs - Afișează loguri în consolă', 'info');
+        addOutput('  inspect - Activează modul de inspectare', 'info');
+        addOutput('  exit inspect - Dezactivează modul de inspectare', 'info');
+        addOutput('  clear - Șterge ieșirea din linia de comandă', 'info');
+        addOutput('  clear cache - Șterge cache-ul browserului', 'info');
+        addOutput('  time - Afișează ora și data curentă', 'info');
+        addOutput('  delog - Deconectează contul', 'info');
+        addOutput('  open admin - Navighează la panoul de administrare', 'info');
+        addOutput('  help - Afișează mesajul de ajutor', 'info');
+        addOutput('  exit/close - Închide linia de comandă', 'info');
         break;
 
       case 'close':
@@ -352,7 +352,7 @@ export default function CommandPrompt() {
         break;
 
       default:
-        addOutput(`Unknown command: ${command}. Type "help" for available commands.`, 'error');
+        addOutput(`Comandă necunoscută: ${command}. Scrie "help" pentru comenzile disponibile.`, 'error');
     }
   };
 
@@ -402,8 +402,8 @@ export default function CommandPrompt() {
       <button
         className={`command-prompt-toggle ${darkTheme ? 'dark-theme' : ''}`}
         onClick={togglePrompt}
-        title="Open Command Prompt (Shift+~)"
-        aria-label="Open Command Prompt"
+        title="Deschide linia de comandă (Shift+~)"
+        aria-label="Deschide linia de comandă"
       >
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
           <path d="M4 9V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v4M4 9h16M4 9l-2 8h20l-2-8M9 13h6" />
@@ -432,7 +432,7 @@ export default function CommandPrompt() {
         style={inspectMode ? { pointerEvents: 'auto' } : {}}
       >
         <div className="command-prompt-header">
-          <span className="command-prompt-title">Command Prompt</span>
+          <span className="command-prompt-title">Linia de comandă</span>
           <button
             className="command-prompt-close"
             onClick={() => setIsOpen(false)}
@@ -444,8 +444,8 @@ export default function CommandPrompt() {
         <div className="command-prompt-output" ref={outputRef}>
           {output.length === 0 && (
             <div className="command-prompt-welcome">
-              <div>Welcome to Command Prompt</div>
-              <div>Type "help" for available commands</div>
+              <div>Bine ai venit la linia de comandă</div>
+              <div>Scrie "help" pentru comenzile disponibile</div>
             </div>
           )}
           {output.map((item, index) => (
@@ -466,7 +466,7 @@ export default function CommandPrompt() {
             value={command}
             onChange={(e) => setCommand(e.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder="Type a command..."
+            placeholder="Scrie o comandă..."
             autoComplete="off"
           />
         </div>

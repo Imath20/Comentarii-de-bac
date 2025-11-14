@@ -111,7 +111,7 @@ const customSelectStyles = (darkTheme) => ({
 
 const planOptions = [
     { value: 'toate', label: 'Toate planurile' },
-    { value: 'free', label: 'Free' },
+    { value: 'free', label: 'Gratis' },
     { value: 'pro', label: 'Pro' },
     { value: 'premium', label: 'Premium' },
 ];
@@ -364,7 +364,7 @@ export default function Comentarii() {
                                                 {c.autor}
                                             </div>
                                             <div className={`comentarii-card-number ${darkTheme ? 'dark-theme' : ''}`}>
-                                                {c.plan === 'premium' ? 'Premium' : c.plan === 'pro' ? 'Pro' : 'Free'}
+                                                {c.plan === 'premium' ? 'Premium' : c.plan === 'pro' ? 'Pro' : 'Gratis'}
                                             </div>
                                         </div>
                                     </div>

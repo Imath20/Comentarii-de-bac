@@ -295,7 +295,7 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
                 onChange={(e) => setComentariuForm({ ...comentariuForm, plan: e.target.value })}
                 className="admin-select"
               >
-                <option value="free">Free</option>
+                <option value="free">Gratis</option>
                 <option value="pro">Pro</option>
                 <option value="premium">Premium</option>
               </select>
