@@ -16,6 +16,8 @@ const AdminAddButton = ({ darkTheme, type = 'comentarii' }) => {
     // Navigate to admin page with the appropriate tab
     if (type === 'subiecte') {
       navigate('/admin?tab=subiecte');
+    } else if (type === 'filme') {
+      navigate('/admin?tab=filme');
     } else {
       navigate('/admin?tab=comentarii');
     }
@@ -25,8 +27,8 @@ const AdminAddButton = ({ darkTheme, type = 'comentarii' }) => {
     <button
       className={`admin-add-button ${darkTheme ? 'dark-theme' : ''}`}
       onClick={handleClick}
-      aria-label={`Adaugă ${type === 'subiecte' ? 'subiect' : 'comentariu'}`}
-      title={`Adaugă ${type === 'subiecte' ? 'subiect' : 'comentariu'}`}
+      aria-label={`Adaugă ${type === 'subiecte' ? 'subiect' : type === 'filme' ? 'film' : 'comentariu'}`}
+      title={`Adaugă ${type === 'subiecte' ? 'subiect' : type === 'filme' ? 'film' : 'comentariu'}`}
     >
       <svg
         width="24"

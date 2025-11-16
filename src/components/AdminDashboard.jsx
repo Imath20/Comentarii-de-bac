@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { addComentariu, updateComentariu } from '../firebase/comentariiService';
 import { addSubiect, updateSubiect } from '../firebase/subiecteService';
+import { addFilm, updateFilm } from '../firebase/filmeService';
 import { 
   fetchScriitori, 
   addScriitor, 
@@ -45,12 +46,14 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
   const [message, setMessage] = useState({ type: '', text: '' });
   const [isEditing, setIsEditing] = useState(false);
   const [isEditingSubiect, setIsEditingSubiect] = useState(false);
+  const [isEditingFilm, setIsEditingFilm] = useState(false);
   const [isEditingScriitor, setIsEditingScriitor] = useState(false);
   const [scriitoriList, setScriitoriList] = useState([]);
   const [selectedScriitor, setSelectedScriitor] = useState(null);
   const [scriitorView, setScriitorView] = useState('list'); // 'list', 'add', 'edit', 'posts', 'post-add', 'post-edit'
   const [allScriitoriForSearch, setAllScriitoriForSearch] = useState([]);
   const editingCommentRef = useRef(null);
+  const hasInitializedTabRef = useRef(false);
 
   // Helper function to update URL params
   const updateUrlParams = useCallback((updates) => {
@@ -96,12 +99,14 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
     content: [], // Changed from text to content (array of blocks)
   });
 
-  // Read tab from URL params on mount
+  // Read tab from URL params only on initial mount
   useEffect(() => {
+    if (hasInitializedTabRef.current) return;
     const tabParam = searchParams.get('tab');
-    if (tabParam === 'subiecte' || tabParam === 'comentarii' || tabParam === 'scriitori') {
+    if (tabParam === 'subiecte' || tabParam === 'comentarii' || tabParam === 'scriitori' || tabParam === 'filme') {
       setActiveTab(tabParam);
     }
+    hasInitializedTabRef.current = true;
   }, [searchParams]);
 
   // Populate form when initialCommentData is provided
@@ -118,8 +123,9 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
         content: initialCommentData.content || (initialCommentData.text ? [{ type: 'paragraph', text: initialCommentData.text }] : []),
       });
       setActiveTab('comentarii');
+      updateUrlParams({ tab: 'comentarii' });
     }
-  }, [initialCommentData]);
+  }, [initialCommentData, updateUrlParams]);
 
   // Populate form when initialSubjectData is provided
   useEffect(() => {
@@ -145,8 +151,9 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
           : (initialSubjectData.punctaj || ''),
       });
       setActiveTab('subiecte');
+      updateUrlParams({ tab: 'subiecte' });
     }
-  }, [initialSubjectData]);
+  }, [initialSubjectData, updateUrlParams]);
 
   // Subiect form state
   const [subiectForm, setSubiectForm] = useState({
@@ -169,6 +176,21 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
     'poezie', 'roman', 'comedie', 'basm', 'nuvela', 
     'critica', 'memorii', 'poveste', 'schita'
   ];
+
+  const categoriiFilme = [
+    'poezie', 'proza', 'roman', 'comedie', 'basm', 'nuvela', 'teatru'
+  ];
+
+  // Film form state
+  const [filmForm, setFilmForm] = useState({
+    id: '',
+    titlu: '',
+    descriere: '',
+    videoId: '',
+    categorie: '',
+    durata: '',
+    autor: '',
+  });
 
   // Scriitor form state
   const [scriitorForm, setScriitorForm] = useState({
@@ -528,6 +550,72 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
     }
   };
 
+  const handleFilmSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setMessage({ type: '', text: '' });
+
+    try {
+      // Generate ID from titlu if not provided
+      let filmId = filmForm.id;
+      if (!filmId && filmForm.titlu) {
+        filmId = filmForm.titlu.toLowerCase()
+          .replace(/ă/g, 'a').replace(/â/g, 'a').replace(/î/g, 'i')
+          .replace(/ș/g, 's').replace(/ş/g, 's').replace(/ț/g, 't').replace(/ţ/g, 't')
+          .replace(/[^a-z0-9 ]/g, '')
+          .split(' ')
+          .filter(Boolean)
+          .join('-')
+          .substring(0, 50);
+      }
+
+      if (!filmId) {
+        throw new Error('ID-ul filmului este obligatoriu (se generează automat din titlu)');
+      }
+
+      const filmData = {
+        ...filmForm,
+        id: filmId,
+      };
+
+      if (isEditingFilm) {
+        // Update existing film
+        if (!filmForm.id) {
+          throw new Error('ID-ul filmului este obligatoriu pentru editare');
+        }
+
+        await updateFilm(filmData);
+
+        setMessage({ type: 'success', text: 'Filmul a fost actualizat cu succes!' });
+        
+        // Navigate to videoclipuri page after successful update
+        setTimeout(() => {
+          navigate('/videoclipuri');
+        }, 500);
+      } else {
+        // Add new film
+        await addFilm(filmData);
+
+        setMessage({ type: 'success', text: 'Filmul a fost adăugat cu succes!' });
+        setFilmForm({
+          id: '',
+          titlu: '',
+          descriere: '',
+          videoId: '',
+          categorie: '',
+          durata: '',
+          autor: '',
+        });
+        setIsEditingFilm(false);
+      }
+    } catch (error) {
+      console.error(`Error ${isEditingFilm ? 'updating' : 'adding'} film:`, error);
+      setMessage({ type: 'error', text: `Eroare: ${error.message || `Nu s-a putut ${isEditingFilm ? 'actualiza' : 'adăuga'} filmul`}` });
+    } finally {
+      setLoading(false);
+    }
+  };
+
   // Scriitor handlers
   const handleScriitorSubmit = async (e) => {
     e.preventDefault();
@@ -799,21 +887,39 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
       <div className="admin-tabs">
         <button
           className={`admin-tab ${activeTab === 'comentarii' ? 'active' : ''}`}
-          onClick={() => setActiveTab('comentarii')}
+          onClick={() => {
+            setActiveTab('comentarii');
+            updateUrlParams({ tab: 'comentarii' });
+          }}
         >
           Adaugă Comentariu
         </button>
         <button
           className={`admin-tab ${activeTab === 'subiecte' ? 'active' : ''}`}
-          onClick={() => setActiveTab('subiecte')}
+          onClick={() => {
+            setActiveTab('subiecte');
+            updateUrlParams({ tab: 'subiecte' });
+          }}
         >
           Adaugă Subiect
         </button>
         <button
           className={`admin-tab ${activeTab === 'scriitori' ? 'active' : ''}`}
-          onClick={() => setActiveTab('scriitori')}
+          onClick={() => {
+            setActiveTab('scriitori');
+            updateUrlParams({ tab: 'scriitori' });
+          }}
         >
           Gestionează Scriitori
+        </button>
+        <button
+          className={`admin-tab ${activeTab === 'filme' ? 'active' : ''}`}
+          onClick={() => {
+            setActiveTab('filme');
+            updateUrlParams({ tab: 'filme' });
+          }}
+        >
+          Adaugă Film
         </button>
       </div>
 
@@ -1107,6 +1213,121 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
             {loading ? (isEditingSubiect ? 'Se actualizează...' : 'Se adaugă...') : (isEditingSubiect ? 'Actualizează Subiect' : 'Adaugă Subiect')}
           </button>
         </form>
+      )}
+
+      {activeTab === 'filme' && (
+        <form onSubmit={handleFilmSubmit} className="admin-form">
+            <h2>{isEditingFilm ? 'Editează Film' : 'Adaugă Film'}</h2>
+          
+          <div className="admin-form-row">
+            <div className="admin-form-group">
+              <label htmlFor="film-id">ID {isEditingFilm ? '(nu poate fi modificat)' : '(opțional, se generează automat din titlu)'}</label>
+              <input
+                type="text"
+                id="film-id"
+                value={filmForm.id}
+                onChange={(e) => setFilmForm({ ...filmForm, id: e.target.value })}
+                placeholder="ion-creanga-harap-alb"
+                className="admin-input"
+                disabled={isEditingFilm}
+                style={isEditingFilm ? { opacity: 0.6, cursor: 'not-allowed' } : {}}
+              />
+            </div>
+
+            <div className="admin-form-group">
+              <label htmlFor="film-categorie">Categorie *</label>
+              <select
+                id="film-categorie"
+                value={filmForm.categorie}
+                onChange={(e) => setFilmForm({ ...filmForm, categorie: e.target.value })}
+                required
+                className="admin-select"
+              >
+                <option value="">Selectează categoria</option>
+                {categoriiFilme.map(cat => (
+                  <option key={cat} value={cat}>{cat}</option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          <div className="admin-form-group">
+            <label htmlFor="film-titlu">Titlu *</label>
+            <input
+              type="text"
+              id="film-titlu"
+              value={filmForm.titlu}
+              onChange={(e) => setFilmForm({ ...filmForm, titlu: e.target.value })}
+              placeholder="Ion Creangă - Povestea lui Harap-Alb"
+              required
+              className="admin-input"
+            />
+          </div>
+
+          <div className="admin-form-group">
+            <label htmlFor="film-descriere">Descriere *</label>
+            <input
+              type="text"
+              id="film-descriere"
+              value={filmForm.descriere}
+              onChange={(e) => setFilmForm({ ...filmForm, descriere: e.target.value })}
+              placeholder="Harap-Alb"
+              required
+              className="admin-input"
+            />
+          </div>
+
+          <div className="admin-form-row">
+            <div className="admin-form-group">
+              <label htmlFor="film-videoId">Video ID (YouTube) *</label>
+              <input
+                type="text"
+                id="film-videoId"
+                value={filmForm.videoId}
+                onChange={(e) => setFilmForm({ ...filmForm, videoId: e.target.value })}
+                placeholder="RMl6c8B0VvE"
+                required
+                className="admin-input"
+              />
+              <small style={{ color: darkTheme ? '#a97c50' : '#666', marginTop: '0.5rem', display: 'block' }}>
+                Doar ID-ul din URL-ul YouTube (ex: din https://www.youtube.com/watch?v=RMl6c8B0VvE, folosește RMl6c8B0VvE)
+              </small>
+            </div>
+
+            <div className="admin-form-group">
+              <label htmlFor="film-durata">Durată *</label>
+              <input
+                type="text"
+                id="film-durata"
+                value={filmForm.durata}
+                onChange={(e) => setFilmForm({ ...filmForm, durata: e.target.value })}
+                placeholder="37:28"
+                required
+                className="admin-input"
+              />
+              <small style={{ color: darkTheme ? '#a97c50' : '#666', marginTop: '0.5rem', display: 'block' }}>
+                Format: HH:MM:SS sau MM:SS
+              </small>
+            </div>
+          </div>
+
+          <div className="admin-form-group">
+            <label htmlFor="film-autor">Autor *</label>
+            <input
+              type="text"
+              id="film-autor"
+              value={filmForm.autor}
+              onChange={(e) => setFilmForm({ ...filmForm, autor: e.target.value })}
+              placeholder="Ion Creangă"
+              required
+              className="admin-input"
+            />
+          </div>
+
+            <button type="submit" disabled={loading} className="admin-submit-button">
+              {loading ? (isEditingFilm ? 'Se actualizează...' : 'Se adaugă...') : (isEditingFilm ? 'Actualizează Film' : 'Adaugă Film')}
+            </button>
+          </form>
       )}
 
       {activeTab === 'scriitori' && (
