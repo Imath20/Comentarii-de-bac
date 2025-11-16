@@ -143,7 +143,7 @@ export default function Subiecte() {
     const [selectedSesiune, setSelectedSesiune] = useState('toate');
     const [selectedSubpunct, setSelectedSubpunct] = useState(null);
     const [selectedProfil, setSelectedProfil] = useState('real');
-    const [sortOption, setSortOption] = useState('none');
+    const [sortOption, setSortOption] = useState('cronologic-desc');
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [activeSubiect, setActiveSubiect] = useState(null);
     const [subiecte, setSubiecte] = useState([]);

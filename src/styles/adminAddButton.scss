@@ -16,6 +16,9 @@
 
 .admin-add-button,
 .admin-manage-button {
+  position: fixed;
+  right: 2rem;
+  bottom: 2rem;
   width: 56px;
   height: 56px;
   border-radius: 50%;
@@ -30,6 +33,7 @@
   transition: all 0.3s ease;
   padding: 0;
   outline: none;
+  z-index: 1000;
   
   &:focus {
     outline: none;
@@ -64,6 +68,8 @@
 
   // Responsive adjustments
   @media (max-width: 768px) {
+    right: 1.5rem;
+    bottom: 1.5rem;
     width: 48px;
     height: 48px;
 
