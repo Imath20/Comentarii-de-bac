@@ -1,12 +1,12 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import scriitoriData from '../scriitoriData';
+import { getScriitoriData } from '../firebase/scriitoriService';
+import { fetchScriitor, deleteCommentFromPost } from '../firebase/scriitoriService';
 import ScriitorInfo from '../assets/ScriitorInfo';
 import AvatarSearchBar from '../assets/AvatarSearchBar';
 import ScriitorChat from '../assets/ScriitorChat';
-import { getScriitorOpere } from '../data/scriitoriOpere';
-import { getScriitorPrezentare } from '../data/scriitoriPrezentare';
-import { getScriitorBiografie } from '../data/biografie/index.js';
+import { useAuth } from '../firebase/AuthContext';
+import '../styles/adminAddButton.scss';
 
 // Date pentru poeziile scurte
 const shortPoems = {
@@ -283,7 +283,6 @@ function useQuery() {
 const Scriitor = () => {
   const query = useQuery();
   const name = query.get('name');
-  const data = scriitoriData[name];
   const bannerRef = useRef(null);
   const profileImgRef = useRef(null);
   const [isFullScreen, setIsFullScreen] = useState(false);
@@ -294,6 +293,61 @@ const Scriitor = () => {
   const [darkTheme, setDarkTheme] = useState(() => localStorage.getItem('theme') === 'dark');
   const navigate = useNavigate();
   const location = useLocation();
+  const { userProfile } = useAuth();
+  const isAdmin = userProfile?.isAdmin === true;
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [scriitoriData, setScriitoriData] = useState({});
+
+  // Load scriitor data from Firestore
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        setLoading(true);
+        console.log('Loading scriitor:', name);
+        
+        // Load all scriitori for friends/comments references
+        const allScriitori = await getScriitoriData();
+        console.log('Loaded all scriitori:', Object.keys(allScriitori).length);
+        setScriitoriData(allScriitori);
+        
+        // Load specific scriitor
+        const scriitor = await fetchScriitor(name);
+        console.log('Fetched scriitor:', scriitor ? scriitor.nume : 'null', scriitor);
+        
+        if (scriitor) {
+          console.log('Setting data for:', scriitor.nume, 'Posts:', scriitor.posts?.length || 0);
+          // Ensure all required fields exist
+          const cleanedScriitor = {
+            ...scriitor,
+            nume: scriitor.nume || '',
+            date: scriitor.date || '',
+            img: scriitor.img || '',
+            banner: scriitor.banner || '',
+            friends: Array.isArray(scriitor.friends) ? scriitor.friends : [],
+            gallery: Array.isArray(scriitor.gallery) ? scriitor.gallery : [],
+            posts: Array.isArray(scriitor.posts) ? scriitor.posts : [],
+          };
+          setData(cleanedScriitor);
+        } else {
+          console.warn('Scriitor not found:', name);
+          setData(null);
+        }
+      } catch (error) {
+        console.error('Error loading scriitor data:', error);
+        setData(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    if (name) {
+      loadData();
+    } else {
+      setLoading(false);
+      setData(null);
+    }
+  }, [name]);
 
   const handleFullScreen = () => {
     if (!isFullScreen) {
@@ -372,24 +426,43 @@ const Scriitor = () => {
     localStorage.setItem('theme', darkTheme ? 'dark' : 'light');
   }, [darkTheme]);
 
-  if (!data) {
-    return <div className="scriitor-not-found">Scriitorul nu a fost găsit.</div>;
-  }
-
-  // Prieteni, galerie, postări
-  const friends = data.friends || [];
-  const gallery = data.gallery || [];
-  const posts = (data.posts || []).slice().sort((a, b) => (b.pin ? 1 : 0) - (a.pin ? 1 : 0)); // Pin first
-  const friendsCount = friends.length;
-
+  // TOATE HOOKS-URILE TREBUIE SĂ FIE AICI, ÎNAINTE DE ORICE RETURN CONDITIONAL
   // Pentru comentarii expandabile
   const [expandedComments, setExpandedComments] = useState({});
+  
+  // Pentru expandarea textului poeziei
+  const [expandedPoems, setExpandedPoems] = useState({});
+  
+  // Pentru modalul cu toți prietenii
+  const [showAllFriendsModal, setShowAllFriendsModal] = useState(false);
+  
+  // Pentru modal preview poezie
+  const [poemPreviewModal, setPoemPreviewModal] = useState({ open: false, post: null });
+  
+  // Pentru modal "Citește tot"
+  const [readAllModal, setReadAllModal] = useState(false);
+  const [scrollPosition, setScrollPosition] = useState(0);
+  
+  // Pentru modal Bibliografie (Citește tot descrierea)
+  const [bioModalOpen, setBioModalOpen] = useState(false);
+  
+  // Pentru galerie poezie
+  const [poemGalleryModal, setPoemGalleryModal] = useState({ open: false, images: [], startIndex: 0 });
+  const [poemGalleryCurrentIndex, setPoemGalleryCurrentIndex] = useState(0);
+
+  // Galerie preview state
+  const [galleryPreviewIdx, setGalleryPreviewIdx] = useState(null);
+  const [galleryCurrentIndex, setGalleryCurrentIndex] = useState(0);
+  // Overview mode (show all thumbnails like a task view)
+  const [galleryOverviewOpen, setGalleryOverviewOpen] = useState(false);
+  const [overviewIndex, setOverviewIndex] = useState(0);
+  const overviewGridRef = useRef(null);
+
+  // Funcții helper (nu sunt hooks, pot fi după hooks)
   const toggleComments = (postId) => {
     setExpandedComments((prev) => ({ ...prev, [postId]: !prev[postId] }));
   };
 
-  // Pentru expandarea textului poeziei
-  const [expandedPoems, setExpandedPoems] = useState({});
   const togglePoemText = (postId) => {
     setExpandedPoems((prev) => ({ ...prev, [postId]: !prev[postId] }));
   };
@@ -399,13 +472,9 @@ const Scriitor = () => {
     return shortPoems[poemKey]?.text || 'Poezia nu este disponibilă momentan.';
   };
 
-  // Pentru modalul cu toți prietenii
-  const [showAllFriendsModal, setShowAllFriendsModal] = useState(false);
   const openAllFriendsModal = () => setShowAllFriendsModal(true);
   const closeAllFriendsModal = () => setShowAllFriendsModal(false);
 
-  // Pentru modal preview poezie
-  const [poemPreviewModal, setPoemPreviewModal] = useState({ open: false, post: null });
   const openPoemPreview = (post) => {
     // Salvează poziția de scroll curentă
     const currentScrollY = window.scrollY;
@@ -441,10 +510,6 @@ const Scriitor = () => {
     // Restaurează poziția de scroll
     window.scrollTo(0, scrollPosition);
   };
-
-  // Pentru modal "Citește tot"
-  const [readAllModal, setReadAllModal] = useState(false);
-  const [scrollPosition, setScrollPosition] = useState(0);
   
   const openReadAllModal = () => {
     // Salvează poziția de scroll curentă
@@ -470,8 +535,6 @@ const Scriitor = () => {
     window.scrollTo(0, scrollPosition);
   };
 
-  // Pentru modal Bibliografie (Citește tot descrierea)
-  const [bioModalOpen, setBioModalOpen] = useState(false);
   const openBioModal = () => {
     // Salvează poziția de scroll curentă
     const currentScrollY = window.scrollY;
@@ -495,8 +558,6 @@ const Scriitor = () => {
     window.scrollTo(0, scrollPosition);
   };
 
-  // Pentru galerie poezie
-  const [poemGalleryModal, setPoemGalleryModal] = useState({ open: false, images: [], startIndex: 0 });
   const openPoemGallery = (images, startIndex = 0) => {
     // Salvează poziția de scroll curentă
     const currentScrollY = window.scrollY;
@@ -525,15 +586,7 @@ const Scriitor = () => {
     // Restaurează poziția de scroll
     window.scrollTo(0, scrollPosition);
   };
-  const [poemGalleryCurrentIndex, setPoemGalleryCurrentIndex] = useState(0);
 
-  // Galerie preview state
-  const [galleryPreviewIdx, setGalleryPreviewIdx] = useState(null);
-  const [galleryCurrentIndex, setGalleryCurrentIndex] = useState(0);
-  // Overview mode (show all thumbnails like a task view)
-  const [galleryOverviewOpen, setGalleryOverviewOpen] = useState(false);
-  const [overviewIndex, setOverviewIndex] = useState(0);
-  const overviewGridRef = useRef(null);
   const openGalleryPreview = (idx) => {
     setGalleryOverviewOpen(false);
     setGalleryPreviewIdx(idx);
@@ -562,9 +615,12 @@ const Scriitor = () => {
 
   // Keyboard navigation for gallery modals (left/right, A/D; Space/Enter => forward)
   useEffect(() => {
+    if (!data) return; // Early return if data not loaded
+    
     const handleKeyDown = (e) => {
       const key = e.key;
-
+      const gallery = data.gallery || [];
+      
       // Determine which gallery is active
       const isImageGalleryOpen = galleryPreviewIdx !== null && Array.isArray(gallery) && gallery.length > 0;
       const isPoemGalleryOpen = poemGalleryModal.open && Array.isArray(poemGalleryModal.images) && poemGalleryModal.images.length > 0;
@@ -693,7 +749,7 @@ const Scriitor = () => {
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [galleryPreviewIdx, gallery, poemGalleryModal, setGalleryCurrentIndex, setPoemGalleryCurrentIndex, galleryOverviewOpen, overviewIndex]);
+  }, [galleryPreviewIdx, data, poemGalleryModal, galleryOverviewOpen, overviewIndex, galleryCurrentIndex, poemGalleryCurrentIndex]);
 
   // Ensure the selected overview item stays in view when navigating
   useEffect(() => {
@@ -705,10 +761,54 @@ const Scriitor = () => {
     }
   }, [galleryOverviewOpen, overviewIndex]);
 
+  // RETURN CONDITIONAL - TREBUIE SĂ FIE DUPĂ TOATE HOOKS-URILE
+  if (loading) {
+    return (
+      <div className="scriitor-not-found" style={{ padding: '40px', textAlign: 'center' }}>
+        Se încarcă...
+      </div>
+    );
+  }
+
+  if (!data) {
+    return (
+      <div className="scriitor-not-found" style={{ padding: '40px', textAlign: 'center' }}>
+        <h2>Scriitorul nu a fost găsit.</h2>
+        <p>Key: {name}</p>
+        <button 
+          onClick={() => navigate('/scriitori')}
+          style={{
+            marginTop: '20px',
+            padding: '10px 20px',
+            backgroundColor: darkTheme ? '#a97c50' : '#ffd591',
+            color: darkTheme ? '#fff' : '#4e2e1e',
+            border: 'none',
+            borderRadius: '8px',
+            cursor: 'pointer',
+          }}
+        >
+          Înapoi la Scriitori
+        </button>
+      </div>
+    );
+  }
+
+  // Acum putem folosi data în siguranță
+  // Prieteni, galerie, postări
+  const friends = data.friends || [];
+  const gallery = data.gallery || [];
+  const posts = (data.posts || []).slice().sort((a, b) => (b.pin ? 1 : 0) - (a.pin ? 1 : 0)); // Pin first
+  const friendsCount = friends.length;
+
   // Navigare către alt scriitor
   const goToScriitor = (key) => {
     const prevFrom = (location.state && location.state.from) || { pathname: '/scriitori', scrollY: 0 };
     navigate(`/scriitor?name=${key}`, { state: { from: prevFrom } });
+  };
+
+  // Helper to get scriitor data by key (for friends/comments)
+  const getScriitorByKey = (key) => {
+    return scriitoriData[key];
   };
 
   // Navigare către poezie (placeholder)
@@ -763,21 +863,24 @@ const Scriitor = () => {
 
   return (
     <div className="scriitor-page">
-      {/* Banner pe toată lățimea ferestrei */}
-             <div
-         ref={bannerRef}
-         className={`scriitor-banner ${isFullScreen ? 'fullscreen' : ''} ${name}`}
-         style={{
-           background: `url(${data.banner}) center center/cover no-repeat`,
-           backgroundPosition: name === 'eminescu' ? 'center 30%' : name === 'preda' ? 'center 50%' : name === 'sorescu' ? 'center 50%' : name === 'voiculescu' ? 'center 80%' : 'center 20%',
-         }}
+        {/* Banner pe toată lățimea ferestrei */}
+        <div
+          ref={bannerRef}
+          className={`scriitor-banner ${isFullScreen ? 'fullscreen' : ''} ${name}`}
+          style={{
+            background: data.banner ? `url(${data.banner}) center center/cover no-repeat` : 'transparent',
+            backgroundPosition: name === 'eminescu' ? 'center 30%' : name === 'preda' ? 'center 50%' : name === 'sorescu' ? 'center 50%' : name === 'voiculescu' ? 'center 80%' : 'center 20%',
+          }}
          onClick={handleFullScreen}
          title={isFullScreen ? 'Ieși din full screen' : 'Click pentru full screen'}
        >
         {/* AvatarSearchBar pe stânga sus, doar dacă nu e fullscreen */}
         {!isFullScreen && (
           <div className="avatar-searchbar-banner-wrapper" onClick={(e) => e.stopPropagation()}>
-            <AvatarSearchBar onSelect={s => goToScriitor(Object.keys(scriitoriData).find(k => scriitoriData[k].nume === s.nume))} />
+            <AvatarSearchBar onSelect={s => {
+              const key = s.key || Object.keys(scriitoriData).find(k => scriitoriData[k]?.nume === s.nume);
+              if (key) goToScriitor(key);
+            }} />
           </div>
         )}
         {/* Theme toggle button - floating in banner top-right */}
@@ -803,7 +906,7 @@ const Scriitor = () => {
               onClick={(e) => { e.stopPropagation(); handleProfileFullScreen(); }}
               title="Click pentru full screen"
             >
-              <img ref={profileImgRef} src={data.img} alt={data.nume} />
+              <img ref={profileImgRef} src={data.img || ''} alt={data.nume || 'Scriitor'} />
             </div>
           </>
         )}
@@ -846,21 +949,18 @@ const Scriitor = () => {
           </button>
                      {/* Info personală */}
            <div className="scriitor-info-card">
-             <h2>{data.nume}</h2>
-             <div className="scriitor-dates">{data.date}</div>
+             <h2>{data.nume || 'Scriitor'}</h2>
+             {data.date && <div className="scriitor-dates">{data.date}</div>}
            </div>
                        {/* Prezentare */}
             <div className="scriitor-section">
               <div className="scriitor-section-title">Prezentare</div>
               <div className="scriitor-presentation">
-                <ScriitorInfo name={name} />
+                <ScriitorInfo info={data.info} name={name} />
                 <div className="scriitor-presentation-extra">
-                  {(() => {
-                    const prezentare = getScriitorPrezentare(name);
-                    return prezentare.paragrafe.map((paragraf, index) => (
-                      <p key={index}>{paragraf}</p>
-                    ));
-                  })()}
+                  {data.prezentare?.paragrafe?.map((paragraf, index) => (
+                    <p key={index}>{paragraf}</p>
+                  ))}
                 </div>
                 {/* Buton Citește tot în același chenar */}
                 <div className="scriitor-presentation-actions">
@@ -980,7 +1080,9 @@ const Scriitor = () => {
         </div>
         {/* Dreapta: postări */}
         <div className="scriitor-right-column">
-          <div className="scriitor-posts-title">Postări</div>
+          <div style={{ marginBottom: '15px' }}>
+            <div className="scriitor-posts-title">Postări</div>
+          </div>
           <div className="scriitor-posts-container">
             {posts.map((post) => (
               <div key={post.id} className={`scriitor-post ${post.pin ? 'pinned' : ''} ${post.link ? 'clickable' : ''}`} onClick={() => post.link && !post.pinnedActions && goToPoezie(post.link)}>
@@ -1165,13 +1267,89 @@ const Scriitor = () => {
                 {expandedComments[post.id] && (
                   <div className="scriitor-comments">
                     {post.comments.length === 0 && <div className="scriitor-no-comments">Niciun comentariu încă.</div>}
-                    {post.comments.map((c, idx) => (
+                    {post.comments.map((c, idx) => {
+                      const friendData = getScriitorByKey(c.key);
+                      return (
                       <div key={idx} className="scriitor-comment">
-                        <img src={scriitoriData[c.key]?.img} alt={c.author} />
+                        <img src={friendData?.img} alt={c.author} />
                         <span className="scriitor-comment-author" onClick={() => goToScriitor(c.key)}>{c.author}</span>
                         <span className="scriitor-comment-text">{c.text}</span>
+                        {isAdmin && (
+                          <div className="scriitor-comment-actions">
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                navigate(`/admin?tab=scriitori&scriitor=${name}&action=edit-comment&postId=${post.id}&commentIndex=${idx}`);
+                              }}
+                              className="scriitor-comment-edit-button"
+                              title="Editează comentariu"
+                            >
+                              ✏️
+                            </button>
+                            <button
+                              onClick={async (e) => {
+                                e.stopPropagation();
+                                if (window.confirm('Ești sigur că vrei să ștergi acest comentariu?')) {
+                                  try {
+                                    await deleteCommentFromPost(name, post.id, idx);
+                                    // Reîncarcă datele
+                                    const updatedData = await fetchScriitor(name);
+                                    if (updatedData) {
+                                      setData(updatedData);
+                                    }
+                                  } catch (error) {
+                                    console.error('Error deleting comment:', error);
+                                    alert('Eroare la ștergerea comentariului');
+                                  }
+                                }
+                              }}
+                              className="scriitor-comment-delete-button"
+                              title="Șterge comentariu"
+                            >
+                              🗑️
+                            </button>
+                          </div>
+                        )}
                       </div>
-                    ))}
+                      );
+                    })}
+                  </div>
+                )}
+                {isAdmin && (
+                  <div className="scriitor-post-admin-actions">
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        navigate(`/admin?tab=scriitori&scriitor=${name}&action=edit-post&postId=${post.id}&from=scriitor`);
+                      }}
+                      className={`scriitor-post-edit-button ${darkTheme ? 'dark-theme' : ''}`}
+                      title="Editează postare"
+                    >
+                      ✏️ Editează
+                    </button>
+                    <button
+                      onClick={async (e) => {
+                        e.stopPropagation();
+                        if (window.confirm('Ești sigur că vrei să ștergi această postare?')) {
+                          try {
+                            const { deletePostFromScriitor } = await import('../firebase/scriitoriService');
+                            await deletePostFromScriitor(name, post.id);
+                            // Reîncarcă datele
+                            const updatedData = await fetchScriitor(name);
+                            if (updatedData) {
+                              setData(updatedData);
+                            }
+                          } catch (error) {
+                            console.error('Error deleting post:', error);
+                            alert('Eroare la ștergerea postării');
+                          }
+                        }
+                      }}
+                      className="scriitor-post-delete-button"
+                      title="Șterge postare"
+                    >
+                      🗑️ Șterge
+                    </button>
                   </div>
                 )}
               </div>
@@ -1370,7 +1548,7 @@ const Scriitor = () => {
             <div className="scriitor-poem-preview-content bio">
               <div className="scriitor-poem-preview-text bio">
                 {(() => {
-                  const source = getScriitorBiografie(name) || (getScriitorPrezentare(name)?.bibliografie || '');
+                  const source = data.biografie || data.prezentare?.bibliografie || '';
                   const paragraphs = typeof source === 'string' ? source.split(/\n\s*\n/) : [];
                   return paragraphs.map((p, idx) => (<p key={idx}>{p}</p>));
                 })()}
@@ -1562,7 +1740,7 @@ const Scriitor = () => {
             
             <div className="scriitor-readall-content">
               {(() => {
-                const opere = getScriitorOpere(name);
+                const opere = data.opere || {};
                 
                 // Definim ordinea și numele categoriilor pentru afișare
                 const categoriiOrdonat = [
@@ -1697,6 +1875,30 @@ const Scriitor = () => {
               </div>
             </div>
           </div>
+        </div>
+      )}
+      {isAdmin && (
+        <div className="admin-buttons-container">
+          <button
+            onClick={() => navigate(`/admin?tab=scriitori&scriitor=${name}&view=posts&from=scriitor`)}
+            className={`admin-manage-button ${darkTheme ? 'dark-theme' : ''}`}
+            title="Gestionează postări"
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="12" cy="12" r="3"></circle>
+              <path d="M12 1v6m0 6v6M5.64 5.64l4.24 4.24m4.24 4.24l4.24 4.24M1 12h6m6 0h6M5.64 18.36l4.24-4.24m4.24-4.24l4.24-4.24"></path>
+            </svg>
+          </button>
+          <button
+            onClick={() => navigate(`/admin?tab=scriitori&scriitor=${name}&action=add-post&from=scriitor`)}
+            className={`admin-add-button ${darkTheme ? 'dark-theme' : ''}`}
+            title="Adaugă postare nouă"
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="12" y1="5" x2="12" y2="19"></line>
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+          </button>
         </div>
       )}
     </div>

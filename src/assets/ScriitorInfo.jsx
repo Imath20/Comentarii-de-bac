@@ -1,7 +1,8 @@
 import React from 'react';
 
-const ScriitorInfo = ({ name }) => {
-  const scriitoriInfo = {
+const ScriitorInfo = ({ info }) => {
+  // Fallback pentru datele hardcodate (dacă nu sunt date din baza de date)
+  const scriitoriInfoFallback = {
     eminescu: {
       ocupatie: 'Poet, prozator, jurnalist și publicist',
       studii: 'Studii la Viena și Berlin',
@@ -172,34 +173,49 @@ const ScriitorInfo = ({ name }) => {
     }
   };
 
-  const info = scriitoriInfo[name];
+  // Folosește datele din baza de date dacă există, altfel fallback
+  const infoData = info || scriitoriInfoFallback[name];
   
-  if (!info) {
+  if (!infoData) {
     return null;
   }
 
   return (
     <>
-      <div style={{ marginBottom: '0.8rem' }}>
-        <span style={{ color: '#a97c50', fontWeight: 600 }}>📚</span> {info.ocupatie}
-      </div>
-      <div style={{ marginBottom: '0.8rem' }}>
-        <span style={{ color: '#a97c50', fontWeight: 600 }}>🎓</span> {info.studii}
-      </div>
-      <div style={{ marginBottom: '0.8rem' }}>
-        <span style={{ color: '#a97c50', fontWeight: 600 }}>📰</span> {info.activitate}
-      </div>
-      <div style={{ marginTop: '1rem', paddingTop: '0.8rem', borderTop: '1px solid #f0e6d6' }}>
-        <div style={{ marginBottom: '0.5rem' }}>
-          <span style={{ color: '#a97c50', fontWeight: 600 }}>🏠</span> {info.locNastere}
+      {infoData.ocupatie && (
+        <div style={{ marginBottom: '0.8rem' }}>
+          <span style={{ color: '#a97c50', fontWeight: 600 }}>📚</span> {infoData.ocupatie}
         </div>
-        <div style={{ marginBottom: '0.5rem' }}>
-          <span style={{ color: '#a97c50', fontWeight: 600 }}>📅</span> {info.perioada}
+      )}
+      {infoData.studii && (
+        <div style={{ marginBottom: '0.8rem' }}>
+          <span style={{ color: '#a97c50', fontWeight: 600 }}>🎓</span> {infoData.studii}
         </div>
-        <div>
-          <span style={{ color: '#a97c50', fontWeight: 600 }}>⭐</span> {info.opere}
+      )}
+      {infoData.activitate && (
+        <div style={{ marginBottom: '0.8rem' }}>
+          <span style={{ color: '#a97c50', fontWeight: 600 }}>📰</span> {infoData.activitate}
         </div>
-      </div>
+      )}
+      {(infoData.locNastere || infoData.perioada || infoData.opere) && (
+        <div style={{ marginTop: '1rem', paddingTop: '0.8rem', borderTop: '1px solid #f0e6d6' }}>
+          {infoData.locNastere && (
+            <div style={{ marginBottom: '0.5rem' }}>
+              <span style={{ color: '#a97c50', fontWeight: 600 }}>🏠</span> {infoData.locNastere}
+            </div>
+          )}
+          {infoData.perioada && (
+            <div style={{ marginBottom: '0.5rem' }}>
+              <span style={{ color: '#a97c50', fontWeight: 600 }}>📅</span> {infoData.perioada}
+            </div>
+          )}
+          {infoData.opere && (
+            <div>
+              <span style={{ color: '#a97c50', fontWeight: 600 }}>⭐</span> {infoData.opere}
+            </div>
+          )}
+        </div>
+      )}
     </>
   );
 };

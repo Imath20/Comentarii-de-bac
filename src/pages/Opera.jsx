@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import Layout from '../assets/Layout';
-import scriitoriData from '../scriitoriData';
+import { getScriitoriData } from '../firebase/scriitoriService';
 import { getQuestionsForOpera, getGenericQuestions } from '../data/operaQuestions';
 import '../styles/style.scss';
 
@@ -697,6 +697,7 @@ export default function Opera() {
   const [activeTab, setActiveTab] = useState('prezentare');
   const [prevTab, setPrevTab] = useState('prezentare');
   const [poemModal, setPoemModal] = useState({ open: false, poem: null });
+  const [scriitoriData, setScriitoriData] = useState({});
   const tabsOrder = [
     'prezentare',
     'analiza',
@@ -751,6 +752,19 @@ export default function Opera() {
   // Scroll to top when component mounts (when opening an opera)
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'instant' });
+  }, []);
+
+  // Load scriitori data from Firebase
+  useEffect(() => {
+    const loadScriitoriData = async () => {
+      try {
+        const data = await getScriitoriData();
+        setScriitoriData(data);
+      } catch (error) {
+        console.error('Error loading scriitori data:', error);
+      }
+    };
+    loadScriitoriData();
   }, []);
 
   const initialOpera = location.state && location.state.opera ? location.state.opera : null;
@@ -926,7 +940,7 @@ export default function Opera() {
   // Găsește profilul autorului (cheie și poză) după nume
   const authorProfile = useMemo(() => {
     const authorName = (operaDetails && operaDetails.autor) || (effectiveOpera && effectiveOpera.autor) || '';
-    if (!authorName) return null;
+    if (!authorName || Object.keys(scriitoriData).length === 0) return null;
 
     const normalize = (text) =>
       (text || '')
@@ -943,7 +957,7 @@ export default function Opera() {
       }
     }
     return null;
-  }, [operaDetails, effectiveOpera]);
+  }, [operaDetails, effectiveOpera, scriitoriData]);
 
   const renderTabContent = () => {
     if (!operaDetails) {

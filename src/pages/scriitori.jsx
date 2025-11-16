@@ -1,180 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import Layout from '../assets/Layout';
 import '../styles/style.scss';
+import '../styles/adminAddButton.scss';
 import Select from 'react-select';
 import { Link, useNavigate } from 'react-router-dom';
+import { fetchScriitori } from '../firebase/scriitoriService';
+import { useAuth } from '../firebase/AuthContext';
 
-// Lista completă cu scriitorii și categorii
-const scriitoriList = [
-  {
-    nume: 'Ion Creangă',
-    date: '1837 – 1889',
-    img: '/scriitori/creanga_ion.webp',
-    color: 'rgba(255,179,71,0.82)',
-    categorie: 'basm',
-    canonic: true
-  },
-  {
-    nume: 'Mihai Eminescu',
-    date: '1850 – 1889',
-    img: '/scriitori/eminescu_mihai.webp',
-    color: 'rgba(122,58,0,0.82)',
-    categorie: 'poezie',
-    canonic: true
-  },
-  {
-    nume: 'I.L. Caragiale',
-    date: '1852 – 1912',
-    img: '/scriitori/il-caragiale.webp',
-    color: 'rgba(255,179,71,0.82)',
-    categorie: 'comedie',
-    canonic: true
-  },
-  {
-    nume: 'Ioan Slavici',
-    date: '1848 – 1925',
-    img: '/scriitori/ioan_slavici.webp',
-    color: 'rgba(122,58,0,0.82)',
-    categorie: 'roman',
-    canonic: true
-  },
-  {
-    nume: 'Liviu Rebreanu',
-    date: '1885 – 1944',
-    img: '/scriitori/liviu_rebreanu_nou.webp',
-    color: 'rgba(255,179,71,0.82)',
-    categorie: 'roman',
-    canonic: true
-  },
-  {
-    nume: 'George Călinescu',
-    date: '1899 – 1965',
-    img: '/scriitori/george_calinescu.webp',
-    color: 'rgba(255,179,71,0.82)',
-    categorie: 'roman',
-    canonic: true
-  },
-  {
-    nume: 'George Bacovia',
-    date: '1881 – 1957',
-    img: '/scriitori/bacovia_rezerva.webp',
-    color: 'rgba(122,58,0,0.82)',
-    categorie: 'poezie',
-    canonic: true
-  },
-  {
-    nume: 'Mihail Sadoveanu',
-    date: '1880 – 1961',
-    img: '/scriitori/mihail-sadoveanu-3.webp',
-    color: 'rgba(255,179,71,0.82)',
-    categorie: 'roman',
-    canonic: true
-  },
-  {
-    nume: 'Camil Petrescu',
-    date: '1894 – 1957',
-    img: '/scriitori/camil_rezerva.webp',
-    color: 'rgba(122,58,0,0.82)',
-    categorie: 'roman',
-    canonic: true
-  },
-  {
-    nume: 'Tudor Arghezi',
-    date: '1880 – 1967',
-    img: '/scriitori/tudor_arghezi.webp',
-    color: 'rgba(255,179,71,0.82)',
-    categorie: 'poezie',
-    canonic: true
-  },
-  {
-    nume: 'Lucian Blaga',
-    date: '1895 – 1961',
-    img: '/scriitori/lucian_blaga.webp',
-    color: 'rgba(122,58,0,0.82)',
-    categorie: 'poezie',
-    canonic: true
-  },
-  {
-    nume: 'Ion Barbu',
-    date: '1895 – 1961',
-    img: '/scriitori/barbu_ion.webp',
-    color: 'rgba(255,179,71,0.82)',
-    categorie: 'poezie',
-    canonic: true
-  },
-  {
-    nume: 'Marin Preda',
-    date: '1922 – 1980',
-    img: '/scriitori/marin_preda.webp',
-    color: 'rgba(122,58,0,0.82)',
-    categorie: 'roman',
-    canonic: true
-  },
-  {
-    nume: 'Nichita Stănescu',
-    date: '1933 – 1983',
-    img: '/scriitori/nichita_stanescu_rezerva.webp',
-    color: 'rgba(255,179,71,0.82)',
-    categorie: 'poezie',
-    canonic: true
-  },
-  {
-    nume: 'Marin Sorescu',
-    date: '1936 – 1996',
-    img: '/scriitori/marin_sorescu.webp',
-    color: 'rgba(122,58,0,0.82)',
-    categorie: 'poezie',
-    canonic: true
-  },
-  {
-    nume: 'Titu Maiorescu',
-    date: '1840 – 1917',
-    img: '/scriitori/titu_maiorescu (2).webp',
-    color: 'rgba(122,58,0,0.82)',
-    categorie: 'critica',
-    canonic: true
-  },
-  {
-    nume: 'Eugen Lovinescu',
-    date: '1881 – 1943',
-    img: '/scriitori/eugen_lovinescu.webp',
-    color: 'rgba(122,58,0,0.82)',
-    categorie: 'critica',
-    canonic: true
-  },
-  {
-    nume: 'Mircea Eliade',
-    date: '1907 – 1986',
-    img: '/scriitori/mircea-eliade.webp',
-    color: 'rgba(255,179,71,0.82)',
-    categorie: 'roman',
-    canonic: false
-  },
-  {
-    nume: 'Costache Negruzzi',
-    date: '1808 – 1868',
-    img: '/scriitori/costache-negruzzi.webp',
-    color: 'rgba(255,179,71,0.82)',
-    categorie: 'roman',
-    canonic: false
-  },
-  {
-    nume: 'Ion Pillat',
-    date: '1891 – 1945',
-    img: '/scriitori/ion_pillat.webp',
-    color: 'rgba(122,58,0,0.82)',
-    categorie: 'poezie',
-    canonic: false
-  },
-  {
-    nume: 'Vasile Voiculescu',
-    date: '1884 – 1963',
-    img: '/scriitori/vasile_voiculescu.webp',
-    color: 'rgba(255,179,71,0.82)',
-    categorie: 'poezie',
-    canonic: false
-  }
-];
+// Fallback gol - datele se încarcă din Firebase
+const scriitoriListFallback = [];
 
 const categorii = [
   { id: 'toate', nume: 'Toate categoriile' },
@@ -291,14 +125,59 @@ export default function Scriitori() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('toate');
   const [canonicFilter, setCanonicFilter] = useState('toate'); // 'toate', 'canonic', 'necanonic'
-  const [sortOption, setSortOption] = useState('none');
+  // Sortare implicită după ordine (nu 'none')
+  const [sortOption, setSortOption] = useState('ordine');
+  const { userProfile } = useAuth();
+  const isAdmin = userProfile?.isAdmin === true;
+  // Initialize with empty array - data will be loaded from Firebase
+  const [scriitoriList, setScriitoriList] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const sortOptions = [
-    { value: 'none', label: 'Fără sortare' },
+    { value: 'ordine', label: 'Ordine implicită' },
     { value: 'cronologic-asc', label: 'Cronologic ↑' },
     { value: 'cronologic-desc', label: 'Cronologic ↓' },
     { value: 'az', label: 'Ordine A–Z' },
   ];
   const navigate = useNavigate();
+
+  // Load scriitori from Firestore
+  useEffect(() => {
+    const loadScriitori = async () => {
+      try {
+        setLoading(true);
+        const scriitori = await fetchScriitori();
+        // Convert to format expected by the page
+        // Filtrează Veronica Micle din lista principală (apare doar în searchbar)
+        const formattedScriitori = scriitori
+          .filter(s => {
+            const key = s.key || s.id;
+            return key !== 'veronica'; // Exclude Veronica Micle
+          })
+          .map(s => ({
+            nume: s.nume || '',
+            date: s.date || '',
+            img: s.img || '',
+            color: s.color || 'rgba(255,179,71,0.82)',
+            categorie: s.categorie || '',
+            canonic: s.canonic !== undefined ? s.canonic : true,
+            ordine: s.ordine !== undefined ? s.ordine : 999,
+            key: s.key || s.id,
+          }));
+        
+        setScriitoriList(formattedScriitori);
+        setError(null);
+      } catch (error) {
+        console.error('Error loading scriitori:', error);
+        setError('Nu s-au putut încărca datele scriitorilor. Te rugăm să reîncerci mai târziu.');
+        setScriitoriList([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    loadScriitori();
+  }, []);
 
   // Theme is applied globally by Layout; do not toggle body/localStorage here
 
@@ -336,8 +215,15 @@ export default function Scriitori() {
       }
       case 'az':
         return a.nume.localeCompare(b.nume, 'ro', { sensitivity: 'base' });
+      case 'ordine':
       default:
-        return 0;
+        // Sortare implicită după ordine (din Firestore), apoi după nume
+        const ordineA = a.ordine !== undefined ? a.ordine : 999;
+        const ordineB = b.ordine !== undefined ? b.ordine : 999;
+        if (ordineA !== ordineB) {
+          return ordineA - ordineB;
+        }
+        return a.nume.localeCompare(b.nume, 'ro', { sensitivity: 'base' });
     }
   });
 
@@ -358,14 +244,27 @@ export default function Scriitori() {
   return (
     <Layout darkTheme={darkTheme} setDarkTheme={setDarkTheme}>
       <div className="page-hero">
-        <h1 className="page-title">{
-          'Scriitori'.split(' ').map((word, wi) => (
+        <h1 className="page-title">
+          {'Scriitori'.split(' ').map((word, wi) => (
             <span className="page-title-word" key={wi}>
               {word.split('').map((l, i) => <span key={i}>{l}</span>)}
             </span>
-          ))
-        }</h1>
+          ))}
+        </h1>
         <p className="page-desc">Aici vei găsi comentarii și resurse despre scriitorii importanți pentru BAC.</p>
+        {loading && <p style={{ marginTop: '10px', fontSize: '14px', opacity: 0.7 }}>Se încarcă scriitorii...</p>}
+        {error && (
+          <div style={{ 
+            marginTop: '20px', 
+            padding: '15px', 
+            backgroundColor: darkTheme ? 'rgba(200, 0, 0, 0.2)' : 'rgba(200, 0, 0, 0.1)',
+            borderRadius: '8px',
+            border: `1px solid ${darkTheme ? 'rgba(200, 0, 0, 0.5)' : 'rgba(200, 0, 0, 0.3)'}`,
+            color: darkTheme ? '#ff6b6b' : '#d32f2f'
+          }}>
+            {error}
+          </div>
+        )}
       </div>
 
       <div className="container">
@@ -488,7 +387,7 @@ export default function Scriitori() {
               <div
                 key={scriitor.nume}
                 className={`scriitori-card ${darkTheme ? 'dark-theme' : ''}`}
-                onClick={() => navigate(`/scriitor?name=${key}`, { state: { from: { pathname: '/scriitori', scrollY: window.scrollY } } })}
+                onClick={() => navigate(`/scriitor?name=${scriitor.key || key}`, { state: { from: { pathname: '/scriitori', scrollY: window.scrollY } } })}
                 onMouseOver={e => {
                   e.currentTarget.style.transform = 'scale(1.045)';
                   e.currentTarget.style.zIndex = 2;
@@ -518,7 +417,30 @@ export default function Scriitori() {
           </div>
         )}
       </div>
-      
+      {isAdmin && (
+        <div className="admin-buttons-container">
+          <button
+            onClick={() => navigate('/admin?tab=scriitori')}
+            className={`admin-manage-button ${darkTheme ? 'dark-theme' : ''}`}
+            title="Gestionează scriitori"
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="12" cy="12" r="3"></circle>
+              <path d="M12 1v6m0 6v6M5.64 5.64l4.24 4.24m4.24 4.24l4.24 4.24M1 12h6m6 0h6M5.64 18.36l4.24-4.24m4.24-4.24l4.24-4.24"></path>
+            </svg>
+          </button>
+          <button
+            onClick={() => navigate('/admin?tab=scriitori&view=add')}
+            className={`admin-add-button ${darkTheme ? 'dark-theme' : ''}`}
+            title="Adaugă scriitor nou"
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="12" y1="5" x2="12" y2="19"></line>
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+          </button>
+        </div>
+      )}
     </Layout>
   );
 } 

@@ -1,7 +1,21 @@
-.admin-add-button {
+.admin-buttons-container {
   position: fixed;
   right: 2rem;
   bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  z-index: 1000;
+
+  @media (max-width: 768px) {
+    right: 1.5rem;
+    bottom: 1.5rem;
+    gap: 0.75rem;
+  }
+}
+
+.admin-add-button,
+.admin-manage-button {
   width: 56px;
   height: 56px;
   border-radius: 50%;
@@ -14,10 +28,10 @@
   justify-content: center;
   box-shadow: 0 4px 16px rgba(60, 40, 20, 0.2);
   transition: all 0.3s ease;
-  z-index: 1000;
   padding: 0;
   outline: none;
-  &:focus{
+  
+  &:focus {
     outline: none;
   }
 
@@ -50,8 +64,6 @@
 
   // Responsive adjustments
   @media (max-width: 768px) {
-    right: 1.5rem;
-    bottom: 1.5rem;
     width: 48px;
     height: 48px;
 

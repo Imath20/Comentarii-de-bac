@@ -1,11 +1,34 @@
-import React, { useState } from 'react';
-import scriitoriData from '../scriitoriData';
-
-const allScriitori = Object.values(scriitoriData);
+import React, { useState, useEffect } from 'react';
+import { getScriitoriData } from '../firebase/scriitoriService';
 
 export default function AvatarSearchBar({ onSelect }) {
   const [search, setSearch] = useState('');
   const [focused, setFocused] = useState(false);
+  const [allScriitori, setAllScriitori] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // Load scriitori from Firestore
+  useEffect(() => {
+    const loadScriitori = async () => {
+      try {
+        const scriitoriData = await getScriitoriData();
+        const scriitoriArray = Object.values(scriitoriData).map(s => ({
+          nume: s.nume || '',
+          img: s.img || '',
+          key: s.key || s.id,
+        }));
+        setAllScriitori(scriitoriArray);
+      } catch (error) {
+        console.error('Error loading scriitori for search:', error);
+        setAllScriitori([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    loadScriitori();
+  }, []);
+
   const filtered = search.length === 0
     ? []
     : allScriitori.filter(s => s.nume.toLowerCase().includes(search.toLowerCase()));
@@ -37,15 +60,19 @@ export default function AvatarSearchBar({ onSelect }) {
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}
       />
-      {filtered.length > 0 && (
+      {!loading && filtered.length > 0 && (
         <ul className="searchbar-results" style={{ left: 0, right: 0, minWidth: '100%' }}>
           {filtered.map((s, idx) => (
             <li
-              key={s.nume + idx}
+              key={s.key || s.nume + idx}
               className="searchbar-result-item"
               onMouseDown={() => onSelect && onSelect(s)}
             >
-              <img src={s.img.replace('/scriitori/', '/public/scriitori/').replace('/public/', '/')} alt={s.nume} className="searchbar-result-avatar" />
+              <img 
+                src={s.img ? s.img.replace('/scriitori/', '/public/scriitori/').replace('/public/', '/') : ''} 
+                alt={s.nume} 
+                className="searchbar-result-avatar" 
+              />
               <span className="searchbar-result-name">{s.nume}</span>
             </li>
           ))}

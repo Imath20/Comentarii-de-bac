@@ -19,6 +19,7 @@ import './styles/style.scss';
 import Curente from './pages/curente';
 import Curent from './pages/Curent';
 import Admin from './pages/admin';
+// import MigrateScriitori from './pages/migrateScriitori';
 
 export default function App() {
   return (
@@ -41,6 +42,7 @@ export default function App() {
       <Route path="/curente" element={<Curente />} />
       <Route path="/curent/:id" element={<Curent />} />
       <Route path="/admin" element={<Admin />} />
+      {/* <Route path="/migrate-scriitori" element={<MigrateScriitori />} /> */}
     </Routes>
   );
 }
