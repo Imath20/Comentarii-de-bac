@@ -46,6 +46,8 @@ const subpunctOptions = [
     { value: 'B', label: 'B' }
 ];
 
+const FIRESTORE_ORDER_FIELD = 'createdAt';
+
 const customSelectStyles = (darkTheme) => ({
     control: (provided, state) => ({
         ...provided,
@@ -155,6 +157,13 @@ export default function Subiecte() {
     const [usingLocalFallback, setUsingLocalFallback] = useState(false);
     const [localLoadedCount, setLocalLoadedCount] = useState(0);
 
+    const firestoreOrderDirection = useMemo(() => {
+        if (sortOption === 'cronologic-asc') {
+            return 'asc';
+        }
+        return 'desc';
+    }, [sortOption]);
+
     useEffect(() => {
         // Add transition class for smooth theme change
         document.body.classList.add('theme-transitioning');
@@ -184,9 +193,18 @@ export default function Subiecte() {
         async function loadInitialSubiecte() {
             setLoadingSubiecte(true);
             setFetchError(null);
+            setSubiecte([]);
+            setLastFetchedDoc(null);
+            setHasMoreSubiecte(true);
+            setUsingLocalFallback(false);
+            setLocalLoadedCount(0);
 
             try {
-                const { items, lastDoc } = await fetchSubiecteBatch({ limit: PAGE_SIZE });
+                const { items, lastDoc } = await fetchSubiecteBatch({
+                    limit: PAGE_SIZE,
+                    orderByField: FIRESTORE_ORDER_FIELD,
+                    orderDirection: firestoreOrderDirection,
+                });
                 if (!isMounted) return;
 
                 if (Array.isArray(items) && items.length > 0) {
@@ -226,7 +244,7 @@ export default function Subiecte() {
         return () => {
             isMounted = false;
         };
-    }, [PAGE_SIZE]);
+    }, [PAGE_SIZE, firestoreOrderDirection]);
 
     // Preia filtrele din URL (query sau hash) și setează filtrele inițiale
     useEffect(() => {
@@ -293,6 +311,8 @@ export default function Subiecte() {
                 const { items, lastDoc } = await fetchSubiecteBatch({
                     limit: PAGE_SIZE,
                     cursor: lastFetchedDoc,
+                    orderByField: FIRESTORE_ORDER_FIELD,
+                    orderDirection: firestoreOrderDirection,
                 });
 
                 if (items.length > 0) {
@@ -319,6 +339,7 @@ export default function Subiecte() {
         localLoadedCount,
         PAGE_SIZE,
         lastFetchedDoc,
+        firestoreOrderDirection,
     ]);
 
     const handleInfiniteScroll = useCallback(() => {
@@ -415,6 +436,10 @@ export default function Subiecte() {
     };
 
     const sortedSubiecte = useMemo(() => {
+        if (!usingLocalFallback) {
+            return filteredSubiecte;
+        }
+
         if (sortOption === 'none') {
             return [...filteredSubiecte];
         }
@@ -435,7 +460,28 @@ export default function Subiecte() {
 
             return yearB - yearA;
         });
-    }, [filteredSubiecte, sortOption]);
+    }, [filteredSubiecte, sortOption, usingLocalFallback]);
+
+    useEffect(() => {
+        if (loadingSubiecte || isLoadingMore) {
+            return;
+        }
+        if (!hasMoreSubiecte) {
+            return;
+        }
+        if (sortedSubiecte.length >= PAGE_SIZE) {
+            return;
+        }
+
+        loadMoreSubiecte();
+    }, [
+        sortedSubiecte.length,
+        PAGE_SIZE,
+        hasMoreSubiecte,
+        loadingSubiecte,
+        isLoadingMore,
+        loadMoreSubiecte,
+    ]);
 
     const openSubiectModal = (subiect) => {
         setActiveSubiect(subiect);

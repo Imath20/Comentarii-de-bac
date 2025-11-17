@@ -57,13 +57,27 @@ export async function getAllSubiecte() {
  * @param {import('firebase/firestore').QueryDocumentSnapshot} [options.cursor] - Document snapshot to paginate from
  * @returns {Promise<{ items: Array<Object>, lastDoc: import('firebase/firestore').QueryDocumentSnapshot | null }>}
  */
-export async function fetchSubiecteBatch({ limit = 12, cursor = null } = {}) {
+export async function fetchSubiecteBatch({
+  limit = 12,
+  cursor = null,
+  orderByField = 'createdAt',
+  orderDirection = 'desc',
+} = {}) {
   try {
     const subiecteRef = collection(db, 'subiecte');
-    let subiecteQuery = query(subiecteRef, orderBy('createdAt', 'desc'), limitFn(limit));
+    let subiecteQuery = query(
+      subiecteRef,
+      orderBy(orderByField, orderDirection),
+      limitFn(limit)
+    );
 
     if (cursor) {
-      subiecteQuery = query(subiecteRef, orderBy('createdAt', 'desc'), startAfter(cursor), limitFn(limit));
+      subiecteQuery = query(
+        subiecteRef,
+        orderBy(orderByField, orderDirection),
+        startAfter(cursor),
+        limitFn(limit)
+      );
     }
 
     const snapshot = await getDocs(subiecteQuery);
