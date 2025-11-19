@@ -197,6 +197,10 @@
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
+  outline: none;
+  &:focus{
+    outline: none;
+  }
 }
 
 .book-reader-bookmark-btn:hover {
@@ -440,6 +444,10 @@
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s;
+  outline: none;
+  &:focus{
+    outline: none;
+  }
 }
 
 .book-reader-confirm-btn:hover {
