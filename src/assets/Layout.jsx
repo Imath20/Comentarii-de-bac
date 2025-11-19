@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Navbar from './Navbar';
 import Footer from './Footer';
+import NotificationsButton from '../components/NotificationsButton';
 
 export default function Layout({
   children,
@@ -48,6 +49,7 @@ export default function Layout({
         {children}
       </main>
       <Footer darkTheme={darkTheme} />
+      <NotificationsButton />
     </>
   );
 }

@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../firebase/AuthContext';
+import { isAdminEmail } from '../utils/adminUtils';
+import { deleteAllNotifications } from '../firebase/notificationsService';
 import '../styles/commandPrompt.scss';
 
 export default function CommandPrompt() {
@@ -14,7 +16,7 @@ export default function CommandPrompt() {
   const inputRef = useRef(null);
   const outputRef = useRef(null);
   const navigate = useNavigate();
-  const { logout } = useAuth();
+  const { logout, userProfile, currentUser } = useAuth();
   const inspectModeRef = useRef(false);
 
   useEffect(() => {
@@ -146,7 +148,7 @@ export default function CommandPrompt() {
     }
   }, [inspectMode]);
 
-  const executeCommand = (cmd) => {
+  const executeCommand = async (cmd) => {
     const trimmedCmd = cmd.trim().toLowerCase();
     const parts = trimmedCmd.split(' ');
     const command = parts[0];
@@ -285,6 +287,22 @@ export default function CommandPrompt() {
           } else {
             addOutput('API-ul de cache nu este disponibil. Vă rugăm să ștergeți cache-ul manual din setările browserului.', 'error');
           }
+        } else if (args === 'history') {
+          // Clear notifications history - admin only
+          const isAdmin = userProfile?.isAdmin === true || 
+            (currentUser?.email && isAdminEmail(currentUser.email));
+          
+          if (!isAdmin) {
+            addOutput('Nu ai permisiuni pentru această comandă. Doar administratorii pot șterge istoricul notificărilor.', 'error');
+            break;
+          }
+
+          try {
+            await deleteAllNotifications();
+            addOutput('Istoricul notificărilor a fost șters cu succes', 'success');
+          } catch (error) {
+            addOutput(`Eroare la ștergerea istoricului: ${error.message}`, 'error');
+          }
         } else {
           addOutput(`Unknown command: clear ${args}`, 'error');
         }
@@ -325,6 +343,9 @@ export default function CommandPrompt() {
         break;
 
       case 'help':
+        const isAdmin = userProfile?.isAdmin === true || 
+          (currentUser?.email && isAdminEmail(currentUser.email));
+        
         addOutput('Comenzi disponibile:', 'info');
         addOutput('  goto <path> - Navighează la pagina (ex: goto home, goto scriitori)', 'info');
         addOutput('  search "term" - Caută termenul pe pagina', 'info');
@@ -335,6 +356,9 @@ export default function CommandPrompt() {
         addOutput('  exit inspect - Dezactivează modul de inspectare', 'info');
         addOutput('  clear - Șterge ieșirea din linia de comandă', 'info');
         addOutput('  clear cache - Șterge cache-ul browserului', 'info');
+        if (isAdmin) {
+          addOutput('  clear history - Șterge istoricul notificărilor (doar admini)', 'info');
+        }
         addOutput('  time - Afișează ora și data curentă', 'info');
         addOutput('  delog - Deconectează contul', 'info');
         addOutput('  open admin - Navighează la panoul de administrare', 'info');

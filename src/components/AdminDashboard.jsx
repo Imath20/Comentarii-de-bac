@@ -20,6 +20,7 @@ import RichTextEditor from './RichTextEditor';
 import AvatarSearchBar from '../assets/AvatarSearchBar';
 import { getScriitoriData } from '../firebase/scriitoriService';
 import { useAuth } from '../firebase/AuthContext';
+import { createNotification } from '../firebase/notificationsService';
 import '../styles/admin.scss';
 
 const REACTIONS = [
@@ -520,6 +521,23 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
 
         setMessage({ type: 'success', text: 'Comentariul a fost actualizat cu succes!' });
         
+        // Create notification
+        try {
+          await createNotification({
+            type: 'comentariu',
+            action: 'updated',
+            userId: currentUserId,
+            userName: userDisplayName,
+            userEmail: userEmail,
+            userPhotoURL: userProfile?.photoURL || currentUser?.photoURL || '',
+            isSemiAdmin: isSemiAdminUser,
+            itemName: comentariuForm.titlu,
+            itemId: comentariuForm.id,
+          });
+        } catch (notifError) {
+          console.error('Error creating notification:', notifError);
+        }
+        
         // Navigate to comentarii page after successful update
         setTimeout(() => {
           navigate('/comentarii');
@@ -538,6 +556,23 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
         await addComentariu(payload);
 
         setMessage({ type: 'success', text: 'Comentariul a fost adăugat cu succes!' });
+        
+        // Create notification
+        try {
+          await createNotification({
+            type: 'comentariu',
+            action: 'added',
+            userId: currentUserId,
+            userName: userDisplayName,
+            userEmail: userEmail,
+            userPhotoURL: userProfile?.photoURL || currentUser?.photoURL || '',
+            isSemiAdmin: isSemiAdminUser,
+            itemName: comentariuForm.titlu,
+            itemId: id,
+          });
+        } catch (notifError) {
+          console.error('Error creating notification:', notifError);
+        }
       }
 
       // Reset form after successful submit (only if not editing, as we navigate away)
@@ -602,6 +637,23 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
 
         setMessage({ type: 'success', text: 'Subiectul a fost actualizat cu succes!' });
         
+        // Create notification
+        try {
+          await createNotification({
+            type: 'subiect',
+            action: 'updated',
+            userId: currentUserId,
+            userName: userDisplayName,
+            userEmail: userEmail,
+            userPhotoURL: userProfile?.photoURL || currentUser?.photoURL || '',
+            isSemiAdmin: isSemiAdminUser,
+            itemName: subiectForm.titlu,
+            itemId: subiectForm.id,
+          });
+        } catch (notifError) {
+          console.error('Error creating notification:', notifError);
+        }
+        
         // Navigate to subiecte page after successful update
         setTimeout(() => {
           navigate('/subiecte');
@@ -612,6 +664,24 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
         await addSubiect(payload);
 
         setMessage({ type: 'success', text: 'Subiectul a fost adăugat cu succes!' });
+        
+        // Create notification
+        try {
+          await createNotification({
+            type: 'subiect',
+            action: 'added',
+            userId: currentUserId,
+            userName: userDisplayName,
+            userEmail: userEmail,
+            userPhotoURL: userProfile?.photoURL || currentUser?.photoURL || '',
+            isSemiAdmin: isSemiAdminUser,
+            itemName: subiectForm.titlu,
+            itemId: subiectForm.id || '',
+          });
+        } catch (notifError) {
+          console.error('Error creating notification:', notifError);
+        }
+        
         setSubiectForm({
           id: '',
           titlu: '',
@@ -681,6 +751,23 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
 
         setMessage({ type: 'success', text: 'Filmul a fost actualizat cu succes!' });
         
+        // Create notification
+        try {
+          await createNotification({
+            type: 'film',
+            action: 'updated',
+            userId: currentUserId,
+            userName: userDisplayName,
+            userEmail: userEmail,
+            userPhotoURL: userProfile?.photoURL || currentUser?.photoURL || '',
+            isSemiAdmin: isSemiAdminUser,
+            itemName: filmForm.titlu,
+            itemId: filmForm.id,
+          });
+        } catch (notifError) {
+          console.error('Error creating notification:', notifError);
+        }
+        
         // Navigate to videoclipuri page after successful update
         setTimeout(() => {
           navigate('/videoclipuri');
@@ -691,6 +778,24 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
         await addFilm(payload);
 
         setMessage({ type: 'success', text: 'Filmul a fost adăugat cu succes!' });
+        
+        // Create notification
+        try {
+          await createNotification({
+            type: 'film',
+            action: 'added',
+            userId: currentUserId,
+            userName: userDisplayName,
+            userEmail: userEmail,
+            userPhotoURL: userProfile?.photoURL || currentUser?.photoURL || '',
+            isSemiAdmin: isSemiAdminUser,
+            itemName: filmForm.titlu,
+            itemId: filmId,
+          });
+        } catch (notifError) {
+          console.error('Error creating notification:', notifError);
+        }
+        
         setFilmForm({
           id: '',
           titlu: '',
@@ -770,10 +875,44 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
         const payload = attachOwnershipMetadata(scriitorData);
         await updateScriitor(key, payload);
         setMessage({ type: 'success', text: 'Scriitorul a fost actualizat cu succes!' });
+        
+        // Create notification
+        try {
+          await createNotification({
+            type: 'scriitor',
+            action: 'updated',
+            userId: currentUserId,
+            userName: userDisplayName,
+            userEmail: userEmail,
+            userPhotoURL: userProfile?.photoURL || currentUser?.photoURL || '',
+            isSemiAdmin: isSemiAdminUser,
+            itemName: scriitorForm.nume,
+            itemId: key,
+          });
+        } catch (notifError) {
+          console.error('Error creating notification:', notifError);
+        }
       } else {
         const payload = attachOwnershipMetadata(scriitorData);
         await addScriitor(payload);
         setMessage({ type: 'success', text: 'Scriitorul a fost adăugat cu succes!' });
+        
+        // Create notification
+        try {
+          await createNotification({
+            type: 'scriitor',
+            action: 'added',
+            userId: currentUserId,
+            userName: userDisplayName,
+            userEmail: userEmail,
+            userPhotoURL: userProfile?.photoURL || currentUser?.photoURL || '',
+            isSemiAdmin: isSemiAdminUser,
+            itemName: scriitorForm.nume,
+            itemId: key,
+          });
+        } catch (notifError) {
+          console.error('Error creating notification:', notifError);
+        }
       }
 
       await loadScriitori();
@@ -871,12 +1010,48 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
         ensureCanEdit(postForm.createdBy || scriitorOwnerId, 'Nu poți edita o postare creată de altcineva.');
         await updatePostForScriitor(selectedScriitor.key, postForm.id, postData);
         setMessage({ type: 'success', text: 'Postarea a fost actualizată cu succes!' });
+        
+        // Create notification
+        try {
+          await createNotification({
+            type: 'post',
+            action: 'updated',
+            userId: currentUserId,
+            userName: userDisplayName,
+            userEmail: userEmail,
+            userPhotoURL: userProfile?.photoURL || currentUser?.photoURL || '',
+            isSemiAdmin: isSemiAdminUser,
+            itemName: postForm.poemTitle || postForm.storyTitle || postForm.text?.substring(0, 50) || 'Postare',
+            itemId: postForm.id?.toString() || '',
+            scriitorName: selectedScriitor.nume,
+          });
+        } catch (notifError) {
+          console.error('Error creating notification:', notifError);
+        }
       } else {
         if (!isAdminUser && !isSemiAdminUser) {
           throw new Error('Nu ai permisiuni pentru a adăuga postări.');
         }
         await addPostToScriitor(selectedScriitor.key, postData);
         setMessage({ type: 'success', text: 'Postarea a fost adăugată cu succes!' });
+        
+        // Create notification
+        try {
+          await createNotification({
+            type: 'post',
+            action: 'added',
+            userId: currentUserId,
+            userName: userDisplayName,
+            userEmail: userEmail,
+            userPhotoURL: userProfile?.photoURL || currentUser?.photoURL || '',
+            isSemiAdmin: isSemiAdminUser,
+            itemName: postForm.poemTitle || postForm.storyTitle || postForm.text?.substring(0, 50) || 'Postare',
+            itemId: postData.id?.toString() || '',
+            scriitorName: selectedScriitor.nume,
+          });
+        } catch (notifError) {
+          console.error('Error creating notification:', notifError);
+        }
       }
 
       // Dacă postarea are o imagine, adaugă-o automat în galerie
@@ -968,6 +1143,24 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
       setLoading(true);
       await deleteScriitor(key);
       setMessage({ type: 'success', text: 'Scriitorul a fost șters cu succes!' });
+      
+      // Create notification
+      try {
+        await createNotification({
+          type: 'scriitor',
+          action: 'deleted',
+          userId: currentUserId,
+          userName: userDisplayName,
+          userEmail: userEmail,
+          userPhotoURL: userProfile?.photoURL || currentUser?.photoURL || '',
+          isSemiAdmin: isSemiAdminUser,
+          itemName: scriitor.nume,
+          itemId: key,
+        });
+      } catch (notifError) {
+        console.error('Error creating notification:', notifError);
+      }
+      
       await loadScriitori();
     } catch (error) {
       console.error('Error deleting scriitor:', error);
@@ -995,6 +1188,25 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
       setLoading(true);
       await deletePostFromScriitor(selectedScriitor.key, postId);
       setMessage({ type: 'success', text: 'Postarea a fost ștearsă cu succes!' });
+      
+      // Create notification
+      try {
+        await createNotification({
+          type: 'post',
+          action: 'deleted',
+          userId: currentUserId,
+          userName: userDisplayName,
+          userEmail: userEmail,
+          userPhotoURL: userProfile?.photoURL || currentUser?.photoURL || '',
+          isSemiAdmin: isSemiAdminUser,
+          itemName: post.poemTitle || post.storyTitle || post.text?.substring(0, 50) || 'Postare',
+          itemId: postId?.toString() || '',
+          scriitorName: selectedScriitor.nume,
+        });
+      } catch (notifError) {
+        console.error('Error creating notification:', notifError);
+      }
+      
       await loadScriitori();
       const updated = await fetchScriitori();
       const updatedScriitor = updated.find(s => s.key === selectedScriitor.key);
