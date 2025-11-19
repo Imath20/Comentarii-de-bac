@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, useCallback } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { getScriitoriData } from '../firebase/scriitoriService';
 import { fetchScriitor, deleteCommentFromPost } from '../firebase/scriitoriService';
@@ -293,11 +293,21 @@ const Scriitor = () => {
   const [darkTheme, setDarkTheme] = useState(() => localStorage.getItem('theme') === 'dark');
   const navigate = useNavigate();
   const location = useLocation();
-  const { userProfile } = useAuth();
+  const { currentUser, userProfile } = useAuth();
+  const currentUserId = currentUser?.uid || null;
   const isAdmin = userProfile?.isAdmin === true;
+  const isSemiAdmin = userProfile?.isSemiAdmin === true;
+  const canEditResource = useCallback((ownerId) => {
+    if (isAdmin) return true;
+    if (isSemiAdmin && ownerId && currentUserId) {
+      return ownerId === currentUserId;
+    }
+    return false;
+  }, [isAdmin, isSemiAdmin, currentUserId]);
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [scriitoriData, setScriitoriData] = useState({});
+  const canManageCurrentScriitor = data?.createdBy ? canEditResource(data.createdBy) : false;
 
   // Load scriitor data from Firestore
   useEffect(() => {
@@ -1269,45 +1279,51 @@ const Scriitor = () => {
                     {post.comments.length === 0 && <div className="scriitor-no-comments">Niciun comentariu încă.</div>}
                     {post.comments.map((c, idx) => {
                       const friendData = getScriitorByKey(c.key);
+                      const commentOwnerId = c.createdBy || post.createdBy || data?.createdBy;
+                      const canManageComment = canEditResource(commentOwnerId);
+                      const canDeleteComment = canManageComment || isAdmin;
                       return (
                       <div key={idx} className="scriitor-comment">
                         <img src={friendData?.img} alt={c.author} />
                         <span className="scriitor-comment-author" onClick={() => goToScriitor(c.key)}>{c.author}</span>
                         <span className="scriitor-comment-text">{c.text}</span>
-                        {isAdmin && (
+                        {(canManageComment || canDeleteComment) && (
                           <div className="scriitor-comment-actions">
-                            <button
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                navigate(`/admin?tab=scriitori&scriitor=${name}&action=edit-comment&postId=${post.id}&commentIndex=${idx}`);
-                              }}
-                              className="scriitor-comment-edit-button"
-                              title="Editează comentariu"
-                            >
-                              ✏️
-                            </button>
-                            <button
-                              onClick={async (e) => {
-                                e.stopPropagation();
-                                if (window.confirm('Ești sigur că vrei să ștergi acest comentariu?')) {
-                                  try {
-                                    await deleteCommentFromPost(name, post.id, idx);
-                                    // Reîncarcă datele
-                                    const updatedData = await fetchScriitor(name);
-                                    if (updatedData) {
-                                      setData(updatedData);
+                            {canManageComment && (
+                              <button
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  navigate(`/admin?tab=scriitori&scriitor=${name}&action=edit-comment&postId=${post.id}&commentIndex=${idx}`);
+                                }}
+                                className="scriitor-comment-edit-button"
+                                title="Editează comentariu"
+                              >
+                                ✏️
+                              </button>
+                            )}
+                            {canDeleteComment && (
+                              <button
+                                onClick={async (e) => {
+                                  e.stopPropagation();
+                                  if (window.confirm('Ești sigur că vrei să ștergi acest comentariu?')) {
+                                    try {
+                                      await deleteCommentFromPost(name, post.id, idx);
+                                      const updatedData = await fetchScriitor(name);
+                                      if (updatedData) {
+                                        setData(updatedData);
+                                      }
+                                    } catch (error) {
+                                      console.error('Error deleting comment:', error);
+                                      alert('Eroare la ștergerea comentariului');
                                     }
-                                  } catch (error) {
-                                    console.error('Error deleting comment:', error);
-                                    alert('Eroare la ștergerea comentariului');
                                   }
-                                }
-                              }}
-                              className="scriitor-comment-delete-button"
-                              title="Șterge comentariu"
-                            >
-                              🗑️
-                            </button>
+                                }}
+                                className="scriitor-comment-delete-button"
+                                title="Șterge comentariu"
+                              >
+                                🗑️
+                              </button>
+                            )}
                           </div>
                         )}
                       </div>
@@ -1315,7 +1331,13 @@ const Scriitor = () => {
                     })}
                   </div>
                 )}
-                {isAdmin && (
+                {(() => {
+                  const postOwnerId = post.createdBy || data?.createdBy;
+                  const canManagePost = canEditResource(postOwnerId);
+                  if (!canManagePost) {
+                    return null;
+                  }
+                  return (
                   <div className="scriitor-post-admin-actions">
                     <button
                       onClick={(e) => {
@@ -1334,7 +1356,6 @@ const Scriitor = () => {
                           try {
                             const { deletePostFromScriitor } = await import('../firebase/scriitoriService');
                             await deletePostFromScriitor(name, post.id);
-                            // Reîncarcă datele
                             const updatedData = await fetchScriitor(name);
                             if (updatedData) {
                               setData(updatedData);
@@ -1351,7 +1372,8 @@ const Scriitor = () => {
                       🗑️ Șterge
                     </button>
                   </div>
-                )}
+                  );
+                })()}
               </div>
             ))}
           </div>
@@ -1877,7 +1899,7 @@ const Scriitor = () => {
           </div>
         </div>
       )}
-      {isAdmin && (
+      {(isAdmin || isSemiAdmin) && (
         <div className="admin-buttons-container">
           <button
             onClick={() => navigate(`/admin?tab=scriitori&scriitor=${name}&view=posts&from=scriitor`)}

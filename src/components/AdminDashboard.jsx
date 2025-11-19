@@ -19,6 +19,7 @@ import { uploadImageToCloudinary } from '../utils/cloudinary';
 import RichTextEditor from './RichTextEditor';
 import AvatarSearchBar from '../assets/AvatarSearchBar';
 import { getScriitoriData } from '../firebase/scriitoriService';
+import { useAuth } from '../firebase/AuthContext';
 import '../styles/admin.scss';
 
 const REACTIONS = [
@@ -54,6 +55,47 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
   const [allScriitoriForSearch, setAllScriitoriForSearch] = useState([]);
   const editingCommentRef = useRef(null);
   const hasInitializedTabRef = useRef(false);
+  const { currentUser, userProfile } = useAuth();
+  const currentUserId = currentUser?.uid || null;
+  const userEmail = currentUser?.email || userProfile?.email || '';
+  const userDisplayName = userProfile?.displayName || currentUser?.displayName || '';
+  const isAdminUser = userProfile?.isAdmin === true;
+  const isSemiAdminUser = userProfile?.isSemiAdmin === true;
+  const isLimitedAdminView = !isAdminUser && isSemiAdminUser;
+
+  const canEditResource = useCallback((ownerId) => {
+    if (isAdminUser) return true;
+    if (isSemiAdminUser && ownerId && currentUserId) {
+      return ownerId === currentUserId;
+    }
+    return false;
+  }, [isAdminUser, isSemiAdminUser, currentUserId]);
+
+  const ensureOwnershipContext = useCallback(() => {
+    if (!currentUserId) {
+      throw new Error('Profilul utilizatorului nu este încărcat. Reîncearcă după ce te autentifici din nou.');
+    }
+  }, [currentUserId]);
+
+  const attachOwnershipMetadata = useCallback((payload = {}) => {
+    if (!currentUserId) return payload;
+    const enriched = { ...payload };
+    if (!enriched.createdBy) {
+      enriched.createdBy = currentUserId;
+      enriched.createdByEmail = userEmail;
+      enriched.createdByName = userDisplayName;
+    }
+    enriched.lastUpdatedBy = currentUserId;
+    enriched.lastUpdatedByEmail = userEmail;
+    enriched.lastUpdatedByName = userDisplayName;
+    return enriched;
+  }, [currentUserId, userEmail, userDisplayName]);
+
+  const ensureCanEdit = useCallback((ownerId, errorMessage) => {
+    if (!canEditResource(ownerId)) {
+      throw new Error(errorMessage || 'Nu ai permisiuni pentru a modifica această resursă.');
+    }
+  }, [canEditResource]);
 
   // Helper function to update URL params
   const updateUrlParams = useCallback((updates) => {
@@ -97,6 +139,9 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
     plan: 'free',
     descriere: '',
     content: [], // Changed from text to content (array of blocks)
+    createdBy: '',
+    createdByEmail: '',
+    createdByName: '',
   });
 
   // Read tab from URL params only on initial mount
@@ -121,6 +166,9 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
         plan: initialCommentData.plan || 'free',
         descriere: initialCommentData.descriere || '',
         content: initialCommentData.content || (initialCommentData.text ? [{ type: 'paragraph', text: initialCommentData.text }] : []),
+        createdBy: initialCommentData.createdBy || '',
+        createdByEmail: initialCommentData.createdByEmail || '',
+        createdByName: initialCommentData.createdByName || '',
       });
       setActiveTab('comentarii');
       updateUrlParams({ tab: 'comentarii' });
@@ -149,6 +197,9 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
         punctaj: Array.isArray(initialSubjectData.punctaj)
           ? initialSubjectData.punctaj.join('\n')
           : (initialSubjectData.punctaj || ''),
+        createdBy: initialSubjectData.createdBy || '',
+        createdByEmail: initialSubjectData.createdByEmail || '',
+        createdByName: initialSubjectData.createdByName || '',
       });
       setActiveTab('subiecte');
       updateUrlParams({ tab: 'subiecte' });
@@ -170,6 +221,9 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
     text: '',
     cerinte: '',
     punctaj: '',
+    createdBy: '',
+    createdByEmail: '',
+    createdByName: '',
   });
 
   const categorii = [
@@ -190,6 +244,9 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
     categorie: '',
     durata: '',
     autor: '',
+    createdBy: '',
+    createdByEmail: '',
+    createdByName: '',
   });
 
   // Scriitor form state
@@ -215,6 +272,9 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
     newFriendName: '',
     // Temporary field for editing opere JSON
     opereJsonText: '',
+    createdBy: '',
+    createdByEmail: '',
+    createdByName: '',
   });
 
   // Post form state (for adding/editing posts)
@@ -242,6 +302,9 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
     newReactionFriendKey: '',
     newReactionFriendName: '',
     newReactionType: '',
+    createdBy: '',
+    createdByEmail: '',
+    createdByName: '',
   });
 
   // Load scriitori when tab is active
@@ -302,6 +365,9 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
               newFriendKey: '',
               newFriendName: '',
               opereJsonText: '',
+              createdBy: scriitor.createdBy || '',
+              createdByEmail: scriitor.createdByEmail || '',
+              createdByName: scriitor.createdByName || '',
             });
             setIsEditingScriitor(true);
           }
@@ -332,6 +398,9 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
               pinnedActions: [],
               reactions: [],
               comments: [],
+              createdBy: '',
+              createdByEmail: '',
+              createdByName: '',
             });
             setScriitorView('post-add');
           } else if (actionParam === 'edit-post' && postIdParam) {
@@ -354,6 +423,9 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
                 pinnedActions: post.pinnedActions || [],
                 reactions: post.reactions || [],
                 comments: post.comments || [],
+                createdBy: post.createdBy || '',
+                createdByEmail: post.createdByEmail || '',
+                createdByName: post.createdByName || '',
               });
               setScriitorView('post-edit');
             }
@@ -378,6 +450,9 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
                 pinnedActions: post.pinnedActions || [],
                 reactions: post.reactions || [],
                 comments: post.comments || [],
+                createdBy: post.createdBy || '',
+                createdByEmail: post.createdByEmail || '',
+                createdByName: post.createdByName || '',
               });
               setScriitorView('post-edit');
               updateUrlParams({ view: 'post-edit', scriitor: scriitorParam, action: 'edit-post', postId: postIdParam, commentIndex: commentIndexParam });
@@ -417,6 +492,7 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
     setMessage({ type: '', text: '' });
 
     try {
+      ensureOwnershipContext();
       // Validate content - at least one paragraph must have text
       if (!comentariuForm.content || comentariuForm.content.length === 0) {
         throw new Error('Trebuie să adaugi cel puțin un paragraf cu text');
@@ -435,10 +511,12 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
         if (!comentariuForm.id) {
           throw new Error('ID-ul comentariului este obligatoriu pentru editare');
         }
-
-        await updateComentariu({
+        ensureCanEdit(comentariuForm.createdBy, 'Nu poți edita un comentariu creat de altcineva.');
+        const payload = attachOwnershipMetadata({
           ...comentariuForm,
         });
+
+        await updateComentariu(payload);
 
         setMessage({ type: 'success', text: 'Comentariul a fost actualizat cu succes!' });
         
@@ -452,10 +530,12 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
         const id = comentariuForm.id || 
           `${comentariuForm.autor.toLowerCase().replace(/\s+/g, '-')}-${comentariuForm.titlu.toLowerCase().replace(/\s+/g, '-')}`;
 
-        await addComentariu({
+        const payload = attachOwnershipMetadata({
           ...comentariuForm,
           id,
         });
+
+        await addComentariu(payload);
 
         setMessage({ type: 'success', text: 'Comentariul a fost adăugat cu succes!' });
       }
@@ -470,6 +550,9 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
           plan: 'free',
           descriere: '',
           content: [],
+          createdBy: '',
+          createdByEmail: '',
+          createdByName: '',
         });
         setIsEditing(false);
       }
@@ -487,6 +570,7 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
     setMessage({ type: '', text: '' });
 
     try {
+      ensureOwnershipContext();
       // Parse cerinte and punctaj from textarea (one per line)
       const cerinte = subiectForm.cerinte
         .split('\n')
@@ -511,8 +595,10 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
         if (!subiectForm.id) {
           throw new Error('ID-ul subiectului este obligatoriu pentru editare');
         }
+        ensureCanEdit(subiectForm.createdBy, 'Nu poți edita un subiect creat de altcineva.');
+        const payload = attachOwnershipMetadata(subiectData);
 
-        await updateSubiect(subiectData);
+        await updateSubiect(payload);
 
         setMessage({ type: 'success', text: 'Subiectul a fost actualizat cu succes!' });
         
@@ -522,7 +608,8 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
         }, 500);
       } else {
         // Add new subiect
-        await addSubiect(subiectData);
+        const payload = attachOwnershipMetadata(subiectData);
+        await addSubiect(payload);
 
         setMessage({ type: 'success', text: 'Subiectul a fost adăugat cu succes!' });
         setSubiectForm({
@@ -539,6 +626,9 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
           text: '',
           cerinte: '',
           punctaj: '',
+          createdBy: '',
+          createdByEmail: '',
+          createdByName: '',
         });
         setIsEditingSubiect(false);
       }
@@ -556,6 +646,7 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
     setMessage({ type: '', text: '' });
 
     try {
+      ensureOwnershipContext();
       // Generate ID from titlu if not provided
       let filmId = filmForm.id;
       if (!filmId && filmForm.titlu) {
@@ -583,8 +674,10 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
         if (!filmForm.id) {
           throw new Error('ID-ul filmului este obligatoriu pentru editare');
         }
+        ensureCanEdit(filmForm.createdBy, 'Nu poți edita un film creat de altcineva.');
+        const payload = attachOwnershipMetadata(filmData);
 
-        await updateFilm(filmData);
+        await updateFilm(payload);
 
         setMessage({ type: 'success', text: 'Filmul a fost actualizat cu succes!' });
         
@@ -594,7 +687,8 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
         }, 500);
       } else {
         // Add new film
-        await addFilm(filmData);
+        const payload = attachOwnershipMetadata(filmData);
+        await addFilm(payload);
 
         setMessage({ type: 'success', text: 'Filmul a fost adăugat cu succes!' });
         setFilmForm({
@@ -605,6 +699,9 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
           categorie: '',
           durata: '',
           autor: '',
+          createdBy: '',
+          createdByEmail: '',
+          createdByName: '',
         });
         setIsEditingFilm(false);
       }
@@ -623,6 +720,7 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
     setMessage({ type: '', text: '' });
 
     try {
+      ensureOwnershipContext();
       if (!scriitorForm.nume) {
         throw new Error('Numele este obligatoriu');
       }
@@ -668,10 +766,13 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
       };
 
       if (isEditingScriitor) {
-        await updateScriitor(key, scriitorData);
+        ensureCanEdit(scriitorForm.createdBy, 'Nu poți edita un scriitor creat de altcineva.');
+        const payload = attachOwnershipMetadata(scriitorData);
+        await updateScriitor(key, payload);
         setMessage({ type: 'success', text: 'Scriitorul a fost actualizat cu succes!' });
       } else {
-        await addScriitor(scriitorData);
+        const payload = attachOwnershipMetadata(scriitorData);
+        await addScriitor(payload);
         setMessage({ type: 'success', text: 'Scriitorul a fost adăugat cu succes!' });
       }
 
@@ -698,6 +799,9 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
         newFriendKey: '',
         newFriendName: '',
         opereJsonText: '',
+        createdBy: '',
+        createdByEmail: '',
+        createdByName: '',
       });
       setIsEditingScriitor(false);
       setSelectedScriitor(null);
@@ -737,6 +841,8 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
     setMessage({ type: '', text: '' });
 
     try {
+      ensureOwnershipContext();
+      const scriitorOwnerId = selectedScriitor.createdBy || '';
       // Validare pentru poezii
       if (postForm.isPoem) {
         if (!postForm.poemTitle) {
@@ -753,18 +859,22 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
         }
       }
 
-      const postData = {
+      const postData = attachOwnershipMetadata({
         ...postForm,
         id: postForm.id || Date.now(),
         author: postForm.author || selectedScriitor.nume,
         // Dacă e poezie, nu folosi image, folosește poemImages
         image: postForm.isPoem ? '' : postForm.image,
-      };
+      });
 
       if (scriitorView === 'post-edit') {
+        ensureCanEdit(postForm.createdBy || scriitorOwnerId, 'Nu poți edita o postare creată de altcineva.');
         await updatePostForScriitor(selectedScriitor.key, postForm.id, postData);
         setMessage({ type: 'success', text: 'Postarea a fost actualizată cu succes!' });
       } else {
+        if (!isAdminUser && !isSemiAdminUser) {
+          throw new Error('Nu ai permisiuni pentru a adăuga postări.');
+        }
         await addPostToScriitor(selectedScriitor.key, postData);
         setMessage({ type: 'success', text: 'Postarea a fost adăugată cu succes!' });
       }
@@ -829,6 +939,9 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
         newReactionFriendKey: '',
         newReactionFriendName: '',
         newReactionType: '',
+        createdBy: '',
+        createdByEmail: '',
+        createdByName: '',
       });
     } catch (error) {
       console.error('Error saving post:', error);
@@ -838,7 +951,17 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
     }
   };
 
-  const handleDeleteScriitor = async (key) => {
+  const handleDeleteScriitor = async (scriitor) => {
+    if (!scriitor) return;
+    const key = scriitor.key || scriitor.id;
+    if (!key) {
+      setMessage({ type: 'error', text: 'Nu s-a putut identifica scriitorul pentru ștergere.' });
+      return;
+    }
+    if (!canEditResource(scriitor.createdBy)) {
+      setMessage({ type: 'error', text: 'Poți șterge doar scriitorii creați de tine.' });
+      return;
+    }
     if (!window.confirm('Ești sigur că vrei să ștergi acest scriitor?')) return;
 
     try {
@@ -855,7 +978,18 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
   };
 
   const handleDeletePost = async (postId) => {
-    if (!selectedScriitor || !window.confirm('Ești sigur că vrei să ștergi această postare?')) return;
+    if (!selectedScriitor) return;
+    const post = selectedScriitor.posts?.find((p) => p.id === postId);
+    if (!post) {
+      setMessage({ type: 'error', text: 'Postarea nu a fost găsită.' });
+      return;
+    }
+    const postOwnerId = post?.createdBy || selectedScriitor.createdBy;
+    if (!canEditResource(postOwnerId)) {
+      setMessage({ type: 'error', text: 'Poți șterge doar postările create de tine.' });
+      return;
+    }
+    if (!window.confirm('Ești sigur că vrei să ștergi această postare?')) return;
 
     try {
       setLoading(true);
@@ -883,6 +1017,22 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
           Ieșire
         </button>
       </div>
+      {isLimitedAdminView && (
+        <div
+          className="admin-info-banner"
+          style={{
+            background: 'rgba(169, 124, 80, 0.15)',
+            border: '1px solid rgba(169, 124, 80, 0.5)',
+            color: darkTheme ? '#ffd591' : '#4e2e1e',
+            padding: '12px 16px',
+            borderRadius: '8px',
+            marginBottom: '16px',
+            display: 'none',
+          }}
+        >
+          {/* Ai rol de semi-admin. Poți adăuga, edita și șterge doar conținutul creat de tine; conținutul altor administratori rămâne protejat. */}
+        </div>
+      )}
 
       <div className="admin-tabs">
         <button
@@ -1361,6 +1511,10 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
                         ordine: 999,
                         newFriendKey: '',
                         newFriendName: '',
+                        opereJsonText: '',
+                        createdBy: '',
+                        createdByEmail: '',
+                        createdByName: '',
                       });
                       setSelectedScriitor(null);
                     }}
@@ -1378,7 +1532,9 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
                 </div>
               </div>
               <div className="admin-scriitori-grid">
-                {scriitoriList.map(scriitor => (
+                {scriitoriList.map(scriitor => {
+                  const canManageScriitor = canEditResource(scriitor.createdBy);
+                  return (
                   <div key={scriitor.key || scriitor.id} className="admin-scriitor-card">
                     {scriitor.img && <img src={scriitor.img} alt={scriitor.nume} />}
                     <h3>{scriitor.nume}</h3>
@@ -1395,7 +1551,8 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
                       >
                         Postări ({scriitor.posts?.length || 0})
                       </button>
-                      <button 
+                      {canManageScriitor && (
+                        <button 
                         onClick={() => {
                           setScriitorForm({
                             key: scriitor.key || scriitor.id,
@@ -1417,6 +1574,9 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
                             newFriendKey: '',
                             newFriendName: '',
                             opereJsonText: '',
+                            createdBy: scriitor.createdBy || '',
+                            createdByEmail: scriitor.createdByEmail || '',
+                            createdByName: scriitor.createdByName || '',
                           });
                           setIsEditingScriitor(true);
                           setSelectedScriitor(scriitor);
@@ -1428,16 +1588,19 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
                       >
                         Editează
                       </button>
-                      <button 
-                        onClick={() => handleDeleteScriitor(scriitor.key || scriitor.id)}
-                        className="admin-submit-button"
-                        style={{ backgroundColor: '#dc3545', flex: 1 }}
-                      >
-                        Șterge
-                      </button>
+                      )}
+                      {canManageScriitor && (
+                        <button 
+                          onClick={() => handleDeleteScriitor(scriitor)}
+                          className="admin-submit-button"
+                          style={{ backgroundColor: '#dc3545', flex: 1 }}
+                        >
+                          Șterge
+                        </button>
+                      )}
                     </div>
                   </div>
-                ))}
+                )})}
               </div>
             </div>
           )}
@@ -1893,7 +2056,10 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
                     <p>Nu există postări pentru acest scriitor.</p>
                   </div>
                 ) : (
-                  selectedScriitor.posts?.map(post => (
+                  selectedScriitor.posts?.map(post => {
+                    const postOwnerId = post.createdBy || selectedScriitor.createdBy;
+                    const canManagePost = canEditResource(postOwnerId);
+                    return (
                     <div key={post.id} className="admin-post-card">
                       <div className="admin-post-content">
                         <div className="admin-post-header">
@@ -1936,49 +2102,54 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
                         </div>
                       </div>
                       <div className="admin-post-actions">
-                        <button 
-                          onClick={() => {
-                            setPostForm({
-                              id: post.id,
-                              date: post.date || '',
-                              author: post.author || selectedScriitor.nume,
-                              text: post.text || '',
-                              image: post.image || '',
-                              pin: post.pin || false,
-                              isPoem: post.isPoem || false,
-                              isStory: post.isStory || false,
-                              poemTitle: post.poemTitle || '',
-                              poemText: post.poemText || '',
-                              poemImages: post.poemImages || [],
-                              storyTitle: post.storyTitle || '',
-                              storyText: post.storyText || '',
-                              pinnedActions: post.pinnedActions || [],
-                              reactions: post.reactions || [],
-                              comments: post.comments || [],
-                              newCommentAuthor: '',
-                              newCommentKey: '',
-                              newCommentText: '',
-                              newReactionFriendKey: '',
-                              newReactionFriendName: '',
-                              newReactionType: '',
-                            });
-                            setScriitorView('post-edit');
-                            const currentFrom = searchParams.get('from');
-                            updateUrlParams({ action: 'edit-post', scriitor: selectedScriitor.key || selectedScriitor.id, postId: post.id, commentIndex: null, from: currentFrom || 'posts' });
-                          }}
-                          className="admin-post-edit-button"
-                        >
-                          Editează
-                        </button>
-                        <button 
-                          onClick={() => handleDeletePost(post.id)}
-                          className="admin-post-delete-button"
-                        >
-                          Șterge
-                        </button>
+                        {canManagePost && (
+                          <>
+                            <button 
+                              onClick={() => {
+                                setPostForm({
+                                  id: post.id,
+                                  date: post.date || '',
+                                  author: post.author || selectedScriitor.nume,
+                                  text: post.text || '',
+                                  image: post.image || '',
+                                  pin: post.pin || false,
+                                  isPoem: post.isPoem || false,
+                                  isStory: post.isStory || false,
+                                  poemTitle: post.poemTitle || '',
+                                  poemText: post.poemText || '',
+                                  poemImages: post.poemImages || [],
+                                  storyTitle: post.storyTitle || '',
+                                  storyText: post.storyText || '',
+                                  pinnedActions: post.pinnedActions || [],
+                                  reactions: post.reactions || [],
+                                  comments: post.comments || [],
+                                  newCommentAuthor: '',
+                                  newCommentKey: '',
+                                  newCommentText: '',
+                                  newReactionFriendKey: '',
+                                  newReactionFriendName: '',
+                                  newReactionType: '',
+                                });
+                                setScriitorView('post-edit');
+                                const currentFrom = searchParams.get('from');
+                                updateUrlParams({ action: 'edit-post', scriitor: selectedScriitor.key || selectedScriitor.id, postId: post.id, commentIndex: null, from: currentFrom || 'posts' });
+                              }}
+                              className="admin-post-edit-button"
+                            >
+                              Editează
+                            </button>
+                            <button 
+                              onClick={() => handleDeletePost(post.id)}
+                              className="admin-post-delete-button"
+                            >
+                              Șterge
+                            </button>
+                          </>
+                        )}
                       </div>
                     </div>
-                  ))
+                  );
+                  })
                 )}
               </div>
             </div>
@@ -2483,6 +2654,9 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
                           key: postForm.newCommentKey,
                           author: postForm.newCommentAuthor,
                           text: postForm.newCommentText,
+                          createdBy: currentUserId || '',
+                          createdByEmail: userEmail,
+                          createdByName: userDisplayName,
                         };
                         setPostForm({
                           ...postForm,

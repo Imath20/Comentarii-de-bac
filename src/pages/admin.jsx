@@ -59,15 +59,15 @@ const Admin = () => {
     }
   }, [searchParams]);
 
-  // Check if user is admin
+  // Check if user has admin or semi-admin rights
   useEffect(() => {
     if (currentUser && userProfile) {
-      const isAdmin = userProfile.isAdmin === true;
-      if (isAdmin) {
+      const hasAdminAccess = userProfile.isAdmin === true || userProfile.isSemiAdmin === true;
+      if (hasAdminAccess) {
         setIsAuthenticated(true);
         setError('');
       } else {
-        setError('Nu ai permisiuni de administrator.');
+        setError('Nu ai permisiuni suficiente pentru a accesa panoul de administrare.');
         setIsAuthenticated(false);
       }
     } else if (currentUser && !userProfile) {

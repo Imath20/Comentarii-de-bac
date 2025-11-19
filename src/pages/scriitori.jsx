@@ -128,7 +128,7 @@ export default function Scriitori() {
   // Sortare implicită după ordine (nu 'none')
   const [sortOption, setSortOption] = useState('ordine');
   const { userProfile } = useAuth();
-  const isAdmin = userProfile?.isAdmin === true;
+  const hasAdminAccess = userProfile?.isAdmin === true || userProfile?.isSemiAdmin === true;
   // Initialize with empty array - data will be loaded from Firebase
   const [scriitoriList, setScriitoriList] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -417,7 +417,7 @@ export default function Scriitori() {
           </div>
         )}
       </div>
-      {isAdmin && (
+      {hasAdminAccess && (
         <div className="admin-buttons-container">
           <button
             onClick={() => navigate('/admin?tab=scriitori')}

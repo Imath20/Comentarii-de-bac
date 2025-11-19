@@ -8,7 +8,7 @@ const AdminAddButton = ({ darkTheme, type = 'comentarii' }) => {
   const { userProfile } = useAuth();
 
   // Only show if user is admin
-  if (!userProfile || !userProfile.isAdmin) {
+  if (!userProfile || (!userProfile.isAdmin && !userProfile.isSemiAdmin)) {
     return null;
   }
 

@@ -10,7 +10,7 @@ import {
 import { auth, googleProvider } from './firebase';
 import { getUserProfile, saveUserProfile } from './profileService';
 import { getProfileImageUrl } from '../utils/cloudinary';
-import { isAdminEmail } from '../utils/adminUtils';
+import { getRoleFlags } from '../utils/adminUtils';
 
 const AuthContext = createContext({});
 
@@ -37,13 +37,15 @@ export const AuthProvider = ({ children }) => {
       const existingProfile = await getUserProfile(user.uid);
       const isNewUser = !existingProfile;
 
+      const roleFlags = getRoleFlags(user.email || '');
+
       // Create or update user profile in Firestore
       const profileData = {
         displayName: user.displayName || user.email?.split('@')[0] || '',
         email: user.email || '',
         photoURL: user.photoURL || '',
         uid: user.uid,
-        isAdmin: isAdminEmail(user.email || ''),
+        ...roleFlags,
       };
       
       // Save to database - preserve createdAt if user already exists
@@ -66,13 +68,15 @@ export const AuthProvider = ({ children }) => {
         await updateProfile(user, { displayName });
       }
       
+      const roleFlags = getRoleFlags(user.email || '');
+
       // Create user profile in Firestore
       const profileData = {
         displayName: displayName || user.email?.split('@')[0] || '',
         email: user.email || '',
         photoURL: '',
         uid: user.uid,
-        isAdmin: isAdminEmail(user.email || ''),
+        ...roleFlags,
       };
       
       await saveUserProfile(user.uid, profileData, true);
@@ -96,13 +100,15 @@ export const AuthProvider = ({ children }) => {
       // Transform Google profile image with Cloudinary
       const transformedPhotoURL = user.photoURL ? getProfileImageUrl(user.photoURL) : '';
 
+      const roleFlags = getRoleFlags(user.email || '');
+
       // Create or update user profile in Firestore
       const profileData = {
         displayName: user.displayName || '',
         email: user.email || '',
         photoURL: transformedPhotoURL,
         uid: user.uid, // Store UID for reference
-        isAdmin: isAdminEmail(user.email || ''),
+        ...roleFlags,
       };
       
       // Save to database - preserve createdAt if user already exists
@@ -148,9 +154,12 @@ export const AuthProvider = ({ children }) => {
         updates.photoURL = transformedPhotoURL;
       }
 
-      // Update isAdmin status based on email (don't allow manual changes)
+      // Update role flags based on email (don't allow manual changes)
       if (currentUser.email) {
-        dataToUpdate.isAdmin = isAdminEmail(currentUser.email);
+        const roleFlags = getRoleFlags(currentUser.email);
+        dataToUpdate.isAdmin = roleFlags.isAdmin;
+        dataToUpdate.isSemiAdmin = roleFlags.isSemiAdmin;
+        dataToUpdate.role = roleFlags.role;
       }
 
       // Update Firebase Auth profile if displayName or photoURL changed
@@ -189,23 +198,27 @@ export const AuthProvider = ({ children }) => {
       if (showLoading) {
         setProfileLoading(true);
       }
-      const profile = await getUserProfile(userId);
+      let profile = await getUserProfile(userId);
       
-      // Check if user is admin and update profile if needed
+      // Check if user role matches their email and update profile if needed
       if (profile && profile.email) {
-        const shouldBeAdmin = isAdminEmail(profile.email);
-        const isCurrentlyAdmin = profile.isAdmin === true;
-        
-        // If email is admin but profile doesn't have isAdmin set, update it
-        if (shouldBeAdmin && !isCurrentlyAdmin) {
-          console.log('🔄 Updating user profile: setting isAdmin to true for', profile.email);
-          await saveUserProfile(userId, { isAdmin: true }, false);
-          profile.isAdmin = true;
-        } else if (!shouldBeAdmin && isCurrentlyAdmin) {
-          // If email is not admin but profile says it is, update it
-          console.log('🔄 Updating user profile: setting isAdmin to false for', profile.email);
-          await saveUserProfile(userId, { isAdmin: false }, false);
-          profile.isAdmin = false;
+        const roleFlags = getRoleFlags(profile.email);
+        const updates = {};
+
+        if (profile.isAdmin !== roleFlags.isAdmin) {
+          updates.isAdmin = roleFlags.isAdmin;
+        }
+        if (profile.isSemiAdmin !== roleFlags.isSemiAdmin) {
+          updates.isSemiAdmin = roleFlags.isSemiAdmin;
+        }
+        if (profile.role !== roleFlags.role) {
+          updates.role = roleFlags.role;
+        }
+
+        if (Object.keys(updates).length > 0) {
+          console.log('🔄 Updating user profile role flags for', profile.email, updates);
+          await saveUserProfile(userId, updates, false);
+          profile = { ...profile, ...updates };
         }
       }
       

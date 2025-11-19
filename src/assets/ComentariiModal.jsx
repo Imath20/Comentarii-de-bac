@@ -6,13 +6,17 @@ import { Trash2, Edit } from 'lucide-react';
 import '../styles/comentariiModal.scss';
 
 export default function ComentariiModal({ isOpen, comentariu, darkTheme, onClose, onDelete }) {
-  const { userProfile } = useAuth();
+  const { currentUser, userProfile } = useAuth();
   const navigate = useNavigate();
   const [isDeleting, setIsDeleting] = useState(false);
   const isAdmin = userProfile?.isAdmin === true;
+  const isSemiAdmin = userProfile?.isSemiAdmin === true;
+  const isOwner = !!(comentariu?.createdBy && currentUser?.uid === comentariu.createdBy);
+  const canEdit = isAdmin || (isSemiAdmin && isOwner);
+  const canDelete = isAdmin || (isSemiAdmin && isOwner);
 
   const handleDelete = async () => {
-    if (!comentariu?.id) return;
+    if (!comentariu?.id || !canDelete) return;
     
     const confirmed = window.confirm('Ești sigur că vrei să ștergi acest comentariu? Această acțiune nu poate fi anulată.');
     if (!confirmed) return;
@@ -33,7 +37,7 @@ export default function ComentariiModal({ isOpen, comentariu, darkTheme, onClose
   };
 
   const handleEdit = () => {
-    if (!comentariu?.id) return;
+    if (!comentariu?.id || !canEdit) return;
     
     // Encode comment data as URL parameter
     const commentData = encodeURIComponent(JSON.stringify(comentariu));
@@ -249,7 +253,7 @@ export default function ComentariiModal({ isOpen, comentariu, darkTheme, onClose
                     <div className={`comentarii-modal-text ${darkTheme ? 'dark-theme' : ''}`}>
                         {renderContent()}
                     </div>
-                    {isAdmin && (
+                    {(canEdit || canDelete) && (
                         <div className="comentarii-modal-footer" style={{
                             marginTop: '24px',
                             paddingTop: '16px',
@@ -258,54 +262,58 @@ export default function ComentariiModal({ isOpen, comentariu, darkTheme, onClose
                             justifyContent: 'flex-end',
                             gap: '12px'
                         }}>
-                            <button
-                                onClick={handleEdit}
-                                className={`comentarii-modal-edit ${darkTheme ? 'dark-theme' : ''}`}
-                                style={{
-                                    padding: '10px 20px',
-                                    borderRadius: '8px',
-                                    border: 'none',
-                                    background: darkTheme ? '#4e2e1e' : '#e3f2fd',
-                                    color: darkTheme ? '#64b5f6' : '#1976d2',
-                                    cursor: 'pointer',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    gap: '8px',
-                                    fontSize: '0.9rem',
-                                    fontWeight: 500,
-                                    transition: 'all 0.2s',
-                                    outline: 'none',
-                                }}
-                                title="Editează comentariul"
-                            >
-                                <Edit size={16} />
-                                Editează comentariul
-                            </button>
-                            <button
-                                onClick={handleDelete}
-                                disabled={isDeleting}
-                                className={`comentarii-modal-delete ${darkTheme ? 'dark-theme' : ''}`}
-                                style={{
-                                    padding: '10px 20px',
-                                    borderRadius: '8px',
-                                    border: 'none',
-                                    background: darkTheme ? '#6a4322' : '#ffebee',
-                                    color: darkTheme ? '#ff6b6b' : '#c62828',
-                                    cursor: isDeleting ? 'not-allowed' : 'pointer',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    gap: '8px',
-                                    fontSize: '0.9rem',
-                                    fontWeight: 500,
-                                    opacity: isDeleting ? 0.6 : 1,
-                                    transition: 'all 0.2s',
-                                    outline: 'none',
-                                }}
-                                title="Șterge comentariul"
-                            >
-                                <Trash2 size={16} />
-                                {isDeleting ? 'Se șterge...' : 'Șterge comentariul'}
-                            </button>
+                            {canEdit && (
+                              <button
+                                  onClick={handleEdit}
+                                  className={`comentarii-modal-edit ${darkTheme ? 'dark-theme' : ''}`}
+                                  style={{
+                                      padding: '10px 20px',
+                                      borderRadius: '8px',
+                                      border: 'none',
+                                      background: darkTheme ? '#4e2e1e' : '#e3f2fd',
+                                      color: darkTheme ? '#64b5f6' : '#1976d2',
+                                      cursor: 'pointer',
+                                      display: 'flex',
+                                      alignItems: 'center',
+                                      gap: '8px',
+                                      fontSize: '0.9rem',
+                                      fontWeight: 500,
+                                      transition: 'all 0.2s',
+                                      outline: 'none',
+                                  }}
+                                  title="Editează comentariul"
+                              >
+                                  <Edit size={16} />
+                                  Editează comentariul
+                              </button>
+                            )}
+                            {canDelete && (
+                              <button
+                                  onClick={handleDelete}
+                                  disabled={isDeleting}
+                                  className={`comentarii-modal-delete ${darkTheme ? 'dark-theme' : ''}`}
+                                  style={{
+                                      padding: '10px 20px',
+                                      borderRadius: '8px',
+                                      border: 'none',
+                                      background: darkTheme ? '#6a4322' : '#ffebee',
+                                      color: darkTheme ? '#ff6b6b' : '#c62828',
+                                      cursor: isDeleting ? 'not-allowed' : 'pointer',
+                                      display: 'flex',
+                                      alignItems: 'center',
+                                      gap: '8px',
+                                      fontSize: '0.9rem',
+                                      fontWeight: 500,
+                                      opacity: isDeleting ? 0.6 : 1,
+                                      transition: 'all 0.2s',
+                                      outline: 'none',
+                                  }}
+                                  title="Șterge comentariul"
+                              >
+                                  <Trash2 size={16} />
+                                  {isDeleting ? 'Se șterge...' : 'Șterge comentariul'}
+                              </button>
+                            )}
                         </div>
                     )}
                 </div>

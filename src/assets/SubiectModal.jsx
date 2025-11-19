@@ -7,13 +7,17 @@ import '../styles/subiectModal.scss';
 
 export default function SubiectModal({ isOpen, subiect, darkTheme, onClose, onDelete }) {
     const navigate = useNavigate();
-    const { userProfile } = useAuth();
+    const { currentUser, userProfile } = useAuth();
     const [isDeleting, setIsDeleting] = useState(false);
-    // Butoanele admin sunt vizibile DOAR pentru utilizatorii cu isAdmin === true
     const isAdmin = userProfile?.isAdmin === true;
+    const isSemiAdmin = userProfile?.isSemiAdmin === true;
+    const ownerId = subiect?.createdBy;
+    const isOwner = !!(ownerId && currentUser?.uid === ownerId);
+    const canEdit = isAdmin || (isSemiAdmin && isOwner);
+    const canDelete = isAdmin || (isSemiAdmin && isOwner);
 
     const handleDelete = async () => {
-        if (!subiect?.id) {
+        if (!subiect?.id || !canDelete) {
             // If subject doesn't have an ID (from static file), show error
             alert('Acest subiect nu poate fi șters deoarece nu are un ID. Doar subiectele adăugate prin panoul de administrare pot fi șterse.');
             return;
@@ -38,7 +42,7 @@ export default function SubiectModal({ isOpen, subiect, darkTheme, onClose, onDe
     };
 
     const handleEdit = () => {
-        if (!subiect?.id) {
+        if (!subiect?.id || !canEdit) {
             // If subject doesn't have an ID, show error
             alert('Acest subiect nu poate fi editat deoarece nu are un ID. Doar subiectele adăugate prin panoul de administrare pot fi editate.');
             return;
@@ -180,25 +184,29 @@ export default function SubiectModal({ isOpen, subiect, darkTheme, onClose, onDe
                                 Verifică cu AI
                             </button>
                         </div>
-                        {isAdmin && (
+                        {(canEdit || canDelete) && (
                             <div className="subiecte-modal-admin-footer">
-                                <button
-                                    onClick={handleEdit}
-                                    className={`subiecte-modal-edit ${darkTheme ? 'dark-theme' : ''}`}
-                                    title="Editează subiectul"
-                                >
-                                    <Edit size={16} />
-                                    Editează subiectul
-                                </button>
-                                <button
-                                    onClick={handleDelete}
-                                    disabled={isDeleting}
-                                    className={`subiecte-modal-delete ${darkTheme ? 'dark-theme' : ''}`}
-                                    title="Șterge subiectul"
-                                >
-                                    <Trash2 size={16} />
-                                    {isDeleting ? 'Se șterge...' : 'Șterge subiectul'}
-                                </button>
+                                {canEdit && (
+                                  <button
+                                      onClick={handleEdit}
+                                      className={`subiecte-modal-edit ${darkTheme ? 'dark-theme' : ''}`}
+                                      title="Editează subiectul"
+                                  >
+                                      <Edit size={16} />
+                                      Editează subiectul
+                                  </button>
+                                )}
+                                {canDelete && (
+                                  <button
+                                      onClick={handleDelete}
+                                      disabled={isDeleting}
+                                      className={`subiecte-modal-delete ${darkTheme ? 'dark-theme' : ''}`}
+                                      title="Șterge subiectul"
+                                  >
+                                      <Trash2 size={16} />
+                                      {isDeleting ? 'Se șterge...' : 'Șterge subiectul'}
+                                  </button>
+                                )}
                             </div>
                         )}
                     </div>
