@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../firebase/AuthContext';
-import { isAdminEmail } from '../utils/adminUtils';
+import { isAdminEmail, isSemiAdminEmail } from '../utils/adminUtils';
 import { deleteAllNotifications } from '../firebase/notificationsService';
 import '../styles/commandPrompt.scss';
 
@@ -16,8 +16,9 @@ export default function CommandPrompt() {
   const inputRef = useRef(null);
   const outputRef = useRef(null);
   const navigate = useNavigate();
-  const { logout, userProfile, currentUser } = useAuth();
+  const { logout, userProfile, currentUser, loadUserProfile } = useAuth();
   const inspectModeRef = useRef(false);
+  const shapeshiftTimerRef = useRef(null);
 
   useEffect(() => {
     // Update theme when it changes
@@ -61,6 +62,15 @@ export default function CommandPrompt() {
       outputRef.current.scrollTop = outputRef.current.scrollHeight;
     }
   }, [output]);
+
+  // Cleanup shapeshift timer on unmount
+  useEffect(() => {
+    return () => {
+      if (shapeshiftTimerRef.current) {
+        clearTimeout(shapeshiftTimerRef.current);
+      }
+    };
+  }, []);
 
   const addOutput = (message, type = 'info') => {
     setOutput((prev) => [...prev, { message, type, timestamp: new Date() }]);
@@ -342,9 +352,108 @@ export default function CommandPrompt() {
         }
         break;
 
+      case 'shapeshift':
+        // Only admins can use shapeshift (not semi-admins)
+        // Check original role from email, not from potentially shapeshifted profile
+        const userEmail = currentUser?.email;
+        if (!userEmail) {
+          addOutput('Nu ești autentificat.', 'error');
+          break;
+        }
+        
+        const originalIsAdmin = isAdminEmail(userEmail);
+        const originalIsSemiAdmin = isSemiAdminEmail(userEmail);
+        
+        if (!originalIsAdmin || originalIsSemiAdmin) {
+          addOutput('Nu ai permisiuni pentru această comandă. Doar administratorii pot folosi shapeshift.', 'error');
+          break;
+        }
+
+        // Parse command: shapeshift semi-admin x or shapeshift member x
+        const shapeshiftParts = args.trim().split(/\s+/);
+        if (shapeshiftParts.length !== 2) {
+          addOutput('Utilizare: shapeshift <semi-admin|member> <secunde>', 'error');
+          addOutput('Exemplu: shapeshift semi-admin 400', 'info');
+          addOutput('Exemplu: shapeshift member 300', 'info');
+          break;
+        }
+
+        const targetRole = shapeshiftParts[0].toLowerCase();
+        const seconds = parseInt(shapeshiftParts[1], 10);
+
+        if (targetRole !== 'semi-admin' && targetRole !== 'member') {
+          addOutput('Rol invalid. Folosește "semi-admin" sau "member".', 'error');
+          break;
+        }
+
+        if (isNaN(seconds) || seconds <= 0) {
+          addOutput('Numărul de secunde trebuie să fie un număr pozitiv.', 'error');
+          break;
+        }
+
+        // Clear any existing shapeshift timer
+        if (shapeshiftTimerRef.current) {
+          clearTimeout(shapeshiftTimerRef.current);
+          shapeshiftTimerRef.current = null;
+        }
+
+        // Store shapeshift state in localStorage
+        const expiresAt = Date.now() + (seconds * 1000);
+        const shapeshiftData = {
+          role: targetRole === 'semi-admin' ? 'semi-admin' : 'user',
+          expiresAt: expiresAt,
+          originalRole: 'admin'
+        };
+        localStorage.setItem('shapeshift', JSON.stringify(shapeshiftData));
+
+        // Set timer to auto-restore
+        shapeshiftTimerRef.current = setTimeout(() => {
+          localStorage.removeItem('shapeshift');
+          if (currentUser && loadUserProfile) {
+            loadUserProfile(currentUser.uid, false).catch(error => {
+              console.error('Error reloading user profile after shapeshift:', error);
+            });
+          }
+          addOutput('Shapeshift expirat. Rolul tău a fost restaurat la admin.', 'success');
+          shapeshiftTimerRef.current = null;
+        }, seconds * 1000);
+
+        const roleName = targetRole === 'semi-admin' ? 'semi-admin' : 'membru';
+        addOutput(`Shapeshift activat! Ești acum ${roleName} pentru ${seconds} secunde.`, 'success');
+        addOutput(`Scrie "end" pentru a termina shapeshift-ul mai devreme.`, 'info');
+        break;
+
+      case 'end':
+        // Check if shapeshift is active
+        const activeShapeshift = localStorage.getItem('shapeshift');
+        if (!activeShapeshift) {
+          addOutput('Nu există un shapeshift activ.', 'error');
+          break;
+        }
+
+        // Clear shapeshift
+        localStorage.removeItem('shapeshift');
+        
+        // Clear timer
+        if (shapeshiftTimerRef.current) {
+          clearTimeout(shapeshiftTimerRef.current);
+          shapeshiftTimerRef.current = null;
+        }
+
+        // Reload profile to restore original role
+        if (currentUser && loadUserProfile) {
+          loadUserProfile(currentUser.uid, false).catch(error => {
+            console.error('Error reloading user profile after ending shapeshift:', error);
+          });
+        }
+
+        addOutput('Shapeshift terminat. Rolul tău a fost restaurat la admin.', 'success');
+        break;
+
       case 'help':
         const isAdmin = userProfile?.isAdmin === true || 
           (currentUser?.email && isAdminEmail(currentUser.email));
+        const isSemiAdmin = userProfile?.isSemiAdmin === true;
         
         addOutput('Comenzi disponibile:', 'info');
         addOutput('  goto <path> - Navighează la pagina (ex: goto home, goto scriitori)', 'info');
@@ -356,8 +465,10 @@ export default function CommandPrompt() {
         addOutput('  exit inspect - Dezactivează modul de inspectare', 'info');
         addOutput('  clear - Șterge ieșirea din linia de comandă', 'info');
         addOutput('  clear cache - Șterge cache-ul browserului', 'info');
-        if (isAdmin) {
+        if (isAdmin && !isSemiAdmin) {
           addOutput('  clear history - Șterge istoricul notificărilor (doar admini)', 'info');
+          addOutput('  shapeshift <semi-admin|member> <secunde> - Schimbă temporar rolul (doar admini)', 'info');
+          addOutput('  end - Termină shapeshift-ul mai devreme (doar admini)', 'info');
         }
         addOutput('  time - Afișează ora și data curentă', 'info');
         addOutput('  delog - Deconectează contul', 'info');

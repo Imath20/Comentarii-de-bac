@@ -11,14 +11,51 @@ const NotificationsButton = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [notifications, setNotifications] = useState([]);
   const [unreadCount, setUnreadCount] = useState(0);
+  const [hasActiveShapeshift, setHasActiveShapeshift] = useState(false);
 
-  // Only show for admins (not semi-admins)
+  // Check if shapeshift is active
+  const getShapeshiftOverride = () => {
+    try {
+      const shapeshiftData = localStorage.getItem('shapeshift');
+      if (!shapeshiftData) return null;
+      
+      const parsed = JSON.parse(shapeshiftData);
+      const now = Date.now();
+      
+      // Check if shapeshift has expired
+      if (parsed.expiresAt && now > parsed.expiresAt) {
+        localStorage.removeItem('shapeshift');
+        return null;
+      }
+      
+      return parsed;
+    } catch (error) {
+      return null;
+    }
+  };
+
+  // Monitor shapeshift changes
+  useEffect(() => {
+    const checkShapeshift = () => {
+      const shapeshift = getShapeshiftOverride();
+      setHasActiveShapeshift(shapeshift !== null);
+    };
+
+    // Check immediately
+    checkShapeshift();
+
+    // Check every second for changes
+    const interval = setInterval(checkShapeshift, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Only show for admins (not semi-admins) and when shapeshift is not active
   // Check both userProfile and currentUser email as fallback
   const isAdmin = userProfile?.isAdmin === true || 
     (currentUser?.email && isAdminEmail(currentUser.email));
 
   useEffect(() => {
-    if (!isAdmin) return;
+    if (!isAdmin || hasActiveShapeshift) return;
 
     // Subscribe to notifications
     const unsubscribe = subscribeToNotifications((notifs) => {
@@ -30,12 +67,12 @@ const NotificationsButton = () => {
     return () => {
       if (unsubscribe) unsubscribe();
     };
-  }, [isAdmin]);
+  }, [isAdmin, hasActiveShapeshift]);
 
-  // Don't show if not admin - must be after all hooks
+  // Don't show if not admin or if shapeshift is active - must be after all hooks
   // Show button only if we're sure user is admin (either from profile or email check)
   // Allow showing even if profile is loading but we have email confirmation
-  if (!isAdmin) {
+  if (!isAdmin || hasActiveShapeshift) {
     return null;
   }
 

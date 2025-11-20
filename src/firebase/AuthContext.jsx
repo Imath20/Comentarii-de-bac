@@ -25,6 +25,7 @@ export const useAuth = () => {
 export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
   const [userProfile, setUserProfile] = useState(null);
+  const [modifiedUserProfile, setModifiedUserProfile] = useState(null);
   const [loading, setLoading] = useState(true);
   const [profileLoading, setProfileLoading] = useState(false);
 
@@ -233,6 +234,51 @@ export const AuthProvider = ({ children }) => {
     }
   }, [saveUserProfile]);
 
+  // Helper function to get shapeshift override from localStorage
+  const getShapeshiftOverride = () => {
+    try {
+      const shapeshiftData = localStorage.getItem('shapeshift');
+      if (!shapeshiftData) return null;
+      
+      const parsed = JSON.parse(shapeshiftData);
+      const now = Date.now();
+      
+      // Check if shapeshift has expired
+      if (parsed.expiresAt && now > parsed.expiresAt) {
+        localStorage.removeItem('shapeshift');
+        return null;
+      }
+      
+      return parsed;
+    } catch (error) {
+      console.error('Error reading shapeshift data:', error);
+      return null;
+    }
+  };
+
+  // Helper function to apply shapeshift override to profile
+  const applyShapeshiftOverride = (profile) => {
+    if (!profile) return profile;
+    
+    const shapeshift = getShapeshiftOverride();
+    if (!shapeshift) return profile;
+    
+    // Create a modified profile with shapeshift role
+    const modifiedProfile = { ...profile };
+    
+    if (shapeshift.role === 'semi-admin') {
+      modifiedProfile.isAdmin = false;
+      modifiedProfile.isSemiAdmin = true;
+      modifiedProfile.role = 'semi-admin';
+    } else if (shapeshift.role === 'member' || shapeshift.role === 'user') {
+      modifiedProfile.isAdmin = false;
+      modifiedProfile.isSemiAdmin = false;
+      modifiedProfile.role = 'user';
+    }
+    
+    return modifiedProfile;
+  };
+
   useEffect(() => {
     // Set loading to false immediately to allow app to render
     setLoading(false);
@@ -248,15 +294,48 @@ export const AuthProvider = ({ children }) => {
         });
       } else {
         setUserProfile(null);
+        // Clear shapeshift on logout
+        localStorage.removeItem('shapeshift');
       }
     });
 
     return unsubscribe;
   }, [loadUserProfile]);
 
+  // Effect to apply shapeshift override when userProfile changes
+  useEffect(() => {
+    if (userProfile) {
+      const modifiedProfile = applyShapeshiftOverride(userProfile);
+      setModifiedUserProfile(modifiedProfile);
+    } else {
+      setModifiedUserProfile(null);
+    }
+  }, [userProfile]);
+
+  // Effect to check for expired shapeshift and update profile accordingly
+  useEffect(() => {
+    if (!userProfile || !currentUser) return;
+    
+    const checkShapeshift = () => {
+      const shapeshift = getShapeshiftOverride();
+      // If shapeshift was active but now expired, reload profile
+      // The applyShapeshiftOverride will automatically remove the override
+      // when shapeshift is null, so we just need to trigger a re-render
+      // by updating the modified profile
+      if (!shapeshift) {
+        const modifiedProfile = applyShapeshiftOverride(userProfile);
+        setModifiedUserProfile(modifiedProfile);
+      }
+    };
+
+    // Check every second for expired shapeshift
+    const interval = setInterval(checkShapeshift, 1000);
+    return () => clearInterval(interval);
+  }, [userProfile, currentUser]);
+
   const value = {
     currentUser,
-    userProfile,
+    userProfile: modifiedUserProfile,
     loginWithGoogle,
     loginWithEmailPassword,
     signUpWithEmailPassword,
