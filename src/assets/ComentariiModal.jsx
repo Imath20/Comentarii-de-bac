@@ -12,8 +12,8 @@ export default function ComentariiModal({ isOpen, comentariu, darkTheme, onClose
   const isAdmin = userProfile?.isAdmin === true;
   const isSemiAdmin = userProfile?.isSemiAdmin === true;
   const isOwner = !!(comentariu?.createdBy && currentUser?.uid === comentariu.createdBy);
-  const canEdit = isAdmin || (isSemiAdmin && isOwner);
-  const canDelete = isAdmin || (isSemiAdmin && isOwner);
+  const canEdit = isAdmin || isSemiAdmin;
+  const canDelete = isAdmin;
 
   const handleDelete = async () => {
     if (!comentariu?.id || !canDelete) return;

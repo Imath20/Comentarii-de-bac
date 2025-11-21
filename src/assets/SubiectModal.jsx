@@ -14,7 +14,7 @@ export default function SubiectModal({ isOpen, subiect, darkTheme, onClose, onDe
     const ownerId = subiect?.createdBy;
     const isOwner = !!(ownerId && currentUser?.uid === ownerId);
     const canEdit = isAdmin || (isSemiAdmin && isOwner);
-    const canDelete = isAdmin || (isSemiAdmin && isOwner);
+    const canDelete = isAdmin;
 
     const handleDelete = async () => {
         if (!subiect?.id || !canDelete) {

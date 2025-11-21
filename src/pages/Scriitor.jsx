@@ -297,10 +297,15 @@ const Scriitor = () => {
   const currentUserId = currentUser?.uid || null;
   const isAdmin = userProfile?.isAdmin === true;
   const isSemiAdmin = userProfile?.isSemiAdmin === true;
-  const canEditResource = useCallback((ownerId) => {
+  const canEditResource = useCallback((ownerId, { allowSemiAdminFullAccess = false } = {}) => {
     if (isAdmin) return true;
-    if (isSemiAdmin && ownerId && currentUserId) {
-      return ownerId === currentUserId;
+    if (isSemiAdmin) {
+      if (allowSemiAdminFullAccess) {
+        return true;
+      }
+      if (ownerId && currentUserId) {
+        return ownerId === currentUserId;
+      }
     }
     return false;
   }, [isAdmin, isSemiAdmin, currentUserId]);
@@ -1280,8 +1285,8 @@ const Scriitor = () => {
                     {post.comments.map((c, idx) => {
                       const friendData = getScriitorByKey(c.key);
                       const commentOwnerId = c.createdBy || post.createdBy || data?.createdBy;
-                      const canManageComment = canEditResource(commentOwnerId);
-                      const canDeleteComment = canManageComment || isAdmin;
+                      const canManageComment = canEditResource(commentOwnerId, { allowSemiAdminFullAccess: true });
+                      const canDeleteComment = isAdmin;
                       return (
                       <div key={idx} className="scriitor-comment">
                         <img src={friendData?.img} alt={c.author} />
@@ -1333,7 +1338,8 @@ const Scriitor = () => {
                 )}
                 {(() => {
                   const postOwnerId = post.createdBy || data?.createdBy;
-                  const canManagePost = canEditResource(postOwnerId);
+                  const canManagePost = canEditResource(postOwnerId, { allowSemiAdminFullAccess: true });
+                  const canDeletePost = isAdmin;
                   if (!canManagePost) {
                     return null;
                   }
@@ -1349,28 +1355,30 @@ const Scriitor = () => {
                     >
                       ✏️ Editează
                     </button>
-                    <button
-                      onClick={async (e) => {
-                        e.stopPropagation();
-                        if (window.confirm('Ești sigur că vrei să ștergi această postare?')) {
-                          try {
-                            const { deletePostFromScriitor } = await import('../firebase/scriitoriService');
-                            await deletePostFromScriitor(name, post.id);
-                            const updatedData = await fetchScriitor(name);
-                            if (updatedData) {
-                              setData(updatedData);
+                    {canDeletePost && (
+                      <button
+                        onClick={async (e) => {
+                          e.stopPropagation();
+                          if (window.confirm('Ești sigur că vrei să ștergi această postare?')) {
+                            try {
+                              const { deletePostFromScriitor } = await import('../firebase/scriitoriService');
+                              await deletePostFromScriitor(name, post.id);
+                              const updatedData = await fetchScriitor(name);
+                              if (updatedData) {
+                                setData(updatedData);
+                              }
+                            } catch (error) {
+                              console.error('Error deleting post:', error);
+                              alert('Eroare la ștergerea postării');
                             }
-                          } catch (error) {
-                            console.error('Error deleting post:', error);
-                            alert('Eroare la ștergerea postării');
                           }
-                        }
-                      }}
-                      className="scriitor-post-delete-button"
-                      title="Șterge postare"
-                    >
-                      🗑️ Șterge
-                    </button>
+                        }}
+                        className="scriitor-post-delete-button"
+                        title="Șterge postare"
+                      >
+                        🗑️ Șterge
+                      </button>
+                    )}
                   </div>
                   );
                 })()}

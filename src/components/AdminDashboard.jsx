@@ -64,10 +64,15 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
   const isSemiAdminUser = userProfile?.isSemiAdmin === true;
   const isLimitedAdminView = !isAdminUser && isSemiAdminUser;
 
-  const canEditResource = useCallback((ownerId) => {
+  const canEditResource = useCallback((ownerId, { allowSemiAdminFullAccess = false } = {}) => {
     if (isAdminUser) return true;
-    if (isSemiAdminUser && ownerId && currentUserId) {
-      return ownerId === currentUserId;
+    if (isSemiAdminUser) {
+      if (allowSemiAdminFullAccess) {
+        return true;
+      }
+      if (ownerId && currentUserId) {
+        return ownerId === currentUserId;
+      }
     }
     return false;
   }, [isAdminUser, isSemiAdminUser, currentUserId]);
@@ -92,8 +97,8 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
     return enriched;
   }, [currentUserId, userEmail, userDisplayName]);
 
-  const ensureCanEdit = useCallback((ownerId, errorMessage) => {
-    if (!canEditResource(ownerId)) {
+  const ensureCanEdit = useCallback((ownerId, errorMessage, options = {}) => {
+    if (!canEditResource(ownerId, options)) {
       throw new Error(errorMessage || 'Nu ai permisiuni pentru a modifica această resursă.');
     }
   }, [canEditResource]);
@@ -512,7 +517,7 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
         if (!comentariuForm.id) {
           throw new Error('ID-ul comentariului este obligatoriu pentru editare');
         }
-        ensureCanEdit(comentariuForm.createdBy, 'Nu poți edita un comentariu creat de altcineva.');
+        ensureCanEdit(comentariuForm.createdBy, 'Nu poți edita un comentariu creat de altcineva.', { allowSemiAdminFullAccess: true });
         const payload = attachOwnershipMetadata({
           ...comentariuForm,
         });
@@ -1007,7 +1012,7 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
       });
 
       if (scriitorView === 'post-edit') {
-        ensureCanEdit(postForm.createdBy || scriitorOwnerId, 'Nu poți edita o postare creată de altcineva.');
+        ensureCanEdit(postForm.createdBy || scriitorOwnerId, 'Nu poți edita o postare creată de altcineva.', { allowSemiAdminFullAccess: true });
         await updatePostForScriitor(selectedScriitor.key, postForm.id, postData);
         setMessage({ type: 'success', text: 'Postarea a fost actualizată cu succes!' });
         
@@ -1127,16 +1132,17 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
   };
 
   const handleDeleteScriitor = async (scriitor) => {
+    if (!isAdminUser) {
+      setMessage({ type: 'error', text: 'Doar administratorii pot șterge scriitori.' });
+      return;
+    }
     if (!scriitor) return;
     const key = scriitor.key || scriitor.id;
     if (!key) {
       setMessage({ type: 'error', text: 'Nu s-a putut identifica scriitorul pentru ștergere.' });
       return;
     }
-    if (!canEditResource(scriitor.createdBy)) {
-      setMessage({ type: 'error', text: 'Poți șterge doar scriitorii creați de tine.' });
-      return;
-    }
+    // Admins can delete any scriitor; semi-admins are blocked earlier
     if (!window.confirm('Ești sigur că vrei să ștergi acest scriitor?')) return;
 
     try {
@@ -1171,17 +1177,17 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
   };
 
   const handleDeletePost = async (postId) => {
+    if (!isAdminUser) {
+      setMessage({ type: 'error', text: 'Doar administratorii pot șterge postări.' });
+      return;
+    }
     if (!selectedScriitor) return;
     const post = selectedScriitor.posts?.find((p) => p.id === postId);
     if (!post) {
       setMessage({ type: 'error', text: 'Postarea nu a fost găsită.' });
       return;
     }
-    const postOwnerId = post?.createdBy || selectedScriitor.createdBy;
-    if (!canEditResource(postOwnerId)) {
-      setMessage({ type: 'error', text: 'Poți șterge doar postările create de tine.' });
-      return;
-    }
+    // Admins can delete any post; semi-admins are blocked earlier
     if (!window.confirm('Ești sigur că vrei să ștergi această postare?')) return;
 
     try {
@@ -1801,7 +1807,7 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
                         Editează
                       </button>
                       )}
-                      {canManageScriitor && (
+                      {isAdminUser && (
                         <button 
                           onClick={() => handleDeleteScriitor(scriitor)}
                           className="admin-submit-button"
@@ -2350,12 +2356,14 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
                             >
                               Editează
                             </button>
-                            <button 
-                              onClick={() => handleDeletePost(post.id)}
-                              className="admin-post-delete-button"
-                            >
-                              Șterge
-                            </button>
+                            {isAdminUser && (
+                              <button 
+                                onClick={() => handleDeletePost(post.id)}
+                                className="admin-post-delete-button"
+                              >
+                                Șterge
+                              </button>
+                            )}
                           </>
                         )}
                       </div>
