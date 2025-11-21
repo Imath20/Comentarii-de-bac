@@ -1,8 +1,8 @@
 import pdfplumber
 import json
 
-pdf_path = "public/Pdf/toaz.info-amintiri-de-la-junimea-pr_b4227656b70e69927f9c4d43c287d550.pdf"
-output_json = "src/data/opere/amintiri-de-la-junimea-din-iasi.json"
+pdf_path = "public/Pdf/camil-petrescu-ultima-noapte-de-dragoste_-c3aentc3a2ia-noapte-de-razboi.pdf"
+output_json = "src/data/opere/ultima-noapte-dragoste.json"
 
 pages = []
 with pdfplumber.open(pdf_path) as pdf:

@@ -59,7 +59,7 @@ const BOOKS = {
     path: "/src/data/opere/ultima-noapte-dragoste.json",
     title: "Ultima noapte de dragoste, intiia noapte de razboi",
     bookmarkKey: "ultima_noapte_dragoste_bookmark",
-    maxWidth: "600px",
+    maxWidth: "570px",
     width: "80vw"
   },
   "luceafarul": {
