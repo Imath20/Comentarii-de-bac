@@ -5,6 +5,34 @@ import { deleteComentariu } from '../firebase/comentariiService';
 import { Trash2, Edit } from 'lucide-react';
 import '../styles/comentariiModal.scss';
 
+// Helper function to convert hex color to rgba with reduced alpha
+const hexToRgba = (color, alpha = 0.5) => {
+  // If already rgba, return as is (but we could also parse and adjust alpha)
+  if (color.startsWith('rgba')) {
+    return color;
+  }
+  
+  // If already rgb, convert to rgba
+  if (color.startsWith('rgb(')) {
+    return color.replace('rgb(', 'rgba(').replace(')', `, ${alpha})`);
+  }
+  
+  // Handle hex colors
+  let hex = color.replace('#', '');
+  
+  // Handle short hex (e.g., #FFF -> #FFFFFF)
+  if (hex.length === 3) {
+    hex = hex.split('').map(char => char + char).join('');
+  }
+  
+  // Parse hex to RGB
+  const r = parseInt(hex.substring(0, 2), 16);
+  const g = parseInt(hex.substring(2, 4), 16);
+  const b = parseInt(hex.substring(4, 6), 16);
+  
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+};
+
 export default function ComentariiModal({ isOpen, comentariu, darkTheme, onClose, onDelete }) {
   const { currentUser, userProfile } = useAuth();
   const navigate = useNavigate();
@@ -132,15 +160,18 @@ export default function ComentariiModal({ isOpen, comentariu, darkTheme, onClose
                             
                             // Only set color if explicitly specified in formats
                             // Otherwise, let CSS handle it based on dark theme
+                            // Apply reduced alpha for text color
                             if (segment.formats.color) {
-                                styles.color = segment.formats.color;
+                                styles.color = hexToRgba(segment.formats.color, 0.7);
                             }
                             
+                            // Apply reduced alpha for highlight
                             if (segment.formats.highlight) {
-                                styles.backgroundColor = segment.formats.highlight;
+                                styles.backgroundColor = hexToRgba(segment.formats.highlight, 0.5);
                             }
+                            // Apply reduced alpha for underline
                             if (segment.formats.underline) {
-                                styles.borderBottom = `2px solid ${segment.formats.underline}`;
+                                styles.borderBottom = `2px solid ${hexToRgba(segment.formats.underline, 0.5)}`;
                             }
                             if (segment.formats.bold) {
                                 styles.fontWeight = 'bold';
@@ -164,11 +195,12 @@ export default function ComentariiModal({ isOpen, comentariu, darkTheme, onClose
                     };
 
                     const imageAlignment = block.image?.alignment || 'left';
+                    const isRemovedBg = block.image?.removedBg || false;
                     
                     return (
                         <div key={blockIndex} className={`comentarii-content-block ${block.image ? `has-image-${imageAlignment}` : ''}`}>
                             {block.image && (
-                                <div className={`comentarii-content-image ${imageAlignment}`}>
+                                <div className={`comentarii-content-image ${imageAlignment} ${isRemovedBg ? 'removed-bg' : ''}`}>
                                     <img src={block.image.url} alt="Comentariu" />
                                 </div>
                             )}

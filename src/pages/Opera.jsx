@@ -407,7 +407,37 @@ const OPERA_DETAILS = {
       '"Harap Alb, Harap Alb, / Călătorul cel mai bun"',
       '"Să nu te uiți înapoi!"',
       '"Bunătatea se răsplătește mereu"'
-    ]
+    ],
+    rezumat: {
+      incipit: 'Într-o lume în care realul și miraculosul se întrepătrund firesc, Creangă așază începutul poveștii într-un spațiu patriarhal, familiar basmului românesc. Craiul, stăpân dispre vechime peste un ținut tihnit, primește o chemare hotărâtoare de la fratele său, împăratul Verde: acesta, lipsit de moștenitor, cere să-i fie trimis cel mai vrednic dintre feciori.\n\nCei doi fii mai mari, umbrați de orgoliu și lipsă de profunzime, eșuează lamentabil în fața probei ursului — o probă inițiatică, menită să le dezvăluie fibra lăuntrică. Doar mezinul, cel ce se arată milostiv față de bătrâna-înțeleaptă, Sfânta Duminică, primește în dar ceea ce nu se cumpără: protecție, sfat și un cal năzdrăvan, alter-egoul său spiritual.\n\nAstfel e deschis un drum care nu e doar geografic, ci simbolic — drumul devenirii.',
+      intriga: 'În punctul acesta de vulnerabilitate, când tânărul a pornit, încă neștiutor, spre încercările vieții, apare figura amenințătoare și perfidă a Spânului. Fântâna în care îl coboară nu e doar o capcană, ci un spațiu al coborârii în sine, al morții simbolice. Iar jurământul pe care îl smulge mezinului îl transformă în „Harap-Alb", nume ce poartă paradoxul condiției sale: sluga neagră întru suferință, dar albă la suflet.\n\nÎn acest moment, ordinea firească se răstoarnă, și intriga basmului prinde contur.',
+      desfasurarea: {
+        sectiuni: [
+          {
+            subtitlu: 'La împăratul Verde – încercările maturizării',
+            text: 'Ajuns la împăratul Verde, Spânul se substituie eroului, dar își aruncă adevărata victimă — pe Harap-Alb — în vâltoarea probelor inițiatice.\n\nPrima probă, aducerea sălăților din Grădina Ursului, devine o confruntare cu primejdia pură, cu animalitatea neîmblânzită. Ajutat de calul năzdrăvan și de disciplina căpătată, Harap-Alb răpunge ursul și trece de capcanele grădinii.\n\nA doua probă, pielea cerbului fermecat, cu cap luminând orbitor, reprezintă confruntarea cu iluzia și dezorientarea. Cu sprijinul Sfintei Duminici, Harap-Alb pătrunde prin labirintul pădurii bântuite și învinge creatura dominată de magie.'
+          },
+          {
+            subtitlu: 'Drumul spre împăratul Roș – extinderea orizontului inițiatic',
+            text: 'A treia probă, „să aduci fata împăratului Roș", deschide un alt registru al încercărilor — nu doar forță, ci inteligență, prietenie, solidaritate.\n\nÎn pădurea care leagă cele două imperii, Harap-Alb întâlnește ființele cu puteri hiperbolice: Gerilă, Flămânzilă, Setilă, Ochilă, Păsărilă. Ele devin simbolurile energiilor extreme pe care omul le poate stăpâni doar prin cumpătare și caracter.'
+          },
+          {
+            subtitlu: 'La împăratul Roș – probele imposibilului',
+            text: 'Împăratul Roș, ființă orgolioasă și vicleană, ridică bariere din ce în ce mai greu de trecut:',
+            listaProbe: [
+              'sortarea semințelor într-o noapte – rezolvată de albinele Sfintei Duminici;',
+              'fierul înroșit – răcit de Gerilă;',
+              'ospățul colosal – devorat de Flămânzilă;',
+              'butoiul fără fund – secat de Setilă;',
+              'ascunderea fetei, realizată prin farmece – dejucată de privirea lui Ochilă și zborul lui Păsărilă.'
+            ],
+            textFinal: 'Prin aceste probe, fata împăratului Roș vede limpede adevărul: între sluga smerită și stăpânul ei impostor, doar Harap-Alb este purtătorul luminii morale.'
+          }
+        ]
+      },
+      punctulCulminant: 'Întoarcerea la împăratul Verde aduce cu sine inevitabilul. Spânul, simțind că minciuna i se apropie de sfârșit, îl obligă pe Harap-Alb să i se supună pentru ultima dată. Când tânărul refuză, Spânul îl lovește cu paloșul, iar Harap-Alb cade sub povara destinului său tragic.\n\nEste momentul în care masca impostorului se sfărâmă: fata împăratului Roș spune tot, iar calul năzdrăvan, într-o izbucnire justițiară, îl răpune pe Spân, restabilind echilibrul cosmic al poveștii.',
+      deznodamant: 'Moartea eroului e doar o treaptă; Sfânta Duminică îl întoarce la viață cu apa vie și apa moartă, refăcând ordinea lumii. Împăratul Verde recunoaște în el adevăratul moștenitor, iar Harap-Alb își primește locul cuvenit, atât în împărăție, cât și în ritmul firesc al lumii.\n\nDeznodământul aduce împăcarea tuturor lucrurilor: adevărul triumfă, binele învinge, iar basmul își închide cercul cu nunta eroului — o celebrare a armoniei recâștigate.'
+    }
   },
   'baltagul': {
     titlu: 'Baltagul',
@@ -1082,6 +1112,79 @@ export default function Opera() {
         );
 
       case 'rezumat':
+        if (operaDetails.rezumat) {
+          return (
+            <div className="opera-tab-content">
+              <div className="opera-rezumat">
+                <h2 className="rezumat-title">{operaDetails.titlu} - Rezumat</h2>
+                
+                <div className="rezumat-section">
+                  <h3 className="rezumat-section-title">Incipit</h3>
+                  <p className="rezumat-text">{operaDetails.rezumat.incipit}</p>
+                </div>
+
+                <div className="rezumat-section">
+                  <h3 className="rezumat-section-title">Intriga</h3>
+                  <p className="rezumat-text">{operaDetails.rezumat.intriga}</p>
+                </div>
+
+                <div className="rezumat-section">
+                  <h3 className="rezumat-section-title">Desfășurarea acțiunii</h3>
+                  {typeof operaDetails.rezumat.desfasurarea === 'object' && operaDetails.rezumat.desfasurarea.sectiuni ? (
+                    <>
+                      {operaDetails.rezumat.desfasurarea.sectiuni.map((sectiune, sectIndex) => (
+                        <div key={sectIndex} className="rezumat-subsection">
+                          {sectiune.subtitlu && (
+                            <h4 className="rezumat-subtitle">{sectiune.subtitlu}</h4>
+                          )}
+                          {sectiune.text && (
+                            <p className="rezumat-text">{sectiune.text}</p>
+                          )}
+                          {sectiune.listaProbe && (
+                            <ul className="rezumat-list">
+                              {sectiune.listaProbe.map((item, index) => (
+                                <li key={index} className="rezumat-list-item">{item}</li>
+                              ))}
+                            </ul>
+                          )}
+                          {sectiune.textFinal && (
+                            <p className="rezumat-text">{sectiune.textFinal}</p>
+                          )}
+                        </div>
+                      ))}
+                    </>
+                  ) : typeof operaDetails.rezumat.desfasurarea === 'object' ? (
+                    <>
+                      <p className="rezumat-text">{operaDetails.rezumat.desfasurarea.text}</p>
+                      {operaDetails.rezumat.desfasurarea.listaProbe && (
+                        <ul className="rezumat-list">
+                          {operaDetails.rezumat.desfasurarea.listaProbe.map((item, index) => (
+                            <li key={index} className="rezumat-list-item">{item}</li>
+                          ))}
+                        </ul>
+                      )}
+                      {operaDetails.rezumat.desfasurarea.textFinal && (
+                        <p className="rezumat-text">{operaDetails.rezumat.desfasurarea.textFinal}</p>
+                      )}
+                    </>
+                  ) : (
+                    <p className="rezumat-text">{operaDetails.rezumat.desfasurarea}</p>
+                  )}
+                </div>
+
+                <div className="rezumat-section">
+                  <h3 className="rezumat-section-title">Punctul culminant</h3>
+                  <p className="rezumat-text">{operaDetails.rezumat.punctulCulminant}</p>
+                </div>
+
+                <div className="rezumat-section">
+                  <h3 className="rezumat-section-title">Deznodământ</h3>
+                  <p className="rezumat-text">{operaDetails.rezumat.deznodamant}</p>
+                </div>
+              </div>
+            </div>
+          );
+        }
         return (
           <div className="opera-tab-content">
             <div className="opera-analysis">
@@ -1414,7 +1517,14 @@ export default function Opera() {
                       (operaDetails && operaDetails.autor) ||
                       (effectiveOpera && effectiveOpera.autor) ||
                       '';
-                    const q = title || author || '';
+                    // Normalize title for search - replace "Harap Alb" with "harap-alb"
+                    let searchTitle = title;
+                    if (title && title.toLowerCase().includes('harap alb')) {
+                      searchTitle = title.replace(/harap alb/gi, 'harap-alb').toLowerCase();
+                    } else {
+                      searchTitle = title.toLowerCase();
+                    }
+                    const q = searchTitle || author.toLowerCase() || '';
                     navigate(`/comentarii${q ? `?q=${encodeURIComponent(q)}` : ''}`);
                     return;
                   }

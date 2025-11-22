@@ -603,6 +603,19 @@
     // box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     display: block;
   }
+
+  // Styling for removed-bg images (transparent background)
+  &.removed-bg {
+    background: transparent !important;
+    
+    img {
+      background: transparent !important;
+      box-shadow: none !important;
+      border: none !important;
+      // Ensure transparency is preserved
+      mix-blend-mode: normal;
+    }
+  }
 }
 
 .rich-text-textarea {

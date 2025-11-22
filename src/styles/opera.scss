@@ -653,6 +653,112 @@ body.tabs-revealed .opera-back-btn {
         }
       }
 
+      // Rezumat styles
+      .opera-rezumat {
+        .rezumat-title {
+          font-size: 2.5rem;
+          font-weight: 700;
+          color: #a97c50;
+          margin-bottom: 2.5rem;
+          text-align: center;
+          padding-bottom: 1rem;
+          border-bottom: 3px solid #a97c50;
+        }
+
+        .rezumat-section {
+          margin-bottom: 3rem;
+          padding: 2rem;
+          background: #fafafa;
+          border-radius: 12px;
+          border-left: 5px solid #a97c50;
+          transition: all 0.3s ease;
+
+          &:last-child {
+            margin-bottom: 0;
+          }
+
+          &:hover {
+            background: #f5efe7;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+          }
+
+          .rezumat-section-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #8b6b42;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid #e8d7bd;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+
+            &:before {
+              content: "";
+              width: 6px;
+              height: 28px;
+              background: #a97c50;
+              border-radius: 3px;
+            }
+          }
+
+          .rezumat-subsection {
+            margin-bottom: 2rem;
+
+            &:last-child {
+              margin-bottom: 0;
+            }
+          }
+
+          .rezumat-subtitle {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #8b6b42;
+            margin: 2rem 0 1.25rem 0;
+            padding-bottom: 0.75rem;
+            // border-bottom: 2px solid #e8d7bd;
+
+            &:first-child {
+              margin-top: 0;
+            }
+          }
+
+          .rezumat-text {
+            line-height: 1.9;
+            color: #333;
+            font-size: 1.1rem;
+            white-space: pre-line;
+            margin: 0 0 1rem 0;
+          }
+
+          .rezumat-list {
+            list-style-type: disc;
+            padding-left: 2rem;
+            margin: 1.5rem 0;
+            line-height: 1.9;
+
+            .rezumat-list-item {
+              color: #333;
+              font-size: 1.1rem;
+              margin-bottom: 0.75rem;
+              padding-left: 0.5rem;
+              border-bottom: none;
+              padding-top: 0;
+              padding-bottom: 0;
+
+              &:before {
+                display: none;
+              }
+
+              &:last-child {
+                margin-bottom: 0;
+              }
+            }
+          }
+        }
+      }
+
       // Card-like list items for themes and characters
       .opera-themes ul li,
       .opera-characters ul li {
@@ -1145,6 +1251,48 @@ body.tabs-revealed .opera-back-btn {
       .opera-quotes:hover {
         background: #4a2e1a;
         box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+      }
+
+      // Rezumat dark theme styles
+      .opera-rezumat {
+        .rezumat-title {
+          color: #ffd591;
+          border-bottom-color: #ffd591;
+        }
+
+        .rezumat-section {
+          background: #3d2815;
+          border-left-color: #ffd591;
+
+          &:hover {
+            background: #4a2e1a;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+          }
+
+          .rezumat-section-title {
+            color: #ffb366;
+            border-bottom-color: #5a3a20;
+
+            &:before {
+              background: #ffd591;
+            }
+          }
+
+          .rezumat-subtitle {
+            color: #ffb366;
+            border-bottom-color: #5a3a20;
+          }
+
+          .rezumat-text {
+            color: #e0e0e0;
+          }
+
+          .rezumat-list {
+            .rezumat-list-item {
+              color: #e0e0e0;
+            }
+          }
+        }
       }
 
       .opera-quote {

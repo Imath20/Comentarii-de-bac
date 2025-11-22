@@ -43,6 +43,34 @@ const FONT_SIZES = [
   { name: '32px', value: '32px' },
 ];
 
+// Helper function to convert hex color to rgba with reduced alpha
+const hexToRgba = (color, alpha = 0.5) => {
+  // If already rgba, return as is (but we could also parse and adjust alpha)
+  if (color.startsWith('rgba')) {
+    return color;
+  }
+  
+  // If already rgb, convert to rgba
+  if (color.startsWith('rgb(')) {
+    return color.replace('rgb(', 'rgba(').replace(')', `, ${alpha})`);
+  }
+  
+  // Handle hex colors
+  let hex = color.replace('#', '');
+  
+  // Handle short hex (e.g., #FFF -> #FFFFFF)
+  if (hex.length === 3) {
+    hex = hex.split('').map(char => char + char).join('');
+  }
+  
+  // Parse hex to RGB
+  const r = parseInt(hex.substring(0, 2), 16);
+  const g = parseInt(hex.substring(2, 4), 16);
+  const b = parseInt(hex.substring(4, 6), 16);
+  
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+};
+
 const RichTextEditor = ({ value, onChange, darkTheme }) => {
   const [content, setContent] = useState(value || []);
   const [selectedText, setSelectedText] = useState(null);
@@ -387,12 +415,27 @@ const RichTextEditor = ({ value, onChange, darkTheme }) => {
     fileInputRef.current?.click();
   };
 
+  // Helper function to detect if image has removed background
+  const detectRemovedBg = (fileName) => {
+    if (!fileName) return false;
+    const lowerName = fileName.toLowerCase();
+    return lowerName.includes('removed-bg') || 
+           lowerName.includes('removedbg') || 
+           lowerName.includes('removed_bg') ||
+           lowerName.includes('no-background') ||
+           lowerName.includes('nobg') ||
+           lowerName.includes('transparent-bg');
+  };
+
   const handleImageFileSelect = async (e, index) => {
     const file = e.target.files?.[0];
     if (!file || !file.type.startsWith('image/')) {
       alert('Te rog selectează o imagine validă');
       return;
     }
+
+    // Check if image has removed background based on filename
+    const isRemovedBg = detectRemovedBg(file.name);
 
     // Create preview
     const reader = new FileReader();
@@ -402,6 +445,7 @@ const RichTextEditor = ({ value, onChange, darkTheme }) => {
         file,
         preview: event.target.result,
         alignment: 'left', // default
+        removedBg: isRemovedBg, // Store removed-bg flag
       });
       // Reset crop state when new image is selected
       setCropShape('rectangle');
@@ -1136,6 +1180,7 @@ const RichTextEditor = ({ value, onChange, darkTheme }) => {
       block.image = {
         url: uploadedUrl,
         alignment: imagePreview.alignment || 'left',
+        removedBg: imagePreview.removedBg || false, // Store removed-bg flag
       };
 
       setContent(newContent);
@@ -1285,15 +1330,22 @@ const RichTextEditor = ({ value, onChange, darkTheme }) => {
               }
               
               return segments.map((segment, i) => {
+                // Apply reduced alpha for text color
+                const textColorWithAlpha = segment.formats.color 
+                  ? hexToRgba(segment.formats.color, 0.7)
+                  : hexToRgba(textColor, 0.7);
+                
                 const styles = {
-                  color: segment.formats.color || textColor,
+                  color: textColorWithAlpha,
                 };
                 
+                // Apply reduced alpha for highlight
                 if (segment.formats.highlight) {
-                  styles.backgroundColor = segment.formats.highlight;
+                  styles.backgroundColor = hexToRgba(segment.formats.highlight, 0.5);
                 }
+                // Apply reduced alpha for underline
                 if (segment.formats.underline) {
-                  styles.borderBottom = `2px solid ${segment.formats.underline}`;
+                  styles.borderBottom = `2px solid ${hexToRgba(segment.formats.underline, 0.5)}`;
                 }
                 if (segment.formats.bold) {
                   styles.fontWeight = 'bold';
@@ -1410,7 +1462,7 @@ const RichTextEditor = ({ value, onChange, darkTheme }) => {
 
           <div className={`rich-text-content-wrapper ${block.image ? `has-image-${block.image?.alignment || 'left'}` : ''}`}>
             {block.image && (
-              <div className="rich-text-image-preview">
+              <div className={`rich-text-image-preview ${block.image.removedBg ? 'removed-bg' : ''}`}>
                 <img 
                   ref={(el) => {
                     imageRefs.current[index] = el;

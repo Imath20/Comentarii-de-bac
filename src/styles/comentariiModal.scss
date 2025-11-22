@@ -232,6 +232,19 @@ body.dark-theme .comentarii-modal-text {
       max-height: none;
     }
   }
+
+  // Styling for removed-bg images (transparent background)
+  &.removed-bg {
+    background: transparent !important;
+    
+    img {
+      background: transparent !important;
+      box-shadow: none !important;
+      border: none !important;
+      // Ensure transparency is preserved
+      mix-blend-mode: normal;
+    }
+  }
 }
 
 .comentarii-content-text-wrapper {
