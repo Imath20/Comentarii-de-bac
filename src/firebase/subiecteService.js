@@ -16,14 +16,22 @@ export async function addSubiect(subiectData) {
       updatedAt: new Date().toISOString(),
     };
 
+    // Avoid persisting empty string IDs on the document data
+    if (!dataToSave.id) {
+      delete dataToSave.id;
+    }
+
     // If ID is provided, use setDoc with the ID, otherwise use addDoc
     if (subiectData.id) {
       const subiectDocRef = doc(db, 'subiecte', subiectData.id);
-      await setDoc(subiectDocRef, dataToSave);
+      await setDoc(subiectDocRef, {
+        ...dataToSave,
+        id: subiectData.id,
+      });
       console.log('✅ Subiect adăugat cu succes:', subiectData.id);
     } else {
-      await addDoc(subiecteRef, dataToSave);
-      console.log('✅ Subiect adăugat cu succes');
+      const newDoc = await addDoc(subiecteRef, dataToSave);
+      console.log('✅ Subiect adăugat cu succes:', newDoc.id);
     }
   } catch (error) {
     console.error('❌ Eroare la adăugarea subiectului:', error);
@@ -40,10 +48,17 @@ export async function getAllSubiecte() {
     const subiecteRef = collection(db, 'subiecte');
     const snapshot = await getDocs(subiecteRef);
 
-    return snapshot.docs.map((docSnap) => ({
-      id: docSnap.id,
-      ...docSnap.data(),
-    }));
+    return snapshot.docs.map((docSnap) => {
+      const data = docSnap.data();
+      const resolvedId = typeof data.id === 'string' && data.id.trim().length > 0
+        ? data.id
+        : docSnap.id;
+
+      return {
+        ...data,
+        id: resolvedId,
+      };
+    });
   } catch (error) {
     console.error('❌ Eroare la preluarea subiectelor:', error);
     throw error;
@@ -82,10 +97,17 @@ export async function fetchSubiecteBatch({
 
     const snapshot = await getDocs(subiecteQuery);
 
-    const items = snapshot.docs.map((docSnap) => ({
-      id: docSnap.id,
-      ...docSnap.data(),
-    }));
+    const items = snapshot.docs.map((docSnap) => {
+      const data = docSnap.data();
+      const resolvedId = typeof data.id === 'string' && data.id.trim().length > 0
+        ? data.id
+        : docSnap.id;
+
+      return {
+        ...data,
+        id: resolvedId,
+      };
+    });
 
     const lastDoc = snapshot.docs.length > 0 ? snapshot.docs[snapshot.docs.length - 1] : null;
 

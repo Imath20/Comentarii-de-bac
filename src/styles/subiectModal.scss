@@ -281,6 +281,9 @@
   font-weight: 500;
   transition: all 0.2s;
   outline: none;
+  &:focus{
+    outline: none;
+  }
 
   &:hover {
     transform: translateY(-1px);
@@ -313,6 +316,10 @@
 .subiecte-modal-delete {
   background: #ffebee;
   color: #c62828;
+  outline: none;
+  &:focus{
+    outline: none;
+  }
 
   &.dark-theme {
     background: #6a4322;
