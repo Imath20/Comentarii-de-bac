@@ -181,6 +181,50 @@ const updateRangesForMutation = (ranges = [], mutation, textLength) => {
     .filter(Boolean);
 };
 
+const getWordTokens = (text = '') => {
+  const tokens = [];
+  if (!text) {
+    return tokens;
+  }
+
+  const wordRegex = /\S+/g;
+  let match;
+
+  while ((match = wordRegex.exec(text)) !== null) {
+    tokens.push({
+      start: match.index,
+      end: match.index + match[0].length,
+      text: match[0],
+    });
+  }
+
+  return tokens;
+};
+
+const buildCharWordMap = (text = '', tokens = []) => {
+  const map = new Array(text.length).fill(-1);
+  tokens.forEach((token, idx) => {
+    for (let i = token.start; i < token.end; i += 1) {
+      map[i] = idx;
+    }
+  });
+  return map;
+};
+
+const EMPTY_PREVIEW_SELECTION = { blockIndex: null, wordIndices: [], lastWordIndex: null };
+
+const ensureUniqueSortedWordIndices = (wordIndices = [], tokens = []) => {
+  const seen = new Set();
+  return wordIndices
+    .filter((idx) => typeof idx === 'number' && idx >= 0 && idx < tokens.length)
+    .filter((idx) => {
+      if (seen.has(idx)) return false;
+      seen.add(idx);
+      return true;
+    })
+    .sort((a, b) => a - b);
+};
+
 const RichTextEditor = ({ value, onChange, darkTheme }) => {
   const [content, setContent] = useState(value || []);
   const [selectedText, setSelectedText] = useState(null);
@@ -203,6 +247,66 @@ const RichTextEditor = ({ value, onChange, darkTheme }) => {
   const imageRefs = useRef({});
   const cropCanvasRef = useRef(null);
   const previewImageRef = useRef(null);
+  const wordTokenCache = useRef({});
+  const [previewSelection, setPreviewSelection] = useState(EMPTY_PREVIEW_SELECTION);
+
+  const syncSelectedTextFromPreview = (selection) => {
+    if (
+      !selection ||
+      selection.blockIndex === null ||
+      !Array.isArray(selection.wordIndices) ||
+      selection.wordIndices.length === 0
+    ) {
+      setSelectedText(null);
+      setShowColorPicker(null);
+      return;
+    }
+
+    const block = content[selection.blockIndex];
+    if (!block || !block.text) {
+      setSelectedText(null);
+      setShowColorPicker(null);
+      return;
+    }
+
+    const cachedTokens = wordTokenCache.current[selection.blockIndex];
+    const tokens = cachedTokens && cachedTokens.length > 0 ? cachedTokens : getWordTokens(block.text);
+    if (!cachedTokens || cachedTokens.length === 0) {
+      wordTokenCache.current[selection.blockIndex] = tokens;
+    }
+
+    if (!tokens.length) {
+      setSelectedText(null);
+      setShowColorPicker(null);
+      return;
+    }
+
+    const uniqueSorted = ensureUniqueSortedWordIndices(selection.wordIndices, tokens);
+    if (!uniqueSorted.length) {
+      setSelectedText(null);
+      setShowColorPicker(null);
+      return;
+    }
+
+    const firstToken = tokens[uniqueSorted[0]];
+    const lastToken = tokens[uniqueSorted[uniqueSorted.length - 1]];
+    if (!firstToken || !lastToken) {
+      setSelectedText(null);
+      setShowColorPicker(null);
+      return;
+    }
+
+    const start = firstToken.start;
+    const end = lastToken.end;
+
+    setSelectedText({
+      index: selection.blockIndex,
+      start,
+      end,
+      text: block.text.substring(start, end),
+    });
+    setShowColorPicker(selection.blockIndex);
+  };
 
   // Initialize with one empty paragraph if content is empty
   React.useEffect(() => {
@@ -305,6 +409,7 @@ const RichTextEditor = ({ value, onChange, darkTheme }) => {
   const handleTextSelect = (index, textarea) => {
     const selection = textarea.value.substring(textarea.selectionStart, textarea.selectionEnd);
     if (selection.length > 0) {
+      setPreviewSelection(EMPTY_PREVIEW_SELECTION);
       setSelectedText({
         index,
         start: textarea.selectionStart,
@@ -315,14 +420,19 @@ const RichTextEditor = ({ value, onChange, darkTheme }) => {
       if (showColorPicker !== index) {
         setShowColorPicker(index);
       }
+    } else {
+      setPreviewSelection(EMPTY_PREVIEW_SELECTION);
     }
     // Don't close panel when selection is cleared
   };
 
-  const applyFormatting = (formatType, value) => {
-    if (!selectedText || !value) return; // Don't apply if value is empty
+  const applyFormatting = (formatType, value, selectionOverride = null) => {
+    if (!value) return; // Don't apply if value is empty
 
-    const { index, start, end } = selectedText;
+    const targetSelection = selectionOverride || selectedText;
+    if (!targetSelection) return;
+
+    const { index, start, end } = targetSelection;
     const newContent = [...content];
     const block = newContent[index];
 
@@ -360,10 +470,11 @@ const RichTextEditor = ({ value, onChange, darkTheme }) => {
     // Don't close panel or clear selection
   };
 
-  const applyHighlight = (color) => {
-    if (!selectedText) return;
+  const applyHighlight = (color, selectionOverride = null) => {
+    const targetSelection = selectionOverride || selectedText;
+    if (!targetSelection) return;
 
-    const { index, start, end } = selectedText;
+    const { index, start, end } = targetSelection;
     const newContent = [...content];
     const block = newContent[index];
 
@@ -396,10 +507,11 @@ const RichTextEditor = ({ value, onChange, darkTheme }) => {
     // Don't close panel or clear selection
   };
 
-  const applyUnderline = (color) => {
-    if (!selectedText) return;
+  const applyUnderline = (color, selectionOverride = null) => {
+    const targetSelection = selectionOverride || selectedText;
+    if (!targetSelection) return;
 
-    const { index, start, end } = selectedText;
+    const { index, start, end } = targetSelection;
     const newContent = [...content];
     const block = newContent[index];
 
@@ -432,10 +544,11 @@ const RichTextEditor = ({ value, onChange, darkTheme }) => {
     // Don't close panel or clear selection
   };
 
-  const applyTextColor = (color) => {
-    if (!selectedText) return;
+  const applyTextColor = (color, selectionOverride = null) => {
+    const targetSelection = selectionOverride || selectedText;
+    if (!targetSelection) return;
 
-    const { index, start, end } = selectedText;
+    const { index, start, end } = targetSelection;
     const block = content[index];
 
     // Check if there's already a color format with the same color on this exact selection
@@ -453,13 +566,14 @@ const RichTextEditor = ({ value, onChange, darkTheme }) => {
       onChange(newContent);
     } else {
       // Apply new color
-      applyFormatting('color', color);
+      applyFormatting('color', color, targetSelection);
     }
   };
 
-  const toggleBold = () => {
-    if (!selectedText) return;
-    const { index, start, end } = selectedText;
+  const toggleBold = (selectionOverride = null) => {
+    const targetSelection = selectionOverride || selectedText;
+    if (!targetSelection) return;
+    const { index, start, end } = targetSelection;
     const block = content[index];
     
     // Check if selection already has bold
@@ -477,13 +591,14 @@ const RichTextEditor = ({ value, onChange, darkTheme }) => {
       onChange(newContent);
     } else {
       // Add bold
-      applyFormatting('bold', true);
+      applyFormatting('bold', true, targetSelection);
     }
   };
 
-  const toggleItalic = () => {
-    if (!selectedText) return;
-    const { index, start, end } = selectedText;
+  const toggleItalic = (selectionOverride = null) => {
+    const targetSelection = selectionOverride || selectedText;
+    if (!targetSelection) return;
+    const { index, start, end } = targetSelection;
     const block = content[index];
     
     // Check if selection already has italic
@@ -501,8 +616,45 @@ const RichTextEditor = ({ value, onChange, darkTheme }) => {
       onChange(newContent);
     } else {
       // Add italic
-      applyFormatting('italic', true);
+      applyFormatting('italic', true, targetSelection);
     }
+  };
+
+  const handlePreviewWordClick = (blockIndex, wordIndex, shiftKey = false) => {
+    if (typeof wordIndex !== 'number' || wordIndex < 0) return;
+
+    setPreviewSelection((prev) => {
+      let nextSelection;
+      if (shiftKey && prev.blockIndex === blockIndex && prev.lastWordIndex !== null) {
+        const rangeStart = Math.min(prev.lastWordIndex, wordIndex);
+        const rangeEnd = Math.max(prev.lastWordIndex, wordIndex);
+        const merged = new Set(prev.wordIndices);
+        for (let i = rangeStart; i <= rangeEnd; i += 1) {
+          merged.add(i);
+        }
+        nextSelection = {
+          blockIndex,
+          wordIndices: Array.from(merged).sort((a, b) => a - b),
+          lastWordIndex: wordIndex,
+        };
+      } else if (!shiftKey && prev.blockIndex === blockIndex && prev.wordIndices.length === 1 && prev.wordIndices[0] === wordIndex) {
+        nextSelection = EMPTY_PREVIEW_SELECTION;
+      } else {
+        nextSelection = {
+          blockIndex,
+          wordIndices: [wordIndex],
+          lastWordIndex: wordIndex,
+        };
+      }
+
+      syncSelectedTextFromPreview(nextSelection);
+      return nextSelection;
+    });
+  };
+
+  const clearPreviewSelection = () => {
+    setPreviewSelection(EMPTY_PREVIEW_SELECTION);
+    syncSelectedTextFromPreview(EMPTY_PREVIEW_SELECTION);
   };
 
   const handleImageClick = (index) => {
@@ -1332,6 +1484,206 @@ const RichTextEditor = ({ value, onChange, darkTheme }) => {
 
   const renderTextWithFormatting = (block, index) => {
     const textColor = block.textColor || '#000000';
+    const baseText = block.text || '';
+    const wordTokens = getWordTokens(baseText);
+    wordTokenCache.current[index] = wordTokens;
+    const charWordMap = buildCharWordMap(baseText, wordTokens);
+
+    const buildStyledSpan = (segment) => {
+      const textColorWithAlpha = segment.formats.color
+        ? hexToRgba(segment.formats.color, 0.7)
+        : hexToRgba(textColor, 0.7);
+
+      const styles = {
+        color: textColorWithAlpha,
+      };
+
+      if (segment.formats.highlight) {
+        styles.backgroundColor = hexToRgba(segment.formats.highlight, 0.5);
+      }
+      if (segment.formats.underline) {
+        styles.borderBottom = `2px solid ${hexToRgba(segment.formats.underline, 0.5)}`;
+      }
+      if (segment.formats.bold) {
+        styles.fontWeight = 'bold';
+      }
+      if (segment.formats.italic) {
+        styles.fontStyle = 'italic';
+      }
+      if (segment.formats.fontFamily) {
+        styles.fontFamily = segment.formats.fontFamily;
+      }
+      if (segment.formats.fontSize) {
+        styles.fontSize = segment.formats.fontSize;
+      }
+
+      return (
+        <span key={segment.key} style={styles}>
+          {segment.text}
+        </span>
+      );
+    };
+
+    const buildInteractiveContent = () => {
+      if (!baseText) return null;
+
+      const breakpoints = new Set([0, baseText.length]);
+
+      (block.highlights || []).forEach((h) => {
+        breakpoints.add(h.start);
+        breakpoints.add(h.end);
+      });
+
+      (block.underlines || []).forEach((u) => {
+        breakpoints.add(u.start);
+        breakpoints.add(u.end);
+      });
+
+      (block.formats || []).forEach((f) => {
+        breakpoints.add(f.start);
+        breakpoints.add(f.end);
+      });
+
+      const sortedBreakpoints = Array.from(breakpoints).sort((a, b) => a - b);
+      const segments = [];
+
+      for (let i = 0; i < sortedBreakpoints.length - 1; i += 1) {
+        const start = sortedBreakpoints[i];
+        const end = sortedBreakpoints[i + 1];
+
+        if (start >= end) {
+          continue;
+        }
+
+        const segmentText = baseText.substring(start, end);
+        if (!segmentText.length) {
+          continue;
+        }
+
+        const formats = {
+          highlight: null,
+          underline: null,
+          bold: false,
+          italic: false,
+          color: null,
+          fontFamily: null,
+          fontSize: null,
+        };
+
+        (block.highlights || []).forEach((h) => {
+          if (h.start < end && h.end > start) {
+            formats.highlight = h.color;
+          }
+        });
+
+        (block.underlines || []).forEach((u) => {
+          if (u.start < end && u.end > start) {
+            formats.underline = u.color;
+          }
+        });
+
+        (block.formats || []).forEach((f) => {
+          if (f.start < end && f.end > start) {
+            if (f.type === 'bold') formats.bold = true;
+            if (f.type === 'italic') formats.italic = true;
+            if (f.type === 'color') formats.color = f.value;
+            if (f.type === 'fontFamily') formats.fontFamily = f.value;
+            if (f.type === 'fontSize') formats.fontSize = f.value;
+          }
+        });
+
+        segments.push({ text: segmentText, formats, start, end });
+      }
+
+      const splitSegments = [];
+
+      segments.forEach((segment, segIdx) => {
+        let pointer = segment.start;
+        while (pointer < segment.end) {
+          const currentWordIndex = charWordMap[pointer];
+          let nextPointer = pointer + 1;
+
+          while (nextPointer < segment.end && charWordMap[nextPointer] === currentWordIndex) {
+            nextPointer += 1;
+          }
+
+          const pieceText = baseText.substring(pointer, nextPointer);
+          splitSegments.push({
+            key: `${segIdx}-${pointer}`,
+            start: pointer,
+            end: nextPointer,
+            text: pieceText,
+            wordIndex: currentWordIndex,
+            formats: segment.formats,
+          });
+
+          pointer = nextPointer;
+        }
+      });
+
+      const selectedWordSet = previewSelection.blockIndex === index
+        ? new Set(previewSelection.wordIndices)
+        : new Set();
+
+      const nodes = [];
+      let currentGroup = [];
+      let currentWordIndex = null;
+
+      const flushGroup = () => {
+        if (!currentGroup.length) return;
+
+        if (currentWordIndex === null || currentWordIndex === -1) {
+          currentGroup.forEach((segment) => {
+            nodes.push(buildStyledSpan(segment));
+          });
+        } else {
+          const wordIndexForHandlers = currentWordIndex;
+          const isSelected = selectedWordSet.has(wordIndexForHandlers);
+          const wordKey = `word-${wordIndexForHandlers}-${currentGroup[0].start}`;
+          nodes.push(
+            <span
+              key={wordKey}
+              className={`preview-word${isSelected ? ' selected' : ''}`}
+              role="button"
+              tabIndex={0}
+              aria-pressed={isSelected}
+              aria-label={`Selectează cuvântul "${wordTokens[wordIndexForHandlers]?.text || ''}"`}
+              data-word-index={wordIndexForHandlers}
+              onMouseDown={(e) => e.preventDefault()}
+              onClick={(e) => {
+                e.preventDefault();
+                handlePreviewWordClick(index, wordIndexForHandlers, e.shiftKey);
+              }}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  handlePreviewWordClick(index, wordIndexForHandlers, e.shiftKey);
+                } else if (e.key === 'Escape') {
+                  clearPreviewSelection();
+                }
+              }}
+            >
+              {currentGroup.map((segment) => buildStyledSpan(segment))}
+            </span>
+          );
+        }
+
+        currentGroup = [];
+      };
+
+      splitSegments.forEach((segment) => {
+        if (segment.wordIndex === currentWordIndex) {
+          currentGroup.push(segment);
+        } else {
+          flushGroup();
+          currentGroup = [segment];
+          currentWordIndex = segment.wordIndex;
+        }
+      });
+
+      flushGroup();
+      return nodes;
+    };
     
     return (
       <div className="rich-text-preview" style={{ color: textColor }}>
@@ -1347,123 +1699,7 @@ const RichTextEditor = ({ value, onChange, darkTheme }) => {
             {block.title}
           </div>
         )}
-        {block.text && (
-          <>
-            {(() => {
-              // Collect all breakpoints (start and end positions of all formats)
-              const breakpoints = new Set([0, block.text.length]);
-              
-              // Add breakpoints from highlights
-              (block.highlights || []).forEach(h => {
-                breakpoints.add(h.start);
-                breakpoints.add(h.end);
-              });
-              
-              // Add breakpoints from underlines
-              (block.underlines || []).forEach(u => {
-                breakpoints.add(u.start);
-                breakpoints.add(u.end);
-              });
-              
-              // Add breakpoints from formats
-              (block.formats || []).forEach(f => {
-                breakpoints.add(f.start);
-                breakpoints.add(f.end);
-              });
-              
-              // Convert to sorted array
-              const sortedBreakpoints = Array.from(breakpoints).sort((a, b) => a - b);
-              
-              // Build segments
-              const segments = [];
-              for (let i = 0; i < sortedBreakpoints.length - 1; i++) {
-                const start = sortedBreakpoints[i];
-                const end = sortedBreakpoints[i + 1];
-                
-                if (start >= end) continue;
-                
-                const segmentText = block.text.substring(start, end);
-                if (segmentText.length === 0) continue;
-                
-                // Collect all formats that apply to this segment
-                const formats = {
-                  highlight: null,
-                  underline: null,
-                  bold: false,
-                  italic: false,
-                  color: null,
-                  fontFamily: null,
-                  fontSize: null,
-                };
-                
-                // Check highlights
-                (block.highlights || []).forEach(h => {
-                  if (h.start < end && h.end > start) {
-                    formats.highlight = h.color;
-                  }
-                });
-                
-                // Check underlines
-                (block.underlines || []).forEach(u => {
-                  if (u.start < end && u.end > start) {
-                    formats.underline = u.color;
-                  }
-                });
-                
-                // Check other formats
-                (block.formats || []).forEach(f => {
-                  if (f.start < end && f.end > start) {
-                    if (f.type === 'bold') formats.bold = true;
-                    if (f.type === 'italic') formats.italic = true;
-                    if (f.type === 'color') formats.color = f.value;
-                    if (f.type === 'fontFamily') formats.fontFamily = f.value;
-                    if (f.type === 'fontSize') formats.fontSize = f.value;
-                  }
-                });
-                
-                segments.push({ text: segmentText, formats });
-              }
-              
-              return segments.map((segment, i) => {
-                // Apply reduced alpha for text color
-                const textColorWithAlpha = segment.formats.color 
-                  ? hexToRgba(segment.formats.color, 0.7)
-                  : hexToRgba(textColor, 0.7);
-                
-                const styles = {
-                  color: textColorWithAlpha,
-                };
-                
-                // Apply reduced alpha for highlight
-                if (segment.formats.highlight) {
-                  styles.backgroundColor = hexToRgba(segment.formats.highlight, 0.5);
-                }
-                // Apply reduced alpha for underline
-                if (segment.formats.underline) {
-                  styles.borderBottom = `2px solid ${hexToRgba(segment.formats.underline, 0.5)}`;
-                }
-                if (segment.formats.bold) {
-                  styles.fontWeight = 'bold';
-                }
-                if (segment.formats.italic) {
-                  styles.fontStyle = 'italic';
-                }
-                if (segment.formats.fontFamily) {
-                  styles.fontFamily = segment.formats.fontFamily;
-                }
-                if (segment.formats.fontSize) {
-                  styles.fontSize = segment.formats.fontSize;
-                }
-                
-                return (
-                  <span key={i} style={styles}>
-                    {segment.text}
-                  </span>
-                );
-              });
-            })()}
-          </>
-        )}
+        {baseText && buildInteractiveContent()}
       </div>
     );
   };

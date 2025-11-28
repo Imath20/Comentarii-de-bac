@@ -149,6 +149,7 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
     createdByEmail: '',
     createdByName: '',
   });
+  const [editingCommentId, setEditingCommentId] = useState(null);
 
   // Read tab from URL params only on initial mount
   useEffect(() => {
@@ -163,9 +164,11 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
   // Populate form when initialCommentData is provided
   useEffect(() => {
     if (initialCommentData) {
+      const resolvedId = initialCommentData.id || initialCommentData.docId || initialCommentData.docID || '';
       setIsEditing(true);
+      setEditingCommentId(resolvedId || null);
       setComentariuForm({
-        id: initialCommentData.id || '',
+        id: resolvedId || '',
         titlu: initialCommentData.titlu || '',
         autor: initialCommentData.autor || '',
         categorie: initialCommentData.categorie || '',
@@ -178,6 +181,8 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
       });
       setActiveTab('comentarii');
       updateUrlParams({ tab: 'comentarii' });
+    } else {
+      setEditingCommentId(null);
     }
   }, [initialCommentData, updateUrlParams]);
 
@@ -514,12 +519,15 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
 
       if (isEditing) {
         // Update existing comentariu
-        if (!comentariuForm.id) {
+        const targetId = editingCommentId || comentariuForm.id;
+        if (!targetId) {
           throw new Error('ID-ul comentariului este obligatoriu pentru editare');
         }
+
         ensureCanEdit(comentariuForm.createdBy, 'Nu poți edita un comentariu creat de altcineva.', { allowSemiAdminFullAccess: true });
         const payload = attachOwnershipMetadata({
           ...comentariuForm,
+          id: targetId,
         });
 
         await updateComentariu(payload);
@@ -545,6 +553,8 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
         
         // Navigate to comentarii page after successful update
         setTimeout(() => {
+          setIsEditing(false);
+          setEditingCommentId(null);
           navigate('/comentarii');
         }, 500);
       } else {
@@ -595,6 +605,7 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
           createdByName: '',
         });
         setIsEditing(false);
+        setEditingCommentId(null);
       }
     } catch (error) {
       console.error(`Error ${isEditing ? 'updating' : 'adding'} comentariu:`, error);
