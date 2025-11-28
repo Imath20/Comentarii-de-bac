@@ -71,6 +71,116 @@ const hexToRgba = (color, alpha = 0.5) => {
   return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 };
 
+const computeTextMutation = (previous = '', next = '') => {
+  if (previous === next) return null;
+
+  const prevLen = previous.length;
+  const nextLen = next.length;
+  let start = 0;
+
+  while (start < prevLen && start < nextLen && previous[start] === next[start]) {
+    start++;
+  }
+
+  let prevEnd = prevLen;
+  let nextEnd = nextLen;
+
+  while (prevEnd > start && nextEnd > start && previous[prevEnd - 1] === next[nextEnd - 1]) {
+    prevEnd--;
+    nextEnd--;
+  }
+
+  return {
+    index: start,
+    removedLength: prevEnd - start,
+    addedLength: nextEnd - start,
+  };
+};
+
+const clampRangeToText = (range, textLength) => {
+  if (!range) return null;
+  const safeStart = Math.max(0, Math.min(range.start, textLength));
+  const safeEnd = Math.max(safeStart, Math.min(range.end, textLength));
+  if (safeEnd <= safeStart) return null;
+  return { ...range, start: safeStart, end: safeEnd };
+};
+
+const applyDeletionToRange = (range, index, length) => {
+  if (!range || length <= 0) return range;
+  const deleteEnd = index + length;
+
+  if (deleteEnd <= range.start) {
+    return { ...range, start: range.start - length, end: range.end - length };
+  }
+
+  if (index >= range.end) {
+    return range;
+  }
+
+  let start = range.start;
+  let end = range.end;
+  let deleteIndex = index;
+  let deleteLength = length;
+
+  if (deleteIndex < start) {
+    const removedBefore = Math.min(start - deleteIndex, deleteLength);
+    start -= removedBefore;
+    end -= removedBefore;
+    deleteIndex += removedBefore;
+    deleteLength -= removedBefore;
+  }
+
+  if (deleteLength <= 0) {
+    return { ...range, start, end };
+  }
+
+  const overlapStart = Math.max(start, deleteIndex);
+  const overlapEnd = Math.min(end, deleteIndex + deleteLength);
+  const overlapLength = Math.max(0, overlapEnd - overlapStart);
+  end -= overlapLength;
+
+  if (end <= start) return null;
+
+  return { ...range, start, end };
+};
+
+const applyInsertionToRange = (range, index, length) => {
+  if (!range || length <= 0) return range;
+
+  if (index <= range.start) {
+    return { ...range, start: range.start + length, end: range.end + length };
+  }
+
+  if (index >= range.end) {
+    return range;
+  }
+
+  return { ...range, end: range.end + length };
+};
+
+const updateRangesForMutation = (ranges = [], mutation, textLength) => {
+  if (!mutation || !Array.isArray(ranges) || ranges.length === 0) return ranges || [];
+  const { index, removedLength, addedLength } = mutation;
+
+  return ranges
+    .map((range) => {
+      if (!range) return null;
+      let updatedRange = { ...range };
+
+      if (removedLength > 0) {
+        updatedRange = applyDeletionToRange(updatedRange, index, removedLength);
+        if (!updatedRange) return null;
+      }
+
+      if (addedLength > 0) {
+        updatedRange = applyInsertionToRange(updatedRange, index, addedLength);
+      }
+
+      return clampRangeToText(updatedRange, textLength);
+    })
+    .filter(Boolean);
+};
+
 const RichTextEditor = ({ value, onChange, darkTheme }) => {
   const [content, setContent] = useState(value || []);
   const [selectedText, setSelectedText] = useState(null);
@@ -179,28 +289,13 @@ const RichTextEditor = ({ value, onChange, darkTheme }) => {
     const oldText = block.text || '';
     block.text = newText;
     
-    // Remove formats that are now out of bounds
+    const mutation = computeTextMutation(oldText, newText);
     const newLength = newText.length;
-    
-    // Clean highlights
-    if (block.highlights) {
-      block.highlights = block.highlights.filter(h => 
-        h.start < newLength && h.end <= newLength
-      );
-    }
-    
-    // Clean underlines
-    if (block.underlines) {
-      block.underlines = block.underlines.filter(u => 
-        u.start < newLength && u.end <= newLength
-      );
-    }
-    
-    // Clean formats
-    if (block.formats) {
-      block.formats = block.formats.filter(f => 
-        f.start < newLength && f.end <= newLength
-      );
+
+    if (mutation) {
+      block.highlights = updateRangesForMutation(block.highlights || [], mutation, newLength);
+      block.underlines = updateRangesForMutation(block.underlines || [], mutation, newLength);
+      block.formats = updateRangesForMutation(block.formats || [], mutation, newLength);
     }
     
     setContent(newContent);
