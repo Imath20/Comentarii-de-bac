@@ -756,6 +756,28 @@ body.tabs-revealed .opera-back-btn {
               }
             }
           }
+
+          .rezumat-versuri {
+            margin: 1.5rem 0;
+            padding-left: 2rem;
+            
+            .rezumat-vers {
+              font-style: italic;
+              color: #555;
+              font-size: 1.05rem;
+              line-height: 1.8;
+              margin: 0.5rem 0;
+              padding-left: 0;
+              
+              &:first-child {
+                margin-top: 0;
+              }
+              
+              &:last-child {
+                margin-bottom: 0;
+              }
+            }
+          }
         }
       }
 
@@ -1290,6 +1312,12 @@ body.tabs-revealed .opera-back-btn {
           .rezumat-list {
             .rezumat-list-item {
               color: #e0e0e0;
+            }
+          }
+
+          .rezumat-versuri {
+            .rezumat-vers {
+              color: #d0d0d0;
             }
           }
         }
