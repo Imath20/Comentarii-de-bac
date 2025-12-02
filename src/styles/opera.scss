@@ -1536,7 +1536,40 @@ body.tabs-revealed .opera-back-btn {
   align-items: center;
   justify-content: center;
 }
+.opera-curent-link{
+  background: linear-gradient(135deg, #a97c50 0%, #8b6b42 100%);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1.2rem;
+  border-radius: 5 rem;
+  margin-top: 20px;
+  display: inline-block;
+  &:hover {
+    background: linear-gradient(135deg, #8b6b42 0%, #6d5233 100%);
+    box-shadow: 0 8px 25px rgba(169, 124, 80, 0.4);
+  }
+  &:focus {
+    outline: none !important;
+  }
+  &:active {
+    transform: translateY(1px);
+  }
+  &:visited {
+    color: #333;
+  }
+  .dark-theme & {
+    background: linear-gradient(135deg, #ffd591 0%, #ffb366 100%);
+      color: #333;
 
+      &:hover {
+        background: linear-gradient(135deg, #ffb366 0%, #ff9f33 100%);
+      }
+  }
+}
 .opera-poem-modal {
   background: rgb(255, 255, 255);
   border-radius: 18px;
@@ -1592,7 +1625,6 @@ body.tabs-revealed .opera-back-btn {
       }
     }
   }
-
   .opera-poem-modal-content {
     flex: 1;
     overflow-y: auto;

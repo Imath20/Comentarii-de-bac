@@ -1296,6 +1296,34 @@ const OPERA_DETAILS = {
   }
 };
 
+function getCurentIdForOpera(operaDetails) {
+  if (!operaDetails) return null;
+
+  const categorie = (operaDetails.categorie || '').toLowerCase();
+  const autor = (operaDetails.autor || '').toLowerCase();
+  const titlu = (operaDetails.titlu || '').toLowerCase();
+
+  // Proza canonică pentru BAC – în majoritate realism
+  if (categorie === 'roman' || categorie === 'nuvelă' || categorie === 'nuvela' || categorie === 'comedie') {
+    return 'realism';
+  }
+
+  // Basm cult – romantic, cu tradiția folclorică
+  if (categorie === 'basm') {
+    return 'romantism';
+  }
+
+  // Poezie – diferențiem după autor
+  if (categorie === 'poezie') {
+    if (autor.includes('eminescu')) return 'romantism';
+    if (autor.includes('bacovia')) return 'simbolism';
+    if (autor.includes('arghezi') || autor.includes('blaga') || autor.includes('barbu')) return 'modernism';
+  }
+
+  // Fallback: momentan fără curent mapat explicit
+  return null;
+}
+
 export default function Opera() {
   const params = useParams();
   const location = useLocation();
@@ -1659,34 +1687,47 @@ export default function Opera() {
           </div>
         );
 
-      case 'comentariu': 
+      case 'comentariu': {
+        const title =
+          (operaDetails && operaDetails.titlu) ||
+          (effectiveOpera && effectiveOpera.titlu) ||
+          '';
+        const author =
+          (operaDetails && operaDetails.autor) ||
+          (effectiveOpera && effectiveOpera.autor) ||
+          '';
+        // Normalize title for search - replace "Harap Alb" with "harap-alb"
+        let searchTitle = title;
+        if (title && title.toLowerCase().includes('harap alb')) {
+          searchTitle = title.replace(/harap alb/gi, 'harap-alb').toLowerCase();
+        } else {
+          searchTitle = title.toLowerCase();
+        }
+        const q = searchTitle || author.toLowerCase() || '';
+
         return (
           <div className="opera-tab-content">
             <div className="opera-comment-content">
-              <h3>Comentarii {selectedCommentPack}</h3>
-              {selectedCommentPack && selectedCommentIndex ? (
-                selectedCommentIndex === 'all' ? (
-                  <div className="comment-text">
-                    <ul>
-                      {[1,2,3,4].map((idx) => (
-                        <li addkey={idx}>{`Comentariu ${idx} — Comentariu ${selectedCommentPack}`}</li>
-                      ))}
-                    </ul>
-                  </div>
-                ) : (
-                  <div className="comment-text">
-                  </div>
-                )
-              ) : (
-                <div className="comment-text">
-                  <p>
-                    Alege un comentariu din dropdown-urile de deasupra pentru a-l afișa aici.
-                  </p>
-                </div>
-              )}
+              <h3>Comentarii</h3>
+              <p>
+                Deschide pagina dedicată de comentarii pentru această operă. Vei găsi acolo comentarii structurate pe niveluri și planuri.
+              </p>
+              <button
+                className="opera-curent-link"
+                onClick={() =>
+                  navigate(`/comentarii${q ? `?q=${encodeURIComponent(q)}` : ''}`, {
+                    state: {
+                      from: { pathname: location.pathname, scrollY: window.scrollY },
+                    },
+                  })
+                }
+              >
+                Vezi comentariile
+              </button>
             </div>
           </div>
         );
+      }
 
       case 'curent': {
         const curentText = (() => {
@@ -1698,11 +1739,26 @@ export default function Opera() {
           if (categorie === 'basm') return 'Romantism / tradiția basmului cult, motive folclorice.';
           return 'Curent literar: în lucru.';
         })();
+        const curentId = getCurentIdForOpera(operaDetails);
         return (
           <div className="opera-tab-content">
             <div className="opera-analysis">
               <h3>Curent literar</h3>
               <p>{curentText}</p>
+              {curentId && (
+                <button
+                  className="opera-curent-link"
+                  onClick={() =>
+                    navigate(`/curent/${curentId}`, {
+                      state: {
+                        from: { pathname: location.pathname, scrollY: window.scrollY },
+                      },
+                    })
+                  }
+                >
+                  Vezi pagina curentului
+                </button>
+              )}
             </div>
           </div>
         );
@@ -2122,29 +2178,7 @@ export default function Opera() {
               <button
                 key={key}
                 className={`opera-tab ${activeTab === key ? 'active' : ''}`}
-                onClick={() => {
-                  if (key === 'comentariu') {
-                    const title =
-                      (operaDetails && operaDetails.titlu) ||
-                      (effectiveOpera && effectiveOpera.titlu) ||
-                      '';
-                    const author =
-                      (operaDetails && operaDetails.autor) ||
-                      (effectiveOpera && effectiveOpera.autor) ||
-                      '';
-                    // Normalize title for search - replace "Harap Alb" with "harap-alb"
-                    let searchTitle = title;
-                    if (title && title.toLowerCase().includes('harap alb')) {
-                      searchTitle = title.replace(/harap alb/gi, 'harap-alb').toLowerCase();
-                    } else {
-                      searchTitle = title.toLowerCase();
-                    }
-                    const q = searchTitle || author.toLowerCase() || '';
-                    navigate(`/comentarii${q ? `?q=${encodeURIComponent(q)}` : ''}`);
-                    return;
-                  }
-                  setActiveTab(key);
-                }}
+                onClick={() => setActiveTab(key)}
               >
                 {tabsLabels[key]}
               </button>
