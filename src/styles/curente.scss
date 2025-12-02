@@ -290,6 +290,108 @@
     font-style: italic;
     padding: 10px 0 4px;
   }
+
+  .curent-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .curent-section {
+    background: #fff;
+    border-radius: 18px;
+    border: 1.5px solid #f0e6d6;
+    box-shadow: 0 2px 12px rgba(124, 79, 43, 0.08);
+    padding: 20px 22px;
+
+    h3 {
+      margin: 0 0 8px;
+      font-size: 1.35rem;
+      color: #7c4f2b;
+    }
+  }
+
+  .curent-section-subtitle {
+    margin: 0 0 12px;
+    color: #9c6b3d;
+    font-weight: 600;
+  }
+
+  .curent-paragraph {
+    margin: 0 0 12px;
+    color: #3d2b1d;
+    line-height: 1.6;
+  }
+
+  .curent-subheading {
+    margin: 12px 0 8px;
+    font-size: 1.05rem;
+    color: #a06a32;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .curent-list-wrapper {
+    margin-bottom: 6px;
+  }
+
+  .curent-list-intro {
+    margin: 0 0 6px;
+    font-weight: 600;
+    color: #5e3b1a;
+  }
+
+  .curent-list {
+    margin: 0;
+    padding-left: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    li {
+      color: #2f1f12;
+      line-height: 1.5;
+    }
+  }
+
+  .curent-list-dash {
+    list-style: none;
+    padding-left: 0;
+
+    li {
+      position: relative;
+      padding-left: 10px;
+    }
+
+    li::before {
+      position: absolute;
+      left: 0;
+      color: #a06a32;
+    }
+  }
+
+  .curent-list-numbered {
+    list-style-type: decimal;
+  }
+
+  .curent-list-item-title {
+    font-weight: 700;
+    color: #5c3412;
+  }
+
+  .curent-list-item-description {
+    color: #3c2a1f;
+  }
+
+  .curent-sublist {
+    margin: 6px 0 0;
+    padding-left: 18px;
+    list-style-type: disc;
+
+    li {
+      color: #4b3424;
+    }
+  }
 }
 
 // Dark theme styles for curent page
@@ -297,6 +399,36 @@
   .curent-page {
     .empty-state {
       color: rgba(255, 255, 255, 0.7);
+    }
+    .curent-section {
+      background: rgba(58, 33, 0, 0.95);
+      border-color: rgba(255, 255, 255, 0.08);
+      box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+
+      h3 {
+        color: #f3d7a4;
+      }
+    }
+
+    .curent-section-subtitle,
+    .curent-list-intro,
+    .curent-list-item-title {
+      color: #f0c98f;
+    }
+
+    .curent-paragraph,
+    .curent-list li,
+    .curent-list-item-description,
+    .curent-sublist li {
+      color: rgba(255, 255, 255, 0.86);
+    }
+
+    .curent-subheading {
+      color: #ffde9a;
+    }
+
+    .curent-list-dash li::before {
+      color: #ffde9a;
     }
   }
 }

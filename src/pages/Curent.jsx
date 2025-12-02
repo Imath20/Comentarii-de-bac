@@ -16,6 +16,62 @@ export default function Curent() {
 
   const curent = useMemo(() => curenteById[id] || null, [id]);
 
+  const renderBlock = (block, idx) => {
+    if (!block) return null;
+    switch (block.type) {
+      case 'text':
+        return (
+          <p key={`text-${idx}`} className="curent-paragraph">
+            {block.content}
+          </p>
+        );
+      case 'subheading':
+        return (
+          <h4 key={`subheading-${idx}`} className="curent-subheading">
+            {block.content}
+          </h4>
+        );
+      case 'list': {
+        const listClass = ['curent-list'];
+        if (block.style === 'dash') listClass.push('curent-list-dash');
+        if (block.style === 'numbered') listClass.push('curent-list-numbered');
+        return (
+          <div key={`list-${idx}`} className="curent-list-wrapper">
+            {block.intro && <p className="curent-list-intro">{block.intro}</p>}
+            <ul className={listClass.join(' ')}>
+              {(block.items || []).map((item, itemIdx) => {
+                if (typeof item === 'string') {
+                  return (
+                    <li key={`list-${idx}-item-${itemIdx}`}>
+                      <span>{item}</span>
+                    </li>
+                  );
+                }
+                return (
+                  <li key={`list-${idx}-item-${itemIdx}`}>
+                    {item.title && <div className="curent-list-item-title">{item.title}</div>}
+                    {item.description && (
+                      <div className="curent-list-item-description">{item.description}</div>
+                    )}
+                    {item.subitems && item.subitems.length > 0 && (
+                      <ul className="curent-sublist">
+                        {item.subitems.map((sub, subIdx) => (
+                          <li key={`list-${idx}-item-${itemIdx}-sub-${subIdx}`}>{sub}</li>
+                        ))}
+                      </ul>
+                    )}
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        );
+      }
+      default:
+        return null;
+    }
+  };
+
   const goBack = () => {
     const y = (location.state && location.state.from && typeof location.state.from.scrollY === 'number') ? location.state.from.scrollY : 0;
     const fromPath = (location.state && location.state.from && location.state.from.pathname) || '/curente';
@@ -117,7 +173,23 @@ export default function Curent() {
           </div>
 
           <div className="curent-right scriitor-right-column">
-            {/* rezervat pentru alte secțiuni viitoare */}
+            {curent.sections && curent.sections.length > 0 ? (
+              <div className="curent-content">
+                {curent.sections.map((section, sectionIdx) => (
+                  <section key={`section-${sectionIdx}`} className="curent-section">
+                    {section.title && <h3>{section.title}</h3>}
+                    {section.subtitle && <p className="curent-section-subtitle">{section.subtitle}</p>}
+                    {(section.blocks || []).map((block, blockIdx) =>
+                      renderBlock(block, `${sectionIdx}-${blockIdx}`)
+                    )}
+                  </section>
+                ))}
+              </div>
+            ) : (
+              <div className="empty-state">
+                <p>Revenim curând cu mai multe detalii despre acest curent.</p>
+              </div>
+            )}
           </div>
         </div>
       </div>
