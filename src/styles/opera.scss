@@ -895,16 +895,16 @@ body.tabs-revealed .opera-back-btn {
         &:before {
           content: "";
           position: absolute;
-          left: 12px;
+          left: 16px;
           top: 0;
-          bottom: 0;
-          width: 2px;
-          background: linear-gradient(180deg, rgba(169, 124, 80, 0.25), rgba(194, 140, 82, 0.05));
+          bottom: 8px;
+          width: 3px;
+          background: linear-gradient(180deg, rgba(169, 124, 80, 0.55), rgba(194, 140, 82, 0.08));
         }
 
         .opera-symbol-item {
           position: relative;
-          padding: 1.5rem 1.5rem 1.5rem 3rem;
+          padding: 1.5rem 1.5rem 1.5rem 3.4rem;
           background: linear-gradient(135deg, #fffdf9 0%, #f8f1e7 100%);
           border-radius: 12px;
           border: 1px solid rgba(169, 124, 80, 0.18);
@@ -914,13 +914,13 @@ body.tabs-revealed .opera-back-btn {
           &:before {
             content: "";
             position: absolute;
-            width: 14px;
-            height: 14px;
+            width: 16px;
+            height: 16px;
             border-radius: 50%;
             background: #c28c52;
-            left: 6px;
-            top: 28px;
-            box-shadow: 0 0 0 6px rgba(194, 140, 82, 0.15);
+            left: 9px;
+            top: 26px;
+            box-shadow: 0 0 0 6px rgba(194, 140, 82, 0.22);
           }
 
           h4 {
@@ -1187,7 +1187,6 @@ body.tabs-revealed .opera-back-btn {
     background: none !important;
     // border-radius: 12px;
     // border: 1px solid #e0e0e0;
-
     .opera-read-btn {
       background: linear-gradient(135deg, #a97c50 0%, #8b6b42 100%);
       color: white;
@@ -1651,13 +1650,13 @@ body.tabs-revealed .opera-back-btn {
 
       .opera-symbols-list {
         &:before {
-          background: linear-gradient(180deg, rgba(255, 213, 145, 0.4), rgba(255, 213, 145, 0.05));
+          background: linear-gradient(180deg, rgba(255, 213, 145, 0.75), rgba(255, 213, 145, 0.08));
         }
 
         .opera-symbol-item {
-          background: linear-gradient(135deg, rgba(61, 40, 21, 0.95) 0%, rgba(38, 24, 12, 0.95) 100%);
-          border-color: rgba(255, 213, 145, 0.25);
-          box-shadow: 0 16px 34px rgba(0, 0, 0, 0.45);
+          background: linear-gradient(135deg, rgba(61, 40, 21, 0.96) 0%, rgba(33, 21, 11, 0.96) 100%);
+          border-color: rgba(255, 213, 145, 0.32);
+          box-shadow: 0 18px 38px rgba(0, 0, 0, 0.55);
 
           &:before {
             background: #ffd591;

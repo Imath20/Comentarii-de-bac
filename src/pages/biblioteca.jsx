@@ -20,7 +20,7 @@ const cartiList = [
     {
         titlu: 'Moara cu noroc',
         autor: 'Ioan Slavici',
-        data: 'Redactare: 1880',
+        data: 'Redactare: 1881',
         img: '/opere/moara-cu-noroc.webp',
         categorie: 'nuvela',
         canonic: true,

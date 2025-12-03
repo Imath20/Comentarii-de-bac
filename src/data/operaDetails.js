@@ -259,49 +259,76 @@ export const OPERA_DETAILS = {
     }
   },
   'moara-cu-noroc': {
-    titlu: 'Moara cu noroc',
-    autor: 'Ioan Slavici',
-    data: '1881',
-    categorie: 'nuvelă',
-    canonic: true,
-    descriere: 'Nuvelă realist-psihologică despre distrugerea unei familii prin lăcomie și influența mediului.',
-    teme: ['conflictul dintre avere și moralitate', 'destinul', 'coruperea sufletului'],
-    personaje: ['Ghiță', 'Ana', 'Lica Sămădăul', 'bătrâna', 'Pintea'],
-    analiza: 'Nuvela explorează cum dorința de avere și putere poate corupe moralitatea omului. Ghiță începe ca un om cinstit, dar se lasă corupt de Lică Sămădăul, ajungând să-și sacrifice familia și principiile.',
-    citate: [
-      '"Omul să fie mulțumit cu sărăcia sa"',
-      '"Aici, la Moara cu noroc, nu putea să stea nimeni fără voia lui Lică"',
-      '"Să-ți fie frică de mine!"'
-    ],
-    titluSection: {
-      descriere: 'Titlul trimite la hanul izolat unde se joacă destinul personajelor, transformând locul într-un verdict moral.',
-      puncte: [
-        '„Moara” păstrează urmele muncii cinstite de altădată, dar devine spațiu al corupției după sosirea lui Ghiță.',
-        'Sintagma „cu noroc” e ironică: prosperitatea aparentă maschează prăbușirea morală.',
-        'Titlul sugerează că norocul este condiționat de etică – când compromisul intră, locul devine blestemat.'
-      ]
-    },
-    simboluriSection: {
-      descriere: 'Sadoveanu folosește simboluri concrete pentru a marca alunecarea de la echilibru la haos.',
-      simboluri: [
-        {
-          nume: 'Drumul / răscrucea',
-          explicatie: 'Moara se află la intersecție de drumuri: metaforă pentru opțiunile morale ale personajelor.'
-        },
-        {
-          nume: 'Focul final',
-          explicatie: 'Incendiul care mistuie hanul purifică simbolic spațiul de păcat și închide cercul vinovăției.'
-        },
-        {
-          nume: 'Câinii lui Ghiță',
-          explicatie: 'Instrumente de control care se întorc împotriva stăpânului – semn al rupturii interioare.'
-        },
-        {
-          nume: 'Veriga Licăi',
-          explicatie: 'Obiectul cu semnele sale devine emblemă a dependenței; odată acceptată, libertatea lui Ghiță este pierdută.'
-        }
-      ]
-    },
+  titlu: 'Moara cu noroc',
+  autor: 'Ioan Slavici',
+  data: '1881',
+  categorie: 'nuvelă',
+  canonic: true,
+  descriere: 'Nuvelă realist-psihologică și moralizatoare care urmărește degradarea unui om simplu sub influența banilor, fricii și dorinței de putere. Textul surprinde conflictul dintre aspirația spre îmbogățire și nevoia de a păstra echilibrul moral, subliniind importanța mediului și a caracterului în definirea destinului.',
+  teme: [
+    'conflictul dintre avere și moralitate',
+    'influența mediului asupra individului',
+    'puterea distrugătoare a lăcomiei',
+    'destinul și responsabilitatea personală',
+    'dezintegrarea familială',
+    'coruperea sufletului'
+  ],
+  personaje: [
+    'Ghiță',
+    'Ana',
+    'Lica Sămădăul',
+    'bătrâna',
+    'Pintea'
+  ],
+  personajeDetalii: {
+    Ghiță: 'Protagonistul nuvelei, inițial om cinstit și harnic, care dorește să ofere familiei o viață mai bună. Presiunea banilor și influența lui Lică îl împing spre frică, compromisuri morale și, în final, autodistrugere. Evoluția lui este emblematică pentru omul slab în fața ispitelor.',
+    Ana: 'Soția lui Ghiță, simbol al inocenței și al echilibrului familial. Observă degradarea morală a soțului, dar rămâne alături de el. Relația cu Lică o vulnerabilizează și contribuie la tragedia finală.',
+    'Lica Sămădăul': 'Antagonistul nuvelei, personaj carismatic, inteligent și periculos. Domină psihologic pe cei din jur, manipulează, amenință și corupe. Reprezintă răul activ, un om fără limite morale.',
+    bătrâna: 'Mama Anei, simbol al înțelepciunii tradiționale. Avertizează asupra pericolelor lăcomiei („Omul să fie mulțumit cu sărăcia sa”), funcționând ca voce morală a nuvelei.',
+    Pintea: 'Căpitan de țară, întruchipează legea și dreptatea. Apare ca opozant direct al lui Lică, dar are prea puțină influență asupra deciziilor lui Ghiță.'
+  },
+  analiza: 'Nuvela urmărește, cu mijloace realiste și psihologice, prăbușirea morală a unui om care își depășește limitele din dorința de a câștiga mai bine. Slavici construiește un studiu moral despre slăbiciune, coruperea sufletului și efectele devastatoare ale alegerilor greșite. Relația dintre Ghiță și Lică devine axa principală a conflictului, evidențiind dependența psihologică și frica. Degradarea progresivă a protagonistului transformă nuvela într-o tragedie modernă despre responsabilitate și păcat.',
+  citate: [
+    'Omul să fie mulțumit cu sărăcia sa.',
+    'Aici, la Moara cu noroc, nu putea să stea nimeni fără voia lui Lică.',
+    'Să-ți fie frică de mine!',
+    'Unde-i lege nu-i tocmeală.',
+    'Frica-i la om ca frâul la cal.'
+  ],
+  titluSection: {
+    descriere: 'Titlul funcționează ca avertisment moral și ca ironie tragică. Deși locul promite prosperitate, el devine scenă a ispitei, corupției și morții. Moara cu noroc devine un simbol al iluziilor care atrag omul dincolo de limitele sale.',
+    puncte: [
+      '„Moara cu noroc” sugerează inițial ideea de prosperitate, dar sensul real este ironic: moara aduce ruină, nu noroc.',
+      'Locul este izolat, predispus la primejdii și rupt de comunitatea tradițională, ceea ce favorizează influența lui Lică.',
+      'Titlul reflectă tema centrală: echilibrul fragil dintre aspirația materială și responsabilitatea morală.',
+      'Moara devine personaj-simbol, un spațiu în care natura umană este pusă la încercare și unde alegerile greșite duc la tragedie.'
+    ]
+  },
+  simboluriSection: {
+    descriere: 'Simbolurile nuvelei scot în evidență relația dintre caracter, mediu și destin. Ele marchează momente-cheie ale degradării și reflectă tensiunea dintre moralitate și ispită.',
+    simboluri: [
+      {
+        nume: 'Moara cu noroc',
+        explicatie: 'Spațiu al tentațiilor și al instabilității morale; locul unde ascensiunea materială pare posibilă, dar unde corupția devine inevitabilă.'
+      },
+      {
+        nume: 'Drumul',
+        explicatie: 'Legătura dintre lumea ordonată a satului și universul violent al Sămădăului; simbol al destinului care poate fi schimbat prin alegeri bune sau rele.'
+      },
+      {
+        nume: 'Banii',
+        explicatie: 'Forța coruptă care distruge echilibrul interior al lui Ghiță, transformându-l într-un om dominat de frică și compromis.'
+      },
+      {
+        nume: 'Focul final',
+        explicatie: 'Actul purificator care distruge răul, dar și viețile celor vinovați sau inocenți; simbol al justiției morale implacabile.'
+      },
+      {
+        nume: 'Lică Sămădăul',
+        explicatie: 'Simbol al răului seducător și al haosului moral. Prezența lui corupe și dezbină, funcționând ca agent al distrugerii.'
+      }
+    ]
+  },
     rezumat: {
       incipit: {
         sectiuni: [
@@ -564,9 +591,41 @@ export const OPERA_DETAILS = {
         "Cine are curaj și credință, trece marea și se-nchină.",
         "Unde-i unul nu-i putere; unde-s mulți puterea crește.",
         "Sfatul bun e mai de preț decât o pungă de galbeni."
-      ]
-    },
-    
+      ],
+      titluSection: {
+        descriere: "Titlul pune accent pe identitatea aparent umilă a eroului și ascunde în spatele numelui de slugă un drum complex de transformare. El anunță tema centrală: descoperirea sinelui și depășirea condiției impuse.",
+        puncte: [
+          "Numele Harap-Alb reflectă pierderea identității nobiliare și începutul unei etape de învățare și maturizare.",
+          "Contrastează între „Harap”, asociat cu starea de robie, și „Alb”, simbol al purității și al potențialului moral.",
+          "Transformarea numelui devine simbolul trecerii de la aparență la esență: sub masca slujii se ascunde viitorul împărat.",
+          "Titlul susține ideea că adevărata valoare a eroului nu ține de rang, ci de faptele sale."
+        ]
+      },
+      simboluriSection: {
+        descriere: "Simbolurile din basm evidențiază evoluția eroului, lupta dintre bine și rău, dar și importanța alegerilor morale. Elementele miraculoase și obiectele întâlnite au rol formator și îl pregătesc pe Harap-Alb pentru statutul final.",
+        simboluri: [
+          {
+            nume: "Podul",
+            explicatie: "Locul unde Harap-Alb îl întâlnește pe Spân și își pierde identitatea nobilă; simbolizează trecerea decisivă între copilărie și maturitate."
+          },
+          {
+            nume: "Fântâna",
+            explicatie: "Spațiul în care Spânul îl păcălește pe tânăr; semnifică punctul vulnerabil al eroului și consecințele naivității."
+          },
+          {
+            nume: "Calul năzdrăvan",
+            explicatie: "Este ghidul interior al eroului, simbolul înțelepciunii, loialității și al forței reale ascunse sub aparențe simple."
+          },
+          {
+            nume: "Probele împăratului Roș",
+            explicatie: "Fiecare probă reprezintă o etapă a maturizării: autocontrol, răbdare, solidaritate și curaj."
+          },
+          {
+            nume: "Masca identității furate",
+            explicatie: "Situația în care Harap-Alb trăiește sub numele impus de Spân simbolizează lupta dintre identitatea adevărată și rolurile sociale impuse."
+          }
+        ]
+      },      
     rezumat: {
       incipit: {
         sectiuni: [
@@ -648,7 +707,9 @@ export const OPERA_DETAILS = {
           }
         ]
       }
-    },
+    }
+  },
+
   'baltagul': {
     titlu: 'Baltagul',
     autor: 'Mihail Sadoveanu',
