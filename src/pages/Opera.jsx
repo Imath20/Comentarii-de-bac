@@ -337,6 +337,12 @@ function getCurentIdForOpera(operaDetails) {
   const autor = (operaDetails.autor || '').toLowerCase();
   const titlu = (operaDetails.titlu || '').toLowerCase();
 
+  // Caz special: „Povestea lui Harap-Alb” este basm cult, dar se studiază
+  // la BAC în cheia prozei realiste, deci o trimitem la pagina de realism.
+  if (titlu.includes('harap alb') || titlu.includes('harap-alb')) {
+    return 'realism';
+  }
+
   // Proza canonică pentru BAC – în majoritate realism
   if (categorie === 'roman' || categorie === 'nuvelă' || categorie === 'nuvela' || categorie === 'comedie') {
     return 'realism';
@@ -797,11 +803,17 @@ export default function Opera() {
       case 'curent': {
         const curentText = (() => {
           const categorie = operaDetails.categorie || '';
+          const titlu = (operaDetails.titlu || '').toLowerCase();
           if (categorie === 'roman') return 'Realism (roman), cu particularități specifice epocii/autorului.';
           if (categorie === 'poezie') return 'Modernism / Simbolism (poezie), în funcție de autor și perioadă.';
           if (categorie === 'nuvelă') return 'Realism (nuvelă), accent pe morală și tipologii.';
           if (categorie === 'comedie') return 'Realism satiric (comedie), critică socială și politică.';
-          if (categorie === 'basm') return 'Romantism / tradiția basmului cult, motive folclorice.';
+          if (categorie === 'basm') {
+            if (titlu.includes('harap alb') || titlu.includes('harap-alb')) {
+              return 'Realism (basm cult cu elemente fantastice), studiat la proza realistă pentru BAC.';
+            }
+            return 'Romantism / tradiția basmului cult, motive folclorice.';
+          }
           return 'Curent literar: în lucru.';
         })();
         const curentId = getCurentIdForOpera(operaDetails);
