@@ -14,7 +14,7 @@ export const scriitoriPrezentare = {
     paragrafe: [
       'Ion Creangă a fost unul dintre cei mai iubiți scriitori români, cunoscut pentru stilul său narativ autentic și pentru faptul că a adus în literatura română vocea și spiritul poporului.',
       'Născut în 1837 în Humulești, Neamț, Creangă a fost învățător și preot, dar și un povestitor natural care a captat esența vieții rurale românești.',
-      'Opera sa cuprinde "Amintiri din copilărie", o autobiografie literară de excepție, precum și povești populare precum "POvestea lui Harap-Alb", "Capra cu trei iezi", "Dănilă Prepeleac" și "Ivan Turbincă".',
+      'Opera sa cuprinde "Amintiri din copilărie", o autobiografie literară de excepție, precum și povești populare precum "Povestea lui Harap-Alb", "Capra cu trei iezi", "Dănilă Prepeleac" și "Ivan Turbincă".',
       'Stilul său se caracterizează prin folosirea unui limbaj popular autentic, prin umor și prin faptul că a reușit să păstreze farmecul și autenticitatea poveștilor tradiționale românești.'
     ]
   },

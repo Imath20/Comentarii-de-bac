@@ -1822,7 +1822,7 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
                         <button 
                           onClick={() => handleDeleteScriitor(scriitor)}
                           className="admin-submit-button"
-                          style={{ backgroundColor: '#dc3545', flex: 1 }}
+                          style={{ backgroundColor: '#dc3545', flex: 1, display: 'none'}}
                         >
                           Șterge
                         </button>
