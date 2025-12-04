@@ -372,7 +372,7 @@ export const OPERA_QUESTIONS = {
         'Enigma feminității moderne',
         'Tipul intelectualului'
       ],
-      correct: 1,
+      correct: 0,
       explanation: 'Otilia reprezintă enigma feminității moderne, complexă și misterioasă.'
     },
     {

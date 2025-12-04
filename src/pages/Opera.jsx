@@ -4,6 +4,7 @@ import Layout from '../assets/Layout';
 import { getScriitoriData } from '../firebase/scriitoriService';
 import { getQuestionsForOpera, getGenericQuestions } from '../data/operaQuestions';
 import { OPERA_DETAILS } from '../data/operaDetails';
+import { curenteById } from '../data/curente';
 import '../styles/style.scss';
 
 // Date pentru poeziile scurte (copiate din Scriitor.jsx)
@@ -327,42 +328,6 @@ const OPERA_IMAGES_BY_TITLE = {
   'Aci sosi pe vremuri': '/opere/aci-sosi.webp',
   'În Grădina Ghetsimani': '/opere/gradina-ghetsimani.webp',
 };
-
-// Date detaliate despre opere
-
-function getCurentIdForOpera(operaDetails) {
-  if (!operaDetails) return null;
-
-  const categorie = (operaDetails.categorie || '').toLowerCase();
-  const autor = (operaDetails.autor || '').toLowerCase();
-  const titlu = (operaDetails.titlu || '').toLowerCase();
-
-  // Caz special: „Povestea lui Harap-Alb” este basm cult, dar se studiază
-  // la BAC în cheia prozei realiste, deci o trimitem la pagina de realism.
-  if (titlu.includes('harap alb') || titlu.includes('harap-alb')) {
-    return 'realism';
-  }
-
-  // Proza canonică pentru BAC – în majoritate realism
-  if (categorie === 'roman' || categorie === 'nuvelă' || categorie === 'nuvela' || categorie === 'comedie') {
-    return 'realism';
-  }
-
-  // Basm cult – romantic, cu tradiția folclorică
-  if (categorie === 'basm') {
-    return 'romantism';
-  }
-
-  // Poezie – diferențiem după autor
-  if (categorie === 'poezie') {
-    if (autor.includes('eminescu')) return 'romantism';
-    if (autor.includes('bacovia')) return 'simbolism';
-    if (autor.includes('arghezi') || autor.includes('blaga') || autor.includes('barbu')) return 'modernism';
-  }
-
-  // Fallback: momentan fără curent mapat explicit
-  return null;
-}
 
 export default function Opera() {
   const params = useParams();
@@ -801,22 +766,11 @@ export default function Opera() {
       }
 
       case 'curent': {
-        const curentText = (() => {
-          const categorie = operaDetails.categorie || '';
-          const titlu = (operaDetails.titlu || '').toLowerCase();
-          if (categorie === 'roman') return 'Realism (roman), cu particularități specifice epocii/autorului.';
-          if (categorie === 'poezie') return 'Modernism / Simbolism (poezie), în funcție de autor și perioadă.';
-          if (categorie === 'nuvelă') return 'Realism (nuvelă), accent pe morală și tipologii.';
-          if (categorie === 'comedie') return 'Realism satiric (comedie), critică socială și politică.';
-          if (categorie === 'basm') {
-            if (titlu.includes('harap alb') || titlu.includes('harap-alb')) {
-              return 'Realism (basm cult cu elemente fantastice), studiat la proza realistă pentru BAC.';
-            }
-            return 'Romantism / tradiția basmului cult, motive folclorice.';
-          }
-          return 'Curent literar: în lucru.';
-        })();
-        const curentId = getCurentIdForOpera(operaDetails);
+        const curentId = operaDetails.curent || null;
+        const curentData = curentId ? curenteById[curentId] : null;
+        const curentText = curentData
+          ? curentData.descriere
+          : 'Curentul literar al acestei opere va fi explicat în curând, cu legături directe către pagina de curent.';
         return (
           <div className="opera-tab-content">
             <div className="opera-analysis">

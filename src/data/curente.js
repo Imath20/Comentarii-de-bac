@@ -9,7 +9,7 @@ const CURENTE = [
     an: 1550,
     img: '/curente/umanismul.webp',
     glowColor: 'rgba(89, 67, 2, 0.85)',
-    descriere: 'Revenire la Antichitate, interes pentru om și rațiune.',
+    descriere: 'Umanismul pune în centrul culturii omul, rațiunea și demnitatea sa, promovând întoarcerea la valorile Antichității pentru formarea unui spirit cultivat.',
     autori: [],
     sections: [
       {
@@ -180,7 +180,7 @@ const CURENTE = [
     an: 1700,
     img: '/curente/clasicismul.webp',
     glowColor: 'rgba(247, 194, 97, 0.85)',
-    descriere: 'Echilibru, rațiune, reguli stricte. Influență franceză.',
+    descriere: 'Clasicismul valorizează echilibrul, rigoarea, ordinea și respectarea modelelor antice, urmărind perfecțiunea morală și estetică.',
     autori: [
       { nume: 'Nicolas Boileau', slug: null, img: '/scriitori/boileau.webp' },
     ],
@@ -331,7 +331,7 @@ const CURENTE = [
     an: 1750,
     img: '/curente/iluminismul.webp',
     glowColor: 'rgba(109, 76, 10, 0.85)',
-    descriere: 'Rațiune, educație, spirit critic. Enciclopedism european.',
+    descriere: 'Iluminismul exaltează rațiunea, educația și progresul, susținând emanciparea omului prin cunoaștere și spirit critic.',
     autori: [],
     sections: [
       {
@@ -492,7 +492,7 @@ const CURENTE = [
     an: 1848,
     img: '/curente/pasoptismul.webp',
     glowColor: 'rgba(161, 112, 14, 0.85)',
-    descriere: 'Program cultural-național, modernizare, limbă și literatură.',
+    descriere: 'Pașoptismul susține modernizarea societății prin cultură, promovând patriotismul, identitatea națională și aspirațiile civice.',
     autori: [],
     sections: [
       {
@@ -828,7 +828,7 @@ const CURENTE = [
     an: 1830,
     img: '/curente/romantismul.webp',
     glowColor: 'rgba(106, 90, 205, 0.85)',
-    descriere: 'Sentiment, imaginație, natura și individul. În RO: Eminescu.',
+    descriere: 'Romantismul exprimă trăiri intense, idealuri ale libertății și evadarea în natură, istorie sau imaginar, valorizând geniul creator.',
     autori: [
       { nume: 'Mihai Eminescu', slug: 'eminescu', img: '/scriitori/eminescu_mihai.webp' },
       { nume: 'Vasile Alecsandri', slug: 'alecsandri', img: '/scriitori/alecsandri.webp' },
@@ -1001,7 +1001,7 @@ const CURENTE = [
     an: 1870,
     img: '/curente/criticismul.webp',
     glowColor: 'rgba(122,58,0,0.85)',
-    descriere: 'Spirit critic, criterii estetice, "forme fără fond".',
+    descriere: 'Criticismul junimist pune accent pe rigoare estetică, echilibru și selecția valorilor, criticând excesul retoric și lipsa de autenticitate.',
     autori: [],
     sections: [
       {
@@ -1162,7 +1162,7 @@ const CURENTE = [
     an: 1880,
     img: '/curente/realismul.webp',
     glowColor: 'rgba(160, 127, 45, 0.85)',
-    descriere: 'Reflectă fidel realitatea socială. În RO: Rebreanu, Călinescu.',
+    descriere: 'Realismul redă fidel viața socială, observând obiectiv tipologii, conflicte și realitatea cotidiană, fără idealizare.',
     autori: [
       { nume: 'Liviu Rebreanu', slug: 'rebreanu', img: '/scriitori/liviu_rebreanu_nou.webp' },
       { nume: 'George Călinescu', slug: 'calinescu', img: '/scriitori/george_calinescu.webp' },
@@ -1338,7 +1338,7 @@ const CURENTE = [
     an: 1895,
     img: '/curente/simbolismul.webp',
     glowColor: 'rgba(103, 58, 183, 0.9)',
-    descriere: 'Sugestie, muzicalitate, corespondențe. În RO: Bacovia.',
+    descriere: 'Simbolismul explorează lumea interioară prin sugestie, muzicalitate și corespondențe, transformând poezia într-o expresie a stărilor sufletești.',
     autori: [
       { nume: 'George Bacovia', slug: 'bacovia', img: '/scriitori/bacovia_rezerva.webp' },
     ],
@@ -1514,7 +1514,7 @@ const CURENTE = [
     an: 1905,
     img: '/curente/prelungiri.webp',
     glowColor: 'rgba(72, 61, 139, 0.85)',
-    descriere: 'Persistențe tematice și formale post-1900.',
+    descriere: 'Acestă zonă literară îmbină sentimentul național, tradiția și expresivitatea cu tonalități simbolice și melancolice, păstrând lirismul profund.',
     autori: [],
     sections: [
       {
@@ -1632,7 +1632,7 @@ const CURENTE = [
     an: 1920,
     img: '/curente/avangarda.webp',
     glowColor: 'rgba(255, 69, 0, 0.85)',
-    descriere: 'Ruperea convențiilor: dadaism, suprarealism. În RO: Tzara.',
+    descriere: 'Avangarda rupe orice convenție, experimentând radical cu limbajul, forma și imaginile pentru a crea literatură complet inovatoare.',
     autori: [
       { nume: 'Tristan Tzara', slug: null, img: '/scriitori/stanescu.webp' },
     ],
@@ -1814,7 +1814,7 @@ const CURENTE = [
     an: 1925,
     img: '/curente/modernismul.webp',
     glowColor: 'rgba(47, 79, 79, 0.85)',
-    descriere: 'Inovație formală, introspecție, urban. În RO: Arghezi, Blaga.',
+    descriere: 'Modernismul caută originalitate, introspecție și structură controlată, modernizând estetica prin tehnici noi și viziune intelectualizată.',
     autori: [
       { nume: 'Tudor Arghezi', slug: 'arghezi', img: '/scriitori/tudor_arghezi.webp' },
       { nume: 'Lucian Blaga', slug: 'blaga', img: '/scriitori/lucian_blaga.webp' },
@@ -1994,7 +1994,7 @@ const CURENTE = [
     an: 1930,
     img: '/curente/interbelic.webp',
     glowColor: 'rgba(139, 69, 19, 0.85)',
-    descriere: 'Inovație, sincronizare europeană, experiment estetic.',
+    descriere: 'Modernismul interbelic combină inovație formală, sincronizare europeană și experiment estetic, reflectând o perioadă de tranziție între două războaie mondiale.',
     autori: [],
     sections: [
       {
@@ -2060,7 +2060,7 @@ const CURENTE = [
     an: 1930,
     img: '/curente/traditionalismul.webp',
     glowColor: 'rgba(34, 139, 34, 0.85)',
-    descriere: 'Întoarcere la sat, ethos național, mit și religie.',
+    descriere: 'Traditionalismul valorizează satul, natura, spiritualitatea și continuitatea culturală, idealizând rădăcinile identității românești.',
     autori: [],
     sections: [
       {
@@ -2206,7 +2206,7 @@ const CURENTE = [
     an: 1965,
     img: '/curente/postbelic.webp',
     glowColor: 'rgba(105, 105, 105, 0.85)',
-    descriere: 'Literatură sub constrângeri ideologice și deschideri parțiale.',
+    descriere: 'Literatura postbelică reflectă condiția umană marcată de traume istorice, restricții ideologice și căutări existențiale, diversificând stilurile și temele.',
     autori: [],
     sections: [
       {
@@ -2345,7 +2345,7 @@ const CURENTE = [
     an: 1970,
     img: '/curente/neomodernismul.webp',
     glowColor: 'rgba(70, 130, 180, 0.85)',
-    descriere: 'Reactualizare a modernismului, densitate metaforică, reflexiv.',
+    descriere: 'Literatura postbelică reflectă condiția umană marcată de traume istorice, restricții ideologice și căutări existențiale, diversificând stilurile și temele.',
     autori: [],
     sections: [
       {
@@ -2514,7 +2514,7 @@ const CURENTE = [
     an: 1990,
     img: '/curente/postmodernismul.webp',
     glowColor: 'rgba(255, 105, 180, 0.85)',
-    descriere: 'Intertextualitate, ironie, ludic, amestec de registre.',
+    descriere: 'Postmodernismul combină ludicul, ironia și intertextualitatea într-o literatură liberă, fragmentară și reflexivă, care reinterpretează tradiția.',
     autori: [],
     sections: [
       {
