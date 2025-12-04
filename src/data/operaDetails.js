@@ -1614,7 +1614,164 @@ export const OPERA_DETAILS = {
     citate: [
       '"Hanul Ancuței, locul întâlnirilor"'
     ]
+  },
+  'iona': {
+  titlu: 'Iona',
+  autor: 'Marin Sorescu',
+  data: '1968',
+  categorie: 'dramă',
+  canonic: true,
+  curent: 'postmodernism',
+  descriere: '„Iona” este o dramă modernă despre singurătatea omului și căutarea sensului într-o lume absurdă. Pus în burta unui pește uriaș, personajul încearcă să găsească o ieșire, iar drumul lui devine o metaforă pentru lupta interioară, libertate și autocunoaștere.',
+
+  teme: [
+    'singurătatea',
+    'absurdul existenței',
+    'căutarea sensului',
+    'condiția umană',
+    'libertatea',
+    'destinul'
+  ],
+
+  personaje: [
+    'Iona',
+    'Pescarul 1',
+    'Pescarul 2',
+    'Vocea'
+  ],
+
+  analiza: 'Sorescu construiește o dramă-parabolă despre omul modern prins într-o lume a absurdității și limitării. Piesa urmărește lupta interioară a lui Iona, simbol al individului care încearcă să iasă din propriile limite și să-și găsească sensul existenței. Textul are puternice accente alegorice, ironice și metafizice.',
+
+  citate: [
+    '"Singurătatea e un fel de a te măsura cu Dumnezeu."',
+    '"M-am născut în pântecele chitului."',
+    '"Omul e un pește care trebuie mereu să înoate împotriva curentului."'
+  ],
+
+  personajeDetalii: {
+    'Iona': 'Personajul principal, pescar prins în burta unui pește uriaș. Este simbolul omului modern, singur, confruntându-se cu sensul vieții, limitele existenței și absurdul.',
+    'Pescarul 1': 'Apare episodic și reprezintă omul obișnuit, prins în rutina vieții, fără întrebări existențiale profunde.',
+    'Pescarul 2': 'Simbolizează repetitivitatea vieții și ciclul existenței; pare o dublură ironică a lui Iona.',
+    'Vocea': 'Instanță abstractă, poate fi conștiința lui Iona sau destinul însuși.'
+  },
+
+  titluSection: {
+    descriere: 'Titlul piesei trimite la figura biblică Iona, accentuând ideea de încercare, captivitate și revelație interioară.',
+    puncte: [
+      'Numelă preia simbolistica profetului biblic înghițit de chit, sugerând o experiență-limită.',
+      'Titlul indică o parabolă existențialistă despre om și destinul său.',
+      'Numele unic pune accent pe universalitatea condiției umane – Iona poate fi oricine.'
+    ]
+  },
+
+  simboluriSection: {
+    descriere: 'Opera este construită pe simboluri existențialiste care exprimă drama omului prins în limitele propriei vieți.',
+    simboluri: [
+      {
+        nume: 'Chitul',
+        explicatie: 'Simbol al vieții ca spațiu închis, al destinului inevitabil și al limitării umane.'
+      },
+      {
+        nume: 'Cuțitul lui Iona',
+        explicatie: 'Reprezintă încercarea de a depăși limitele și lupta pentru libertate și cunoaștere.'
+      },
+      {
+        nume: 'Peștele în pește',
+        explicatie: 'Simbol al universurilor concentric-limitatoare; omul nu scapă complet de propriile condiționări.'
+      },
+      {
+        nume: 'Strigătul lui Iona',
+        explicatie: 'Act de revoltă și disperare existențială; simbol al dorinței de comunicare cu absolutul.'
+      }
+    ]
+  },
+  rezumat: {
+    incipit: {
+      sectiuni: [
+        {
+          subtitlu: "Contextul și singurătatea lui Iona",
+          text: "Piesa (Tabloul I) începe într-un cadru simbolic: Iona, un pescar, se află în gura unui pește uriaș, cu năvodul aruncat peste cercuri de cretă care simbolizează apa. Iona este singur, vorbind tare cu sine însuși și dedublându-se (acționează ca două personaje) pentru a-și alunga izolarea profundă."
+        },
+        {
+          subtitlu: "Pierderea ecoului și a legăturii cu exteriorul",
+          text: "Un moment crucial este descoperirea pierderii ecoului. La strigătul 'Io-na!', el aude doar 'Io' (care înseamnă 'eu' în limbi vechi). Acest detaliu simbolizează pierderea ultimei forme de legătură cu lumea exterioară, rămânând izolat în propriul sine. Iona încearcă să găsească sensul vieții sale monotone, visând să fie pădurar."
+        },
+        {
+          subtitlu: "Momentul dramatic al înghițirii",
+          text: "Tabloul se încheie brusc: în timp ce Iona se apleacă peste acvariul cu peștișorii săi, gura peștelui uriaș începe să se închidă. Iona strigă 'Ajutor! Ajutoooor!', dar conștientizează că nici măcar ecoul nu mai este acolo să-i răspundă. Scena se termină în întuneric."
+        }
+      ]
+    },
+    intriga: {
+      sectiuni: [
+        {
+          subtitlu: "Trezirea în absurd și lipsa modelului",
+          text: "Iona se trezește (Tabloul II) în interiorul primului pește, într-un spațiu plin de bureți, osoașe și mizerie acvatică. El realizează că este 'înghițit de viu'. Își amintește o poveste despre cineva înghițit de un chit, dar nu știe cum se termină acea poveste, metaforă pentru condiția sa fără precedent sau soluție cunoscută."
+        },
+        {
+          subtitlu: "Absurdul cotidian și speranța",
+          text: "Într-o tentativă de a menține normalitatea, Iona își aruncă năvodul în interiorul peștelui și continuă să prindă pești mai mici – un gest absurd. El filosofează despre viață și moarte, cântând o melodie pe tema 'Venica mistuire'. Își dă seama că peștele a uitat să-i ia cuțitul, ceea ce îi oferă o falsă speranță de evadare."
+        },
+        {
+          subtitlu: "Eșecul comunicării și primul perete spart",
+          text: "Apar Pescarul I și Pescarul II, purtând bârne în spinare, dar sunt muți. Iona încearcă în zadar să comunice cu ei. Cu ajutorul cuțitului și apoi al unghiilor, Iona reușește să spargă peretele peștelui, dar descoperă cu groază că se află doar în burta unui al doilea pește, care l-a înghițit pe primul."
+        }
+      ]
+    },
+    desfasurarea: {
+      sectiuni: [
+        {
+          subtitlu: "Conștientizarea realității stratificate",
+          text: "Iona realizează (Tabloul III) că se află într-o realitate stratificată, ca într-o serie de matrioșke: 'Altul! Mă miram eu să se termine așa de repede!'. Calmul său forțat ascunde groaza crescândă că această succesiune de pești (simbol al captivității) ar putea fi infinită."
+        },
+        {
+          subtitlu: "Pierderea memoriei și Regresia spre mamă",
+          text: "Spațiul devine mai întunecos și mai opresiv. Iona începe să uite lucruri fundamentale din viața sa. Memoria soției se estompează, în timp ce imaginea mamei devine din ce în ce mai clară. Această inversare sugerează o întoarcere spre origini și o dorință de renaștere: 'Mai naște-mă o dată! Prima viață nu prea mi-a ieșit ea'."
+        },
+        {
+          subtitlu: "Scrisoarea disperată și pierderea empatiei",
+          text: "Iona își taie o bucată de piele din palmă și scrie cu propriul sânge un mesaj de ajutor, pe care îl pune într-o bică. Din neatenție, calcă pe bică, iar aceasta explodează. Găsind scrisoarea, o citește, dar, nerecunoscându-și scrisul, crede că aparține altui naufragiat. El își respinge propria cerere de ajutor, devenind cinic și dur: 'Pe omenire o doare în fund de soarta ta... Biete, descurcă-te și tu cum poți'."
+        },
+        {
+          subtitlu: "Amenințarea peștișorilor",
+          text: "Tabloul se încheie apocaliptic: ochii peștișorilor nenăscuți ai monstrului îl privesc din întuneric. Explozia bicăi i-a trezit la viață și aceștia cresc rapid, amenințându-l: 'Vin spre mine cu gurile... Cu gurile... scoase din teac. Mă mănâncă!'"
+        }
+      ]
+    },
+    punctulCulminant: {
+      sectiuni: [
+        {
+          subtitlu: "Ieșirea falsă și Extazul eșuat",
+          text: "Iona reușește să spintece al treilea pește (Tabloul IV) și iese la lumină, extaziat: 'Marea! Aerul!'. Fericirea sa este însă scurtă. El realizează rapid că nu există apă în jur, ci doar 'nasturi de nisip'. Nu se află pe o plajă reală, ci într-un alt spațiu închis."
+        },
+        {
+          subtitlu: "Revelația terifiantă a orizonturilor",
+          text: "Urcându-se pe o movilă, Iona privește în zare și vede un orizont – dar acesta este 'o burtă de pește'. Urmează un alt orizont – 'o burtă de pește uriașă'. Iona înțelege că realitatea este stratificată la infinit, că orice evadare duce la un alt nivel de captivitate: 'Doamne, câți pești unul într-altul!'"
+        },
+        {
+          subtitlu: "Ciclicitatea și pierderea memoriei totale",
+          text: "Întâlnirea repetată cu Pescarul I și Pescarul II, purtând aceleași bârne, confirmă că se mișcă într-un univers ciclic, claustrofobic: 'De ce întâlnesc mereu aceiași oameni? S-o fi-ngustat lumea până într-atâta?'. Iona nu mai poate răspunde la întrebările fundamentale, aproape uitându-și propriul nume."
+        }
+      ]
+    },
+    deznodamant: {
+      sectiuni: [
+        {
+          subtitlu: "Metafora Dumnezeului eșuat și a nașterii",
+          text: "Iona formulează cea mai profundă reflexie a sa, comparându-se cu un Dumnezeu 'care nu mai poate învia', sugerând că și divinitatea poate eșua în fața absurdului. El generalizează condiția sa: 'Problema e dacă mai reușești să ieși din ceva, odată ce te-ai născut. Toate lucrurile sunt pești', ceea ce înseamnă că nașterea însăși este o formă de înghițire."
+        },
+        {
+          subtitlu: "Recunoașterea identității și gestul final",
+          text: "Într-un moment de luciditate, Iona își amintește: 'Iona. Eu sunt Iona.', strigând propriul nume ca pe o descoperire fundamentală. El ia o decizie radicală: nu mai încearcă să spintece peștele din afară, ci își spintecă propria burtă. 'Gata, Iona? Răzbim noi cumva la lumină'."
+        },
+        {
+          subtitlu: "Semnificația ambiguă a încheierii",
+          text: "Finalul este profund ambiguu. Gestul auto-distructiv/creator al lui Iona poate fi interpretat ca o sinucidere simbolică pentru a elibera spiritul, ca o auto-naștere disperată (un act de mântuire prin sine) sau ca o recunoaștere nihilistă a faptului că omul însuși este peștele final, propria sa închisoare. Răspunsul la problema ieșirii rămâne suspendat."
+        }
+      ]
+    }
   }
+}
 };
 
 export default OPERA_DETAILS;

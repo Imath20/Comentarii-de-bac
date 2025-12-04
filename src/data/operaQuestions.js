@@ -428,6 +428,78 @@ export const OPERA_QUESTIONS = {
       correct: 1,
       explanation: 'Romanul explorează conflictul dintre valorile tradiționale și noile schimbări sociale și politice.'
     }
+  ],
+  'iona': [
+  {
+    "q": "Tema centrală în piesa „Iona” este:",
+    "options": [
+      "Lupta eroică pentru supraviețuire fizică",
+      "Condiția umană în fața absurdului și a singurătății",
+      "Viața pescarilor în satul tradițional"
+    ],
+    "correct": 1,
+    "explanation": "Piesa explorează absurdul existenței, singurătatea, identitatea și căutarea sensului."
+  },
+  {
+    "q": "Curentul literar al piesei „Iona” este:",
+    "options": [
+      "Realism clasic",
+      "Avangardism",
+      "Teatru absurd / neomodernism"
+    ],
+    "correct": 2,
+    "explanation": "„Iona” aparține teatrului absurd românesc și neomodernismului, cu simboluri și situații existențiale."
+  },
+  {
+    "q": "Ce simbolizează peștele uriaș care îl înghite pe Iona?",
+    "options": [
+      "Frica de apă",
+      "Captivitatea în propriul destin existențial",
+      "O întâmplare obișnuită pentru pescari"
+    ],
+    "correct": 1,
+    "explanation": "Peștele este simbolul-prizonier, metafora limitelor, a destinului și a labirintului interior."
+  },
+  {
+    "q": "Pierderea ecoului pentru Iona reprezintă:",
+    "options": [
+      "O reacție normală în spații închise",
+      "Ruperea ultimei legături cu exteriorul și cu ceilalți",
+      "Un efect comic al scenei"
+    ],
+    "correct": 1,
+    "explanation": "Ecoul era singura confirmare a existenței altcuiva. Lipsa lui accentuează izolarea totală."
+  },
+  {
+    "q": "Cei doi pescari care trec fără să vorbească simbolizează:",
+    "options": [
+      "Ajutorul iminent care vine spre Iona",
+      "Indiferența lumii față de drama individului",
+      "Ghidarea eroică spre libertate"
+    ],
+    "correct": 1,
+    "explanation": "În teatrul absurd, tăcerea și lipsa comunicării subliniază izolarea și lipsa empatiei."
+  },
+  {
+    "q": "Gestul final al lui Iona, în care își spintecă propria burtă, poate semnifica:",
+    "options": [
+      "O simplă renunțare fizică",
+      "O auto-naștere sau eliberare prin sine",
+      "O pedeapsă impusă de ceilalți"
+    ],
+    "correct": 1,
+    "explanation": "Finalul e ambiguu: poate fi o renaștere simbolică, o căutare a luminii sau o evadare metaforică."
+  },
+  {
+    "q": "Ce sugerează replica „Toate lucrurile sunt pești”?",
+    "options": [
+      "Importanța pescuitului în piesă",
+      "Ideea că orice situație este o formă de captivitate",
+      "O glumă despre lumea marină"
+    ],
+    "correct": 1,
+    "explanation": "Replica generalizează metafora captivării: orice spațiu, orice etapă a vieții e un nou „pește”."
+  }
   ]
 };
 
