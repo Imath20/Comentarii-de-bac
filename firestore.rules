@@ -1,21 +1,58 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    // Temporary open-read window: 30 days from 2025-11-05 => until 2025-12-05 (exclusive)
-    function isWithinInitialWindow() {
-      return request.time < timestamp.date(2025, 12, 5);
+    // Helper function to check if user is admin or semi-admin
+    function isAdmin() {
+      return request.auth != null && 
+             exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+             get(/databases/$(database)/documents/users/$(request.auth.uid)).data.isAdmin == true;
     }
-
-    // Default rule for all documents/collections
-    match /{document=**} {
-      allow read: if isWithinInitialWindow();
-      allow write: if true; // no writes from clients
+    
+    function isSemiAdmin() {
+      return request.auth != null && 
+             exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+             get(/databases/$(database)/documents/users/$(request.auth.uid)).data.isSemiAdmin == true;
+    }
+    
+    function isAdminOrSemiAdmin() {
+      return isAdmin() || isSemiAdmin();
+    }
+    
+    // Public collections - readable by everyone, writable by admins/semi-admins
+    match /scriitori/{document=**} {
+      allow read: if true;
+      allow write: if isAdminOrSemiAdmin();
+    }
+    
+    match /notifications/{document=**} {
+      allow read: if true;
+      allow write: if isAdminOrSemiAdmin();
+    }
+    
+    match /comentarii/{document=**} {
+      allow read: if true;
+      allow write: if isAdminOrSemiAdmin();
+    }
+    
+    match /filme/{document=**} {
+      allow read: if true;
+      allow write: if isAdminOrSemiAdmin();
+    }
+    
+    match /subiecte/{document=**} {
+      allow read: if true;
+      allow write: if isAdminOrSemiAdmin();
     }
     
     // User profile rules - users can read and write their own profile
     match /users/{userId} {
       allow read: if true; // Anyone can read user profiles
       allow write: if request.auth != null && request.auth.uid == userId; // Users can only write their own profile
+    }
+    
+    // Default rule - deny all other access
+    match /{document=**} {
+      allow read, write: if false;
     }
   }
 }

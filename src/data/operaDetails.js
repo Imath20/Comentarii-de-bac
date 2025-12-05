@@ -1407,20 +1407,227 @@ export const OPERA_DETAILS = {
     }
   },
   'morometii': {
-    titlu: 'Moromeții',
-    autor: 'Marin Preda',
-    data: '1955/1967',
-    categorie: 'roman',
-    canonic: true,
-    curent: 'realism',
-    descriere: 'Roman realist despre destrămarea unei familii de țărani din Câmpia Dunării.',
-    teme: ['familia', 'satul tradițional', 'schimbarea socială'],
-    personaje: ['Ilie Moromete', 'Catrina', 'Niculae', 'Paraschiv', 'Achim', 'Nilă'],
-    analiza: 'Preda creează un roman epic despre transformările societății românești prin prisma familiei Moromeților. Opera explorează conflictul dintre tradiție și modernitate, între vechi și nou.',
-    citate: [
-      '"Ilie Moromete, țăranul înțelept"',
-      '"Catrina, femeia puternică"',
-      '"Tradițiile se schimbă"'
+  titlu: 'Moromeții',
+  autor: 'Marin Preda',
+  data: '1955 / 1967',
+  categorie: 'roman',
+  canonic: true,
+  curent: 'realism',
+  descriere: '„Moromeții” surprinde destrămarea treptată a unei familii țărănești și schimbările profunde din satul românesc. Primul volum prezintă lumea tradițională interbelică, dominată de calmul și ironia lui Ilie Moromete, iar al doilea volum urmărește maturizarea lui Niculae și transformările brutale aduse de perioada postbelică. Împreună, cele două volume arată trecerea de la vechiul mod de viață la o societate complet schimbată.',
+  teme: [
+    'familia',
+    'satul tradițional',
+    'schimbarea socială',
+    'conflictul dintre generații',
+    'modernizarea forțată',
+    'dezagregarea lumii rurale'
+  ],
+
+  personaje: [
+    'Ilie Moromete',
+    'Catrina',
+    'Niculae',
+    'Paraschiv',
+    'Achim',
+    'Nilă',
+    'Guica',
+    'Cocoșilă',
+    'Bălosu'
+  ],
+
+  analiza: 'Preda creează una dintre cele mai importante fresce ale satului românesc, surprinzând cu finețe destrămarea unei lumi aflate în fața modernizării. Volumul I explorează tensiunile din familia Moromete și disoluția tradițiilor, în timp ce volumul II îl urmărește pe Niculae în confruntarea cu noua realitate politică postbelică. Romanul pune în centru drama unei familii și tragedia unei lumi care dispare.',
+
+  citate: [
+    '„Numai păcatele nu te lasă să dormi.”',
+    '„Am peste şaizeci de ani și în mintea mea e că o să trăiesc o sută. De ce să nu trăiesc?”',
+    '„Cineva îl întrebase odată în glumă de ce vorbește singur și Moromete îi răspunse serios că asta e din pricina că n-are cu cine discuta.”',
+    '„Visele sunt vise, uneori visezi rău și nu se întâmplă nimic, visul rău e gândul care n-ai scăpat de el.”',
+    '„Atâta timp cât trăiesc eu, ori faceți cum zic eu, ori dacă nu, să plecați!”'
+  ],
+
+  personajeDetalii: {
+    'Ilie Moromete': 'Patriarhul familiei și simbolul țăranului filozof. Inteligent, ironic, calm, încearcă să mențină unitatea familiei într-o lume aflată în schimbare. Volumul II îl arată înfrânt de modernizare.',
+    'Catrina': 'Soția răbdătoare și harnică, silită să suporte indiferența și preferințele lui Moromete pentru copiii din prima căsătorie.',
+    'Niculae': 'Fiul cel mic, inteligent și sensibil. În vol. I caută educația; în vol. II devine intelectual prins în frământările politice postbelice.',
+    'Paraschiv': 'Fiul cel mare, rebel, egoist, preocupat de bani; pleacă la oraș, abandonând familia.',
+    'Achim': 'Ambițios și dur, se ocupă cu negustoria și contribuie la destrămarea familiei.',
+    'Nilă': 'Lipsit de inițiativă, influențabil, simbol al omului slab în fața schimbării.',
+    'Guica': 'Sora lui Moromete, mereu pusă pe intrigi; tensionează atmosfera familială.',
+    'Cocoșilă': 'Prieten și confident al lui Moromete; reprezintă umorul și înțelepciunea satului.',
+    'Bălosu': 'Vecinul bogat, simbol al presiunii sociale și economice asupra familiei Moromete.'
+  },
+
+  titluSection: {
+    descriere: 'Titlul evidențiază familia Moromete ca nucleu al unei lumi aflate în declin, cu accent pe transformările sociale ce afectează fiecare membru.',
+    puncte: [
+      'Numele de familie sugerează o saga rurală desfășurată pe două generații.',
+      'Indică trecerea timpului și efectele lui asupra unei familii simbolice pentru satul românesc.',
+      'Titlul marchează disoluția treptată a unei lumi tradiționale.'
+    ]
+  },
+
+  simboluriSection: {
+    descriere: 'Simbolistica romanului surprinde tensiunea dintre tradiție și modernitate și degradarea treptată a universului rural.',
+    simboluri: [
+      {
+        nume: 'Timpul',
+        explicatie: 'Reprezintă schimbarea inevitabilă care erodează familia și tradițiile satului.'
+      },
+      {
+        nume: 'Poiana lui Iocan',
+        explicatie: 'Simbol al libertății gândirii și al comunității tradiționale; locul unde „se dezbate țara”.'
+      },
+      {
+        nume: 'Casa Moromeților',
+        explicatie: 'Spațiu al tradiției și stabilității, care se degradează odată cu destrămarea familiei.'
+      },
+      {
+        nume: 'Secerișul',
+        explicatie: 'Simbol al ordinii tradiționale și al muncii, dar și al efortului perpetuu al țăranului.'
+      }
+    ]
+  },
+    rezumate: [
+      {
+        incipit: {
+          sectiuni: [
+            {
+              subtitlu: "Cadrul spațio-temporal și Iluzia Timpului",
+              text: "Romanul începe prin fixarea cadrului: satul Siliștea-Gumești, în Câmpia Dunării, în perioada interbelică (cu câțiva ani înainte de Al Doilea Război Mondial). Naratorul introduce celebra iluzie a stabilității: 'se pare că timpul avea cu oamenii nesfârșită răbdare'."
+            },
+            {
+              subtitlu: "Prezentarea Familiei Moromete",
+              text: "Este prezentată familia numeroasă Moromete, o structură hibridă și tensionată, compusă din Ilie (tatăl), Catrina (a doua soție) și șase copii: trei din prima căsătorie (Paraschiv, Nilă, Achim) și trei din a doua (Tita, Ilinca, Niculae). Sunt expuse problemele latente: datoriile financiare (fonciirea, banca) și nemulțumirea fiilor celor mari."
+            },
+            {
+              subtitlu: "Figura lui Ilie Moromete",
+              text: "Figura centrală este Ilie Moromete – țăranul filosof, ironic, care crede că poate rezolva crizele prin dialog, disimulare și amânare. Scena cinei, cu membrii familiei așezați la masa rotundă în funcție de vârstă și autoritate, sugerează o coeziune deja spartă și ierarhia patriarhală amenințată."
+            }
+          ]
+        },
+        intriga: {
+          sectiuni: [
+            {
+              subtitlu: "Complotul Fugarilor",
+              text: "Elementul care declanșează criza majoră este hotărârea celor trei fii mai mari (Paraschiv, Nilă și Achim), influențați de sora lui Ilie, Guica, de a nu mai suporta autoritatea tatălui și sărăcia. Ei concep un plan de a fugi la București, luând cu ei oile familiei (capitalul esențial), pentru a câștiga bani și a-și câștiga independența."
+            },
+            {
+              subtitlu: "Subminarea Autorității",
+              text: "Acest plan secret, bazat pe furtul capitalului, subminează direct autoritatea patriarhală și strategia de supraviețuire a lui Ilie, care se baza pe credința că poate controla timpul și destinele familiei."
+            }
+          ]
+        },
+        desfasurarea: {
+          sectiuni: [
+            {
+              subtitlu: "Lupta pe frontul social-economic",
+              text: "Ilie Moromete duce o luptă continuă pentru a amâna plata taxelor (scena memorabilă cu perceptorul Jupuitu) și a ratelor la bancă. El folosește disimularea și umorul ca arme de apărare. Participă la discuțiile politice din Poiana lui Iocan, unde își menține iluzia de stăpân al situației și de spectator lucid al evenimentelor."
+            },
+            {
+              subtitlu: "Tensiunile familiale și plecarea lui Achim",
+              text: "Tensiunile familiale cresc: Niculae vrea insistent să meargă la școală, ceea ce Ilie percepe ca o povară financiară. Catrina este nemulțumită de situația pământului ei. Deși simte complotul fiilor, Ilie refuză să accepte gravitatea lui. Plecarea lui Achim cu oile la București (teoretic temporar) este primul semn clar al fisurii și o mare greșeală tactică a tatălui."
+            }
+          ]
+        },
+        punctulCulminant: {
+          sectiuni: [
+            {
+              subtitlu: "Izbucnirea violentă și criza tatălui",
+              text: "Momentul de maximă intensitate este izbucnirea violentă a lui Ilie Moromete, atunci când complotul fiilor devine evident, iar autoritatea sa este complet negată. Într-o scenă dramatică, Ilie recurge la violență fizică (îi bate cu parul pe Paraschiv și Nilă) într-o încercare disperată și tardivă de a-și restabili autoritatea patriarhală și de a opri destrămarea familiei."
+            },
+            {
+              subtitlu: "Căderea Măștii Ironiei",
+              text: "Este momentul în care masca ironiei și a disimulării cade, dezvăluind neputința și furia unui tată care vede cum se prăbușește universul său de valori."
+            }
+          ]
+        },
+        deznodamant: {
+          sectiuni: [
+            {
+              subtitlu: "Destrămarea Familiei și Fuga Făptuitoare",
+              text: "Ordinea veche se prăbușește definitiv. Paraschiv și Nilă fug la București, spărgând lada de zestre și furând caii. Familia este destrămată iremediabil."
+            },
+            {
+              subtitlu: "Ilie Moromete și Acceptarea Realității",
+              text: "Ilie Moromete, înfrânt, este nevoit să accepte realitatea dură: vinde o parte din pământ pentru a plăti datoriile acumulate. Într-un gest final de resemnare, acceptă să-l trimită pe Niculae la școală. Iluzia că timpul are răbdare s-a spulberat definitiv."
+            },
+            {
+              subtitlu: "O Lume la Apus",
+              text: "Ilie rămâne singur pe prispă, o figură tragică la apusul unei lumi. Volumul I se încheie cu sfârșitul ordinii patriarhale tradiționale și cu victoria forțelor istorice și economice asupra încercării individuale de a le amâna."
+            }
+          ]
+        }
+      },
+      {
+        incipit: {
+          sectiuni: [
+            {
+              subtitlu: "Saltul în timp și Răbdarea pierdută",
+              text: "Acțiunea Volumului II face un salt în timp, acoperind perioada de după Al Doilea Război Mondial, marcată de instaurarea regimului comunist. Atmosfera este radical schimbată, iar iluzia stabilității este spulberată: 'Timpul nu mai avea răbdare'. Conflictul se mută din drama familială (Vol. I) în cea social-politică."
+            },
+            {
+              subtitlu: "Starea lui Ilie Moromete și apariția lui Niculae",
+              text: "Ilie Moromete este acum un om bătrân, izolat și cu autoritatea mult diminuată. El a fost părăsit de Catrina (din cauza pământului ei) și a pierdut coeziunea familiei, dar și-a păstrat spiritul critic. În prim-plan apare Niculae Moromete, devenit activist de partid, reprezentant al noii puteri și al ideologiei care va distruge satul tradițional."
+            }
+          ]
+        },
+        intriga: {
+          sectiuni: [
+            {
+              subtitlu: "Intervenția brutală a Istoriei",
+              text: "Intriga este declanșată de intervenția brutală a Istoriei în viața satului, prin directivele de la 'Centru' care impun cote obligatorii zdrobitoare pentru țărani (cereale, animale) și pregătesc terenul pentru colectivizare (înființarea G.A.C.)."
+            },
+            {
+              subtitlu: "Niculae în mijlocul crizei",
+              text: "Niculae este trimis în satul natal ca activist, fiind pus în situația imposibilă de a aplica directivele de partid, lovind astfel în lumea și valorile din care provine. Aceasta creează o tensiune ideologică între tată și fiu."
+            }
+          ]
+        },
+        desfasurarea: {
+          sectiuni: [
+            {
+              subtitlu: "Ascensiunea oportunismului și teroarea",
+              text: "Se desfășoară un conflict ideologic și social dur. Satul este condus de personaje noi, mediocre și violente (precum Isosică, Zdroncan), care folosesc teroarea, abuzul și frica pentru a aplica ordinele partidului, distrugând demnitatea țăranilor."
+            },
+            {
+              subtitlu: "Drama lui Niculae (Idealism vs. Realitate)",
+              text: "Tânărul activist crede sincer în idealurile comuniste (care promiseseră școală și progres), dar este oripilat de metodele brutale folosite în teren. El intră în conflict cu linia dură a partidului și încearcă să tempereze abuzurile, ceea ce, inevitabil, îi va aduce acuzația de 'deviaționism' și excluderea temporară."
+            },
+            {
+              subtitlu: "Rezistența lui Ilie Moromete",
+              text: "Bătrânul Moromete refuză constant să intre în colectiv, folosindu-și vechea ironie, acum mai amară, pentru a demasca absurdul noii orânduiri. El se izolează în lumea sa, refuzând să se adapteze, fiind un simbol al demnității individuale în fața istoriei implacabile."
+            }
+          ]
+        },
+        punctulCulminant: {
+          sectiuni: [
+            {
+              subtitlu: "Finalizarea Colectivizării",
+              text: "Punctul culminant nu este o singură scenă, ci un proces cumulativ: finalizarea colectivizării forțate în Siliștea-Gumești. Este momentul în care rezistența individuală a țăranilor este definitiv înfrântă de aparatul represiv al statului, iar proprietatea privată asupra pământului – baza existenței țărănești – este lichidată."
+            },
+            {
+              subtitlu: "Epurarea lui Niculae",
+              text: "Niculae este epurat (înlăturat) din funcția politică, fiind victimă a sistemului pe care, cu idealism naiv, l-a slujit. Amândoi Moromeți, tată și fiu, sunt învinși de Istorie, deși pe căi diferite."
+            }
+          ]
+        },
+        deznodamant: {
+          sectiuni: [
+            {
+              subtitlu: "Reconcilierea și Reintegrarea",
+              text: "Finalul romanului consemnează sfârșitul unei ere. Niculae se retrage din politică și devine inginer agronom. El se reconciliază târziu cu tatăl său, într-o scenă în care își recunosc reciproc greșelile de comunicare și diferențele de viziune, deși reconcilierea este mai mult spirituală, decât familială."
+            },
+            {
+              subtitlu: "Moartea lui Ilie Moromete",
+              text: "Romanul se încheie cu moartea lui Ilie Moromete, la bătrânețe, în mod natural, dar dramatic. Dispariția sa este simbolică pentru moartea clasei țărănești tradiționale."
+            },
+            {
+              subtitlu: "Testamentul Demnității",
+              text: "Ultimele sale cuvinte, adresate doctorului, sunt un testament al demnității sale neînfrânte și al libertății personale pe care a căutat-o până la sfârșit: 'Domnule, eu totdeauna am dus o viață independentă!'. Aceste cuvinte subliniază opoziția sa constantă față de orice formă de înregimentare și încheie povestea cu o notă de luciditate tragică."
+            }
+          ]
+        }
+      }
     ]
   },
   'plumb': {
@@ -1430,15 +1637,120 @@ export const OPERA_DETAILS = {
     categorie: 'poezie',
     canonic: true,
     curent: 'simbolism',
-    descriere: 'Poezie simbolistă ce exprimă singurătatea și moartea prin simbolul „plumbului”.',
-    teme: ['moartea', 'singurătatea', 'neputința comunicării'],
+    descriere: 'Poezie simbolistă care redă o atmosferă apăsătoare, singurătatea și moartea, folosind plumbul ca simbol al greutății sufletești și al inexorabilității destinului.',
+    teme: ['moartea', 'singurătatea', 'neputința comunicării', 'melancolia'],
     personaje: ['eul liric'],
-    analiza: 'Bacovia creează o atmosferă de melancolie profundă prin metafora plumbului, care sugerează greutatea și monotonia existenței. Poezia explorează tema singurătății și a tristeții prin imagini concrete și simbolice.',
+    analiza: 'Bacovia construiește un univers dominat de apăsare și tristețe, unde plumbul simbolizează atât greutatea fizică, cât și sufletească. Eul liric trăiește o alienare profundă, incapabil să comunice cu lumea exterioară. Poezia reflectă condiția omului modern, prins între dorința de viață și inevitabilitatea morții.',
     citate: [
       '"Dormeau adânc sicriele de plumb"',
       '"Stam singur în cavou... și era vânt"',
       '"Și-i atârnau aripile de plumb"'
-    ]
+    ],
+    personajeDetalii: {
+      'eul liric': 'Vocea poetică centrală, exprimă sentimentul de izolare, neputință și melancolie. Este un observator pasiv al propriei stări și al mediului apăsător în care trăiește.'
+    },
+    titluSection: {
+      descriere: 'Titlul „Plumb” sintetizează tema centrală a poeziei: greutatea sufletească, apăsarea existențială și iminența morții.',
+      puncte: [
+        'Plumbul simbolizează atât greutatea fizică, cât și pe cea morală și psihică.',
+        'Titlul reflectă atmosfera generală a poeziei, sumbră și apăsătoare.',
+        'Un cuvânt scurt, dar cu impact puternic, care devine leitmotiv al simbolismului bacovian.'
+      ]
+    },
+    simboluriSection: {
+      descriere: 'Poezia folosește simboluri pentru a transmite stări și idei abstracte legate de moarte, singurătate și alienare.',
+      simboluri: [
+        {
+          nume: 'Plumbul',
+          explicatie: 'Simbol al greutății sufletești, al tristeții și al implacabilității destinului.'
+        },
+        {
+          nume: 'Sicriele',
+          explicatie: 'Sugerează moartea, imobilitatea și finalitatea existenței.'
+        },
+        {
+          nume: 'Vântul',
+          explicatie: 'Simbol al singurătății, al trecerii timpului și al fragilității umane în fața destinului.'
+        },
+        {
+          nume: 'Aripile',
+          explicatie: 'Simbol al speranței zdrobită, al transcendenței imposibile.'
+        }
+      ]
+    },
+    rezumat: {
+      contextGeneral: {
+        sectiuni: [
+          {
+            subtitlu: "Capodoperă Simbolistă",
+            text: "Plumb este una dintre cele mai reprezentative capodopere ale simbolismului românesc, publicată în volumul de debut al lui Bacovia din 1916. Poemul ilustrează perfect universul bacovian: un spațiu claustrofobic, dominat de boală, moarte și disperare existențială."
+          },
+          {
+            subtitlu: "Tema și Atmosfera",
+            text: "Tema centrală este singurătatea absolută și tragedia existențială. Atmosfera este una de coșmar, oboseală metafizică și apocalipsă interioară, sugerată prin imagini vizuale, auditive și olfactive specifice ritualului funebru."
+          }
+        ]
+      },
+      analizaStrofaI: {
+        titlu: "Strofa I: Cadrul Exterior al Morții",
+        versuri: [
+          {
+            text: "Dormeau adânc sicriele de plumb,",
+            analiza: "Verbul 'dormeau' personifică sicriele, sugerând o moarte activă, nu pasivă. 'adânc' amplifică senzația de îngropare, de coborâre în adâncuri. 'sicriele de plumb' - plumbul devine material dominant, simbolizând greutatea, opacitatea, frigul morții."
+          },
+          {
+            text: "Și flori de plumb și funerar vestmânt...",
+            analiza: "Repetiția 'de plumb' transformă tot universul în metal rece și greu. 'flori de plumb' este un oximoron tragic; florile, simboluri ale vieții, devin metalice, moarte. Punctele de suspensie sugerează continuarea nesfârșită a acestui inventar macabru."
+          },
+          {
+            text: "Stam singur în cavou... și era vânt...",
+            analiza: "Prima apariție a eului liric, izolat. 'cavou' - spațiu subteran, închis, claustrofobic, destinat morților. 'și era vânt' - element dinamic în universul static; vântul ca suflare a morții, ca prezență a vidului. Singurătatea este dublată de spațiul opresiv."
+          },
+          {
+            text: "Și scârțâiau coroanele de plumb.",
+            analiza: "Imaginea auditivă: 'scârțâiau' sugerează sunete stridente, neplăcute, o mișcare fantomatică. 'coroanele de plumb' - chiar și ofranda funerară e transformată în metal rece. Închiderea strofei cu punct ferm marchează un cadru complet al scenei mortuare."
+          }
+        ]
+      },
+      analizaStrofaII: {
+        titlu: "Strofa a II-a: Drama Interioară - Iubirea Moartă",
+        versuri: [
+          {
+            text: "Dormea întors amorul meu de plumb",
+            analiza: "Mutarea focusului de la moartea generală la drama personală. 'amorul meu' - ființa iubită este moartă. 'întors' - cu fața în jos, poziție care amplifică dramatismul și respingerea. Iubirea însăși e metamorfozată în metal, devenind rece, moartă."
+          },
+          {
+            text: "Pe flori de plumb... și-am început să-l strig...",
+            analiza: "Culcușul morții este din 'flori de plumb' - natura e denaturată complet. 'am început să-l strig' - tentativa disperată de a trezi mortul, de a lupta împotriva morții. Suspensiile marchează ezitarea, disperarea, imposibilitatea comunicării."
+          },
+          {
+            text: "Stam singur lângă mort... și era frig...",
+            analiza: "Repetiția structurii din strofa I ('stam singur... și era') accentuează tragismul și fatalitatea. 'lângă mort' - apropiere fizică de moarte, dar separare ontologică totală. 'frig' - temperatura morții, absența căldurii vieții. Frigul fizic se suprapune peste frigul sufletesc."
+          },
+          {
+            text: "Și-i atârnau aripile de plumb.",
+            analiza: "'aripile' - sugerează că mortul ar putea fi un înger sau o ființă iubită idealizată (speranța, idealul). 'atârnau' - imagine a căderii, a greutății care trage în jos. Chiar și aripile, simboluri ale transcendenței, sunt îngreuiate de 'plumb', semn al imposibilității zborului spiritual și al salvării."
+          }
+        ]
+      },
+      elementeSpecifice: {
+        subtitlu: "Stil",
+        sectiuni: [
+          {
+            nume: "Particularități stilistice",
+            lista: [
+              "Repetiția obsesivă a cuvântului 'plumb' (de 6 ori) - creează atmosfera de coșmar și monotonie apăsătoare.",
+              "Paralelismul celor două strofe (structură similară) - subliniază corespondența dintre lumea exterioară (moartea) și cea interioară (iubirea moartă).",
+              "Sonoritatea - aliterații în 'd', 'r', 's' ('Dormeau adânc... scârțâiau coroanele') - creează sunete reci, metalice, stridente.",
+              "Oximoronul ('flori de plumb') - ilustrează denaturarea elementelor vitale de către materia rece."
+            ]
+          }
+        ]
+      },
+      concluzie: {
+        text: "Poemul 'Plumb' este o expresie supremă a dezolării existențiale și a simbolismului negru bacovian, transformând materialul greu și rece în metaforă a stării sufletești a eului liric, sufocat de moarte și singurătate."
+      }
+    }
   },
   'testament': {
     titlu: 'Testament',
@@ -1447,15 +1759,116 @@ export const OPERA_DETAILS = {
     categorie: 'poezie',
     canonic: true,
     curent: 'modernism',
-    descriere: 'Poezie manifest despre menirea artei și moștenirea spirituală.',
-    teme: ['arta', 'moștenirea', 'creația'],
+    descriere: 'Poezie-manifest care subliniază menirea artei și rolul poetului în transmiterea valorilor spirituale și culturale. Arghezi pune accent pe transformarea experienței dure și a realității murdare în creație artistică, demonstrând cum durerea, mizeria și suferința pot fi convertite în frumusețe și sens. Opera evidențiază responsabilitatea artistului și moștenirea culturală pe care o lasă posterității.',
+    teme: ['arta', 'moștenirea', 'creația', 'transformarea dureroasă în frumusețe', 'responsabilitatea artistică'],
     personaje: ['eul liric'],
-    analiza: 'Arghezi creează o poezie-manifest despre rolul poetului în societate și despre transformarea experienței dureroase în artă. Opera explorează tema moștenirii culturale și a responsabilității artistului.',
+    analiza: '„Testament” este o poezie-manifest în care Arghezi explorează rolul poetului ca transformator al realității și ca păstrător al valorilor spirituale. Eul liric declară ce lasă moștenire lumii: nu bunuri materiale, ci opere care provin din experiență și suferință. Opera subliniază ideea că arta adevărată se naște din mizerie, din conflict și durere, și are puterea de a oferi posterității frumusețe și învățăminte morale.',
     citate: [
       '"Nu-ți voi lăsa drept bunuri, după moarte"',
       '"Cartea mea-i, fiule, o treaptă"',
       '"Din bube, mucegaiuri și noroi / Iscat-am frumuseți și prețuri noi"'
-    ]
+    ],
+    personajeDetalii: {
+      'eul liric': 'Vocea poetică care se adresează posterității, asumându-și rolul de creator și păstrător al valorilor culturale. Reprezintă artistul care își folosește experiența personală și durerea ca materie primă pentru creație și transmiterea moștenirii spirituale.'
+    },
+    titluSection: {
+      descriere: 'Titlul „Testament” sugerează o moștenire care nu este materială, ci spirituală și artistică, subliniind ideea responsabilității poetului față de cultură și posteritate.',
+      puncte: [
+        'Titlul reflectă intenția de a lăsa o moștenire culturală și artistică.',
+        'Sugerează importanța operei poetice ca instrument de transmitere a valorilor.',
+        'Sublinează contrastul dintre bunurile materiale și moștenirea spirituală.'
+      ]
+    },
+    simboluriSection: {
+      descriere: 'Arghezi folosește simboluri care evidențiază procesul de transformare a experienței dure în creație artistică și moștenirea spirituală lăsată posterității.',
+      simboluri: [
+        {
+          nume: 'Bube și mucegaiuri',
+          explicatie: 'Simbol al suferinței și mizeriei din care se naște arta, evidențiind puterea transformatoare a creației.'
+        },
+        {
+          nume: 'Cartea',
+          explicatie: 'Simbol al moștenirii culturale și al operei artistice care transcende materialul și timpul.'
+        },
+        {
+          nume: 'Noroiul',
+          explicatie: 'Reprezintă realitatea dură și grea, de unde eul liric extrage frumusețe și sens prin creație.'
+        }
+      ]
+    },
+    rezumat: {
+      contextGeneral: {
+        sectiuni: [
+          {
+            subtitlu: "Poem manifest arghezian",
+            text: "Publicată în 1927, poezia deschide volumul 'Cuvinte potrivite' și funcționează ca testament artistic. Arghezi formulează programul estetic al transfigurării 'urâtului' în artă."
+          },
+          {
+            subtitlu: "Moștenire spirituală",
+            text: "Adresarea către 'fiule' transmite o moștenire culturală și morală: cartea-poartă este singurul bun lăsat urmașilor."
+          }
+        ]
+      },
+      analizaStrofaI: {
+        titlu: "Arta ca moștenire",
+        versuri: [
+          {
+            text: "Nu-ți voi lăsa drept bunuri, după moarte, / decât un nume adunat pe-o carte.",
+            analiza: "Cartea devine singurul patrimoniu. Poetul își asumă condiția modestă, dar valoarea spirituală este supremă."
+          },
+          {
+            text: "Cartea mea-i, fiule, o treaptă",
+            analiza: "Metafora treptei sugerează ascensiunea prin cultură. Poezia este mijloc de urcare spirituală."
+          },
+          {
+            text: "Încă tu însuți ești o carte",
+            analiza: "Identificarea fiului cu o carte indică filiația spirituală și responsabilitatea continuării creației."
+          },
+          {
+            text: "Cartea mea, fiule, e-o treaptă.",
+            analiza: "Reluarea accentuează ideea de progres și de moștenire culturală, nu materială."
+          }
+        ]
+      },
+      analizaStrofaII: {
+        titlu: "Estetica urâtului și transfigurarea materiei",
+        versuri: [
+          {
+            text: "Din bube, mucegaiuri și noroi / Iscat-am frumuseți și prețuri noi.",
+            analiza: "Program estetic: materia joasă devine sursă de frumusețe. Poetul valorifică marginalul și sordidul."
+          },
+          {
+            text: "Am luat ocara, și torcând ușure, / Am făcut din ea funie",
+            analiza: "Poetul prelucrează suferința și rușinea în instrument de salvare. Creativitatea devine act redemptiv."
+          },
+          {
+            text: "Sunt stihuri de-o vitregie parca însângerată",
+            analiza: "Sublinează sacrificiul și durerea din spatele creației. Poezia poartă amprenta suferinței."
+          },
+          {
+            text: "În cartea mea vei găsi / o viață de rob și de slugi",
+            analiza: "Memoria suferinței colective este integrată în opera poetică; destinul social devine material artistic."
+          }
+        ]
+      },
+      elementeSpecifice: {
+        subtitlu: "Teme, Simboluri și Stil",
+        sectiuni: [
+          {
+            nume: "Particularități stilistice",
+            lista: [
+              "Estetica urâtului – transformarea materiei impure (bube, noroi) în artă.",
+              "Metafora 'cartea-trepte' – cartea ca mijloc de ascensiune și moștenire spirituală.",
+              "Adresarea directă către 'fiule' – ton testamentar și dialogic.",
+              "Lexic mixt (sacru/profan) – îmbină registrul biblic cu vocabularul concret, domestic."
+            ]
+          }
+        ]
+      },
+      concluzie: {
+        text: "Testament fixează crezul arghezian: poezia transformă suferința și materia degradată în valori durabile, oferind urmașilor singura avere esențială – cultura."
+      }
+    }
   },
   'flori-de-mucigai': {
     titlu: 'Flori de mucigai',
@@ -1464,15 +1877,138 @@ export const OPERA_DETAILS = {
     categorie: 'poezie',
     canonic: true,
     curent: 'modernism',
-    descriere: 'Volum liric inspirat de experiența detenției, cu poezii despre degradare și suferință.',
-    teme: ['existența', 'degradarea', 'creația din suferință'],
+    descriere: 'Volum liric inspirat de experiența detenției, în care Arghezi explorează suferința, degradarea și condițiile vitrege ale vieții. Poeziile transmit starea de izolare, neputință și melancolie, dar în același timp arată cum arta și creația pot transforma durerea și mizeria în frumusețe și sens. Autorul folosește imagini dure, simboluri puternice și un limbaj expresiv pentru a reda atmosfera apăsătoare, dar și forța interioară a eului liric.',
+    teme: ['existența', 'degradarea', 'creația din suferință', 'suferința și frumusețea'],
     personaje: ['eul liric'],
-    analiza: 'Arghezi creează o poezie despre puterea creatoare care poate transforma chiar și mizeria în artă. Opera explorează tema creației artistice în condiții extreme și a transformării experienței dureroase în frumusețe.',
+    analiza: 'Arghezi construiește un univers poetic în care condițiile extreme – închisoarea, degradarea, izolarea – devin sursă de inspirație și creație. Poeziile din volum pun în prim-plan lupta interioară a eului liric cu suferința, încercarea de a transforma experiența dureroasă în artă și capacitatea de a găsi frumusețe chiar și în cele mai întunecate situații. „Flori de mucigai” evidențiază tensiunea dintre degradare și renaștere artistică, dintre realitatea dură și imaginația creatorului, și se remarcă prin forța simbolurilor și originalitatea limbajului.',
     citate: [
       '"Le-am scris cu unghia pe tencuială"',
       '"Sunt stihuri fără an, / Stihuri de groapă"',
       '"Și m-am silit să scriu cu unghiile de la mâna stângă"'
-    ]
+    ],
+    personajeDetalii: {
+      'eul liric': 'Vocea poetică care experimentează suferința și degradarea, transformând experiența dureroasă în creație artistică. Reprezintă artistul care luptă cu condițiile vitrege pentru a lăsa o urmă a existenței sale.'
+    },
+    titluSection: {
+      descriere: 'Titlul „Flori de mucigai” reflectă contrastul dintre frumusețe și degradare, subliniind capacitatea artei de a înfrumuseța chiar și cele mai întunecate experiențe.',
+      puncte: [
+        'Contrastează frumusețea cu mizeria și degradarea.',
+        'Sugerează că creația poate apărea din suferință și condiții extreme.',
+        'Titlul atrage atenția asupra dualității: viață și moarte, artă și durere.'
+      ]
+    },
+    simboluriSection: {
+      descriere: 'Arghezi folosește simboluri puternice pentru a reda suferința, degradarea și capacitatea de creație a artistului.',
+      simboluri: [
+        {
+          nume: 'Mucigaiul',
+          explicatie: 'Simbol al degradării, al suferinței și al mediului opresiv care provoacă alienare.'
+        },
+        {
+          nume: 'Florile',
+          explicatie: 'Simbol al frumuseții și al creației artistice care se naște din durere și condiții vitrege.'
+        },
+        {
+          nume: 'Unghia',
+          explicatie: 'Simbol al efortului, al luptelor pentru a lăsa o urmă și al creației care sfidează condițiile dificile.'
+        }
+      ]
+    },
+    rezumat: {
+        contextGeneral: {
+          sectiuni: [
+            {
+              subtitlu: "Oximoronul Titular și Autobiografia",
+              text: "Flori de mucigai este un poem dramatic, o artă poetică modernă care vorbește despre condiția artistului. Titlul este un oximoron puternic: 'florile' simbolizează frumusețea și creația, în timp ce 'mucigaiul' simbolizează descompunerea, putrezirea și boala. Poemul este scris într-o perioadă de recludere și ilustrează actul creației în condiții extreme, fizice și spirituale."
+            },
+            {
+              subtitlu: "Tema și Spațiul",
+              text: "Tema centrală este chinul creației și supraviețuirea artei în fața degradării totale. Spațiul este claustrofobic, o 'firidă goală' percepută ca o celulă de închisoare sau un mormânt, sugerând izolarea totală a poetului de lumea vie și de sursele divine de inspirație."
+            }
+          ]
+        },
+        analizaStrofaI: {
+          titlu: "Strofa I: Stabilirea Cadrului și a Condițiilor Inumane de Creație",
+          versuri: [
+            {
+              text: "Le-am scris cu unghia pe tencuială / Pe un părete de firidă goală,",
+              analiza: "Actul scrisului este un gest disperat. 'unghia' este un instrument rudimentar, primitiv, sugerând lipsa totală a mijloacelor. 'tencuială' și 'firidă goală' (nișă în perete) definesc un spațiu claustrofobic, improvizat, tipic deținuților. Virgula prelungind pauza amplifică senzația de gol."
+            },
+            {
+              text: "Pe întuneric, în singurătate, / Cu puterile neajutate",
+              analiza: "Izolare totală. 'întuneric' (absența luminii fizice și spirituale) și 'singurătate' se întăresc reciproc. 'puterile neajutate' exprimă ideea de abandon complet, de lipsă a oricărui sprijin divin sau uman în actul creației."
+            },
+            {
+              text: "Nici de taurul, nici de leul, nici de vulturul / Care au lucrat împrejurul / Lui Luca, lui Marcu şi lui Ioan.",
+              analiza: "Enumerație tripartită (anaforă pe 'nici de') a simbolurilor celor trei evangheliști. Absența lor marchează lipsa inspirației divine și a protecției sacre. Poetul este conștient de harul acordat altora ('au lucrat') și de propriul său vid spiritual. Matei este omis, poate deliberat, accentuând golul."
+            },
+            {
+              text: "Sunt stihuri fără an, / Stihuri de groapă, / De sete de apă / Şi de foame de scrum, / Stihurile de acum.",
+              analiza: "Definirea versurilor. 'stihuri' (arhaism cu conotație religioasă) sunt 'fără an' (atemporale, nesemnificative) și 'de groapă' (scrise în fața morții). Climaxul degradării este atins prin 'sete de apă' (nevoia fizică elementară) și, șocant, 'foame de scrum' – o expresie paradoxală a dorinței de neant, de moarte ca hrană. 'de acum' indică prezentul imediat al chinului."
+            },
+            {
+              text: "Când mi s-a tocit unghia îngerească / Am lăsat-o să crească / Şi nu mi-a crescut -",
+              analiza: "Eul liric conștientizează uzura ('tocit') instrumentului său de creație. Adjectivul 'îngerească' sugerează că arta sa este, inițial, de natură spirituală, dar se consumă prin sacrificiu fizic. Speranța regenerării este tăiată brusc ('Și nu mi-a crescut -'), linia de pauză marcând șocul eșecului."
+            },
+            {
+              text: "Sau nu o mai am cunoscut.",
+              analiza: "Alternativă și mai tulburătoare: eșecul nu este doar biologic, ci ontologic. Poetul nu-și mai recunoaște instrumentul de creație, pierzând contactul cu identitatea sa fizică. 'sau' introduce incertitudinea și alienarea de sine."
+            }
+          ]
+        },
+        analizaStrofaII: {
+          titlu: "Strofa a II-a: Metamorfoza și Triumful Voinței",
+          versuri: [
+            {
+              text: "Era întuneric. / Ploaia bătea departe, afară.",
+              analiza: "Reluarea motivului 'întunericului', acum categoric. 'Ploaia bătea departe, afară' - ploaia (viața, dinamismul naturii) este violentă ('bătea') și separată de eul liric, care e izolat în spațiul mort al 'firidei' ('afară' vs. 'înăuntru')."
+            },
+            {
+              text: "Şi mă durea mâna ca o ghiară / Neputincioasă să se strângă",
+              analiza: "Suferință fizică acută. Comparația 'mâna ca o ghiară' sugerează o transformare grotescă, animalizarea corpului. Instrumentul nobil al scrisului devine organ animalic, rigid, 'neputincioasă să se strângă' (incapacitatea de a face gestul scrisului)."
+            },
+            {
+              text: "Şi m-am silit să scriu cu unghiile de la mâna stângă.",
+              analiza: "Final dramatic și eroic. 'm-am silit' arată efortul supraomenesc, voința care transcende limitele fizice. 'mâna stângă' (mâna neobișnuită, asociată cu sinistrul/umbra, dar și cu ultimul resort) devine noul instrument. În ciuda degradării și a tuturor obstacolelor, imperativul creației este împlinit. Arta triumfă prin sacrificiu total."
+            }
+          ]
+        },
+        elementeSpecifice: {
+          subtitlu: "Figuri de Stil, Vocabular și Structură",
+          sectiuni: [
+            {
+              nume: "Figuri de Stil Majore",
+              lista: [
+                "Oximoron titular: 'flori de mucigai' (frumusețe în descompunere).",
+                "Metaforă extinsă: Scrisul cu unghia pe tencuială (creația ca act de calvar).",
+                "Comparația: 'mâna ca o ghiară' (animalizarea corpului creator).",
+                "Paralelism: 'de sete de apă / și de foame de scrum' (degradarea nevoilor)."
+              ]
+            },
+            {
+              nume: "Vocabular și Sonorități",
+              lista: [
+                "Lexic religios/arhaic: 'stihuri', 'firidă', 'taurul, leul, vulturul' (folosit în context profan/degradat).",
+                "Termeni ai lipsei și negației: 'goală', 'neajutate', 'fără', 'nu'.",
+                "Aliterații în 't', 'c', 'g' ('tocit', 'crească', 'ghiară') – sugerează duritatea și asprimea experienței.",
+                "Asonanțe în 'a' ('tencuială', 'ghiară') – vocala deschisă a durerii."
+              ]
+            },
+            {
+              nume: "Structură și Ritm",
+              lista: [
+                "Trei strofe inegale (12 + 4 + 5 versuri) – asimetrie care oglindește haosul interior.",
+                "Versuri libere, de lungimi inegale – lipsa constrângerilor formale.",
+                "Tonalitate: solemn-tragică (Strofa I) trece în confesiv-dureros (Strofa a II-a) și ajunge la dramatic-eroic (Strofa a III-a).",
+                "Autoreflexivitate: Poemul este metapoetic, vorbind despre propria sa creație."
+              ]
+            }
+          ]
+        },
+        concluzie: {
+          text: "Poemul 'Flori de mucigai' este un testament al suferinței creatoare și o artă poetică a sacrificiului extrem. Bacovia transformă actul scrisului într-un calvar fizic și spiritual, în care corpul poetului se descompune și se animalizează, dar voința artistică triumfă în cele din urmă, fiind singura forță capabilă să genereze frumusețe ('flori') chiar și din descompunere ('mucigai')."
+        }
+      }
   },
   'eu-nu-strivesc-corola-de-minuni-a-lumii': {
     titlu: 'Eu nu strivesc corola de minuni a lumii',
@@ -1481,15 +2017,138 @@ export const OPERA_DETAILS = {
     categorie: 'poezie',
     canonic: true,
     curent: 'modernism',
-    descriere: 'Poezie filozofică despre misterul existenței și atitudinea creatorului.',
-    teme: ['misterul', 'cunoașterea', 'iubirea'],
+    descriere: 'Poezie filozofică în care Blaga explorează misterul și frumusețea lumii, raportul dintre cunoaștere și respectul față de viață. Eul liric afirmă o atitudine contemplativă și reverențioasă față de creația universală, subliniind delicatețea cu care omul trebuie să interacționeze cu tot ce există, de la flori și ochi până la moarte și morminte.',
+    teme: ['misterul', 'cunoașterea', 'iubirea', 'respectul față de viață'],
     personaje: ['eul liric'],
-    analiza: 'Blaga creează o poezie despre rolul poetului în descoperirea misterului existenței. Opera explorează tema tainei universale și a modului în care poezia poate dezvălui misterul lumii.',
+    analiza: 'Blaga construiește un univers poetic dominat de ideea că lumea și misterul ei trebuie privite cu atenție și respect. Eul liric nu distruge, nu invadează, ci participă la sporeșterea tainelor lumii prin contemplare și iubire. Poezia pune accent pe responsabilitatea creatorului, a poetului, și a omului față de univers, subliniind că adevărata cunoaștere implică delicatețe și înțelegere. Opera combină o estetică modernistă cu gândirea filozofică, explorând relația dintre individ, cunoaștere și eternitatea misterului lumii.',
     citate: [
       '"Eu nu strivesc corola de minuni a lumii"',
       '"eu cu lumina mea sporesc a lumii taină"',
       '"căci eu iubesc / și flori și ochi și buze și morminte"'
-    ]
+    ],
+    personajeDetalii: {
+      'eul liric': 'Vocea poetică care exprimă respectul față de misterul lumii și rolul creatorului în păstrarea și sporirea frumuseții și a tainei existenței.'
+    },
+    titluSection: {
+      descriere: 'Titlul subliniază ideea centrală a poeziei: respectul față de viață, mister și frumusețe, fără a distruge sau diminua minunile lumii.',
+      puncte: [
+        'Sugerează atitudinea blândă și admirativă față de lume.',
+        'Titlul atrage atenția asupra responsabilității creatorului și a omului.',
+        'Relevă ideea de păstrare a tainei și frumuseții universale.'
+      ]
+    },
+    simboluriSection: {
+      descriere: 'Blaga folosește simboluri pentru a exprima misterul, frumusețea și responsabilitatea în raport cu viața și cunoașterea.',
+      simboluri: [
+        {
+          nume: 'Corola de minuni',
+          explicatie: 'Simbol al frumuseții și misterului lumii, care trebuie păstrat și admirat, nu distrus.'
+        },
+        {
+          nume: 'Lumina',
+          explicatie: 'Simbol al cunoașterii și al forței creative a poetului, care sporește taina lumii fără a o strivi.'
+        },
+        {
+          nume: 'Iubirea',
+          explicatie: 'Simbol al atitudinii respectuoase și al legăturii emoționale cu viața, esențială pentru adevărata înțelegere.'
+        }
+      ]
+    },
+    rezumat:{
+      contextGeneral: {
+        sectiuni: [
+          {
+            subtitlu: "Manifest Liric și Estetică Blagiană",
+            text: "Acest poem, publicat în volumul 'Poemele luminii' (1919), reprezintă un manifest liric al filosofiei și esteticii blagiene. Este o declarație a atitudinii poetului față de cunoaștere, mister și existență. Blaga pledează pentru păstrarea și amplificarea misterului lumii (cunoașterea luciferică), opunându-se cunoașterii raționaliste care vrea să explice totul (cunoașterea paradisiacă)."
+          },
+          {
+            subtitlu: "Tema și Atitudinea Cognitivă",
+            text: "Tema centrală este atitudinea contemplativă și participativă a poetului în fața misterului cosmic. Eul liric refuză cunoașterea de tip logic-rațional (ucigătoare de taină) și o substituie cu o atitudine bazată pe iubire și creație, menită să mărească enigma lumii."
+          }
+        ]
+      },
+      analizaStrofaI: {
+        titlu: "Declarația de Principiu și Refuzul",
+        versuri: [
+          {
+            text: "Eu nu strivesc corola de minuni a lumii",
+            analiza: "'Eu' - Afirmația categorică a subiectivității, a eului creator. 'nu strivesc' - Negație programatică, refuz deliberat al actului distructiv. 'corola de minuni' - Metaforă botanică centrală, lumea este o floare fragilă, formată din miracole. Versul este o declarație solemnă de principiu."
+          },
+          {
+            text: "şi nu ucid cu mintea tainele, / ce le-ntâlnesc în calea mea",
+            analiza: "'nu ucid cu mintea' - Rațiunea ('mintea') este instrumentul ucigaș care reduce, analizează și distruge misterul ('tainele'). Eul liric refuză acest mod de cunoaștere. 'în calea mea' sugerează că misterele sunt întâlnite natural, organic."
+          },
+          {
+            text: "în flori, în ochi, pe buze ori morminte.",
+            analiza: "Enumerație gradată în crescendo existențial (polisindeton implicit): de la natură ('flori') la omul viu ('ochi', 'buze') și la moarte ('morminte'). Toate aspectele existenței sunt privite ca mistere care trebuie păstrate. Punctul final încheie solemn manifestul."
+          }
+        ]
+      },
+      analizaStrofaII: {
+        titlu: "Paradoxul Creației și Iubirea",
+        versuri: [
+          {
+            text: "Lumina altora sugrumă vraja / nepătrunsului ascuns în adâncimi de întuneric,",
+            analiza: "'Lumina altora' - Raționalismul, știința. 'sugrumă' - Verb violent, arătând că cunoașterea logică, în loc să lumineze, ucide farmecul ('vraja'). 'nepătrunsului ascuns' - Misterul este perceput ca fiind o esență profundă, deliberat ascunsă în 'întuneric' (metafora necunoașterii). "
+          },
+          {
+            text: "dar eu, eu cu lumina mea sporesc a lumii taină -",
+            analiza: "'dar eu, eu' - Opoziție radicală și afirmare emfatică a identității. Paradoxul central: 'lumina mea' (intuiția, poeticul) nu distruge, ci 'sporesc' (mărește, amplifică) misterul lumii. Taina devine mai profundă sub atingerea poetică. Inversiunea 'a lumii taină' conferă solemnitate."
+          },
+          {
+            text: "şi-ntocmai cum cu razele ei albe / luna nu micşorează, ci tremurătoare / măreşte şi mai tare taina nopţii,",
+            analiza: "Comparația extinsă (nucleul filosofic). 'luna' - Simbol al cunoașterii poetice, intuitive (opusă soarelui/rațiunii). Lumina ei 'nu micșorează, ci... mărește' misterul. Epitetul 'tremurătoare' personifică luna, sugerând fragilitatea și emoția, esența subiectivă a cunoașterii blagiene. Enjambamentul accentuează 'tremurătoare'."
+          },
+          {
+            text: "aşa îmbogăţesc şi eu întunecata zare / cu largi fiori de sfânt mister",
+            analiza: "'așa' - Aplicarea analogiei la propria viziune. 'îmbogățesc' - Verbul care sugerează adăugarea de valoare. 'întunecata zare' - Metaforă a orizontului necunoscut, amplificată. 'largi fiori de sfânt mister' - Imagine sinestezică (tactil + spațial + spiritual) ce arată dimensiunea sacră a misterului pe care poetul o adaugă."
+          },
+          {
+            text: "şi tot ce-i neînţeles se schimbă-n neînţelesuri şi mai mari / sub ochii mei-",
+            analiza: "Paradoxul Suprem: Neînțelesul nu este explicat, ci se transformă în 'neînțelesuri și mai mari' (hiperbolă). Aceasta este esența poetică: multiplicarea enigmei. 'sub ochii mei' - privirea lucidă a poetului este agentul acestei transformări metafizice."
+          },
+          {
+            text: "căci eu iubesc / şi flori şi ochi şi buze şi morminte.",
+            analiza: "'căci eu iubesc' - Conjuncția cauzală introduce motivația fundamentală: actul cognitiv al poetului nu este rațional, ci afectiv. Iubirea este atitudinea care permite amplificarea misterului. Repetarea exactă a enumerației din prima strofă, dar cu polisindeton ('și... și... și... și...') - conferă ritm insistent, o îmbrățișare totală a existenței (viață și moarte) prin afectivitate."
+          }
+        ]
+      },
+      elementeSpecifice: {
+        subtitlu: "Particularități Stilistice și Filosofice",
+        sectiuni: [
+          {
+            nume: "Figuri de Stil Cheie",
+            lista: [
+              "Metafora centrală: 'corola de minuni a lumii'.",
+              "Antiteza fundamentală: 'eu' vs. 'altora' / 'lumina mea' vs. 'lumina altora'.",
+              "Paradoxul: Lumina care sporește întunericul ('sporesc a lumii taină').",
+              "Comparația extinsă: Poetul (cu lumina sa) este asemeni lunii."
+            ]
+          },
+          {
+            nume: "Limbaj și Vocabular",
+            lista: [
+              "Verbe violente (refuzate): 'strivesc', 'ucid', 'sugrumă'.",
+              "Verbe constructive (alese): 'sporesc', 'mărește', 'îmbogățesc', 'iubesc'.",
+              "Substantivizări blagiene: 'nepătrunsul', 'neînțelesuri' (crearea de concepte noi).",
+              "Câmpuri semantice opuse: Lumină ('raze albe', 'luna') vs. Întuneric ('adâncimi de întuneric', 'noaptea')."
+            ]
+          },
+          {
+            nume: "Structură și Versificație",
+            lista: [
+              "Vers liber (lipsa de rime și metru regulat) - libertatea maximă a gândirii filosofice.",
+              "Structură circulară: Poemul începe și se termină cu aceeași enumerație gradată ('flori... morminte').",
+              "Negația programatică: 'nu strivesc', 'nu ucid' - afirmarea prin negare la început.",
+              "Repetiții: Repetarea emfatică a pronumelui 'eu' (de 6 ori) subliniază subiectivitatea absolută a poetului-creator."
+            ]
+          }
+        ]
+      },
+      concluzie: {
+        text: "Poemul 'Eu nu strivesc corola de minuni a lumii' este o artă poetică completă, un manifest al misterului lucid. Poetul refuză cunoașterea rațională și adoptă Iubirea ca atitudine cognitivă superioară. Lumina poetică nu distruge, ci amplifică taina existenței, transformând neînțelesul în 'neînțelesuri și mai mari', afirmând astfel vocația sacră a artistului de a îmbogăți universul prin mister."
+      }
+    }
   },
   'leoaica-tanara-iubirea': {
     titlu: 'Leoaică tânără, iubirea',
@@ -1498,15 +2157,154 @@ export const OPERA_DETAILS = {
     categorie: 'poezie',
     canonic: true,
     curent: 'postmodernism',
-    descriere: 'Poezie modernă despre experiența iubirii ca forță revelatoare.',
-    teme: ['iubirea', 'cunoașterea', 'existența'],
+    descriere: 'Poezie modernă care explorează iubirea ca forță revelatoare, primitivă și transformatoare. Prin metafore animalice și imagini senzoriale, Stănescu surprinde intensitatea și imprevizibilitatea iubirii, redând-o ca experiență existențială și energie vitală. Poezia este o meditație asupra modului în care iubirea poate provoca schimbări interioare profunde și poate stimula percepții noi asupra lumii.',
+    teme: ['iubirea', 'cunoașterea', 'existența', 'energia vitală', 'metamorfoza sentimentelor'],
     personaje: ['eul liric'],
-    analiza: 'Stănescu creează o poezie despre iubire ca forță primitivă și transformatoare. Opera explorează tema iubirii prin metafore animalice și imagini senzoriale puternice.',
+    analiza: 'Stănescu folosește limbajul poetic modern și imagini metaforice pentru a transforma iubirea într-un fenomen vizual și senzorial. „Leoaică tânără, iubirea” explorează dinamica pasiunii, impactul ei asupra conștiinței și legătura dintre instinct și intelect. Eul liric trăiește iubirea ca o forță care mușcă, zguduie și transformă, iar poezia creează un univers în care iubirea și cunoașterea sunt inseparabile.',
     citate: [
       '"Leoaică tânără, iubirea / mi-a sărit în față"',
       '"m-a mușcat leoaica, azi, de față"',
       '"o leoaică aramie / cu mișcările viclene"'
-    ]
+    ],
+    personajeDetalii: {
+      'eul liric': 'Vocea poetică care experimentează iubirea ca forță intensă și transformatoare. Este martor și participant la revelația iubirii, trăind-o ca o experiență senzorială și existențială care zguduie universul interior.'
+    },
+    titluSection: {
+      descriere: 'Titlul „Leoaică tânără, iubirea” pune în prim-plan iubirea ca forță vie și instinctuală, evidențiind caracterul sălbatic și primar al emoției.',
+      puncte: [
+        'Leoaica simbolizează forța pasională, imprevizibilă și vitală a iubirii.',
+        'Titlul transmite imediat intensitatea și caracterul sălbatic al trăirii poetice.',
+        'Sugerează o iubire care mușcă, zguduie și transformă, nu doar o experiență sentimentală.'
+      ]
+    },
+    simboluriSection: {
+      descriere: 'Poezia folosește simboluri puternice pentru a reda natura sălbatică și transformatoare a iubirii și impactul ei asupra eului liric.',
+      simboluri: [
+        {
+          nume: 'Leoaica',
+          explicatie: 'Simbol al pasiunii, al iubirii sălbatice și al energiei vitale care zguduie conștiința.'
+        },
+        {
+          nume: 'Mușcătura',
+          explicatie: 'Simbol al impactului direct și inevitabil al iubirii asupra individului, al transformării interioare.'
+        },
+        {
+          nume: 'Aramie',
+          explicatie: 'Culoarea leoaicei evocă intensitatea, forța și vivacitatea iubirii trăite în mod autentic.'
+        }
+      ]
+    },
+    rezumat: {
+      contextGeneral: {
+        sectiuni: [
+          {
+            subtitlu: "Viziune a Sentimentelor și Estetica Nicihtiană",
+            text: "Acest poem face parte din volumul 'O viziune a sentimentelor' (1964) și este una dintre cele mai celebre opere ale lui Nichita Stănescu dedicate iubirii. Poetul transformă experiența erotică (actul fizic) într-o metaforă animalică, violentă și senzorială, cosmicizând sentimentul. Iubirea este percepută ca o forță primordială, neașteptată și transfiguratoare."
+          },
+          {
+            subtitlu: "Tema și Simbolul Central",
+            text: "Tema centrală este impactul brutal și transfigurator al iubirii asupra eului liric, care este smuls din existența obișnuită și aruncat într-o stare de grație și alienare. Simbolul central este leoaica, reprezentând iubirea: forță vitală, instinctuală, tânără, periculoasă, dar și sublimă, 'aramie'."
+          }
+        ]
+      },
+      analizaStrofaI: {
+        titlu: "Atacul și Capturarea Eului",
+        versuri: [
+          {
+            text: "Leoaică tânără, iubirea mi-a sarit în faţă. / Mă pândise-n încordare mai demult.",
+            analiza: "'Leoaică tânără' - Metafora centrală, un vocativ-apostrofă. Iubirea este animal sălbatic, plin de vigoare. 'mi-a sărit în faţă' - Atac brusc, violent, transformând poetul în pradă. 'Mă pândise' (mai-mult-ca-perfect) - Subliniază inevitabilitatea și fatalitatea întâlnirii, atacul era pregătit din trecut."
+          },
+          {
+            text: "Colţii albi mi i-a înfipt în faţă, / m-a muşcat leoaica, azi, de faţă.",
+            analiza: "'Colții albi' - Imagine a violenței erotice, cu o sugestie paradoxală de puritate ('albi'). 'mi i-a înfipt' - Act de posesiune totală. Fața (identitatea, locul vulnerabil) este vizată direct. 'azi' - Marcă a prezentului, a actualității momentului. 'de faţă' - Expresie populară pentru 'în mod deschis' sau spațial 'în zona feței'."
+          }
+        ]
+      },
+      analizaStrofaII: {
+        titlu: "Metamorfoza Cosmică",
+        versuri: [
+          {
+            text: "Şi deodata-n jurul meu, natura / se făcu un cerc, de-a-dura,",
+            analiza: "'Și deodată' - Schimbare bruscă. Atacul fizic declanșează o metamorfoză cosmică. Natura întreagă participă la experiență. 'un cerc, de-a-dura' - Cercul (forma perfectă, ciclică) sugerează ritmul unui dans cosmic, al unei hore ('de-a-dura', arhaism popular). Poetul devine centrul universului."
+          },
+          {
+            text: "când mai larg, când mai aproape, / ca o strîngere de ape.",
+            analiza: "Structura paralelă 'când... când...' sugerează pulsația, ritmul, expansiunea și contracția cosmică. 'strângere de ape' - Comparație acvatică: natura devine fluidă, element primordial, matern și erotic, care îmbrățișează total eul."
+          }
+        ]
+      },
+      analizaStrofaIII: {
+        titlu: "Autonomia Simțurilor",
+        versuri: [
+          {
+            text: "Şi privirea-n sus ţîşni, curcubeu / tăiat în două,",
+            analiza: "Simțurile se desprind de corp. 'privirea... țâșni' - Mișcare verticală, explozivă. 'curcubeu' - Sinestezie; privirea devine fenomen optic, punte între pământ și cer. 'tăiat în două' - Sugerează fragmentarea, distrugerea viziunii normale."
+          },
+          {
+            text: "şi auzul o-ntîlni / tocmai lângă ciorcârlii.",
+            analiza: "'auzul o-ntâlni' - Personificare: simțurile devin entități autonome. Auzul se ridică la înălțimea 'ciorcârliei' (ciocârlia, pasărea cerului), sugerând o percepție înaltă, spirituală, a sunetelor."
+          }
+        ]
+      },
+      analizaStrofaIV: {
+        titlu: "Alienarea Corporală",
+        versuri: [
+          {
+            text: "Mi-am dus mâna la sprînceană, / la timplă şi la bărbie, / dar mâna nu le mai ştie.",
+            analiza: "Enumerație descendentă a părților feței: poetul încearcă să-și regăsească identitatea fizică prin gest reflexiv. 'dar mâna nu le mai ştie' - Constatare șocantă. Alienare corporală, disociere între mână și față. Corpul, sub impactul iubirii, a devenit străin de sine."
+          }
+        ]
+      },
+      analizaStrofaV: {
+        titlu: "Transfigurarea și Infinitul",
+        versuri: [
+          {
+            text: "Şi alunecă-n neştire / pe-un deşert în strălucire,",
+            analiza: "'alunecă-n neștire' - Mișcare lentă, pasivă; starea de transă, de pierdere a conștiinței ('neștire', neologism substantivizat). 'deșert în strălucire' - Oximoron. Fața/Corpul poetului devine un peisaj cosmic, gol, dar transfigurat de lumină."
+          },
+          {
+            text: "peste care trece-alene / o leoaică aramie / cu mişcările viclene,",
+            analiza: "Leoaica (iubirea) revine, dar este schimbată: 'aramie' (culoare metalică, prețioasă, matură). 'trece-alene' (încet, majestuos) - Mișcarea nu mai este atac, ci un dans regal, viclean și seducător, peste peisajul cosmic care este corpul poetului."
+          },
+          {
+            text: "incă-o vreme, si-ncă-o vreme..",
+            analiza: "Repetiție cu puncte de suspensie: Sugerează continuitate indefinită, hipnotică. Iubirea (leoaica) nu se oprește, ci trece veșnic peste spațiul nou creat. Finalul este deschis, fără rezolvare, proiecție a sentimentului în infinit."
+          }
+        ]
+      },
+      elementeSpecifice: {
+        subtitlu: "Aspecte Stilistice și Nichitiene",
+        sectiuni: [
+          {
+            nume: "Cosmizarea și Metamorfoza",
+            lista: [
+              "Cosmizarea experienței: Experiența personală (atac, mușcătură) declanșează fenomene cosmice (cercul naturii, curcubeu, deșert).",
+              "Corporalitatea vizionară: CorpuI ('fața', 'mâna') este dezintegrat și apoi transfigurat în peisaj cosmic ('deșert în strălucire')."
+            ]
+          },
+          {
+            nume: "Figuri și Vocabular",
+            lista: [
+              "Metafora dominantă: Iubirea = Leoaică.",
+              "Neologisme/Arhaisme: 'neștire', 'ciorcârlii', 'de-a-dura' – îmbină limbajul popular cu cel abstract.",
+              "Verbe de mișcare: 'sărit', 'țâșni', 'alunecă', 'trece' – ilustrează dinamismul sentimentului.",
+              "Oximoron: 'deșert în strălucire' (vid plin de lumină)."
+            ]
+          },
+          {
+            nume: "Ritm și Tonalitate",
+            lista: [
+              "Vers liber și strofe inegale – exprimă libertatea vizionară.",
+              "Ritm contrastant: Rapid, agresiv (Strofa I) vs. Lent, plutitor (Strofa V).",
+              "Tonalitate: Dramatică și violentă inițial, transformată în vizionară și hipnotică spre final."
+            ]
+          }
+        ]
+      },
+      concluzie: {
+        text: "Poemul 'Leoaică tânără, iubirea' este o capodoperă a lirismului neomodernist, transformând actul erotic într-o cosmogonie personală. Iubirea, sub forma leoaicei, nu doar rănește, ci transfigurează eul liric, dezintegrând simțurile și corpul pentru a le recompune ca un peisaj cosmic, strălucitor și infinit. Violența inițială devine un preț plătit pentru accesul la o stare de conștiință superioară, veșnică ('încă-o vreme, și-ncă-o vreme..')."
+      }
+    }
   },
   'aci-sosi-pe-vremuri': {
     titlu: 'Aci sosi pe vremuri',
@@ -1515,15 +2313,116 @@ export const OPERA_DETAILS = {
     categorie: 'poezie',
     canonic: true,
     curent: 'traditionalism',
-    descriere: 'Poezie tradiționalistă evocând trecutul și trecerea timpului.',
-    teme: ['nostalgia', 'timpul', 'familia'],
+    descriere: 'Poezie tradiționalistă care evocă trecutul și amintirile din copilărie, prin prisma familiei și a legăturii cu natura. Pillat surprinde frumusețea lumii rurale, nostalgia vremurilor de demult și continuitatea tradițiilor transmise de generații, redând o atmosferă lirică, caldă și armonioasă.',
+    teme: ['nostalgia', 'timpul', 'familia', 'tradiția', 'legătura cu natura'],
     personaje: ['eul liric'],
-    analiza: 'Pillat creează o poezie despre amintire și tradiții familiale. Opera explorează tema legăturii cu trecutul și a frumuseții naturii românești prin povestea bunicii.',
+    analiza: '„Aci sosi pe vremuri” este o poezie care explorează raportul dintre trecut și prezent, între copilărie și maturitate. Eul liric evocă figura bunicii și atmosfera satului, amintind de tradițiile românești și legătura cu natura. Pillat reușește să creeze o poezie nostalgică și armonioasă, în care trecutul devine un spațiu sacru al memoriei și valorilor familiale.',
     citate: [
       '"Aci sosi pe vremuri bunica-mi Calyopi"',
       '"Privind cu ea sub luna câmpia ca un lac"',
       '"Si totul ce romantic, ca-n basme, se urzea"'
-    ]
+    ],
+    personajeDetalii: {
+      'eul liric': 'Vocea poetică care evocă amintirile copilăriei și legătura cu trecutul. Prin intermediul experiențelor și observațiilor sale, eul liric pune în valoare frumusețea naturii, tradițiile familiale și continuitatea valorilor culturale.'
+    },
+    titluSection: {
+      descriere: 'Titlul „Aci sosi pe vremuri” evocă sosirea în trecut, amintirile și legătura cu tradițiile și familia. Este o invitație la reflectarea asupra timpului și a valorilor transmise de generații.',
+      puncte: [
+        'Titlul sugerează o călătorie în timp și o apropiere de trecut.',
+        'Evidențiază legătura eului liric cu memoria familiei și cu tradițiile.',
+        'Transmiterea sentimentului de nostalgie și armonie prin evocarea vremurilor trecute.'
+      ]
+    },
+    simboluriSection: {
+      descriere: 'Poezia folosește simboluri care transmit legătura cu trecutul, familia și natura, accentuând continuitatea și frumusețea vieții rurale.',
+      simboluri: [
+        {
+          nume: 'Bunica',
+          explicatie: 'Simbol al tradiției, continuității și înțelepciunii transmise din generație în generație.'
+        },
+        {
+          nume: 'Câmpia sub lună',
+          explicatie: 'Simbol al armoniei naturii și al frumuseții simple a vieții rurale.'
+        },
+        {
+          nume: 'Basmele',
+          explicatie: 'Simbol al memoriei și al imaginației copilăriei, care leagă prezentul de trecut.'
+        }
+      ]
+    },
+    rezumat: {
+      contextGeneral: {
+        sectiuni: [
+          {
+            subtitlu: "Tradiționalism și memorie",
+            text: "Poem din volumul 'Pe Argeș în sus' (1923), construit ca meditație asupra trecutului familial. Reîntoarcerea la conac devine prilej de reactivare a memoriei."
+          },
+          {
+            subtitlu: "Timp circular",
+            text: "Prezentul eului liric se suprapune peste trecutul bunicilor; spațiul rural devine punte între generații."
+          }
+        ]
+      },
+      analizaStrofaI: {
+        titlu: "Evocarea bunicii și a conacului",
+        versuri: [
+          {
+            text: "Aci sosi pe vremuri bunica-mi Calyopi",
+            analiza: "Vers inaugural care fixează locul ('Aci') și introduce figura bunicii; tonul este narativ și afectiv."
+          },
+          {
+            text: "Privind cu ea sub luna câmpia ca un lac",
+            analiza: "Imagine idilică: câmpia devine oglindă sub clar de lună; atmosfera romantică."
+          },
+          {
+            text: "Și totul, ce romantic, ca-n basme, se urzea",
+            analiza: "Percepția copilului filtrează realul prin basm; nostalgia colorează amintirea."
+          },
+          {
+            text: "În tindă, umbra mamei, în șoapte, mă chema",
+            analiza: "Evocare domestică, tandră; legătura maternă consolidează memoria locului."
+          }
+        ]
+      },
+      analizaStrofaII: {
+        titlu: "Regăsirea și suprapunerea temporală",
+        versuri: [
+          {
+            text: "Azi vin să mă reculeg sub bolta vechilor tei",
+            analiza: "Prezentul liric revizitează locul; teii funcționează ca martori ai timpului."
+          },
+          {
+            text: "Și parcă văd prin frunze siluetele lor, doi",
+            analiza: "Viziune fantasmatică a bunicilor; memoria se proiectează în peisaj."
+          },
+          {
+            text: "Între trecut și astăzi nu-i decât o clipă",
+            analiza: "Senzația de timp anulat; trecutul devine prezent interior."
+          },
+          {
+            text: "Conacul e același, dar pașii mei sunt alții",
+            analiza: "Spațiul rămâne, oamenii se schimbă; tensiune între permanență și efemer."
+          }
+        ]
+      },
+      elementeSpecifice: {
+        subtitlu: "Teme, Simboluri și Stil",
+        sectiuni: [
+          {
+            nume: "Particularități stilistice",
+            lista: [
+              "Simetrie temporală – alternanță între trecutul bunicilor și prezentul eului liric.",
+              "Peisaj idilic – câmpia ca lac sub lună, teii vechi, conacul.",
+              "Ton elegiac și nostalgic – recuperarea afectivă a rădăcinilor.",
+              "Vers clasic, imagini limpezi – claritate și echilibru specifice tradiționalismului."
+            ]
+          }
+        ]
+      },
+      concluzie: {
+        text: "Aci sosi pe vremuri devine o meditație asupra memoriei și a continuității, transformând locul natal în punte între generații și în spațiu al regăsirii identității."
+      }
+    }
   },
   'in-gradina-ghetsimani': {
     titlu: 'În Grădina Ghetsimani',
@@ -1532,15 +2431,117 @@ export const OPERA_DETAILS = {
     categorie: 'poezie',
     canonic: true,
     curent: 'modernism',
-    descriere: 'Poezie religioasă despre suferința lui Hristos înaintea răstignirii.',
-    teme: ['credința', 'sacrificiul', 'suferința'],
+    descriere: 'Poezie religioasă care evocă ultimele momente de liniște și rugăciune ale lui Hristos înaintea răstignirii. Voiculescu explorează suferința spirituală și lupta interioară dintre acceptarea destinului și teama de suferință. Opera este meditativă, religioasă și profund umană, concentrându-se pe sacrificiu, credință și puterea alegerii morale.',
+    teme: ['credința', 'sacrificiul', 'suferința', 'lupta interioară', 'acceptarea destinului'],
     personaje: ['eul liric', 'Hristos'],
-    analiza: 'Voiculescu creează o poezie despre lupta dintre bine și rău, despre sacrificiul și refuzul răului. Opera explorează tema puterii divine și a alegerii morale.',
+    analiza: '„În Grădina Ghetsimani” surprinde dramatismul sufletesc al lui Hristos și relația acestuia cu destinul său divin. Voiculescu creează o poezie meditativă, în care eul liric reflectă asupra suferinței, sacrificiului și puterii morale de a rezista răului. Opera combină lirismul modernist cu temele religioase tradiționale, punând accent pe dimensiunea umană a Mântuitorului și alegerea sa morală supremă.',
     citate: [
       '"Iisus lupta cu soarta și nu primea paharul"',
       '"Dar nu voia s-atingă infama băutură"',
       '"Bătându-se cu moartea, uitase de viață!"'
-    ]
+    ],
+    personajeDetalii: {
+      'eul liric': 'Vocea poetică care reflectă asupra suferinței și sacrificiului, punând accent pe dimensiunea umană și spirituală a evenimentelor.',
+      'Hristos': 'Figura centrală a poeziei, simbol al sacrificiului suprem și al puterii morale, confruntat cu suferința și destinul divin.'
+    },
+    titluSection: {
+      descriere: 'Titlul poeziei situează cititorul în Grădina Ghetsimani, spațiul în care Hristos se confruntă cu ultimele momente de suferință înaintea răstignirii. Este un titlu care evocă solemnitatea și dramatismul sacrificial.',
+      puncte: [
+        'Titlul indică locul central al rugăciunii și suferinței lui Hristos.',
+        'Sugerează tensiunea dintre destinul divin și teama umană.',
+        'Creează cadrul spiritual pentru meditația asupra sacrificiului și credinței.'
+      ]
+    },
+    simboluriSection: {
+      descriere: 'Simbolurile poeziei evidențiază lupta interioară, sacrificiul și dimensiunea umană și divină a lui Hristos, punând accent pe credință și moralitate.',
+      simboluri: [
+        {
+          nume: 'Paharul',
+          explicatie: 'Simbol al suferinței inevitabile și al destinului divin, pe care Hristos trebuie să-l accepte.'
+        },
+        {
+          nume: 'Grădina Ghetsimani',
+          explicatie: 'Loc al rugăciunii și al luptei interioare, simbol al confruntării dintre voința umană și destinul divin.'
+        },
+        {
+          nume: 'Moartea',
+          explicatie: 'Simbol al încercării supreme și al sacrificiului, reflectând gravitatea alegerilor morale.'
+        }
+      ]
+    },
+    rezumat: {
+      contextGeneral: {
+        sectiuni: [
+          {
+            subtitlu: "Poem religios modernist",
+            text: "Publicat în 1921, poemul reinterpretează episodul biblic din Ghetsimani. Voiculescu accentuează dimensiunea umană și dramatică a lui Hristos."
+          },
+          {
+            subtitlu: "Tema sacrificiului",
+            text: "Lupta interioară a lui Iisus înainte de patimă devine meditație asupra libertății și alegerii morale."
+          }
+        ]
+      },
+      analizaStrofaI: {
+        titlu: "Momentul luptei cu destinul",
+        versuri: [
+          {
+            text: "Iisus lupta cu soarta și nu primea paharul",
+            analiza: "Conflict între voința divină și cea umană. 'Paharul' reprezintă suferința asumată, dar încă refuzată."
+          },
+          {
+            text: "În lături, Tată! - Îl rugă cu amar",
+            analiza: "Rugăciunea exprimă ezitarea și durerea. Tonul e umanizat, lipsit de solemnitate rigidă."
+          },
+          {
+            text: "Și sângele-i curgea din tâmple ca sudori",
+            analiza: "Imagine hiperbolică a suferinței; sudoarea de sânge din episodul biblic devine semn al tensiunii maxime."
+          },
+          {
+            text: "Bătându-se cu moartea, uitase de viață!",
+            analiza: "Paradox: în lupta cu moartea, viața devine absentă. Intensitatea încercării îl consumă complet."
+          }
+        ]
+      },
+      analizaStrofaII: {
+        titlu: "Acceptarea paharului",
+        versuri: [
+          {
+            text: "Dar nu voia s-atingă infama băutură",
+            analiza: "Refuzul inițial persistă; paharul este numit 'infam', accentuând repulsia față de suferință."
+          },
+          {
+            text: "Și totuși, din iubire, îl duse către buze",
+            analiza: "Momentul hotărâtor: iubirea pentru oameni transformă refuzul în acceptare."
+          },
+          {
+            text: "Și bău, până la fund, din amarul destin",
+            analiza: "Asumare totală a sacrificiului; înghițirea amarului destin marchează biruința morală."
+          },
+          {
+            text: "În urmă, liniștit, s-a ridicat și s-a predat",
+            analiza: "Liniștea finală arată împăcarea cu misiunea. Acceptarea aduce pacea interioară."
+          }
+        ]
+      },
+      elementeSpecifice: {
+        subtitlu: "Teme, Simboluri și Stil",
+        sectiuni: [
+          {
+            nume: "Particularități stilistice",
+            lista: [
+              "Simbolul paharului – semn al suferinței acceptate.",
+              "Alternanță între revoltă și supunere – tensiunea voințelor uman/divin.",
+              "Imagini expresioniste (sudoare de sânge) – amplifică dramatismul.",
+              "Vers liber cu inflexiuni orale – ton confesiv, apropiat de cititor."
+            ]
+          }
+        ]
+      },
+      concluzie: {
+        text: "Poemul surprinde lupta interioară a lui Hristos și transformarea refuzului în acceptare, punând accent pe libertatea alegerii și pe iubirea care face posibil sacrificiul."
+      }
+    }
   },
   'riga-crypto': {
     titlu: 'Riga Crypto și Lapona Enigel',
@@ -1549,13 +2550,126 @@ export const OPERA_DETAILS = {
     categorie: 'poem',
     canonic: true,
     curent: 'modernism',
-    descriere: 'Poem alegoric despre incompatibilitatea dintre două lumi.',
-    teme: ['iubirea', 'incompatibilitatea', 'destinul'],
-    personaje: ['Riga Crypto', 'Lapona Enigel'],
-    analiza: 'Barbu creează un poem alegoric despre incompatibilitatea dintre două lumi.',
+    descriere: 'Poem alegoric ce ilustrează întâlnirea dintre două lumi incompatibile: lumea vegetală a lui Crypto și lumea spiritualizată a lui Enigel. Povestea transformă iubirea într-un simbol al aspirației și al limitelor care separă ființele cu naturi diferite.',
+    teme: [
+      'iubirea', 
+      'incompatibilitatea', 
+      'destinul', 
+      'aspirația'
+    ],
+    personaje: [
+      'Riga Crypto', 
+      'Lapona Enigel'
+    ],
+    analiza: 'Poemul redă, sub forma unei povești alegorice, eșecul apropierii dintre două naturi opuse. Crypto, ființă vegetală atrasă de umbră, este incapabil să urmeze chemarea spre lumină, în timp ce Enigel aspiră spre cunoaștere și spiritualizare. Conflictul dintre cele două principii conduce la imposibilitatea unirii lor.',
     citate: [
-
-    ]
+      '"Riga Crypto, crai de ghiață"',
+      '"Enigel, Enigel, / De te-aș prinde-ntr-un inel"',
+      '"Nuntaş fruntaş! Cu Enigel şi riga Crypto. - Zi-l menestrel! La spartul nunţii, în cămară."',
+      '"Crai Crypto, inimă ascunsă, la vecinic tron, de rouă parcă! De la fântâna tinereţii. Că nu voia să înflorească."',
+      '"Că nu voia să înflorească. Cu piei, pre nume Enigel. La Crypto, mirele poienii. Veni s-o-mbie, cu dulceaţă."',
+      '"Și adus dulceaţă, iacă. Ia-i şi toarnă-i în puiacă."',
+      '"Mulţumesc Dumitale. Fragii fragezi, mai la vale. Începi, rogu-te, cu mine. - Te-aş culege, rigă blând. Lasă. - Aşteaptă de te coace."'
+    ],
+    personajeDetalii: {
+      'Riga Crypto': 'Regele-ciupercă, simbol al lumii vegetale limitate, incapabile de evoluție spirituală. Reprezintă ființa care trăiește în umbră și refuză lumina, rămânând captivă propriei naturi.',
+      'Lapona Enigel': 'Tânără pură, luminată și orientată spre cunoaștere. Aspirația ei spre soare simbolizează dorința de evoluție spirituală și depășire a condiției materiale.'
+    },
+    titluSection: {
+      descriere: 'Titlul combină numele celor două personaje pentru a sugera contrastul dintre lumi opuse și destinul lor incompatibil.',
+      puncte: [
+        'Juxtapunerea numelor subliniază dualitatea fundamentală: umbra (Crypto) și lumina (Enigel).',
+        'Ritmul și sonoritatea titlului accentuează atmosfera de basm și alegorie.',
+        'Titlul anunță povestea unei întâlniri imposibile, marcată încă de la început de diferența naturilor.'
+      ]
+    },
+    simboluriSection: {
+      descriere: 'Poemul se construiește pe o simbolistică puternică, axată pe opoziția dintre umbră și lumină.',
+      simboluri: [
+        {
+          nume: 'Soarele',
+          explicatie: 'Simbol al cunoașterii și al evoluției spirituale. Enigel îl caută, iar Crypto îl teme.'
+        },
+        {
+          nume: 'Inelul',
+          explicatie: 'Simbol al dorinței de posesie și al iubirii neîmplinite a lui Crypto.'
+        },
+        {
+          nume: 'Ghețurile/umbra',
+          explicatie: 'Reprezintă stagnarea, limita și imposibilitatea de a accede la un nivel superior al spiritului.'
+        }
+      ]
+    },
+    rezumat: {
+      incipit: {
+        sectiuni: [
+          {
+            subtitlu: "Cadrul narativ și melancolia",
+            text: "Povestea începe într-un cadru festiv neobișnuit: la o nuntă, un menestrel (bardul) îmbătat de vinul ospățului este rugat insistent de un nuntaș fruntaș să povestească din nou o legendă cântată de el în vara trecută. Aceasta este povestea straniei întâlniri dintre Riga Crypto și Lapona Enigel. Atmosfera inițială îmbină veselia cu o notă de melancolie și mister, pregătind terenul pentru o narațiune care transcende simplele evenimente."
+          },
+          {
+            subtitlu: "Protagoniștii și natura lor",
+            text: "Sunt introduse cele două personaje principale, simboluri ale unor lumi fundamental opuse: Riga Crypto, 'regele-ciupercă' (ființă a umbrei, a umezelii și a instinctului), și Lapona Enigel, o tânără crescătoare de reni (ființă a luminii, a gheții și a spiritului)."
+          }
+        ]
+      },
+      intriga: {
+        sectiuni: [
+          {
+            subtitlu: "Planul lui Crypto (Regele umbrei)",
+            text: "În adâncurile unei păduri umede, domnește Riga Crypto, o ființă misterioasă, 'nărăvașă', cu 'inimă ascunsă'. El trăiește pe un 'vecinic tron de rouă'. Pacea sa este tulburată de bârfele celorlalte ciuperci (ghioci, toporași) care îl critică pentru sterilitate și pentru refuzul de a înflori, sugerând un fundal magic și conflictual cu 'vrăjitoarea mânătarca'."
+          },
+          {
+            subtitlu: "Planul Enigel (Făptura solară)",
+            text: "În același timp, în ținuturile înghețate ale nordului, Lapona Enigel, 'făptură a gheții și a iernii', trăiește într-o lume a purității ('ursul alb îi e vărul drept'). Ea este legată de lumina nordică și este adoratoare a soarelui ca simbol al înțelepciunii și al purității spirituale."
+          }
+        ]
+      },
+      desfasurarea: {
+        sectiuni: [
+          {
+            subtitlu: "Întâlnirea celor două lumi",
+            text: "Enigel călătorește cu turmele sale de reni 'prin aer ud, tot mai la sud'. Obosită, ea se oprește să se odihnească și adoarme pe un muște verde, exact în poiana lui Crypto, pe 'trei covoare de răcoare'."
+          },
+          {
+            subtitlu: "Curtea lui Crypto și ispitele",
+            text: "Crypto o descoperă pe Enigel adormită și, fascinat, încearcă să o curteze, venind însoțit de un eunuc bătrân și aducând daruri: dulceață și fragi. El o ispitește cu promisiuni dulci, rugând-o să rămână în umbră, în lumea lui de răcoare și umiditate, departe de soare."
+          },
+          {
+            subtitlu: "Filosofia Sufletului și a Luminii",
+            text: "Enigel ezită și îi explică lui Crypto incompatibilitatea lor ontologică. Ea îi mărturisește că este făcută pentru lumina nordului și că se închină la 'soarele-înțelept', căci 'sufletul-i fântână-n piept'. Ea formulează o filosofie profundă: la soare, sufletul crește ('roata albă se mărește'); la umbră, doar carnea se dezvoltă, dar aceasta este efemeră. Ea alege conștient lumina și puritatea spirituală."
+          }
+        ]
+      },
+      punctulCulminant: {
+        sectiuni: [
+          {
+            subtitlu: "Catastrofa solară",
+            text: "Enigel, mișcată de Crypto, acceptă să rămână puțin mai mult. Exact în acel moment, soarele se ridică pe cer 'svârlit în sus, ca un inel', strălucitor și necruțător. Crypto, obișnuit cu umbra, este expus brutal luminii solare. Soarele 'se oglindi adânc în el / De zece ori, fără sfială'."
+          },
+          {
+            subtitlu: "Plesnirea Inimii Ascunse",
+            text: "Efectul luminii este devastator: 'ascunsa-i inimă plesneşte', sucul său dulce se înăcrește, iar din interior țâșnesc 'venin și roșu untdelemn', semnele descompunerii. Crypto nu poate suporta lumina intensă deoarece gândul lui nu este 'fântână' capabilă să absoarbă și să transforme lumina (ca la om), ci doar 'pahar cu otravă' – simbol al limitării și fragilității."
+          }
+        ]
+      },
+      deznodamant: {
+        sectiuni: [
+          {
+            subtitlu: "Metamorfoza Grotescă",
+            text: "Tragedia se consumă iremediabil. Crypto este transformat de focul solar care i-a 'fript inima'. El nu moare, ci suferă o metamorfoză grotescă și dureroasă, rămânând 'să rătăcească / Cu altă față, mai crăiască' – o existență distorsionată, o parodie amară a demnității sale."
+          },
+          {
+            subtitlu: "Decăderea și Mesajul Final",
+            text: "Imaginea finală este una de decădere completă: Crypto devine asociat cu 'Laurul-Balaurul', o figură malefică, destinat 'să toarne-n lume aurul / Să-l toace' și să hoinărească gol pe drumuri alături de 'măsălariţa-mireasă'. Acest final sarcastic subliniază prăbușirea totală a protagonistului și condamnarea sa la o existență inferioară, de rătăcitor."
+          },
+          {
+            subtitlu: "Semnificația Incompatibilității",
+            text: "Balada rămâne o meditație profundă asupra incompatibilității dintre lumi (umbră/lumină, instinct/spirit) și asupra imposibilității ontologice a iubirii absolute între ființe aparținând unor regnuri diferite. Lumina, deși simbol al transcendenței, poate fi fatală pentru cei care nu sunt pregătiți să o primească."
+          }
+        ]
+      }
+    }
   },
   'lapusneanu': {
     titlu: 'Alexandru Lăpușneanu',
@@ -1594,11 +2708,117 @@ export const OPERA_DETAILS = {
     categorie: 'eseu',
     canonic: true,
     curent: 'junimism',
-    descriere: 'Eseu critic ce denunță imitațiile culturale fără bază reală.',
-    teme: ['critica socială', 'cultura', 'modernizarea falsă'],
+    descriere: 'Eseu critic în care Maiorescu analizează societatea românească și denunță adoptarea de forme culturale și instituționale fără un fond real, susținând că modernizarea adevărată trebuie să se bazeze pe dezvoltarea internă și autentică a societății.',
+    teme: ['critica socială', 'cultura', 'modernizarea falsă', 'tradiția vs. modernitatea'],
     personaje: ['– (eseu)'],
-    analiza: 'Maiorescu formulează teoria formelor fără fond, criticând importul de instituții și modele fără suport real în societate.',
-    citate: []
+    analiza: 'Lucrarea lui Maiorescu reprezintă un punct de referință în critica literară și socială românească. Autorul argumentează că societatea românească copiază formele Occidentului fără a le adapta la realitatea internă, ceea ce duce la superficialitate și ineficiență. Eseul pune bazele unei gândiri critice fundamentate pe observație și rațiune, fiind un manifest pentru autenticitate și maturitate culturală.',
+    citate: [
+      '"Nu formele contează, ci fondul."',
+      '"Modernizarea fără adaptare internă este iluzorie."',
+      '"Autenticitatea trebuie să fie temelia progresului."'
+    ],
+    personajeDetalii: {
+      '– (eseu)': 'Eseul nu are personaje, dar vocea autorului acționează ca un „personaj critic”, analizând cu luciditate și ironie societatea românească și practicile sale culturale și sociale.'
+    },
+    titluSection: {
+      descriere: 'Titlul subliniază ideea centrală a eseului: adoptarea formelor fără un conținut real este inutilă și chiar periculoasă pentru dezvoltarea societății.',
+      puncte: [
+        'Exprima clar ideea critică centrală a lucrării.',
+        'Sugerează contrastul dintre exterior (forme) și esență (fond).',
+        'Titlul servește ca avertisment pentru societate și cultură.'
+      ]
+    },
+    simboluriSection: {
+      descriere: 'Eseul folosește simbolic „forme” și „fond” pentru a reprezenta exteriorul superficial versus esența reală a culturii și instituțiilor.',
+      simboluri: [
+        {
+          nume: 'Formele',
+          explicatie: 'Simbol al imitației, al superficialității, al aspectului exterior fără valoare reală.'
+        },
+        {
+          nume: 'Fondul',
+          explicatie: 'Simbol al autenticității, al dezvoltării reale, al valorii fundamentale care susține progresul.'
+        },
+        {
+          nume: 'Occidentul',
+          explicatie: 'Folosit ca reper pentru comparație, simbol al modernității ce trebuie adaptată, nu copiată mecanic.'
+        }
+      ]
+    },
+    rezumat: {
+      incipit: {
+        sectiuni: [
+          {
+            subtitlu: "Diagnosticul crizei culturale (Prefața din 1874)",
+            text: "Opera se deschide cu expresia dezamăgirii autorului față de starea culturii române: 'Iluzii pierdute — iată semnul timpului în care trăim. Stăpânirea frazei încetează.' Maiorescu constată o criză intelectuală, marcată de 'mulțimea mediocrităților' și 'gloata de exploatatori' care au invadat viața publică. "
+          },
+          {
+            subtitlu: "Scopul și Tonul Criticii",
+            text: "Autorul își propune o 'critică demolatoare, dar constructivă': 'critica unde trebuie și constructivă unde poate'. Tonul este cel al unui chirurg care trebuie să intervină drastic pentru a salva corpul bolnav al culturii românești, stabilind tema centrală: necesitatea adevărului în cultură și respingerea 'formelor goale'."
+          }
+        ]
+      },
+      intriga: {
+        sectiuni: [
+          {
+            subtitlu: "Confruntarea: Direcția Veche (Falsă)",
+            text: "Intriga se construiește pe confruntarea dintre viziuni. Direcția veche este caracterizată de 'forme fără fond': instituții (școli, academii, teatre) create fără conținutul necesar. Aceasta include etimologismul absurd (Cipariu, Laurian), germanismele din presa transilvăneană și falsificarea istorică (Petru Maior) și filologică (Lexiconul de la Buda). În poezie, este reprezentată de versificatori fără talent (Tăutu, Sion), care scriu cu pretenții politice, dar fără valoare estetică."
+          },
+          {
+            subtitlu: "Confruntarea: Direcția Nouă (Autentică)",
+            text: "Direcția nouă, sursa de speranță, este profilată de Vasile Alecsandri cu 'Pastelurile' sale (poezie autentică despre natură), și mai ales de Mihai Eminescu, recunoscut ca 'poet în toată puterea cuvântului'. Conflictul fundamental este între adevăr și neadevăr, substanță și aparență, cultură autentică și imitație superficială."
+          }
+        ]
+      },
+      desfasurarea: {
+        sectiuni: [
+          {
+            subtitlu: "1. Critica Poeziei Române (1867)",
+            text: "Maiorescu stabilește două condiții fundamentale ale poeziei: Condiția materială (crearea de imagini sensibile prin cuvinte concrete și epitete ornante) și Condiția ideală (exprimarea de sentimente și pasiuni, nu idei politice sau teorii). Aplicând aceste criterii, arată că majoritatea scriu 'proză rimată, nu poezie', oferind exemple dezastruoase și concluzionând că 'o literatură falsă și urâtă este cel dintâi pas spre degradarea culturii'."
+          },
+          {
+            subtitlu: "2. Limba română în jurnalele din Austria (1868)",
+            text: "Este atacată germanizarea limbii din presa transilvăneană (germanizarea vocabularului, îngreuierea stilului prin fraze greoaie și falsa originalitate, precum 'organ corporal'). Maiorescu explică faptul că traducerea literală a 'idiotismelor' (expresiilor specifice) distruge spiritul limbii române: 'Cu organe corporale, cu muzică de pisici, cu legători de atenţiune... nu vom putea întări împotrivirea patriotică...'"
+          },
+          {
+            subtitlu: "3. Observări polemice (1869) și Treptele Falsității",
+            text: "Maiorescu dezvoltă tema falsității prin 'treptele' relației românești cu Occidentul: I. Imitația timidă; II. Comparația pretențioasă (Academia Română lăudând excesiv o gramatică mediocră); III. Superioritatea imaginară (politicieni care compară pe Văcărescu cu Goethe sau proclamă poporul român drept 'poporul-Messia'). Maiorescu critică 'politica megalografică': 'avem politică şi ştiinţă... dar în realitate toate acestea sunt producţiuni moarte, pretenţii fără fundament, stafii fără trup, iluzii fără adevăr'."
+          },
+          {
+            subtitlu: "4. În contra direcției de astăzi în cultura română (1868)",
+            text: "Maiorescu formulează diagnosticul complet: vițiul radical este neadevărul sistematic, începând cu falsificările filologice și istorice. El susține că 'Singura clasă reală la noi este ţăranul român, şi realitatea lui este suferinţa, sub care suspină de fantasmagoriile claselor superioare.' Stabilește două principii fundamentale: Mediocritățile trebuie descurajate și 'Este mai bine să nu facem o şcoală deloc decât să facem o şcoală rea'."
+          },
+          {
+            subtitlu: "5. Direcția nouă în poezia română (1872)",
+            text: "După demolarea falsului, Maiorescu prezintă speranța. Îl laudă pe Alecsandri (renăscut cu 'Pastelurile') și pe Eminescu, 'poet, poet în toată puterea cuvântului'. Totuși, îi reproșează lui Eminescu neglijența formei, formulând principiul estetic: arta necesită perfecțiune formală, deoarece forma frumoasă intră într-o lume 'unde timpul nu mai are înţeles' (metafora statuii antice). Criticul citează zeci de exemple de pseudopoeți care își justifică lipsa de talent prin invocarea Națiunii și a Libertății."
+          }
+        ]
+      },
+      punctulCulminant: {
+        sectiuni: [
+          {
+            subtitlu: "Momentul Teoretic: Teza 'Formă fără Fond'",
+            text: "Punctul culminant teoretic este formularea tezei centrale (în *În contra direcției de astăzi*): 'Forma fără fond nu numai că nu aduce nici un folos, dar este de-a dreptul stricăcioasă, fiindcă nimiceşte un mijloc puternic de cultură.' Maiorescu susține că formele goale nu sunt neutre, ci 'discreditează cu totul în opinia publică' instituțiile și 'întârzie chiar fondul' autentic. Falsificarea culturii face imposibilă apariția ei viitoare."
+          },
+          {
+            subtitlu: "Momentul Existențial: Dialectica Disperare-Speranță",
+            text: "Punctul culminant emoțional se află în *Direcția nouă*, unde Maiorescu oscilează între disperarea ('Plângerea poporului de jos şi ridicolul plebei de sus au ajuns la culme') și speranța legitimă generată de descoperirea unei 'literaturi încă jună şi... nerecunoscută' (Eminescu, Alecsandri). Aici se află drama intelectuală: confruntarea între dezastrul cultural constatat și 'semnele de viață' autentice."
+          }
+        ]
+      },
+      deznodamant: {
+        sectiuni: [
+          {
+            subtitlu: "Programul de Acțiune (Negativ și Pozitiv)",
+            text: "Deznodământul este un program: Negativ – respingerea falsei toleranțe, a relativismului patriotic ('Ce este rău pentru alte popoare este rău şi pentru noi') și a scuzei 'epocii de tranziție'. Pozitiv – impunerea unei critici necruțătoare, a sincerității în simțire, a exigenței estetice și a respectului pentru 'cultura autentică'."
+          },
+          {
+            subtitlu: "Profesiunea de Credință și Testamentul Critic",
+            text: "Maiorescu închide cu o viziune despre misiunea criticii: 'Cine a ştiut să plăsmuiască forma frumoasă, acela desigur — dar numai acela — a ajuns pe calea nemuririi' (puterea formei, ilustrată prin Tacitus). El avertizează că 'Cu o cultură falsă nu poate trăi un popor' și, pășind înainte cu stoicism eroic, își păstrează încrederea că 'progresul adevărului trebuie să se facă'."
+          }
+        ]
+      }
+    }
   },
   'hanul-ancutei': {
     titlu: 'Hanul Ancuţei',

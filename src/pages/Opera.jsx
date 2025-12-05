@@ -281,12 +281,19 @@ const OPERA_JSON_FILES = {
   'Mara': 'mara',
   'Ultima noapte de dragoste, întaia noapte de razboi': 'ultima-noapte-dragoste',
   'Luceafărul': 'luceafarul',
+  'Plumb': 'plumb',
+  'Eu nu strivesc corola de minuni a lumii': 'eu-nu-strivesc-corola',
+  'Leoaică tânără, iubirea': 'leoaica-tanara-iubirea',
+  'Flori de mucigai': 'flori-de-mucigai',
   'Enigma Otiliei': 'enigma-otiliei',
   'Riga crypto si lapona enigel': 'riga-crypto',
+  'Aci sosi pe vremuri': 'aci-sosi-pe-vremuri',
+  'În Grădina Ghetsimani': 'gradina-ghetsimani',
   'Morometii': 'morometii',
   'Iona': 'iona',
   'Formele fara fond': 'critice',
   'Alexandru Lăpușneanu': 'lapusneanu',
+  'Testament': 'testament',
   'Răscoala': 'rascoala',
   'Hanul Ancuţei': 'hanul-ancutei',
   'Maytreyi': 'maitreyi',
@@ -642,6 +649,172 @@ export default function Opera() {
     </div>
   );
 
+  const renderRezumatSectionContent = (sectionData) => {
+    if (!sectionData) return null;
+
+    if (typeof sectionData === 'object' && sectionData.sectiuni) {
+      return (
+        <>
+          {sectionData.sectiuni.map((sectiune, sectIndex) => renderRezumatSectiune(sectiune, sectIndex))}
+        </>
+      );
+    }
+
+    if (typeof sectionData === 'object') {
+      return (
+        <>
+          {sectionData.text && (
+            <p className="rezumat-text">{sectionData.text}</p>
+          )}
+          {sectionData.listaProbe && (
+            <ul className="rezumat-list">
+              {sectionData.listaProbe.map((item, index) => (
+                <li key={index} className="rezumat-list-item">{item}</li>
+              ))}
+            </ul>
+          )}
+          {sectionData.textFinal && (
+            <p className="rezumat-text">{sectionData.textFinal}</p>
+          )}
+        </>
+      );
+    }
+
+    return <p className="rezumat-text">{sectionData}</p>;
+  };
+
+  const isPoemRezumatStructure = (rezumatData) => {
+    if (!rezumatData || typeof rezumatData !== 'object') return false;
+    return ['contextGeneral', 'analizaStrofaI', 'analizaStrofaII', 'analizaStrofaIII', 'analizaStrofaIV','analizaStrofaV','elementeSpecifice', 'concluzie'].some(
+      (key) => rezumatData[key]
+    );
+  };
+
+  const renderPoemSectiuni = (sectiuni) => {
+    if (!Array.isArray(sectiuni)) return null;
+    return sectiuni.map((sectiune, index) => (
+      <div key={index} className="rezumat-subsection">
+        {sectiune.subtitlu && <h4 className="rezumat-subtitle">{sectiune.subtitlu}</h4>}
+        {sectiune.text && <p className="rezumat-text">{sectiune.text}</p>}
+      </div>
+    ));
+  };
+
+  const renderPoemVersuri = (versuri) => {
+    if (!Array.isArray(versuri)) return null;
+    return (
+      <div className="rezumat-versuri">
+        {versuri.map((vers, index) => (
+          <div key={index} className="rezumat-subsection">
+            <p className="rezumat-vers">{vers.text}</p>
+            {vers.analiza && <p className="rezumat-text">{vers.analiza}</p>}
+          </div>
+        ))}
+      </div>
+    );
+  };
+
+  const renderPoemRezumatBlock = (rezumatData, blockIndex) => (
+    <div key={blockIndex} className="rezumat-block">
+      {rezumatData.contextGeneral && (
+        <div className="rezumat-section">
+          <h3 className="rezumat-section-title">Context general</h3>
+          {renderPoemSectiuni(rezumatData.contextGeneral.sectiuni)}
+        </div>
+      )}
+      {rezumatData.analizaStrofaI && (
+        <div className="rezumat-section">
+          <h3 className="rezumat-section-title">{rezumatData.analizaStrofaI.titlu || 'Analiza strofa I'}</h3>
+          {renderPoemVersuri(rezumatData.analizaStrofaI.versuri)}
+        </div>
+      )}
+      {rezumatData.analizaStrofaII && (
+        <div className="rezumat-section">
+          <h3 className="rezumat-section-title">{rezumatData.analizaStrofaII.titlu || 'Analiza strofa II'}</h3>
+          {renderPoemVersuri(rezumatData.analizaStrofaII.versuri)}
+        </div>
+      )}
+      {rezumatData.analizaStrofaIII && (
+        <div className="rezumat-section">
+          <h3 className="rezumat-section-title">{rezumatData.analizaStrofaIII.titlu || 'Analiza strofa III'}</h3>
+          {renderPoemVersuri(rezumatData.analizaStrofaIII.versuri)}
+        </div>
+      )}
+      {rezumatData.analizaStrofaIV && (
+        <div className="rezumat-section">
+          <h3 className="rezumat-section-title">{rezumatData.analizaStrofaIV.titlu || 'Analiza strofa IV'}</h3>
+          {renderPoemVersuri(rezumatData.analizaStrofaIV.versuri)}
+        </div>
+      )}
+      {rezumatData.analizaStrofaV && (
+        <div className="rezumat-section">
+          <h3 className="rezumat-section-title">{rezumatData.analizaStrofaV.titlu || 'Analiza strofa V'}</h3>
+          {renderPoemVersuri(rezumatData.analizaStrofaV.versuri)}
+        </div>
+      )}
+      {rezumatData.elementeSpecifice && (
+        <div className="rezumat-section">
+          <h3 className="rezumat-section-title">{rezumatData.elementeSpecifice.subtitlu || 'Elemente specifice'}</h3>
+          {Array.isArray(rezumatData.elementeSpecifice.sectiuni) &&
+            rezumatData.elementeSpecifice.sectiuni.map((sectiune, index) => (
+              <div key={index} className="rezumat-subsection">
+                {sectiune.nume && <h4 className="rezumat-subtitle">{sectiune.nume}</h4>}
+                {Array.isArray(sectiune.lista) && (
+                  <ul className="rezumat-list">
+                    {sectiune.lista.map((item, idx) => (
+                      <li key={idx} className="rezumat-list-item">
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            ))}
+        </div>
+      )}
+      {rezumatData.concluzie && rezumatData.concluzie.text && (
+        <div className="rezumat-section">
+          <h3 className="rezumat-section-title">Concluzie</h3>
+          <p className="rezumat-text">{rezumatData.concluzie.text}</p>
+        </div>
+      )}
+    </div>
+  );
+
+  const renderRezumatBlock = (rezumatData, blockIndex, totalBlocks) => {
+    if (!rezumatData) return null;
+
+    if (isPoemRezumatStructure(rezumatData)) {
+      return renderPoemRezumatBlock(rezumatData, blockIndex);
+    }
+
+    const sectionsConfig = [
+      { key: 'incipit', title: 'Incipit' },
+      { key: 'intriga', title: 'Intriga' },
+      { key: 'desfasurarea', title: 'Desfășurarea acțiunii' },
+      { key: 'punctulCulminant', title: 'Punctul culminant' },
+      { key: 'deznodamant', title: 'Deznodământ' },
+    ];
+
+    return (
+      <div key={blockIndex} className="rezumat-block">
+        {totalBlocks > 1 && (
+          <h3 className="rezumat-section-title">{`Rezumat - Volumul ${blockIndex + 1}`}</h3>
+        )}
+        {sectionsConfig.map(({ key, title }) => {
+          const sectionValue = rezumatData?.[key];
+          if (!sectionValue) return null;
+          return (
+            <div key={key} className="rezumat-section">
+              <h3 className="rezumat-section-title">{title}</h3>
+              {renderRezumatSectionContent(sectionValue)}
+            </div>
+          );
+        })}
+      </div>
+    );
+  };
+
   const renderTabContent = () => {
     if (!operaDetails) {
       return (
@@ -817,80 +990,18 @@ export default function Opera() {
       }
 
       case 'rezumat':
-        if (operaDetails.rezumat) {
+        if (operaDetails.rezumat || (Array.isArray(operaDetails.rezumate) && operaDetails.rezumate.length > 0)) {
+          const rezumateArray = Array.isArray(operaDetails.rezumate) && operaDetails.rezumate.length > 0
+            ? operaDetails.rezumate
+            : [operaDetails.rezumat];
+
           return (
             <div className="opera-tab-content">
               <div className="opera-rezumat">
                 <h2 className="rezumat-title">{operaDetails.titlu} - Rezumat</h2>
-                
-                <div className="rezumat-section">
-                  <h3 className="rezumat-section-title">Incipit</h3>
-                  {typeof operaDetails.rezumat.incipit === 'object' && operaDetails.rezumat.incipit.sectiuni ? (
-                    <>
-                      {operaDetails.rezumat.incipit.sectiuni.map((sectiune, sectIndex) => renderRezumatSectiune(sectiune, sectIndex))}
-                    </>
-                  ) : (
-                  <p className="rezumat-text">{operaDetails.rezumat.incipit}</p>
-                  )}
-                </div>
-
-                <div className="rezumat-section">
-                  <h3 className="rezumat-section-title">Intriga</h3>
-                  {typeof operaDetails.rezumat.intriga === 'object' && operaDetails.rezumat.intriga.sectiuni ? (
-                    <>
-                      {operaDetails.rezumat.intriga.sectiuni.map((sectiune, sectIndex) => renderRezumatSectiune(sectiune, sectIndex))}
-                    </>
-                  ) : (
-                  <p className="rezumat-text">{operaDetails.rezumat.intriga}</p>
-                  )}
-                </div>
-
-                <div className="rezumat-section">
-                  <h3 className="rezumat-section-title">Desfășurarea acțiunii</h3>
-                  {typeof operaDetails.rezumat.desfasurarea === 'object' && operaDetails.rezumat.desfasurarea.sectiuni ? (
-                    <>
-                      {operaDetails.rezumat.desfasurarea.sectiuni.map((sectiune, sectIndex) => renderRezumatSectiune(sectiune, sectIndex))}
-                    </>
-                  ) : typeof operaDetails.rezumat.desfasurarea === 'object' ? (
-                    <>
-                      <p className="rezumat-text">{operaDetails.rezumat.desfasurarea.text}</p>
-                      {operaDetails.rezumat.desfasurarea.listaProbe && (
-                        <ul className="rezumat-list">
-                          {operaDetails.rezumat.desfasurarea.listaProbe.map((item, index) => (
-                            <li key={index} className="rezumat-list-item">{item}</li>
-                          ))}
-                        </ul>
-                      )}
-                      {operaDetails.rezumat.desfasurarea.textFinal && (
-                        <p className="rezumat-text">{operaDetails.rezumat.desfasurarea.textFinal}</p>
-                      )}
-                    </>
-                  ) : (
-                    <p className="rezumat-text">{operaDetails.rezumat.desfasurarea}</p>
-                  )}
-                </div>
-
-                <div className="rezumat-section">
-                  <h3 className="rezumat-section-title">Punctul culminant</h3>
-                  {typeof operaDetails.rezumat.punctulCulminant === 'object' && operaDetails.rezumat.punctulCulminant.sectiuni ? (
-                    <>
-                      {operaDetails.rezumat.punctulCulminant.sectiuni.map((sectiune, sectIndex) => renderRezumatSectiune(sectiune, sectIndex))}
-                    </>
-                  ) : (
-                  <p className="rezumat-text">{operaDetails.rezumat.punctulCulminant}</p>
-                  )}
-                </div>
-
-                <div className="rezumat-section">
-                  <h3 className="rezumat-section-title">Deznodământ</h3>
-                  {typeof operaDetails.rezumat.deznodamant === 'object' && operaDetails.rezumat.deznodamant.sectiuni ? (
-                    <>
-                      {operaDetails.rezumat.deznodamant.sectiuni.map((sectiune, sectIndex) => renderRezumatSectiune(sectiune, sectIndex))}
-                    </>
-                  ) : (
-                  <p className="rezumat-text">{operaDetails.rezumat.deznodamant}</p>
-                  )}
-                </div>
+                {rezumateArray.map((rezumatItem, rezIndex) =>
+                  renderRezumatBlock(rezumatItem, rezIndex, rezumateArray.length)
+                )}
               </div>
             </div>
           );
