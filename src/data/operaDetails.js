@@ -522,24 +522,24 @@ export const OPERA_DETAILS = {
       desfasurarea: {
         sectiuni: [
           {
-            "subtitlu": "A. Degradarea progresivă",
-            "text": "După înțelegerea cu Lică, viața lui Ghiță se schimbă radical. He devine ursuz, violent cu slugile, distant față de Ana. Își cumpără pistoale, angajează o a doua slugă (Marți, un ungur înalt), și își ia doi câței pe care îi dresează să atace. Ana observă transformarea și suferă: \"Adeseori Ana ar fi voit să-l întrebe: 'Ghiță! ce-i cu tine?', însă ea nu mai îndrăznea să-i vorbească dezghețat ca mai nainte, căci se temea ca nu cumva el să se mânie și pe dânsa.\"\nRelația dintre Ghiță și Ana se deteriorează. El își petrece timpul cu câinii, neglijând familia. Ana simte că \"de când are câini, ține mai puțin la nevastă și la copii.\""
+            subtitlu: "A. Degradarea progresivă",
+            text: "După înțelegerea cu Lică, viața lui Ghiță se schimbă radical. He devine ursuz, violent cu slugile, distant față de Ana. Își cumpără pistoale, angajează o a doua slugă (Marți, un ungur înalt), și își ia doi câței pe care îi dresează să atace. Ana observă transformarea și suferă: \"Adeseori Ana ar fi voit să-l întrebe: 'Ghiță! ce-i cu tine?', însă ea nu mai îndrăznea să-i vorbească dezghețat ca mai nainte, căci se temea ca nu cumva el să se mânie și pe dânsa.\"\nRelația dintre Ghiță și Ana se deteriorează. El își petrece timpul cu câinii, neglijând familia. Ana simte că \"de când are câini, ține mai puțin la nevastă și la copii.\""
           },
           {
-            "subtitlu": "B. Crima de la arândașul",
-            "text": "Intriga se complică dramatic când, într-o zi de luni, Lică vine la cârciuma cu trei tovarăși: Buză-Ruptă, Săilă Boarul și Răuț. În prezența drumeților, Lică vorbește despre arândaș (proprietarul care închiriază cârciuma), întrebându-l pe Ghiță când va veni acesta. Vorbește suficient de tare pentru ca drumeții să audă, punând astfel bazele unui alibi.\nSeara, Buză-Ruptă și Săilă pleacă spre Ineu, Răuț dispare spre pădurea de la Fundureni, iar Lică rămâne peste noapte la cârciuma. Peste noapte, câinii latră de două ori. Ana, care nu poate dormi, îl vede pe Lică întorcându-se singur în zori de zi. Dimineața, Lică pleacă aparent calm.\nMarți dimineață sosește Pintea căprarul cu doi jandarmi. Au fost comise crime teribile: arândașul a fost călcat și jefuit în noaptea precedentă. Pintea îl ia pe Ghiță la cercetări la Ineu. Pe drum, descoperă o trăsură părăsită și un copil mort - alte victime ale bandei lui Lică."
+            subtitlu: "B. Crima de la arândașul",
+            text: "Intriga se complică dramatic când, într-o zi de luni, Lică vine la cârciuma cu trei tovarăși: Buză-Ruptă, Săilă Boarul și Răuț. În prezența drumeților, Lică vorbește despre arândaș (proprietarul care închiriază cârciuma), întrebându-l pe Ghiță când va veni acesta. Vorbește suficient de tare pentru ca drumeții să audă, punând astfel bazele unui alibi.\nSeara, Buză-Ruptă și Săilă pleacă spre Ineu, Răuț dispare spre pădurea de la Fundureni, iar Lică rămâne peste noapte la cârciuma. Peste noapte, câinii latră de două ori. Ana, care nu poate dormi, îl vede pe Lică întorcându-se singur în zori de zi. Dimineața, Lică pleacă aparent calm.\nMarți dimineață sosește Pintea căprarul cu doi jandarmi. Au fost comise crime teribile: arândașul a fost călcat și jefuit în noaptea precedentă. Pintea îl ia pe Ghiță la cercetări la Ineu. Pe drum, descoperă o trăsură părăsită și un copil mort - alte victime ale bandei lui Lică."
           },
           {
-            "subtitlu": "C. Investigația și judecata",
-            "text": "La Ineu, Ghiță este confruntat cu mărturisirile slugilor sale. Marți povestește că Lică a stat cu Răuț, Buză-Ruptă și Săilă la cârciuma, că au vorbit despre arândaș, și că târziu în noapte a venit un om cu o femeie la Lică. Ghiță este prins în contradicții - susține că Lică a stat toată noaptea la cârciuma, dar nu poate dovedi acest lucru convingător.\nPintea, fost tovarăș de temnița al lui Lică, devine personajul care încearcă să-l prindă pe Sămădău. El îl pune pe Ghiță să accepte o slujnică - Uța - care de fapt este un om de pândă. Pintea descoperă în pădure cadavrul femeii din trăsură, ucisă prin înăbușire, și biciul lui Lică lângă trup. Mai târziu, găsește și pe jandarmul Hanțl rănit mortal, cu un cuțit înfipt în corp și o cârpă vânătă în mână - smulsă de pe fața atacatorului.\nLa judecata de la Oradea-Mare, Lică scapă prin viclenie și protecția stăpânilor săi influenți. Buză-Ruptă și Săilă Boarul sunt osândiți pe viață, deși mărturisirile lor contradictorii sugerează că sunt victime ale unui complot. Ghiță, pus în fața judecătorilor, trebuie să aleagă: ori îl trădează pe Lică și riscă răzbunarea, ori minte și devine complice deplin. El alege o cale de mijloc, declarând: \"Nu pot să jur că n-a plecat în noaptea aceea, fiindcă n-am stat mereu lângă dânsul; jur însă că l-am știut toată noaptea la cârciuma.\""
+            subtitlu: "C. Investigația și judecata",
+            text: "La Ineu, Ghiță este confruntat cu mărturisirile slugilor sale. Marți povestește că Lică a stat cu Răuț, Buză-Ruptă și Săilă la cârciuma, că au vorbit despre arândaș, și că târziu în noapte a venit un om cu o femeie la Lică. Ghiță este prins în contradicții - susține că Lică a stat toată noaptea la cârciuma, dar nu poate dovedi acest lucru convingător.\nPintea, fost tovarăș de temnița al lui Lică, devine personajul care încearcă să-l prindă pe Sămădău. El îl pune pe Ghiță să accepte o slujnică - Uța - care de fapt este un om de pândă. Pintea descoperă în pădure cadavrul femeii din trăsură, ucisă prin înăbușire, și biciul lui Lică lângă trup. Mai târziu, găsește și pe jandarmul Hanțl rănit mortal, cu un cuțit înfipt în corp și o cârpă vânătă în mână - smulsă de pe fața atacatorului.\nLa judecata de la Oradea-Mare, Lică scapă prin viclenie și protecția stăpânilor săi influenți. Buză-Ruptă și Săilă Boarul sunt osândiți pe viață, deși mărturisirile lor contradictorii sugerează că sunt victime ale unui complot. Ghiță, pus în fața judecătorilor, trebuie să aleagă: ori îl trădează pe Lică și riscă răzbunarea, ori minte și devine complice deplin. El alege o cale de mijloc, declarând: \"Nu pot să jur că n-a plecat în noaptea aceea, fiindcă n-am stat mereu lângă dânsul; jur însă că l-am știut toată noaptea la cârciuma.\""
           },
           {
-            "subtitlu": "D. Prăbușirea morală și materială",
-            "text": "După judecată, Ghiță este eliberat, dar cinstea îi este distrusă. Oamenii din Ineu îl privesc cu bănuială. El însuși simte că \"cinstit nu e decât omul care a astupat gurile rele, pe care nimeni nu-l poate grăi de rău fără de a se da de rușine\" - și el nu mai este astfel de om.\nRelația cu Ana devine și mai tensionată. Ea bănuiește adevărul, dar nu îndrăznește să-l întrebe direct. Ghiță, copleșit de vinovăție și de frica de răzbunarea lui Lică, devine tot mai violent și distant. Într-o scenă teribilă, după ce Ana îl întreabă despre implicarea sa în crime, Ghiță îi scuipă în față: \"Mi-e scârbă când mă gândesc că am o nevastă care poate să mai trăiască cu un om precum tu mă socotești pe mine.\"\nÎn același timp, Lică continuă să vină la cârciuma și să-i aducă lui Ghiță bani murdari de la jafuri - hârtii noi-nouțe împunse cu acul (furate de la bancă), galbeni cu zimții piliți, argintărie de la arândaș. Ghiță, prins în capcană, acceptă să schimbe banii, dar ia legătura secret cu Pintea, promițându-i că îl va prinde pe Lică.\nÎnsă Ghiță însuși devine complice activ - păstrează jumătate din banii schimbați pentru sine, mințindu-l pe Pintea. Vinovăția și lăcomia îl corup complet. El adună o avere considerabilă, dar pierde tot ce avea mai de preț: cinstea, liniștea sufletului, dragostea familiei."
+            subtitlu: "D. Prăbușirea morală și materială",
+            text: "După judecată, Ghiță este eliberat, dar cinstea îi este distrusă. Oamenii din Ineu îl privesc cu bănuială. El însuși simte că \"cinstit nu e decât omul care a astupat gurile rele, pe care nimeni nu-l poate grăi de rău fără de a se da de rușine\" - și el nu mai este astfel de om.\nRelația cu Ana devine și mai tensionată. Ea bănuiește adevărul, dar nu îndrăznește să-l întrebe direct. Ghiță, copleșit de vinovăție și de frica de răzbunarea lui Lică, devine tot mai violent și distant. Într-o scenă teribilă, după ce Ana îl întreabă despre implicarea sa în crime, Ghiță îi scuipă în față: \"Mi-e scârbă când mă gândesc că am o nevastă care poate să mai trăiască cu un om precum tu mă socotești pe mine.\"\nÎn același timp, Lică continuă să vină la cârciuma și să-i aducă lui Ghiță bani murdari de la jafuri - hârtii noi-nouțe împunse cu acul (furate de la bancă), galbeni cu zimții piliți, argintărie de la arândaș. Ghiță, prins în capcană, acceptă să schimbe banii, dar ia legătura secret cu Pintea, promițându-i că îl va prinde pe Lică.\nÎnsă Ghiță însuși devine complice activ - păstrează jumătate din banii schimbați pentru sine, mințindu-l pe Pintea. Vinovăția și lăcomia îl corup complet. El adună o avere considerabilă, dar pierde tot ce avea mai de preț: cinstea, liniștea sufletului, dragostea familiei."
           },
           {
-            "subtitlu": "E. Influența pernicioasă a Uței și atracția fatală",
-            "text": "Pe măsură ce trece timpul - toamna, iarna, primăvara - atmosfera de la Moara cu Noroc devine din ce în ce mai coruptă. Uța, slujnica pusă de Pintea, se dovedește a fi o femeie dezmățată care organizează petreceri cu țigani pentru Lică. Ana, la început dezgustată, se obișnuiește treptat cu desfrâul și chiar începe să participe.\nLică, care până atunci evitase femeile ca pe o slăbiciune, devine fascinat de Ana. El vine din ce în ce mai des la cârciuma, joacă cu Ana, o sărută \"în glumă\", îi împletește un bici pentru băiat. Ana, neglijată de Ghiță, răspunde inconștient la atenția lui Lică. Slavici descrie magistral această atracție fatală, subtilă la început, din ce în ce mai evidentă.\nBătrâna, vocea conștiinței, încearcă să intervină înainte de Paști: \"Nu v-am spus-o până acum, fiindcă n-aveam pentru ce; acum vă zic să-l țineți mai departe de voi.\" Dar e prea târziu."
+            subtitlu: "E. Influența pernicioasă a Uței și atracția fatală",
+            text: "Pe măsură ce trece timpul - toamna, iarna, primăvara - atmosfera de la Moara cu Noroc devine din ce în ce mai coruptă. Uța, slujnica pusă de Pintea, se dovedește a fi o femeie dezmățată care organizează petreceri cu țigani pentru Lică. Ana, la început dezgustată, se obișnuiește treptat cu desfrâul și chiar începe să participe.\nLică, care până atunci evitase femeile ca pe o slăbiciune, devine fascinat de Ana. El vine din ce în ce mai des la cârciuma, joacă cu Ana, o sărută \"în glumă\", îi împletește un bici pentru băiat. Ana, neglijată de Ghiță, răspunde inconștient la atenția lui Lică. Slavici descrie magistral această atracție fatală, subtilă la început, din ce în ce mai evidentă.\nBătrâna, vocea conștiinței, încearcă să intervină înainte de Paști: \"Nu v-am spus-o până acum, fiindcă n-aveam pentru ce; acum vă zic să-l țineți mai departe de voi.\" Dar e prea târziu."
           }
         ]
       },
@@ -1800,73 +1800,151 @@ export const OPERA_DETAILS = {
       contextGeneral: {
         sectiuni: [
           {
-            subtitlu: "Poem manifest arghezian",
-            text: "Publicată în 1927, poezia deschide volumul 'Cuvinte potrivite' și funcționează ca testament artistic. Arghezi formulează programul estetic al transfigurării 'urâtului' în artă."
+            subtitlu: "Artă Poetică Modernă și Estetica Uratului",
+            text: "Publicat în volumul 'Cuvinte potrivite' (1927), 'Testament' este o artă poetică fundamentală, în care Arghezi definește rolul poetului ca intermediar între două lumi: lumea umilă, țărănească a străbunilor (materia primă) și lumea cultă (produsul final, cartea). Poemul este o declarație de principii despre forța transformatoare a poeziei."
           },
           {
-            subtitlu: "Moștenire spirituală",
-            text: "Adresarea către 'fiule' transmite o moștenire culturală și morală: cartea-poartă este singurul bun lăsat urmașilor."
+            subtitlu: "Moștenirea și Transfigurarea",
+            text: "Tema centrală este moștenirea spirituală lăsată fiului, care nu este materială, ci o carte-instrument. Poetul realizează o alchimie verbală prin care materia abjectă (ură, suferință, noroi) este transformată în frumusețe, punând bazele 'esteticii urâtului' în literatura română."
           }
         ]
       },
       analizaStrofaI: {
-        titlu: "Arta ca moștenire",
+        titlu: "Strofa I: Cartea ca Treaptă și Datoria Genealogică",
         versuri: [
           {
-            text: "Nu-ți voi lăsa drept bunuri, după moarte, / decât un nume adunat pe-o carte.",
-            analiza: "Cartea devine singurul patrimoniu. Poetul își asumă condiția modestă, dar valoarea spirituală este supremă."
+            text: "Nu-ţi voi lăsa drept bunuri, după moarte, / Decât un nume adunat pe o carte,",
+            analiza: "Deschidere solemnă, în stil testamentar. 'Nu-ți voi lăsa' introduce o negație ce subliniază caracterul nematerial al moștenirii. 'un nume adunat pe o carte' - Unica moștenire este opera literară, rezultat al muncii de o viață."
           },
           {
-            text: "Cartea mea-i, fiule, o treaptă",
-            analiza: "Metafora treptei sugerează ascensiunea prin cultură. Poezia este mijloc de urcare spirituală."
+            text: "În seara răzvrătită care vine / De la străbunii mei până la tine,",
+            analiza: "'Seara răzvrătită' - Metaforă a unei epoci tulburi, de schimbare socială. Poemul cuprinde un întreg traseu genealogic, de la 'străbuni' (origini umile) la 'tine' (fiul, generația nouă), stabilind continuitatea luptei."
           },
           {
-            text: "Încă tu însuți ești o carte",
-            analiza: "Identificarea fiului cu o carte indică filiația spirituală și responsabilitatea continuării creației."
+            text: "Prin râpi şi gropi adânci / Suite de bătrânii mei pe brânci / Şi care, tânăr, să le urci te-aşteaptă",
+            analiza: "'râpi şi gropi adânci' - Metafore ale obstacolelor sociale și istorice. 'Suite... pe brânci' - Imagine hiperbolică a umilinței, a efortului supraomenesc depus de generațiile de țărani-robi. Datoria fiului este să continue acest urcuș. 'te-așteaptă' - Personificarea luptei."
           },
           {
-            text: "Cartea mea, fiule, e-o treaptă.",
-            analiza: "Reluarea accentuează ideea de progres și de moștenire culturală, nu materială."
+            text: "Cartea mea-i, fiule, o treaptă.",
+            analiza: "Concluzie categorică. 'o treaptă' - Metafora centrală; cartea este instrumentul de ascensiune socială și spirituală, simbolizând emanciparea prin cultură."
           }
         ]
       },
       analizaStrofaII: {
-        titlu: "Estetica urâtului și transfigurarea materiei",
+        titlu: "Strofa a II-a: Hrisovul Robilor",
         versuri: [
           {
-            text: "Din bube, mucegaiuri și noroi / Iscat-am frumuseți și prețuri noi.",
-            analiza: "Program estetic: materia joasă devine sursă de frumusețe. Poetul valorifică marginalul și sordidul."
+            text: "Aşeaz-o cu credinţă căpătâi. / Ea e hrisovul vostru cel dintâi.",
+            analiza: "'Așeaz-o... căpătâi' - Imperativ: gest ritualic, sacralizarea cărții. 'hrisovul vostru cel dintâi' - Metaforă: cartea devine act de proprietate spirituală, certificatul de libertate și de identitate al noii generații ('vostru')."
           },
           {
-            text: "Am luat ocara, și torcând ușure, / Am făcut din ea funie",
-            analiza: "Poetul prelucrează suferința și rușinea în instrument de salvare. Creativitatea devine act redemptiv."
+            text: "Al robilor cu saricile, pline / De osemintele vărsate-n mine.",
+            analiza: "'Al robilor' - Cartea aparține celor asupriți. 'saricile' (săculețe) sunt pline de 'osemintele' (rămășițele) strămoșilor, vărsate în sufletul poetului ('în mine'). Poetul este vasul care adună memoria suferinței ancestrale."
+          }
+        ]
+      },
+      analizaStrofaIII: {
+        titlu: "Strofa a III-a: Alchimia Cuvântului și Geneza Operei",
+        versuri: [
+          {
+            text: "Ca să schimbăm, acum, întâia oară / Sapa-n condei şi brazda-n calimară",
+            analiza: "Antiteza socială și instrumentală: 'Sapa' (munca fizică, țărănească) este transformată în 'condei' (munca intelectuală, scrisul); 'brazda' (rezultat agricol) în 'calimară' (sursa scrisului). Acțiunea are loc 'acum, întâia oară' (moment istoric, revoluționar)."
           },
           {
-            text: "Sunt stihuri de-o vitregie parca însângerată",
-            analiza: "Sublinează sacrificiul și durerea din spatele creației. Poezia poartă amprenta suferinței."
+            text: "Bătrânii au adunat, printre plăvani, / Sudoarea muncii sutelor de ani.",
+            analiza: "Străbunii au acumulat capitalul energetic al operei: 'Sudoarea muncii' (transpirația) timp de 'sute de ani' în condiții ostile ('printre plăvani' - buruieni). Efortul secular devine materie primă."
           },
           {
-            text: "În cartea mea vei găsi / o viață de rob și de slugi",
-            analiza: "Memoria suferinței colective este integrată în opera poetică; destinul social devine material artistic."
+            text: "Din graiul lor cu-ndemnuri pentru vite / Eu am ivit cuvinte potrivite",
+            analiza: "Transformarea limbajului: Poetul ('Eu') extrage ('am ivit') 'cuvinte potrivite' (titlul volumului, limbaj artistic) din 'graiul... pentru vite' (limbajul minimal, brutal, al asupririi). Alchimia limbii."
+          },
+          {
+            text: "Făcui din zdrenţe muguri şi coroane.",
+            analiza: "Transformare alchimică supremă: 'zdrențe' (sărăcie, degradare) sunt metamorfozate în 'muguri' (viață, speranță) și 'coroane' (glorie, regalitate). Estetica urâtului: urâtul e sursa frumosului."
+          },
+          {
+            text: "Veninul strâns l-am preschimbat în miere, / Lăsând întreagă dulcea lui putere.",
+            analiza: "Alchimie morală: ura, suferința ('Veninul') este transformată în artă ('miere'). 'dulcea lui putere' - Oximoron care indică faptul că esența violentă și forța veninului sunt păstrate, dar canalizate constructiv."
+          }
+        ]
+      },
+      analizaStrofaIV: {
+        titlu: "Strofa a IV-a: Veninul Transsubstanțiat și Hotarul Sacru",
+        versuri: [
+          {
+            text: "Am luat cenuşa morţilor din vatră / Şi am făcut-o Dumnezeu de piatră,",
+            analiza: "Sacralizarea profanului: 'cenușa' (simbolul morții strămoșilor) din 'vatră' (simbolul căminului) este divinizată, devenind 'Dumnezeu de piatră' (idol, monument etern al suferinței)."
+          },
+          {
+            text: "Hotar înalt, cu două lumi pe poale, / Păzind în piscul datoriei tale.",
+            analiza: "Dumnezeul-piatră este un 'Hotar' (graniță) ce separă robia de libertate. El supraveghează 'datoria' fiului, care trebuie să ducă la capăt lupta pentru emancipare."
+          }
+        ]
+      },
+      analizaStrofaV: {
+        titlu: "Strofa a V-a: Răzbunarea Prin Artă și Rodul Durerii",
+        versuri: [
+          {
+            text: "Durerea noastră surdă şi amară / O grămădii pe-o singură vioară, / Pe care ascultând-o a jucat / Stăpânul, ca un ţap înjunghiat.",
+            analiza: "Ironie amară: Suferința colectivă ('Durerea noastră') este concentrată într-un instrument ('vioară', poezia). Stăpânul, care credea că se distrează ('a jucat'), suferă la rândul lui, fiind comparat cu 'un țap înjunghiat' (imaginea victimei). Inversarea rolurilor."
+          },
+          {
+            text: "Din bube, mucegaiuri şi noroi / Iscat-am frumuseţi şi preţuri noi.",
+            analiza: "Explicarea Esteticii Uratului: Materialul cel mai abject ('bube, mucegaiuri şi noroi') devine sursa 'frumuseți și prețuri noi'. Din degradare se naște valoarea artistică și socială. "
+          },
+          {
+            text: "Biciul răbdat se-ntoarce în cuvinte / Si izbăveşte-ncet pedesitor / Odrasla vie-a crimei tuturor.",
+            analiza: "Răzbunare spirituală: Instrumentul torturii ('Biciul') se transformă în cuvinte care 'izbăvește' (mântuiesc) și 'pedesitor' (pedepsesc). Poezia este eliberatoare pentru noua generație ('Odrasla vie'), chiar dacă aceasta este rodul unui trecut violent ('a crimei tuturor')."
+          }
+        ]
+      },
+      analizaStrofaVI: {
+        titlu: "Strofa a VI-a: Revelația Secretă a Cărții",
+        versuri: [
+          {
+            text: "Întinsă leneşă pe canapea, / Domniţa suferă în cartea mea.",
+            analiza: "Antiteza socială finală: Imagine burgheză, elegantă. 'Domnița' (reprezentanta clasei dominante) suferă acum o suferință livrescă, estetică, citind cartea scrisă de rob. Rolurile s-au inversat complet."
+          },
+          {
+            text: "Slova de foc şi slova faurită / Împărechiate-n carte se mărită, / Ca fierul cald îmbrăţişat în cleşte.",
+            analiza: "Definirea procesului artistic: Poezia îmbină 'slova de foc' (inspirația, patima) cu 'slova faurită' (măiestria, meșteșugul). Comparația cu 'fierul cald îmbrățișat în clește' descrie procesul de forjare (metalurgie) a cuvântului."
+          },
+          {
+            text: "Robul a scris-o, Domnul o citeşte, / Făr-a cunoaşte ca-n adâncul ei / Zace mania bunilor mei.",
+            analiza: "Finalul amenințător. 'Robul a scris-o, Domnul o citește': ultimul act al inversării puterii. Stăpânul citește în ignoranță, neștiind că în profunzimea cărții ('adâncul ei') zace 'mania bunilor mei' (furia acumulată, răzbunarea). Cartea este o bombă cu efect întârziat."
           }
         ]
       },
       elementeSpecifice: {
-        subtitlu: "Teme, Simboluri și Stil",
+        subtitlu: "Elemente de Artă Poetică și Stil",
         sectiuni: [
           {
-            nume: "Particularități stilistice",
+            nume: "Instrumente Alchimice",
             lista: [
-              "Estetica urâtului – transformarea materiei impure (bube, noroi) în artă.",
-              "Metafora 'cartea-trepte' – cartea ca mijloc de ascensiune și moștenire spirituală.",
-              "Adresarea directă către 'fiule' – ton testamentar și dialogic.",
-              "Lexic mixt (sacru/profan) – îmbină registrul biblic cu vocabularul concret, domestic."
+              "Transformarea: sapă→condei; brazdă→calimară; zdrenţe→coroane; venin→miere; bube→frumuseți.",
+              "Antiteza centrală: Sapa (munca fizică) vs. Condeiul (munca spirituală).",
+              "Cuvântul: Este atât 'slova de foc' (inspirație), cât și 'slova faurită' (măiestrie)."
+            ]
+          },
+          {
+            nume: "Limbaj și Tonalitate",
+            lista: [
+              "Polivalența Lexicală: Amestec de termeni populari-arhaici ('brânci', 'sarici', 'făcui') cu termeni culti ('hrisov', 'pedesitor', 'izbăvește').",
+              "Tonalitate: Solemn-testamentară, mesianic-profetică, cu accente de ironie socială ('ţap înjunghiat') și amenințare voalată."
+            ]
+          },
+          {
+            nume: "Structură și Ritm",
+            lista: [
+              "Structură circulară: Încheierea cu tematica răzbunării și moștenirii ('mania bunilor mei') reia tensiunea începutului.",
+              "Vers alb/Liber: Lipsa de rime și metrică fixă contribuie la tonul grav, de discurs filosofic și etic.",
+              "Structură binară a procesului: Acumulare (Străbunii) → Transfigurare (Poetul) → Moștenire (Fiul)."
             ]
           }
         ]
       },
       concluzie: {
-        text: "Testament fixează crezul arghezian: poezia transformă suferința și materia degradată în valori durabile, oferind urmașilor singura avere esențială – cultura."
+        text: "Poemul 'Testament' este o declarație monumentală despre puterea artei de a transforma suferința seculară în frumusețe și umilința în instrument de emancipare. Arghezi creează un manifest social în formă de testament, care legitimează generațiile oprimate, făcând din poezie nu doar un act estetic, ci o armă spirituală de răzbunare și un document al îndreptățirii istorice."
       }
     }
   },
@@ -2351,76 +2429,142 @@ export const OPERA_DETAILS = {
       ]
     },
     rezumat: {
-      contextGeneral: {
-        sectiuni: [
+      "contextGeneral": {
+        "sectiuni": [
           {
-            subtitlu: "Tradiționalism și memorie",
-            text: "Poem din volumul 'Pe Argeș în sus' (1923), construit ca meditație asupra trecutului familial. Reîntoarcerea la conac devine prilej de reactivare a memoriei."
+            subtitlu: "Viziunea asupra Timpului și Estetica Neoclasică",
+            text: "Poemul face parte din volumul 'Pe Argeș în sus' (1923) și este o meditație rafinată asupra timpului. Ion Pillat construiește o structură oglindă perfectă (mise en abyme) în care trecutul și prezentul se suprapun, demonstrând caracterul ciclic, ritualic al existenței. Poezia îmbină nostalgia trecutului boieresc cu ironia conștientizării moderne."
           },
           {
-            subtitlu: "Timp circular",
-            text: "Prezentul eului liric se suprapune peste trecutul bunicilor; spațiul rural devine punte între generații."
+            subtitlu: "Tema Centrală: Iubirea ca Ritual al Continuității",
+            text: "Tema principală este suprapunerea generațiilor și modul în care gestul de curtare, al iubirii, devine un ritual care se repetă identic, indiferent de epocă. Casa boierească, cu 'obloane și pridvor', devine spațiul sacru al memoriei, iar elemente precum 'clopotul' și 'berzele' subliniază ciclicitatea destinului individual și colectiv."
           }
         ]
       },
-      analizaStrofaI: {
-        titlu: "Evocarea bunicii și a conacului",
-        versuri: [
+      analizaStrofaI:{
+          titlu: "Cadrul Spațial al Amintirii",
+          versuri: [
+            {
+              text: "La casa amintirii cu-obloane si pridvor, / Paienjeni zabrelira si poarta, si zavor.",
+              analiza: "'casa amintirii' - Metaforă a spațiului care devine templu al memoriei. 'obloane și pridvor' - Detalii ale casei boierești. 'Păienjeni zăbreliră' - Metaforă: pânzele de păianjen devin gratii care sugerează abandonul și închiderea trecutului."
+            },
+            {
+              text: "Iar hornul nu mai trage alene din ciubuc / De când luptara-n codru si poteri, si haiduc.",
+              analiza: "Hornul ('ciubuc') - Simbol al tihnei domestice dispărute. Referirea la 'poteri și haiduc' fixează temporal sfârșitul unei lumi (secolul al XIX-lea) și marchează o ruptură istorică."
+            },
+            {
+              text: "În drumul lor spre zare îmbatrânira plopii. / Aci sosi pe vremuri bunica-mi Calyopi.",
+              analiza: "'îmbătrâniră plopii' - Personificare: copacii sunt martori cronometri. 'Aci sosi pe vremuri' - Expresie-cheie care definește timpul inaugural. 'Calyopi' - Nume aristocratic, sugerând rafinament și aluzie la muza poeziei epice."
+            },
+            {
+              text: "Nerabdator bunicul pândise de la scara / Berlina leganata prin lanuri de secara.",
+              analiza: "'Nerăbdător bunicul' - Stare emoțională de anticipare. 'pândise' - Mai-mult-ca-perfectul arhaic al acțiunii. 'Berlina legănată' - Trăsura elegantă, cu mișcare ritmică, străbătând 'lanuri de secară' (peisaj idilic românesc)."
+            },
+            {
+              text: "Pie-atunci nu erau trenuri ca azi, si din berlina / Sari, subtire, -o fata în larga crinolina.",
+              analiza: "'nu erau trenuri ca azi' - Comparație ironică ce conștientizează modernitatea. 'Sări, subțire' - Gest viu, tineresc, contrastând 'subțire' (corp) cu 'larga crinolină' (îmbrăcăminte - modă sec. XIX). 'O fată' - Universalizarea personajului."
+            },
+            {
+              text: "Privind cu ea sub luna câmpia ca un lac, / Bunicul meu desigur i-a recitat Le lac.",
+              analiza: "'câmpia ca un lac' - Comparație romantică, peisajul transfigurat de lună. 'i-a recitat Le lac' - Gest cultural (poezia lui Lamartine, 1820), ritual al curtării aristocratice în limba franceză."
+            },
+            {
+              text: "Iar când deasupra casei ca umbre berze cad, / Îi spuse Sburatorul de-un tânar Eliad.",
+              analiza: "'ca umbre berze cad' - Berzele sunt simboluri ale norocului și ale ciclicității. Trecerea la un element de cultură națională: 'Sburătorul' de Eminescu, arătând specificul cultural al elitei românești."
+            },
+            {
+              text: "Ea-l asculta tacuta, cu ochi de peruzea… / Si totul ce romantic, ca-n basme, se urzea.",
+              analiza: "'ochi de peruzea' - Comparație prețioasă, estompată, specifică timpului. 'se urzea' - Metaforă textilă: povestea de iubire se țese. 'ca-n basme' - Realitatea este transfigurată de romantism."
+            },
+            {
+              text: "Si cum sedeau… departe, un clopot a sunat, / De nunta sau de moarte, în turnul vechi din sat.",
+              analiza: "'un clopot a sunat' - Sunetul rupe tăcerea, introducând timpul social. Ambiguitatea 'De nuntă sau de moarte' sugerează că destinul, fie el început (nuntă) sau sfârșit (moarte), este unic și inevitabil. Turnul este martorul tuturor generațiilor."
+            },
+            {
+              text: "Dar ei, în clipa asta simteau ca-o sa ramâna… / De mult e mort bunicul, bunica e batrâna…",
+              analiza: "Contrast (Adversativă 'Dar'): certitudinea interioară a 'rămânerii' lor eterne se lovește de prezentul dur. Schimbare brutală de timp: 'e mort bunicul' și 'bunica e bătrână' - constatarea liniară, ireversibilă, a trecerii timpului biologic."
+            },
+            {
+              text: "Ce straniu lucru: vremea! Deodata pe perete / Te vezi aievea numai în stersele portrete.",
+              analiza: "'Ce straniu lucru: vremea!' - Exclamație filosofică, care deschide meditația. 'portrete șterse' - Locul unde se păstrează identitatea trecută; singura modalitate de a te vedea 'aievea' (clar), în contrast cu prezentul."
+            },
+            {
+              text: "Te recunosti în ele, dar nu si-n fata ta, / Caci trupul tau te uita, dar tu nu-l poti uita….",
+              analiza: "Paradoxul identitar: recunoașterea în trecut (portret), dar alienarea de sine în prezent. Personificarea 'trupul tău te uită' explică transformarea fizică, în timp ce 'tu nu-l poți uita' menține permanența conștiinței/memoriei."
+            },
+            {
+              text: "Ca ieri sosi bunica… si vii acuma tu:",
+              analiza: "'Ca ieri' - Comparație care anulează distanța temporală. 'sosi bunica' (trecut) - 'vii acuma tu' (prezent). Strofa funcționează ca pivot, introducând al doilea plan, cel al poetului și al iubitei sale, pentru a demonstra ciclicitatea."
+            },
+            {
+              text: "Pe urmele berlinei trasura ta statu.",
+              analiza: "'Pe urmele berlinei' - Suprapunere spațială. 'trăsura ta stătù' - Vehiculul prezentului se oprește exact în același loc cu cel al trecutului. Ritualul se repetă."
+            },
+            {
+              text: "Acelasi drum te-aduse prin lanul de secara. / Ca dânsa tragi, în dreptul pridvorului, la scara.",
+              analiza: "Repetarea exactă a cadrului ('același drum', 'lanul de secară'). 'Ca dânsa tragi' - Comparația perfectă: gestul de oprire la 'scară' (pridvor) este identic, fixând geometria iubirii în același loc."
+            },
+            {
+              text: "Subtire, calci nisipul pe care ea sari. / Cu berzele într-ânsul amurgul se opri….",
+              analiza: "'Subțire' - Epitet reluat (Strofa IV), arătând grația. 'calci nisipul pe care ea sări' - Suprapunere fizică, generațiile calcă pe aceleași urme. 'amurgul se opri' - Personificarea timpului cosmic care se suspendă în momentul reîntoarcerii."
+            },
+            {
+              text: "Si m-ai gasit, zâmbindu-mi, ca prea naiv eram / Când ti-am soptit poeme de bunul Francis Jammes.",
+              analiza: "Autoirone: poetul se consideră 'prea naiv' în comparație cu gestul bunicului. Recitarea lui Francis Jammes (poet francez al simplității rustice) este paralelismul gestului cultural al bunicului (Lamartine)."
+            },
+            {
+              text: "Iar când în noapte câmpul fu lac întins sub luna / Si-am spus Balada lunei de Horia Furtuna,.",
+              analiza: "'câmpul fu lac întins sub lună' - Imagine repetată (Strofa V), care arată permanența naturii. Recitarea lui Horia Furtună (poet simbolist român) finalizează paralelismul cultural național (Eminescu)."
+            },
+            {
+              text: "M-ai ascultat pe gânduri, cu ochi de ametist, / Si ti-am parut romantic si poate simbolist.",
+              analiza: "'ochi de ametist' - Comparație care reflectă frumusețea, fiind un paralelism cu 'ochi de peruzea' ai bunicii. 'romantic și poate simbolist' - Poetul își recunoaște cu ironie apartenența la un curent modern, în timp ce repetă ritualul romantic."
+            },
+            {
+              text: "Si cum sedeau… departe, un clopot a sunat, / Acelasi clopot poate, în turnul vechi din sat….",
+              analiza: "Repetarea exactă a formulei din strofa a VIII-a. 'Același clopot poate' - Ambiguitate voită: incertitudinea faptului (e fizic același?) accentuează certitudinea semnificației (gestul e identic). Patru puncte prelungesc reveria."
+            },
+            {
+              text: "De nunta sau de moarte, în turnul vechi din sat.",
+              analiza: "Repetarea finală, identică. Alternativa 'nuntă sau moarte' sugerează că, în ciclul etern, începutul și sfârșitul vieții se contopesc. Clopotul devine simbolul destinului care sună la fel pentru ambele generații, într-o simetrie perfectă care închide compoziția."
+            }
+          ]
+        },
+      "elementeSpecifice": {
+        subtitlu: "Analiza Stilistică Detaliată (Neoclasicism, Simbolism)",
+        "sectiuni": [
           {
-            text: "Aci sosi pe vremuri bunica-mi Calyopi",
-            analiza: "Vers inaugural care fixează locul ('Aci') și introduce figura bunicii; tonul este narativ și afectiv."
+            "nume": "Structură și Compoziție (Structura Oglindă)",
+            "lista": [
+              "Structură ternară: Cadrul spațial (I-II), Scena trecutului (III-IX), Meditația asupra timpului (X-XI), Scena prezentului (XII-XIX).",
+              "Structură în oglindă (simetrie perfectă) între secțiunea trecutului (III-VIII) și secțiunea prezentului (XIII-XIX).",
+              "Versuri reluate integral: Ex. Strofa VIII = Strofa XIX (ultimele două versuri), sugerând eternul reîntors.",
+              "Paralelisme culturale: Bunicul recită Lamartine/Eminescu, poetul recită Jammes/Furtună – evidențiază continuitatea culturală."
+            ]
           },
           {
-            text: "Privind cu ea sub luna câmpia ca un lac",
-            analiza: "Imagine idilică: câmpia devine oglindă sub clar de lună; atmosfera romantică."
+            "nume": "Figuri de Stil și Teme",
+            "lista": [
+              "Paradox identitar: 'trupul tău te uită, dar tu nu-l poți uita' (alienarea conștiinței față de corpul care îmbătrânește).",
+              "Comparații prețioase: 'ochi de peruzea' (bunica), 'ochi de ametist' (iubita).",
+              "Metafore temporale: 'casa amintirii', 'zăbreliră' (pânzele de păianjen devin gratii).",
+              "Personificări: 'plopii îmbătrâniră', 'amurgul se opri', 'trupul tău te uită'.",
+              "Antiteze: trecut-prezent, viu-mort, nuntă-moarte.",
+              "Intertextualitate culturală: Lamartine, Eminescu, Jammes, Furtună, ilustrând ritualul curteniei."
+            ]
           },
           {
-            text: "Și totul, ce romantic, ca-n basme, se urzea",
-            analiza: "Percepția copilului filtrează realul prin basm; nostalgia colorează amintirea."
-          },
-          {
-            text: "În tindă, umbra mamei, în șoapte, mă chema",
-            analiza: "Evocare domestică, tandră; legătura maternă consolidează memoria locului."
-          }
-        ]
-      },
-      analizaStrofaII: {
-        titlu: "Regăsirea și suprapunerea temporală",
-        versuri: [
-          {
-            text: "Azi vin să mă reculeg sub bolta vechilor tei",
-            analiza: "Prezentul liric revizitează locul; teii funcționează ca martori ai timpului."
-          },
-          {
-            text: "Și parcă văd prin frunze siluetele lor, doi",
-            analiza: "Viziune fantasmatică a bunicilor; memoria se proiectează în peisaj."
-          },
-          {
-            text: "Între trecut și astăzi nu-i decât o clipă",
-            analiza: "Senzația de timp anulat; trecutul devine prezent interior."
-          },
-          {
-            text: "Conacul e același, dar pașii mei sunt alții",
-            analiza: "Spațiul rămâne, oamenii se schimbă; tensiune între permanență și efemer."
-          }
-        ]
-      },
-      elementeSpecifice: {
-        subtitlu: "Teme, Simboluri și Stil",
-        sectiuni: [
-          {
-            nume: "Particularități stilistice",
-            lista: [
-              "Simetrie temporală – alternanță între trecutul bunicilor și prezentul eului liric.",
-              "Peisaj idilic – câmpia ca lac sub lună, teii vechi, conacul.",
-              "Ton elegiac și nostalgic – recuperarea afectivă a rădăcinilor.",
-              "Vers clasic, imagini limpezi – claritate și echilibru specifice tradiționalismului."
+            "nume": "Vocabular și Sonorități",
+            "lista": [
+              "Lexic sincretic: Îmbinare de arhaisme ('aci', 'aievea', 'berlină', 'ciubuc', 'zăvor') cu termeni moderni ('simbolist', 'trenuri ca azi').",
+              "Sonorități (Aliterații/Asonanțe): Aliterații în 's' ('sosi', 'sub', 'spuse') și în 'r' ('romantic', 'rămâna') care accentuează ritmul melancolic.",
+              "Versificație: Alexandrin românesc (13 silabe) și catrene (4 versuri) cu rimă împerecheată (AABB), conferind solemnitate și ritm tradițional."
             ]
           }
         ]
       },
-      concluzie: {
-        text: "Aci sosi pe vremuri devine o meditație asupra memoriei și a continuității, transformând locul natal în punte între generații și în spațiu al regăsirii identității."
+      "concluzie": {
+        text: "Poemul 'Aci sosi pe vremuri' este capodopera lui Ion Pillat, sintetizând viziunea acestuia asupra timpului ca o forță ciclică, care anulează distanțele dintre generații. Gesturile de iubire se repetă ca un ceremonial sacru în același cadru spațial. Prin structura oglindă, paradoxul identitar și ironia blândă, Pillat oferă o meditație profundă asupra permanenței esenței umane și a ciclicității destinului, simbolizată perfect de clopotul final, care sună deopotrivă 'de nuntă sau de moarte', sugerând că începutul și sfârșitul sunt indistincte în marea repetiție a vieții."
       }
     }
   },
@@ -2473,73 +2617,98 @@ export const OPERA_DETAILS = {
       contextGeneral: {
         sectiuni: [
           {
-            subtitlu: "Poem religios modernist",
-            text: "Publicat în 1921, poemul reinterpretează episodul biblic din Ghetsimani. Voiculescu accentuează dimensiunea umană și dramatică a lui Hristos."
+            subtitlu: "Reinterpretare Modernă a Sacrului și Expresionism Religios",
+            text: "Poemul face parte din volumul 'Poems with Angels' și reprezintă o reinterpretare modernă, expresionistă, a episodului biblic (Matei 26:36-46) al rugăciunii lui Iisus în Grădina Ghetsimani. Voiculescu nu descrie acceptarea pasivă, ci transformă scena într-o luptă viscerală, cosmică, între voința divină (soarta) și revolta umană (carnea) în fața sacrificiului."
           },
           {
-            subtitlu: "Tema sacrificiului",
-            text: "Lupta interioară a lui Iisus înainte de patimă devine meditație asupra libertății și alegerii morale."
+            subtitlu: "Tema și Ipostaza lui Hristos",
+            text: "Tema centrală este agonia și rezistența lui Iisus în fața destinului prestabilit. Hristos este prezentat în ipostază profund umană și vulnerabilă – nu ca Fiu al lui Dumnezeu, ci ca un erou tragic care luptă fizic și spiritual ('căzut pe brânci') împotriva propriei sale misiuni."
           }
         ]
       },
       analizaStrofaI: {
-        titlu: "Momentul luptei cu destinul",
+        titlu: "Strofa I: Lupta și Groaza Corporală",
         versuri: [
           {
-            text: "Iisus lupta cu soarta și nu primea paharul",
-            analiza: "Conflict între voința divină și cea umană. 'Paharul' reprezintă suferința asumată, dar încă refuzată."
+            text: "Iisus lupta cu soarta și nu primea paharul... / Căzut pe brânci în iarbă, se-mpotrivea îtruna.",
+            analiza: "'lupta cu soarta' - Exprimă rezistența activă, refuzul categoric al sacrificiului ('nu primea paharul', metaforă biblică). 'Căzut pe brânci' - Ipostază de umilință și degradare extremă (imagine animalică). 'se-mpotrivea îtruna' - Arhaism popular; tensiune continuă, neîntreruptă."
           },
           {
-            text: "În lături, Tată! - Îl rugă cu amar",
-            analiza: "Rugăciunea exprimă ezitarea și durerea. Tonul e umanizat, lipsit de solemnitate rigidă."
-          },
-          {
-            text: "Și sângele-i curgea din tâmple ca sudori",
-            analiza: "Imagine hiperbolică a suferinței; sudoarea de sânge din episodul biblic devine semn al tensiunii maxime."
-          },
-          {
-            text: "Bătându-se cu moartea, uitase de viață!",
-            analiza: "Paradox: în lupta cu moartea, viața devine absentă. Intensitatea încercării îl consumă complet."
+            text: "Curgeau sudori de sânge pe chipu-i alb ca varul / Și-amarnica-i strigare stârnea în slăvi furtuna.",
+            analiza: "'sudori de sânge' - Realismul crud al suferinței fizice. 'alb ca varul' - Comparație a palorii mortale (contrast puternic cu roșul sângelui). 'stârnea în slăvi furtuna' - Hiperbolă; suferința terestră a lui Iisus provoacă tulburare cosmică, o reacție violentă a dimensiunii divine."
           }
         ]
       },
       analizaStrofaII: {
-        titlu: "Acceptarea paharului",
+        titlu: "Strofa a II-a: Presiunea Inexorabilă și Refuzul",
         versuri: [
           {
-            text: "Dar nu voia s-atingă infama băutură",
-            analiza: "Refuzul inițial persistă; paharul este numit 'infam', accentuând repulsia față de suferință."
+            text: "O mâna nendurată, ținând grozava cupă, / Se coboară-miindu-l și i-o ducea la gură...",
+            analiza: "'O mâna nendurată' - Mâna destinului, forța inexorabilă, fără milă. 'grozava cupă' - Intensificarea metaforei paharului. 'Se coboară-miindu-l' - Verb complex (neologism voiculescian: a ademeni, a îndemna) care sugerează presiune persuasivă, nu forță brută. Iminența acceptării ('i-o ducea la gură')."
           },
           {
-            text: "Și totuși, din iubire, îl duse către buze",
-            analiza: "Momentul hotărâtor: iubirea pentru oameni transformă refuzul în acceptare."
+            text: "Și-o sete uriașă stă sufletul să-i rupă... / Dar nu voia s-atingă infama băutură.",
+            analiza: "'sete uriașă' - Hiperbolă; o dorință de neant sau de eliberare care amenință însăși existența. 'Dar nu voia' - Refuz categoric, de voință. 'infama băutură' - Epitet violent: paharul este descris ca aducător de dezonoare, de rușine."
+          }
+        ]
+      },
+      analizaStrofaIII: {
+        titlu: "Strofa a III-a: Paradoxul Tentației și Agonia Totală",
+        versuri: [
+          {
+            text: "În apa ei verzuie jucau sterlici de miere / Și sub veninul groaznic simțea că e dulceață...",
+            analiza: "Descrierea paharului: 'apa verzuie' (ambiguitate: venin sau putrefacție) conține 'sterlici de miere' (tentația vizuală și gustativă). Paradoxul suprem: otrăvirea este dulce; acceptarea destinului, deși dureroasă, este în esență o chemare dulce (mântuirea). Tentația este dublă, vizuală și interioară."
           },
           {
-            text: "Și bău, până la fund, din amarul destin",
-            analiza: "Asumare totală a sacrificiului; înghițirea amarului destin marchează biruința morală."
+            text: "Dar fălcile-nclestându-și, cu ultima putere / Bătându-se cu moartea, uitase de viață!",
+            analiza: "'fălcile-nclestându-și' - Gest fizic de rezistență animalică, disperată. 'cu ultima putere' - Epuizarea resurselor. Paradoxul tragic: luptând atât de violent cu moartea (sacrificiul), a pierdut esența pentru care lupta – viața însăși. Exclamația finală accentuează agonia."
+          }
+        ]
+      },
+      analizaStrofaIV: {
+        titlu: "Strofa a IV-a: Cosmizarea Dramei și Amenințarea Finală",
+        versuri: [
+          {
+            text: "Deasupra fără tihnă, se frământau măslinii, / Păreau că vor să fugă din loc, să nu-l mai vadă...",
+            analiza: "Personificarea naturii: 'măslinii' (arborii grădinii) participă la dramă, fiind agitați ('fără tihnă', 'se frământau'). Ei vor să fugă, refuzând să fie martori la suferința divină. Natura devine sensibilă la suferința lui Hristos."
           },
           {
-            text: "În urmă, liniștit, s-a ridicat și s-a predat",
-            analiza: "Liniștea finală arată împăcarea cu misiunea. Acceptarea aduce pacea interioară."
+            text: "Treceau bătăi de aripi prin vraiștea grădinii / Și uliii de seară dau roate dupa pradă.",
+            analiza: "Ambiguitate ('bătăi de aripi'): îngerii sau păsările. 'vraiștea grădinii' - Locul e încurcat, întunecat. Finalul este sumbru: 'uliii de seară dau roate dupa pradă' - Metafora sinistră a morții și a sacrificiului inevitabil. Iisus este Pradă, iar forțele răpitoare (moartea) sunt iminente."
           }
         ]
       },
       elementeSpecifice: {
-        subtitlu: "Teme, Simboluri și Stil",
+        subtitlu: "Elemente de Expresionism și Stil Voiculescian",
         sectiuni: [
           {
-            nume: "Particularități stilistice",
+            nume: "Violență Corporală și Viziune",
             lista: [
-              "Simbolul paharului – semn al suferinței acceptate.",
-              "Alternanță între revoltă și supunere – tensiunea voințelor uman/divin.",
-              "Imagini expresioniste (sudoare de sânge) – amplifică dramatismul.",
-              "Vers liber cu inflexiuni orale – ton confesiv, apropiat de cititor."
+              "Realism crud: Sudoare de sânge, căzut 'pe brânci', fălci 'încleștându-și'.",
+              "Cosmizarea experienței: Strigătul stârnește 'furtuna în slăvi'.",
+              "Ambiguitate simbolică: Paharul este 'venin' și 'dulceață', 'infam' și tentant."
+            ]
+          },
+          {
+            nume: "Limbaj și Tonalitate",
+            lista: [
+              "Lexic sincretic: Îmbinare de termeni biblici ('paharul', 'slăvi') cu termeni populari ('pe brânci', 'îtruna', 'vraiște').",
+              "Neologism voiculescian: 'miîndu-l' (a ademeni, a îndemna), care adaugă nuanță psihologică presiunii.",
+              "Tonalitate: Tragic-epic, cu o tensiune dramatică susținută de-a lungul celor patru catrene."
+            ]
+          },
+          {
+            nume: "Versificație",
+            lista: [
+              "Vers clasic: Alexandrin (13 silabe) și strofe catren (4 versuri) cu rimă încrucișată (ABAB).",
+              "Contrast între forma clasică și conținutul violent, expresionist.",
+              "Repetiții: Consonantice dure ('r', 's', 't') care accentuează dificultatea și asprimea luptei."
             ]
           }
         ]
       },
       concluzie: {
-        text: "Poemul surprinde lupta interioară a lui Hristos și transformarea refuzului în acceptare, punând accent pe libertatea alegerii și pe iubirea care face posibil sacrificiul."
+        text: "Poemul 'În grădina Ghetsimani' este o capodoperă a lirismului religios, care tratează un subiect sacru cu o intensitate și un realism expresionist. Voiculescu îl transformă pe Iisus într-un erou tragic care luptă cu destinul, amplificând la nivel cosmic agonia sa umană. Acesta devine simbolul luptei eterne a spiritului împotriva materiei și a acceptării (neacceptării) sacrificiului suprem."
       }
     }
   },

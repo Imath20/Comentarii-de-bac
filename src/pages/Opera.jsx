@@ -685,7 +685,7 @@ export default function Opera() {
 
   const isPoemRezumatStructure = (rezumatData) => {
     if (!rezumatData || typeof rezumatData !== 'object') return false;
-    return ['contextGeneral', 'analizaStrofaI', 'analizaStrofaII', 'analizaStrofaIII', 'analizaStrofaIV','analizaStrofaV','elementeSpecifice', 'concluzie'].some(
+    return ['contextGeneral', 'analizaStrofaI', 'analizaStrofaII', 'analizaStrofaIII', 'analizaStrofaIV','analizaStrofaV', 'analizaStrofaVI', 'elementeSpecifice', 'concluzie'].some(
       (key) => rezumatData[key]
     );
   };
@@ -750,6 +750,12 @@ export default function Opera() {
         <div className="rezumat-section">
           <h3 className="rezumat-section-title">{rezumatData.analizaStrofaV.titlu || 'Analiza strofa V'}</h3>
           {renderPoemVersuri(rezumatData.analizaStrofaV.versuri)}
+        </div>
+      )}
+      {rezumatData.analizaStrofaVI && (
+        <div className="rezumat-section">
+          <h3 className="rezumat-section-title">{rezumatData.analizaStrofaVI.titlu || 'Analiza strofa VI'}</h3>
+          {renderPoemVersuri(rezumatData.analizaStrofaVI.versuri)}
         </div>
       )}
       {rezumatData.elementeSpecifice && (

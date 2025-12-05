@@ -968,7 +968,112 @@ export const OPERA_QUESTIONS = {
     "correct": 0,
     "explanation": "Voiculescu se încadrează în modernism, cu accente simboliste și spiritual-religioase."
   }
+],
+"amintiri-din-copilarie": [
+  {
+    "q": "Tema centrală a operei „Amintiri din copilărie” este:",
+    "options": [
+      "Evocarea copilăriei și a lumii satului tradițional",
+      "Conflictele politice ale epocii",
+      "Viața la oraș și modernizarea"
+    ],
+    "correct": 0,
+    "explanation": "Opera evocă universul copilăriei lui Nică și atmosfera satului moldovenesc tradițional."
+  },
+  {
+    "q": "Narațiunea din „Amintiri din copilărie” este:",
+    "options": [
+      "La persoana a treia, obiectivă",
+      "La persoana întâi, subiectivă",
+      "O narațiune dialogată fără narator"
+    ],
+    "correct": 1,
+    "explanation": "Nică povestește la persoana I, oferind o perspectivă subiectivă, afectivă și plină de umor."
+  },
+  {
+    "q": "Un episod celebru din „Amintiri din copilărie” este:",
+    "options": [
+      "Furtul cireșelor din ograda mătușii Mărioara",
+      "Întâlnirea cu Miorița",
+      "Vizita la orașul București"
+    ],
+    "correct": 0,
+    "explanation": "Furtul cireșelor este unul dintre episoadele cele mai cunoscute și comice."
+  },
+  {
+    "q": "Stilul lui Creangă se remarcă prin:",
+    "options": [
+      "Limbaj arhaic, umor popular și expresivitate orală",
+      "Lirism modernist abstract",
+      "Discurs filozofic și ermetic"
+    ],
+    "correct": 0,
+    "explanation": "Creangă folosește un limbaj plin de culoare, cu regionalisme și umor autentic."
+  },
+  {
+    "q": "Opera „Amintiri din copilărie” aparține genului:",
+    "options": [
+      "Dramatic",
+      "Epic, cu caracter autobiografic",
+      "Liric, cu accente elegiace"
+    ],
+    "correct": 1,
+    "explanation": "Este o operă epică autobiografică, evocând întâmplări reale din copilăria autorului."
+  }
+],
+"maitreyi": [
+  {
+    "q": "Tema principală a romanului „Maitreyi” este:",
+    "options": [
+      "Conflictul între generații",
+      "Dragostea imposibilă dintre două culturi diferite",
+      "Satira societății interbelice"
+    ],
+    "correct": 1,
+    "explanation": "Romanul explorează povestea de dragoste dintre Allan și Maitreyi, marcată de diferențele culturale dintre Occident și Orient."
+  },
+  {
+    "q": "Narațiunea în „Maitreyi” este realizată:",
+    "options": [
+      "La persoana întâi, din perspectiva lui Allan",
+      "La persoana a treia, narator obiectiv",
+      "Alternând între Allan și Maitreyi"
+    ],
+    "correct": 0,
+    "explanation": "Povestea este redată sub forma unei confesiuni subiective a lui Allan."
+  },
+  {
+    "q": "Personajul Maitreyi este asociat cu:",
+    "options": [
+      "Inocența și misterul feminității orientale",
+      "Figura intelectualului occidental",
+      "O antagonista negativă"
+    ],
+    "correct": 0,
+    "explanation": "Maitreyi întruchipează feminitatea exotică și spiritualitatea indiană."
+  },
+  {
+    "q": "Conflictul central al romanului este determinat de:",
+    "options": [
+      "Interdicțiile culturale și familiale",
+      "Rivalitatea profesională dintre Allan și Narendra Sen",
+      "Probleme economice și sociale"
+    ],
+    "correct": 0,
+    "explanation": "Dragostea lor devine imposibilă din cauza tradițiilor indiene care nu permit o relație cu un străin."
+  },
+  {
+    "q": "Romanul „Maitreyi” aparține curentului:",
+    "options": [
+      "Modernismului subiectiv",
+      "Realismului tradițional",
+      "Simbolismului"
+    ],
+    "correct": 0,
+    "explanation": "Construcția subiectivă, analiza trăirilor și conflictul interior îl plasează în modernism."
+  }
 ]
+
 
 };
 
