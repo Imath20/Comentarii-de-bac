@@ -292,7 +292,7 @@ const OPERA_JSON_FILES = {
   'Morometii': 'morometii',
   'Iona': 'iona',
   'Formele fara fond': 'critice',
-  'Alexandru Lăpușneanu': 'lapusneanu',
+  'Alexandru Lăpușneanu': 'alexandru-lapusneanul',
   'Testament': 'testament',
   'Răscoala': 'rascoala',
   'Hanul Ancuţei': 'hanul-ancutei',

@@ -1091,15 +1091,50 @@ export const OPERA_DETAILS = {
     categorie: 'roman',
     canonic: true,
     curent: 'realism',
-    descriere: 'Roman realist despre destinul unei mame care își sacrifică viața pentru copii.',
-    teme: ['familia', 'educația', 'tradiția'],
+    descriere: 'Roman realist care prezintă destinul Marei, o femeie puternică din Transilvania, care își dedică întreaga viață educației și bunăstării copiilor săi. Opera explorează sacrificiul matern, relațiile familiale, dificultățile economice și valorile morale într-o societate tradițională în schimbare.',
+    teme: ['familia', 'educația', 'tradiția', 'sacrificiul', 'morala'],
     personaje: ['Mara', 'Persida', 'Trică', 'Bandi', 'Natl'],
-    analiza: 'Slavici creează un portret autentic al femeii transilvănene prin personajul Marei. Romanul explorează conflictul dintre tradiție și modernitate, Mara reprezentând valorile tradiționale în fața schimbărilor sociale.',
+    personajeDetalii: {
+      'Mara': 'Protagonista, femeie puternică și responsabilă, simbol al dăruirii materne și al respectului pentru tradiții. Ea își sacrifică fericirea personală pentru binele copiilor.',
+      'Persida': 'Fiica Marei, simbol al inocenței și al fragilității. Este influențată de educația și valorile mamei sale.',
+      'Trică': 'Fiul Marei, reprezentant al tineretului care învață de la mamă și se confruntă cu provocările lumii adulte.',
+      'Bandi': 'Persoană din cercul social al familiei, simbol al influenței mediului asupra destinului personajelor.',
+      'Natl': 'Alt membru al familiei sau comunității, reflectă legăturile sociale și tradițiile transilvănene.'
+    },
+    analiza: 'Romanul urmărește destinul Marei și modul în care valorile tradiționale, dăruirea și educația modelează viețile copiilor ei. Slavici explorează tensiunea dintre tradiție și modernitate, responsabilitatea individuală și impactul sacrificiului asupra dezvoltării personajelor.',
     citate: [
-      '"Mara, femeia cea bună"',
-      '"Tradițiile nu se uită"',
-      '"Viața e grea, dar trebuie să o duci"'
-    ]
+      '„Mai rău decât să fii în pământ e să fii în sufletul omului uitat”',
+      '„Omul se iubeşte pe sine mai mult decât orice, iar de ceilalţi, cel mult, îi suportă”',
+      '„Nu cunoşti oamenii decât după ce-i ai la nevoie”',
+      '„Cât timp încă mai iubeşti, nu poţi să fii de tot nenorocit”',
+      '„Nimeni nu e mai deştept decât viaţa”',
+      '„Când eşti tânăr, ai timp să greşeşti; dar, când îmbătrâneşti, timpul ţi se scurtează”'
+    ],
+    titluSection: {
+      descriere: 'Titlul pune accent pe figura centrală a romanului, Mara, indicând că destinul și acțiunile ei vor ghida întreaga narațiune.',
+      puncte: [
+        'Titlul evidențiază importanța personajului feminin central.',
+        'Sugerează că povestea este centrată pe viața și valorile unei femei transilvănene.',
+        'Pregătește cititorul pentru temele legate de familie, sacrificiu și moralitate.'
+      ]
+    },
+    simboluriSection: {
+      descriere: 'Simbolurile din roman reflectă valorile morale, sacrificiul matern și tensiunea dintre tradiție și modernitate.',
+      simboluri: [
+        {
+          nume: 'Mara',
+          explicatie: 'Simbol al dăruirii, puterii feminine și al responsabilității familiale.'
+        },
+        {
+          nume: 'Casa familiei',
+          explicatie: 'Reprezintă stabilitatea, valorile morale și centrul vieții sociale și familiale.'
+        },
+        {
+          nume: 'Copiii',
+          explicatie: 'Simbolizează continuitatea valorilor și importanța educației pentru formarea caracterului.'
+        }
+      ]
+    }    
   },
   'ultima-noapte-dragoste': {
     titlu: 'Ultima noapte de dragoste, întâia noapte de război',
@@ -1407,86 +1442,86 @@ export const OPERA_DETAILS = {
     }
   },
   'morometii': {
-  titlu: 'Moromeții',
-  autor: 'Marin Preda',
-  data: '1955 / 1967',
-  categorie: 'roman',
-  canonic: true,
-  curent: 'realism',
-  descriere: '„Moromeții” surprinde destrămarea treptată a unei familii țărănești și schimbările profunde din satul românesc. Primul volum prezintă lumea tradițională interbelică, dominată de calmul și ironia lui Ilie Moromete, iar al doilea volum urmărește maturizarea lui Niculae și transformările brutale aduse de perioada postbelică. Împreună, cele două volume arată trecerea de la vechiul mod de viață la o societate complet schimbată.',
-  teme: [
-    'familia',
-    'satul tradițional',
-    'schimbarea socială',
-    'conflictul dintre generații',
-    'modernizarea forțată',
-    'dezagregarea lumii rurale'
-  ],
+    titlu: 'Moromeții',
+    autor: 'Marin Preda',
+    data: '1955 / 1967',
+    categorie: 'roman',
+    canonic: true,
+    curent: 'realism',
+    descriere: '„Moromeții” surprinde destrămarea treptată a unei familii țărănești și schimbările profunde din satul românesc. Primul volum prezintă lumea tradițională interbelică, dominată de calmul și ironia lui Ilie Moromete, iar al doilea volum urmărește maturizarea lui Niculae și transformările brutale aduse de perioada postbelică. Împreună, cele două volume arată trecerea de la vechiul mod de viață la o societate complet schimbată.',
+    teme: [
+      'familia',
+      'satul tradițional',
+      'schimbarea socială',
+      'conflictul dintre generații',
+      'modernizarea forțată',
+      'dezagregarea lumii rurale'
+    ],
 
-  personaje: [
-    'Ilie Moromete',
-    'Catrina',
-    'Niculae',
-    'Paraschiv',
-    'Achim',
-    'Nilă',
-    'Guica',
-    'Cocoșilă',
-    'Bălosu'
-  ],
+    personaje: [
+      'Ilie Moromete',
+      'Catrina',
+      'Niculae',
+      'Paraschiv',
+      'Achim',
+      'Nilă',
+      'Guica',
+      'Cocoșilă',
+      'Bălosu'
+    ],
 
-  analiza: 'Preda creează una dintre cele mai importante fresce ale satului românesc, surprinzând cu finețe destrămarea unei lumi aflate în fața modernizării. Volumul I explorează tensiunile din familia Moromete și disoluția tradițiilor, în timp ce volumul II îl urmărește pe Niculae în confruntarea cu noua realitate politică postbelică. Romanul pune în centru drama unei familii și tragedia unei lumi care dispare.',
+    analiza: 'Preda creează una dintre cele mai importante fresce ale satului românesc, surprinzând cu finețe destrămarea unei lumi aflate în fața modernizării. Volumul I explorează tensiunile din familia Moromete și disoluția tradițiilor, în timp ce volumul II îl urmărește pe Niculae în confruntarea cu noua realitate politică postbelică. Romanul pune în centru drama unei familii și tragedia unei lumi care dispare.',
 
-  citate: [
-    '„Numai păcatele nu te lasă să dormi.”',
-    '„Am peste şaizeci de ani și în mintea mea e că o să trăiesc o sută. De ce să nu trăiesc?”',
-    '„Cineva îl întrebase odată în glumă de ce vorbește singur și Moromete îi răspunse serios că asta e din pricina că n-are cu cine discuta.”',
-    '„Visele sunt vise, uneori visezi rău și nu se întâmplă nimic, visul rău e gândul care n-ai scăpat de el.”',
-    '„Atâta timp cât trăiesc eu, ori faceți cum zic eu, ori dacă nu, să plecați!”'
-  ],
+    citate: [
+      '„Numai păcatele nu te lasă să dormi.”',
+      '„Am peste şaizeci de ani și în mintea mea e că o să trăiesc o sută. De ce să nu trăiesc?”',
+      '„Cineva îl întrebase odată în glumă de ce vorbește singur și Moromete îi răspunse serios că asta e din pricina că n-are cu cine discuta.”',
+      '„Visele sunt vise, uneori visezi rău și nu se întâmplă nimic, visul rău e gândul care n-ai scăpat de el.”',
+      '„Atâta timp cât trăiesc eu, ori faceți cum zic eu, ori dacă nu, să plecați!”'
+    ],
 
-  personajeDetalii: {
-    'Ilie Moromete': 'Patriarhul familiei și simbolul țăranului filozof. Inteligent, ironic, calm, încearcă să mențină unitatea familiei într-o lume aflată în schimbare. Volumul II îl arată înfrânt de modernizare.',
-    'Catrina': 'Soția răbdătoare și harnică, silită să suporte indiferența și preferințele lui Moromete pentru copiii din prima căsătorie.',
-    'Niculae': 'Fiul cel mic, inteligent și sensibil. În vol. I caută educația; în vol. II devine intelectual prins în frământările politice postbelice.',
-    'Paraschiv': 'Fiul cel mare, rebel, egoist, preocupat de bani; pleacă la oraș, abandonând familia.',
-    'Achim': 'Ambițios și dur, se ocupă cu negustoria și contribuie la destrămarea familiei.',
-    'Nilă': 'Lipsit de inițiativă, influențabil, simbol al omului slab în fața schimbării.',
-    'Guica': 'Sora lui Moromete, mereu pusă pe intrigi; tensionează atmosfera familială.',
-    'Cocoșilă': 'Prieten și confident al lui Moromete; reprezintă umorul și înțelepciunea satului.',
-    'Bălosu': 'Vecinul bogat, simbol al presiunii sociale și economice asupra familiei Moromete.'
-  },
+    personajeDetalii: {
+      'Ilie Moromete': 'Patriarhul familiei și simbolul țăranului filozof. Inteligent, ironic, calm, încearcă să mențină unitatea familiei într-o lume aflată în schimbare. Volumul II îl arată înfrânt de modernizare.',
+      'Catrina': 'Soția răbdătoare și harnică, silită să suporte indiferența și preferințele lui Moromete pentru copiii din prima căsătorie.',
+      'Niculae': 'Fiul cel mic, inteligent și sensibil. În vol. I caută educația; în vol. II devine intelectual prins în frământările politice postbelice.',
+      'Paraschiv': 'Fiul cel mare, rebel, egoist, preocupat de bani; pleacă la oraș, abandonând familia.',
+      'Achim': 'Ambițios și dur, se ocupă cu negustoria și contribuie la destrămarea familiei.',
+      'Nilă': 'Lipsit de inițiativă, influențabil, simbol al omului slab în fața schimbării.',
+      'Guica': 'Sora lui Moromete, mereu pusă pe intrigi; tensionează atmosfera familială.',
+      'Cocoșilă': 'Prieten și confident al lui Moromete; reprezintă umorul și înțelepciunea satului.',
+      'Bălosu': 'Vecinul bogat, simbol al presiunii sociale și economice asupra familiei Moromete.'
+    },
 
-  titluSection: {
-    descriere: 'Titlul evidențiază familia Moromete ca nucleu al unei lumi aflate în declin, cu accent pe transformările sociale ce afectează fiecare membru.',
-    puncte: [
-      'Numele de familie sugerează o saga rurală desfășurată pe două generații.',
-      'Indică trecerea timpului și efectele lui asupra unei familii simbolice pentru satul românesc.',
-      'Titlul marchează disoluția treptată a unei lumi tradiționale.'
-    ]
-  },
+    titluSection: {
+      descriere: 'Titlul evidențiază familia Moromete ca nucleu al unei lumi aflate în declin, cu accent pe transformările sociale ce afectează fiecare membru.',
+      puncte: [
+        'Numele de familie sugerează o saga rurală desfășurată pe două generații.',
+        'Indică trecerea timpului și efectele lui asupra unei familii simbolice pentru satul românesc.',
+        'Titlul marchează disoluția treptată a unei lumi tradiționale.'
+      ]
+    },
 
-  simboluriSection: {
-    descriere: 'Simbolistica romanului surprinde tensiunea dintre tradiție și modernitate și degradarea treptată a universului rural.',
-    simboluri: [
-      {
-        nume: 'Timpul',
-        explicatie: 'Reprezintă schimbarea inevitabilă care erodează familia și tradițiile satului.'
-      },
-      {
-        nume: 'Poiana lui Iocan',
-        explicatie: 'Simbol al libertății gândirii și al comunității tradiționale; locul unde „se dezbate țara”.'
-      },
-      {
-        nume: 'Casa Moromeților',
-        explicatie: 'Spațiu al tradiției și stabilității, care se degradează odată cu destrămarea familiei.'
-      },
-      {
-        nume: 'Secerișul',
-        explicatie: 'Simbol al ordinii tradiționale și al muncii, dar și al efortului perpetuu al țăranului.'
-      }
-    ]
-  },
+    simboluriSection: {
+      descriere: 'Simbolistica romanului surprinde tensiunea dintre tradiție și modernitate și degradarea treptată a universului rural.',
+      simboluri: [
+        {
+          nume: 'Timpul',
+          explicatie: 'Reprezintă schimbarea inevitabilă care erodează familia și tradițiile satului.'
+        },
+        {
+          nume: 'Poiana lui Iocan',
+          explicatie: 'Simbol al libertății gândirii și al comunității tradiționale; locul unde „se dezbate țara”.'
+        },
+        {
+          nume: 'Casa Moromeților',
+          explicatie: 'Spațiu al tradiției și stabilității, care se degradează odată cu destrămarea familiei.'
+        },
+        {
+          nume: 'Secerișul',
+          explicatie: 'Simbol al ordinii tradiționale și al muncii, dar și al efortului perpetuu al țăranului.'
+        }
+      ]
+    },
     rezumate: [
       {
         incipit: {
@@ -1993,100 +2028,100 @@ export const OPERA_DETAILS = {
       ]
     },
     rezumat: {
-        contextGeneral: {
-          sectiuni: [
-            {
-              subtitlu: "Oximoronul Titular și Autobiografia",
-              text: "Flori de mucigai este un poem dramatic, o artă poetică modernă care vorbește despre condiția artistului. Titlul este un oximoron puternic: 'florile' simbolizează frumusețea și creația, în timp ce 'mucigaiul' simbolizează descompunerea, putrezirea și boala. Poemul este scris într-o perioadă de recludere și ilustrează actul creației în condiții extreme, fizice și spirituale."
-            },
-            {
-              subtitlu: "Tema și Spațiul",
-              text: "Tema centrală este chinul creației și supraviețuirea artei în fața degradării totale. Spațiul este claustrofobic, o 'firidă goală' percepută ca o celulă de închisoare sau un mormânt, sugerând izolarea totală a poetului de lumea vie și de sursele divine de inspirație."
-            }
-          ]
-        },
-        analizaStrofaI: {
-          titlu: "Strofa I: Stabilirea Cadrului și a Condițiilor Inumane de Creație",
-          versuri: [
-            {
-              text: "Le-am scris cu unghia pe tencuială / Pe un părete de firidă goală,",
-              analiza: "Actul scrisului este un gest disperat. 'unghia' este un instrument rudimentar, primitiv, sugerând lipsa totală a mijloacelor. 'tencuială' și 'firidă goală' (nișă în perete) definesc un spațiu claustrofobic, improvizat, tipic deținuților. Virgula prelungind pauza amplifică senzația de gol."
-            },
-            {
-              text: "Pe întuneric, în singurătate, / Cu puterile neajutate",
-              analiza: "Izolare totală. 'întuneric' (absența luminii fizice și spirituale) și 'singurătate' se întăresc reciproc. 'puterile neajutate' exprimă ideea de abandon complet, de lipsă a oricărui sprijin divin sau uman în actul creației."
-            },
-            {
-              text: "Nici de taurul, nici de leul, nici de vulturul / Care au lucrat împrejurul / Lui Luca, lui Marcu şi lui Ioan.",
-              analiza: "Enumerație tripartită (anaforă pe 'nici de') a simbolurilor celor trei evangheliști. Absența lor marchează lipsa inspirației divine și a protecției sacre. Poetul este conștient de harul acordat altora ('au lucrat') și de propriul său vid spiritual. Matei este omis, poate deliberat, accentuând golul."
-            },
-            {
-              text: "Sunt stihuri fără an, / Stihuri de groapă, / De sete de apă / Şi de foame de scrum, / Stihurile de acum.",
-              analiza: "Definirea versurilor. 'stihuri' (arhaism cu conotație religioasă) sunt 'fără an' (atemporale, nesemnificative) și 'de groapă' (scrise în fața morții). Climaxul degradării este atins prin 'sete de apă' (nevoia fizică elementară) și, șocant, 'foame de scrum' – o expresie paradoxală a dorinței de neant, de moarte ca hrană. 'de acum' indică prezentul imediat al chinului."
-            },
-            {
-              text: "Când mi s-a tocit unghia îngerească / Am lăsat-o să crească / Şi nu mi-a crescut -",
-              analiza: "Eul liric conștientizează uzura ('tocit') instrumentului său de creație. Adjectivul 'îngerească' sugerează că arta sa este, inițial, de natură spirituală, dar se consumă prin sacrificiu fizic. Speranța regenerării este tăiată brusc ('Și nu mi-a crescut -'), linia de pauză marcând șocul eșecului."
-            },
-            {
-              text: "Sau nu o mai am cunoscut.",
-              analiza: "Alternativă și mai tulburătoare: eșecul nu este doar biologic, ci ontologic. Poetul nu-și mai recunoaște instrumentul de creație, pierzând contactul cu identitatea sa fizică. 'sau' introduce incertitudinea și alienarea de sine."
-            }
-          ]
-        },
-        analizaStrofaII: {
-          titlu: "Strofa a II-a: Metamorfoza și Triumful Voinței",
-          versuri: [
-            {
-              text: "Era întuneric. / Ploaia bătea departe, afară.",
-              analiza: "Reluarea motivului 'întunericului', acum categoric. 'Ploaia bătea departe, afară' - ploaia (viața, dinamismul naturii) este violentă ('bătea') și separată de eul liric, care e izolat în spațiul mort al 'firidei' ('afară' vs. 'înăuntru')."
-            },
-            {
-              text: "Şi mă durea mâna ca o ghiară / Neputincioasă să se strângă",
-              analiza: "Suferință fizică acută. Comparația 'mâna ca o ghiară' sugerează o transformare grotescă, animalizarea corpului. Instrumentul nobil al scrisului devine organ animalic, rigid, 'neputincioasă să se strângă' (incapacitatea de a face gestul scrisului)."
-            },
-            {
-              text: "Şi m-am silit să scriu cu unghiile de la mâna stângă.",
-              analiza: "Final dramatic și eroic. 'm-am silit' arată efortul supraomenesc, voința care transcende limitele fizice. 'mâna stângă' (mâna neobișnuită, asociată cu sinistrul/umbra, dar și cu ultimul resort) devine noul instrument. În ciuda degradării și a tuturor obstacolelor, imperativul creației este împlinit. Arta triumfă prin sacrificiu total."
-            }
-          ]
-        },
-        elementeSpecifice: {
-          subtitlu: "Figuri de Stil, Vocabular și Structură",
-          sectiuni: [
-            {
-              nume: "Figuri de Stil Majore",
-              lista: [
-                "Oximoron titular: 'flori de mucigai' (frumusețe în descompunere).",
-                "Metaforă extinsă: Scrisul cu unghia pe tencuială (creația ca act de calvar).",
-                "Comparația: 'mâna ca o ghiară' (animalizarea corpului creator).",
-                "Paralelism: 'de sete de apă / și de foame de scrum' (degradarea nevoilor)."
-              ]
-            },
-            {
-              nume: "Vocabular și Sonorități",
-              lista: [
-                "Lexic religios/arhaic: 'stihuri', 'firidă', 'taurul, leul, vulturul' (folosit în context profan/degradat).",
-                "Termeni ai lipsei și negației: 'goală', 'neajutate', 'fără', 'nu'.",
-                "Aliterații în 't', 'c', 'g' ('tocit', 'crească', 'ghiară') – sugerează duritatea și asprimea experienței.",
-                "Asonanțe în 'a' ('tencuială', 'ghiară') – vocala deschisă a durerii."
-              ]
-            },
-            {
-              nume: "Structură și Ritm",
-              lista: [
-                "Trei strofe inegale (12 + 4 + 5 versuri) – asimetrie care oglindește haosul interior.",
-                "Versuri libere, de lungimi inegale – lipsa constrângerilor formale.",
-                "Tonalitate: solemn-tragică (Strofa I) trece în confesiv-dureros (Strofa a II-a) și ajunge la dramatic-eroic (Strofa a III-a).",
-                "Autoreflexivitate: Poemul este metapoetic, vorbind despre propria sa creație."
-              ]
-            }
-          ]
-        },
-        concluzie: {
-          text: "Poemul 'Flori de mucigai' este un testament al suferinței creatoare și o artă poetică a sacrificiului extrem. Bacovia transformă actul scrisului într-un calvar fizic și spiritual, în care corpul poetului se descompune și se animalizează, dar voința artistică triumfă în cele din urmă, fiind singura forță capabilă să genereze frumusețe ('flori') chiar și din descompunere ('mucigai')."
-        }
+      contextGeneral: {
+        sectiuni: [
+          {
+            subtitlu: "Oximoronul Titular și Autobiografia",
+            text: "Flori de mucigai este un poem dramatic, o artă poetică modernă care vorbește despre condiția artistului. Titlul este un oximoron puternic: 'florile' simbolizează frumusețea și creația, în timp ce 'mucigaiul' simbolizează descompunerea, putrezirea și boala. Poemul este scris într-o perioadă de recludere și ilustrează actul creației în condiții extreme, fizice și spirituale."
+          },
+          {
+            subtitlu: "Tema și Spațiul",
+            text: "Tema centrală este chinul creației și supraviețuirea artei în fața degradării totale. Spațiul este claustrofobic, o 'firidă goală' percepută ca o celulă de închisoare sau un mormânt, sugerând izolarea totală a poetului de lumea vie și de sursele divine de inspirație."
+          }
+        ]
+      },
+      analizaStrofaI: {
+        titlu: "Strofa I: Stabilirea Cadrului și a Condițiilor Inumane de Creație",
+        versuri: [
+          {
+            text: "Le-am scris cu unghia pe tencuială / Pe un părete de firidă goală,",
+            analiza: "Actul scrisului este un gest disperat. 'unghia' este un instrument rudimentar, primitiv, sugerând lipsa totală a mijloacelor. 'tencuială' și 'firidă goală' (nișă în perete) definesc un spațiu claustrofobic, improvizat, tipic deținuților. Virgula prelungind pauza amplifică senzația de gol."
+          },
+          {
+            text: "Pe întuneric, în singurătate, / Cu puterile neajutate",
+            analiza: "Izolare totală. 'întuneric' (absența luminii fizice și spirituale) și 'singurătate' se întăresc reciproc. 'puterile neajutate' exprimă ideea de abandon complet, de lipsă a oricărui sprijin divin sau uman în actul creației."
+          },
+          {
+            text: "Nici de taurul, nici de leul, nici de vulturul / Care au lucrat împrejurul / Lui Luca, lui Marcu şi lui Ioan.",
+            analiza: "Enumerație tripartită (anaforă pe 'nici de') a simbolurilor celor trei evangheliști. Absența lor marchează lipsa inspirației divine și a protecției sacre. Poetul este conștient de harul acordat altora ('au lucrat') și de propriul său vid spiritual. Matei este omis, poate deliberat, accentuând golul."
+          },
+          {
+            text: "Sunt stihuri fără an, / Stihuri de groapă, / De sete de apă / Şi de foame de scrum, / Stihurile de acum.",
+            analiza: "Definirea versurilor. 'stihuri' (arhaism cu conotație religioasă) sunt 'fără an' (atemporale, nesemnificative) și 'de groapă' (scrise în fața morții). Climaxul degradării este atins prin 'sete de apă' (nevoia fizică elementară) și, șocant, 'foame de scrum' – o expresie paradoxală a dorinței de neant, de moarte ca hrană. 'de acum' indică prezentul imediat al chinului."
+          },
+          {
+            text: "Când mi s-a tocit unghia îngerească / Am lăsat-o să crească / Şi nu mi-a crescut -",
+            analiza: "Eul liric conștientizează uzura ('tocit') instrumentului său de creație. Adjectivul 'îngerească' sugerează că arta sa este, inițial, de natură spirituală, dar se consumă prin sacrificiu fizic. Speranța regenerării este tăiată brusc ('Și nu mi-a crescut -'), linia de pauză marcând șocul eșecului."
+          },
+          {
+            text: "Sau nu o mai am cunoscut.",
+            analiza: "Alternativă și mai tulburătoare: eșecul nu este doar biologic, ci ontologic. Poetul nu-și mai recunoaște instrumentul de creație, pierzând contactul cu identitatea sa fizică. 'sau' introduce incertitudinea și alienarea de sine."
+          }
+        ]
+      },
+      analizaStrofaII: {
+        titlu: "Strofa a II-a: Metamorfoza și Triumful Voinței",
+        versuri: [
+          {
+            text: "Era întuneric. / Ploaia bătea departe, afară.",
+            analiza: "Reluarea motivului 'întunericului', acum categoric. 'Ploaia bătea departe, afară' - ploaia (viața, dinamismul naturii) este violentă ('bătea') și separată de eul liric, care e izolat în spațiul mort al 'firidei' ('afară' vs. 'înăuntru')."
+          },
+          {
+            text: "Şi mă durea mâna ca o ghiară / Neputincioasă să se strângă",
+            analiza: "Suferință fizică acută. Comparația 'mâna ca o ghiară' sugerează o transformare grotescă, animalizarea corpului. Instrumentul nobil al scrisului devine organ animalic, rigid, 'neputincioasă să se strângă' (incapacitatea de a face gestul scrisului)."
+          },
+          {
+            text: "Şi m-am silit să scriu cu unghiile de la mâna stângă.",
+            analiza: "Final dramatic și eroic. 'm-am silit' arată efortul supraomenesc, voința care transcende limitele fizice. 'mâna stângă' (mâna neobișnuită, asociată cu sinistrul/umbra, dar și cu ultimul resort) devine noul instrument. În ciuda degradării și a tuturor obstacolelor, imperativul creației este împlinit. Arta triumfă prin sacrificiu total."
+          }
+        ]
+      },
+      elementeSpecifice: {
+        subtitlu: "Figuri de Stil, Vocabular și Structură",
+        sectiuni: [
+          {
+            nume: "Figuri de Stil Majore",
+            lista: [
+              "Oximoron titular: 'flori de mucigai' (frumusețe în descompunere).",
+              "Metaforă extinsă: Scrisul cu unghia pe tencuială (creația ca act de calvar).",
+              "Comparația: 'mâna ca o ghiară' (animalizarea corpului creator).",
+              "Paralelism: 'de sete de apă / și de foame de scrum' (degradarea nevoilor)."
+            ]
+          },
+          {
+            nume: "Vocabular și Sonorități",
+            lista: [
+              "Lexic religios/arhaic: 'stihuri', 'firidă', 'taurul, leul, vulturul' (folosit în context profan/degradat).",
+              "Termeni ai lipsei și negației: 'goală', 'neajutate', 'fără', 'nu'.",
+              "Aliterații în 't', 'c', 'g' ('tocit', 'crească', 'ghiară') – sugerează duritatea și asprimea experienței.",
+              "Asonanțe în 'a' ('tencuială', 'ghiară') – vocala deschisă a durerii."
+            ]
+          },
+          {
+            nume: "Structură și Ritm",
+            lista: [
+              "Trei strofe inegale (12 + 4 + 5 versuri) – asimetrie care oglindește haosul interior.",
+              "Versuri libere, de lungimi inegale – lipsa constrângerilor formale.",
+              "Tonalitate: solemn-tragică (Strofa I) trece în confesiv-dureros (Strofa a II-a) și ajunge la dramatic-eroic (Strofa a III-a).",
+              "Autoreflexivitate: Poemul este metapoetic, vorbind despre propria sa creație."
+            ]
+          }
+        ]
+      },
+      concluzie: {
+        text: "Poemul 'Flori de mucigai' este un testament al suferinței creatoare și o artă poetică a sacrificiului extrem. Bacovia transformă actul scrisului într-un calvar fizic și spiritual, în care corpul poetului se descompune și se animalizează, dar voința artistică triumfă în cele din urmă, fiind singura forță capabilă să genereze frumusețe ('flori') chiar și din descompunere ('mucigai')."
       }
+    }
   },
   'eu-nu-strivesc-corola-de-minuni-a-lumii': {
     titlu: 'Eu nu strivesc corola de minuni a lumii',
@@ -2132,7 +2167,7 @@ export const OPERA_DETAILS = {
         }
       ]
     },
-    rezumat:{
+    rezumat: {
       contextGeneral: {
         sectiuni: [
           {
@@ -2441,95 +2476,95 @@ export const OPERA_DETAILS = {
           }
         ]
       },
-      analizaStrofaI:{
-          titlu: "Cadrul Spațial al Amintirii",
-          versuri: [
-            {
-              text: "La casa amintirii cu-obloane si pridvor, / Paienjeni zabrelira si poarta, si zavor.",
-              analiza: "'casa amintirii' - Metaforă a spațiului care devine templu al memoriei. 'obloane și pridvor' - Detalii ale casei boierești. 'Păienjeni zăbreliră' - Metaforă: pânzele de păianjen devin gratii care sugerează abandonul și închiderea trecutului."
-            },
-            {
-              text: "Iar hornul nu mai trage alene din ciubuc / De când luptara-n codru si poteri, si haiduc.",
-              analiza: "Hornul ('ciubuc') - Simbol al tihnei domestice dispărute. Referirea la 'poteri și haiduc' fixează temporal sfârșitul unei lumi (secolul al XIX-lea) și marchează o ruptură istorică."
-            },
-            {
-              text: "În drumul lor spre zare îmbatrânira plopii. / Aci sosi pe vremuri bunica-mi Calyopi.",
-              analiza: "'îmbătrâniră plopii' - Personificare: copacii sunt martori cronometri. 'Aci sosi pe vremuri' - Expresie-cheie care definește timpul inaugural. 'Calyopi' - Nume aristocratic, sugerând rafinament și aluzie la muza poeziei epice."
-            },
-            {
-              text: "Nerabdator bunicul pândise de la scara / Berlina leganata prin lanuri de secara.",
-              analiza: "'Nerăbdător bunicul' - Stare emoțională de anticipare. 'pândise' - Mai-mult-ca-perfectul arhaic al acțiunii. 'Berlina legănată' - Trăsura elegantă, cu mișcare ritmică, străbătând 'lanuri de secară' (peisaj idilic românesc)."
-            },
-            {
-              text: "Pie-atunci nu erau trenuri ca azi, si din berlina / Sari, subtire, -o fata în larga crinolina.",
-              analiza: "'nu erau trenuri ca azi' - Comparație ironică ce conștientizează modernitatea. 'Sări, subțire' - Gest viu, tineresc, contrastând 'subțire' (corp) cu 'larga crinolină' (îmbrăcăminte - modă sec. XIX). 'O fată' - Universalizarea personajului."
-            },
-            {
-              text: "Privind cu ea sub luna câmpia ca un lac, / Bunicul meu desigur i-a recitat Le lac.",
-              analiza: "'câmpia ca un lac' - Comparație romantică, peisajul transfigurat de lună. 'i-a recitat Le lac' - Gest cultural (poezia lui Lamartine, 1820), ritual al curtării aristocratice în limba franceză."
-            },
-            {
-              text: "Iar când deasupra casei ca umbre berze cad, / Îi spuse Sburatorul de-un tânar Eliad.",
-              analiza: "'ca umbre berze cad' - Berzele sunt simboluri ale norocului și ale ciclicității. Trecerea la un element de cultură națională: 'Sburătorul' de Eminescu, arătând specificul cultural al elitei românești."
-            },
-            {
-              text: "Ea-l asculta tacuta, cu ochi de peruzea… / Si totul ce romantic, ca-n basme, se urzea.",
-              analiza: "'ochi de peruzea' - Comparație prețioasă, estompată, specifică timpului. 'se urzea' - Metaforă textilă: povestea de iubire se țese. 'ca-n basme' - Realitatea este transfigurată de romantism."
-            },
-            {
-              text: "Si cum sedeau… departe, un clopot a sunat, / De nunta sau de moarte, în turnul vechi din sat.",
-              analiza: "'un clopot a sunat' - Sunetul rupe tăcerea, introducând timpul social. Ambiguitatea 'De nuntă sau de moarte' sugerează că destinul, fie el început (nuntă) sau sfârșit (moarte), este unic și inevitabil. Turnul este martorul tuturor generațiilor."
-            },
-            {
-              text: "Dar ei, în clipa asta simteau ca-o sa ramâna… / De mult e mort bunicul, bunica e batrâna…",
-              analiza: "Contrast (Adversativă 'Dar'): certitudinea interioară a 'rămânerii' lor eterne se lovește de prezentul dur. Schimbare brutală de timp: 'e mort bunicul' și 'bunica e bătrână' - constatarea liniară, ireversibilă, a trecerii timpului biologic."
-            },
-            {
-              text: "Ce straniu lucru: vremea! Deodata pe perete / Te vezi aievea numai în stersele portrete.",
-              analiza: "'Ce straniu lucru: vremea!' - Exclamație filosofică, care deschide meditația. 'portrete șterse' - Locul unde se păstrează identitatea trecută; singura modalitate de a te vedea 'aievea' (clar), în contrast cu prezentul."
-            },
-            {
-              text: "Te recunosti în ele, dar nu si-n fata ta, / Caci trupul tau te uita, dar tu nu-l poti uita….",
-              analiza: "Paradoxul identitar: recunoașterea în trecut (portret), dar alienarea de sine în prezent. Personificarea 'trupul tău te uită' explică transformarea fizică, în timp ce 'tu nu-l poți uita' menține permanența conștiinței/memoriei."
-            },
-            {
-              text: "Ca ieri sosi bunica… si vii acuma tu:",
-              analiza: "'Ca ieri' - Comparație care anulează distanța temporală. 'sosi bunica' (trecut) - 'vii acuma tu' (prezent). Strofa funcționează ca pivot, introducând al doilea plan, cel al poetului și al iubitei sale, pentru a demonstra ciclicitatea."
-            },
-            {
-              text: "Pe urmele berlinei trasura ta statu.",
-              analiza: "'Pe urmele berlinei' - Suprapunere spațială. 'trăsura ta stătù' - Vehiculul prezentului se oprește exact în același loc cu cel al trecutului. Ritualul se repetă."
-            },
-            {
-              text: "Acelasi drum te-aduse prin lanul de secara. / Ca dânsa tragi, în dreptul pridvorului, la scara.",
-              analiza: "Repetarea exactă a cadrului ('același drum', 'lanul de secară'). 'Ca dânsa tragi' - Comparația perfectă: gestul de oprire la 'scară' (pridvor) este identic, fixând geometria iubirii în același loc."
-            },
-            {
-              text: "Subtire, calci nisipul pe care ea sari. / Cu berzele într-ânsul amurgul se opri….",
-              analiza: "'Subțire' - Epitet reluat (Strofa IV), arătând grația. 'calci nisipul pe care ea sări' - Suprapunere fizică, generațiile calcă pe aceleași urme. 'amurgul se opri' - Personificarea timpului cosmic care se suspendă în momentul reîntoarcerii."
-            },
-            {
-              text: "Si m-ai gasit, zâmbindu-mi, ca prea naiv eram / Când ti-am soptit poeme de bunul Francis Jammes.",
-              analiza: "Autoirone: poetul se consideră 'prea naiv' în comparație cu gestul bunicului. Recitarea lui Francis Jammes (poet francez al simplității rustice) este paralelismul gestului cultural al bunicului (Lamartine)."
-            },
-            {
-              text: "Iar când în noapte câmpul fu lac întins sub luna / Si-am spus Balada lunei de Horia Furtuna,.",
-              analiza: "'câmpul fu lac întins sub lună' - Imagine repetată (Strofa V), care arată permanența naturii. Recitarea lui Horia Furtună (poet simbolist român) finalizează paralelismul cultural național (Eminescu)."
-            },
-            {
-              text: "M-ai ascultat pe gânduri, cu ochi de ametist, / Si ti-am parut romantic si poate simbolist.",
-              analiza: "'ochi de ametist' - Comparație care reflectă frumusețea, fiind un paralelism cu 'ochi de peruzea' ai bunicii. 'romantic și poate simbolist' - Poetul își recunoaște cu ironie apartenența la un curent modern, în timp ce repetă ritualul romantic."
-            },
-            {
-              text: "Si cum sedeau… departe, un clopot a sunat, / Acelasi clopot poate, în turnul vechi din sat….",
-              analiza: "Repetarea exactă a formulei din strofa a VIII-a. 'Același clopot poate' - Ambiguitate voită: incertitudinea faptului (e fizic același?) accentuează certitudinea semnificației (gestul e identic). Patru puncte prelungesc reveria."
-            },
-            {
-              text: "De nunta sau de moarte, în turnul vechi din sat.",
-              analiza: "Repetarea finală, identică. Alternativa 'nuntă sau moarte' sugerează că, în ciclul etern, începutul și sfârșitul vieții se contopesc. Clopotul devine simbolul destinului care sună la fel pentru ambele generații, într-o simetrie perfectă care închide compoziția."
-            }
-          ]
-        },
+      analizaStrofaI: {
+        titlu: "Cadrul Spațial al Amintirii",
+        versuri: [
+          {
+            text: "La casa amintirii cu-obloane si pridvor, / Paienjeni zabrelira si poarta, si zavor.",
+            analiza: "'casa amintirii' - Metaforă a spațiului care devine templu al memoriei. 'obloane și pridvor' - Detalii ale casei boierești. 'Păienjeni zăbreliră' - Metaforă: pânzele de păianjen devin gratii care sugerează abandonul și închiderea trecutului."
+          },
+          {
+            text: "Iar hornul nu mai trage alene din ciubuc / De când luptara-n codru si poteri, si haiduc.",
+            analiza: "Hornul ('ciubuc') - Simbol al tihnei domestice dispărute. Referirea la 'poteri și haiduc' fixează temporal sfârșitul unei lumi (secolul al XIX-lea) și marchează o ruptură istorică."
+          },
+          {
+            text: "În drumul lor spre zare îmbatrânira plopii. / Aci sosi pe vremuri bunica-mi Calyopi.",
+            analiza: "'îmbătrâniră plopii' - Personificare: copacii sunt martori cronometri. 'Aci sosi pe vremuri' - Expresie-cheie care definește timpul inaugural. 'Calyopi' - Nume aristocratic, sugerând rafinament și aluzie la muza poeziei epice."
+          },
+          {
+            text: "Nerabdator bunicul pândise de la scara / Berlina leganata prin lanuri de secara.",
+            analiza: "'Nerăbdător bunicul' - Stare emoțională de anticipare. 'pândise' - Mai-mult-ca-perfectul arhaic al acțiunii. 'Berlina legănată' - Trăsura elegantă, cu mișcare ritmică, străbătând 'lanuri de secară' (peisaj idilic românesc)."
+          },
+          {
+            text: "Pie-atunci nu erau trenuri ca azi, si din berlina / Sari, subtire, -o fata în larga crinolina.",
+            analiza: "'nu erau trenuri ca azi' - Comparație ironică ce conștientizează modernitatea. 'Sări, subțire' - Gest viu, tineresc, contrastând 'subțire' (corp) cu 'larga crinolină' (îmbrăcăminte - modă sec. XIX). 'O fată' - Universalizarea personajului."
+          },
+          {
+            text: "Privind cu ea sub luna câmpia ca un lac, / Bunicul meu desigur i-a recitat Le lac.",
+            analiza: "'câmpia ca un lac' - Comparație romantică, peisajul transfigurat de lună. 'i-a recitat Le lac' - Gest cultural (poezia lui Lamartine, 1820), ritual al curtării aristocratice în limba franceză."
+          },
+          {
+            text: "Iar când deasupra casei ca umbre berze cad, / Îi spuse Sburatorul de-un tânar Eliad.",
+            analiza: "'ca umbre berze cad' - Berzele sunt simboluri ale norocului și ale ciclicității. Trecerea la un element de cultură națională: 'Sburătorul' de Eminescu, arătând specificul cultural al elitei românești."
+          },
+          {
+            text: "Ea-l asculta tacuta, cu ochi de peruzea… / Si totul ce romantic, ca-n basme, se urzea.",
+            analiza: "'ochi de peruzea' - Comparație prețioasă, estompată, specifică timpului. 'se urzea' - Metaforă textilă: povestea de iubire se țese. 'ca-n basme' - Realitatea este transfigurată de romantism."
+          },
+          {
+            text: "Si cum sedeau… departe, un clopot a sunat, / De nunta sau de moarte, în turnul vechi din sat.",
+            analiza: "'un clopot a sunat' - Sunetul rupe tăcerea, introducând timpul social. Ambiguitatea 'De nuntă sau de moarte' sugerează că destinul, fie el început (nuntă) sau sfârșit (moarte), este unic și inevitabil. Turnul este martorul tuturor generațiilor."
+          },
+          {
+            text: "Dar ei, în clipa asta simteau ca-o sa ramâna… / De mult e mort bunicul, bunica e batrâna…",
+            analiza: "Contrast (Adversativă 'Dar'): certitudinea interioară a 'rămânerii' lor eterne se lovește de prezentul dur. Schimbare brutală de timp: 'e mort bunicul' și 'bunica e bătrână' - constatarea liniară, ireversibilă, a trecerii timpului biologic."
+          },
+          {
+            text: "Ce straniu lucru: vremea! Deodata pe perete / Te vezi aievea numai în stersele portrete.",
+            analiza: "'Ce straniu lucru: vremea!' - Exclamație filosofică, care deschide meditația. 'portrete șterse' - Locul unde se păstrează identitatea trecută; singura modalitate de a te vedea 'aievea' (clar), în contrast cu prezentul."
+          },
+          {
+            text: "Te recunosti în ele, dar nu si-n fata ta, / Caci trupul tau te uita, dar tu nu-l poti uita….",
+            analiza: "Paradoxul identitar: recunoașterea în trecut (portret), dar alienarea de sine în prezent. Personificarea 'trupul tău te uită' explică transformarea fizică, în timp ce 'tu nu-l poți uita' menține permanența conștiinței/memoriei."
+          },
+          {
+            text: "Ca ieri sosi bunica… si vii acuma tu:",
+            analiza: "'Ca ieri' - Comparație care anulează distanța temporală. 'sosi bunica' (trecut) - 'vii acuma tu' (prezent). Strofa funcționează ca pivot, introducând al doilea plan, cel al poetului și al iubitei sale, pentru a demonstra ciclicitatea."
+          },
+          {
+            text: "Pe urmele berlinei trasura ta statu.",
+            analiza: "'Pe urmele berlinei' - Suprapunere spațială. 'trăsura ta stătù' - Vehiculul prezentului se oprește exact în același loc cu cel al trecutului. Ritualul se repetă."
+          },
+          {
+            text: "Acelasi drum te-aduse prin lanul de secara. / Ca dânsa tragi, în dreptul pridvorului, la scara.",
+            analiza: "Repetarea exactă a cadrului ('același drum', 'lanul de secară'). 'Ca dânsa tragi' - Comparația perfectă: gestul de oprire la 'scară' (pridvor) este identic, fixând geometria iubirii în același loc."
+          },
+          {
+            text: "Subtire, calci nisipul pe care ea sari. / Cu berzele într-ânsul amurgul se opri….",
+            analiza: "'Subțire' - Epitet reluat (Strofa IV), arătând grația. 'calci nisipul pe care ea sări' - Suprapunere fizică, generațiile calcă pe aceleași urme. 'amurgul se opri' - Personificarea timpului cosmic care se suspendă în momentul reîntoarcerii."
+          },
+          {
+            text: "Si m-ai gasit, zâmbindu-mi, ca prea naiv eram / Când ti-am soptit poeme de bunul Francis Jammes.",
+            analiza: "Autoirone: poetul se consideră 'prea naiv' în comparație cu gestul bunicului. Recitarea lui Francis Jammes (poet francez al simplității rustice) este paralelismul gestului cultural al bunicului (Lamartine)."
+          },
+          {
+            text: "Iar când în noapte câmpul fu lac întins sub luna / Si-am spus Balada lunei de Horia Furtuna,.",
+            analiza: "'câmpul fu lac întins sub lună' - Imagine repetată (Strofa V), care arată permanența naturii. Recitarea lui Horia Furtună (poet simbolist român) finalizează paralelismul cultural național (Eminescu)."
+          },
+          {
+            text: "M-ai ascultat pe gânduri, cu ochi de ametist, / Si ti-am parut romantic si poate simbolist.",
+            analiza: "'ochi de ametist' - Comparație care reflectă frumusețea, fiind un paralelism cu 'ochi de peruzea' ai bunicii. 'romantic și poate simbolist' - Poetul își recunoaște cu ironie apartenența la un curent modern, în timp ce repetă ritualul romantic."
+          },
+          {
+            text: "Si cum sedeau… departe, un clopot a sunat, / Acelasi clopot poate, în turnul vechi din sat….",
+            analiza: "Repetarea exactă a formulei din strofa a VIII-a. 'Același clopot poate' - Ambiguitate voită: incertitudinea faptului (e fizic același?) accentuează certitudinea semnificației (gestul e identic). Patru puncte prelungesc reveria."
+          },
+          {
+            text: "De nunta sau de moarte, în turnul vechi din sat.",
+            analiza: "Repetarea finală, identică. Alternativa 'nuntă sau moarte' sugerează că, în ciclul etern, începutul și sfârșitul vieții se contopesc. Clopotul devine simbolul destinului care sună la fel pentru ambele generații, într-o simetrie perfectă care închide compoziția."
+          }
+        ]
+      },
       "elementeSpecifice": {
         subtitlu: "Analiza Stilistică Detaliată (Neoclasicism, Simbolism)",
         "sectiuni": [
@@ -2721,13 +2756,13 @@ export const OPERA_DETAILS = {
     curent: 'modernism',
     descriere: 'Poem alegoric ce ilustrează întâlnirea dintre două lumi incompatibile: lumea vegetală a lui Crypto și lumea spiritualizată a lui Enigel. Povestea transformă iubirea într-un simbol al aspirației și al limitelor care separă ființele cu naturi diferite.',
     teme: [
-      'iubirea', 
-      'incompatibilitatea', 
-      'destinul', 
+      'iubirea',
+      'incompatibilitatea',
+      'destinul',
       'aspirația'
     ],
     personaje: [
-      'Riga Crypto', 
+      'Riga Crypto',
       'Lapona Enigel'
     ],
     analiza: 'Poemul redă, sub forma unei povești alegorice, eșecul apropierii dintre două naturi opuse. Crypto, ființă vegetală atrasă de umbră, este incapabil să urmeze chemarea spre lumină, în timp ce Enigel aspiră spre cunoaștere și spiritualizare. Conflictul dintre cele două principii conduce la imposibilitatea unirii lor.',
@@ -2847,13 +2882,48 @@ export const OPERA_DETAILS = {
     categorie: 'nuvelă',
     canonic: true,
     curent: 'romantism',
-    descriere: 'Nuvelă istorică despre domnia crudă a lui Lăpușneanu.',
-    teme: ['puterea', 'răzbunarea', 'istoria'],
+    descriere: 'Nuvelă istorică care surprinde domnia tiranică a lui Alexandru Lăpușneanu, reflectând conflictele de putere, răzbunarea și consecințele deciziilor crude. Opera combină evenimente istorice cu tensiuni dramatice, evidențiind relațiile dintre domnitor și supuși și dilemele morale ale conducătorului.',
+    teme: ['puterea', 'răzbunarea', 'tradiția istorică', 'destinul', 'conflictul moral'],
     personaje: ['Alexandru Lăpușneanu', 'Ruxanda', 'Moțoc'],
-    analiza: 'Negruzzi creează o nuvelă istorică despre complexitatea puterii și alegerilor morale.',
+    personajeDetalii: {
+      'Alexandru Lăpușneanu': 'Domnitor tiranic, condus de dorința de putere și răzbunare. Deciziile lui drastice afectează soarta întregului regat și pun în evidență lupta dintre autoritate și moralitate.',
+      'Ruxanda': 'Fiica lui Lăpușneanu, simbol al nevinovăției și al victimei neputincioase în fața puterii tatălui. Relația ei cu tatăl și cu Moțoc amplifică tensiunea dramatică a nuvelei.',
+      'Moțoc': 'Tânăr curajos și devotat, reprezentant al poporului și al dreptății morale, care devine ținta răzbunării domnitorului.'
+    },
+    analiza: 'Nuvela explorează puterea absolută și consecințele ei asupra indivizilor și societății. Negruzzi evidențiază dilemele morale și dramatice ale domnitorului, alternând între istorie și ficțiune. Relațiile dintre personaje și deciziile lor tragice subliniază tensiunea dintre autoritate, justiție și răzbunare.',
     citate: [
-      '"Dacă voi nu mă vreți, eu vă vreau"'
-    ]
+      '"Dacă voi nu mă vreți, eu vă vreau"',
+      '„Proști, dar mulți...”',
+      '„M-ați popit voi, dar de mă voi îndrepta, pre mulți am să popesc și eu!”',
+      '„Capul lui Moțoc vrem!”',
+      '„Judecă că după viață este și moarte și că măria-ta ești muritor și ai să dai seamă! Pentru că, cu monăstirile nu se răscumpără sîngele, ci mai ales ispitești și înfrunți pre Dumnezeu, socotind că făcînd biserci îl poți împăca.”',
+      '„Învață a muri, tu care știai numai a omorî.”'
+    ],
+    titluSection: {
+      descriere: 'Titlul fixează atenția asupra domnitorului Alexandru Lăpușneanu și anticipă tema centrală a puterii și tiraniei.',
+      puncte: [
+        'Numele domnitorului indică că întreaga acțiune și conflictul gravitează în jurul său.',
+        'Titlul subliniază caracterul istoric al nuvelei și importanța lui Lăpușneanu în evenimentele dramatice.',
+        'Cititorul este pregătit să exploreze relațiile complexe de putere și răzbunarea în societatea medievală.'
+      ]
+    },
+    simboluriSection: {
+      descriere: 'Simbolurile din nuvelă reflectă puterea absolută, răzbunarea și consecințele morale ale acțiunilor domnitorului.',
+      simboluri: [
+        {
+          nume: 'Domnia lui Lăpușneanu',
+          explicatie: 'Simbol al autorității absolute, al tiraniei și al efectelor negative ale puterii necontrolate.'
+        },
+        {
+          nume: 'Ruxanda',
+          explicatie: 'Simbol al nevinovăției și al victimelor neputincioase în fața tiraniei.'
+        },
+        {
+          nume: 'Moțoc',
+          explicatie: 'Simbol al curajului, al opoziției morale și al dreptății în fața abuzului de putere.'
+        }
+      ]
+    }    
   },
   'maitreyi': {
     titlu: 'Maitreyi',
@@ -2862,13 +2932,47 @@ export const OPERA_DETAILS = {
     categorie: 'roman',
     canonic: true,
     curent: 'modernism',
-    descriere: 'Roman exotic despre iubirea pasională dintre un european și o tânără indiană.',
-    teme: ['iubirea', 'diferențele culturale', 'pasiunea'],
+    descriere: 'Roman exotic care surprinde iubirea pasională și imposibilă dintre Allan, un european curios și inteligent, și Maitreyi, o tânără indiană. Eliade explorează diferențele culturale, tensiunile dintre lumi și condiția individului în fața sentimentelor și tradițiilor, evidențiind experiența inițiatică a dragostei și maturizarea emoțională.',
+    teme: ['iubirea', 'diferențele culturale', 'pasiunea', 'inițierea', 'conflictul tradiție vs. modernitate'],
     personaje: ['Allan', 'Maitreyi', 'Narendra Sen'],
-    analiza: 'Eliade creează un roman despre dragostea imposibilă și inițierea prin prisma diferențelor culturale.',
+    personajeDetalii: {
+      'Allan': 'Protagonist european, tânăr curios și intelectual, care descoperă o lume diferită de a sa și experimentează iubirea pasională. Este un personaj aflat între rațiune și emoție, între cultură și pasiune.',
+      'Maitreyi': 'Tânăra indiană, educată și sensibilă, simbol al exoticului și al frumuseții inaccesibile. Relația ei cu Allan este intensă, dar limitată de diferențele culturale și norme sociale.',
+      'Narendra Sen': 'Profesor și tutore al Maitreyi, simbol al tradiției și al autorității în societatea indiană. Este o figură de contrast pentru libertatea emoțională a tinerilor.'
+    },
+    analiza: 'Romanul explorează iubirea imposibilă între două culturi și efectele diferențelor sociale și culturale asupra sentimentelor. Eliade folosește experiența lui Allan pentru a analiza maturizarea interioară, conflictele interioare și tensiunea dintre tradiție și pasiune. Opera surprinde universalitatea iubirii și constrângerile impuse de normele sociale.',
     citate: [
-      '"Maitreyi, dragostea imposibilă"'
-    ]
+      '„Am înțeles că dragostea nu se împarte și nici nu se cerșește.”',
+      '„Dacă nu voi mai fi lângă tine, nici lumea nu va fi mai largă pentru mine.”',
+      '„Ceea ce nu poate fi spus sau scris, trebuie trăit.”',
+      '„Nu poți înțelege India dacă nu iubești India, iar India nu iubește pe nimeni decât pe cel care o iubește.”',
+      '„O iubire cum este aceasta nu moare niciodată, chiar dacă trupurile se despart.”'
+    ],
+    titluSection: {
+      descriere: 'Titlul romanului evidențiază personajul central feminin și relația sa cu protagonistul european, indicând tema iubirii imposibile și exotismul poveștii.',
+      puncte: [
+        'Numele Maitreyi aduce în prim-plan misterul și frumusețea personajului feminin.',
+        'Titlul sugerează accentul pe relația pasională și conflictul cultural dintre personaje.',
+        'Cititorul este pregătit să exploreze tensiunile dintre dragoste, diferențele culturale și inițierea emoțională.'
+      ]
+    },
+    simboluriSection: {
+      descriere: 'Simbolurile romanului reflectă iubirea, diferențele culturale și experiența inițiatică a personajelor.',
+      simboluri: [
+        {
+          nume: 'Maitreyi',
+          explicatie: 'Simbol al frumuseții inaccesibile, al exoticului și al iubirii imposibile.'
+        },
+        {
+          nume: 'Allan',
+          explicatie: 'Simbol al căutării cunoașterii, al experienței și al maturizării prin iubire.'
+        },
+        {
+          nume: 'Casa și mediul indian',
+          explicatie: 'Reprezintă diferențele culturale și tensiunile dintre tradiție și modernitate.'
+        }
+      ]
+    }    
   },
   'critice': {
     titlu: 'Formele fără fond',
@@ -2990,177 +3094,317 @@ export const OPERA_DETAILS = {
     }
   },
   'hanul-ancutei': {
-    titlu: 'Hanul Ancuţei',
+    titlu: 'Hanul Ancuței',
     autor: 'Mihail Sadoveanu',
     data: '1928',
     categorie: 'nuvelă',
     canonic: true,
     curent: 'traditionalism',
-    descriere: 'Volum de povestiri în ramă, relatate la han.',
-    teme: ['oralitatea', 'trecutul', 'legenda'],
-    personaje: ['Ancuța', 'povestitorii (Moș Leonte, Ioniță comisul, alții)'],
-    analiza: 'Sadoveanu creează o nuvelă despre atmosfera unui han moldovenesc și despre tradițiile rurale. Opera explorează tema schimbărilor sociale prin prisma unui han tradițional.',
+    descriere: 'Volum de povestiri în ramă, desfășurate în atmosfera unui han moldovenesc, unde călătorii împărtășesc întâmplări din viața lor și legende locale. Sadoveanu surprinde tradițiile rurale, oralitatea și farmecul poveștilor populare, oferind o imagine vie a societății rurale din Moldova interbelică.',
+    teme: ['oralitatea', 'trecutul', 'legenda', 'tradiția', 'societatea rurală'],
+    personaje: ['Ancuța', 'Moș Leonte', 'Ioniță Comisul', 'călătorii și povestitorii de la han'],
+    personajeDetalii: {
+      'Ancuța': 'Proprietara hanului, simbol al ospitalității și al locului de întâlnire pentru povești și experiențe. Este un punct central care adună diverse personaje și narațiuni.',
+      'Moș Leonte': 'Povestitor înțelept, reprezentant al tradiției orale. Prin poveștile sale transmite experiență, moravuri și valori morale.',
+      'Ioniță Comisul': 'Tânăr călător sau personaj care contribuie la atmosfera hanului prin relatările sale, reflectând preocupările și evenimentele comunității.',
+      'povestitorii de la han': 'Diverse personaje care completează tabloul social al hanului, fiecare cu propria experiență sau legendă, contribuind la diversitatea narațiunilor.'
+    },
+    analiza: 'Sadoveanu creează o nuvelă în ramă care combină ficțiunea cu tradiția orală. Hanul devine un spațiu simbolic al comunității, al schimbului de experiențe și al păstrării memoriei colective. Fiecare povestire reflectă valori morale, legende locale și legătura dintre trecut și prezent, evidențiind tensiunea dintre tradiție și modernitate.',
     citate: [
-      '"Hanul Ancuței, locul întâlnirilor"'
-    ]
+      '"Iapa lui Vodă" - "Eu aici îs trecator... cuvânta, cu oala în mâna, dumnealui Ionita comisul; eu încalic si pornesc în lumea mea,.. Roibu meu îi totdeauna gata, cu saua pe el... Cal ca mine n-are nimeni... Încalic, îmi plesnesc caciula pe-o ureche si ma duc, nici nu-mi pasa..."',
+      '"Haralambie" - "Dar te rog sa ma lasi slobod la pamântul meu si la liniste - caci am varsat sângele pârinților mei, care curge și-n vremele mele."',
+      '"Hanul Ancuței era o poveste nesfârșită, cu oameni și întâmplări venite din veacuri apuse."',
+      '"Fiecare noapte la han era ca o pagină ruptă dintr-un basm."',
+      '"Sub acoperișul hanului, sufletele se întâlneau și se împleteau în povești de viață."'
+    ],
+    titluSection: {
+      descriere: 'Titlul accentuează locul central al întâmplărilor – hanul – care devine un spațiu al poveștilor și al întâlnirilor sociale.',
+      puncte: [
+        'Titlul subliniază rolul hanului ca centru al narațiunilor și al comunității.',
+        'Sugerează un spațiu cald, primitor, unde trecutul și legenda se întâlnesc.',
+        'Pregătește cititorul pentru diversitatea povestirilor și pentru accentul pe tradiția orală.'
+      ]
+    },
+    simboluriSection: {
+      descriere: 'Simbolurile nuvelei reflectă tradiția orală, legătura cu trecutul și comunitatea rurală.',
+      simboluri: [
+        {
+          nume: 'Hanul',
+          explicatie: 'Simbol al adunării comunității, al schimbului de povești și al memoriei colective.'
+        },
+        {
+          nume: 'Ancuța',
+          explicatie: 'Reprezintă ospitalitatea, continuitatea tradițiilor și echilibrul în cadrul hanului.'
+        },
+        {
+          nume: 'Poveștile',
+          explicatie: 'Simbol al legăturii cu trecutul și al valorilor morale transmise prin generații.'
+        }
+      ]
+    }    
   },
   'iona': {
-  titlu: 'Iona',
-  autor: 'Marin Sorescu',
-  data: '1968',
-  categorie: 'dramă',
-  canonic: true,
-  curent: 'postmodernism',
-  descriere: '„Iona” este o dramă modernă despre singurătatea omului și căutarea sensului într-o lume absurdă. Pus în burta unui pește uriaș, personajul încearcă să găsească o ieșire, iar drumul lui devine o metaforă pentru lupta interioară, libertate și autocunoaștere.',
+    titlu: 'Iona',
+    autor: 'Marin Sorescu',
+    data: '1968',
+    categorie: 'dramă',
+    canonic: true,
+    curent: 'postmodernism',
+    descriere: '„Iona” este o dramă modernă despre singurătatea omului și căutarea sensului într-o lume absurdă. Pus în burta unui pește uriaș, personajul încearcă să găsească o ieșire, iar drumul lui devine o metaforă pentru lupta interioară, libertate și autocunoaștere.',
 
-  teme: [
-    'singurătatea',
-    'absurdul existenței',
-    'căutarea sensului',
-    'condiția umană',
-    'libertatea',
-    'destinul'
-  ],
+    teme: [
+      'singurătatea',
+      'absurdul existenței',
+      'căutarea sensului',
+      'condiția umană',
+      'libertatea',
+      'destinul'
+    ],
 
-  personaje: [
-    'Iona',
-    'Pescarul 1',
-    'Pescarul 2',
-    'Vocea'
-  ],
+    personaje: [
+      'Iona',
+      'Pescarul 1',
+      'Pescarul 2',
+      'Vocea'
+    ],
 
-  analiza: 'Sorescu construiește o dramă-parabolă despre omul modern prins într-o lume a absurdității și limitării. Piesa urmărește lupta interioară a lui Iona, simbol al individului care încearcă să iasă din propriile limite și să-și găsească sensul existenței. Textul are puternice accente alegorice, ironice și metafizice.',
+    analiza: 'Sorescu construiește o dramă-parabolă despre omul modern prins într-o lume a absurdității și limitării. Piesa urmărește lupta interioară a lui Iona, simbol al individului care încearcă să iasă din propriile limite și să-și găsească sensul existenței. Textul are puternice accente alegorice, ironice și metafizice.',
 
-  citate: [
-    '"Singurătatea e un fel de a te măsura cu Dumnezeu."',
-    '"M-am născut în pântecele chitului."',
-    '"Omul e un pește care trebuie mereu să înoate împotriva curentului."'
-  ],
+    citate: [
+      '"Singurătatea e un fel de a te măsura cu Dumnezeu."',
+      '"M-am născut în pântecele chitului."',
+      '"Omul e un pește care trebuie mereu să înoate împotriva curentului."'
+    ],
 
-  personajeDetalii: {
-    'Iona': 'Personajul principal, pescar prins în burta unui pește uriaș. Este simbolul omului modern, singur, confruntându-se cu sensul vieții, limitele existenței și absurdul.',
-    'Pescarul 1': 'Apare episodic și reprezintă omul obișnuit, prins în rutina vieții, fără întrebări existențiale profunde.',
-    'Pescarul 2': 'Simbolizează repetitivitatea vieții și ciclul existenței; pare o dublură ironică a lui Iona.',
-    'Vocea': 'Instanță abstractă, poate fi conștiința lui Iona sau destinul însuși.'
-  },
+    personajeDetalii: {
+      'Iona': 'Personajul principal, pescar prins în burta unui pește uriaș. Este simbolul omului modern, singur, confruntându-se cu sensul vieții, limitele existenței și absurdul.',
+      'Pescarul 1': 'Apare episodic și reprezintă omul obișnuit, prins în rutina vieții, fără întrebări existențiale profunde.',
+      'Pescarul 2': 'Simbolizează repetitivitatea vieții și ciclul existenței; pare o dublură ironică a lui Iona.',
+      'Vocea': 'Instanță abstractă, poate fi conștiința lui Iona sau destinul însuși.'
+    },
 
-  titluSection: {
-    descriere: 'Titlul piesei trimite la figura biblică Iona, accentuând ideea de încercare, captivitate și revelație interioară.',
-    puncte: [
-      'Numelă preia simbolistica profetului biblic înghițit de chit, sugerând o experiență-limită.',
-      'Titlul indică o parabolă existențialistă despre om și destinul său.',
-      'Numele unic pune accent pe universalitatea condiției umane – Iona poate fi oricine.'
-    ]
-  },
+    titluSection: {
+      descriere: 'Titlul piesei trimite la figura biblică Iona, accentuând ideea de încercare, captivitate și revelație interioară.',
+      puncte: [
+        'Numelă preia simbolistica profetului biblic înghițit de chit, sugerând o experiență-limită.',
+        'Titlul indică o parabolă existențialistă despre om și destinul său.',
+        'Numele unic pune accent pe universalitatea condiției umane – Iona poate fi oricine.'
+      ]
+    },
 
-  simboluriSection: {
-    descriere: 'Opera este construită pe simboluri existențialiste care exprimă drama omului prins în limitele propriei vieți.',
-    simboluri: [
-      {
-        nume: 'Chitul',
-        explicatie: 'Simbol al vieții ca spațiu închis, al destinului inevitabil și al limitării umane.'
+    simboluriSection: {
+      descriere: 'Opera este construită pe simboluri existențialiste care exprimă drama omului prins în limitele propriei vieți.',
+      simboluri: [
+        {
+          nume: 'Chitul',
+          explicatie: 'Simbol al vieții ca spațiu închis, al destinului inevitabil și al limitării umane.'
+        },
+        {
+          nume: 'Cuțitul lui Iona',
+          explicatie: 'Reprezintă încercarea de a depăși limitele și lupta pentru libertate și cunoaștere.'
+        },
+        {
+          nume: 'Peștele în pește',
+          explicatie: 'Simbol al universurilor concentric-limitatoare; omul nu scapă complet de propriile condiționări.'
+        },
+        {
+          nume: 'Strigătul lui Iona',
+          explicatie: 'Act de revoltă și disperare existențială; simbol al dorinței de comunicare cu absolutul.'
+        }
+      ]
+    },
+    rezumat: {
+      incipit: {
+        sectiuni: [
+          {
+            subtitlu: "Contextul și singurătatea lui Iona",
+            text: "Piesa (Tabloul I) începe într-un cadru simbolic: Iona, un pescar, se află în gura unui pește uriaș, cu năvodul aruncat peste cercuri de cretă care simbolizează apa. Iona este singur, vorbind tare cu sine însuși și dedublându-se (acționează ca două personaje) pentru a-și alunga izolarea profundă."
+          },
+          {
+            subtitlu: "Pierderea ecoului și a legăturii cu exteriorul",
+            text: "Un moment crucial este descoperirea pierderii ecoului. La strigătul 'Io-na!', el aude doar 'Io' (care înseamnă 'eu' în limbi vechi). Acest detaliu simbolizează pierderea ultimei forme de legătură cu lumea exterioară, rămânând izolat în propriul sine. Iona încearcă să găsească sensul vieții sale monotone, visând să fie pădurar."
+          },
+          {
+            subtitlu: "Momentul dramatic al înghițirii",
+            text: "Tabloul se încheie brusc: în timp ce Iona se apleacă peste acvariul cu peștișorii săi, gura peștelui uriaș începe să se închidă. Iona strigă 'Ajutor! Ajutoooor!', dar conștientizează că nici măcar ecoul nu mai este acolo să-i răspundă. Scena se termină în întuneric."
+          }
+        ]
       },
-      {
-        nume: 'Cuțitul lui Iona',
-        explicatie: 'Reprezintă încercarea de a depăși limitele și lupta pentru libertate și cunoaștere.'
+      intriga: {
+        sectiuni: [
+          {
+            subtitlu: "Trezirea în absurd și lipsa modelului",
+            text: "Iona se trezește (Tabloul II) în interiorul primului pește, într-un spațiu plin de bureți, osoașe și mizerie acvatică. El realizează că este 'înghițit de viu'. Își amintește o poveste despre cineva înghițit de un chit, dar nu știe cum se termină acea poveste, metaforă pentru condiția sa fără precedent sau soluție cunoscută."
+          },
+          {
+            subtitlu: "Absurdul cotidian și speranța",
+            text: "Într-o tentativă de a menține normalitatea, Iona își aruncă năvodul în interiorul peștelui și continuă să prindă pești mai mici – un gest absurd. El filosofează despre viață și moarte, cântând o melodie pe tema 'Venica mistuire'. Își dă seama că peștele a uitat să-i ia cuțitul, ceea ce îi oferă o falsă speranță de evadare."
+          },
+          {
+            subtitlu: "Eșecul comunicării și primul perete spart",
+            text: "Apar Pescarul I și Pescarul II, purtând bârne în spinare, dar sunt muți. Iona încearcă în zadar să comunice cu ei. Cu ajutorul cuțitului și apoi al unghiilor, Iona reușește să spargă peretele peștelui, dar descoperă cu groază că se află doar în burta unui al doilea pește, care l-a înghițit pe primul."
+          }
+        ]
       },
-      {
-        nume: 'Peștele în pește',
-        explicatie: 'Simbol al universurilor concentric-limitatoare; omul nu scapă complet de propriile condiționări.'
+      desfasurarea: {
+        sectiuni: [
+          {
+            subtitlu: "Conștientizarea realității stratificate",
+            text: "Iona realizează (Tabloul III) că se află într-o realitate stratificată, ca într-o serie de matrioșke: 'Altul! Mă miram eu să se termine așa de repede!'. Calmul său forțat ascunde groaza crescândă că această succesiune de pești (simbol al captivității) ar putea fi infinită."
+          },
+          {
+            subtitlu: "Pierderea memoriei și Regresia spre mamă",
+            text: "Spațiul devine mai întunecos și mai opresiv. Iona începe să uite lucruri fundamentale din viața sa. Memoria soției se estompează, în timp ce imaginea mamei devine din ce în ce mai clară. Această inversare sugerează o întoarcere spre origini și o dorință de renaștere: 'Mai naște-mă o dată! Prima viață nu prea mi-a ieșit ea'."
+          },
+          {
+            subtitlu: "Scrisoarea disperată și pierderea empatiei",
+            text: "Iona își taie o bucată de piele din palmă și scrie cu propriul sânge un mesaj de ajutor, pe care îl pune într-o bică. Din neatenție, calcă pe bică, iar aceasta explodează. Găsind scrisoarea, o citește, dar, nerecunoscându-și scrisul, crede că aparține altui naufragiat. El își respinge propria cerere de ajutor, devenind cinic și dur: 'Pe omenire o doare în fund de soarta ta... Biete, descurcă-te și tu cum poți'."
+          },
+          {
+            subtitlu: "Amenințarea peștișorilor",
+            text: "Tabloul se încheie apocaliptic: ochii peștișorilor nenăscuți ai monstrului îl privesc din întuneric. Explozia bicăi i-a trezit la viață și aceștia cresc rapid, amenințându-l: 'Vin spre mine cu gurile... Cu gurile... scoase din teac. Mă mănâncă!'"
+          }
+        ]
       },
-      {
-        nume: 'Strigătul lui Iona',
-        explicatie: 'Act de revoltă și disperare existențială; simbol al dorinței de comunicare cu absolutul.'
+      punctulCulminant: {
+        sectiuni: [
+          {
+            subtitlu: "Ieșirea falsă și Extazul eșuat",
+            text: "Iona reușește să spintece al treilea pește (Tabloul IV) și iese la lumină, extaziat: 'Marea! Aerul!'. Fericirea sa este însă scurtă. El realizează rapid că nu există apă în jur, ci doar 'nasturi de nisip'. Nu se află pe o plajă reală, ci într-un alt spațiu închis."
+          },
+          {
+            subtitlu: "Revelația terifiantă a orizonturilor",
+            text: "Urcându-se pe o movilă, Iona privește în zare și vede un orizont – dar acesta este 'o burtă de pește'. Urmează un alt orizont – 'o burtă de pește uriașă'. Iona înțelege că realitatea este stratificată la infinit, că orice evadare duce la un alt nivel de captivitate: 'Doamne, câți pești unul într-altul!'"
+          },
+          {
+            subtitlu: "Ciclicitatea și pierderea memoriei totale",
+            text: "Întâlnirea repetată cu Pescarul I și Pescarul II, purtând aceleași bârne, confirmă că se mișcă într-un univers ciclic, claustrofobic: 'De ce întâlnesc mereu aceiași oameni? S-o fi-ngustat lumea până într-atâta?'. Iona nu mai poate răspunde la întrebările fundamentale, aproape uitându-și propriul nume."
+          }
+        ]
+      },
+      deznodamant: {
+        sectiuni: [
+          {
+            subtitlu: "Metafora Dumnezeului eșuat și a nașterii",
+            text: "Iona formulează cea mai profundă reflexie a sa, comparându-se cu un Dumnezeu 'care nu mai poate învia', sugerând că și divinitatea poate eșua în fața absurdului. El generalizează condiția sa: 'Problema e dacă mai reușești să ieși din ceva, odată ce te-ai născut. Toate lucrurile sunt pești', ceea ce înseamnă că nașterea însăși este o formă de înghițire."
+          },
+          {
+            subtitlu: "Recunoașterea identității și gestul final",
+            text: "Într-un moment de luciditate, Iona își amintește: 'Iona. Eu sunt Iona.', strigând propriul nume ca pe o descoperire fundamentală. El ia o decizie radicală: nu mai încearcă să spintece peștele din afară, ci își spintecă propria burtă. 'Gata, Iona? Răzbim noi cumva la lumină'."
+          },
+          {
+            subtitlu: "Semnificația ambiguă a încheierii",
+            text: "Finalul este profund ambiguu. Gestul auto-distructiv/creator al lui Iona poate fi interpretat ca o sinucidere simbolică pentru a elibera spiritul, ca o auto-naștere disperată (un act de mântuire prin sine) sau ca o recunoaștere nihilistă a faptului că omul însuși este peștele final, propria sa închisoare. Răspunsul la problema ieșirii rămâne suspendat."
+          }
+        ]
       }
-    ]
+    }
   },
-  rezumat: {
-    incipit: {
-      sectiuni: [
-        {
-          subtitlu: "Contextul și singurătatea lui Iona",
-          text: "Piesa (Tabloul I) începe într-un cadru simbolic: Iona, un pescar, se află în gura unui pește uriaș, cu năvodul aruncat peste cercuri de cretă care simbolizează apa. Iona este singur, vorbind tare cu sine însuși și dedublându-se (acționează ca două personaje) pentru a-și alunga izolarea profundă."
-        },
-        {
-          subtitlu: "Pierderea ecoului și a legăturii cu exteriorul",
-          text: "Un moment crucial este descoperirea pierderii ecoului. La strigătul 'Io-na!', el aude doar 'Io' (care înseamnă 'eu' în limbi vechi). Acest detaliu simbolizează pierderea ultimei forme de legătură cu lumea exterioară, rămânând izolat în propriul sine. Iona încearcă să găsească sensul vieții sale monotone, visând să fie pădurar."
-        },
-        {
-          subtitlu: "Momentul dramatic al înghițirii",
-          text: "Tabloul se încheie brusc: în timp ce Iona se apleacă peste acvariul cu peștișorii săi, gura peștelui uriaș începe să se închidă. Iona strigă 'Ajutor! Ajutoooor!', dar conștientizează că nici măcar ecoul nu mai este acolo să-i răspundă. Scena se termină în întuneric."
-        }
+  'rascoala': {
+    titlu: 'Răscoala',
+    autor: 'Liviu Rebreanu',
+    data: '1932',
+    categorie: 'roman',
+    canonic: true,
+    curent: 'realism',
+    descriere: 'Roman amplu inspirat de Răscoala din 1907, în care Rebreanu urmărește cauzele sociale și psihologice ale revoltei țărănești. Opera prezintă tensiunile dintre țărani și moșieri, nedreptățile economice, foametea, abuzurile și explozia violentă a mulțimii. Rebreanu construiește o imagine realistă, obiectivă și documentată, surprinzând drama unei societăți aflate în pragul colapsului moral și social.',
+    teme: ['nedreptatea socială', 'răscoala', 'relația țăran–moșier', 'violenta colectivă', 'sărăcia'],
+    personaje: ['Țugurlan', 'Petre Petre', 'Grigore Iuga', 'Nadina', 'ministrașul', 'mulțimea'],
+    analiza: 'Roman realist de mari dimensiuni, „Răscoala” reprezintă radiografia societății rurale românești înainte de 1907. Rebreanu analizează mecanismele care duc la revoltă: mizeria, lipsa pământului, datoriile, abuzurile autorităților și prăpastia dintre clase. Personajele sunt construite tipologic, iar narațiunea alternează perspective individuale cu scene colective, evidențiind complexitatea fenomenului social. Prin obiectivitatea stilului și construcția riguroasă, romanul devine o frescă socială solidă și un document literar despre suferința rurală.',
+    citate: [
+      '„Țăranul nu cere luxuri, ci doar dreptul de a trăi și de a-și asigura pâinea zilnică din rodul propriului său pământ.”',
+      '„Omul, muncind în zadar la pământul altuia, își pierde speranța. Când i se taie drepturile, chiar și munca cea mai cinstită devine inutilă.” ',
+      '"Pământul... pământul era în toate!"',
+      '"Țăranii se simțeau strânși ca într-o menghină."',
+      '"Răscoala creștea ca un val uriaș."'
+    ],
+    personajeDetalii: {
+      'Țugurlan': 'Simbol al forței brute și al răzvrătirii necontrolate; reprezintă violența născută din disperare.',
+      'Petre Petre': 'Țăran muncitor, sărac, devenit vocea revoltei, împins la extrem de nedreptăți.',
+      'Grigore Iuga': 'Moșier intelectual, moderat, reprezentant al clasei superioare care încearcă să înțeleagă drama țăranilor.',
+      'Nadina': 'Soția lui Iuga, personaj care reflectă viața aristocratică și contrastul cu lumea țărănimii.',
+      'mulțimea': 'Personaj colectiv simbolic, reprezentând explozia socială produsă de condițiile grele.'
+    },
+    titluSection: {
+      descriere: 'Titlul trimite direct la revolta țărănească din 1907, sugerând un eveniment istoric major și amploarea socială a conflictului.',
+      puncte: [
+        'Trimite la un fenomen colectiv, nu la un personaj individual.',
+        'Anunță conflictul central al romanului: revolta violentă a țăranilor.',
+        'Sugerează tensiunea socială și inevitabilitatea exploziei sociale.'
       ]
     },
-    intriga: {
-      sectiuni: [
+    simboluriSection: {
+      descriere: 'Simbolurile subliniază raportul dintre om și pământ, presiunea socială și prăbușirea ordinii.',
+      simboluri: [
         {
-          subtitlu: "Trezirea în absurd și lipsa modelului",
-          text: "Iona se trezește (Tabloul II) în interiorul primului pește, într-un spațiu plin de bureți, osoașe și mizerie acvatică. El realizează că este 'înghițit de viu'. Își amintește o poveste despre cineva înghițit de un chit, dar nu știe cum se termină acea poveste, metaforă pentru condiția sa fără precedent sau soluție cunoscută."
+          nume: 'Pământul',
+          explicatie: 'Simbol al vieții, al muncii și al dreptului fundamental al țăranilor; principala cauză a răscoalei.'
         },
         {
-          subtitlu: "Absurdul cotidian și speranța",
-          text: "Într-o tentativă de a menține normalitatea, Iona își aruncă năvodul în interiorul peștelui și continuă să prindă pești mai mici – un gest absurd. El filosofează despre viață și moarte, cântând o melodie pe tema 'Venica mistuire'. Își dă seama că peștele a uitat să-i ia cuțitul, ceea ce îi oferă o falsă speranță de evadare."
+          nume: 'Mulțimea',
+          explicatie: 'Simbol al forței colective, al instinctului primar și al revoltei născute din foame.'
         },
         {
-          subtitlu: "Eșecul comunicării și primul perete spart",
-          text: "Apar Pescarul I și Pescarul II, purtând bârne în spinare, dar sunt muți. Iona încearcă în zadar să comunice cu ei. Cu ajutorul cuțitului și apoi al unghiilor, Iona reușește să spargă peretele peștelui, dar descoperă cu groază că se află doar în burta unui al doilea pește, care l-a înghițit pe primul."
+          nume: 'Focul',
+          explicatie: 'Simbol al distrugerii, dar și al purificării prin violență.'
         }
       ]
+    }
+  },
+  'amintiri-din-copilarie': {
+    titlu: 'Amintiri din copilărie',
+    autor: 'Ion Creangă',
+    data: '1881',
+    categorie: 'memorii',
+    canonic: true,
+    curent: 'realism',
+    descriere: 'Opera prezintă copilăria autorului în satul Humulești, printr-o serie de episoade pline de umor, naturalețe și observație socială. Creangă surprinde cu finețe viața satului, jocurile copilăriei, relația cu familia și școala, dar și obiceiurile și tradițiile rurale. Textul îmbină realismul cu nostalgia și umorul, oferind o frescă vie a lumii țărănești din secolul XIX.',
+    teme: ['copilăria', 'educația', 'satul tradițional', 'familia', 'umorul'],
+    personaje: ['Ion Creangă', 'mama', 'tata', 'verii', 'bunicii', 'vecinii'],
+    analiza: '„Amintiri din copilărie” este un roman autobiografic în care Creangă construiește o imagine autentică a vieții rurale. Fiecare episod este însoțit de observații morale sau comice, iar stilul este viu și direct. Opera explorează relațiile familiale, educația, obiceiurile și valorile comunității. Naratorul combină perspectiva copilului cu reflecții de adult, oferind profunzime și umor subtil.',
+    citate: [
+      '„Ştiu că sunt prost. Dar când mă uit în jur, prind curaj.”',
+      '"Am fugit de la școală, dar tot am învățat ceva."',
+      '„Copilăria este o oglindă care reflectează în viaţa de mai târziu primele imagini.”',
+      '„Cel ce a avut o copilărie luminoasă şi fericită şi-a adunat comoara nesecată în care se găseşte mângâierea şi în cele mai dureroase clipe ale vieţii.”',
+      '"Satul meu, Humulești, era o lume întreagă."',
+      '„Viaţa este o flacără ce se stinge totdeauna, dar recapătă scânteie ori de câte ori se naşte un copil.”',
+      '„Copilăria este fericirea de a fi tu însuţi.”'
+    ],
+    personajeDetalii: {
+      'Ion Creangă': 'Naratorul și personajul principal, copil curios și isteț, care trăiește aventuri pline de umor și lecții de viață în satul natal.',
+      'mama': 'Simbol al grijii și iubirii materne, oferă protecție și sfaturi, dar și discipline blânde.',
+      'tata': 'Figura autoritară și totodată afectuoasă, reprezintă principiile morale și regulile de conduită ale satului.',
+      'verii': 'Parteneri de joacă și complice la năzbâtii, simbolizează solidaritatea și camaraderia copilăriei.',
+      'bunicii': 'Reprezentanți ai tradiției și înțelepciunii populare, transmit povești, obiceiuri și lecții de viață.',
+      'vecinii': 'Personaje colective care dau culoare satului și reflectă viața comunității rurale din secolul XIX.'
     },
-    desfasurarea: {
-      sectiuni: [
-        {
-          subtitlu: "Conștientizarea realității stratificate",
-          text: "Iona realizează (Tabloul III) că se află într-o realitate stratificată, ca într-o serie de matrioșke: 'Altul! Mă miram eu să se termine așa de repede!'. Calmul său forțat ascunde groaza crescândă că această succesiune de pești (simbol al captivității) ar putea fi infinită."
-        },
-        {
-          subtitlu: "Pierderea memoriei și Regresia spre mamă",
-          text: "Spațiul devine mai întunecos și mai opresiv. Iona începe să uite lucruri fundamentale din viața sa. Memoria soției se estompează, în timp ce imaginea mamei devine din ce în ce mai clară. Această inversare sugerează o întoarcere spre origini și o dorință de renaștere: 'Mai naște-mă o dată! Prima viață nu prea mi-a ieșit ea'."
-        },
-        {
-          subtitlu: "Scrisoarea disperată și pierderea empatiei",
-          text: "Iona își taie o bucată de piele din palmă și scrie cu propriul sânge un mesaj de ajutor, pe care îl pune într-o bică. Din neatenție, calcă pe bică, iar aceasta explodează. Găsind scrisoarea, o citește, dar, nerecunoscându-și scrisul, crede că aparține altui naufragiat. El își respinge propria cerere de ajutor, devenind cinic și dur: 'Pe omenire o doare în fund de soarta ta... Biete, descurcă-te și tu cum poți'."
-        },
-        {
-          subtitlu: "Amenințarea peștișorilor",
-          text: "Tabloul se încheie apocaliptic: ochii peștișorilor nenăscuți ai monstrului îl privesc din întuneric. Explozia bicăi i-a trezit la viață și aceștia cresc rapid, amenințându-l: 'Vin spre mine cu gurile... Cu gurile... scoase din teac. Mă mănâncă!'"
-        }
+    titluSection: {
+      descriere: 'Titlul evocă memoria și experiența personală a autorului, sugerând că ceea ce urmează sunt relatări sincere și personale despre copilărie.',
+      puncte: [
+        'Evidențiază natura autobiografică a operei.',
+        'Sugerează nostalgie și recuperarea experiențelor din trecut.',
+        'Pregătește cititorul pentru o narațiune subiectivă, plină de umor și înțelepciune populară.'
       ]
     },
-    punctulCulminant: {
-      sectiuni: [
+    simboluriSection: {
+      descriere: 'Simbolurile operează atât în plan realist, cât și în plan moral și cultural, subliniind experiențele formative ale copilului.',
+      simboluri: [
         {
-          subtitlu: "Ieșirea falsă și Extazul eșuat",
-          text: "Iona reușește să spintece al treilea pește (Tabloul IV) și iese la lumină, extaziat: 'Marea! Aerul!'. Fericirea sa este însă scurtă. El realizează rapid că nu există apă în jur, ci doar 'nasturi de nisip'. Nu se află pe o plajă reală, ci într-un alt spațiu închis."
+          nume: 'Satul Humulești',
+          explicatie: 'Simbol al universului copilăriei și al comunității tradiționale, locul unde se formează primele lecții de viață.'
         },
         {
-          subtitlu: "Revelația terifiantă a orizonturilor",
-          text: "Urcându-se pe o movilă, Iona privește în zare și vede un orizont – dar acesta este 'o burtă de pește'. Urmează un alt orizont – 'o burtă de pește uriașă'. Iona înțelege că realitatea este stratificată la infinit, că orice evadare duce la un alt nivel de captivitate: 'Doamne, câți pești unul într-altul!'"
+          nume: 'Jocurile copilăriei',
+          explicatie: 'Reprezintă libertatea, creativitatea și modul prin care copilul învață despre lume și oameni.'
         },
         {
-          subtitlu: "Ciclicitatea și pierderea memoriei totale",
-          text: "Întâlnirea repetată cu Pescarul I și Pescarul II, purtând aceleași bârne, confirmă că se mișcă într-un univers ciclic, claustrofobic: 'De ce întâlnesc mereu aceiași oameni? S-o fi-ngustat lumea până într-atâta?'. Iona nu mai poate răspunde la întrebările fundamentale, aproape uitându-și propriul nume."
-        }
-      ]
-    },
-    deznodamant: {
-      sectiuni: [
-        {
-          subtitlu: "Metafora Dumnezeului eșuat și a nașterii",
-          text: "Iona formulează cea mai profundă reflexie a sa, comparându-se cu un Dumnezeu 'care nu mai poate învia', sugerând că și divinitatea poate eșua în fața absurdului. El generalizează condiția sa: 'Problema e dacă mai reușești să ieși din ceva, odată ce te-ai născut. Toate lucrurile sunt pești', ceea ce înseamnă că nașterea însăși este o formă de înghițire."
-        },
-        {
-          subtitlu: "Recunoașterea identității și gestul final",
-          text: "Într-un moment de luciditate, Iona își amintește: 'Iona. Eu sunt Iona.', strigând propriul nume ca pe o descoperire fundamentală. El ia o decizie radicală: nu mai încearcă să spintece peștele din afară, ci își spintecă propria burtă. 'Gata, Iona? Răzbim noi cumva la lumină'."
-        },
-        {
-          subtitlu: "Semnificația ambiguă a încheierii",
-          text: "Finalul este profund ambiguu. Gestul auto-distructiv/creator al lui Iona poate fi interpretat ca o sinucidere simbolică pentru a elibera spiritul, ca o auto-naștere disperată (un act de mântuire prin sine) sau ca o recunoaștere nihilistă a faptului că omul însuși este peștele final, propria sa închisoare. Răspunsul la problema ieșirii rămâne suspendat."
+          nume: 'Școala și învățătura',
+          explicatie: 'Simbol al educației și al disciplinei, dar și al încercărilor prin care copilul devine conștient de reguli și valori.'
         }
       ]
     }
   }
-}
 };
 
 export default OPERA_DETAILS;

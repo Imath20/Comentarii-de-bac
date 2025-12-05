@@ -1072,8 +1072,163 @@ export const OPERA_QUESTIONS = {
     "correct": 0,
     "explanation": "Construcția subiectivă, analiza trăirilor și conflictul interior îl plasează în modernism."
   }
+],
+"hanul-ancutei": [
+  {
+    "q": "„Hanul Ancuței” este o operă construită sub forma:",
+    "options": [
+      "Unui ciclu de povestiri în ramă",
+      "Unui roman istoric",
+      "Unui poem epic"
+    ],
+    "correct": 0,
+    "explanation": "Cartea este alcătuită din povestiri în ramă, unite de spațiul hanului și de atmosfera de legendă."
+  },
+  {
+    "q": "Atmosfera dominantă în „Hanul Ancuței” este:",
+    "options": [
+      "O atmosferă de mister și fabulos, cu iz arhaic",
+      "Una urbană și modernă",
+      "Una comică și parodică"
+    ],
+    "correct": 0,
+    "explanation": "Sadoveanu creează o atmosferă arhaică, plină de farmec, mister și elemente de baladă."
+  },
+  {
+    "q": "Rolul Ancuței în volum este acela de:",
+    "options": [
+      "Povestitoare principală",
+      "Gazdă și catalizator al poveștilor călătorilor",
+      "Personaj negativ"
+    ],
+    "correct": 1,
+    "explanation": "Ancuța, hangița, îi adună pe călători și creează cadrul în care poveștile prind viață."
+  },
+  {
+    "q": "Temele esențiale ale volumului sunt:",
+    "options": [
+      "Dragostea, vitejia și aventura",
+      "Viața monahală și meditația",
+      "Eroarea judiciară"
+    ],
+    "correct": 0,
+    "explanation": "Poveștile călătorilor evocă iubirea, faptele vitejești, trecutul și legendele Moldovei."
+  },
+  {
+    "q": "Limbajul utilizat de Sadoveanu în „Hanul Ancuței” se remarcă prin:",
+    "options": [
+      "Arhaisme, regionalisme și un ton de baladă",
+      "Termeni științifici și neologisme moderne",
+      "Structuri simple, fără expresivitate"
+    ],
+    "correct": 0,
+    "explanation": "Sadoveanu recreează limba veche moldovenească, dând textului o muzicalitate aparte."
+  }
+],
+"alexandru-lapusneanul": [
+  {
+    "q": "„Alexandru Lăpușneanul” este considerată:",
+    "options": [
+      "Prima nuvelă istorică din literatura română",
+      "O poezie romantică",
+      "Un basm popular"
+    ],
+    "correct": 0,
+    "explanation": "Negruzzi scrie prima nuvelă istorică de referință, inspirată din cronicile lui Grigore Ureche."
+  },
+  {
+    "q": "Replica celebră „Dacă voi nu mă vreți, eu vă vreau” exprimă:",
+    "options": [
+      "Hotărârea lui Lăpușneanul de a reveni pe tron",
+      "Dragostea domnitorului pentru popor",
+      "Refuzul de a se mai implica în politică"
+    ],
+    "correct": 0,
+    "explanation": "Replica arată voința autoritară și crudă a domnitorului de a-și recăpăta puterea."
+  },
+  {
+    "q": "Construirea personajului principal se realizează predominant prin:",
+    "options": [
+      "Autocaracterizare detaliată",
+      "Caracterizare indirectă și fapte memorabile",
+      "Dialoguri comice"
+    ],
+    "correct": 1,
+    "explanation": "Lăpușneanul este construit prin acțiuni, atitudini, replici și prin percepția altor personaje."
+  },
+  {
+    "q": "Tema centrală a nuvelei este:",
+    "options": [
+      "Exercitarea tiranică a puterii și răzbunarea",
+      "Aventura romantică a domnitorului",
+      "Pierderea identității"
+    ],
+    "correct": 0,
+    "explanation": "Nuvela explorează tirania, setea de putere și cruzimea domnitorului."
+  },
+  {
+    "q": "Episodul „piramidei de capete” reprezintă:",
+    "options": [
+      "Un ritual religios",
+      "Un gest simbolic de pedepsire a boierilor trădători",
+      "O scenă comică"
+    ],
+    "correct": 1,
+    "explanation": "Scena șocantă evidențiază cruzimea și dorința de răzbunare a domnitorului."
+  }
+],
+"rascoala": [
+  {
+    "q": "Tema principală a romanului „Răscoala” este:",
+    "options": [
+      "Conflictul social dintre țărani și boieri",
+      "Dragostea interzisă",
+      "Viața intelectualilor la oraș"
+    ],
+    "correct": 0,
+    "explanation": "Romanul analizează cauzele psihologice și sociale ale Răscoalei din 1907."
+  },
+  {
+    "q": "Romanul „Răscoala” se încadrează în curentul:",
+    "options": [
+      "Simbolism",
+      "Realism obiectiv",
+      "Impresionism"
+    ],
+    "correct": 1,
+    "explanation": "Rebreanu folosește tehnici realiste: obiectivitate, perspectivă narativă neutră și analiză socială."
+  },
+  {
+    "q": "Personajul central care simbolizează revolta țăranilor este:",
+    "options": [
+      "Victor",
+      "Petru al lui Iacob",
+      "Ion al Glanetașului"
+    ],
+    "correct": 1,
+    "explanation": "Petru reprezintă frământările, nedreptățile și acumularea tensiunii care izbucnește în răscoală."
+  },
+  {
+    "q": "Romanul este structurat în trei părți care urmăresc:",
+    "options": [
+      "Cauzele, desfășurarea și urmările răscoalei",
+      "Povestea de dragoste a personajelor",
+      "Formarea intelectuală a naratorului"
+    ],
+    "correct": 0,
+    "explanation": "Structura trilogică evidențiază evoluția unui fenomen social amplu."
+  },
+  {
+    "q": "Stilul lui Rebreanu în „Răscoala” se caracterizează prin:",
+    "options": [
+      "Analiză psihologică și descrieri obiective",
+      "Lirism exagerat",
+      "Umor și ironie"
+    ],
+    "correct": 0,
+    "explanation": "Rebreanu combină obiectivitatea realistă cu analiza psihologică a maselor și indivizilor."
+  }
 ]
-
 
 };
 
