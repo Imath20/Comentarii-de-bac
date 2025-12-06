@@ -1134,7 +1134,84 @@ export const OPERA_DETAILS = {
           explicatie: 'Simbolizează continuitatea valorilor și importanța educației pentru formarea caracterului.'
         }
       ]
-    }    
+    },
+    rezumat: {
+      incipit: {
+        sectiuni: [
+          {
+            subtitlu: "Văduva Precupeață și Voința de Îmbogățire",
+            text: "Mara este o văduvă tânără, voinică și harnică din Radna, care trăiește la hotarul dintre români și șvabi. Răposatul ei soț, Bârzovanu, fusese un cizmar mai mult cârpaci și bețiv, lăsând copiilor o vie, câțiva pruni și casa. Mara este precupeață, cumpărând și vânzând marfă la târgurile din Radna, Lipova și Arad, străbătând des Murășul. Voința ei de a nu rămâne săracă este obsesivă: 'mai bucuros se împrumută pentru ziua de mâine' decât să nu pună bani în cei trei ciorapi."
+          },
+          {
+            subtitlu: "Cei Trei Ciorapi și Visul Mamei",
+            text: "Mara își împarte câștigul zilnic în trei ciorapi: unul pentru zilele de bătrânețe și înmormântare, unul pentru fiica ei, Persida (Sidi), și unul pentru fiul ei, Trică. Visul ei este ca Persida să devină preoteasă, iar Trică să ajungă un staroste de cojocari ca Bocioacă, având o siguranță socială și financiară. În acest scop, o dă pe Persida la mănăstirea catolică din Lipova, sub îngrijirea maicii Aegidia, cu o taxă redusă.",
+            listaProbe: [
+              "Mara este precupeață la Radna, Lipova și Arad;",
+              "Economisește bani în trei ciorapi (pentru ea, Persida și Trică);",
+              "Persida este dată la mănăstirea minoriților din Lipova, la maica Aegidia;",
+              "Mara obține arânda podului de pe Murăș."
+            ]
+          }
+        ]
+      },
+      intriga: {
+        sectiuni: [
+          {
+            subtitlu: "Maica Aegidia și Prima Neorânduială a Persidei",
+            text: "Maica Aegidia, o călugăriță aspră, dar bună la suflet, o protejează pe Mara, ajutând-o să obțină arânda podului de pe Murăș și reducând taxa Persidei. În ciuda eforturilor de a o civiliza, Persida, deși deșteaptă, este neastâmpărată și greu de adus la 'buna-cuviinţă'. Mara se teme că blândețea ei o va face să se călugărească: 'Mai bine moartă!'."
+          },
+          {
+            subtitlu: "Fuga peste Murăș și Trecerea la Timpul Marilor Decizii",
+            text: "Intriga se declanșează când Trică, bătut de Costi Balcovici la școală, fuge la mănăstire, cerând ajutorul Persidei. Persida, într-un gest de revoltă pentru a-și apăra fratele, fuge cu el și traversează Murășul într-o luntriță pe ape învolburate, punând în pericol numele mănăstirii. Acest episod arată forța instinctivă a Persidei și o maturizează, anunțând viitoarea ei hotărâre de a-și urma pasiunea."
+          }
+        ]
+      },
+      desfasurarea: {
+        sectiuni: [
+          {
+            subtitlu: "Ispita și Dragostea Interzisă (Persida și Națl)",
+            text: "Persida se îndrăgostește de Națl, fiul măcelarului bogat, neamț și de altă religie (catolic), Balthazar. Dragostea lor este o 'ispită' care sfidează barierele etnice, religioase și sociale. Națl, curățel și deștept, fiu de 'om cu stare', este văzut ca o alegere nepotrivită de Mara, care avea alte planuri pentru fata ei ('fiu de popă, nepot de protopop')."
+          },
+          {
+            subtitlu: "Fuga și Birtul de la Sărărie",
+            text: "Persida se supune 'datoriei' de a-și urma inima și fuge cu Națl, căsătorindu-se în secret. Cei doi își deschid un birt la Lipova, chiar lângă podul Murășului, sub privirile Marei. Deși o așteaptă 'în toate zilele să se întoarcă', Mara refuză să-i viziteze și speră că 'fata ei are în cele din urmă să-l părăsească pe neamț'. Trică, deși ucenic cojocar, se abate de la calea visată de mamă, fiind implicat în 'isprăvi' și înrolându-se în armată."
+          },
+          {
+            subtitlu: "Degradarea Relației și Plecarea lui Națl",
+            text: "Relația Persidei cu Națl se degradează din cauza neînțelegerilor și a geloziei. Națl, descris de Mara ca 'călău', o lovește pe Persida. Națl pleacă apoi să se înroleze în armată (se îndreaptă spre Veneția și Verona) , crezând că o 'scapă de un nemernic' ca el. Persida rămâne singură și bolnavă, cu o 'greul vieţii' de suportat. Totuși, Mara simte o 'mângâiere' în gândul că fata ei 'nu e cununată cu neamţul'."
+          }
+        ]
+      },
+      punctulCulminant: {
+        sectiuni: [
+          {
+            subtitlu: "Întoarcerea și Confruntarea din Casa Bolii",
+            text: "Intriga atinge punctul culminant când Națl se întoarce la Persida, aflată pe patul de suferință, gata să nască. Mara, îngrijorată de starea fiicei, este 'tulbure' și îl gonește pe Națl, spunând că el a adus 'blestemul casei'.",
+            listaProbe: [
+              "Națl se întoarce la Persida în timpul bolii și nașterii ei;",
+              "Mara încearcă să-l alunge pe Națl: 'Nu e linişte-n casa aceasta câtă vreme te afli tu în preajma ei!';",
+              "Mara îl acuză: 'Călău i-ai fost! Iată ce-ai făcut din ea!'."
+            ]
+          },
+          {
+            subtitlu: "Mărturisirea Persidei și Acceptarea Mamei",
+            text: "În timpul confruntării, Persida se ridică din culcuș și își apără soțul: 'Da, mamă, mi-e bărbat și-i sunt soție, după lege, în fața lui Dumnezeu, ca să ne ajutăm la nevoie unul pe altul'. Această declarație, făcută în fața morții și a nașterii, o forțează pe Mara să accepte, în sfârșit, căsnicia interzisă a fiicei sale. Nașterea noului-născut adună membrii risipiți ai familiei."
+          }
+        ]
+      },
+      deznodamant: {
+        sectiuni: [
+          {
+            subtitlu: "Echilibrul Moral și Moartea lui Balthazar",
+            text: "Moartea bătrânului Balthazar (tatăl lui Națl) și sinuciderea fratelui vitreg al lui Națl, Bandi, (care încercase să-și însușească averea, 'Rostul lui Bandi') simplifică situația financiară a cuplului. Persida și Națl primesc moștenirea și dobândesc o siguranță materială. Persida devine centrul moral al familiei, cel care îi adună pe toți."
+          },
+          {
+            subtitlu: "Finalul (Pace și Liniște)",
+            text: "Romanul se încheie cu o imagine de 'pace și liniște' relativă. Deși copiii și-au găsit calea (Persida este căsătorită și bogată, Trică este staroste cojocar, îndeplinind, parțial, visul Marei), Mara simte că pacea 'n-a intrat încă în suflete', iar între ei 'tot învrăjbiți erau'. Opera subliniază triumful eticii și al instinctului matern asupra ambiției oarbe. Mara a strâns banii, dar a pierdut aproape totul în zbuciumul copiilor, care își găsesc, în cele din urmă, echilibrul prin iubire și suferință."
+          }
+        ]
+      }
+    }
   },
   'ultima-noapte-dragoste': {
     titlu: 'Ultima noapte de dragoste, întâia noapte de război',
@@ -2465,7 +2542,7 @@ export const OPERA_DETAILS = {
     },
     rezumat: {
       "contextGeneral": {
-        "sectiuni": [
+        sectiuni: [
           {
             subtitlu: "Viziunea asupra Timpului și Estetica Neoclasică",
             text: "Poemul face parte din volumul 'Pe Argeș în sus' (1923) și este o meditație rafinată asupra timpului. Ion Pillat construiește o structură oglindă perfectă (mise en abyme) în care trecutul și prezentul se suprapun, demonstrând caracterul ciclic, ritualic al existenței. Poezia îmbină nostalgia trecutului boieresc cu ironia conștientizării moderne."
@@ -2567,7 +2644,7 @@ export const OPERA_DETAILS = {
       },
       "elementeSpecifice": {
         subtitlu: "Analiza Stilistică Detaliată (Neoclasicism, Simbolism)",
-        "sectiuni": [
+        sectiuni: [
           {
             "nume": "Structură și Compoziție (Structura Oglindă)",
             "lista": [
@@ -2923,7 +3000,98 @@ export const OPERA_DETAILS = {
           explicatie: 'Simbol al curajului, al opoziției morale și al dreptății în fața abuzului de putere.'
         }
       ]
-    }    
+    },
+    rezumat: {
+      incipit: {
+        sectiuni: [
+          {
+            subtitlu: "Întoarcerea în Țară și Tensiunea Inițială",
+            text: "Nuvela debutează *in medias res*, prezentând a doua venire la domnie a lui Alexandru Lăpușneanu, după ce fusese alungat. Acesta se întoarce din Constantinopol cu o armată de spahii turci și oșteni de strânsură, hotărât să recucerească tronul de la uzurpatorul Ștefan Tomșa. Atmosfera este tensionată, dominată de suspiciunea domnului față de boieri, pe care îi cunoaște bine din prima domnie. Îl însoțește vornicul Bogdan, iar curtea este plină de presimțiri sumbre."
+          },
+          {
+            subtitlu: "Replica Mărturie: 'Dacă voi nu mă vreți, eu vă vreu…!'",
+            text: "Intriga se declanșează odată cu întâlnirea dintre Lăpușneanu și o delegație de patru boieri trimiși de Tomșa – Moțoc, Veveriță, Spancioc și Stroici – care îi transmit mesajul că țara nu-l dorește. Răspunsul tiranului stabilește tema întregii opere și devine motto-ul ei, prefigurând tirania absolută ce va urma. Moțoc, crezând că face un serviciu, îl avertizează pe Lăpușneanu că poporul s-a săturat de 'sângele ce ai vărsat'. Domnul, însă, nu îl ucide pe Moțoc, ci îl păstrează, spunându-i ironic: 'Te voi cruța, căci îmi ești trebuitor, ca să mă scapi de blestemele norodului.'"
+          }
+        ]
+      },
+      intriga: {
+        sectiuni: [
+          {
+            subtitlu: "Consolidarea Tiraniei",
+            text: "Odată ajuns pe tron, Lăpușneanu își consolidează puterea printr-o serie de acte de teroare, confirmând temerile boierilor și prefigurând masacrul. El nu cruță pe nimeni și nu iartă nicio greșeală, reală sau inventată:",
+            listaProbe: [
+              "Arde cetățile țării (cu excepția Hotinului) pentru a elimina refugiile boierilor;",
+              "Confiscă averile boierilor pentru a-i slăbi financiar și politic;",
+              "Execută boieri sub cele mai mici pretexte, expunând capetele în poarta curții cu 'țidule' care anunță vina lor;",
+              "Își formează o gardă de lefegii (mercenari) albanezi, sârbi și unguri, indivizi violenți și loiali doar banului."
+            ]
+          },
+          {
+            subtitlu: "Intervenția Doamnei Ruxanda",
+            text: "Doamna Ruxanda, soția domnului și fiica lui Petru Rareș, este un personaj blând, pios și profund nefericit din cauza cruzimilor soțului. Într-o scenă crucială, o văduvă îndoliată îi arată capul soțului ei executat, stârnind revolta morală a domniței. Ruxanda îl imploră pe Lăpușneanu să înceteze vărsarea de sânge. Răspunsul tiranului este cinic și ambiguu: 'de poimîne nu vei mai vedea' capete tăiate. El îi promite 'un leac de frică', prefigurând masacrul."
+          }
+        ]
+      },
+      desfasurarea: {
+        sectiuni: [
+          {
+            subtitlu: "Pregătirea Marelui Ospăț (Cap. III)",
+            text: "Lăpușneanu pune la cale o capcană diabolică. El anunță că dorește să se împace cu boierii și îi invită pe toți la un ospăț solemn la curtea domnească, după liturghia de la biserică. În biserică, domnul ține o cuvântare plină de ipocrizie și căință simulată: 'De la venirea mea cu a doua domnie și pînă astăzi, am arătat asprime către mulți... Să trăim de acum în pace, iubindu-ne ca niște frați.' Boierii, naivi și dornici de liniște, îl iartă, cu excepția celor doi boieri suspicioși, Spancioc și Stroici, care refuză să participe la ospăț și se refugiază în secret, prefigurând deznodământul."
+          },
+          {
+            subtitlu: "Ospățul de la Curte (Cap. III)",
+            text: "La ospăț participă 47 de boieri. În timp ce boierii mănâncă și beau, curtea este înconjurată de lefegii înarmați. Masacrul începe brusc, când boierul Veveriță, ridicând paharul, este lovit în cap de buzduganul armașului. Lăpușneanu dă semnalul: 'A! voi ocărîți pre domnul vostru! la ei, flăcăi!'"
+          },
+          {
+            subtitlu: "Sacrificarea lui Moțoc (Cap. III)",
+            text: "În timp ce masacrul celor 47 de boieri se desfășoară sub privirile amuzate ale lui Lăpușneanu, poporul, adunat la porțile palatului, cere socoteală. Armașul îi întreabă ce doresc, iar mulțimea strigă, la unison: 'Capul lui Moțoc vrem!' Moțoc, oportunistul suprem, îl imploră pe domn să-l apere, dar Lăpușneanu se dovedește cinic și pragmatic. El îl sacrifică pe Moțoc pentru a-și mulțumi poporul (Proști, dar mulți...) și îl aruncă mulțimii, care îl face bucăți. Domnul își cumpără astfel loialitatea mulțimii, spunând: 'Iată cum plătește Alexandru-vodă la cei ce pradă țara!'",
+            listaProbe: [
+              "Moțoc se teme de răzbunarea poporului;",
+              "Lăpușneanu îl predă poporului ca 'țap ispășitor';",
+              "Sacrificiul lui Moțoc restaurează liniștea aparentă."
+            ]
+          }
+        ]
+      },
+      punctulCulminant: {
+        sectiuni: [
+          {
+            subtitlu: "Piramida Capetelor și 'Leacul de Frică' (Cap. III)",
+            text: "Punctul culminant este finalizarea masacrului și scena grotescă a piramidei de capete. Lăpușneanu își respectă promisiunea făcută Ruxandei: capetele celor 47 de boieri sunt așezate pe masa ospățului în formă piramidală. Trupurile sunt aruncate pe fereastră. Când Ruxanda este adusă să vadă 'leacul de frică', ea leșină la vederea sângeroasei priveliști. Prin această scenă de violență și cruzime extremă, Lăpușneanu își atinge apogeul tiraniei și al cinismului macabru."
+          }
+        ]
+      },
+      deznodamant: {
+        sectiuni: [
+          {
+            subtitlu: "Teroarea și Boala (Cap. IV)",
+            text: "Timp de patru ani, Lăpușneanu continuă să domnească prin teroare, însă renunță la execuțiile prin sabie în favoarea unor torturi fizice (scoaterea de ochi, tăierea de mâini). Singurii care îi tulbură liniștea sunt Spancioc și Stroici, refugiați la Cameniță. Mutându-se la Hotin pentru a-i supraveghea, Lăpușneanu se îmbolnăvește grav de lângoare (febră tifoidă). În delir, este bântuit de viziunile victimelor sale, simțind că moartea e aproape.",
+            listaProbe: [
+              "Delirul bolii și viziunile jertfelor;",
+              "Căința simulată în fața mitropolitului Teofan și a boierilor;",
+              "Decizia de a se călugări și tunderea sub numele de Paisie."
+            ]
+          },
+          {
+            subtitlu: "Trezirea și Ultima Amenințare",
+            text: "Lăpușneanu se trezește din comă și descoperă cu o furie oarbă că a fost călugărit, crezând că a fost victima unei conspirații. El își arată adevărata natură, amenințând cu o nouă serie de crime: 'M-ați popit voi, dar de mă voi îndrepta, pre mulți am să popesc și eu!' (referindu-se la uciderea mitropolitului și a boierilor). Această amenințare o determină pe Ruxanda, disperată pentru viața fiului ei și încurajată de Mitropolitul Teofan ('Domnul Dumnezeu să te povățuiască'), să acționeze."
+          },
+          {
+            subtitlu: "Răzbunarea Finală: Otrava",
+            text: "Spancioc și Stroici sosesc în secret la Hotin. Spancioc îi oferă Ruxandei o otravă puternică, spunându-i că singura cale de a-și salva fiul este să-l ucidă pe Lăpușneanu. Ruxanda, între datoria conjugală și cea maternă, alege viața fiului. Ea îi dă domnului paharul cu otravă. Recunoscându-i pe cei doi boieri pe care îi credea morți, Lăpușneanu înțelege că a fost trădat, dar este prea târziu."
+          },
+          {
+            subtitlu: "Agonia și Moartea Tiranului",
+            text: "Moartea lui Lăpușneanu este descrisă naturalist, cu detalii șocante. Spancioc și Stroici asistă la agonia tiranului, torturându-l psihologic. La cererea de milă, Stroici îl forțează să bea drojdiile de otravă rămase în pahar. Lăpușneanu moare în chinuri groaznice, zbatându-se în convulsii, cu spume la gură. Nuvela se încheie cu sentința finală, istorică: 'Acest fel fu sfîrșitul lui Alexandru Lăpușneanul, care lăsă o pată de sînge în istoria Moldaviei.'",
+            listaProbe: [
+              "Recunoașterea lui Spancioc și Stroici (momentul realizării trădării);",
+              "Tortura psihologică aplicată de cei doi boieri-răzbunători;",
+              "Moartea în agonie, ca justiție imanentă."
+            ]
+          }
+        ]
+      }
+    }
   },
   'maitreyi': {
     titlu: 'Maitreyi',
@@ -2972,7 +3140,109 @@ export const OPERA_DETAILS = {
           explicatie: 'Reprezintă diferențele culturale și tensiunile dintre tradiție și modernitate.'
         }
       ]
-    }    
+    },
+    rezumat: {
+      incipit: {
+        sectiuni: [
+          {
+            subtitlu: "Reflecția Jurnalistică și Prima Impresie",
+            text: "Romanul debutează cu Allan, tânărul inginer englez, citind și rescriind în jurnalul său, încercând să reconstituie debutul poveștii. Starea de nervozitate și ezitare a naratorului anticipează drama. El își amintește vag de prima dată când o văzuse pe Maitreyi (pe atunci îi păruse urâtă, cu buze cărnoase și o siluetă plină), dar un detaliu îl fascinează imediat: brațul ei gol, brun, 'de lut și de ceară'."
+          },
+          {
+            subtitlu: "Contextul din Calcutta și Paradoxul Pasiunii",
+            text: "Allan locuiește în Wellesley Street, la Ripon Mansion, iar vecinul său, Harold Carr, un eurasian, îl avertizează cu dezgust despre femeile bengaleze: 'Sunt murdare, crede-mă. Și apoi, nu e nimic de făcut, nici dragoste.' Reacția lui Allan la aceste vorbe este una paradoxală – simte o pasiune 'vrăjmașă' care cere 'suprimarea, alterarea, detronarea' celei dintâi pasiuni, un semn al complexității și conflictului ce se prefigurează.",
+            listaProbe: [
+              "Allan locuiește la Ripon Mansion;",
+              "Harold Carr avertizează cu dezgust despre femeile bengaleze;",
+              "Allan își recunoaște o atracție paradoxală: îi place să audă vorbindu-se de rău de cei pe care îi iubește."
+            ]
+          }
+        ]
+      },
+      intriga: {
+        sectiuni: [
+          {
+            subtitlu: "Inginerul Narendra Sen și Boala lui Allan",
+            text: "Allan lucrează la o societate de canalizare sub conducerea inginerului Narendra Sen, un brahman neortodox, laureat la Edinburgh. După ce Allan se îmbolnăvește grav de malaria pe șantierul de la Tamluk, Sen, sub pretextul unei convalescențe, îl invită să locuiască în casa sa din cartierul Bhowanipore. Sen este fizic neatrăgător ('se asemăna cu o broască'), dar emană simpatie și înțelepciune. Allan acceptă, intrigat de lumea indiană.",
+            listaProbe: [
+              "Allan este inginer, lucrează la canalizarea deltei;",
+              "Se îmbolnăvește de malarie la Tamluk;",
+              "Inginerul Sen îl invită să locuiască în casa sa."
+            ]
+          },
+          {
+            subtitlu: "Maitreyi: Prima Viziune în Casa Bengaleză",
+            text: "Prima vizită oficială, alături de ziaristul francez Lucien Metz, îl fascinează pe Allan. Casa bengaleză, plină de covoare de Kashmir și măsuțe de alamă, creează o atmosferă magică. Maitreyi apare în sari de culoarea ceaiului palid. Ea este descrisă ca o apariție supranaturală, cu bucle prea negre și ochi prea mari, care creează 'o viață mai puțin umană în acest trup înfășurat și totuși transparent', sugerând misterul ei poetic și inaccesibil."
+          }
+        ]
+      },
+      desfasurarea: {
+        sectiuni: [
+          {
+            subtitlu: "Primele Apropieri și Lecțiile Reciproce",
+            text: "Allan se mută la parterul casei Sen. Se simte continuu observat, dar Maitreyi i se pare inițial mândră și distantă. Încep lecțiile reciproce de limbi: Maitreyi îl învață bengaleza, el îi predă franceza. Maitreyi se dezvăluie a fi o poetă filosofică apreciată de Tagore, iar caietele ei sunt pline de versuri haotice. Allan descoperă un univers nou pe terasa casei, departe de lumea europeană."
+          },
+          {
+            subtitlu: "Gesturile Erotice și Tensiunea Secretă",
+            text: "Relația lor avansează prin gesturi încărcate de simbolism. Maitreyi îi aruncă o floare, pe care Allan o falsifică, fiind deconspirat: 'Floarea aceea avea, împletit, un fir din părul meu...' Tensiunea crește prin plimbările cu mașina în jurul Calcuttei, unde, sub masa de seară, își strâng picioarele goale, un gest secret ce devine ritual. Allan își mușcă ușor brațul Maitreyiei, un semn al posesivității sale pasionale. Maitreyi răspunde la gest prin apariția într-un costum de Rajputana, expunându-și 'sânii bruni într-o paloare ucigător de turburătoare'."
+          },
+          {
+            subtitlu: "Confesiunile și Gelozia lui Allan",
+            text: "Maitreyi îi dezvăluie trecutul ei: dragostea pentru un pom cu 'șapte frunze' (pe care îl îmbrățișa goală) și relația spirituală, aproape carnală, cu Tagore (de la care primește o 'mantră' de puritate și o șuviță de păr). Allan este chinuit de gelozie, simțind că puritatea și întâietatea lui sunt amenințate de aceste amintiri mistice: 'Unde îmi era siguranța întâietății mele, liniștea mea?'"
+          },
+          {
+            subtitlu: "Logodna Secretă și Noaptea Întâi",
+            text: "După o seară la Lacuri, Maitreyi inițiază un ritual magic de logodnă secretă în bengaleză, legându-se pe pământ, pe cer, pe apă. Inelul - din fier și aur (doi șerpi încolăciți) - devine simbolul lor. Punctul culminant al apropierii fizice are loc după ziua ei de naștere (10 septembrie), când Maitreyi vine în camera lui Allan, tremurând, în sari subțire. După această noapte, ea devine o amantă desăvârșită, vizitându-l regulat, cu 'siguranța cu care săruta, perfecțiunea îmbrățișării ei'."
+          },
+          {
+            subtitlu: "Umbrele și Presimțirile Dezastrului",
+            text: "Situația se complică: Khokha (vărul sărac) îi surprinde îmbrățișați. Chabù, sora Maitreyiei, își pierde mințile (vede 'calea' chemând-o) și devine un simbol al tragediei iminente. Domnul Sen se confruntă cu probleme grave de sănătate (tensiune arterială și 'mouches-volantes'). Un episod definitoriu se petrece la Lacuri, unde Chabù o demască inocent pe sora sa, simțind mâna lui Allan sub șalul ei și spunând: 'Ai văzut că dadà își ține mâna la pieptul tău? Parcă eu nu știu...'"
+          }
+        ]
+      },
+      punctulCulminant: {
+        sectiuni: [
+          {
+            subtitlu: "Descoperirea și Expulzarea lui Allan",
+            text: "Intriga atinge punctul culminant când Maitreyi este forțată să acționeze. Chabù i-a spus totul mamei, iar Maitreyi, prinsă la mijloc, i-a șoptit lui Allan sub masă să nu mărturisească nimic. A doua zi, inginerul Sen intră în camera lui Allan cu ochelarii negri, ascunzându-și privirea, și îl anunță calm că trebuie să plece 'chiar astăzi' din casă, sub pretextul operației sale de ochi și al oboselii lui Allan. Allan înțelege că a fost descoperit: 'Un băiat energic ca d-ta iese întotdeauna din încurcătură.'",
+            listaProbe: [
+              "Chabù mărturisește totul doamnei Sen;",
+              "Sen anunță expulzarea imediată a lui Allan, sub pretextul bolii sale;",
+              "Allan este concediat."
+            ]
+          },
+          {
+            subtitlu: "Scena Despărțirii (Tăcerea și Caderea)",
+            text: "Despărțirea este sfâșietoare, dominată de tăcerea acuzatoare a familiei. Allan cade la picioarele doamnei Sen, implorând 'Iartă-mă, mamă, nu mă lăsa să plec!', dar aceasta rămâne neclintită. Allan își ia rămas-bun de la Chabù, apoi face gestul de umilire supremă, punându-și palmele pe piciorul drept al inginerului Sen și al soției sale – cel mai vulnerabil salut indian. În momentul plecării, Allan o vede pe Maitreyi la balcon, care scoate un țipăt scurt și cade lată. Allan vrea să se întoarcă, dar Sen îl oprește, iar în taxi îi înmânează o scrisoare dură, acuzându-l de ingratitudine și caracter depravat."
+          }
+        ]
+      },
+      deznodamant: {
+        sectiuni: [
+          {
+            subtitlu: "Bătaia și Suferința Maitreyiei",
+            text: "Allan află de la Khokha, care îi aduce 'o ramură de oleandru înflorit' de la Maitreyi, despre consecințele acțiunilor sale. Maitreyi a încercat să fie măritată, dar a amenințat că va mărturisi soțului că s-a culcat cu Allan. Drept urmare, a fost bătută crunt de inginer ('de a trântit-o la pământ în sânge') și de șofer, până la nesimțire. Sen ajunge la spital aproape orb, iar Maitreyi este sechestrată. Allan, în schimb, își pierde slujba și banii, intrând într-o perioadă de 'beznă', refuzând să răspundă la telefoanele disperate ale Maitreyiei ('Unde e Allan? Vreau să vorbesc cu Allan!')."
+          },
+          {
+            subtitlu: "Retragerea în Himalaya și Eșecul Uitărilor",
+            text: "Allan se retrage luni de zile în solitudine absolută, între Almora și Ranikhet (Himalaya), reluând obsedant 'același film interior al dragostei mele cu Maitreyi'. Încearcă să o uite prin escapade, inclusiv cu Jenia Isaac, o muzicantă sud-africană, dar experimentul eșuează. Înțelege că pe Maitreyi 'o iubesc, numai pe ea!'. Disperarea îl face să se gândească la sinucidere."
+          },
+          {
+            subtitlu: "Revelația Finală și Sacrificiul (Epilogul)",
+            text: "Întors în lume (la Singapore), Allan primește revelația finală de la J., nepotul doamnei Sen: Maitreyi s-a 'dat vânzătorului de fructe' (simbolul degradării supreme) pentru a se face 'necinstită' și a fi alungată din casă, sperând astfel să poată pleca după Allan. Deși a rămas însărcinată și a plecat la Midnapur, Sen a refuzat s-o alunge: 'A spus că mai bine o omoară cu mâna lui decât s-o dea afară.'",
+            listaProbe: [
+              "Maitreyi se 'dă' vânzătorului de fructe;",
+              "Scopul sacrificiului: să fie alungată pentru a fugi la Allan;",
+              "Sen refuză să o alunge din casă."
+            ]
+          },
+          {
+            subtitlu: "Finalul Deschis și Îndoiala",
+            text: "Allan înțelege gestul Maitreyiei ca pe un sacrificiu suprem de devotament, însă este copleșit de incertitudine și remușcări ('Sunt foarte tulbure, acum, foarte tulbure.'). Romanul se încheie cu dorința disperată a naratorului de a privi din nou ochii Maitreyiei, fiind incapabil să distingă între realitate și auto-iluzionare, între adevăr și 'o păcăleală a dragostei mele'. Finalul rămâne deschis, subliniind imposibilitatea iubirii dincolo de barierele culturale și distrugerea reciprocă a protagoniștilor."
+          }
+        ]
+      }
+    }
   },
   'critice': {
     titlu: 'Formele fără fond',
@@ -3141,7 +3411,88 @@ export const OPERA_DETAILS = {
           explicatie: 'Simbol al legăturii cu trecutul și al valorilor morale transmise prin generații.'
         }
       ]
-    }    
+    },
+    rezumat: {
+      incipit: {
+        sectiuni: [
+          {
+            subtitlu: "Cadrul Spațial și Atmosfera Festivă",
+            text: "Nuvela-ciclu se deschide într-o toamnă 'aurită', la Hanul Ancuței, un loc descris ca o 'cetate' cu ziduri groase și porți ferecate, situat pe drumul dintre Țara de Jos și Țara de Sus a Moldovei. Este un spațiu mitic în care timpul pare suspendat. Atmosfera este de sărbătoare: lăutarii cântă, oamenii beau vin nou, iar Ancuța cea tânără (frumoasă și vicleană ca mama ei) îi servește pe oaspeți."
+          },
+          {
+            subtitlu: "Adunarea Povestitorilor și Promisiunea lui Ionița",
+            text: "La han se adună un cerc eterogen de povestitori: Comisul Ionița (razașul bătrân), Căpitanul Neculai Isac (mazâl), Moș Leonte zodierul, Părintele Gherman, Meșterul Ienache coropcarul, și alții. Comisul Ionița promite să spună 'cea mai minunată istorisire', dar este mereu amânat. Această promisiune creează cadrul narativ (povestea în ramă) și tensiunea întregului ciclu.",
+            listaProbe: [
+              "Hanul este descris ca o 'cetate';",
+              "Comisul Ionița promite cea mai minunată poveste;",
+              "Caravanele poposesc la han cu vin nou (simbol al abundenței)."
+            ]
+          }
+        ]
+      },
+      intriga: {
+        sectiuni: [
+          {
+            subtitlu: "Tema Rememorării și Lumea Veche a Moldovei",
+            text: "Intriga nu este liniară, ci tematică: dorința personajelor de a-și povesti amintirile creează un tablou epic al Moldovei de altădată. Poveștile abordează teme precum vitejia, nedreptatea boierească, hoția, dreptatea divină și destinul individual în epoca domnilor și a hoților de codru. Fiecare narativă contribuie la refacerea 'cărții de balade' a neamului."
+          },
+          {
+            subtitlu: "Dihotomia Ordine vs. Arbitrariu",
+            text: "Se stabilesc conflicte fundamentale: Vodă (puterea absolută, ca în *Iapa lui Vodă*) versus răzeși (dreptatea personală, ca în *Judecata sărmănilor*). Hanul, condus de Ancuța (mama/fiica), reprezintă un spațiu de neutralitate și ospitalitate care mediază și adună aceste forțe sociale și istorice opuse."
+          }
+        ]
+      },
+      desfasurarea: {
+        sectiuni: [
+          {
+            subtitlu: "Iapa lui Vodă și Haralambie (Vitejia și Sacrificiul)",
+            text: "Comisul Ionița relatează întâlnirea cu Vodă Mihai Sturdza deghizat, care, amuzat de îndrăzneala de a-i cere dreptate, i-o face. Apoi, Părintele Gherman povestește tragedia: Gheorghie Leondari (unchiul) își ucide fratele, pe Haralambie (hoț de codru), din obligație față de Vodă, transformând episodul în sacrificiu și ispășire monahală."
+          },
+          {
+            subtitlu: "Balaurul și Fântâna dintre Plopi (Forța Destinului și Pasiunea Tragedică)",
+            text: "Moș Leonte descrie cum un 'balaur' (fenomen meteo/destin) intervine pentru a salva pe Irinuța și Alixandrel de boierul tiran Nastasă Bolomir. Căpitanul Neculai Isac își povestește drama vieții: dragostea pentru țiganca Marga, trădarea ei și uciderea ei în fântână. Această a doua poveste este cea mai lirică și dramatică, punând în centru o pasiune mistuitoare care l-a costat un ochi pe căpitan."
+          },
+          {
+            subtitlu: "Cealaltă Ancuță și Judecata Sărmănilor (Dreptatea Răzeșilor)",
+            text: "Meșterul Ienache povestește evadarea și salvarea duducăi Varvara de către răzășul Todiță Catană, cu ajutorul Ancuței cea bătrână. Ciobanul Moțoc descrie 'judecata sărmănilor': un țăran răzbunate care, cu ajutorul hoțului Vasile cel Mare, îl ucide pe boierul Răducan Chioru, făcând dreptate acolo unde legea domnească eșuase."
+          },
+          {
+            subtitlu: "Negustorul și Fântânarul (Lumea Nouă și Lumea Vechii Iertări)",
+            text: "Negustorul Damian Cristișor aduce lumea nouă în han prin descrierea călătoriei la Lipsca ('căruța cu foc') și a contrastului dintre civilizația europeană și corupția locală ('baiderice roșii'). Zaharia Fântânarul încheie seria cu o poveste despre restaurarea echilibrului social: el o ajută pe Aglaita să scape cu Ilieș Ursachi, iar Vodă Calimah (prezent la vânătoare) le iartă și le devine naș. Dreptatea se realizează prin intervenția providențială a puterii domnești (spre deosebire de *Judecata sărmănilor*)."
+          }
+        ]
+      },
+      punctulCulminant: {
+        sectiuni: [
+          {
+            subtitlu: "Trecerea Demonului Nopții (Apogeul Fantastic)",
+            text: "Punctul culminant al întregului cadru narativ este marcat de un moment supranatural, care estompează granița dintre realitate și legendă. După povestea lui Zaharia, iapa lui Ionița nechează înfricoșător. Lița Salomia recunoaște că 'nu-i ceas curat', simțind trecerea demonului nopții. Oamenii sunt cuprinși de o spaimă ancestrală, 'loviți ca de o grea muncă'. Tensiunea acumulată din toate istorisirile se descarcă în această prezență a fantasticului popular.",
+            listaProbe: [
+              "Nechezatul înfricoșător al iepei;",
+              "Recunoașterea 'demonului nopții' de către Lița Salomia;",
+              "Oamenii sunt 'loviți' de o spaimă ancestrală."
+            ]
+          }
+        ]
+      },
+      deznodamant: {
+        sectiuni: [
+          {
+            subtitlu: "Amânarea Finală și Închiderea Cercului",
+            text: "Deznodământul este caracterizat de amânarea și circularitate. Comisul Ionița, deși promisese de la început, uită complet să-și spună istorisirea. El îl îmbrățișează pe Căpitanul Neculai Isac, gest ce pecetluiește legătura afectivă și memoria comună creată prin povestire. Noaptea se încheie cu cucosii cântând, vestind zorile, iar oamenii, epuizați, se retrag la odihnă în diferite colțuri ale hanului. Lumea de legendă a Moldovei se retrage odată cu zorii, lăsând locul realității cotidiene, dar amintirile rămân.",
+            listaProbe: [
+              "Ionița uită să-și spună povestea promisă;",
+              "Îmbrățișarea lui Ionița cu Neculai Isac (simbolul unității);",
+              "Cântatul cocoșilor (revenirea la timpul real)."
+            ]
+          },
+          {
+            subtitlu: "Semnificația Operei (Cartea de Balade)",
+            text: "Hanul Ancuței este 'o carte de balade', o meditație asupra trecerii timpului și a modului în care oralitatea menține vie istoria. Hanul este un topos mitic (un *axis mundi*), unde trecutul și prezentul se întâlnesc. Sadoveanu folosește un stil marcat de oralitate și arhaisme, conferind textului o muzicalitate de psalm și o autenticitate istorică profundă, transformând memoria individuală în memorie colectivă."
+          }
+        ]
+      }
+    }
   },
   'iona': {
     titlu: 'Iona',
@@ -3349,6 +3700,76 @@ export const OPERA_DETAILS = {
           explicatie: 'Simbol al distrugerii, dar și al purificării prin violență.'
         }
       ]
+    },
+    rezumat:{
+      incipit: {
+        sectiuni: [
+          {
+            subtitlu: "Contextul Socio-politic și Tensiunea Socială",
+            text: "Romanul se deschide cu o scenă din tren, pe ruta Craiova-București, care reunește câteva personaje reprezentative pentru clasa conducătoare. Arendașul Ilie Rogojinaru (arendașul moșiei Olena-Dolj) susține cu vehemență că țăranul român este leneș, prost și rău, negându-i orice dreptate. Grigore Iuga, un tânăr moșier și intelectual, ascultă critic discuția, conștient de inegalitățile profunde. Această secvență stabilește contrastul dintre viața privilegiată a stăpânilor și drama țărănimii.",
+            listaProbe: [
+              "Rogojinaru consideră țăranul 'numai rău, și prost, și leneș'.",
+              "Grigore Iuga, moșier, ascultă discuția în compartimentul de tren."
+            ]
+          },
+          {
+            subtitlu: "Semnele Răscoalei",
+            text: "Intriga se declanșează când veștile despre o mare tulburare socială se răspândesc. Răscoala, pornită în Moldova, ajunge rapid în sud. Primele semne vizibile în câmpie sunt focurile de la moșia Ruginoasa (arendașul Apostol, evreu, din sindicatul Apostol), un simbol al exploatării excesive a arendașilor."
+          }
+        ]
+      },
+      intriga: {
+        sectiuni: [
+          {
+            subtitlu: "Cauza Imadiată și Mobilizarea de la Amara",
+            text: "Cauza imediată a nemulțumirilor este refuzul sindicatului arendașilor de a reînnoi contractele pentru muncile agricole în condiții decente, lăsând țăranii din sate (precum Amara și Bârlogu) fără pământ și fără mijloace de subzistență. Pe acest fundal de foamete și disperare, flăcările de la Ruginoasa ajung la Amara, proprietatea lui Miron Iuga (tatăl lui Grigore), unde Petre Petre (poreclit și Petre al Mare), un țăran conștient și echilibrat, este nevoit să devină liderul mișcării, inițial fără voia sa."
+          }
+        ]
+      },
+      desfasurarea: {
+        sectiuni: [
+          {
+            subtitlu: "Extinderea Focarelor de Revoltă",
+            text: "Răscoala se extinde pe parcursul mai multor zile. Țăranii, organizați spontan sub diferite căpetenii locale, iau cu asalt conacele, ard documentele de proprietate și de arendă, și atacă arendașii. Mișcarea nu este doar împotriva arendașilor evrei, ci se transformă într-o revoltă generală împotriva tuturor formelor de exploatare, inclusiv a moșierilor români (ciocoi).",
+            listaProbe: [
+              "Țăranii cer 'Pământurile!... Pământul nostru și munca noastră!'",
+              "Se distrug simboluri ale exploatării (conace, acareturi, registre)."
+            ]
+          },
+          {
+            subtitlu: "Paralizia Autorităților și Reacția din București",
+            text: "În București, clasa politică și oficialitățile (reprezentate de prefectul Baloleanu) sunt nehotărâte și panicarde, căutând inițial să minimizeze evenimentele și să dea vina pe 'jidani' sau pe opoziție. Cu cât revolta capătă amploare, guvernul își pierde autoritatea, iar ziarele anunță că 'pârjolul se întinde' și că nu se iau măsuri de apărare a ordinii. Se decide trimiterea armatei pentru a înăbuși mișcarea."
+          },
+          {
+            subtitlu: "Petre Petre și Revendicările Țăranești",
+            text: "Petre Petre încearcă să mențină revolta pe un făgaș al revendicărilor legitime, acționând ca un lider moral, dar este depășit de forța oarbă a maselor (simbolizată de țărani ca Niță Pârlitu). Revendicările țăranilor se concentrează pe dreptul la pământ și pe dorința de a trăi 'în țara lor, de a nu fi jefuiți'."
+          }
+        ]
+      },
+      punctulCulminant: {
+        sectiuni: [
+          {
+            subtitlu: "Confruntarea și Măcelul de la Amara",
+            text: "Punctul culminant este atins în momentul sosirii trupelor la Amara. Sub conducerea maiorului Tănăsescu și a prefectului Baloleanu, militarii se confruntă cu masa de țărani înarmați cu furci și coase. În fața refuzului de a se supune, maiorul Tănăsescu ordonă foc. Urmează un măcel: gloanțele 'spală toate zgomotele' și 'goana țăranilor' este urmărită și pedepsită fără milă. Petre Petre este ucis, iar bărbați, femei și copii sunt pedepsiți exemplar."
+          },
+          {
+            subtitlu: "Moartea lui Miron Iuga",
+            text: "Miron Iuga, moșierul, moare în timpul haosului, într-un mod aproape simbolic, arătând că violența distruge ambele tabere."
+          }
+        ]
+      },
+      deznodamant: {
+        sectiuni: [
+          {
+            subtitlu: "Represiunea și Schimbarea de Guvern",
+            text: "Răscoala este înfrântă cu o brutalitate extremă, cu mii de victime. Ca urmare a evenimentelor, guvernul demisionează, iar noul guvern (conservator) emite o proclamație regală care promite o reformă agrară – o soluție de compromis care nu rezolvă problema fundamentală a pământului. Ilie Rogojinaru, arendașul, își salvează averea și revine la vechile sale convingeri, acuzând din nou țăranii."
+          },
+          {
+            subtitlu: "Evoluția lui Grigore Iuga și Viitorul Incert",
+            text: "Grigore Iuga, deși salvat și moștenitor, este marcat de violență și de moartea tatălui său. El ajunge la o înțelegere mai profundă a nedreptății și a suferinței țăranilor. Romanul se încheie lăsând o atmosferă de așteptare sumbră și de incertitudine. Deși focul a fost stins, nemulțumirea adâncă și cauza răscoalei ('o cauză sfântă și dreaptă') rămân nerezolvate, sugerând un viitor conflict ('Se mișcă țara!')."
+          }
+        ]
+      }
     }
   },
   'amintiri-din-copilarie': {
@@ -3403,6 +3824,93 @@ export const OPERA_DETAILS = {
           explicatie: 'Simbol al educației și al disciplinei, dar și al încercărilor prin care copilul devine conștient de reguli și valori.'
         }
       ]
+    },
+    rezumat: {
+      incipit: {
+        sectiuni: [
+          {
+            subtitlu: "Nostalgia și Evocarea Humuleștilor",
+            text: "Opera debutează cu o dedicație urmată de o evocare lirică și nostalgic-umoristică a timpului și locurilor copilăriei. Naratorul adult, Ion Creangă, își începe confesiunea meditând la 'ce vremi și ce oameni mai erau' în satul Humulești (jud. Neamț), prezentat ca un spațiu privilegiat, un 'colț de rai' cu gospodari mândri, tradiții puternice, flăcăi voinici și fete frumoase. Este stabilită perspectiva narativă la persoana I și tonul general al prozei memorialistice, îmbinând realismul (descrierea satului răzășesc) cu lirismul nostalgiei."
+          }
+        ]
+      },
+      intriga: {
+        sectiuni: [
+          {
+            subtitlu: "Capitolul I: Prima experiență școlară și Broșteniul",
+            text: "Intriga este marcată de dorința arzătoare a Smarandei (mama lui Nică), o femeie energică și superstițioasă, de a-l face pe fiul ei popă. Nică este un copil neastâmpărat, dar isteț. Școala din Humulești începe sub îndrumarea părintelui Ioan și a dascălului bădița Vasile a Ilioaei. Condițiile sunt aspre: disciplina se menține cu Calul Balan (scaunul de pedepse) și Sfântul Nicolai (biciul). Primul moment dramatic este luarea cu arcanul a bădiței Vasile la oaste, în urma unei curse a vornicului. Ulterior, după un episod de holeră din care Nică este salvat de doi doftori (moș Vasile Țandură), mama hotărăște să-l trimită pe băiat la Broșteni.",
+            listaProbe: [
+              "Diferența de viziune între Smaranda (ambiție) și Ștefan a Petrei (pragmatism);",
+              "Episodul pedepselor și al dascălului Vasile a Ilioaei;",
+              "Salvarea lui Nică din holeră prin leacuri băbești."
+            ]
+          },
+          {
+            subtitlu: "Peripețiile de la Broșteni",
+            text: "Nică, însoțit de bunicul David Creangă din Pipirig și de vărul Dumitru, pleacă iarna la școala din Broșteni, condusă de profesorul Nicolai Nanu. Drumul este plin de peripeții: căderea în apa Neamțului înghețată și rătăcirea pe munte într-o vijelie. La Broșteni, elevii sunt tunși chilug la ordinul profesorului. Nică și Dumitru stau în gazdă la Irinuca, o femeie săracă, și, din cauza necurățeniei, fac râie căprească și sunt alungați de la școală. Se tratează cu leșie și scăldături în Bistrița rece."
+          }
+        ]
+      },
+      desfasurarea: {
+        sectiuni: [
+          {
+            subtitlu: "Capitolul II: Năzdrăvăniile din Humulești (Paradisul regăsit)",
+            text: "Întors acasă, Nică reintră în lumea plină de viață a casei părintești. Capitolul este o înșiruire de episoade comice, ilustrând neastâmpărul (năzdrăvănia) lui Nică și relația cu mama. Smaranda este un personaj memorabil, iubitoare, dar și aspră, care își ceartă copiii noaptea pentru zgomot ('tapangele la spinare').",
+            listaProbe: [
+              "Episodul cu plugul de Anul Nou, în care Nică și băieții sunt goniți de popa Oșlobanu și Vasile-Aniței;",
+              "Episodul cu lincheul de smântână, în care Nică dă vina pe strigoaice;",
+              "Episodul cu pupăza din tei, pe care Nică o prinde pentru a o vinde în târg, dar care zboară, lăsându-l 'cu ochii în soare';",
+              "Episodul cu moș Chiorpec ciubotarul, pe care Nică îl scoate din sărite cerând curele pentru bici."
+            ]
+          },
+          {
+            subtitlu: "Capitolul III: Târgul Neamțului și Fălticeniul",
+            text: "În 1852, Nică este trimis la școala domnească de la Târgul Neamțului, sub îndrumarea părintelui Isaia Duhu, un profesor luminat, dar care intră în conflict cu starețul Nionil pe tema 'științelor ereticii'. Un episod comic îl are ca protagonist pe Nică Oșlobanu, căruia îi cade din sân un urs de mămăligă (plăcintă). Rămas fără tovarăși, Nică pleacă la Fălticeni, la școala catihetică (fabrică de popi). Se cazează la Pavel ciubotarul împreună cu alți elevi (Gâtlan, Mogorogea, Trăsnea, Oșlobanu) și moș Bodrângă."
+          },
+          {
+            subtitlu: "Aventura la Rădășeni",
+            text: "Elevii din Fălticeni merg la crâșma din Rădășeni ('la fata vornicului'), unde beau, mănâncă și joacă toată noaptea, furând diverse produse (fasole, sămânță de cânepă). Pentru a scăpa de Oșlobanu (care mânca mult), Gâtlan și Nică îi pun acestuia poște la tălpi (hârtii lipite cu seu) și le aprind. Tratamentul este aplicat ulterior și altora. Conflictul culminează când Nică îi aplică poște lui Mogorogea, care, crezând că Pavel ciubotarul este vinovat, îl atacă pe gazdă. Se dărâmă soba, iar purceii aduși lui Mogorogea dispar, ceea ce duce la alungarea elevilor."
+          }
+        ]
+      },
+      punctulCulminant: {
+        sectiuni: [
+          {
+            subtitlu: "Catastrofa de la Broșteni (Cap. I)",
+            text: "În timpul șederii la Broșteni, Nică și Dumitru se joacă pe munte și pornesc din greșeală o stâncă uriașă. Aceasta se prăvălește prin gardul și casa Irinucăi, omorând capra și distrugând locuința. Speriați, cei doi fug de la Broșteni cu pluta, ajungând acasă de Paști, după ce bunicul plătește Irinucăi despăgubiri.",
+            listaProbe: [
+              "Prăbușirea stâncii și omorârea caprei;",
+              "Fuga cu pluta pe Bistrița;",
+              "Întoarcerea acasă 'tuns feleguns' (fără plete) de Paști, spre bucuria mamei."
+            ]
+          },
+          {
+            subtitlu: "Baia în Baltă (Cap. II)",
+            text: "Punctul culminant al Capitolului II este episodul scăldatului în baltă. Mama îl roagă pe Nică să lege un copil și să facă țevi, dar el fuge la scăldat. Mama îl surprinde pe mal, îi ia hainele și îl lasă gol pușcă. Nică fuge prin cânepa mătușii Mărioara, este gonit de câinii lui Trăsnea, ajunge acasă și se roagă de mamă. Este iertat cu condiția să fie cuminte.",
+            listaProbe: [
+              "Nerespectarea promisiunii făcute mamei;",
+              "Umilința și frica de a fi văzut gol;",
+              "Revenirea acasă 'plângând de foame' și primirea iertării."
+            ]
+          }
+        ]
+      },
+      deznodamant: {
+        sectiuni: [
+          {
+            subtitlu: "Capitolul IV: Plecarea la Socola (Iași)",
+            text: "În toamna anului 1855, după desființarea catihețiilor, Smaranda insistă ca Nică să plece la Seminarul de la Socola (Iași), pentru a-și continua drumul spre preoție. Nică se împotrivește, fiind legat de sat, de fete și de hore, dar este nevoit să se supună voinței mamei. Pleacă alături de Zaharia și de cărăușul Luca Moșneagu în ziua de Tăierea capului Sfântului Ioan Botezătorul. Cei doi sunt triști, plâng, privesc în urmă la munte, realizând că lasă în urmă lumea copilăriei.",
+            listaProbe: [
+              "Conflictul interior al lui Nică (dorința de libertate vs. obligația școlară);",
+              "Tristețea plecării și sentimentul de pierdere a 'raiului' copilăriei."
+            ]
+          },
+          {
+            subtitlu: "Intrarea în Iași și Finalul Deschis",
+            text: "Drumul este lung și obositor. Intrând în Iași, Nică și Zaharia sunt luați în râs de orășeni din cauza căruței și cailor slabi ai lui Moș Luca, ceea ce amplifică sentimentul de rușine și inferioritate. Opera se încheie brusc, în cierul Socolei, unde găsesc 'o mulțime de dăscălime adunată', sugerând începutul unei noi etape (adolescența și maturitatea) și despărțirea definitivă de lumea magică a satului. \"Amintiri din copilărie\" se încheie, așadar, cu o meditație asupra timpului pierdut și a inevitabilului proces de maturizare."
+          }
+        ]
+      },
     }
   }
 };
