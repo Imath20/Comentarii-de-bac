@@ -102,7 +102,7 @@ export default function SubiectModal({ isOpen, subiect, darkTheme, onClose, onDe
         const subiectAn = an || data;
         
         // Dacă este profil real și an >= 2020, este vechi
-        return profil === 'real' && subiectAn && subiectAn >= 2020;
+        return profil === 'real' && subiectAn && subiectAn >= 2020
     };
 
     // Process text for display

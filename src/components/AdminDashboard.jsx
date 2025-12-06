@@ -189,6 +189,32 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
     }
   }, [initialCommentData, updateUrlParams]);
 
+  // Helper function to extract year from subject data (checks both 'an' and 'data' fields)
+  const extractYearFromSubject = (subjectData) => {
+    if (!subjectData) return new Date().getFullYear().toString();
+    
+    // First try 'an' field
+    if (subjectData.an !== undefined && subjectData.an !== null) {
+      const yearFromAn = parseInt(subjectData.an, 10);
+      if (!Number.isNaN(yearFromAn)) {
+        return yearFromAn.toString();
+      }
+    }
+    
+    // If 'an' is not available, try 'data' field
+    const dataStr = subjectData.data ?? '';
+    if (dataStr) {
+      // Extract year from data string (e.g., "2025" or "2025 sesiune de vară")
+      const match = String(dataStr).match(/(\d{4})/);
+      if (match) {
+        return match[1];
+      }
+    }
+    
+    // Default to current year
+    return new Date().getFullYear().toString();
+  };
+
   // Populate form when initialSubjectData is provided
   useEffect(() => {
     if (initialSubjectData) {
@@ -200,7 +226,7 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
         numarSubiect: initialSubjectData.numarSubiect?.toString() || '1',
         subpunct: initialSubjectData.subpunct || '',
         profil: initialSubjectData.profil || 'real',
-        an: initialSubjectData.an?.toString() || new Date().getFullYear().toString(),
+        an: extractYearFromSubject(initialSubjectData),
         sesiune: initialSubjectData.sesiune || 'sesiune de vară',
         text: initialSubjectData.text || (typeof initialSubjectData.text === 'object' && initialSubjectData.text?.text ? initialSubjectData.text.text : ''),
         cerinte: Array.isArray(initialSubjectData.cerinte) 
@@ -728,9 +754,11 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
         .map(line => line.trim())
         .filter(line => line.length > 0);
 
+      const yearValue = parseInt(subiectForm.an) || new Date().getFullYear();
       const subiectData = {
         ...subiectForm,
-        an: parseInt(subiectForm.an) || new Date().getFullYear(),
+        an: yearValue,
+        data: yearValue.toString(), // Also update 'data' field to match 'an'
         numarSubiect: parseInt(subiectForm.numarSubiect) || 1,
         cerinte,
         punctaj,
