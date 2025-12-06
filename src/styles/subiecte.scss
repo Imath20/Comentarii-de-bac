@@ -154,6 +154,10 @@
   flex-wrap: wrap; // permite să așezăm și o secțiune pe rândul următor
   margin-bottom: 1rem;
   padding: 0 1rem;
+  width: 100%;
+  max-width: 1320px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .subiecte-search-container {
@@ -311,6 +315,10 @@
   flex-wrap: wrap;
   margin-bottom: 1rem;
   padding: 0 1rem;
+  width: 100%;
+  max-width: 1320px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .subiecte-sesiune-dropdown {

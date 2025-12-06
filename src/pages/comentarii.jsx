@@ -254,7 +254,7 @@ export default function Comentarii() {
                             </span>
                         ))}
                     </h1>
-            <p className="page-desc">Comentarii fără imagini, filtrabile după gen și plan</p>
+            <p className="page-desc">Aici vei găsi analize, idei și comentarii pentru toate operele literare de la Bac.</p>
                 </div>
 
                 <div className="container">

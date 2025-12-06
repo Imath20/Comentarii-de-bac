@@ -2,7 +2,7 @@
 // Container principal
 .comentarii-container {
     max-width: 1800px;
-    min-width: 1200px;
+    min-width: 1300px;
     margin: 0 auto;
     padding: 1rem 0;
     display: flex;
@@ -34,6 +34,10 @@
     flex-wrap: wrap; // permite să așezăm și o secțiune pe rândul următor
     margin-bottom: 1rem;
     padding: 0 1rem;
+    width: 100%;
+    max-width: 1320px;
+    margin-left: auto;
+    margin-right: auto;
   }
   
   .comentarii-search-container {
@@ -91,7 +95,7 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
     gap: 2rem;
-    padding: 5rem 1rem;
+    padding: 1rem 1rem 5rem;
   }
 
   
@@ -304,33 +308,32 @@
   }
 // Filter buttons styles
 .comentarii-filter-buttons {
-    display: flex;
-    gap: 0.9rem;
-    justify-content: flex-start;
-    align-items: center;
-    margin-bottom: 1.5rem;
-    flex-wrap: wrap;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+  padding: 0 1rem;
     width: 100%;
-    max-width: 1300px;
-    margin: 0 auto 1.5rem auto;
-    padding: 0 1.5rem;
-    display: flex;
+    max-width: 1320px;
+    margin-left: auto;
+    margin-right: auto;
   }
   .comentarii-filter-buttons-left {
     flex: 0 1 auto; // keep buttons intrinsic width
   }
   
   .comentarii-filter-button {
-    padding: 0.7rem 1.5rem;
-    border-radius: 2rem;
-    border: 2px solid #ececec;
+    padding: 0.75rem 1.5rem;
+    border: 1.5px solid #ececec;
+    border-radius: 2.2rem;
     background: #f7f8fa;
     color: #222;
-    font-weight: 500;
     font-size: 1rem;
+    font-weight: 500;
     cursor: pointer;
-    transition: all 0.2s;
-    box-shadow: none;
+    transition: all 0.3s ease;
     outline: none;
     // display: flex;
     // justify-content: center;
@@ -385,12 +388,9 @@
     }
   } 
   .comentarii-sort-container {
-    flex: 0 1 auto; // don't force growth; allow true centering via auto margins
-    display: flex;
-    justify-content: center;
-    min-width: 260px;
     margin-left: auto;
-    margin-right: auto; // center within the overall row like on subiecte
+    min-width: 260px;
+    margin-right: 7rem;
   }
 
   // React-Select categories dropdown: hide scrollbar but allow scrolling

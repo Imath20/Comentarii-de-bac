@@ -56,6 +56,9 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
   const [allScriitoriForSearch, setAllScriitoriForSearch] = useState([]);
   const editingCommentRef = useRef(null);
   const hasInitializedTabRef = useRef(false);
+  // Generate unique tab ID for this instance (each tab/component instance gets its own ID)
+  // This ID is generated once per component mount and never changes
+  const tabIdRef = useRef(`tab_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`);
   const { currentUser, userProfile } = useAuth();
   const currentUserId = currentUser?.uid || null;
   const userEmail = currentUser?.email || userProfile?.email || '';
@@ -197,10 +200,8 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
         numarSubiect: initialSubjectData.numarSubiect?.toString() || '1',
         subpunct: initialSubjectData.subpunct || '',
         profil: initialSubjectData.profil || 'real',
-        data: initialSubjectData.data || '',
         an: initialSubjectData.an?.toString() || new Date().getFullYear().toString(),
         sesiune: initialSubjectData.sesiune || 'sesiune de vară',
-        tip: initialSubjectData.tip || 'analiza',
         text: initialSubjectData.text || (typeof initialSubjectData.text === 'object' && initialSubjectData.text?.text ? initialSubjectData.text.text : ''),
         cerinte: Array.isArray(initialSubjectData.cerinte) 
           ? initialSubjectData.cerinte.join('\n')
@@ -214,28 +215,122 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
       });
       setActiveTab('subiecte');
       updateUrlParams({ tab: 'subiecte' });
+      // Clear sessionStorage draft when editing an existing subiect
+      try {
+        const storageKey = `admin_subiect_form_draft_${tabIdRef.current}`;
+        sessionStorage.removeItem(storageKey);
+      } catch (error) {
+        console.error('Error clearing subiect form draft from sessionStorage:', error);
+      }
     }
   }, [initialSubjectData, updateUrlParams]);
 
   // Subiect form state
-  const [subiectForm, setSubiectForm] = useState({
-    id: '',
-    titlu: '',
-    descriere: '',
-    numarSubiect: '1',
-    subpunct: '',
-    profil: 'real',
-    data: '',
-    an: new Date().getFullYear(),
-    sesiune: 'sesiune de vară',
-    tip: 'analiza',
-    text: '',
-    cerinte: '',
-    punctaj: '',
-    createdBy: '',
-    createdByEmail: '',
-    createdByName: '',
+  const [subiectForm, setSubiectForm] = useState(() => {
+    // Try to restore from sessionStorage on initial mount
+    try {
+      const storageKey = `admin_subiect_form_draft_${tabIdRef.current}`;
+      const saved = sessionStorage.getItem(storageKey);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        // Only restore if it's not empty (has at least one field filled)
+        if (parsed && (parsed.titlu || parsed.text || parsed.cerinte || parsed.descriere)) {
+          return {
+            id: '',
+            titlu: parsed.titlu || '',
+            descriere: parsed.descriere || '',
+            numarSubiect: parsed.numarSubiect || '1',
+            subpunct: parsed.subpunct || '',
+            profil: parsed.profil || 'real',
+            an: parsed.an || new Date().getFullYear(),
+            sesiune: parsed.sesiune || 'sesiune de vară',
+            text: parsed.text || '',
+            cerinte: parsed.cerinte || '',
+            punctaj: parsed.punctaj || '',
+            createdBy: '',
+            createdByEmail: '',
+            createdByName: '',
+          };
+        }
+      }
+    } catch (error) {
+      console.error('Error restoring subiect form from sessionStorage:', error);
+    }
+    return {
+      id: '',
+      titlu: '',
+      descriere: '',
+      numarSubiect: '1',
+      subpunct: '',
+      profil: 'real',
+      an: new Date().getFullYear(),
+      sesiune: 'sesiune de vară',
+      text: '',
+      cerinte: '',
+      punctaj: '',
+      createdBy: '',
+      createdByEmail: '',
+      createdByName: '',
+    };
   });
+
+  // Save subiect form to sessionStorage whenever it changes (only when not editing)
+  useEffect(() => {
+    if (!isEditingSubiect && activeTab === 'subiecte') {
+      try {
+        // Only save if form has some content
+        if (subiectForm.titlu || subiectForm.text || subiectForm.cerinte || subiectForm.descriere) {
+          const formToSave = {
+            titlu: subiectForm.titlu,
+            descriere: subiectForm.descriere,
+            numarSubiect: subiectForm.numarSubiect,
+            subpunct: subiectForm.subpunct,
+            profil: subiectForm.profil,
+            an: subiectForm.an,
+            sesiune: subiectForm.sesiune,
+            text: subiectForm.text,
+            cerinte: subiectForm.cerinte,
+            punctaj: subiectForm.punctaj,
+          };
+          const storageKey = `admin_subiect_form_draft_${tabIdRef.current}`;
+          sessionStorage.setItem(storageKey, JSON.stringify(formToSave));
+        }
+      } catch (error) {
+        console.error('Error saving subiect form to sessionStorage:', error);
+      }
+    }
+  }, [subiectForm, isEditingSubiect, activeTab]);
+
+  // Restore subiect form from sessionStorage when tab becomes active (only when not editing and no initial data)
+  useEffect(() => {
+    if (activeTab === 'subiecte' && !isEditingSubiect && !initialSubjectData) {
+      try {
+        const storageKey = `admin_subiect_form_draft_${tabIdRef.current}`;
+        const saved = sessionStorage.getItem(storageKey);
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          // Only restore if it's not empty (has at least one field filled)
+          if (parsed && (parsed.titlu || parsed.text || parsed.cerinte || parsed.descriere)) {
+            setSubiectForm(prev => ({
+              ...prev,
+              titlu: parsed.titlu || prev.titlu,
+              descriere: parsed.descriere || prev.descriere,
+              numarSubiect: parsed.numarSubiect || prev.numarSubiect,
+              subpunct: parsed.subpunct || prev.subpunct,
+              profil: parsed.profil || prev.profil,
+              an: parsed.an || prev.an,
+              sesiune: parsed.sesiune || prev.sesiune,
+              text: parsed.text || prev.text,
+              cerinte: parsed.cerinte || prev.cerinte,
+              punctaj: parsed.punctaj || prev.punctaj,
+            }));
+          }
+        }
+      } catch (error) {
+        console.error('Error restoring subiect form from sessionStorage:', error);
+      }
+    }
+  }, [activeTab, isEditingSubiect, initialSubjectData]);
 
   const categorii = [
     'poezie', 'roman', 'comedie', 'basm', 'nuvela', 
@@ -670,6 +765,14 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
           console.error('Error creating notification:', notifError);
         }
         
+        // Clear sessionStorage draft after successful update
+        try {
+          const storageKey = `admin_subiect_form_draft_${tabIdRef.current}`;
+          sessionStorage.removeItem(storageKey);
+        } catch (error) {
+          console.error('Error clearing subiect form draft from sessionStorage:', error);
+        }
+        
         // Navigate to subiecte page after successful update
         setTimeout(() => {
           navigate('/subiecte');
@@ -705,10 +808,8 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
           numarSubiect: '1',
           subpunct: '',
           profil: 'real',
-          data: '',
           an: new Date().getFullYear(),
           sesiune: 'sesiune de vară',
-          tip: 'analiza',
           text: '',
           cerinte: '',
           punctaj: '',
@@ -717,6 +818,18 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
           createdByName: '',
         });
         setIsEditingSubiect(false);
+        // Clear sessionStorage draft after successful submission
+        try {
+          const storageKey = `admin_subiect_form_draft_${tabIdRef.current}`;
+          sessionStorage.removeItem(storageKey);
+        } catch (error) {
+          console.error('Error clearing subiect form draft from sessionStorage:', error);
+        }
+        
+        // Navigate to subiecte page after successful add
+        setTimeout(() => {
+          navigate('/subiecte');
+        }, 500);
       }
     } catch (error) {
       console.error(`Error ${isEditingSubiect ? 'updating' : 'adding'} subiect:`, error);
@@ -1443,23 +1556,23 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
                 <option value="3">Subiect 3</option>
               </select>
             </div>
-          </div>
 
-          {subiectForm.numarSubiect === '1' && (
-            <div className="admin-form-group">
-              <label htmlFor="subiect-subpunct">Subpunct (A/B)</label>
-              <select
-                id="subiect-subpunct"
-                value={subiectForm.subpunct}
-                onChange={(e) => setSubiectForm({ ...subiectForm, subpunct: e.target.value })}
-                className="admin-select"
-              >
-                <option value="">Selectează subpunctul</option>
-                <option value="A">A</option>
-                <option value="B">B</option>
-              </select>
-            </div>
-          )}
+            {subiectForm.numarSubiect === '1' && (
+              <div className="admin-form-group" style={{ flex: '0 0 auto', width: '370px' }}>
+                <label htmlFor="subiect-subpunct">Subpunct (A/B)</label>
+                <select
+                  id="subiect-subpunct"
+                  value={subiectForm.subpunct}
+                  onChange={(e) => setSubiectForm({ ...subiectForm, subpunct: e.target.value })}
+                  className="admin-select"
+                >
+                  <option value="">Toate</option>
+                  <option value="A">A</option>
+                  <option value="B">B</option>
+                </select>
+              </div>
+            )}
+          </div>
 
           <div className="admin-form-group">
             <label htmlFor="subiect-descriere">Descriere *</label>
@@ -1490,9 +1603,9 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
             </div>
 
             <div className="admin-form-group">
-              <label htmlFor="subiect-data">Data *</label>
+              <label htmlFor="subiect-data">An *</label>
               <input
-                type="text"
+                type="number"
                 id="subiect-data"
                 value={subiectForm.data}
                 onChange={(e) => setSubiectForm({ ...subiectForm, data: e.target.value })}
@@ -1502,21 +1615,6 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
               />
             </div>
 
-            <div className="admin-form-group">
-              <label htmlFor="subiect-an">An *</label>
-              <input
-                type="number"
-                id="subiect-an"
-                value={subiectForm.an}
-                onChange={(e) => setSubiectForm({ ...subiectForm, an: e.target.value })}
-                placeholder="2025"
-                required
-                className="admin-input"
-              />
-            </div>
-          </div>
-
-          <div className="admin-form-row">
             <div className="admin-form-group">
               <label htmlFor="subiect-sesiune">Sesiune *</label>
               <select
@@ -1532,20 +1630,6 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
                 <option value="model">Model</option>
                 <option value="rezervă">Rezervă</option>
                 <option value="simulare">Simulare</option>
-              </select>
-            </div>
-
-            <div className="admin-form-group">
-              <label htmlFor="subiect-tip">Tip *</label>
-              <select
-                id="subiect-tip"
-                value={subiectForm.tip}
-                onChange={(e) => setSubiectForm({ ...subiectForm, tip: e.target.value })}
-                required
-                className="admin-select"
-              >
-                <option value="analiza">Analiză</option>
-                <option value="eseu">Eseu</option>
               </select>
             </div>
           </div>
