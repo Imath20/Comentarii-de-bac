@@ -91,6 +91,41 @@ export default function SubiectModal({ isOpen, subiect, darkTheme, onClose, onDe
         return '';
     };
 
+    // Check if subiect is old (profil real AND an >= 2020)
+    const isOldSubiect = (s) => {
+        // Subiect vechi = profil "real" ȘI an >= 2020
+        const profil = s?.profil?.toLowerCase?.() || '';
+        const an = s?.an ? parseInt(s.an) : null;
+        const data = s?.data ? parseInt(s.data) : null;
+        
+        // Folosim an sau data (care este disponibil)
+        const subiectAn = an || data;
+        
+        // Dacă este profil real și an >= 2020, este vechi
+        return profil === 'real' && subiectAn && subiectAn >= 2020;
+    };
+
+    // Process text for display
+    const getProcessedText = (s) => {
+        const text = getLongText(s);
+        if (!text) return [];
+        
+        // Subiectele vechi (profil real + an >= 2020): recunosc Enter-ul ca newline
+        if (isOldSubiect(s)) {
+            // Split by real newlines (Enter din textarea)
+            return text.split('\n').map(p => p.trim()).filter(p => p.length > 0);
+        } else {
+            // Subiectele noi: NU recunosc Enter-ul, doar \n literal
+            // Replace any real newlines with spaces (Enter in textarea should not create paragraphs)
+            let processedText = text.replace(/\r?\n/g, ' ');
+            // Split by literal \n string (the characters backslash + n, not actual newlines)
+            // Procesăm atât \n cât și /n (pentru cazuri când utilizatorul scrie slash în loc de backslash)
+            const paragraphs = processedText.split(/\\n|\/n/);
+            // Filter out empty paragraphs and trim whitespace
+            return paragraphs.map(p => p.trim()).filter(p => p.length > 0);
+        }
+    };
+
     const getCerințe = (s) => {
         if (!s) return [];
         if (Array.isArray(s.cerinte) && s.cerinte.length > 0) return s.cerinte;
@@ -118,7 +153,7 @@ export default function SubiectModal({ isOpen, subiect, darkTheme, onClose, onDe
                             </div>
                         </div>
                         <div className={`subiecte-modal-text ${darkTheme ? 'dark-theme' : ''}`}>
-                            {getLongText(subiect) ? getLongText(subiect).split('\n').map((p, i) => (
+                            {getLongText(subiect) ? getProcessedText(subiect).map((p, i) => (
                                 <p key={i}>{p}</p>
                             )) : (
                                 <div className="subiecte-modal-empty">Nu există text asociat acestui subiect.</div>

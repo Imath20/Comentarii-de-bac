@@ -1603,12 +1603,12 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
             </div>
 
             <div className="admin-form-group">
-              <label htmlFor="subiect-data">An *</label>
+              <label htmlFor="subiect-an">An *</label>
               <input
                 type="number"
-                id="subiect-data"
-                value={subiectForm.data}
-                onChange={(e) => setSubiectForm({ ...subiectForm, data: e.target.value })}
+                id="subiect-an"
+                value={subiectForm.an}
+                onChange={(e) => setSubiectForm({ ...subiectForm, an: e.target.value })}
                 placeholder="2025"
                 required
                 className="admin-input"
@@ -1639,8 +1639,27 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
             <textarea
               id="subiect-text"
               value={subiectForm.text}
-              onChange={(e) => setSubiectForm({ ...subiectForm, text: e.target.value })}
-              placeholder="Textul complet al subiectului..."
+              onChange={(e) => {
+                // Replace real newlines (Enter) with spaces to keep text continuous
+                const value = e.target.value.replace(/\r?\n/g, ' ');
+                setSubiectForm({ ...subiectForm, text: value });
+              }}
+              onKeyDown={(e) => {
+                // Prevent Enter from creating newlines - replace with space
+                if (e.key === 'Enter') {
+                  e.preventDefault();
+                  const textarea = e.target;
+                  const start = textarea.selectionStart;
+                  const end = textarea.selectionEnd;
+                  const value = subiectForm.text.substring(0, start) + ' ' + subiectForm.text.substring(end);
+                  setSubiectForm({ ...subiectForm, text: value });
+                  // Restore cursor position
+                  setTimeout(() => {
+                    textarea.setSelectionRange(start + 1, start + 1);
+                  }, 0);
+                }
+              }}
+              placeholder="Textul complet al subiectului... (folosește \\n pentru paragraf nou)"
               required
               rows={10}
               className="admin-textarea"
