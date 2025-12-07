@@ -91,9 +91,9 @@ export default function SubiectModal({ isOpen, subiect, darkTheme, onClose, onDe
         return '';
     };
 
-    // Check if subiect is old (profil real AND an >= 2020)
+    // Check if subiect is old (profil real AND an >= 2020 AND an < 2026)
     const isOldSubiect = (s) => {
-        // Subiect vechi = profil "real" ȘI an >= 2020
+        // Subiect vechi = profil "real" ȘI an >= 2020 ȘI an < 2026
         const profil = s?.profil?.toLowerCase?.() || '';
         const an = s?.an ? parseInt(s.an) : null;
         const data = s?.data ? parseInt(s.data) : null;
@@ -101,8 +101,8 @@ export default function SubiectModal({ isOpen, subiect, darkTheme, onClose, onDe
         // Folosim an sau data (care este disponibil)
         const subiectAn = an || data;
         
-        // Dacă este profil real și an >= 2020, este vechi
-        return profil === 'real' && subiectAn && subiectAn >= 2020
+        // Dacă este profil real și an între [2020, 2026), este vechi
+        return profil === 'real' && subiectAn && subiectAn >= 2021 && subiectAn < 2026
     };
 
     // Process text for display
