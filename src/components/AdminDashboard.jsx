@@ -21,6 +21,7 @@ import AvatarSearchBar from '../assets/AvatarSearchBar';
 import { getScriitoriData } from '../firebase/scriitoriService';
 import { useAuth } from '../firebase/AuthContext';
 import { createNotification } from '../firebase/notificationsService';
+import { Dice6 } from 'lucide-react';
 import '../styles/admin.scss';
 
 const REACTIONS = [
@@ -48,6 +49,8 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
   const [message, setMessage] = useState({ type: '', text: '' });
   const [isEditing, setIsEditing] = useState(false);
   const [isEditingSubiect, setIsEditingSubiect] = useState(false);
+  const [processingCerinte, setProcessingCerinte] = useState(false);
+  const [aiButtonHover, setAiButtonHover] = useState(false);
   const [isEditingFilm, setIsEditingFilm] = useState(false);
   const [isEditingScriitor, setIsEditingScriitor] = useState(false);
   const [scriitoriList, setScriitoriList] = useState([]);
@@ -357,6 +360,33 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
       }
     }
   }, [activeTab, isEditingSubiect, initialSubjectData]);
+
+  // Auto-set punctaj based on numarSubiect and subpunct
+  useEffect(() => {
+    // Only auto-set if not editing and form is not empty (user is actively working)
+    if (!isEditingSubiect && activeTab === 'subiecte') {
+      let newPunctaj = '';
+      
+      if (subiectForm.numarSubiect === '1' && subiectForm.subpunct === 'A') {
+        // Subiect 1 A: 6 întrebări de 5 puncte fiecare
+        newPunctaj = '6\n6\n6\n6\n6\n6';
+      } else if (subiectForm.numarSubiect === '1' && subiectForm.subpunct === 'B') {
+        // Subiect 1 B: Total 20
+        newPunctaj = 'Total: 20\nSumar conținut: 14\nSumar redactare: 6';
+      } else if (subiectForm.numarSubiect === '2') {
+        // Subiect 2: Total 10
+        newPunctaj = 'Total: 10\nConținut: 6\nRedactare: 4 puncte (utilizarea limbii literare – 1 punct; logica înlănțuirii ideilor – 1 punct; ortografia – 1 punct; punctuaţia – 1 punct)';
+      }
+      else if (subiectForm.numarSubiect === '3') {
+        // Subiect 3: 3 cerințe de 6 puncte + Redactare 12 puncte
+        newPunctaj = '6\n6\n6\nRedactare: 12 puncte(existența părților componente – introducere, cuprins, încheiere – 1 punct; logica înlănțuirii ideilor – 1 punct; abilități de analiză și de argumentare – 3 puncte; utilizarea limbii literare – 2 puncte; ortografia – 2 puncte; punctuaţia – 2 puncte; așezarea în pagină, lizibilitatea – 1 punct)';
+      }
+      // Only update if we have a new punctaj value and it's different from current
+      if (newPunctaj && newPunctaj !== subiectForm.punctaj) {
+        setSubiectForm(prev => ({ ...prev, punctaj: newPunctaj }));
+      }
+    }
+  }, [subiectForm.numarSubiect, subiectForm.subpunct, isEditingSubiect, activeTab]);
 
   const categorii = [
     'poezie', 'roman', 'comedie', 'basm', 'nuvela', 
@@ -733,6 +763,142 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
       setMessage({ type: 'error', text: `Eroare: ${error.message || `Nu s-a putut ${isEditing ? 'actualiza' : 'adăuga'} comentariul`}` });
     } finally {
       setLoading(false);
+    }
+  };
+
+  const processCerinteWithAI = async () => {
+    if (!subiectForm.cerinte || !subiectForm.cerinte.trim()) {
+      setMessage({ type: 'error', text: 'Te rog introdu mai întâi textul cerințelor.' });
+      return;
+    }
+
+    setProcessingCerinte(true);
+    setMessage({ type: '', text: '' });
+
+    try {
+      const GROQ_API_KEY = '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';
+      const GROQ_API_URL = 'https://api.groq.com/openai/v1/chat/completions';
+
+      const prompt = `Ești un expert în procesarea cerințelor pentru subiecte de BAC la limba română (Subiect 1 B, Subiect 2, Subiect 3).
+
+Ai primit textul brut al cerințelor care poate conține mai multe cerințe amestecate, neformatate sau scrise într-un mod neclar.
+
+Sarcina ta este să procesezi acest text și să extragi/formezi cerințele individuale, EXACT în formatul folosit în subiectele de BAC:
+
+EXEMPLE DE FORMAT CORECT pentru SUBIECT 1 B (redactare):
+- 'Cerințe totale: Redactează un text de minimum 150 de cuvinte, în care să argumentezi dacă înfățișarea unei persoane poate influența sau nu succesul acesteia, raportându-te atât la informațiile din textul Părintele „Geticei” de Grigore Băjenaru, cât și la experiența personală sau culturală, respectând reperele de conținut și de redactare.'
+- 'Sumar conținut: formulează o opinie clară cu privire la temă, enunță și dezvoltă două argumente adecvate opiniei, sprijinite pe exemple/raționamente pertinente, și încheie cu o concluzie coerentă.'
+- 'Sumar redactare: utilizează corect conectorii în argumentare; respectă normele limbii literare (exprimare, ortografie, punctuație), așezarea în pagină și lizibilitatea; respectă precizarea privind numărul minim de cuvinte.'
+
+EXEMPLE DE FORMAT CORECT pentru SUBIECT 2 (eseu scurt):
+- 'Prezintă, în minimum 50 de cuvinte, rolul notațiilor autorului în fragmentul de mai jos. '
+- 'Conținut: precizează rolul notațiilor autorului în fragmentul de mai jos'
+- 'Redactare: utiliză corect conectorii în argumentare; respectă normele limbii literare (exprimare, ortografie, punctuație), așezarea în pagină și lizibilitatea'
+
+EXEMPLE DE FORMAT CORECT pentru SUBIECT 3 (eseu):
+- 'Prezintă statutul social, psihologic, moral etc. al personajului ales'
+- 'Evidențiază o trăsătură a personajului ales, prin două episoade/secvențe comentate'
+- 'Analizează două elemente de structură, compoziție și/sau limbaj relevante pentru construcția personajului'
+
+REGULI STRICTE:
+1. Fiecare cerință trebuie să fie o propoziție completă, clară și bine formulată în limba română
+2. Fiecare cerință trebuie să înceapă cu majusculă și să se termine cu punct (sau punct și virgulă dacă e cazul)
+3. NU adăuga numerotare (1., 2., etc.) - fiecare cerință este o linie separată
+4. NU adăuga prefixe precum "Cerința 1:", "a)", "b)", etc. (EXCEPTIE: pentru Subiect 1 B și 2, păstrează prefixele "Cerințe totale:", "Sumar conținut:", "Sumar redactare:", "Conținut:", "Redactare:" dacă apar în textul original)
+5. NU adăuga explicații suplimentare sau comentarii
+6. Păstrează terminologia specifică BAC (ex: "Indică", "Menționează", "Precizează", "Explică", "Prezintă", "Evidențiază", "Analizează", "valorificând textul dat", "justificându-ți răspunsul", etc.)
+7. Dacă cerința menționează număr de cuvinte (ex: "minimum 150 de cuvinte", "30-50 de cuvinte"), păstrează-l exact
+8. Păstrează ghilimelele și semnele de punctuație specifice (ex: „Geticei", „Odobescu")
+9. Pentru Subiect 1 B: păstrează formatul cu "Cerințe totale:", "Sumar conținut:", "Sumar redactare:"
+10. Pentru Subiect 2: păstrează formatul cu "Conținut:" și "Redactare:" dacă apare în text
+11. Pentru Subiect 3: cerințele sunt directe, fără prefixe speciale
+
+Textul brut de procesat:
+${subiectForm.cerinte}
+
+Returnează DOAR cerințele procesate, fiecare pe o linie separată, fără numerotare, fără prefixe inutile, fără explicații. Fiecare linie trebuie să fie o cerință completă, clară și bine formulată, exact ca în exemplele de mai sus.`;
+
+      const requestBody = {
+        model: 'openai/gpt-oss-120b',
+        messages: [
+          {
+            role: 'user',
+            content: prompt
+          }
+        ],
+        temperature: 0.7,
+        max_tokens: 1000
+      };
+
+      const response = await fetch(GROQ_API_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${GROQ_API_KEY}`
+        },
+        body: JSON.stringify(requestBody)
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text().catch(() => '');
+        let errorMessage = `Eroare API: ${response.status} - ${response.statusText}`;
+        
+        try {
+          const errorData = JSON.parse(errorText);
+          if (errorData.error && errorData.error.message) {
+            errorMessage = errorData.error.message;
+          }
+        } catch (e) {
+          // Keep original error message
+        }
+        
+        // Provide helpful error messages
+        if (response.status === 401) {
+          errorMessage = 'Eroare de autentificare. Verifică că cheia API Groq este validă și activă.';
+        } else if (response.status === 429) {
+          errorMessage = 'Ai depășit cota API. Verifică planul tău Groq sau așteaptă resetarea cotei.';
+        } else if (response.status === 404) {
+          errorMessage = 'Endpoint-ul nu a fost găsit. Verifică că URL-ul API este corect.';
+        }
+        
+        throw new Error(errorMessage);
+      }
+
+      const data = await response.json();
+      
+      // Groq uses OpenAI-compatible format
+      if (!data.choices || !data.choices[0] || !data.choices[0].message || !data.choices[0].message.content) {
+        console.log('Unexpected API response format:', data);
+        throw new Error('Răspuns neașteptat de la API');
+      }
+
+      const processedText = data.choices[0].message.content.trim();
+      
+      if (!processedText) {
+        throw new Error('Nu s-a primit text procesat de la API');
+      }
+      
+      // Update the cerinte field with processed text
+      setSubiectForm({ ...subiectForm, cerinte: processedText });
+      setMessage({ type: 'success', text: 'Cerințele au fost procesate cu succes!' });
+    } catch (error) {
+      console.error('Eroare la procesarea cerințelor cu AI:', error);
+      let errorMessage = error.message || 'Te rog încearcă din nou.';
+      
+      // Provide more specific error messages
+      if (errorMessage.includes('401') || errorMessage.includes('autentificare')) {
+        errorMessage = 'Eroare de autentificare. Verifică că cheia API Groq este validă și activă.';
+      } else if (errorMessage.includes('429') || errorMessage.includes('quota')) {
+        errorMessage = 'Ai depășit cota API. Verifică planul tău Groq sau așteaptă resetarea cotei.';
+      } else if (errorMessage.includes('404')) {
+        errorMessage = 'Endpoint-ul nu a fost găsit. Verifică că URL-ul API este corect.';
+      } else if (errorMessage.includes('CORS') || errorMessage.includes('Failed to fetch')) {
+        errorMessage = 'Eroare CORS. Groq API ar trebui să permită cereri din browser. Verifică că endpoint-ul este corect.';
+      }
+      
+      setMessage({ type: 'error', text: `Eroare la procesarea cu AI: ${errorMessage}` });
+    } finally {
+      setProcessingCerinte(false);
     }
   };
 
@@ -1695,7 +1861,41 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
           </div>
 
           <div className="admin-form-group">
-            <label htmlFor="subiect-cerinte">Cerințe (câte una pe linie) *</label>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
+              <label htmlFor="subiect-cerinte">Cerințe (câte una pe linie) *</label>
+              {((subiectForm.numarSubiect === '1' && subiectForm.subpunct === 'B') || subiectForm.numarSubiect === '2' || subiectForm.numarSubiect === '3') && (
+                <button
+                  type="button"
+                  onClick={processCerinteWithAI}
+                  disabled={processingCerinte}
+                  onMouseEnter={() => !processingCerinte && setAiButtonHover(true)}
+                  onMouseLeave={() => setAiButtonHover(false)}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '6px',
+                    padding: '8px 12px',
+                    backgroundColor: aiButtonHover && !processingCerinte
+                      ? (darkTheme ? '#ffd591' : '#a97c50')
+                      : (darkTheme ? '#a97c50' : '#ffd591'),
+                    color: darkTheme ? '#fff' : '#4e2e1e',
+                    border: 'none',
+                    borderRadius: '8px',
+                    cursor: processingCerinte ? 'not-allowed' : 'pointer',
+                    fontSize: '14px',
+                    fontWeight: 500,
+                    opacity: processingCerinte ? 0.6 : 1,
+                    transition: 'all 0.2s',
+                    transform: aiButtonHover && !processingCerinte ? 'scale(1.05)' : 'scale(1)',
+                    boxShadow: aiButtonHover && !processingCerinte ? '0 2px 8px rgba(0,0,0,0.15)' : 'none'
+                  }}
+                  title="Procesează cerințele cu AI"
+                >
+                  <Dice6 size={16} />
+                  {processingCerinte ? 'Se procesează...' : 'Procesează cu AI'}
+                </button>
+              )}
+            </div>
             <textarea
               id="subiect-cerinte"
               value={subiectForm.cerinte}
