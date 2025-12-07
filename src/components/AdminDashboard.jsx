@@ -50,7 +50,7 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
   const [isEditing, setIsEditing] = useState(false);
   const [isEditingSubiect, setIsEditingSubiect] = useState(false);
   const [processingCerinte, setProcessingCerinte] = useState(false);
-  const [aiButtonHover, setAiButtonHover] = useState(false);
+  const [cubeSpinning, setCubeSpinning] = useState(false);
   const [isEditingFilm, setIsEditingFilm] = useState(false);
   const [isEditingScriitor, setIsEditingScriitor] = useState(false);
   const [scriitoriList, setScriitoriList] = useState([]);
@@ -772,6 +772,7 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
       return;
     }
 
+    setCubeSpinning(true);
     setProcessingCerinte(true);
     setMessage({ type: '', text: '' });
 
@@ -899,6 +900,7 @@ Returnează DOAR cerințele procesate, fiecare pe o linie separată, fără nume
       setMessage({ type: 'error', text: `Eroare la procesarea cu AI: ${errorMessage}` });
     } finally {
       setProcessingCerinte(false);
+      setTimeout(() => setCubeSpinning(false), 1000);
     }
   };
 
@@ -1861,39 +1863,92 @@ Returnează DOAR cerințele procesate, fiecare pe o linie separată, fără nume
           </div>
 
           <div className="admin-form-group">
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px', gap: '10px' }}>
               <label htmlFor="subiect-cerinte">Cerințe (câte una pe linie) *</label>
               {((subiectForm.numarSubiect === '1' && subiectForm.subpunct === 'B') || subiectForm.numarSubiect === '2' || subiectForm.numarSubiect === '3') && (
-                <button
-                  type="button"
-                  onClick={processCerinteWithAI}
-                  disabled={processingCerinte}
-                  onMouseEnter={() => !processingCerinte && setAiButtonHover(true)}
-                  onMouseLeave={() => setAiButtonHover(false)}
+                <div
+                  className={`ai-cube-wrapper ${cubeSpinning ? 'spinning' : ''} ${processingCerinte ? 'processing' : ''}`}
+                  onClick={!processingCerinte ? processCerinteWithAI : undefined}
                   style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '6px',
-                    padding: '8px 12px',
-                    backgroundColor: aiButtonHover && !processingCerinte
-                      ? (darkTheme ? '#ffd591' : '#a97c50')
-                      : (darkTheme ? '#a97c50' : '#ffd591'),
-                    color: darkTheme ? '#fff' : '#4e2e1e',
-                    border: 'none',
-                    borderRadius: '8px',
                     cursor: processingCerinte ? 'not-allowed' : 'pointer',
-                    fontSize: '14px',
-                    fontWeight: 500,
                     opacity: processingCerinte ? 0.6 : 1,
-                    transition: 'all 0.2s',
-                    transform: aiButtonHover && !processingCerinte ? 'scale(1.05)' : 'scale(1)',
-                    boxShadow: aiButtonHover && !processingCerinte ? '0 2px 8px rgba(0,0,0,0.15)' : 'none'
                   }}
                   title="Procesează cerințele cu AI"
                 >
-                  <Dice6 size={16} />
-                  {processingCerinte ? 'Se procesează...' : 'Procesează cu AI'}
-                </button>
+                  <div className="ai-cube-3d">
+                    <div className="ai-cube-inner">
+                      <div className="ai-cube-side ai-cube-front" style={{
+                        background: darkTheme 
+                          ? 'linear-gradient(135deg, #a97c50 0%, #8b6b42 100%)'
+                          : 'linear-gradient(135deg, #ffd591 0%, #ffb366 100%)'
+                      }}>
+                        <div className="dice-dots dice-6">
+                          <span className="dot"></span>
+                          <span className="dot"></span>
+                          <span className="dot"></span>
+                          <span className="dot"></span>
+                          <span className="dot"></span>
+                          <span className="dot"></span>
+                        </div>
+                      </div>
+                      <div className="ai-cube-side ai-cube-back" style={{
+                        background: darkTheme 
+                          ? 'linear-gradient(135deg, #8b6b42 0%, #6d5233 100%)'
+                          : 'linear-gradient(135deg, #ffb366 0%, #ff9f33 100%)'
+                      }}>
+                        <div className="dice-dots dice-1">
+                          <span className="dot"></span>
+                        </div>
+                      </div>
+                      <div className="ai-cube-side ai-cube-right" style={{
+                        background: darkTheme 
+                          ? 'linear-gradient(135deg, #8b6b42 0%, #6d5233 100%)'
+                          : 'linear-gradient(135deg, #ffb366 0%, #ff9f33 100%)'
+                      }}>
+                        <div className="dice-dots dice-3">
+                          <span className="dot"></span>
+                          <span className="dot"></span>
+                          <span className="dot"></span>
+                        </div>
+                      </div>
+                      <div className="ai-cube-side ai-cube-left" style={{
+                        background: darkTheme 
+                          ? 'linear-gradient(135deg, #a97c50 0%, #8b6b42 100%)'
+                          : 'linear-gradient(135deg, #ffd591 0%, #ffb366 100%)'
+                      }}>
+                        <div className="dice-dots dice-4">
+                          <span className="dot"></span>
+                          <span className="dot"></span>
+                          <span className="dot"></span>
+                          <span className="dot"></span>
+                        </div>
+                      </div>
+                      <div className="ai-cube-side ai-cube-top" style={{
+                        background: darkTheme 
+                          ? 'linear-gradient(135deg, #a97c50 0%, #8b6b42 100%)'
+                          : 'linear-gradient(135deg, #ffd591 0%, #ffb366 100%)'
+                      }}>
+                        <div className="dice-dots dice-5">
+                          <span className="dot"></span>
+                          <span className="dot"></span>
+                          <span className="dot"></span>
+                          <span className="dot"></span>
+                          <span className="dot"></span>
+                        </div>
+                      </div>
+                      <div className="ai-cube-side ai-cube-bottom" style={{
+                        background: darkTheme 
+                          ? 'linear-gradient(135deg, #8b6b42 0%, #6d5233 100%)'
+                          : 'linear-gradient(135deg, #ffb366 0%, #ff9f33 100%)'
+                      }}>
+                        <div className="dice-dots dice-2">
+                          <span className="dot"></span>
+                          <span className="dot"></span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               )}
             </div>
             <textarea

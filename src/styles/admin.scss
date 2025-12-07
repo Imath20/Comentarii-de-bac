@@ -899,3 +899,285 @@ body.dark-theme .admin-login-subtitle {
     }
   }
 }
+
+// 3D AI Cube Styles - Beautiful Relief Effect
+.ai-cube-wrapper {
+  width: 40px;
+  height: 40px;
+  display: inline-block;
+  position: relative;
+  flex-shrink: 0;
+  transition: opacity 0.3s ease;
+  margin-top: -20px;
+  margin-right: 30px;
+
+  &.spinning .ai-cube-inner {
+    animation: cubeSpin 1s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  &.processing {
+    pointer-events: none;
+  }
+}
+
+.ai-cube-3d {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  perspective: 600px;
+  perspective-origin: 50% 50%;
+  transform-style: preserve-3d;
+}
+
+.ai-cube-inner {
+  width: 40px;
+  height: 40px;
+  position: relative;
+  transform-style: preserve-3d;
+  transform: rotateX(-20deg) rotateY(20deg);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ai-cube-side {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid rgba(0, 0, 0, 0.25);
+  box-shadow: 
+    inset 0 0 12px rgba(0, 0, 0, 0.2),
+    inset 0 0 24px rgba(0, 0, 0, 0.1),
+    0 3px 12px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(0, 0, 0, 0.1);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.ai-cube-front {
+  transform: translateZ(20px);
+  border-radius: 6px;
+  box-shadow: 
+    inset 0 0 12px rgba(0, 0, 0, 0.2),
+    inset 0 0 24px rgba(0, 0, 0, 0.1),
+    0 5px 16px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+}
+
+.ai-cube-back {
+  transform: rotateY(180deg) translateZ(20px);
+  border-radius: 6px;
+  box-shadow: 
+    inset 0 0 12px rgba(0, 0, 0, 0.3),
+    inset 0 0 24px rgba(0, 0, 0, 0.15),
+    0 3px 12px rgba(0, 0, 0, 0.4);
+}
+
+.ai-cube-right {
+  transform: rotateY(90deg) translateZ(20px);
+  box-shadow: 
+    inset 0 0 12px rgba(0, 0, 0, 0.25),
+    inset 0 0 24px rgba(0, 0, 0, 0.12),
+    0 3px 10px rgba(0, 0, 0, 0.35);
+}
+
+.ai-cube-left {
+  transform: rotateY(-90deg) translateZ(20px);
+  box-shadow: 
+    inset 0 0 12px rgba(0, 0, 0, 0.25),
+    inset 0 0 24px rgba(0, 0, 0, 0.12),
+    0 3px 10px rgba(0, 0, 0, 0.35);
+}
+
+.ai-cube-top {
+  transform: rotateX(90deg) translateZ(20px);
+  box-shadow: 
+    inset 0 0 12px rgba(0, 0, 0, 0.2),
+    inset 0 0 24px rgba(0, 0, 0, 0.1),
+    0 3px 12px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(255, 255, 255, 0.15) inset;
+}
+
+.ai-cube-bottom {
+  transform: rotateX(-90deg) translateZ(20px);
+  box-shadow: 
+    inset 0 0 12px rgba(0, 0, 0, 0.3),
+    inset 0 0 24px rgba(0, 0, 0, 0.15),
+    0 3px 10px rgba(0, 0, 0, 0.35);
+}
+
+// Dice dots styles
+.dice-dots {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  padding: 5px;
+  box-sizing: border-box;
+}
+
+.dice-dots .dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.75);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.4), inset 0 0.5px 0.5px rgba(255, 255, 255, 0.25);
+}
+
+// Dice 1 (one dot in center)
+.dice-1 {
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  place-items: center;
+}
+
+// Dice 2 (two dots diagonal)
+.dice-2 {
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  place-items: center;
+  gap: 0;
+  
+  .dot:nth-child(1) {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  .dot:nth-child(2) {
+    grid-column: 2;
+    grid-row: 2;
+  }
+}
+
+// Dice 3 (three dots diagonal)
+.dice-3 {
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  place-items: center;
+  gap: 0;
+  
+  .dot:nth-child(1) {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  .dot:nth-child(2) {
+    grid-column: 2;
+    grid-row: 2;
+  }
+  .dot:nth-child(3) {
+    grid-column: 3;
+    grid-row: 3;
+  }
+}
+
+// Dice 4 (four corners)
+.dice-4 {
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  place-items: center;
+  gap: 0;
+  
+  .dot:nth-child(1) {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  .dot:nth-child(2) {
+    grid-column: 2;
+    grid-row: 1;
+  }
+  .dot:nth-child(3) {
+    grid-column: 1;
+    grid-row: 2;
+  }
+  .dot:nth-child(4) {
+    grid-column: 2;
+    grid-row: 2;
+  }
+}
+
+// Dice 5 (four corners + center)
+.dice-5 {
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  place-items: center;
+  gap: 0;
+  
+  .dot:nth-child(1) {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  .dot:nth-child(2) {
+    grid-column: 3;
+    grid-row: 1;
+  }
+  .dot:nth-child(3) {
+    grid-column: 2;
+    grid-row: 2;
+  }
+  .dot:nth-child(4) {
+    grid-column: 1;
+    grid-row: 3;
+  }
+  .dot:nth-child(5) {
+    grid-column: 3;
+    grid-row: 3;
+  }
+}
+
+// Dice 6 (two columns of three)
+.dice-6 {
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  place-items: center;
+  gap: 0;
+  
+  .dot:nth-child(1) {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  .dot:nth-child(2) {
+    grid-column: 1;
+    grid-row: 2;
+  }
+  .dot:nth-child(3) {
+    grid-column: 1;
+    grid-row: 3;
+  }
+  .dot:nth-child(4) {
+    grid-column: 2;
+    grid-row: 1;
+  }
+  .dot:nth-child(5) {
+    grid-column: 2;
+    grid-row: 2;
+  }
+  .dot:nth-child(6) {
+    grid-column: 2;
+    grid-row: 3;
+  }
+}
+
+@keyframes cubeSpin {
+  0% {
+    transform: rotateX(-20deg) rotateY(20deg);
+  }
+  25% {
+    transform: rotateX(-20deg) rotateY(110deg) rotateZ(90deg);
+  }
+  50% {
+    transform: rotateX(-20deg) rotateY(200deg) rotateZ(180deg);
+  }
+  75% {
+    transform: rotateX(-20deg) rotateY(290deg) rotateZ(270deg);
+  }
+  100% {
+    transform: rotateX(-20deg) rotateY(380deg) rotateZ(360deg);
+  }
+}
+
+.ai-cube-wrapper:hover .ai-cube-inner {
+  transform: rotateX(-25deg) rotateY(30deg) scale(1.1);
+}
+
+.ai-cube-wrapper:active .ai-cube-inner {
+  transform: rotateX(-25deg) rotateY(30deg) scale(0.95);
+}
