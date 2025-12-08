@@ -18,7 +18,7 @@ const AICerinteProcessor = ({ subiectForm, setSubiectForm, setMessage, darkTheme
     const groqApiUrl = import.meta.env.VITE_GROQ_API_URL || 'https://api.groq.com/openai/v1/chat/completions';
 
     if (!groqApiKey) {
-      setMessage({ type: 'error', text: 'Setează VITE_GROQ_API_KEY în .env.local (vezi .env.example).' });
+      setMessage({ type: 'error', text: 'Setează VITE_GROQ_API_KEY în .env.local.' });
       return;
     }
 
