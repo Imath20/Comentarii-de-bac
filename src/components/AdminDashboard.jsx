@@ -367,7 +367,7 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
       
       if (subiectForm.numarSubiect === '1' && subiectForm.subpunct === 'A') {
         // Subiect 1 A: 6 întrebări de 5 puncte fiecare
-        newPunctaj = '6\n6\n6\n6\n6\n6';
+        newPunctaj = '6\n6\n6\n6\n6';
       } else if (subiectForm.numarSubiect === '1' && subiectForm.subpunct === 'B') {
         // Subiect 1 B: Total 20
         newPunctaj = 'Total: 20\nSumar conținut: 14\nSumar redactare: 6';
@@ -773,7 +773,9 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
       ensureOwnershipContext();
       // Parse cerinte and punctaj from textarea (one per line)
       const cerinte = subiectForm.cerinte
-        .split('\n')
+        // Accept both real new lines (Enter) and literal "\n" or "/n"
+        .replace(/\r\n/g, '\n')
+        .split(/\n|\\n|\/n/)
         .map(line => line.trim())
         .filter(line => line.length > 0);
       
@@ -1737,7 +1739,11 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
             <textarea
               id="subiect-cerinte"
               value={subiectForm.cerinte}
-              onChange={(e) => setSubiectForm({ ...subiectForm, cerinte: e.target.value })}
+              onChange={(e) => {
+                // Normalize to real new lines; still accept "/n" or "\n" typed manually
+                const value = e.target.value.replace(/\\n|\/n/g, '\n');
+                setSubiectForm({ ...subiectForm, cerinte: value });
+              }}
               placeholder="Indică sensul din text al cuvântului prielnic&#10;Evidențiază o trăsătură a personajului..."
               required
               rows={5}
