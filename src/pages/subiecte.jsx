@@ -430,31 +430,16 @@ export default function Subiecte() {
         }
 
         const dataStr = subiect.data ?? '';
-        if (dataStr) {
-            const match = String(dataStr).match(/(\d{4})/);
-            if (match) {
-                const yearFromData = parseInt(match[1], 10);
-                if (!Number.isNaN(yearFromData)) {
-                    return yearFromData;
-                }
-            }
-        }
-
-        const createdAtStr = subiect.createdAt ?? '';
-        if (createdAtStr) {
-            const match = String(createdAtStr).match(/(\d{4})/);
-            if (match) {
-                const yearFromCreated = parseInt(match[1], 10);
-                if (!Number.isNaN(yearFromCreated)) {
-                    return yearFromCreated;
-                }
-            }
-        }
-
-        return NaN;
+        if (!dataStr) return NaN;
+        const match = String(dataStr).match(/(\d{4})/);
+        return match ? parseInt(match[1], 10) : NaN;
     };
 
     const sortedSubiecte = useMemo(() => {
+        if (!usingLocalFallback) {
+            return filteredSubiecte;
+        }
+
         if (sortOption === 'none') {
             return [...filteredSubiecte];
         }
@@ -469,16 +454,13 @@ export default function Subiecte() {
             if (!yearAFinite) return 1;
             if (!yearBFinite) return -1;
 
-            if (yearA !== yearB) {
-                return sortOption === 'cronologic-asc' ? yearA - yearB : yearB - yearA;
+            if (sortOption === 'cronologic-asc') {
+                return yearA - yearB;
             }
 
-            const createdA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
-            const createdB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
-
-            return sortOption === 'cronologic-asc' ? createdA - createdB : createdB - createdA;
+            return yearB - yearA;
         });
-    }, [filteredSubiecte, sortOption]);
+    }, [filteredSubiecte, sortOption, usingLocalFallback]);
 
     useEffect(() => {
         if (loadingSubiecte || isLoadingMore) {
