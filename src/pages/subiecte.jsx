@@ -362,10 +362,49 @@ export default function Subiecte() {
         };
     }, [handleInfiniteScroll]);
 
+    // Duplica automat subiectele de la profilul Real către Uman pentru 1A/1B și 2
+    const augmentedSubiecte = useMemo(() => {
+        if (selectedProfil !== 'uman') {
+            return subiecte;
+        }
+
+        const candidates = (subiecte || []).filter((subiect) => {
+            const profilValue = subiect.profil ? String(subiect.profil).toLowerCase() : '';
+            if (profilValue && profilValue !== 'real') {
+                return false;
+            }
+
+            const numar = subiect.numarSubiect ?? subiect.numar ?? null;
+            const numarStr = numar != null ? String(numar) : '';
+            const subpunctValue = subiect.subpunct ? String(subiect.subpunct).toUpperCase() : '';
+
+            const isSubiect1AB =
+                numarStr === '1' && (subpunctValue === 'A' || subpunctValue === 'B');
+            const isSubiect2 = numarStr === '2';
+
+            return isSubiect1AB || isSubiect2;
+        });
+
+        const mirrored = candidates.map((subiect, idx) => {
+            const numar = subiect.numarSubiect ?? subiect.numar ?? 'N';
+            const subpunctValue = subiect.subpunct
+                ? String(subiect.subpunct).toUpperCase()
+                : 'X';
+
+            return {
+                ...subiect,
+                profil: 'uman',
+                id: `${subiect.id || `subiect-${idx}`}-uman-copy-${numar}-${subpunctValue}`,
+            };
+        });
+
+        return [...subiecte, ...mirrored];
+    }, [selectedProfil, subiecte]);
+
     const filteredSubiecte = useMemo(() => {
         const searchLower = searchTerm.trim().toLowerCase();
 
-        return subiecte.filter((subiect) => {
+        return augmentedSubiecte.filter((subiect) => {
             const titluLower = subiect.titlu ? subiect.titlu.toLowerCase() : '';
             const descriereLower = subiect.descriere ? subiect.descriere.toLowerCase() : '';
 
@@ -411,7 +450,15 @@ export default function Subiecte() {
                 matchesProfil
             );
         });
-    }, [subiecte, searchTerm, selectedTip, selectedAn, selectedSesiune, selectedSubpunct, selectedProfil]);
+    }, [
+        augmentedSubiecte,
+        searchTerm,
+        selectedTip,
+        selectedAn,
+        selectedSesiune,
+        selectedSubpunct,
+        selectedProfil,
+    ]);
 
     const sortOptions = [
         { value: 'none', label: 'Fără sortare' },
