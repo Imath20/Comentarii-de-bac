@@ -1727,7 +1727,7 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
           <div className="admin-form-group">
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px', gap: '10px' }}>
               <label htmlFor="subiect-cerinte">Cerințe (câte una pe linie) *</label>
-              {((subiectForm.numarSubiect === '1' && subiectForm.subpunct === 'B') || subiectForm.numarSubiect === '2' || subiectForm.numarSubiect === '3') && (
+              {(((subiectForm.numarSubiect === '1' && (subiectForm.subpunct === 'A' || subiectForm.subpunct === 'B')) ) || subiectForm.numarSubiect === '2' || subiectForm.numarSubiect === '3') && (
                 <AICerinteProcessor
                   subiectForm={subiectForm}
                   setSubiectForm={setSubiectForm}

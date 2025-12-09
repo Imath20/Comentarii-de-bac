@@ -105,6 +105,15 @@ export default function SubiectModal({ isOpen, subiect, darkTheme, onClose, onDe
         return profil === 'real' && subiectAn && subiectAn >= 2021 && subiectAn < 2026
     };
 
+    // Procesăm textul, păstrând și paragrafele goale rezultate din secvențe duble de \n sau /n
+    const splitIntoParagraphs = (textValue) => {
+        return textValue.split('\n').map((p) => {
+            const trimmed = p.trim();
+            // Folosim NBSP pentru a menține paragraful vizibil și când e gol
+            return trimmed.length > 0 ? trimmed : '\u00A0';
+        });
+    };
+
     // Process text for display
     const getProcessedText = (s) => {
         const text = getLongText(s);
@@ -112,17 +121,13 @@ export default function SubiectModal({ isOpen, subiect, darkTheme, onClose, onDe
         
         // Subiectele vechi (profil real + an >= 2020): recunosc Enter-ul ca newline
         if (isOldSubiect(s)) {
-            // Split by real newlines (Enter din textarea)
-            return text.split('\n').map(p => p.trim()).filter(p => p.length > 0);
+            const normalized = text.replace(/\r?\n/g, '\n');
+            return splitIntoParagraphs(normalized);
         } else {
-            // Subiectele noi: NU recunosc Enter-ul, doar \n literal
-            // Replace any real newlines with spaces (Enter in textarea should not create paragraphs)
-            let processedText = text.replace(/\r?\n/g, ' ');
-            // Split by literal \n string (the characters backslash + n, not actual newlines)
-            // Procesăm atât \n cât și /n (pentru cazuri când utilizatorul scrie slash în loc de backslash)
-            const paragraphs = processedText.split(/\\n|\/n/);
-            // Filter out empty paragraphs and trim whitespace
-            return paragraphs.map(p => p.trim()).filter(p => p.length > 0);
+            // Subiectele noi: NU recunosc Enter-ul, doar \n sau /n scrise manual
+            const withoutRealNewlines = text.replace(/\r?\n/g, ' ');
+            const normalized = withoutRealNewlines.replace(/(\\n|\/n)/g, '\n');
+            return splitIntoParagraphs(normalized);
         }
     };
 
