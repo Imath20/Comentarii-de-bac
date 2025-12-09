@@ -97,12 +97,21 @@ export default function SubiectModal({ isOpen, subiect, darkTheme, onClose, onDe
         const profil = s?.profil?.toLowerCase?.() || '';
         const an = s?.an ? parseInt(s.an) : null;
         const data = s?.data ? parseInt(s.data) : null;
+        const numarSubiect = s?.numarSubiect ?? s?.numar ?? null;
+        const numarStr = numarSubiect != null ? String(numarSubiect) : '';
         
         // Folosim an sau data (care este disponibil)
         const subiectAn = an || data;
-        
+
+        // Subiectul 3 la profil uman acceptă mereu newlines, indiferent de an
+        if (profil === 'uman' && numarStr === '3') {
+            return true;
+        }
+
         // Dacă este profil real și an între [2020, 2026), este vechi
-        return profil === 'real' && subiectAn && subiectAn >= 2021 && subiectAn < 2026
+        const isProfilReal = profil === 'real';
+        const isProfilUmanEligible = profil === 'uman' && subiectAn && subiectAn >= 2021 && subiectAn < 2026;
+        return isProfilReal || isProfilUmanEligible;
     };
 
     // Procesăm textul, păstrând și paragrafele goale rezultate din secvențe duble de \n sau /n
@@ -119,9 +128,10 @@ export default function SubiectModal({ isOpen, subiect, darkTheme, onClose, onDe
         const text = getLongText(s);
         if (!text) return [];
         
-        // Subiectele vechi (profil real + an >= 2020): recunosc Enter-ul ca newline
+        // Subiectele vechi (profil real + an >= 2020) și Subiect 3 UMAN: recunosc Enter-ul ca newline
         if (isOldSubiect(s)) {
-            const normalized = text.replace(/\r?\n/g, '\n');
+            // Acceptăm atât Enter, cât și secvențe scrise manual \n sau /n
+            const normalized = text.replace(/(\\n|\/n|\r?\n)/g, '\n');
             return splitIntoParagraphs(normalized);
         } else {
             // Subiectele noi: NU recunosc Enter-ul, doar \n sau /n scrise manual

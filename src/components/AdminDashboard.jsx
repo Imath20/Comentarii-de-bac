@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { addComentariu, updateComentariu } from '../firebase/comentariiService';
 import { addSubiect, updateSubiect } from '../firebase/subiecteService';
@@ -300,6 +300,12 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
       createdByName: '',
     };
   });
+
+  const allowSubiectTextNewlines = useMemo(() => {
+    const numarStr = (subiectForm.numarSubiect ?? '').toString();
+    const profilLower = (subiectForm.profil ?? '').toLowerCase();
+    return profilLower === 'uman' && numarStr === '3';
+  }, [subiectForm.numarSubiect, subiectForm.profil]);
 
   // Save subiect form to sessionStorage whenever it changes (only when not editing)
   useEffect(() => {
@@ -1698,13 +1704,16 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
               id="subiect-text"
               value={subiectForm.text}
               onChange={(e) => {
-                // Replace real newlines (Enter) with spaces to keep text continuous
-                const value = e.target.value.replace(/\r?\n/g, ' ');
+                // Allow Enter only pentru Subiectul 3 profil uman; altfel înlocuiește cu spațiu
+                const rawValue = e.target.value;
+                const value = allowSubiectTextNewlines
+                  ? rawValue.replace(/\r\n/g, '\n')
+                  : rawValue.replace(/\r?\n/g, ' ');
                 setSubiectForm({ ...subiectForm, text: value });
               }}
               onKeyDown={(e) => {
-                // Prevent Enter from creating newlines - replace with space
-                if (e.key === 'Enter') {
+                // Prevent Enter from creating newlines - replace with space (except Subiect 3 UMAN)
+                if (!allowSubiectTextNewlines && e.key === 'Enter') {
                   e.preventDefault();
                   const textarea = e.target;
                   const start = textarea.selectionStart;
