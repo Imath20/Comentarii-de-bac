@@ -1743,6 +1743,7 @@ const Scriitor = () => {
       {showChat && (
         <ScriitorChat
           scriitorKey={name}
+          scriitorMeta={data}
           onClose={() => setShowChat(false)}
         />
       )}

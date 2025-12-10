@@ -1,7 +1,7 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useMemo, useState, useRef, useEffect } from 'react';
 import scriitoriChatData from '../data/scriitoriChatData';
 
-const ScriitorChat = ({ scriitorKey, onClose }) => {
+const ScriitorChat = ({ scriitorKey, onClose, scriitorMeta }) => {
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState('');
   const [isTyping, setIsTyping] = useState(false);
@@ -9,10 +9,37 @@ const ScriitorChat = ({ scriitorKey, onClose }) => {
   const inputRef = useRef(null);
 
   const scriitorData = scriitoriChatData[scriitorKey];
+  const groqApiKey = import.meta.env.VITE_GROQ_API_KEY;
+  const groqApiUrl = import.meta.env.VITE_GROQ_API_URL || 'https://api.groq.com/openai/v1/chat/completions';
+  const groqAvailable = Boolean(groqApiKey);
   
   if (!scriitorData) {
     return null;
   }
+
+  // Construim un scurt rezumat biografic și de stil pentru prompt-ul AI
+  const personaContext = useMemo(() => {
+    const stil = scriitorData.stil ? `Stil: ${scriitorData.stil}.` : '';
+    const metaBio = scriitorMeta?.biografie || scriitorMeta?.prezentare?.bibliografie || '';
+    const date = scriitorMeta?.date ? `Perioadă/ani: ${scriitorMeta.date}.` : '';
+    const opere = scriitorMeta?.opere ? Object.values(scriitorMeta.opere).flat().slice(0, 6).join('; ') : '';
+    const opereText = opere ? `Opere cunoscute: ${opere}.` : '';
+    return [stil, date, opereText, metaBio].filter(Boolean).join(' ');
+  }, [scriitorData.stil, scriitorMeta]);
+
+  const systemPrompt = useMemo(() => {
+    const examples = (scriitorData.dataset || []).slice(0, 6).map(
+      (qa, idx) => `Q${idx + 1}: ${qa.prompt}\nA${idx + 1}: ${qa.response}`
+    ).join('\n\n');
+
+    return [
+      `Ești ${scriitorData.nume}, scriitor român. Vorbești la persoana I, menții tonul și vocabularul autorului, fără emoji și fără explicații tehnice.`,
+      personaContext ? `Context util: ${personaContext}` : '',
+      'Răspunde concis (1-4 fraze), cu respect pentru perioada ta istorică și temele recurente.',
+      'Dacă nu ai o informație exactă, recunoaște onest și răspunde general, păstrând stilul scriitorului.',
+      examples ? `Exemple de dialog:\n${examples}` : ''
+    ].filter(Boolean).join('\n\n');
+  }, [personaContext, scriitorData.dataset, scriitorData.nume]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -119,12 +146,59 @@ const ScriitorChat = ({ scriitorKey, onClose }) => {
     return contextualResponses[Math.floor(Math.random() * contextualResponses.length)];
   };
 
+  const buildGroqMessages = (userText) => {
+    const history = messages.slice(-8).map((m) => ({
+      role: m.sender === 'user' ? 'user' : 'assistant',
+      content: m.text
+    }));
+
+    return [
+      { role: 'system', content: systemPrompt },
+      ...history,
+      { role: 'user', content: userText }
+    ];
+  };
+
+  const fetchGroqResponse = async (userText) => {
+    const body = {
+      model: 'openai/gpt-oss-120b',
+      messages: buildGroqMessages(userText),
+      temperature: 0.7,
+      max_tokens: 320
+    };
+
+    const res = await fetch(groqApiUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${groqApiKey}`
+      },
+      body: JSON.stringify(body)
+    });
+
+    if (!res.ok) {
+      const text = await res.text().catch(() => '');
+      let msg = `Eroare API Groq (${res.status})`;
+      try {
+        const data = JSON.parse(text);
+        if (data?.error?.message) msg = data.error.message;
+      } catch (_) { /* noop */ }
+      throw new Error(msg);
+    }
+
+    const data = await res.json();
+    const content = data?.choices?.[0]?.message?.content?.trim();
+    if (!content) throw new Error('Răspuns gol de la Groq');
+    return content;
+  };
+
   const handleSendMessage = async () => {
-    if (!inputMessage.trim()) return;
+    const trimmed = inputMessage.trim();
+    if (!trimmed) return;
 
     const userMessage = {
       id: Date.now(),
-      text: inputMessage,
+      text: trimmed,
       sender: 'user',
       timestamp: new Date()
     };
@@ -133,20 +207,37 @@ const ScriitorChat = ({ scriitorKey, onClose }) => {
     setInputMessage('');
     setIsTyping(true);
 
-    // Simulează timpul de gândire al scriitorului
-    setTimeout(() => {
-      const response = findBestResponse(inputMessage);
-      
+    try {
+      let reply;
+
+      if (groqAvailable) {
+        reply = await fetchGroqResponse(trimmed);
+      } else {
+        reply = findBestResponse(trimmed);
+      }
+
       const scriitorMessage = {
         id: Date.now() + 1,
-        text: response,
+        text: reply,
         sender: 'scriitor',
         timestamp: new Date()
       };
 
       setMessages(prev => [...prev, scriitorMessage]);
+    } catch (err) {
+      console.error('Eroare Groq chat:', err);
+      const fallback = findBestResponse(trimmed);
+      setMessages(prev => [...prev, {
+        id: Date.now() + 1,
+        text: groqAvailable
+          ? `Am avut o problemă tehnică, dar iată un răspuns pe scurt: ${fallback}`
+          : fallback,
+        sender: 'scriitor',
+        timestamp: new Date()
+      }]);
+    } finally {
       setIsTyping(false);
-    }, 1000 + Math.random() * 2000); // 1-3 secunde
+    }
   };
 
   const handleKeyPress = (e) => {
