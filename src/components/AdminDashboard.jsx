@@ -22,6 +22,7 @@ import { getScriitoriData } from '../firebase/scriitoriService';
 import { useAuth } from '../firebase/AuthContext';
 import { createNotification } from '../firebase/notificationsService';
 import AICerinteProcessor from './AICerinteProcessor';
+import AIPostGenerator from './AIPostGenerator';
 import '../styles/admin.scss';
 
 const REACTIONS = [
@@ -472,6 +473,8 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
     createdByEmail: '',
     createdByName: '',
   });
+  const [aiPostPrompt, setAiPostPrompt] = useState('');
+  const [aiPoemPrompt, setAiPoemPrompt] = useState('');
 
   // Load scriitori when tab is active
   useEffect(() => {
@@ -2435,6 +2438,8 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
                         newReactionFriendName: '',
                         newReactionType: '',
                       });
+                      setAiPostPrompt('');
+                      setAiPoemPrompt('');
                       setScriitorView('post-add');
                       const currentFrom = searchParams.get('from');
                       updateUrlParams({ action: 'add-post', scriitor: selectedScriitor.key || selectedScriitor.id, postId: null, commentIndex: null, from: currentFrom || 'posts' });
@@ -2543,6 +2548,8 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
                                   newReactionFriendName: '',
                                   newReactionType: '',
                                 });
+                              setAiPostPrompt('');
+                              setAiPoemPrompt('');
                                 setScriitorView('post-edit');
                                 const currentFrom = searchParams.get('from');
                                 updateUrlParams({ action: 'edit-post', scriitor: selectedScriitor.key || selectedScriitor.id, postId: post.id, commentIndex: null, from: currentFrom || 'posts' });
@@ -2653,7 +2660,31 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
               {!postForm.isPoem ? (
                 <>
                   <div className="admin-form-group">
-                    <label htmlFor="post-text">Text *</label>
+                    <label htmlFor="post-ai-brief">Despre ce să scrie AI-ul (brief scurt)</label>
+                    <textarea
+                      id="post-ai-brief"
+                      value={aiPostPrompt}
+                      onChange={(e) => setAiPostPrompt(e.target.value)}
+                      placeholder="Ex.: anunță apariția unei noi ediții, pune un highlight dintr-o operă, descrie o amintire din copilărie, invită elevii la lectură..."
+                      rows={3}
+                      className="admin-textarea"
+                    />
+                    <small style={{ color: darkTheme ? '#c3b7a4' : '#666' }}>
+                      Scrie 1-2 idei despre subiect, ton și public; AI-ul va folosi profilul scriitorului selectat.
+                    </small>
+                  </div>
+
+                  <div className="admin-form-group">
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '10px' }}>
+                      <label htmlFor="post-text" style={{ marginBottom: 0 }}>Text *</label>
+                      <AIPostGenerator
+                        prompt={aiPostPrompt}
+                        onTextGenerated={(generatedText) => setPostForm((prev) => ({ ...prev, text: generatedText }))}
+                        scriitor={selectedScriitor}
+                        setMessage={setMessage}
+                        darkTheme={darkTheme}
+                      />
+                    </div>
                     <textarea
                       id="post-text"
                       value={postForm.text}
@@ -2663,6 +2694,9 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
                       rows={5}
                       className="admin-textarea"
                     />
+                    <small style={{ color: darkTheme ? '#c3b7a4' : '#666' }}>
+                      Poți completa manual sau apasă cubul pentru a genera automat pe baza brief-ului de mai sus.
+                    </small>
                   </div>
 
                   <div className="admin-form-row">
@@ -2753,16 +2787,45 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
               ) : (
                 <>
                   <div className="admin-form-group">
-                    <label htmlFor="post-text">Text introductiv *</label>
+                    <label htmlFor="poem-ai-brief">Despre ce să scrie AI-ul (brief poezie)</label>
                     <textarea
-                      id="post-text"
-                      value={postForm.text}
-                      onChange={(e) => setPostForm({ ...postForm, text: e.target.value })}
-                      placeholder='Am scris poezia "Glossă". Gânduri despre timp și viață.'
-                      required
+                      id="poem-ai-brief"
+                      value={aiPoemPrompt}
+                      onChange={(e) => setAiPoemPrompt(e.target.value)}
+                      placeholder="Ex.: o amintire din copilărie, o metaforă despre timp, un peisaj specific autorului..."
                       rows={3}
                       className="admin-textarea"
                     />
+                    <small style={{ color: darkTheme ? '#c3b7a4' : '#666' }}>
+                      1-2 idei, imagini sau teme; AI-ul va scrie poezia în stilul autorului, la persoana I.
+                    </small>
+                  </div>
+
+                  <div className="admin-form-group">
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '10px' }}>
+                      <label htmlFor="poem-text" style={{ marginBottom: 0 }}>Text poezie *</label>
+                      <AIPostGenerator
+                        prompt={aiPoemPrompt}
+                        onTextGenerated={(generatedText) => setPostForm((prev) => ({ ...prev, poemText: generatedText }))}
+                        scriitor={selectedScriitor}
+                        setMessage={setMessage}
+                        darkTheme={darkTheme}
+                        target="poem"
+                      />
+                    </div>
+                    <textarea
+                      id="poem-text"
+                      value={postForm.poemText}
+                      onChange={(e) => setPostForm({ ...postForm, poemText: e.target.value })}
+                      placeholder="Vreme trece, vreme vine..."
+                      required
+                      rows={15}
+                      className="admin-textarea"
+                      style={{ fontFamily: 'monospace', fontSize: '14px' }}
+                    />
+                    <small style={{ color: darkTheme ? '#c3b7a4' : '#666' }}>
+                      Poți edita manual sau apasă cubul pentru a genera versurile după brief.
+                    </small>
                   </div>
 
                   <div className="admin-form-group">
@@ -2775,20 +2838,6 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
                       placeholder="Glossă"
                       required
                       className="admin-input"
-                    />
-                  </div>
-
-                  <div className="admin-form-group">
-                    <label htmlFor="poem-text">Text poezie *</label>
-                    <textarea
-                      id="poem-text"
-                      value={postForm.poemText}
-                      onChange={(e) => setPostForm({ ...postForm, poemText: e.target.value })}
-                      placeholder="Vreme trece, vreme vine..."
-                      required
-                      rows={15}
-                      className="admin-textarea"
-                      style={{ fontFamily: 'monospace', fontSize: '14px' }}
                     />
                   </div>
 
