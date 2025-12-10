@@ -104,6 +104,8 @@
     position: relative;
     height: auto; // Schimbat de la 420px fix la auto pentru a se adapta la conținut
     min-height: 300px; // Adăugat min-height pentru a menține aspectul minim
+  display: flex;
+  flex-direction: column;
     border-radius: 24px;
     overflow: visible; // Schimbat de la hidden la visible pentru a permite textul să iasă
     cursor: pointer;
@@ -148,6 +150,7 @@
     position: relative;
     z-index: 2;
     height: 100%;
+  flex: 1;
     display: flex;
     flex-direction: column;
     padding: 2rem;
@@ -230,8 +233,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 0.5rem; // mută badge-urile mai sus în card
-    padding-top: 0.5rem;
+  margin-top: auto; // forțează footer-ul jos de tot
+  padding-top: 0.75rem;
   }
   
   .comentarii-card-date {
