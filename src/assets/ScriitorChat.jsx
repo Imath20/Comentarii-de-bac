@@ -6,6 +6,7 @@ const ScriitorChat = ({ scriitorKey, onClose, scriitorMeta }) => {
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
+  const typingIntervalRef = useRef(null);
 
   const groqApiKey = import.meta.env.VITE_GROQ_API_KEY;
   const groqApiUrl = import.meta.env.VITE_GROQ_API_URL || 'https://api.groq.com/openai/v1/chat/completions';
@@ -125,6 +126,46 @@ const ScriitorChat = ({ scriitorKey, onClose, scriitorMeta }) => {
     return content;
   };
 
+  // Funcție pentru afișarea treptată a textului (typing effect)
+  const typeMessage = (fullText, messageId) => {
+    // Oprește orice typing în curs
+    if (typingIntervalRef.current) {
+      clearInterval(typingIntervalRef.current);
+    }
+
+    const words = fullText.split(' ');
+    let currentIndex = 0;
+    const wordsPerSecond = 10;
+    const delay = 800 / wordsPerSecond; // ~333ms per cuvânt
+
+    const typeInterval = setInterval(() => {
+      if (currentIndex < words.length) {
+        const currentText = words.slice(0, currentIndex + 1).join(' ');
+        setMessages(prev => prev.map(msg => 
+          msg.id === messageId 
+            ? { ...msg, text: currentText }
+            : msg
+        ));
+        currentIndex++;
+      } else {
+        clearInterval(typeInterval);
+        typingIntervalRef.current = null;
+        setIsTyping(false);
+      }
+    }, delay);
+
+    typingIntervalRef.current = typeInterval;
+  };
+
+  // Cleanup la unmount
+  useEffect(() => {
+    return () => {
+      if (typingIntervalRef.current) {
+        clearInterval(typingIntervalRef.current);
+      }
+    };
+  }, []);
+
   const handleSendMessage = async () => {
     const trimmed = inputMessage.trim();
     if (!trimmed) return;
@@ -149,27 +190,36 @@ const ScriitorChat = ({ scriitorKey, onClose, scriitorMeta }) => {
         reply = generateFallbackResponse(trimmed);
       }
 
+      // Creează mesajul cu text gol inițial
+      const messageId = Date.now() + 1;
       const scriitorMessage = {
-        id: Date.now() + 1,
-        text: reply,
+        id: messageId,
+        text: '',
         sender: 'scriitor',
         timestamp: new Date()
       };
 
+      // Adaugă mesajul gol în listă
       setMessages(prev => [...prev, scriitorMessage]);
+
+      // Începe typing effect
+      typeMessage(reply, messageId);
     } catch (err) {
       console.error('Eroare Groq chat:', err);
       const fallback = generateFallbackResponse(trimmed);
-      setMessages(prev => [...prev, {
-        id: Date.now() + 1,
-        text: groqAvailable
-          ? `Am avut o problemă tehnică, dar iată un răspuns pe scurt: ${fallback}`
-          : fallback,
+      const messageId = Date.now() + 1;
+      const errorMessage = {
+        id: messageId,
+        text: '',
         sender: 'scriitor',
         timestamp: new Date()
-      }]);
-    } finally {
-      setIsTyping(false);
+      };
+      
+      setMessages(prev => [...prev, errorMessage]);
+      const fullText = groqAvailable
+        ? `Am avut o problemă tehnică, dar iată un răspuns pe scurt: ${fallback}`
+        : fallback;
+      typeMessage(fullText, messageId);
     }
   };
 
@@ -228,21 +278,6 @@ const ScriitorChat = ({ scriitorKey, onClose, scriitorMeta }) => {
               </div>
             </div>
           ))}
-          
-          {isTyping && (
-            <div className="scriitor-chat-message scriitor">
-              <div className="scriitor-chat-avatar-small">
-                <img src={scriitorAvatar} alt={scriitorName} />
-              </div>
-              <div className="scriitor-chat-message-content">
-                <div className="scriitor-chat-typing">
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                </div>
-              </div>
-            </div>
-          )}
           
           <div ref={messagesEndRef} />
         </div>
