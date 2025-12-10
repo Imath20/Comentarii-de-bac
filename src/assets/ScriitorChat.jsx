@@ -1,5 +1,4 @@
 import React, { useMemo, useState, useRef, useEffect } from 'react';
-import scriitoriChatData from '../data/scriitoriChatData';
 
 const ScriitorChat = ({ scriitorKey, onClose, scriitorMeta }) => {
   const [messages, setMessages] = useState([]);
@@ -8,38 +7,38 @@ const ScriitorChat = ({ scriitorKey, onClose, scriitorMeta }) => {
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
 
-  const scriitorData = scriitoriChatData[scriitorKey];
   const groqApiKey = import.meta.env.VITE_GROQ_API_KEY;
   const groqApiUrl = import.meta.env.VITE_GROQ_API_URL || 'https://api.groq.com/openai/v1/chat/completions';
   const groqAvailable = Boolean(groqApiKey);
   
-  if (!scriitorData) {
+  if (!scriitorMeta) {
     return null;
   }
 
+  const scriitorName = scriitorMeta.nume || 'Scriitor';
+  const scriitorAvatar = scriitorMeta.img || '';
+
   // Construim un scurt rezumat biografic și de stil pentru prompt-ul AI
   const personaContext = useMemo(() => {
-    const stil = scriitorData.stil ? `Stil: ${scriitorData.stil}.` : '';
+    const categorie = scriitorMeta?.categorie ? `Categorie: ${scriitorMeta.categorie}.` : '';
     const metaBio = scriitorMeta?.biografie || scriitorMeta?.prezentare?.bibliografie || '';
     const date = scriitorMeta?.date ? `Perioadă/ani: ${scriitorMeta.date}.` : '';
     const opere = scriitorMeta?.opere ? Object.values(scriitorMeta.opere).flat().slice(0, 6).join('; ') : '';
     const opereText = opere ? `Opere cunoscute: ${opere}.` : '';
-    return [stil, date, opereText, metaBio].filter(Boolean).join(' ');
-  }, [scriitorData.stil, scriitorMeta]);
+    const info = scriitorMeta?.info ? Object.entries(scriitorMeta.info).map(([k, v]) => `${k}: ${v}`).join('; ') : '';
+    const infoText = info ? `Informații: ${info}.` : '';
+    return [categorie, date, opereText, infoText, metaBio].filter(Boolean).join(' ');
+  }, [scriitorMeta]);
 
   const systemPrompt = useMemo(() => {
-    const examples = (scriitorData.dataset || []).slice(0, 6).map(
-      (qa, idx) => `Q${idx + 1}: ${qa.prompt}\nA${idx + 1}: ${qa.response}`
-    ).join('\n\n');
-
     return [
-      `Ești ${scriitorData.nume}, scriitor român. Vorbești la persoana I, menții tonul și vocabularul autorului, fără emoji și fără explicații tehnice.`,
+      `Ești ${scriitorName}, scriitor român. Vorbești la persoana I, menții tonul și vocabularul autorului, fără emoji și fără explicații tehnice.`,
       personaContext ? `Context util: ${personaContext}` : '',
       'Răspunde concis (1-4 fraze), cu respect pentru perioada ta istorică și temele recurente.',
       'Dacă nu ai o informație exactă, recunoaște onest și răspunde general, păstrând stilul scriitorului.',
-      examples ? `Exemple de dialog:\n${examples}` : ''
+      'Răspunde întotdeauna în limba română, păstrând autenticitatea stilului scriitorului.'
     ].filter(Boolean).join('\n\n');
-  }, [personaContext, scriitorData.dataset, scriitorData.nume]);
+  }, [personaContext, scriitorName]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -55,7 +54,7 @@ const ScriitorChat = ({ scriitorKey, onClose, scriitorMeta }) => {
       setMessages([
         {
           id: 1,
-          text: `Salut! Sunt ${scriitorData.nume}. Îmi place să vorbesc cu oamenii și să împărtășesc gândurile mele. Cum te pot ajuta astăzi?`,
+          text: `Salut! Sunt ${scriitorName}. Îmi place să vorbesc cu oamenii și să împărtășesc gândurile mele. Cum te pot ajuta astăzi?`,
           sender: 'scriitor',
           timestamp: new Date()
         }
@@ -66,76 +65,10 @@ const ScriitorChat = ({ scriitorKey, onClose, scriitorMeta }) => {
     setTimeout(() => {
       inputRef.current?.focus();
     }, 1000);
-  }, []);
+  }, [scriitorName]);
 
-  // Funcție simplificată și îmbunătățită pentru a găsi cel mai potrivit răspuns
-  const findBestResponse = (userMessage) => {
-    const userText = userMessage.toLowerCase().trim();
-    const dataset = scriitorData.dataset;
-    
-    // Caută match exact în dataset
-    for (let item of dataset) {
-      const promptText = item.prompt.toLowerCase().trim();
-      
-      // Verifică match exact
-      if (userText === promptText) {
-        return item.response;
-      }
-      
-      // Verifică dacă întrebarea utilizatorului conține cuvinte cheie din prompt
-      const promptWords = promptText.split(' ').filter(word => word.length > 2);
-      const userWords = userText.split(' ').filter(word => word.length > 2);
-      
-      let matchCount = 0;
-      for (const promptWord of promptWords) {
-        for (const userWord of userWords) {
-          if (userWord.includes(promptWord) || promptWord.includes(userWord)) {
-            matchCount++;
-          }
-        }
-      }
-      
-      // Dacă găsește cel puțin 2 cuvinte cheie comune, returnează răspunsul
-      if (matchCount >= 2) {
-        return item.response;
-      }
-    }
-    
-    // Dacă nu găsește match în dataset, folosește răspunsuri contextuale
-    return generateContextualResponse(userText);
-  };
-
-  const generateContextualResponse = (userText) => {
-    const userWords = userText.toLowerCase().split(' ');
-    
-    // Răspunsuri specifice pentru Eminescu
-    if (scriitorKey === 'eminescu') {
-      if (userWords.some(word => ['veronica', 'micle'].includes(word))) {
-        return "Veronica... Ah, Veronica Micle! Este o persoană care a avut o influență mare asupra vieții mele. Prin scrisorile noastre am împărtășit gânduri și sentimente adânci. Este o femeie de o inteligență rară și de o sensibilitate artistică extraordinară.";
-      }
-      
-      if (userWords.some(word => ['dragoste', 'iubire', 'amor'].includes(word))) {
-        return "Dragostea este misterul cel mai mare al existenței! Este ca luceafărul din poezia mea - strălucitor și etern, dar mereu departe. Dragostea este sufletul lumii, este ceea ce ne face să trăim și să visăm. Fără dragoste, viața ar fi o noapte fără stele.";
-      }
-      
-      if (userWords.some(word => ['poezie', 'vers', 'scriu'].includes(word))) {
-        return "Poezia este pentru mine o modalitate de a atinge infinitul, de a exprima ceea ce nu poate fi spus cu cuvinte obișnuite. Fiecare vers este ca o bătaie a inimii, fiecare cuvânt este ales cu grijă pentru a transmite exact ceea ce simt.";
-      }
-      
-      if (userWords.some(word => ['natura', 'stele', 'luna'].includes(word))) {
-        return "Natura este cea mai mare învățătoare! În stele găsesc răspunsuri la întrebările mele, în luna găsesc melancolia care mă inspiră, în vânt găsesc vocea timpului care trece. Natura este poezia cea mai frumoasă scrisă de Dumnezeu.";
-      }
-      
-      if (userWords.some(word => ['romania', 'patria', 'tara'].includes(word))) {
-        return "România este inima mea! Este țara care m-a născut și care m-a format. Fiecare colț al patriei mele are farmecul său - de la munții noștri măreți până la câmpiile verzi, de la apele Dunării până la stepele Dobrogei.";
-      }
-      
-      if (userWords.some(word => ['cine', 'est', 'sunt'].includes(word))) {
-        return "Sunt Mihai Eminescu, poetul românilor. Sunt cel care a scris 'Luceafărul', 'Scrisori', 'Somnoroase păsări' și multe alte versuri care au rămas în inima poporului meu. Sunt cel care a încercat să exprime frumusețea și melancolia sufletului românesc.";
-      }
-    }
-    
-    // Răspunsuri generice dar mai relevante
+  // Fallback response dacă AI nu este disponibil
+  const generateFallbackResponse = (userText) => {
     const contextualResponses = [
       "Este o întrebare care merită să fie gândită cu atenție. Fiecare zi aduce noi provocări și noi oportunități de a învăța despre viață și despre noi înșine.",
       "În viața mea am învățat că fiecare întrebare are răspunsul său, dar nu întotdeauna în forma pe care o așteptăm. Este important să fim atenți la lecțiile pe care ni le oferă experiența.",
@@ -213,7 +146,7 @@ const ScriitorChat = ({ scriitorKey, onClose, scriitorMeta }) => {
       if (groqAvailable) {
         reply = await fetchGroqResponse(trimmed);
       } else {
-        reply = findBestResponse(trimmed);
+        reply = generateFallbackResponse(trimmed);
       }
 
       const scriitorMessage = {
@@ -226,7 +159,7 @@ const ScriitorChat = ({ scriitorKey, onClose, scriitorMeta }) => {
       setMessages(prev => [...prev, scriitorMessage]);
     } catch (err) {
       console.error('Eroare Groq chat:', err);
-      const fallback = findBestResponse(trimmed);
+      const fallback = generateFallbackResponse(trimmed);
       setMessages(prev => [...prev, {
         id: Date.now() + 1,
         text: groqAvailable
@@ -260,10 +193,10 @@ const ScriitorChat = ({ scriitorKey, onClose, scriitorMeta }) => {
         {/* Header */}
         <div className="scriitor-chat-header">
           <div className="scriitor-chat-avatar">
-            <img src={scriitorData.avatar} alt={scriitorData.nume} />
+            <img src={scriitorAvatar} alt={scriitorName} />
           </div>
           <div className="scriitor-chat-info">
-            <h3>{scriitorData.nume}</h3>
+            <h3>{scriitorName}</h3>
             <span className="scriitor-chat-status">
               {isTyping ? 'Scrie...' : 'Online'}
             </span>
@@ -282,7 +215,7 @@ const ScriitorChat = ({ scriitorKey, onClose, scriitorMeta }) => {
             >
               {message.sender === 'scriitor' && (
                 <div className="scriitor-chat-avatar-small">
-                  <img src={scriitorData.avatar} alt={scriitorData.nume} />
+                  <img src={scriitorAvatar} alt={scriitorName} />
                 </div>
               )}
               <div className="scriitor-chat-message-content">
@@ -299,7 +232,7 @@ const ScriitorChat = ({ scriitorKey, onClose, scriitorMeta }) => {
           {isTyping && (
             <div className="scriitor-chat-message scriitor">
               <div className="scriitor-chat-avatar-small">
-                <img src={scriitorData.avatar} alt={scriitorData.nume} />
+                <img src={scriitorAvatar} alt={scriitorName} />
               </div>
               <div className="scriitor-chat-message-content">
                 <div className="scriitor-chat-typing">
