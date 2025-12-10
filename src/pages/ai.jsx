@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import Layout from '../assets/Layout';
 import '../styles/style.scss';
@@ -134,12 +134,14 @@ const inlineMd = (s) => {
 
 export default function AI() {
   const location = useLocation();
+  const imageInputRef = useRef(null);
   const [darkTheme, setDarkTheme] = useState(() => localStorage.getItem('theme') === 'dark');
   const [scrolled, setScrolled] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [evaluation, setEvaluation] = useState(null);
   const [inputType, setInputType] = useState('text');
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [imagePreview, setImagePreview] = useState(null);
   const [formData, setFormData] = useState({
     solution: '',
     rubric: ''
@@ -211,7 +213,16 @@ export default function AI() {
 
   const handleInputTypeChange = (newType) => {
     if (newType === inputType || isTransitioning) return;
-    
+
+    // If we switch back to text, avoid showing the base64 image string
+    if (newType === 'text' && formData.solution?.startsWith('data:image')) {
+      setFormData(prev => ({ ...prev, solution: '' }));
+      setImagePreview(null);
+      if (imageInputRef.current) {
+        imageInputRef.current.value = '';
+      }
+    }
+
     setIsTransitioning(true);
     
     // Add slide-out animation
@@ -425,21 +436,46 @@ Pentru dezvoltatori: Verificați configurația serverului AI.`
     }
   };
 
+  const resetImageUpload = () => {
+    setImagePreview(null);
+    setFormData(prev => ({ ...prev, solution: '' }));
+    if (imageInputRef.current) {
+      imageInputRef.current.value = '';
+    }
+  };
+
   const handleFileUpload = (e, field) => {
     const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        setFormData(prev => ({
-          ...prev,
-          [field]: event.target.result
-        }));
-      };
-      if (file.type && file.type.startsWith('image/')) {
-        reader.readAsDataURL(file);
-      } else {
-        reader.readAsText(file);
+    if (!file) return;
+
+    const isImage = file.type && file.type.startsWith('image/');
+    if (field === 'solution' && !isImage) {
+      alert('Te rog încarcă o imagine (JPG, PNG, WEBP).');
+      if (imageInputRef.current) {
+        imageInputRef.current.value = '';
       }
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      setFormData(prev => ({
+        ...prev,
+        [field]: event.target.result
+      }));
+
+      if (field === 'solution' && isImage) {
+        setImagePreview({
+          url: event.target.result,
+          name: file.name
+        });
+      }
+    };
+
+    if (isImage) {
+      reader.readAsDataURL(file);
+    } else {
+      reader.readAsText(file);
     }
   };
 
@@ -518,19 +554,39 @@ Pentru dezvoltatori: Verificați configurația serverului AI.`
                     />
                   ) : (
                     <div className="ai-image-upload">
-                      <label htmlFor="solution-image" className={`ai-image-label ${darkTheme ? 'dark-theme' : ''}`}>
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                          <polyline points="7,10 12,15 17,10"/>
-                          <line x1="12" y1="15" x2="12" y2="3"/>
-                        </svg>
-                        Încarcă imaginea rezolvării
-                      </label>
+                      {imagePreview ? (
+                        <div className="ai-image-preview">
+                          <img src={imagePreview.url} alt="Rezolvare încărcată" />
+                          <div className="ai-image-actions">
+                            <div className="ai-image-meta">
+                              <span className="ai-image-name">{imagePreview.name || 'Imagine încărcată'}</span>
+                            </div>
+                            <div className="ai-image-buttons">
+                              <label htmlFor="solution-image" className="ai-change-image">
+                                Schimbă imaginea
+                              </label>
+                              <button type="button" className="ai-remove-image" onClick={resetImageUpload}>
+                                Șterge
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      ) : (
+                        <label htmlFor="solution-image" className={`ai-image-label ${darkTheme ? 'dark-theme' : ''}`}>
+                          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                            <polyline points="7,10 12,15 17,10"/>
+                            <line x1="12" y1="15" x2="12" y2="3"/>
+                          </svg>
+                          Încarcă imaginea rezolvării
+                        </label>
+                      )}
                       <input
                         type="file"
                         id="solution-image"
                         accept="image/*"
                         className="ai-file-input"
+                        ref={imageInputRef}
                         onChange={(e) => handleFileUpload(e, 'solution')}
                       />
                     </div>
