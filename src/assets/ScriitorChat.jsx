@@ -1,4 +1,13 @@
 import React, { useMemo, useState, useRef, useEffect } from 'react';
+import {
+  Plus,
+  Trash2,
+  History,
+  X,
+  RefreshCcw,
+  Edit3,
+  Send
+} from 'lucide-react';
 
 const ScriitorChat = ({ scriitorKey, onClose, scriitorMeta }) => {
   const [messages, setMessages] = useState([]);
@@ -7,6 +16,9 @@ const ScriitorChat = ({ scriitorKey, onClose, scriitorMeta }) => {
   const [sessions, setSessions] = useState([]);
   const [currentSessionId, setCurrentSessionId] = useState(null);
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
+  const [editingMessageId, setEditingMessageId] = useState(null);
+  const [editingSessionId, setEditingSessionId] = useState(null);
+  const [editingSessionTitle, setEditingSessionTitle] = useState('');
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
   const typingIntervalRef = useRef(null);
@@ -72,6 +84,42 @@ const ScriitorChat = ({ scriitorKey, onClose, scriitorMeta }) => {
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const startRenameSession = (id) => {
+    const current = sessions.find(s => s.id === id);
+    setEditingSessionId(id);
+    setEditingSessionTitle(current?.title || '');
+  };
+
+  const commitRenameSession = () => {
+    const trimmed = (editingSessionTitle || '').trim();
+    if (!editingSessionId) return;
+    setSessions(prev => prev.map(s => s.id === editingSessionId ? { ...s, title: trimmed || s.title } : s));
+    setEditingSessionId(null);
+    setEditingSessionTitle('');
+  };
+
+  const cancelRenameSession = () => {
+    setEditingSessionId(null);
+    setEditingSessionTitle('');
+  };
+
+  const deleteSession = (id) => {
+    if (sessions.length <= 1) {
+      alert('Păstrează cel puțin un chat.');
+      return;
+    }
+    setSessions(prev => {
+      const filtered = prev.filter(s => s.id !== id);
+      // dacă am șters sesiunea curentă, mută pe prima rămasă
+      const nextCurrent = filtered[0];
+      if (id === currentSessionId && nextCurrent) {
+        setCurrentSessionId(nextCurrent.id);
+        setMessages(nextCurrent.messages || []);
+      }
+      return filtered;
+    });
   };
 
   useEffect(() => {
@@ -315,17 +363,53 @@ const ScriitorChat = ({ scriitorKey, onClose, scriitorMeta }) => {
       setMessages(welcome);
     }
 
-    const userMessage = {
-      id: Date.now(),
-      text: trimmed,
-      sender: 'user',
-      timestamp: new Date()
-    };
-
     setSessions(prev => prev.map(s => s.id === currentSessionId ? { ...s, lastUserText: trimmed } : s));
-    setMessages(prev => [...prev, userMessage]);
-    if (!redo) setInputMessage('');
-    setIsTyping(true);
+
+    const isEditing = Boolean(editingMessageId);
+    let targetAssistantId = null;
+
+    if (isEditing) {
+      const userIdx = messages.findIndex(m => m.id === editingMessageId);
+      const followingAssistant = userIdx !== -1
+        ? messages.slice(userIdx + 1).find(m => m.sender === 'scriitor')
+        : null;
+      targetAssistantId = followingAssistant?.id || Date.now() + 1;
+
+      setMessages(prev => {
+        const updated = [...prev];
+        const idx = updated.findIndex(m => m.id === editingMessageId);
+        if (idx === -1) return prev;
+
+        updated[idx] = { ...updated[idx], text: trimmed };
+
+        const aIdx = updated.slice(idx + 1).findIndex(m => m.sender === 'scriitor');
+        if (aIdx !== -1) {
+          const realIdx = idx + 1 + aIdx;
+          updated[realIdx] = { ...updated[realIdx], text: '' };
+        } else {
+          updated.splice(idx + 1, 0, {
+            id: targetAssistantId,
+            text: '',
+            sender: 'scriitor',
+            timestamp: new Date()
+          });
+        }
+        return updated;
+      });
+      if (!redo) setInputMessage('');
+      setEditingMessageId(null);
+      setIsTyping(true);
+    } else {
+      const userMessage = {
+        id: Date.now(),
+        text: trimmed,
+        sender: 'user',
+        timestamp: new Date()
+      };
+      setMessages(prev => [...prev, userMessage]);
+      if (!redo) setInputMessage('');
+      setIsTyping(true);
+    }
 
     try {
       let reply;
@@ -336,36 +420,45 @@ const ScriitorChat = ({ scriitorKey, onClose, scriitorMeta }) => {
         reply = generateFallbackResponse(trimmed);
       }
 
-      // Creează mesajul cu text gol inițial
-      const messageId = Date.now() + 1;
-      const scriitorMessage = {
-        id: messageId,
-        text: '',
-        sender: 'scriitor',
-        timestamp: new Date()
-      };
+      if (isEditing) {
+        // tipărim în același loc
+        typeMessage(reply, targetAssistantId);
+      } else {
+        // Creează mesajul cu text gol inițial
+        const messageId = Date.now() + 1;
+        const scriitorMessage = {
+          id: messageId,
+          text: '',
+          sender: 'scriitor',
+          timestamp: new Date()
+        };
 
-      // Adaugă mesajul gol în listă
-      setMessages(prev => [...prev, scriitorMessage]);
+        // Adaugă mesajul gol în listă
+        setMessages(prev => [...prev, scriitorMessage]);
 
-      // Începe typing effect
-      typeMessage(reply, messageId);
+        // Începe typing effect
+        typeMessage(reply, messageId);
+      }
     } catch (err) {
       console.error('Eroare Groq chat:', err);
       const fallback = generateFallbackResponse(trimmed);
-      const messageId = Date.now() + 1;
-      const errorMessage = {
-        id: messageId,
-        text: '',
-        sender: 'scriitor',
-        timestamp: new Date()
-      };
-      
-      setMessages(prev => [...prev, errorMessage]);
-      const fullText = groqAvailable
-        ? `Am avut o problemă tehnică, dar iată un răspuns pe scurt: ${fallback}`
-        : fallback;
-      typeMessage(fullText, messageId);
+      if (isEditing) {
+        typeMessage(fallback, targetAssistantId);
+      } else {
+        const messageId = Date.now() + 1;
+        const errorMessage = {
+          id: messageId,
+          text: '',
+          sender: 'scriitor',
+          timestamp: new Date()
+        };
+        
+        setMessages(prev => [...prev, errorMessage]);
+        const fullText = groqAvailable
+          ? `Am avut o problemă tehnică, dar iată un răspuns pe scurt: ${fallback}`
+          : fallback;
+        typeMessage(fullText, messageId);
+      }
     }
   };
 
@@ -402,19 +495,60 @@ const ScriitorChat = ({ scriitorKey, onClose, scriitorMeta }) => {
     setInputMessage('');
   };
 
-  const redoLast = () => {
-    const last = currentSession?.lastUserText;
-    if (!last) {
+  const redoLast = async () => {
+    const lastUser = [...messages].reverse().find(m => m.sender === 'user');
+    if (!lastUser?.text) {
       alert('Nu există un mesaj anterior de refăcut.');
       return;
     }
-    handleSendMessage(last, { redo: true });
+
+    setIsTyping(true);
+
+    // găsește replica scriitorului imediat după ultimul mesaj al utilizatorului
+    const lastUserIndex = messages.findIndex(m => m.id === lastUser.id);
+    const followingAssistant = messages
+      .slice(lastUserIndex + 1)
+      .find(m => m.sender === 'scriitor');
+
+    let targetId = followingAssistant?.id;
+
+    if (targetId) {
+      // curăță textul existent pentru efectul de scriere
+      setMessages(prev =>
+        prev.map(m =>
+          m.id === targetId ? { ...m, text: '' } : m
+        )
+      );
+    } else {
+      // dacă nu există un răspuns, adaugă unul nou legat de același moment
+      targetId = Date.now() + 1;
+      const scriitorMessage = {
+        id: targetId,
+        text: '',
+        sender: 'scriitor',
+        timestamp: new Date()
+      };
+      setMessages(prev => [...prev, scriitorMessage]);
+    }
+
+    try {
+      const reply = groqAvailable
+        ? await fetchGroqResponse(lastUser.text)
+        : generateFallbackResponse(lastUser.text);
+      typeMessage(reply, targetId);
+    } catch (err) {
+      console.error('Eroare redo:', err);
+      const fallback = generateFallbackResponse(lastUser.text);
+      typeMessage(fallback, targetId);
+    }
   };
 
   const editLast = (text) => {
-    const last = text || currentSession?.lastUserText;
-    if (!last) return;
-    setInputMessage(last);
+    const lastUser = [...messages].reverse().find(m => m.sender === 'user');
+    const value = text || lastUser?.text || '';
+    if (!value) return;
+    setEditingMessageId(lastUser?.id || null);
+    setInputMessage(value);
     setTimeout(() => inputRef.current?.focus(), 50);
   };
 
@@ -453,9 +587,7 @@ const ScriitorChat = ({ scriitorKey, onClose, scriitorMeta }) => {
               onClick={startNewChat}
               title="Chat nou"
             >
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M12 5v14M5 12h14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-              </svg>
+              <Plus size={18} />
             </button>
             <button
               className="scriitor-chat-icon-btn"
@@ -463,9 +595,7 @@ const ScriitorChat = ({ scriitorKey, onClose, scriitorMeta }) => {
               disabled={!messages.length}
               title="Șterge chatul"
             >
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M6 7h12M9 7v11m6-11v11M10 4h4a1 1 0 0 1 1 1v2H9V5a1 1 0 0 1 1-1Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
+              <Trash2 size={18} />
             </button>
             <div className="scriitor-chat-history-trigger" ref={historyMenuRef}>
               <button
@@ -473,28 +603,72 @@ const ScriitorChat = ({ scriitorKey, onClose, scriitorMeta }) => {
                 onClick={() => setIsHistoryOpen((prev) => !prev)}
                 title="Istoric conversații"
               >
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M4 4v5h5M4.93 19.07a9 9 0 1 0-1.4-4.65" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                  <path d="M12 8v5l3 2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
+                <History size={18} />
               </button>
               {isHistoryOpen && (
                 <div className="scriitor-chat-history-menu">
                   <div className="scriitor-chat-history-title">Istoric</div>
                   <div className="scriitor-chat-history-list">
-                    {sessions.map((s) => (
-                      <button
-                        key={s.id}
-                        className={`scriitor-chat-history-item ${s.id === currentSessionId ? 'active' : ''}`}
-                        onClick={() => {
-                          selectSession(s.id);
-                          setIsHistoryOpen(false);
-                        }}
-                        title={new Date(s.createdAt).toLocaleString('ro-RO')}
-                      >
-                        {s.title || 'Chat'}
-                      </button>
-                    ))}
+                    {sessions.map((s) => {
+                      const isEditingSession = editingSessionId === s.id;
+                      return (
+                        <div className="scriitor-chat-history-row" key={s.id}>
+                          {isEditingSession ? (
+                            <input
+                              className={`scriitor-chat-history-item scriitor-chat-history-input ${s.id === currentSessionId ? 'active' : ''}`}
+                              value={editingSessionTitle}
+                              autoFocus
+                              onChange={(e) => setEditingSessionTitle(e.target.value)}
+                              onBlur={commitRenameSession}
+                              onKeyDown={(e) => {
+                                if (e.key === 'Enter') {
+                                  e.preventDefault();
+                                  commitRenameSession();
+                                } else if (e.key === 'Escape') {
+                                  e.preventDefault();
+                                  cancelRenameSession();
+                                }
+                              }}
+                              placeholder="Nume chat"
+                            />
+                          ) : (
+                            <button
+                              className={`scriitor-chat-history-item ${s.id === currentSessionId ? 'active' : ''}`}
+                              onClick={() => {
+                                selectSession(s.id);
+                                setIsHistoryOpen(false);
+                              }}
+                              title={new Date(s.createdAt).toLocaleString('ro-RO')}
+                            >
+                              {s.title || 'Chat'}
+                            </button>
+                          )}
+                          <div className="scriitor-chat-history-actions">
+                            <button
+                              className="scriitor-chat-history-action-btn"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                startRenameSession(s.id);
+                              }}
+                              title="Redenumește"
+                            >
+                              <Edit3 size={14} />
+                            </button>
+                            <button
+                              className="scriitor-chat-history-action-btn"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                deleteSession(s.id);
+                              }}
+                              disabled={sessions.length <= 1}
+                              title={sessions.length <= 1 ? 'Păstrează cel puțin un chat' : 'Șterge'}
+                            >
+                              <Trash2 size={14} />
+                            </button>
+                          </div>
+                        </div>
+                      );
+                    })}
                     {!sessions.length && (
                       <span className="scriitor-chat-history-empty">Niciun chat salvat</span>
                     )}
@@ -507,9 +681,7 @@ const ScriitorChat = ({ scriitorKey, onClose, scriitorMeta }) => {
               onClick={onClose}
               title="Închide"
             >
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M6 6l12 12M18 6l-12 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-              </svg>
+              <X size={25} strokeWidth={3} />
             </button>
           </div>
         </div>
@@ -542,10 +714,7 @@ const ScriitorChat = ({ scriitorKey, onClose, scriitorMeta }) => {
                         disabled={!currentSession?.lastUserText}
                         title="Refă răspuns"
                       >
-                        <svg viewBox="0 0 24 24" aria-hidden="true">
-                          <path d="M9 5H5v4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                          <path d="M20 12a8 8 0 0 0-14-5l-1 2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                        </svg>
+                        <RefreshCcw size={14} />
                       </button>
                       <button
                         className="scriitor-chat-meta-btn"
@@ -553,10 +722,7 @@ const ScriitorChat = ({ scriitorKey, onClose, scriitorMeta }) => {
                         disabled={!currentSession?.lastUserText}
                         title="Editează mesaj"
                       >
-                        <svg viewBox="0 0 24 24" aria-hidden="true">
-                          <path d="M12 20h9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                          <path d="M16.5 3.5a2.121 2.121 0 1 1 3 3L7 19l-4 1 1-4 12.5-12.5Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                        </svg>
+                        <Edit3 size={14} />
                       </button>
                     </div>
                   )}
@@ -585,15 +751,7 @@ const ScriitorChat = ({ scriitorKey, onClose, scriitorMeta }) => {
               disabled={!inputMessage.trim()}
               className="scriitor-chat-send-btn"
             >
-              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M22 2L11 13M22 2L15 22L11 13M22 2L2 9L11 13"
-                  stroke="currentColor"
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
+              <Send size={20} />
             </button>
           </div>
         </div>
