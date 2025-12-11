@@ -10,7 +10,8 @@ const ScriitorChat = ({ scriitorKey, onClose, scriitorMeta }) => {
 
   const groqApiKey = import.meta.env.VITE_GROQ_API_KEY;
   const groqApiUrl = import.meta.env.VITE_GROQ_API_URL || 'https://api.groq.com/openai/v1/chat/completions';
-  const groqAvailable = Boolean(groqApiKey);
+  const groqAvailable = useMemo(() => Boolean(groqApiKey && groqApiKey !== 'undefined'), [groqApiKey]);
+  const storageKey = useMemo(() => `scriitor-chat-${scriitorKey || 'default'}`, [scriitorKey]);
   
   if (!scriitorMeta) {
     return null;
@@ -49,24 +50,57 @@ const ScriitorChat = ({ scriitorKey, onClose, scriitorMeta }) => {
     scrollToBottom();
   }, [messages]);
 
+  // Încarcă istoricul conversației din localStorage și setează mesajul de bun venit doar dacă nu există istoric
   useEffect(() => {
-    // Mesaj de bun venit
-    setTimeout(() => {
-      setMessages([
-        {
-          id: 1,
-          text: `Salut! Sunt ${scriitorName}. Îmi place să vorbesc cu oamenii și să împărtășesc gândurile mele. Cum te pot ajuta astăzi?`,
-          sender: 'scriitor',
-          timestamp: new Date()
-        }
-      ]);
-    }, 500);
+    if (!scriitorMeta) return;
 
-    // Focus pe input
-    setTimeout(() => {
+    const saved = localStorage.getItem(storageKey);
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        const restored = Array.isArray(parsed)
+          ? parsed.map(m => ({
+              ...m,
+              timestamp: m.timestamp ? new Date(m.timestamp) : new Date()
+            }))
+          : [];
+        if (restored.length) {
+          setMessages(restored);
+          return;
+        }
+      } catch (_) {
+        // ignore parse errors, fall back to welcome
+      }
+    }
+
+    // Mesaj de bun venit
+    setMessages([
+      {
+        id: Date.now(),
+        text: `Salut! Sunt ${scriitorName}. Îmi place să vorbesc cu oamenii și să împărtășesc gândurile mele. Cum te pot ajuta astăzi?`,
+        sender: 'scriitor',
+        timestamp: new Date()
+      }
+    ]);
+  }, [scriitorName, scriitorMeta, storageKey]);
+
+  // Focus pe input (după montare sau schimbare scriitor)
+  useEffect(() => {
+    const t = setTimeout(() => {
       inputRef.current?.focus();
-    }, 1000);
-  }, [scriitorName]);
+    }, 300);
+    return () => clearTimeout(t);
+  }, [scriitorKey]);
+
+  // Persistă ultimele mesaje în localStorage (limită 30 pentru a nu crește la infinit)
+  useEffect(() => {
+    if (!storageKey || !messages.length) return;
+    const trimmed = messages.slice(-30).map(m => ({
+      ...m,
+      timestamp: m.timestamp instanceof Date ? m.timestamp.toISOString() : m.timestamp
+    }));
+    localStorage.setItem(storageKey, JSON.stringify(trimmed));
+  }, [messages, storageKey]);
 
   // Fallback response dacă AI nu este disponibil
   const generateFallbackResponse = (userText) => {
@@ -94,6 +128,13 @@ const ScriitorChat = ({ scriitorKey, onClose, scriitorMeta }) => {
   };
 
   const fetchGroqResponse = async (userText) => {
+    const fallback = generateFallbackResponse(userText);
+
+    // Dacă nu avem key/url valid, răspunde direct cu fallback
+    if (!groqAvailable || !groqApiUrl) {
+      return fallback;
+    }
+
     const body = {
       model: 'openai/gpt-oss-120b',
       messages: buildGroqMessages(userText),
@@ -101,29 +142,38 @@ const ScriitorChat = ({ scriitorKey, onClose, scriitorMeta }) => {
       max_tokens: 320
     };
 
-    const res = await fetch(groqApiUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${groqApiKey}`
-      },
-      body: JSON.stringify(body)
-    });
+    try {
+      const res = await fetch(groqApiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${groqApiKey}`
+        },
+        body: JSON.stringify(body)
+      });
 
-    if (!res.ok) {
-      const text = await res.text().catch(() => '');
-      let msg = `Eroare API Groq (${res.status})`;
-      try {
-        const data = JSON.parse(text);
-        if (data?.error?.message) msg = data.error.message;
-      } catch (_) { /* noop */ }
-      throw new Error(msg);
+      if (!res.ok) {
+        const text = await res.text().catch(() => '');
+        let msg = `Eroare API Groq (${res.status})`;
+        try {
+          const data = JSON.parse(text);
+          if (data?.error?.message) msg = data.error.message;
+        } catch (_) { /* noop */ }
+        console.warn('Groq API fallback:', msg);
+        return fallback;
+      }
+
+      const data = await res.json();
+      const content = data?.choices?.[0]?.message?.content?.trim();
+      if (!content) {
+        console.warn('Groq API fallback: răspuns gol', data);
+        return fallback;
+      }
+      return content;
+    } catch (err) {
+      console.warn('Groq API fallback: excepție', err);
+      return fallback;
     }
-
-    const data = await res.json();
-    const content = data?.choices?.[0]?.message?.content?.trim();
-    if (!content) throw new Error('Răspuns gol de la Groq');
-    return content;
   };
 
   // Funcție pentru afișarea treptată a textului (typing effect)
