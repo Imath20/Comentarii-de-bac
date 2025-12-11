@@ -1181,3 +1181,115 @@ body.dark-theme .admin-login-subtitle {
 .ai-cube-wrapper:active .ai-cube-inner {
   transform: rotateX(-25deg) rotateY(30deg) scale(0.95);
 }
+
+// AI formatting helper
+.ai-formatting-card {
+  margin-top: 10px;
+  padding: 14px 16px;
+  border: 1px solid rgba(169, 124, 80, 0.2);
+  border-radius: 14px;
+  background: linear-gradient(135deg, #fdf7ee 0%, #ffffff 100%);
+  box-shadow: 0 4px 18px rgba(60, 40, 20, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  &.dark-theme {
+    background: linear-gradient(135deg, #4e2e1e 0%, #3a2312 100%);
+    border-color: rgba(255, 213, 145, 0.25);
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
+  }
+}
+
+.ai-formatting-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.ai-formatting-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ai-formatting-title {
+  font-weight: 700;
+  color: #4e2e1e;
+
+  .dark-theme & {
+    color: #ffd591;
+  }
+}
+
+.ai-formatting-subtitle {
+  font-size: 0.95rem;
+  color: #7a5c3a;
+  max-width: 720px;
+
+  .dark-theme & {
+    color: #e7caa0;
+  }
+}
+
+.ai-formatting-colors {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ai-formatting-colors-label {
+  font-weight: 600;
+  color: #4e2e1e;
+
+  .dark-theme & {
+    color: #ffd591;
+  }
+}
+
+.ai-formatting-colors-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(36px, 1fr));
+  gap: 8px;
+  max-width: 320px;
+}
+
+.ai-color-chip {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: transform 0.1s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+
+  &.active {
+    border-color: #4e2e1e;
+    box-shadow: 0 0 0 3px rgba(78, 46, 30, 0.15);
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+
+  &.dark-theme {
+    border-color: transparent;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+
+    &.active {
+      border-color: #ffd591;
+      box-shadow: 0 0 0 3px rgba(255, 213, 145, 0.25);
+    }
+  }
+}
+
+.ai-formatting-hint {
+  font-size: 0.85rem;
+  color: #7a5c3a;
+
+  .dark-theme & {
+    color: #e7caa0;
+  }
+}

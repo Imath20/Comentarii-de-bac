@@ -23,6 +23,7 @@ import { useAuth } from '../firebase/AuthContext';
 import { createNotification } from '../firebase/notificationsService';
 import AICerinteProcessor from './AICerinteProcessor';
 import AIPostGenerator from './AIPostGenerator';
+import AIComentariuFormatter from './AIComentariuFormatter';
 import '../styles/admin.scss';
 
 const REACTIONS = [
@@ -1582,6 +1583,12 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
               value={comentariuForm.content}
               onChange={(content) => setComentariuForm({ ...comentariuForm, content })}
               darkTheme={darkTheme}
+            />
+            <AIComentariuFormatter
+              content={comentariuForm.content}
+              darkTheme={darkTheme}
+              onApply={(updatedContent) => setComentariuForm({ ...comentariuForm, content: updatedContent })}
+              onStatus={setMessage}
             />
           </div>
 
