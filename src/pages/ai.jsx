@@ -171,24 +171,39 @@ export default function AI() {
 
   const coerceScore = (result) => {
     if (!result) return result;
-    const candidates = [];
-    if (typeof result.score === 'number') candidates.push(result.score);
-    if (Array.isArray(result.scoreBreakdown)) {
+
+    // Prioritizează score-ul direct din JSON
+    if (typeof result.score === 'number' && !isNaN(result.score)) {
+      const clamped = Math.max(0, Math.min(30, Math.round(result.score)));
+      if (result.score !== clamped) {
+        return { ...result, score: clamped };
+      }
+      return result;
+    }
+    
+    // Dacă nu există score direct, încearcă să-l calculeze din scoreBreakdown
+    if (Array.isArray(result.scoreBreakdown) && result.scoreBreakdown.length > 0) {
       const sum = result.scoreBreakdown
         .map((v) => (typeof v === 'number' ? v : Number.parseFloat(v)))
         .filter((n) => Number.isFinite(n))
         .reduce((a, b) => a + b, 0);
-      if (Number.isFinite(sum) && sum > 0) candidates.push(sum);
+      if (Number.isFinite(sum) && sum >= 0) {
+        const clamped = Math.max(0, Math.min(30, Math.round(sum)));
+        return { ...result, score: clamped };
+      }
     }
+    
+    // Ultimul fallback: încearcă să extragă din feedback
     const fromFeedback = deriveScoreFromText(result.feedback);
-    if (fromFeedback != null) candidates.push(fromFeedback);
-    const best = candidates.length ? Math.max(...candidates) : null;
-    if (best == null) return result;
-    const clamped = Math.max(0, Math.min(30, Math.round(best)));
-    // Only override if different to avoid unnecessary rerenders
-    if (result.score !== clamped) {
-      return { ...result, score: clamped };
+    if (fromFeedback != null) {
+      return { ...result, score: fromFeedback };
     }
+    
+    // Dacă nu există niciun score, setează la 0
+    if (result.score === undefined || result.score === null) {
+      return { ...result, score: 0 };
+    }
+    
     return result;
   };
 
