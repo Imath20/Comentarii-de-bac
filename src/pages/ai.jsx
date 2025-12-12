@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import Layout from '../assets/Layout';
 import '../styles/style.scss';
@@ -146,6 +146,13 @@ export default function AI() {
     solution: '',
     rubric: ''
   });
+  const groqApiKey = import.meta.env.VITE_GROQ_API_KEY;
+  const groqApiKeyBackup = import.meta.env.VITE_GROQ_API_KEY_1;
+  const groqApiUrl = import.meta.env.VITE_GROQ_API_URL || 'https://api.groq.com/openai/v1/chat/completions';
+  const groqApiKeys = useMemo(() => {
+    return [groqApiKey, groqApiKeyBackup].filter((k) => k && k !== 'undefined');
+  }, [groqApiKey, groqApiKeyBackup]);
+  const groqAvailable = useMemo(() => groqApiKeys.length > 0 && !!groqApiUrl, [groqApiKeys, groqApiUrl]);
 
   // Derive score from breakdown text like "(6/6)" occurrences
   const deriveScoreFromText = (text) => {
@@ -261,6 +268,182 @@ export default function AI() {
     }));
   };
 
+  const buildGroqMessages = ({ rubric, solution, type }) => {
+    const commonText = [
+      'Ești evaluator de lucrări pentru examenul de Bacalaureat la limba și literatura română.',
+      'Evaluează strict după barem, calculează punctajul (max 30), oferă feedback detaliat pe criterii și sugestii de îmbunătățire.',
+      'Răspuns strict JSON (fără ``` sau text în afara JSON), structura exactă: { "score": number între 0 și 30, "feedback": "markdown scurt cu criterii și puncte x/y", "suggestions": "markdown scurt cu recomandări", "scoreBreakdown": [numere opțional] }.'
+    ].join('\n');
+
+    const userText = `Barem de corectare:\n${rubric}\n\nEvaluează lucrarea de mai jos și calculează punctajul.`;
+
+    if (type === 'image') {
+      return [
+        { role: 'system', content: commonText },
+        {
+          role: 'user',
+          content: [
+            { type: 'text', text: userText },
+            { type: 'image_url', image_url: { url: solution } }
+          ]
+        }
+      ];
+    }
+
+    return [
+      { role: 'system', content: commonText },
+      {
+        role: 'user',
+        content: `${userText}\n\nLucrare:\n${solution}`
+      }
+    ];
+  };
+
+  const decodeHtmlEntities = (s) => {
+    if (!s) return s;
+    return s
+      .replace(/&quot;/g, '"')
+      .replace(/&#39;/g, "'")
+      .replace(/&lt;/g, '<')
+      .replace(/&gt;/g, '>')
+      .replace(/&amp;/g, '&');
+  };
+
+  const stripCodeFences = (s) => {
+    if (!s) return s;
+    const fenced = s.match(/```(?:json)?\s*([\s\S]*?)```/i);
+    if (fenced && fenced[1]) return fenced[1].trim();
+    return s;
+  };
+
+  const parseGroqContent = (content) => {
+    if (!content || typeof content !== 'string') return null;
+    const cleaned = decodeHtmlEntities(stripCodeFences(content.trim()));
+    try {
+      return JSON.parse(cleaned);
+    } catch (_) {
+      const match = cleaned.match(/\{[\s\S]*\}/);
+      if (match) {
+        try {
+          return JSON.parse(match[0]);
+        } catch (err) {
+          console.warn('Nu s-a putut parsa obiectul JSON extras', err);
+        }
+      }
+    }
+    return null;
+  };
+
+  const evaluateWithGroq = async () => {
+    if (!groqAvailable) {
+      setEvaluation({
+        error: 'Setează variabilele VITE_GROQ_API_KEY (și opțional VITE_GROQ_API_KEY_1) pentru a folosi Groq.'
+      });
+      return;
+    }
+
+    const messages = buildGroqMessages({
+      rubric: formData.rubric,
+      solution: formData.solution,
+      type: inputType
+    });
+
+    // Current Groq-recommended models (text + vision) with fallbacks
+    const modelCandidates =
+      inputType === 'image'
+        ? ['llama-3.2-11b-vision-preview', 'llama-3.2-90b-vision-preview', 'llava-v1.5-7b-4096-preview']
+        : ['llama-3.2-90b-text-preview', 'llama-3.2-11b-text-preview', 'llama-3.2-3b-preview', 'llama-3.1-8b-instant'];
+
+    const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+
+    for (const model of modelCandidates) {
+      for (const key of groqApiKeys) {
+        let attempts = 0;
+        while (attempts < 3) {
+          attempts += 1;
+          try {
+            const response = await fetch(groqApiUrl, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${key}`
+              },
+              body: JSON.stringify({
+                model,
+                messages,
+                temperature: 0.4,
+                max_tokens: 700,
+                response_format: { type: 'json_object' }
+              })
+            });
+
+            const rawText = await response.text().catch(() => '');
+
+            if (!response.ok) {
+              console.warn(`Groq fallback (model=${model}, attempt=${attempts})`, response.status, rawText);
+              if (response.status === 400 && rawText.includes('decommissioned')) {
+                break; // treci la următorul model
+              }
+              if (response.status === 429) {
+                const retryMatch = rawText.match(/try again in ([\d.]+)s/i);
+                const retryMs = retryMatch ? Math.ceil(parseFloat(retryMatch[1]) * 1000) : 2000;
+                await wait(retryMs);
+                continue; // reîncearcă același model+cheie
+              }
+              // dacă json_validate_failed, încearcă următorul attempt cu același model
+              if (rawText.includes('json_validate_failed') || rawText.includes('Failed to generate JSON')) {
+                continue;
+              }
+              break;
+            }
+
+            let data = null;
+            try {
+              data = rawText ? JSON.parse(rawText) : null;
+            } catch (_) {
+              console.warn('Groq: nu am putut parsa json-ul brut', rawText);
+            }
+
+            const content = data?.choices?.[0]?.message?.content?.trim();
+            if (!content) {
+              console.warn('Groq a răspuns fără conținut', data);
+              break;
+            }
+
+            const parsed = parseGroqContent(content);
+            if (parsed && typeof parsed === 'object') {
+              const result = {
+                score: parsed.score,
+                scoreBreakdown: parsed.scoreBreakdown,
+                feedback: parsed.feedback || parsed.analysis || '',
+                suggestions: parsed.suggestions || parsed.improvements || ''
+              };
+              setEvaluation(coerceScore(result));
+              return;
+            }
+
+            // fallback: tratează conținutul ca feedback liber (după decodare)
+            setEvaluation(
+              coerceScore({
+                feedback: decodeHtmlEntities(content),
+                suggestions: ''
+              })
+            );
+            return;
+          } catch (err) {
+            console.warn(`Groq key fallback exception (model=${model}, attempt=${attempts})`, err);
+            await wait(500);
+            continue;
+          }
+        }
+      }
+    }
+
+    setEvaluation({
+      error: 'Nu s-a putut obține un răspuns de la Groq. Încearcă din nou.'
+    });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.solution.trim() || !formData.rubric.trim()) {
@@ -271,166 +454,7 @@ export default function AI() {
     setEvaluation(null);
 
     try {
-      console.log('Sending request to Next.js Server Action...');
-      
-      // Create the exact API endpoint needed
-      const apiEndpoint = 'https://romana-ai.vercel.app/api/evaluate';
-      
-      const response = await fetch(apiEndpoint, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-        },
-        body: JSON.stringify({
-          solution: formData.solution,
-          rubric: formData.rubric,
-          inputType: inputType
-        }),
-      });
-
-      if (response.ok) {
-        const contentType = response.headers.get('content-type');
-        console.log('Response content type:', contentType);
-        
-        if (contentType && contentType.includes('application/json')) {
-          const result = await response.json();
-          setEvaluation(coerceScore(result));
-        } else {
-          // If response is HTML, it might be an error page
-          const text = await response.text();
-          console.log('Response text:', text);
-          throw new Error(`Server returned HTML instead of JSON. Status: ${response.status}`);
-        }
-      } else {
-        const errorText = await response.text();
-        console.log('Error response:', errorText);
-        throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
-      }
-    } catch (error) {
-      console.error('Error:', error);
-      
-      // If CORS error, try with CORS proxy
-      if (error.message.includes('CORS') || error.message.includes('Failed to fetch')) {
-        try {
-          console.log('Trying with CORS proxy...');
-          
-          // Try different CORS proxy services
-          const proxyServices = [
-            `https://cors-anywhere.herokuapp.com/https://romana-ai.vercel.app/`,
-            `https://thingproxy.freeboard.io/fetch/https://romana-ai.vercel.app/`,
-            `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent('https://romana-ai.vercel.app/')}`
-          ];
-
-          let proxyResponse = null;
-          for (const proxyUrl of proxyServices) {
-            try {
-              console.log(`Trying proxy: ${proxyUrl}`);
-              proxyResponse = await fetch(proxyUrl, {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                  'X-Requested-With': 'XMLHttpRequest',
-                },
-                body: JSON.stringify({
-                  solution: formData.solution,
-                  rubric: formData.rubric,
-                  inputType: inputType,
-                  headers: {
-                    'next-action': 'evaluate'
-                  }
-                }),
-              });
-
-              if (proxyResponse.ok) {
-                break;
-              }
-            } catch (proxyError) {
-              console.error(`Proxy ${proxyUrl} failed:`, proxyError);
-              continue;
-            }
-          }
-
-          if (proxyResponse.ok) {
-            const result = await proxyResponse.json();
-            setEvaluation(coerceScore(result));
-            return;
-          }
-        } catch (proxyError) {
-          console.error('CORS proxy also failed:', proxyError);
-        }
-
-        setEvaluation({
-          error: `Eroare CORS: Header-ul "next-action" nu este permis.
-
-SOLUȚIA SIMPLĂ:
-Pe serverul AI (romana-ai.vercel.app), în configurația CORS, adaugă "next-action" în lista de header-uri permise:
-
-Access-Control-Allow-Headers: X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, next-action
-
-Sau în Next.js, în middleware.ts sau vercel.json:
-{
-  "headers": [
-    {
-      "source": "/(.*)",
-      "headers": [
-        {
-          "key": "Access-Control-Allow-Headers",
-          "value": "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, next-action"
-        }
-      ]
-    }
-  ]
-}
-
-Aplicația ta este configurată corect - doar serverul AI trebuie să permită header-ul "next-action".`
-        });
-      } else if (error.message.includes('405')) {
-        setEvaluation({
-          error: `Eroare 405: Endpoint-ul /api/evaluate nu există încă.
-
-SOLUȚIA:
-Pe serverul AI (romana-ai.vercel.app), trebuie să creezi endpoint-ul /api/evaluate.
-
-Pentru Next.js App Router, creează fișierul:
-📁 app/api/evaluate/route.ts
-
-Codul necesar:
-- import { NextRequest, NextResponse } from 'next/server';
-- export async function POST(request: NextRequest)
-- Procesează datele cu Google Gemini
-- Returnează rezultatul cu NextResponse.json()
-
-Aplicația ta este gata - doar trebuie să creezi endpoint-ul!`
-        });
-      } else if (error.message.includes('500')) {
-        setEvaluation({
-          error: `Eroare 500: Eroare internă pe server.
-
-Problema: Serverul AI primește cererea, dar are o problemă la procesarea ei.
-
-Soluții posibile:
-1. Verificați logurile serverului AI pentru erori
-2. Verificați că Google Gemini API este configurat corect
-3. Verificați că datele trimise sunt în formatul corect
-
-Pentru dezvoltatori: Verificați logurile serverului și configurația Google Gemini API.`
-        });
-      } else {
-        setEvaluation({
-          error: `Nu s-a putut conecta la serverul AI.
-
-Erori întâlnite:
-- ${error.message}
-
-Soluții:
-1. Verificați că serverul AI este online la https://romana-ai.vercel.app/
-2. Contactați dezvoltatorii pentru a confirma endpoint-ul corect
-3. Verificați documentația API-ului
-
-Pentru dezvoltatori: Verificați configurația serverului AI.`
-        });
-      }
+      await evaluateWithGroq();
     } finally {
       setIsLoading(false);
     }
