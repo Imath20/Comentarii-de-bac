@@ -451,6 +451,7 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
     date: '',
     author: '',
     text: '',
+    descriere: '',
     image: '',
     pin: false,
     isPoem: false,
@@ -475,7 +476,6 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
     createdByName: '',
   });
   const [aiPostPrompt, setAiPostPrompt] = useState('');
-  const [aiPoemPrompt, setAiPoemPrompt] = useState('');
 
   // Load scriitori when tab is active
   useEffect(() => {
@@ -556,6 +556,7 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
               date: '',
               author: scriitor.nume,
               text: '',
+              descriere: '',
               image: '',
               pin: false,
               isPoem: false,
@@ -581,6 +582,7 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
                 date: post.date || '',
                 author: post.author || scriitor.nume,
                 text: post.text || '',
+                descriere: post.descriere || '',
                 image: post.image || '',
                 pin: post.pin || false,
                 isPoem: post.isPoem || false,
@@ -608,6 +610,7 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
                 date: post.date || '',
                 author: post.author || scriitor.nume,
                 text: post.text || '',
+                descriere: post.descriere || '',
                 image: post.image || '',
                 pin: post.pin || false,
                 isPoem: post.isPoem || false,
@@ -1163,7 +1166,9 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
       setMessage({ type: 'success', text: 'Imagine încărcată cu succes!' });
     } catch (error) {
       console.error('Error uploading image:', error);
-      setMessage({ type: 'error', text: 'Eroare la încărcarea imaginii' });
+      // Show the full error message to help with debugging
+      const errorMessage = error.message || 'Eroare la încărcarea imaginii';
+      setMessage({ type: 'error', text: errorMessage });
     } finally {
       setLoading(false);
     }
@@ -1293,6 +1298,7 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
         date: '',
         author: '',
         text: '',
+        descriere: '',
         image: '',
         pin: false,
         isPoem: false,
@@ -2426,6 +2432,7 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
                         date: '',
                         author: selectedScriitor.nume,
                         text: '',
+                        descriere: '',
                         image: '',
                         pin: false,
                         isPoem: false,
@@ -2492,7 +2499,12 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
                             {post.date} {post.pin && <span className="admin-post-pin">📌</span>}
                           </h4>
                         </div>
-                        <p className="admin-post-text">{post.text}</p>
+                        {post.isPoem && post.descriere && (
+                          <p className="admin-post-text">{post.descriere}</p>
+                        )}
+                        {!post.isPoem && post.text && (
+                          <p className="admin-post-text">{post.text}</p>
+                        )}
                         {post.isPoem && post.poemImages && post.poemImages.length > 0 ? (
                           <div className="admin-post-image-container" style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
                             {post.poemImages.map((img, idx) => (
@@ -2536,6 +2548,7 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
                                   date: post.date || '',
                                   author: post.author || selectedScriitor.nume,
                                   text: post.text || '',
+                                  descriere: post.descriere || '',
                                   image: post.image || '',
                                   pin: post.pin || false,
                                   isPoem: post.isPoem || false,
@@ -2556,7 +2569,6 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
                                   newReactionType: '',
                                 });
                               setAiPostPrompt('');
-                              setAiPoemPrompt('');
                                 setScriitorView('post-edit');
                                 const currentFrom = searchParams.get('from');
                                 updateUrlParams({ action: 'edit-post', scriitor: selectedScriitor.key || selectedScriitor.id, postId: post.id, commentIndex: null, from: currentFrom || 'posts' });
@@ -2640,6 +2652,32 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
                   />
                 </div>
               </div>
+
+              {postForm.isPoem && (
+                <div className="admin-form-group">
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '10px' }}>
+                    <label htmlFor="poem-descriere" style={{ marginBottom: 0 }}>Descriere</label>
+                    <AIPostGenerator
+                      prompt={aiPostPrompt}
+                      onTextGenerated={(generatedText) => setPostForm((prev) => ({ ...prev, descriere: generatedText }))}
+                      scriitor={selectedScriitor}
+                      setMessage={setMessage}
+                      darkTheme={darkTheme}
+                    />
+                  </div>
+                  <textarea
+                    id="poem-descriere"
+                    value={postForm.descriere}
+                    onChange={(e) => setPostForm({ ...postForm, descriere: e.target.value })}
+                    placeholder="Descrierea poeziei..."
+                    rows={3}
+                    className="admin-textarea"
+                  />
+                  <small style={{ color: darkTheme ? '#c3b7a4' : '#666' }}>
+                    Poți completa manual sau apasă cubul pentru a genera automat pe baza brief-ului.
+                  </small>
+                </div>
+              )}
 
               <div className="admin-form-group">
                 <label>
@@ -2794,32 +2832,22 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
               ) : (
                 <>
                   <div className="admin-form-group">
-                    <label htmlFor="poem-ai-brief">Despre ce să scrie AI-ul (brief poezie)</label>
+                    <label htmlFor="poem-ai-brief">Despre ce să scrie AI-ul (brief scurt)</label>
                     <textarea
                       id="poem-ai-brief"
-                      value={aiPoemPrompt}
-                      onChange={(e) => setAiPoemPrompt(e.target.value)}
-                      placeholder="Ex.: o amintire din copilărie, o metaforă despre timp, un peisaj specific autorului..."
+                      value={aiPostPrompt}
+                      onChange={(e) => setAiPostPrompt(e.target.value)}
+                      placeholder="Ex.: anunță apariția unei noi ediții, pune un highlight dintr-o operă, descrie o amintire din copilărie, invită elevii la lectură..."
                       rows={3}
                       className="admin-textarea"
                     />
                     <small style={{ color: darkTheme ? '#c3b7a4' : '#666' }}>
-                      1-2 idei, imagini sau teme; AI-ul va scrie poezia în stilul autorului, la persoana I.
+                      Scrie 1-2 idei despre subiect, ton și public; AI-ul va folosi profilul scriitorului selectat.
                     </small>
                   </div>
 
                   <div className="admin-form-group">
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '10px' }}>
-                      <label htmlFor="poem-text" style={{ marginBottom: 0 }}>Text poezie *</label>
-                      <AIPostGenerator
-                        prompt={aiPoemPrompt}
-                        onTextGenerated={(generatedText) => setPostForm((prev) => ({ ...prev, poemText: generatedText }))}
-                        scriitor={selectedScriitor}
-                        setMessage={setMessage}
-                        darkTheme={darkTheme}
-                        target="poem"
-                      />
-                    </div>
+                    <label htmlFor="poem-text">Text poezie *</label>
                     <textarea
                       id="poem-text"
                       value={postForm.poemText}
@@ -2831,7 +2859,7 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
                       style={{ fontFamily: 'monospace', fontSize: '14px' }}
                     />
                     <small style={{ color: darkTheme ? '#c3b7a4' : '#666' }}>
-                      Poți edita manual sau apasă cubul pentru a genera versurile după brief.
+                      Introdu textul poeziei manual.
                     </small>
                   </div>
 
@@ -2923,7 +2951,9 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
                                   setMessage({ type: 'success', text: 'Imagine încărcată cu succes!' });
                                 } catch (error) {
                                   console.error('Error uploading image:', error);
-                                  setMessage({ type: 'error', text: 'Eroare la încărcarea imaginii' });
+                                  // Show the full error message to help with debugging
+                                  const errorMessage = error.message || 'Eroare la încărcarea imaginii';
+                                  setMessage({ type: 'error', text: errorMessage });
                                 } finally {
                                   setLoading(false);
                                 }

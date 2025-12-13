@@ -10,7 +10,6 @@ const AIPostGenerator = ({
   scriitor,
   setMessage,
   darkTheme,
-  target = 'post', // 'post' | 'poem'
 }) => {
   const [processing, setProcessing] = useState(false);
   const [cubeSpinning, setCubeSpinning] = useState(false);
@@ -44,24 +43,29 @@ const AIPostGenerator = ({
         .trim()
         .slice(0, 480);
 
-      const systemPrompt =
-        target === 'poem'
-          ? `Scrie o poezie scurtă la persoana I ca și cum ar fi scrisă de ${scriitorName}${scriitorPeriod ? ` (${scriitorPeriod})` : ''}${scriitorCategory ? `, ${scriitorCategory}` : ''}.
-Public: oamenii care trăiau în epoca lui, dar textul trebuie să pară autentic pentru autor.
-Ton: specific autorului (imaginar, motive, ritm), evită emoticoane și explicații.
-Perspectivă: eu/îmi/meu; cititorul este tu/voi.
-Structură: 6-14 versuri scurte; poți folosi strofe, dar păstrează simplitatea.
-Context util (opțional, folosește doar ce ajută): ${bioSnippet || '—'}.
-Brief primit: ${brief}
-Returnează doar poezia finală, fără titlu suplimentar, fără ghilimele.`
-          : `Scrie o postare scurtă ca și cum ar fi scrisă la persoana I de ${scriitorName}${scriitorPeriod ? ` (${scriitorPeriod})` : ''}${scriitorCategory ? `, ${scriitorCategory}` : ''}.
-Public: oamenii care traiau in vremea scriitorului respectiv.
-Ton: autentic pentru autor (teme, stil, vocabular), cald și concis, fără emoticoane, fără note explicative.
-Perspectivă: eu/îmi/meu; cititorul este tu/voi.
-Lungime: 80-130 de cuvinte.
-Context util (opțional, folosește doar ce ajută): ${bioSnippet || '—'}.
-Brief primit: ${brief}
-Returnează doar textul final, fără ghilimele.`;
+      const systemPrompt = `Asumă-ți pe deplin identitatea literară a lui ${scriitorName}${scriitorPeriod ? ` (${scriitorPeriod})` : ''}${scriitorCategory ? `, ${scriitorCategory}` : ''}.
+
+Scrie o postare scurtă ca și cum autorul ar avea o „gazetă” sau un spațiu public de exprimare specific epocii sale (nu modern).
+Postarea este scrisă la persoana I și pare destinată contemporanilor autorului.
+
+Public: oameni ai vremii respective (evită orice referință modernă: internet, social media, termeni actuali).
+Perspectivă: eu / îmi / meu; cititorul este tu / voi.
+Ton: autentic pentru autor — respectă temele, obsesiile, stilul sintactic, vocabularul și ritmul frazei caracteristice lui.
+Stil: natural, literar, cu una sau două trăsături recognoscibile (ex: ironie fină, lirism, gravitate, oralitate, solemnitate).
+Nu explica stilul, nu comenta ce faci, nu ieși din rol.
+Evită formulările explicative sau abstractizante de tip eseistic („X este Y”, „are rolul de”, „ordonează”, „cristalizează”).
+Preferă imagini metaforice continue, comparații implicite și asocieri simbolice, fără concluzii explicite.
+Lungime: 80–150 de cuvinte.
+Fără emoticoane. Fără note explicative. Fără ghilimele.
+
+Context util (folosește doar dacă ajută la autenticitate):  
+${bioSnippet || '—'}
+
+Brief / idei-cheie primite (integrează-le organic, nu le enumera):  
+${brief}
+
+Returnează exclusiv textul final al postării, ca și cum ar fi fost scris direct de autor.
+`;
 
       const requestBody = {
         model: 'openai/gpt-oss-120b',
@@ -109,9 +113,17 @@ Returnează doar textul final, fără ghilimele.`;
       }
 
       const data = await response.json();
-      const generated = data?.choices?.[0]?.message?.content?.trim();
+      
+      // Better error handling for API response
+      if (!data || !data.choices || !Array.isArray(data.choices) || data.choices.length === 0) {
+        console.error('Unexpected API response structure:', data);
+        throw new Error('Răspuns neașteptat de la API. Verifică configurația API-ului Groq.');
+      }
+      
+      const generated = data.choices[0]?.message?.content?.trim();
       if (!generated) {
-        throw new Error('Nu s-a primit text generat de la API.');
+        console.error('Empty or missing content in API response:', data);
+        throw new Error('Nu s-a primit text generat de la API. Răspunsul API-ului este gol sau invalid.');
       }
 
       onTextGenerated?.(generated);

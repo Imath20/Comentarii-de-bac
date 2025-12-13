@@ -7,6 +7,7 @@ const CLOUDINARY_CONFIG = {
   cloudName: 'dktbqgxcc',
   apiKey: '323711783762796',
   apiSecret: 'CUk21-Vnyb3SvAyTfAhcjZ2PnK0',
+  uploadPreset: import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET || 'ml_default',
 };
 
 /**
@@ -143,6 +144,22 @@ const generateSignature = (params) => {
 };
 
 /**
+ * Tests connectivity to Cloudinary API
+ * @returns {Promise<boolean>} - True if connection is successful
+ */
+export const testCloudinaryConnection = async () => {
+  try {
+    // Try to fetch Cloudinary's status or a simple endpoint
+    const testUrl = `https://api.cloudinary.com/v1_1/${CLOUDINARY_CONFIG.cloudName}/ping`;
+    const response = await fetch(testUrl, { method: 'GET' });
+    return response.ok || response.status !== 404; // Even 404 means DNS resolved
+  } catch (error) {
+    console.error('Cloudinary connection test failed:', error);
+    return false;
+  }
+};
+
+/**
  * Uploads an image file to Cloudinary
  * 
  * @param {File} file - The image file to upload
@@ -168,7 +185,7 @@ export const uploadImageToCloudinary = async (file, folder = 'profile-pictures')
   // Create form data
   const formData = new FormData();
   formData.append('file', file);
-  formData.append('upload_preset', 'ml_default'); // Create this in Cloudinary dashboard: Settings > Upload > Upload presets
+  formData.append('upload_preset', CLOUDINARY_CONFIG.uploadPreset); // Create this in Cloudinary dashboard: Settings > Upload > Upload presets
   if (folder) {
     formData.append('folder', folder);
   }
@@ -179,23 +196,88 @@ export const uploadImageToCloudinary = async (file, folder = 'profile-pictures')
   // Set it to "Unsigned" and name it (e.g., "ml_default")
 
   try {
-    const response = await fetch(
-      `https://api.cloudinary.com/v1_1/${CLOUDINARY_CONFIG.cloudName}/image/upload`,
-      {
-        method: 'POST',
-        body: formData,
-      }
-    );
+    // Try primary endpoint first
+    const uploadUrl = `https://api.cloudinary.com/v1_1/${CLOUDINARY_CONFIG.cloudName}/image/upload`;
+    
+    // Log for debugging
+    console.log('Uploading to Cloudinary:', {
+      url: uploadUrl,
+      cloudName: CLOUDINARY_CONFIG.cloudName,
+      uploadPreset: CLOUDINARY_CONFIG.uploadPreset,
+      folder: folder,
+      fileSize: file.size,
+      fileType: file.type
+    });
+    
+    const response = await fetch(uploadUrl, {
+      method: 'POST',
+      body: formData,
+      // Don't set Content-Type header - let browser set it with boundary for FormData
+    });
 
     if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}));
-      throw new Error(errorData.error?.message || `Upload failed: ${response.statusText}`);
+      let errorMessage = `Upload failed: ${response.status} ${response.statusText}`;
+      try {
+        const errorData = await response.json();
+        if (errorData.error?.message) {
+          errorMessage = errorData.error.message;
+        }
+      } catch (e) {
+        // If we can't parse the error, use the status text
+        const errorText = await response.text().catch(() => '');
+        if (errorText) {
+          errorMessage = errorText;
+        }
+      }
+      throw new Error(errorMessage);
     }
 
     const data = await response.json();
-    return data.secure_url; // Return the secure URL
+    
+    if (!data.secure_url && !data.url) {
+      throw new Error('Cloudinary nu a returnat URL-ul imaginii. Verifică configurația upload preset.');
+    }
+    
+    return data.secure_url || data.url; // Return the secure URL
   } catch (error) {
-    console.error('Cloudinary upload error:', error);
+    console.error('Cloudinary upload error:', {
+      error: error,
+      message: error.message,
+      name: error.name,
+      stack: error.stack,
+      cloudName: CLOUDINARY_CONFIG.cloudName,
+      uploadPreset: CLOUDINARY_CONFIG.uploadPreset
+    });
+    
+    // Provide more helpful error messages
+    if (error.message.includes('Failed to fetch') || 
+        error.message.includes('ERR_NAME_NOT_RESOLVED') ||
+        error.name === 'TypeError' && error.message.includes('fetch')) {
+      
+      // Try to provide more specific guidance
+      const errorDetails = [
+        'Nu s-a putut conecta la Cloudinary.',
+        '',
+        'Posibile cauze:',
+        '1. Problema de conexiune la internet - verifică conexiunea',
+        '2. Server DNS nu poate rezolva api.cloudinary.com - încearcă să schimbi DNS-ul (ex: 8.8.8.8)',
+        '3. Firewall/proxy blochează conexiunea - verifică setările de firewall',
+        '4. Extensii de browser (ad-blocker) blochează cererea - dezactivează temporar',
+        '',
+        `URL încercat: https://api.cloudinary.com/v1_1/${CLOUDINARY_CONFIG.cloudName}/image/upload`
+      ].join('\n');
+      
+      throw new Error(errorDetails);
+    }
+    
+    if (error.message.includes('401') || error.message.includes('Unauthorized')) {
+      throw new Error(`Eroare de autentificare Cloudinary. Verifică upload preset-ul "${CLOUDINARY_CONFIG.uploadPreset}" în Cloudinary Dashboard (Settings > Upload > Upload presets).`);
+    }
+    
+    if (error.message.includes('400') || error.message.includes('Invalid')) {
+      throw new Error(`Upload preset "${CLOUDINARY_CONFIG.uploadPreset}" nu există sau nu este configurat corect în Cloudinary Dashboard.`);
+    }
+    
     throw error;
   }
 };

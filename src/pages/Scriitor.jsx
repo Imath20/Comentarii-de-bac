@@ -1103,7 +1103,12 @@ const Scriitor = () => {
               <div key={post.id} className={`scriitor-post ${post.pin ? 'pinned' : ''} ${post.link ? 'clickable' : ''}`} onClick={() => post.link && !post.pinnedActions && goToPoezie(post.link)}>
                 {post.pin && <div className="scriitor-post-pin">📌 Pin</div>}
                 <div className="scriitor-post-date">{post.date}</div>
-                <div className="scriitor-post-text">{post.text}</div>
+                {post.isPoem && post.descriere && (
+                  <div className="scriitor-post-text">{post.descriere}</div>
+                )}
+                {!post.isPoem && post.text && (
+                  <div className="scriitor-post-text">{post.text}</div>
+                )}
                 
                 {/* Butoane pentru postările pinned */}
                 {post.pin && post.pinnedActions && (
