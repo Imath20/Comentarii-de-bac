@@ -366,7 +366,7 @@ export default function AI() {
     // Current Groq-recommended models (text + vision) with fallbacks
     const modelCandidates =
       inputType === 'image'
-        ? ['llama-3.2-11b-vision-preview', 'llama-3.2-90b-vision-preview', 'llava-v1.5-7b-4096-preview']
+        ? ['moonshotai/kimi-k2-instruct-0905','llama-3.2-11b-vision-preview', 'llama-3.2-90b-vision-preview', 'llava-v1.5-7b-4096-preview']
         : ['llama-3.2-90b-text-preview', 'llama-3.2-11b-text-preview', 'llama-3.2-3b-preview', 'llama-3.1-8b-instant'];
 
     const wait = (ms) => new Promise((r) => setTimeout(r, ms));

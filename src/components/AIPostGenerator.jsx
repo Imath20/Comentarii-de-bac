@@ -68,7 +68,7 @@ Returnează exclusiv textul final al postării, ca și cum ar fi fost scris dire
 `;
 
       const requestBody = {
-        model: 'openai/gpt-oss-120b',
+        model: 'moonshotai/kimi-k2-instruct-0905',
         messages: [
           {
             role: 'user',

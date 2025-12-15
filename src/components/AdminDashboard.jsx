@@ -24,6 +24,7 @@ import { createNotification } from '../firebase/notificationsService';
 import AICerinteProcessor from './AICerinteProcessor';
 import AIPostGenerator from './AIPostGenerator';
 import AIComentariuFormatter from './AIComentariuFormatter';
+import AICommentGenerator from './AICommentGenerator';
 import '../styles/admin.scss';
 
 const REACTIONS = [
@@ -2453,7 +2454,6 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
                         newReactionType: '',
                       });
                       setAiPostPrompt('');
-                      setAiPoemPrompt('');
                       setScriitorView('post-add');
                       const currentFrom = searchParams.get('from');
                       updateUrlParams({ action: 'add-post', scriitor: selectedScriitor.key || selectedScriitor.id, postId: null, commentIndex: null, from: currentFrom || 'posts' });
@@ -3138,7 +3138,19 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
                     )}
                   </div>
                   <div style={{ marginBottom: '10px' }}>
-                    <label style={{ display: 'block', marginBottom: '5px' }}>Text comentariu</label>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '10px' }}>
+                      <label style={{ display: 'block', marginBottom: 0 }}>Text comentariu</label>
+                      <AICommentGenerator
+                        scriitor={selectedScriitor || { nume: postForm.author }}
+                        descriere={postForm.descriere}
+                        text={postForm.isPoem ? postForm.poemText : (postForm.isStory ? postForm.storyText : postForm.text)}
+                        reactions={postForm.reactions}
+                        commentAuthor={postForm.newCommentAuthor}
+                        onTextGenerated={(generatedText) => setPostForm((prev) => ({ ...prev, newCommentText: generatedText }))}
+                        setMessage={setMessage}
+                        darkTheme={darkTheme}
+                      />
+                    </div>
                     <textarea
                       value={postForm.newCommentText || ''}
                       onChange={(e) => setPostForm({ ...postForm, newCommentText: e.target.value })}
