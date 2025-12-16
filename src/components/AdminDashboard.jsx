@@ -1290,9 +1290,18 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
       if (updatedScriitor) {
         setSelectedScriitor(updatedScriitor);
       }
-      setScriitorView('posts');
-      if (selectedScriitor) {
-        updateUrlParams({ view: 'posts', scriitor: selectedScriitor.key || selectedScriitor.id, action: null, postId: null, commentIndex: null, from: 'admin' });
+
+      // După salvarea postării:
+      // - dacă am venit „din pagina scriitorului” (from=scriitor), navigăm înapoi la scriitor
+      // - altfel rămânem în admin, în zona de postări (comportamentul vechi)
+      const fromParamAfterSave = searchParams.get('from');
+      if (fromParamAfterSave === 'scriitor' && selectedScriitor) {
+        navigate(`/scriitor?name=${selectedScriitor.key || selectedScriitor.id}`);
+      } else {
+        setScriitorView('posts');
+        if (selectedScriitor) {
+          updateUrlParams({ view: 'posts', scriitor: selectedScriitor.key || selectedScriitor.id, action: null, postId: null, commentIndex: null, from: 'admin' });
+        }
       }
       setPostForm({
         id: '',

@@ -812,7 +812,66 @@ const Scriitor = () => {
   // Prieteni, galerie, postări
   const friends = data.friends || [];
   const gallery = data.gallery || [];
-  const posts = (data.posts || []).slice().sort((a, b) => (b.pin ? 1 : 0) - (a.pin ? 1 : 0)); // Pin first
+
+  // Helper pentru sortarea postărilor cronologic (după dată) + pin întotdeauna sus
+  function parsePostDateToTimestamp(dateStr) {
+    if (!dateStr || typeof dateStr !== 'string') return 0;
+
+    const str = dateStr.toLowerCase().trim();
+
+    // Mapare luni în română -> index lună
+    const monthMap = {
+      'ianuarie': 1,
+      'februarie': 2,
+      'martie': 3,
+      'aprilie': 4,
+      'mai': 5,
+      'iunie': 6,
+      'iulie': 7,
+      'august': 8,
+      'septembrie': 9,
+      'octombrie': 10,
+      'noiembrie': 11,
+      'decembrie': 12,
+    };
+
+    // Extrage anul (ultimul număr cu 4 cifre din șir)
+    const yearMatch = str.match(/(\d{4})(?!.*\d{4})/);
+    const year = yearMatch ? parseInt(yearMatch[1], 10) : 0;
+
+    // Extrage luna din text (dacă există un nume de lună în română)
+    let month = 1;
+    for (const [name, value] of Object.entries(monthMap)) {
+      if (str.includes(name)) {
+        month = value;
+        break;
+      }
+    }
+
+    // Extrage ziua (primul număr cu 1–2 cifre, înainte de an de obicei)
+    const dayMatch = str.match(/\b(\d{1,2})\b/);
+    const day = dayMatch ? parseInt(dayMatch[1], 10) : 1;
+
+    // Dacă nu avem an, întoarcem 0 ca fallback (vor apărea la începutul listei)
+    if (!year) return 0;
+
+    return new Date(year, month - 1, day).getTime();
+  }
+
+  const posts = (data.posts || [])
+    .slice()
+    .sort((a, b) => {
+      // Pin first
+      if (a.pin && !b.pin) return -1;
+      if (!a.pin && b.pin) return 1;
+
+      // Apoi sortare cronologică după dată (de la cele mai vechi la cele mai noi)
+      const timeA = parsePostDateToTimestamp(a.date);
+      const timeB = parsePostDateToTimestamp(b.date);
+
+      return timeA - timeB;
+    });
+
   const friendsCount = friends.length;
 
   // Navigare către alt scriitor
