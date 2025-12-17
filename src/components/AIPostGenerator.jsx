@@ -10,6 +10,7 @@ const AIPostGenerator = ({
   scriitor,
   setMessage,
   darkTheme,
+  skipBrief = false,
 }) => {
   const [processing, setProcessing] = useState(false);
   const [cubeSpinning, setCubeSpinning] = useState(false);
@@ -17,7 +18,7 @@ const AIPostGenerator = ({
   const handleGenerate = useCallback(async () => {
     if (processing) return;
     const brief = prompt?.trim();
-    if (!brief) {
+    if (!skipBrief && !brief) {
       setMessage?.({ type: 'error', text: 'Scrie mai întâi despre ce vrei să fie postarea.' });
       return;
     }
@@ -43,9 +44,33 @@ const AIPostGenerator = ({
         .trim()
         .slice(0, 480);
 
-      const systemPrompt = `Asumă-ți pe deplin identitatea literară a lui ${scriitorName}${scriitorPeriod ? ` (${scriitorPeriod})` : ''}${scriitorCategory ? `, ${scriitorCategory}` : ''}.
+      // Debug: verifică dacă brief-ul este trimis corect
+      if (!skipBrief) {
+        console.log('Brief trimis către AI:', brief);
+      }
 
-Scrie o postare scurtă ca și cum autorul ar avea o „gazetă” sau un spațiu public de exprimare specific epocii sale (nu modern).
+      const systemMessage = skipBrief 
+        ? `Asumă-ți pe deplin identitatea literară a lui ${scriitorName}${scriitorPeriod ? ` (${scriitorPeriod})` : ''}${scriitorCategory ? `, ${scriitorCategory}` : ''}.
+
+Scrie o descriere scurtă pentru o poezie, ca și cum autorul ar prezenta propria operă.
+Descrierea este scrisă la persoana I sau a III-a și pare destinată cititorilor contemporani autorului.
+
+Public: oameni ai vremii respective (evită orice referință modernă: internet, social media, termeni actuali).
+Ton: autentic pentru autor — respectă temele, obsesiile, stilul sintactic, vocabularul și ritmul frazei caracteristice lui.
+Stil: natural, literar, cu una sau două trăsături recognoscibile (ex: ironie fină, lirism, gravitate, oralitate, solemnitate).
+Nu explica stilul, nu comenta ce faci, nu ieși din rol.
+Evită formulările explicative sau abstractizante de tip eseistic („X este Y", „are rolul de", „ordonează", „cristalizează").
+Preferă imagini metaforice continue, comparații implicite și asocieri simbolice, fără concluzii explicite.
+Lungime: 50–100 de cuvinte.
+Fără emoticoane. Fără note explicative. Fără ghilimele.
+
+Context util (folosește doar dacă ajută la autenticitate):  
+${bioSnippet || '—'}
+
+Returnează exclusiv textul final al descrierii, ca și cum ar fi fost scris direct de autor sau un critic contemporan.`
+        : `Asumă-ți pe deplin identitatea literară a lui ${scriitorName}${scriitorPeriod ? ` (${scriitorPeriod})` : ''}${scriitorCategory ? `, ${scriitorCategory}` : ''}.
+
+Scrie o postare scurtă ca și cum autorul ar avea o „gazetă" sau un spațiu public de exprimare specific epocii sale (nu modern).
 Postarea este scrisă la persoana I și pare destinată contemporanilor autorului.
 
 Public: oameni ai vremii respective (evită orice referință modernă: internet, social media, termeni actuali).
@@ -53,26 +78,34 @@ Perspectivă: eu / îmi / meu; cititorul este tu / voi.
 Ton: autentic pentru autor — respectă temele, obsesiile, stilul sintactic, vocabularul și ritmul frazei caracteristice lui.
 Stil: natural, literar, cu una sau două trăsături recognoscibile (ex: ironie fină, lirism, gravitate, oralitate, solemnitate).
 Nu explica stilul, nu comenta ce faci, nu ieși din rol.
-Evită formulările explicative sau abstractizante de tip eseistic („X este Y”, „are rolul de”, „ordonează”, „cristalizează”).
+Evită formulările explicative sau abstractizante de tip eseistic („X este Y", „are rolul de", „ordonează", „cristalizează").
 Preferă imagini metaforice continue, comparații implicite și asocieri simbolice, fără concluzii explicite.
 Lungime: 80–150 de cuvinte.
 Fără emoticoane. Fără note explicative. Fără ghilimele.
 
-Context util (folosește doar dacă ajută la autenticitate):  
-${bioSnippet || '—'}
+Context util despre autor (folosește doar dacă ajută la autenticitate):  
+${bioSnippet || '—'}`;
 
-Brief / idei-cheie primite (integrează-le organic, nu le enumera):  
+      const userMessage = skipBrief
+        ? 'Generează descrierea pentru poezie.'
+        : `IMPORTANT: Postarea trebuie să se concentreze EXACT pe următoarele idei și subiecte specificate în brief:
+
 ${brief}
 
-Returnează exclusiv textul final al postării, ca și cum ar fi fost scris direct de autor.
-`;
+Postarea trebuie să răspundă direct la brief-ul de mai sus și să abordeze subiectele, tonul și publicul specificate acolo. Nu ignora brief-ul - el este esențial pentru conținutul postării.
+
+Returnează exclusiv textul final al postării, ca și cum ar fi fost scris direct de autor.`;
 
       const requestBody = {
         model: 'moonshotai/kimi-k2-instruct-0905',
         messages: [
           {
+            role: 'system',
+            content: systemMessage
+          },
+          {
             role: 'user',
-            content: systemPrompt
+            content: userMessage
           }
         ],
         temperature: 0.7,
@@ -136,7 +169,7 @@ Returnează exclusiv textul final al postării, ca și cum ar fi fost scris dire
       setProcessing(false);
       setTimeout(() => setCubeSpinning(false), 800);
     }
-  }, [prompt, scriitor, setMessage, onTextGenerated, processing]);
+  }, [prompt, scriitor, setMessage, onTextGenerated, processing, skipBrief]);
 
   return (
     <div

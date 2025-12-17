@@ -1362,7 +1362,7 @@ const Scriitor = () => {
                               <button
                                 onClick={(e) => {
                                   e.stopPropagation();
-                                  navigate(`/admin?tab=scriitori&scriitor=${name}&action=edit-comment&postId=${post.id}&commentIndex=${idx}`);
+                                  navigate(`/admin?tab=scriitori&scriitor=${name}&action=edit-comment&postId=${post.id}&commentIndex=${idx}&from=scriitor`);
                                 }}
                                 className="scriitor-comment-edit-button"
                                 title="Editează comentariu"

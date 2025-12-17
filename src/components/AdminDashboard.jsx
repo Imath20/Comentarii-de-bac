@@ -469,6 +469,7 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
     newCommentAuthor: '',
     newCommentKey: '',
     newCommentText: '',
+    editingCommentText: '',
     newReactionFriendKey: '',
     newReactionFriendName: '',
     newReactionType: '',
@@ -576,35 +577,51 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
             });
             setScriitorView('post-add');
           } else if (actionParam === 'edit-post' && postIdParam) {
-            const post = scriitor.posts?.find(p => p.id === parseInt(postIdParam) || p.id === postIdParam);
-            if (post) {
-              setPostForm({
-                id: post.id,
-                date: post.date || '',
-                author: post.author || scriitor.nume,
-                text: post.text || '',
-                descriere: post.descriere || '',
-                image: post.image || '',
-                pin: post.pin || false,
-                isPoem: post.isPoem || false,
-                isStory: post.isStory || false,
-                poemTitle: post.poemTitle || '',
-                poemText: post.poemText || '',
-                poemImages: post.poemImages || [],
-                storyTitle: post.storyTitle || '',
-                storyText: post.storyText || '',
-                pinnedActions: post.pinnedActions || [],
-                reactions: post.reactions || [],
-                comments: post.comments || [],
-                createdBy: post.createdBy || '',
-                createdByEmail: post.createdByEmail || '',
-                createdByName: post.createdByName || '',
-              });
-              setScriitorView('post-edit');
+            // Nu reîmprospăta postForm dacă deja suntem în modul de editare pentru aceeași postare
+            // (pentru a nu pierde modificările nesalvate, inclusiv comentariile editate)
+            const postIdNum = parseInt(postIdParam);
+            const currentPostId = typeof postForm.id === 'string' ? parseInt(postForm.id) : postForm.id;
+            const isSamePost = currentPostId === postIdNum || postForm.id === postIdParam;
+            
+            if (scriitorView !== 'post-edit' || !isSamePost) {
+              const post = scriitor.posts?.find(p => p.id === postIdNum || p.id === postIdParam);
+              if (post) {
+                setPostForm({
+                  id: post.id,
+                  date: post.date || '',
+                  author: post.author || scriitor.nume,
+                  text: post.text || '',
+                  descriere: post.descriere || '',
+                  image: post.image || '',
+                  pin: post.pin || false,
+                  isPoem: post.isPoem || false,
+                  isStory: post.isStory || false,
+                  poemTitle: post.poemTitle || '',
+                  poemText: post.poemText || '',
+                  poemImages: post.poemImages || [],
+                  storyTitle: post.storyTitle || '',
+                  storyText: post.storyText || '',
+                  pinnedActions: post.pinnedActions || [],
+                  reactions: post.reactions || [],
+                  comments: post.comments || [],
+                  newCommentAuthor: '',
+                  newCommentKey: '',
+                  newCommentText: '',
+                  editingCommentText: '',
+                  newReactionFriendKey: '',
+                  newReactionFriendName: '',
+                  newReactionType: '',
+                  createdBy: post.createdBy || '',
+                  createdByEmail: post.createdByEmail || '',
+                  createdByName: post.createdByName || '',
+                });
+              }
             }
+            setScriitorView('post-edit');
           } else if (actionParam === 'edit-comment' && postIdParam && commentIndexParam !== null) {
             const post = scriitor.posts?.find(p => p.id === parseInt(postIdParam) || p.id === postIdParam);
             if (post && post.comments && post.comments[parseInt(commentIndexParam)]) {
+              const commentToEdit = post.comments[parseInt(commentIndexParam)];
               // Open post edit view with the post data
               setPostForm({
                 id: post.id,
@@ -627,6 +644,7 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
                 createdBy: post.createdBy || '',
                 createdByEmail: post.createdByEmail || '',
                 createdByName: post.createdByName || '',
+                editingCommentText: commentToEdit.text || '',
               });
               setScriitorView('post-edit');
               updateUrlParams({ view: 'post-edit', scriitor: scriitorParam, action: 'edit-post', postId: postIdParam, commentIndex: commentIndexParam });
@@ -1284,6 +1302,7 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
         }
       }
 
+      // Reîncarcă lista de scriitori pentru a actualiza comentariile
       await loadScriitori();
       const updated = await fetchScriitori();
       const updatedScriitor = updated.find(s => s.key === selectedScriitor.key);
@@ -1296,11 +1315,14 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
       // - altfel rămânem în admin, în zona de postări (comportamentul vechi)
       const fromParamAfterSave = searchParams.get('from');
       if (fromParamAfterSave === 'scriitor' && selectedScriitor) {
-        navigate(`/scriitor?name=${selectedScriitor.key || selectedScriitor.id}`);
+        // Navighează înapoi la pagina scriitorului
+        setTimeout(() => {
+          navigate(`/scriitor?name=${selectedScriitor.key || selectedScriitor.id}`);
+        }, 500);
       } else {
         setScriitorView('posts');
         if (selectedScriitor) {
-          updateUrlParams({ view: 'posts', scriitor: selectedScriitor.key || selectedScriitor.id, action: null, postId: null, commentIndex: null, from: 'admin' });
+          updateUrlParams({ view: 'posts', scriitor: selectedScriitor.key || selectedScriitor.id, action: null, postId: null, commentIndex: null, from: fromParamAfterSave || 'admin' });
         }
       }
       setPostForm({
@@ -1324,6 +1346,7 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
         newCommentAuthor: '',
         newCommentKey: '',
         newCommentText: '',
+        editingCommentText: '',
         newReactionFriendKey: '',
         newReactionFriendName: '',
         newReactionType: '',
@@ -2672,6 +2695,7 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
                       scriitor={selectedScriitor}
                       setMessage={setMessage}
                       darkTheme={darkTheme}
+                      skipBrief={true}
                     />
                   </div>
                   <textarea
@@ -2683,7 +2707,7 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
                     className="admin-textarea"
                   />
                   <small style={{ color: darkTheme ? '#c3b7a4' : '#666' }}>
-                    Poți completa manual sau apasă cubul pentru a genera automat pe baza brief-ului.
+                    Poți completa manual sau apasă cubul pentru a genera automat descrierea.
                   </small>
                 </div>
               )}
@@ -3064,27 +3088,130 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
                     />
                     <div style={{ flex: 1 }}>
                       <div style={{ fontWeight: 'bold', marginBottom: '5px' }}>{comment.author}</div>
-                      <div>{comment.text}</div>
+                      {isEditingComment ? (
+                        <div style={{ marginTop: '10px' }}>
+                          <textarea
+                            value={postForm.editingCommentText || comment.text}
+                            onChange={(e) => setPostForm({ ...postForm, editingCommentText: e.target.value })}
+                            placeholder="Textul comentariului..."
+                            rows={3}
+                            className="admin-textarea"
+                            style={{ width: '100%', marginBottom: '10px' }}
+                          />
+                          <div style={{ display: 'flex', gap: '10px' }}>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                const newComments = [...(postForm.comments || [])];
+                                newComments[idx] = {
+                                  ...newComments[idx],
+                                  text: postForm.editingCommentText || comment.text,
+                                };
+                                setPostForm({ 
+                                  ...postForm, 
+                                  comments: newComments,
+                                  editingCommentText: '',
+                                });
+                                updateUrlParams({ 
+                                  view: 'post-edit', 
+                                  scriitor: selectedScriitor?.key || selectedScriitor?.id, 
+                                  action: 'edit-post', 
+                                  postId: postForm.id, 
+                                  commentIndex: null 
+                                });
+                              }}
+                              style={{
+                                padding: '6px 12px',
+                                fontSize: '12px',
+                                backgroundColor: darkTheme ? '#a97c50' : '#ffd591',
+                                color: darkTheme ? '#fff' : '#4e2e1e',
+                                border: 'none',
+                                borderRadius: '4px',
+                                cursor: 'pointer',
+                              }}
+                            >
+                              Salvează
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setPostForm({ ...postForm, editingCommentText: '' });
+                                updateUrlParams({ 
+                                  view: 'post-edit', 
+                                  scriitor: selectedScriitor?.key || selectedScriitor?.id, 
+                                  action: 'edit-post', 
+                                  postId: postForm.id, 
+                                  commentIndex: null 
+                                });
+                              }}
+                              style={{
+                                padding: '6px 12px',
+                                fontSize: '12px',
+                                backgroundColor: '#6c757d',
+                                color: 'white',
+                                border: 'none',
+                                borderRadius: '4px',
+                                cursor: 'pointer',
+                              }}
+                            >
+                              Anulează
+                            </button>
+                          </div>
+                        </div>
+                      ) : (
+                        <div>{comment.text}</div>
+                      )}
                     </div>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        const newComments = [...(postForm.comments || [])];
-                        newComments.splice(idx, 1);
-                        setPostForm({ ...postForm, comments: newComments });
-                      }}
-                      style={{
-                        padding: '5px 10px',
-                        fontSize: '12px',
-                        backgroundColor: '#dc3545',
-                        color: 'white',
-                        border: 'none',
-                        borderRadius: '4px',
-                        cursor: 'pointer',
-                      }}
-                    >
-                      Șterge
-                    </button>
+                    {!isEditingComment && (
+                      <div style={{ display: 'flex', gap: '5px' }}>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setPostForm({ 
+                              ...postForm, 
+                              editingCommentText: comment.text 
+                            });
+                            updateUrlParams({ 
+                              view: 'post-edit', 
+                              scriitor: selectedScriitor?.key || selectedScriitor?.id, 
+                              action: 'edit-post', 
+                              postId: postForm.id, 
+                              commentIndex: idx 
+                            });
+                          }}
+                          style={{
+                            padding: '5px 10px',
+                            fontSize: '12px',
+                            backgroundColor: darkTheme ? '#a97c50' : '#ffd591',
+                            color: darkTheme ? '#fff' : '#4e2e1e',
+                            border: 'none',
+                            borderRadius: '4px',
+                            cursor: 'pointer',
+                          }}
+                        >
+                          Editează
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const newComments = [...(postForm.comments || [])];
+                            newComments.splice(idx, 1);
+                            setPostForm({ ...postForm, comments: newComments });
+                          }}
+                          style={{
+                            padding: '5px 10px',
+                            fontSize: '12px',
+                            backgroundColor: '#dc3545',
+                            color: 'white',
+                            border: 'none',
+                            borderRadius: '4px',
+                            cursor: 'pointer',
+                          }}
+                        >
+                          Șterge
+                        </button>
+                      </div>
+                    )}
                   </div>
                   );
                 })}

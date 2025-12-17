@@ -103,16 +103,28 @@ const AICommentGenerator = ({
 
     try {
       const persona = commentAuthor || 'un cititor al epocii';
-      const systemPrompt = `Scrie un comentariu scurt (30-70 cuvinte) la postarea unui autor.
+      
+      // Debug: verifică ce context este trimis
+      console.log('Descriere pentru comentariu:', descriereSnippet);
+      console.log('Text pentru comentariu:', contentSnippet);
+      
+      const systemMessage = `Scrie un comentariu scurt (30-70 cuvinte) la postarea unui autor.
 
 Autor: ${scriitorName}${scriitorPeriod ? ` (${scriitorPeriod})` : ''}${scriitorCategory ? `, ${scriitorCategory}` : ''}.
 Perspectivă: ${persona}, prieten/contemporan care răspunde la text.
 Ton: potrivit reacțiilor primite (${reactionMood}); păstrează limbaj natural, fără prezentări metatextuale.
 Stil: coerent cu epoca autorului, fără termeni moderni (internet, social media).
-Nu folosi ghilimele, nu explica ce faci, scrie direct comentariul.
+Nu folosi ghilimele, nu explica ce faci, scrie direct comentariul.`;
 
-Context scurt (descriere): ${descriereSnippet || '—'}
-Fragment din text: ${contentSnippet || '—'}
+      const userMessage = `IMPORTANT: Comentariul trebuie să se bazeze EXACT pe următoarele informații despre postare:
+
+DESCRIEREA POSTĂRII (folosește-o pentru context și înțelegere):
+${descriereSnippet || '—'}
+
+TEXTUL POSTĂRII (comentariul trebuie să răspundă la acest text):
+${contentSnippet || '—'}
+
+Comentariul trebuie să fie relevant pentru descrierea și textul postării de mai sus. Nu ignora aceste informații - ele sunt esențiale pentru conținutul comentariului.
 
 Returnează doar textul comentariului.`;
 
@@ -128,8 +140,12 @@ Returnează doar textul comentariului.`;
             model,
             messages: [
               {
+                role: 'system',
+                content: systemMessage,
+              },
+              {
                 role: 'user',
-                content: systemPrompt,
+                content: userMessage,
               },
             ],
             temperature: 0.65,
