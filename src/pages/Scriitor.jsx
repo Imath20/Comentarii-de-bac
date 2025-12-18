@@ -1223,21 +1223,21 @@ const Scriitor = () => {
                       <h3 className="scriitor-poem-title">
                         {post.poemTitle}
                       </h3>
-                      <div className="scriitor-poem-text">
-                        {expandedPoems[post.id]
-                          ? post.poemText
-                          : post.poemText.split('\n\n').slice(0, 2).join('\n\n')
-                        }
-                      </div>
-                      {post.poemText.split('\n\n').length > 2 && (
-                        <div className="scriitor-poem-expand">
-                          <button
-                            onClick={(e) => { e.stopPropagation(); openPoemPreview(post); }}
-                          >
-                            Mai mult
-                          </button>
+                      <div style={{ marginBottom: '10px' }}>
+                        <div className="scriitor-poem-text" style={{ whiteSpace: 'pre-wrap' }}>
+                          {post.poemPreview || (post.poemText && post.poemText.length > 500 ? `${post.poemText.substring(0, 500)}...` : post.poemText) || 'Fără preview'}
                         </div>
-                      )}
+                      </div>
+                      <div className="scriitor-poem-expand">
+                        <button
+                          onClick={(e) => { 
+                            e.stopPropagation(); 
+                            openPoemPreview(post);
+                          }}
+                        >
+                          Vezi tot
+                        </button>
+                      </div>
                     </div>
                   </div>
                 ) : post.isStory ? (

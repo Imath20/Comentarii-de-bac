@@ -58,6 +58,7 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
   const [selectedScriitor, setSelectedScriitor] = useState(null);
   const [scriitorView, setScriitorView] = useState('list'); // 'list', 'add', 'edit', 'posts', 'post-add', 'post-edit'
   const [allScriitoriForSearch, setAllScriitoriForSearch] = useState([]);
+  const [expandedPoems, setExpandedPoems] = useState(new Set());
   const editingCommentRef = useRef(null);
   const hasInitializedTabRef = useRef(false);
   // Generate unique tab ID for this instance (each tab/component instance gets its own ID)
@@ -459,6 +460,7 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
     isStory: false,
     poemTitle: '',
     poemText: '',
+    poemPreview: '',
     poemImages: [],
     storyTitle: '',
     storyText: '',
@@ -565,6 +567,7 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
               isStory: false,
               poemTitle: '',
               poemText: '',
+              poemPreview: '',
               poemImages: [],
               storyTitle: '',
               storyText: '',
@@ -598,6 +601,7 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
                   isStory: post.isStory || false,
                   poemTitle: post.poemTitle || '',
                   poemText: post.poemText || '',
+                  poemPreview: post.poemPreview || '',
                   poemImages: post.poemImages || [],
                   storyTitle: post.storyTitle || '',
                   storyText: post.storyText || '',
@@ -635,6 +639,7 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
                 isStory: post.isStory || false,
                 poemTitle: post.poemTitle || '',
                 poemText: post.poemText || '',
+                poemPreview: post.poemPreview || '',
                 poemImages: post.poemImages || [],
                 storyTitle: post.storyTitle || '',
                 storyText: post.storyText || '',
@@ -1275,30 +1280,104 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
         }
       }
 
-      // Dacă postarea are o imagine, adaugă-o automat în galerie
-      if (postData.image && postData.image.trim() !== '') {
-        // La editare, verifică dacă imaginea s-a schimbat
-        let imageToAdd = postData.image;
-        if (scriitorView === 'post-edit') {
-          const originalPost = selectedScriitor.posts?.find(p => p.id === postForm.id);
-          if (originalPost && originalPost.image === postData.image) {
-            // Imaginea nu s-a schimbat, nu trebuie să o adăugăm din nou
-            imageToAdd = null;
+      // Colectează toate imaginile din postare și gestionează galeria
+      const imagesToAdd = [];
+      const imagesToRemove = [];
+      
+      // Pentru postări normale și story-uri: folosește postForm.image (nu postData.image care e '' pentru poezii)
+      if (postForm.image && postForm.image.trim() !== '') {
+        imagesToAdd.push(postForm.image);
+      }
+      
+      // Pentru poezii: folosește postForm.poemImages
+      if (postForm.poemImages && Array.isArray(postForm.poemImages)) {
+        postForm.poemImages.forEach(img => {
+          if (img && img.trim() !== '' && !imagesToAdd.includes(img)) {
+            imagesToAdd.push(img);
           }
+        });
+      }
+      
+      // La editare, detectează imaginile eliminate
+      if (scriitorView === 'post-edit') {
+        const originalPost = selectedScriitor.posts?.find(p => p.id === postForm.id);
+        if (originalPost) {
+          const originalImages = [];
+          if (originalPost.image && originalPost.image.trim() !== '') {
+            originalImages.push(originalPost.image);
+          }
+          if (originalPost.poemImages && Array.isArray(originalPost.poemImages)) {
+            originalPost.poemImages.forEach(img => {
+              if (img && img.trim() !== '' && !originalImages.includes(img)) {
+                originalImages.push(img);
+              }
+            });
+          }
+          
+          // Identifică imaginile eliminate (erau în original, dar nu mai sunt în noua versiune)
+          const removedImages = originalImages.filter(img => !imagesToAdd.includes(img));
+          imagesToRemove.push(...removedImages);
+          
+          // Păstrează doar imaginile noi pentru adăugare
+          const filtered = imagesToAdd.filter(img => !originalImages.includes(img));
+          imagesToAdd.length = 0;
+          imagesToAdd.push(...filtered);
         }
-        
-        if (imageToAdd) {
+      }
+      
+      // Actualizează galeria: adaugă imaginile noi și elimină cele șterse
+      if (selectedScriitor?.key) {
+        try {
           const updated = await fetchScriitori();
           const currentScriitor = updated.find(s => s.key === selectedScriitor.key);
           if (currentScriitor) {
-            const gallery = currentScriitor.gallery || [];
-            // Verifică dacă imaginea nu există deja în galerie
-            if (!gallery.includes(imageToAdd)) {
-              const updatedGallery = [...gallery, imageToAdd];
-              await updateScriitor(selectedScriitor.key, { gallery: updatedGallery });
-              console.log('✅ Imagine adăugată automat în galerie:', imageToAdd);
+            let gallery = currentScriitor.gallery || [];
+            
+            // Adaugă imaginile noi
+            if (imagesToAdd.length > 0) {
+              const newImages = imagesToAdd.filter(img => !gallery.includes(img));
+              if (newImages.length > 0) {
+                gallery = [...gallery, ...newImages];
+                console.log('✅ Imagini adăugate automat în galerie:', newImages);
+              }
+            }
+            
+            // Elimină imaginile șterse (doar dacă nu mai sunt în alte postări)
+            if (imagesToRemove.length > 0) {
+              // Verifică dacă imaginile sunt folosite în alte postări
+              const allPosts = currentScriitor.posts || [];
+              const imagesStillInUse = new Set();
+              
+              allPosts.forEach(p => {
+                if (p.id !== postForm.id) { // Exclude postarea curentă
+                  if (p.image && p.image.trim() !== '') {
+                    imagesStillInUse.add(p.image);
+                  }
+                  if (p.poemImages && Array.isArray(p.poemImages)) {
+                    p.poemImages.forEach(img => {
+                      if (img && img.trim() !== '') {
+                        imagesStillInUse.add(img);
+                      }
+                    });
+                  }
+                }
+              });
+              
+              // Elimină doar imaginile care nu mai sunt folosite în nicio altă postare
+              const imagesToRemoveFromGallery = imagesToRemove.filter(img => !imagesStillInUse.has(img));
+              if (imagesToRemoveFromGallery.length > 0) {
+                gallery = gallery.filter(img => !imagesToRemoveFromGallery.includes(img));
+                console.log('✅ Imagini eliminate automat din galerie:', imagesToRemoveFromGallery);
+              }
+            }
+            
+            // Actualizează galeria doar dacă s-a schimbat ceva
+            if (imagesToAdd.length > 0 || imagesToRemove.length > 0) {
+              await updateScriitor(selectedScriitor.key, { gallery });
             }
           }
+        } catch (error) {
+          console.error('❌ Eroare la gestionarea galeriei:', error);
         }
       }
 
@@ -1337,6 +1416,7 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
         isStory: false,
         poemTitle: '',
         poemText: '',
+        poemPreview: '',
         poemImages: [],
         storyTitle: '',
         storyText: '',
@@ -1423,7 +1503,60 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
 
     try {
       setLoading(true);
+      
+      // Colectează toate imaginile din postarea care va fi ștearsă
+      const imagesToRemove = [];
+      if (post.image && post.image.trim() !== '') {
+        imagesToRemove.push(post.image);
+      }
+      if (post.poemImages && Array.isArray(post.poemImages)) {
+        post.poemImages.forEach(img => {
+          if (img && img.trim() !== '' && !imagesToRemove.includes(img)) {
+            imagesToRemove.push(img);
+          }
+        });
+      }
+      
+      // Șterge postarea
       await deletePostFromScriitor(selectedScriitor.key, postId);
+      
+      // Elimină imaginile din galerie (doar dacă nu mai sunt în alte postări)
+      if (imagesToRemove.length > 0 && selectedScriitor?.key) {
+        try {
+          const updated = await fetchScriitori();
+          const currentScriitor = updated.find(s => s.key === selectedScriitor.key);
+          if (currentScriitor) {
+            // Verifică dacă imaginile sunt folosite în alte postări
+            const allPosts = currentScriitor.posts || [];
+            const imagesStillInUse = new Set();
+            
+            allPosts.forEach(p => {
+              if (p.image && p.image.trim() !== '') {
+                imagesStillInUse.add(p.image);
+              }
+              if (p.poemImages && Array.isArray(p.poemImages)) {
+                p.poemImages.forEach(img => {
+                  if (img && img.trim() !== '') {
+                    imagesStillInUse.add(img);
+                  }
+                });
+              }
+            });
+            
+            // Elimină doar imaginile care nu mai sunt folosite în nicio postare
+            const imagesToRemoveFromGallery = imagesToRemove.filter(img => !imagesStillInUse.has(img));
+            if (imagesToRemoveFromGallery.length > 0) {
+              const gallery = currentScriitor.gallery || [];
+              const updatedGallery = gallery.filter(img => !imagesToRemoveFromGallery.includes(img));
+              await updateScriitor(selectedScriitor.key, { gallery: updatedGallery });
+              console.log('✅ Imagini eliminate automat din galerie:', imagesToRemoveFromGallery);
+            }
+          }
+        } catch (error) {
+          console.error('❌ Eroare la eliminarea imaginilor din galerie:', error);
+        }
+      }
+      
       setMessage({ type: 'success', text: 'Postarea a fost ștearsă cu succes!' });
       
       // Create notification
@@ -2559,9 +2692,53 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
                           <div style={{ marginTop: '10px', padding: '10px', backgroundColor: darkTheme ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.03)', borderRadius: '6px' }}>
                             <strong>Poezie:</strong> {post.poemTitle || 'Fără titlu'}
                             {post.poemText && (
-                              <div style={{ marginTop: '5px', fontSize: '12px', color: darkTheme ? '#ccc' : '#666', maxHeight: '100px', overflow: 'hidden' }}>
-                                {post.poemText.substring(0, 100)}...
-                              </div>
+                              <>
+                                <div style={{ marginTop: '10px' }}>
+                                  <div style={{ fontSize: '13px', fontWeight: '600', marginBottom: '5px', color: darkTheme ? '#d4a574' : '#8b6b42' }}>
+                                    Poezia preview
+                                  </div>
+                                  <div style={{ fontSize: '12px', color: darkTheme ? '#ccc' : '#666', maxHeight: '100px', overflow: 'hidden', whiteSpace: 'pre-wrap' }}>
+                                    {post.poemText.substring(0, 150)}...
+                                  </div>
+                                </div>
+                                <div style={{ marginTop: '10px' }}>
+                                  <button
+                                    onClick={() => {
+                                      setExpandedPoems(prev => {
+                                        const newSet = new Set(prev);
+                                        if (newSet.has(post.id)) {
+                                          newSet.delete(post.id);
+                                        } else {
+                                          newSet.add(post.id);
+                                        }
+                                        return newSet;
+                                      });
+                                    }}
+                                    style={{
+                                      background: 'transparent',
+                                      border: `1px solid ${darkTheme ? '#d4a574' : '#8b6b42'}`,
+                                      color: darkTheme ? '#d4a574' : '#8b6b42',
+                                      padding: '4px 12px',
+                                      borderRadius: '4px',
+                                      cursor: 'pointer',
+                                      fontSize: '12px',
+                                      fontWeight: '500'
+                                    }}
+                                  >
+                                    {expandedPoems.has(post.id) ? 'Ascunde' : 'Vezi tot'}
+                                  </button>
+                                </div>
+                                {expandedPoems.has(post.id) && (
+                                  <div style={{ marginTop: '10px' }}>
+                                    <div style={{ fontSize: '13px', fontWeight: '600', marginBottom: '5px', color: darkTheme ? '#d4a574' : '#8b6b42' }}>
+                                      Poezia full
+                                    </div>
+                                    <div style={{ fontSize: '12px', color: darkTheme ? '#ccc' : '#666', whiteSpace: 'pre-wrap' }}>
+                                      {post.poemText}
+                                    </div>
+                                  </div>
+                                )}
+                              </>
                             )}
                           </div>
                         )}
@@ -2587,6 +2764,7 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
                                   isStory: post.isStory || false,
                                   poemTitle: post.poemTitle || '',
                                   poemText: post.poemText || '',
+                                  poemPreview: post.poemPreview || '',
                                   poemImages: post.poemImages || [],
                                   storyTitle: post.storyTitle || '',
                                   storyText: post.storyText || '',
@@ -2727,6 +2905,7 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
                         poemImages: isPoem ? (postForm.poemImages || []) : [],
                         poemTitle: isPoem ? postForm.poemTitle : '',
                         poemText: isPoem ? postForm.poemText : '',
+                        poemPreview: isPoem ? postForm.poemPreview : '',
                       });
                     }}
                     style={{ marginRight: '5px' }}
@@ -2880,6 +3059,22 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
                   </div>
 
                   <div className="admin-form-group">
+                    <label htmlFor="poem-preview">Poezia preview</label>
+                    <textarea
+                      id="poem-preview"
+                      value={postForm.poemPreview}
+                      onChange={(e) => setPostForm({ ...postForm, poemPreview: e.target.value })}
+                      placeholder="Introdu textul pentru preview (primele linii ale poeziei)..."
+                      rows={5}
+                      className="admin-textarea"
+                      style={{ fontFamily: 'monospace', fontSize: '14px' }}
+                    />
+                    <small style={{ color: darkTheme ? '#c3b7a4' : '#666' }}>
+                      Introdu manual textul pentru preview. Acesta va fi afișat înainte de butonul "Vezi tot".
+                    </small>
+                  </div>
+
+                  <div className="admin-form-group">
                     <label htmlFor="poem-text">Text poezie *</label>
                     <textarea
                       id="poem-text"
@@ -2892,7 +3087,7 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
                       style={{ fontFamily: 'monospace', fontSize: '14px' }}
                     />
                     <small style={{ color: darkTheme ? '#c3b7a4' : '#666' }}>
-                      Introdu textul poeziei manual.
+                      Introdu textul complet al poeziei manual.
                     </small>
                   </div>
 
