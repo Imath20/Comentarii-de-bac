@@ -8,8 +8,10 @@ const AICommentGenerator = ({
   scriitor,
   descriere,
   text,
+  poemText = null,
   reactions = [],
   commentAuthor,
+  prompt = '',
   onTextGenerated,
   setMessage,
   darkTheme,
@@ -104,29 +106,75 @@ const AICommentGenerator = ({
     try {
       const persona = commentAuthor || 'un cititor al epocii';
       
-      // Debug: verifică ce context este trimis
-      console.log('Descriere pentru comentariu:', descriereSnippet);
-      console.log('Text pentru comentariu:', contentSnippet);
+      // Pentru poezii, folosim poemText, altfel folosim text normal
+      // Dacă există poemText explicit, folosim doar pe acela
+      const hasPoem = poemText && poemText.trim();
+      const actualPoemText = hasPoem ? poemText : null;
+      const actualText = hasPoem ? null : text; // Dacă e poezie, nu folosim text normal
       
-      const systemMessage = `Scrie un comentariu scurt (30-70 cuvinte) la postarea unui autor.
+      const poemSnippet = actualPoemText 
+        ? (actualPoemText.replace(/\s+/g, ' ').trim().slice(0, 1000))
+        : null;
+      
+      const textSnippet = actualText 
+        ? (actualText.replace(/\s+/g, ' ').trim().slice(0, 750))
+        : null;
 
-Autor: ${scriitorName}${scriitorPeriod ? ` (${scriitorPeriod})` : ''}${scriitorCategory ? `, ${scriitorCategory}` : ''}.
-Perspectivă: ${persona}, prieten/contemporan care răspunde la text.
-Ton: potrivit reacțiilor primite (${reactionMood}); păstrează limbaj natural, fără prezentări metatextuale.
-Stil: coerent cu epoca autorului, fără termeni moderni (internet, social media).
+      const promptText = prompt && prompt.trim() ? prompt.trim() : '';
+      
+      // Debug: verifică ce context este trimis
+      console.log('=== AI COMMENT GENERATOR DEBUG ===');
+      console.log('PROMPT:', promptText);
+      console.log('POEZIE:', poemSnippet ? poemSnippet.substring(0, 100) + '...' : 'NU');
+      console.log('TEXT:', textSnippet ? textSnippet.substring(0, 100) + '...' : 'NU');
+      console.log('DESCRIERE:', descriereSnippet ? descriereSnippet.substring(0, 100) + '...' : 'NU');
+      console.log('==================================');
+
+      // Construiește systemMessage simplu
+      const systemMessage = `Ești ${persona}, prieten/contemporan al lui ${scriitorName}${scriitorPeriod ? ` (${scriitorPeriod})` : ''}.
+Scrie un comentariu scurt (30-70 cuvinte) la postarea lui.
+Ton: ${reactionMood}.
+Stil: coerent cu epoca, fără termeni moderni.
 Nu folosi ghilimele, nu explica ce faci, scrie direct comentariul.`;
 
-      const userMessage = `IMPORTANT: Comentariul trebuie să se bazeze EXACT pe următoarele informații despre postare:
+      // Construiește userMessage cu prompt-ul și conținutul
+      let userMessage = '';
+      
+      if (promptText) {
+        userMessage = `⚠️⚠️⚠️ INSTRUCȚIUNI OBLIGATORII - RESPECTĂ ACESTE CUVINTE:
+"${promptText}"
 
-DESCRIEREA POSTĂRII (folosește-o pentru context și înțelegere):
-${descriereSnippet || '—'}
+Comentariul TREBUIE să se refere explicit la aceste cuvinte: ${promptText}
 
-TEXTUL POSTĂRII (comentariul trebuie să răspundă la acest text):
-${contentSnippet || '—'}
+CONTEXTUL POSTĂRII:
 
-Comentariul trebuie să fie relevant pentru descrierea și textul postării de mai sus. Nu ignora aceste informații - ele sunt esențiale pentru conținutul comentariului.
+${descriereSnippet ? `DESCRIERE: ${descriereSnippet}\n\n` : ''}${poemSnippet ? `POEZIA COMPLETĂ (comentariul TREBUIE să se refere la această poezie și la instrucțiunile "${promptText}"):
+${poemSnippet}
+
+` : ''}${textSnippet ? `TEXTUL POSTĂRII (comentariul TREBUIE să se refere la acest text și la instrucțiunile "${promptText}"):
+${textSnippet}
+
+` : ''}SARCINA TA (ORDINE DE IMPORTANȚĂ):
+1. PRIORITATE ABSOLUTĂ: Comentariul TREBUIE să se refere explicit la: "${promptText}" - aceste cuvinte trebuie să apară sau să fie evidente în comentariu
+${poemSnippet ? '2. OBLIGATORIU: Comentariul TREBUIE să se refere la poezia de mai sus' : textSnippet ? '2. OBLIGATORIU: Comentariul TREBUIE să se refere la textul de mai sus' : ''}
+3. Comentariul trebuie să fie relevant pentru descrierea și conținutul postării
+
+AMINTESTE-TE: Instrucțiunile "${promptText}" sunt PRIORITATE ABSOLUTĂ. Comentariul trebuie să le respecte.
+
+Returnează doar textul comentariului, fără explicații.`;
+      } else {
+        userMessage = `Scrie un comentariu scurt (30-70 cuvinte) la postarea lui ${scriitorName}.
+
+${descriereSnippet ? `DESCRIERE: ${descriereSnippet}\n\n` : ''}${poemSnippet ? `POEZIA COMPLETĂ:
+${poemSnippet}
+
+` : ''}${textSnippet ? `TEXTUL POSTĂRII:
+${textSnippet}
+
+` : ''}Comentariul trebuie să fie relevant pentru conținutul de mai sus.
 
 Returnează doar textul comentariului.`;
+      }
 
       let lastError = null;
       let generated = '';
@@ -249,7 +297,7 @@ Returnează doar textul comentariului.`;
       setProcessing(false);
       setTimeout(() => setCubeSpinning(false), 800);
     }
-  }, [processing, scriitorName, scriitorPeriod, scriitorCategory, contentSnippet, descriereSnippet, reactionMood, commentAuthor, onTextGenerated, setMessage]);
+  }, [processing, scriitorName, scriitorPeriod, scriitorCategory, contentSnippet, descriereSnippet, poemText, reactionMood, commentAuthor, prompt, onTextGenerated, setMessage]);
 
   return (
     <div

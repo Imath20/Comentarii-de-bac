@@ -480,6 +480,7 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
     createdByName: '',
   });
   const [aiPostPrompt, setAiPostPrompt] = useState('');
+  const [aiCommentPrompt, setAiCommentPrompt] = useState('');
 
   // Load scriitori when tab is active
   useEffect(() => {
@@ -1434,6 +1435,8 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
         createdByEmail: '',
         createdByName: '',
       });
+      setAiPostPrompt('');
+      setAiCommentPrompt('');
     } catch (error) {
       console.error('Error saving post:', error);
       setMessage({ type: 'error', text: `Eroare: ${error.message || 'Nu s-a putut salva postarea'}` });
@@ -2619,6 +2622,7 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
                         newReactionType: '',
                       });
                       setAiPostPrompt('');
+                      setAiCommentPrompt('');
                       setScriitorView('post-add');
                       const currentFrom = searchParams.get('from');
                       updateUrlParams({ action: 'add-post', scriitor: selectedScriitor.key || selectedScriitor.id, postId: null, commentIndex: null, from: currentFrom || 'posts' });
@@ -2779,6 +2783,7 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
                                   newReactionType: '',
                                 });
                               setAiPostPrompt('');
+                              setAiCommentPrompt('');
                                 setScriitorView('post-edit');
                                 const currentFrom = searchParams.get('from');
                                 updateUrlParams({ action: 'edit-post', scriitor: selectedScriitor.key || selectedScriitor.id, postId: post.id, commentIndex: null, from: currentFrom || 'posts' });
@@ -3469,14 +3474,30 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
                     )}
                   </div>
                   <div style={{ marginBottom: '10px' }}>
+                    <label style={{ display: 'block', marginBottom: '5px' }}>Despre ce să scrie AI-ul (brief pentru comentariu)</label>
+                    <textarea
+                      value={aiCommentPrompt}
+                      onChange={(e) => setAiCommentPrompt(e.target.value)}
+                      placeholder="Ex.: să comenteze un aspect specific al poeziei, să facă o observație despre stil, să reacționeze la un vers anume..."
+                      rows={2}
+                      className="admin-textarea"
+                      style={{ marginBottom: '10px' }}
+                    />
+                    <small style={{ color: darkTheme ? '#c3b7a4' : '#666', display: 'block', marginBottom: '10px' }}>
+                      Scrie 1-2 idei despre ce aspecte să acopere comentariul; AI-ul va folosi și poezia/textul postării.
+                    </small>
+                  </div>
+                  <div style={{ marginBottom: '10px' }}>
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '10px' }}>
                       <label style={{ display: 'block', marginBottom: 0 }}>Text comentariu</label>
                       <AICommentGenerator
                         scriitor={selectedScriitor || { nume: postForm.author }}
                         descriere={postForm.descriere}
                         text={postForm.isPoem ? postForm.poemText : (postForm.isStory ? postForm.storyText : postForm.text)}
+                        poemText={postForm.isPoem ? postForm.poemText : null}
                         reactions={postForm.reactions}
                         commentAuthor={postForm.newCommentAuthor}
+                        prompt={aiCommentPrompt}
                         onTextGenerated={(generatedText) => setPostForm((prev) => ({ ...prev, newCommentText: generatedText }))}
                         setMessage={setMessage}
                         darkTheme={darkTheme}
