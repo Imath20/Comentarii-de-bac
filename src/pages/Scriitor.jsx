@@ -472,6 +472,8 @@ const Scriitor = () => {
   const [galleryOverviewOpen, setGalleryOverviewOpen] = useState(false);
   const [overviewIndex, setOverviewIndex] = useState(0);
   const overviewGridRef = useRef(null);
+  // Modal pentru toate imaginile din galerie
+  const [galleryAllModalOpen, setGalleryAllModalOpen] = useState(false);
 
   // Funcții helper (nu sunt hooks, pot fi după hooks)
   const toggleComments = (postId) => {
@@ -1104,16 +1106,36 @@ const Scriitor = () => {
           <div className="scriitor-section">
             <div className="scriitor-section-title">Galerie</div>
             <div className="scriitor-gallery-grid">
-              {gallery.map((img, idx) => (
+              {gallery.slice(0, 9).map((img, idx) => (
                 <div key={idx} className="scriitor-gallery-item">
                   <img
                     src={img}
                     alt="galerie"
                     onClick={() => openGalleryPreview(idx)}
+                    loading="lazy"
                   />
                 </div>
               ))}
             </div>
+            {/* Buton "Vezi toate" când sunt mai mult de 9 imagini */}
+            {gallery.length > 9 && (
+              <div className="scriitor-gallery-view-all">
+                <button 
+                  className="scriitor-gallery-view-all-btn"
+                  onClick={() => {
+                    const currentScrollY = window.scrollY;
+                    setScrollPosition(currentScrollY);
+                    setGalleryAllModalOpen(true);
+                    document.body.style.overflow = 'hidden';
+                    document.body.style.position = 'fixed';
+                    document.body.style.top = `-${currentScrollY}px`;
+                    document.body.style.width = '100%';
+                  }}
+                >
+                  Vezi toate ({gallery.length})
+                </button>
+              </div>
+            )}
           </div>
           {/* Prieteni - grid ca la galerie, hover cu nume */}
           <div className="scriitor-friends">
@@ -1965,6 +1987,69 @@ const Scriitor = () => {
                     <div className="scriitor-friends-modal-name">
                       {friend.name}
                     </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+      
+      {/* Modal cu toate imaginile din galerie */}
+      {galleryAllModalOpen && (
+        <div
+          className="scriitor-modal-overlay scriitor-modal-overlay-gallery-all"
+          onClick={() => {
+            setGalleryAllModalOpen(false);
+            document.body.style.overflow = 'unset';
+            document.body.style.position = 'unset';
+            document.body.style.top = 'unset';
+            document.body.style.width = 'unset';
+            window.scrollTo(0, scrollPosition);
+          }}
+        >
+          <div
+            className="scriitor-gallery-all-modal"
+            onClick={e => e.stopPropagation()}
+          >
+            <div className="scriitor-gallery-all-modal-header">
+              <h2>Galerie - {data.nume}</h2>
+              <button
+                onClick={() => {
+                  setGalleryAllModalOpen(false);
+                  document.body.style.overflow = 'unset';
+                  document.body.style.position = 'unset';
+                  document.body.style.top = 'unset';
+                  document.body.style.width = 'unset';
+                  window.scrollTo(0, scrollPosition);
+                }}
+                className="scriitor-modal-close-btn"
+                title="Închide"
+              >
+                ×
+              </button>
+            </div>
+            
+            <div className="scriitor-gallery-all-modal-content">
+              <div className="scriitor-gallery-all-modal-grid">
+                {gallery.map((img, idx) => (
+                  <div
+                    key={idx}
+                    className="scriitor-gallery-all-modal-item"
+                    onClick={() => {
+                      setGalleryAllModalOpen(false);
+                      document.body.style.overflow = 'unset';
+                      document.body.style.position = 'unset';
+                      document.body.style.top = 'unset';
+                      document.body.style.width = 'unset';
+                      openGalleryPreview(idx);
+                    }}
+                  >
+                    <img
+                      src={img}
+                      alt={`Galerie ${idx + 1}`}
+                      loading="lazy"
+                    />
                   </div>
                 ))}
               </div>

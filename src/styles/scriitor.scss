@@ -358,6 +358,37 @@
   }
 }
 
+.scriitor-gallery-view-all {
+  margin-top: 15px;
+  text-align: center;
+
+  .scriitor-gallery-view-all-btn {
+    background: #a97c50;
+    color: #fff;
+    border: none;
+    border-radius: 25px;
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 2px 8px 0 rgba(124, 79, 43, 0.15);
+    outline: none;
+    &:focus{
+      outline: none;
+    }
+    &:hover {
+      background: #8b6a3f;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px 0 rgba(124, 79, 43, 0.25);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+}
+
 .scriitor-friends {
   .scriitor-section-title {
     font-weight: 900;
@@ -1978,6 +2009,100 @@
   }
 }
 
+.scriitor-modal-overlay-gallery-all {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  backdrop-filter: blur(4px);
+
+  .scriitor-gallery-all-modal {
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 8px 32px 0 rgba(60, 40, 20, 0.25);
+    max-width: 95vw;
+    max-height: 95vh;
+    width: 1000px;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+
+    .scriitor-gallery-all-modal-header {
+      background: #a97c50;
+      color: #fff;
+      padding: 20px 25px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      flex-shrink: 0;
+
+      h2 {
+        margin: 0;
+        font-size: 1.4rem;
+        font-weight: 700;
+      }
+
+      .scriitor-modal-close-btn {
+        position: static;
+        width: 40px;
+        height: 40px;
+        font-size: 40px;
+        color: #fff;
+        background: none;
+        border-radius: 0%;
+        transition: background 0.2s;
+
+        &:hover {
+          scale: 1.05;
+        }
+      }
+    }
+
+    .scriitor-gallery-all-modal-content {
+      padding: 25px;
+      max-height: calc(95vh - 80px);
+      overflow-y: auto;
+      flex: 1;
+
+      .scriitor-gallery-all-modal-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 15px;
+        max-width: 100%;
+
+        .scriitor-gallery-all-modal-item {
+          position: relative;
+          cursor: pointer;
+          transition: transform 0.2s, box-shadow 0.2s;
+          border-radius: 12px;
+          overflow: hidden;
+          background: #f8f8f8;
+          aspect-ratio: 1;
+          box-shadow: 0 2px 8px 0 rgba(124, 79, 43, 0.15);
+
+          &:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 6px 16px 0 rgba(124, 79, 43, 0.3);
+            z-index: 1;
+          }
+
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+          }
+        }
+      }
+    }
+  }
+}
+
 // Dark theme styles for scriitor page
 .dark-theme {
   .scriitor-page {
@@ -2333,6 +2458,51 @@
 
             .scriitor-friends-modal-name {
               color: rgba(255, 255, 255, 0.9);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .scriitor-modal-overlay-gallery-all {
+    .scriitor-gallery-all-modal {
+      background: #2a170a;
+      border: 1px solid rgba(255, 179, 71, 0.2);
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+
+      .scriitor-gallery-all-modal-header {
+        background: linear-gradient(135deg, #4e2e1e 0%, #3a2312 100%);
+        border-bottom: 1px solid rgba(255, 179, 71, 0.2);
+
+        h2 {
+          color: #ffd591;
+        }
+
+        .scriitor-modal-close-btn {
+          color: #ffd591;
+          background: rgba(255, 179, 71, 0.1);
+
+          &:hover {
+            background: rgba(255, 179, 71, 0.2);
+            color: #ffb347;
+          }
+        }
+      }
+
+      .scriitor-gallery-all-modal-content {
+        background: #2a170a;
+
+        .scriitor-gallery-all-modal-grid {
+          .scriitor-gallery-all-modal-item {
+            background: rgba(255, 179, 71, 0.1);
+            border: 1px solid rgba(255, 179, 71, 0.2);
+            box-shadow: 0 2px 8px 0 rgba(255, 179, 71, 0.1);
+
+            &:hover {
+              background: rgba(255, 179, 71, 0.15);
+              transform: translateY(-4px) scale(1.02);
+              box-shadow: 0 6px 16px 0 rgba(255, 179, 71, 0.3);
             }
           }
         }
