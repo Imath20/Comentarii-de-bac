@@ -6,6 +6,8 @@ import React, { useCallback, useState } from 'react';
  */
 const AIPostGenerator = ({
   prompt,
+  poemText = null,
+  text = null,
   onTextGenerated,
   scriitor,
   setMessage,
@@ -86,15 +88,77 @@ Fără emoticoane. Fără note explicative. Fără ghilimele.
 Context util despre autor (folosește doar dacă ajută la autenticitate):  
 ${bioSnippet || '—'}`;
 
-      const userMessage = skipBrief
-        ? 'Generează descrierea pentru poezie.'
-        : `IMPORTANT: Postarea trebuie să se concentreze EXACT pe următoarele idei și subiecte specificate în brief:
+      const poemSnippet = poemText 
+        ? (poemText.replace(/\s+/g, ' ').trim().slice(0, 800))
+        : null;
+      
+      const textSnippet = text 
+        ? (text.replace(/\s+/g, ' ').trim().slice(0, 800))
+        : null;
+
+      // Debug
+      console.log('=== AI POST GENERATOR DEBUG ===');
+      console.log('PROMPT:', brief);
+      console.log('POEM TEXT:', poemSnippet ? poemSnippet.substring(0, 100) + '...' : 'NU');
+      console.log('TEXT:', textSnippet ? textSnippet.substring(0, 100) + '...' : 'NU');
+      console.log('SKIP BRIEF:', skipBrief);
+      console.log('================================');
+
+      let userMessage = '';
+      
+      if (skipBrief) {
+        // Pentru descriere (poezie sau text normal)
+        if (brief && brief.trim()) {
+          // Dacă există brief, îl folosim
+          userMessage = `INSTRUCȚIUNI OBLIGATORII PENTRU DESCRIERE:
+${brief.trim()}
+
+Descrierea TREBUIE să se refere la: ${brief.trim()}
+
+${poemSnippet ? `POEZIA COMPLETĂ (descrierea TREBUIE să se bazeze pe această poezie):
+${poemSnippet}
+
+` : textSnippet ? `TEXTUL POSTĂRII (descrierea TREBUIE să se bazeze pe acest text):
+${textSnippet}
+
+` : ''}Sarcina ta:
+1. Scrie o descriere care se referă explicit la: "${brief.trim()}"
+${poemSnippet ? '2. Descrierea TREBUIE să se bazeze pe poezia de mai sus' : textSnippet ? '2. Descrierea TREBUIE să se bazeze pe textul de mai sus' : ''}
+3. Descrierea trebuie să fie relevantă pentru conținut și să respecte instrucțiunile date
+
+Returnează exclusiv textul final al descrierii.`;
+        } else if (poemSnippet) {
+          // Dacă nu există brief dar există poezie, folosim doar poezia
+          userMessage = `Generează descrierea pentru următoarea poezie:
+
+${poemSnippet}
+
+Descrierea trebuie să fie relevantă pentru poezia de mai sus.
+
+Returnează exclusiv textul final al descrierii.`;
+        } else if (textSnippet) {
+          // Dacă nu există brief dar există text normal, folosim doar textul
+          userMessage = `Generează descrierea pentru următorul text:
+
+${textSnippet}
+
+Descrierea trebuie să fie relevantă pentru textul de mai sus.
+
+Returnează exclusiv textul final al descrierii.`;
+        } else {
+          // Fallback
+          userMessage = 'Generează descrierea.';
+        }
+      } else {
+        // Pentru postări normale
+        userMessage = `IMPORTANT: Postarea trebuie să se concentreze EXACT pe următoarele idei și subiecte specificate în brief:
 
 ${brief}
 
 Postarea trebuie să răspundă direct la brief-ul de mai sus și să abordeze subiectele, tonul și publicul specificate acolo. Nu ignora brief-ul - el este esențial pentru conținutul postării.
 
 Returnează exclusiv textul final al postării, ca și cum ar fi fost scris direct de autor.`;
+      }
 
       const requestBody = {
         model: 'moonshotai/kimi-k2-instruct-0905',
@@ -169,7 +233,7 @@ Returnează exclusiv textul final al postării, ca și cum ar fi fost scris dire
       setProcessing(false);
       setTimeout(() => setCubeSpinning(false), 800);
     }
-  }, [prompt, scriitor, setMessage, onTextGenerated, processing, skipBrief]);
+  }, [prompt, poemText, text, scriitor, setMessage, onTextGenerated, processing, skipBrief]);
 
   return (
     <div

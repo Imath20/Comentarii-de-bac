@@ -474,6 +474,13 @@ const Scriitor = () => {
   const overviewGridRef = useRef(null);
   // Modal pentru toate imaginile din galerie
   const [galleryAllModalOpen, setGalleryAllModalOpen] = useState(false);
+  const [galleryAllModalPage, setGalleryAllModalPage] = useState(0);
+  // Sidebar pentru preview imagine din galerie
+  const [gallerySidebarOpen, setGallerySidebarOpen] = useState(false);
+  const [gallerySidebarIndex, setGallerySidebarIndex] = useState(0);
+  // Modal overlay pentru preview imagine peste galerie
+  const [galleryImagePreviewOpen, setGalleryImagePreviewOpen] = useState(false);
+  const [galleryImagePreviewIndex, setGalleryImagePreviewIndex] = useState(0);
 
   // Funcții helper (nu sunt hooks, pot fi după hooks)
   const toggleComments = (postId) => {
@@ -1125,6 +1132,7 @@ const Scriitor = () => {
                   onClick={() => {
                     const currentScrollY = window.scrollY;
                     setScrollPosition(currentScrollY);
+                    setGalleryAllModalPage(0); // Reset to first page
                     setGalleryAllModalOpen(true);
                     document.body.style.overflow = 'hidden';
                     document.body.style.position = 'fixed';
@@ -2001,6 +2009,8 @@ const Scriitor = () => {
           className="scriitor-modal-overlay scriitor-modal-overlay-gallery-all"
           onClick={() => {
             setGalleryAllModalOpen(false);
+            setGalleryImagePreviewOpen(false); // Close image preview when closing modal
+            setGalleryAllModalPage(0); // Reset page when closing
             document.body.style.overflow = 'unset';
             document.body.style.position = 'unset';
             document.body.style.top = 'unset';
@@ -2017,6 +2027,8 @@ const Scriitor = () => {
               <button
                 onClick={() => {
                   setGalleryAllModalOpen(false);
+                  setGalleryImagePreviewOpen(false); // Close image preview when closing modal
+                  setGalleryAllModalPage(0); // Reset page when closing
                   document.body.style.overflow = 'unset';
                   document.body.style.position = 'unset';
                   document.body.style.top = 'unset';
@@ -2030,30 +2042,125 @@ const Scriitor = () => {
               </button>
             </div>
             
-            <div className="scriitor-gallery-all-modal-content">
+            <div className={`scriitor-gallery-all-modal-content ${gallery.length > 15 ? 'no-scroll' : ''}`}>
               <div className="scriitor-gallery-all-modal-grid">
-                {gallery.map((img, idx) => (
+                {(() => {
+                  const imagesPerPage = 15;
+                  const totalPages = Math.ceil(gallery.length / imagesPerPage);
+                  const startIndex = galleryAllModalPage * imagesPerPage;
+                  const endIndex = startIndex + imagesPerPage;
+                  const currentPageImages = gallery.slice(startIndex, endIndex);
+                  
+                  return currentPageImages.map((img, localIdx) => {
+                    const globalIdx = startIndex + localIdx;
+                    return (
+                      <div
+                        key={globalIdx}
+                        className="scriitor-gallery-all-modal-item"
+                        onClick={() => {
+                          setGalleryImagePreviewIndex(globalIdx);
+                          setGalleryImagePreviewOpen(true);
+                        }}
+                      >
+                        <img
+                          src={img}
+                          alt={`Galerie ${globalIdx + 1}`}
+                          loading="lazy"
+                        />
+                      </div>
+                    );
+                  });
+                })()}
+              </div>
+              {gallery.length > 15 && (
+                <div className="scriitor-gallery-all-modal-pagination">
+                  <button
+                    className="scriitor-gallery-pagination-btn"
+                    onClick={() => setGalleryAllModalPage(prev => Math.max(0, prev - 1))}
+                    disabled={galleryAllModalPage === 0}
+                  >
+                    ← Anterior
+                  </button>
+                  <span className="scriitor-gallery-pagination-info">
+                    Pagina {galleryAllModalPage + 1} din {Math.ceil(gallery.length / 15)}
+                  </span>
+                  <button
+                    className="scriitor-gallery-pagination-btn"
+                    onClick={() => setGalleryAllModalPage(prev => prev + 1)}
+                    disabled={galleryAllModalPage >= Math.ceil(gallery.length / 15) - 1}
+                  >
+                    Următor →
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+      {/* Modal overlay preview imagine peste galerie */}
+      {galleryImagePreviewOpen && galleryAllModalOpen && (
+        <div 
+          className="scriitor-gallery-image-preview-overlay"
+          onClick={() => setGalleryImagePreviewOpen(false)}
+        >
+          <div 
+            className="scriitor-gallery-image-preview-modal"
+            onClick={e => e.stopPropagation()}
+          >
+            <button
+              onClick={() => setGalleryImagePreviewOpen(false)}
+              className="scriitor-gallery-image-preview-close"
+              title="Închide"
+            >
+              ×
+            </button>
+            <div className="scriitor-gallery-image-preview-content">
+              <img
+                src={gallery[galleryImagePreviewIndex]}
+                alt={`Galerie ${galleryImagePreviewIndex + 1}`}
+              />
+            </div>
+            {/* Buton stânga */}
+            {gallery.length > 1 && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setGalleryImagePreviewIndex(prev => prev > 0 ? prev - 1 : gallery.length - 1);
+                }}
+                className="scriitor-gallery-image-preview-nav-btn-left"
+                title="Imaginea anterioară"
+              >
+                ‹
+              </button>
+            )}
+            {/* Buton dreapta */}
+            {gallery.length > 1 && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setGalleryImagePreviewIndex(prev => prev < gallery.length - 1 ? prev + 1 : 0);
+                }}
+                className="scriitor-gallery-image-preview-nav-btn-right"
+                title="Imaginea următoare"
+              >
+                ›
+              </button>
+            )}
+            {/* Indicator poziție - dots */}
+            {gallery.length > 1 && (
+              <div className="scriitor-gallery-image-preview-indicators">
+                {gallery.map((_, idx) => (
                   <div
                     key={idx}
-                    className="scriitor-gallery-all-modal-item"
-                    onClick={() => {
-                      setGalleryAllModalOpen(false);
-                      document.body.style.overflow = 'unset';
-                      document.body.style.position = 'unset';
-                      document.body.style.top = 'unset';
-                      document.body.style.width = 'unset';
-                      openGalleryPreview(idx);
+                    className={`scriitor-gallery-image-preview-indicator ${idx === galleryImagePreviewIndex ? 'active' : ''}`}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setGalleryImagePreviewIndex(idx);
                     }}
-                  >
-                    <img
-                      src={img}
-                      alt={`Galerie ${idx + 1}`}
-                      loading="lazy"
-                    />
-                  </div>
+                  />
                 ))}
               </div>
-            </div>
+            )}
           </div>
         </div>
       )}

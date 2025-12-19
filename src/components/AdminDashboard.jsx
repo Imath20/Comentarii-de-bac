@@ -2868,33 +2868,54 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
                 </div>
               </div>
 
-              {postForm.isPoem && (
-                <div className="admin-form-group">
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '10px' }}>
-                    <label htmlFor="poem-descriere" style={{ marginBottom: 0 }}>Descriere</label>
-                    <AIPostGenerator
-                      prompt={aiPostPrompt}
-                      onTextGenerated={(generatedText) => setPostForm((prev) => ({ ...prev, descriere: generatedText }))}
-                      scriitor={selectedScriitor}
-                      setMessage={setMessage}
-                      darkTheme={darkTheme}
-                      skipBrief={true}
-                    />
-                  </div>
-                  <textarea
-                    id="poem-descriere"
-                    value={postForm.descriere}
-                    onChange={(e) => setPostForm({ ...postForm, descriere: e.target.value })}
-                    placeholder="Descrierea poeziei..."
-                    rows={3}
-                    className="admin-textarea"
-                  />
-                  <small style={{ color: darkTheme ? '#c3b7a4' : '#666' }}>
-                    Poți completa manual sau apasă cubul pentru a genera automat descrierea.
-                  </small>
-                </div>
-              )}
+              {/* Brief pentru descriere - apare întotdeauna */}
+              <div className="admin-form-group">
+                <label htmlFor="descriere-ai-brief">Despre ce să scrie AI-ul pentru descriere (brief scurt)</label>
+                <textarea
+                  id="descriere-ai-brief"
+                  value={aiPostPrompt}
+                  onChange={(e) => setAiPostPrompt(e.target.value)}
+                  placeholder={postForm.isPoem ? "Ex.: să descrie tema poeziei, să evidențieze un aspect specific, să comenteze stilul..." : "Ex.: să descrie conținutul postării, să evidențieze un aspect specific..."}
+                  rows={2}
+                  className="admin-textarea"
+                  style={{ marginBottom: '10px' }}
+                />
+                <small style={{ color: darkTheme ? '#c3b7a4' : '#666', display: 'block', marginBottom: '10px' }}>
+                  {postForm.isPoem 
+                    ? "Scrie 1-2 idei despre ce aspecte să acopere descrierea; AI-ul va folosi și textul poeziei."
+                    : "Scrie 1-2 idei despre ce aspecte să acopere descrierea; AI-ul va folosi și textul postării."}
+                </small>
+              </div>
 
+              {/* Descriere - apare întotdeauna */}
+              <div className="admin-form-group">
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '10px' }}>
+                  <label htmlFor="post-descriere" style={{ marginBottom: 0 }}>Descriere</label>
+                  <AIPostGenerator
+                    prompt={aiPostPrompt}
+                    poemText={postForm.isPoem ? postForm.poemText : null}
+                    text={!postForm.isPoem ? postForm.text : null}
+                    onTextGenerated={(generatedText) => setPostForm((prev) => ({ ...prev, descriere: generatedText }))}
+                    scriitor={selectedScriitor}
+                    setMessage={setMessage}
+                    darkTheme={darkTheme}
+                    skipBrief={true}
+                  />
+                </div>
+                <textarea
+                  id="post-descriere"
+                  value={postForm.descriere}
+                  onChange={(e) => setPostForm({ ...postForm, descriere: e.target.value })}
+                  placeholder={postForm.isPoem ? "Descrierea poeziei..." : "Descrierea postării..."}
+                  rows={3}
+                  className="admin-textarea"
+                />
+                <small style={{ color: darkTheme ? '#c3b7a4' : '#666' }}>
+                  Poți completa manual sau apasă cubul pentru a genera automat descrierea.
+                </small>
+              </div>
+
+              {/* Checkbox Poezie - după descriere */}
               <div className="admin-form-group">
                 <label>
                   <input
@@ -2922,21 +2943,6 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
               {!postForm.isPoem ? (
                 <>
                   <div className="admin-form-group">
-                    <label htmlFor="post-ai-brief">Despre ce să scrie AI-ul (brief scurt)</label>
-                    <textarea
-                      id="post-ai-brief"
-                      value={aiPostPrompt}
-                      onChange={(e) => setAiPostPrompt(e.target.value)}
-                      placeholder="Ex.: anunță apariția unei noi ediții, pune un highlight dintr-o operă, descrie o amintire din copilărie, invită elevii la lectură..."
-                      rows={3}
-                      className="admin-textarea"
-                    />
-                    <small style={{ color: darkTheme ? '#c3b7a4' : '#666' }}>
-                      Scrie 1-2 idei despre subiect, ton și public; AI-ul va folosi profilul scriitorului selectat.
-                    </small>
-                  </div>
-
-                  <div className="admin-form-group">
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '10px' }}>
                       <label htmlFor="post-text" style={{ marginBottom: 0 }}>Text *</label>
                       <AIPostGenerator
@@ -2957,7 +2963,7 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
                       className="admin-textarea"
                     />
                     <small style={{ color: darkTheme ? '#c3b7a4' : '#666' }}>
-                      Poți completa manual sau apasă cubul pentru a genera automat pe baza brief-ului de mai sus.
+                      Poți completa manual sau apasă cubul pentru a genera automat textul.
                     </small>
                   </div>
 
@@ -3048,21 +3054,6 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
                 </>
               ) : (
                 <>
-                  <div className="admin-form-group">
-                    <label htmlFor="poem-ai-brief">Despre ce să scrie AI-ul (brief scurt)</label>
-                    <textarea
-                      id="poem-ai-brief"
-                      value={aiPostPrompt}
-                      onChange={(e) => setAiPostPrompt(e.target.value)}
-                      placeholder="Ex.: anunță apariția unei noi ediții, pune un highlight dintr-o operă, descrie o amintire din copilărie, invită elevii la lectură..."
-                      rows={3}
-                      className="admin-textarea"
-                    />
-                    <small style={{ color: darkTheme ? '#c3b7a4' : '#666' }}>
-                      Scrie 1-2 idei despre subiect, ton și public; AI-ul va folosi profilul scriitorului selectat.
-                    </small>
-                  </div>
-
                   <div className="admin-form-group">
                     <label htmlFor="poem-preview">Poezia preview</label>
                     <textarea
