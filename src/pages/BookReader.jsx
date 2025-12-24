@@ -323,10 +323,20 @@ export default function BookReader() {
       }
 
       setPages(data);
-      const saved = Number(localStorage.getItem(bookConfig.bookmarkKey));
-      if (!isNaN(saved) && saved >= 0 && saved < data.length) {
-        setPage(saved);
-        setBookmarkedPage(saved);
+      // Load bookmark first (has priority)
+      const bookmark = Number(localStorage.getItem(bookConfig.bookmarkKey));
+      // Load last page position (separate from bookmark)
+      const lastPageKey = bookConfig.bookmarkKey + "_lastpage";
+      const lastPage = Number(localStorage.getItem(lastPageKey));
+      
+      // If bookmark exists and is valid, use it
+      if (!isNaN(bookmark) && bookmark >= 0 && bookmark < data.length) {
+        setPage(bookmark);
+        setBookmarkedPage(bookmark);
+      } 
+      // Otherwise, use last page if valid
+      else if (!isNaN(lastPage) && lastPage >= 0 && lastPage < data.length) {
+        setPage(lastPage);
       }
       setLoading(false);
     } catch (error) {
@@ -337,11 +347,19 @@ export default function BookReader() {
 
   useEffect(() => {
     if (!loading && currentBook) {
-      localStorage.setItem(currentBook.bookmarkKey, page);
+      // Save current page to separate key (not overwriting bookmark)
+      const lastPageKey = currentBook.bookmarkKey + "_lastpage";
+      localStorage.setItem(lastPageKey, page);
     }
   }, [page, loading, currentBook]);
 
   const goBack = () => {
+    // Save current page before exiting (but preserve bookmark)
+    if (currentBook) {
+      const lastPageKey = currentBook.bookmarkKey + "_lastpage";
+      localStorage.setItem(lastPageKey, page);
+    }
+    
     if (location.state && location.state.from) {
       const { pathname, scrollY } = location.state.from;
       navigate(pathname || -1, { state: { restoreScroll: typeof scrollY === 'number' ? scrollY : 0 } });

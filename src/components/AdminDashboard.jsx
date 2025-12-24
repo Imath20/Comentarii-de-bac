@@ -481,6 +481,137 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
   });
   const [aiPostPrompt, setAiPostPrompt] = useState('');
   const [aiCommentPrompt, setAiCommentPrompt] = useState('');
+  const [isGeneratingDescription, setIsGeneratingDescription] = useState(false);
+  const poemTextDebounceRef = useRef(null);
+
+  // Funcție pentru generarea automată a descrierii poeziei
+  const generatePoemDescription = useCallback(async (poemText) => {
+    if (!poemText || !poemText.trim() || !selectedScriitor || !postForm.isPoem) {
+      return;
+    }
+
+    const groqApiKey = import.meta.env.VITE_GROQ_API_KEY;
+    const groqApiUrl = import.meta.env.VITE_GROQ_API_URL || 'https://api.groq.com/openai/v1/chat/completions';
+
+    if (!groqApiKey) {
+      return; // Nu afișăm eroare, doar nu generăm
+    }
+
+    setIsGeneratingDescription(true);
+
+    try {
+      const scriitorName = selectedScriitor?.nume || 'autorul';
+      const scriitorPeriod = selectedScriitor?.date || '';
+      const scriitorCategory = selectedScriitor?.categorie || '';
+      const bioSnippet = (selectedScriitor?.biografie || '')
+        .replace(/\s+/g, ' ')
+        .trim()
+        .slice(0, 480);
+
+      const systemMessage = `Asumă-ți pe deplin identitatea literară a lui ${scriitorName}${scriitorPeriod ? ` (${scriitorPeriod})` : ''}${scriitorCategory ? `, ${scriitorCategory}` : ''}.
+
+Scrie o descriere scurtă pentru o poezie, ca și cum autorul ar prezenta propria operă.
+Descrierea este scrisă la persoana I sau a III-a și pare destinată cititorilor contemporani autorului.
+
+Public: oameni ai vremii respective (evită orice referință modernă: internet, social media, termeni actuali).
+Ton: autentic pentru autor — respectă temele, obsesiile, stilul sintactic, vocabularul și ritmul frazei caracteristice lui.
+Stil: natural, literar, cu una sau două trăsături recognoscibile (ex: ironie fină, lirism, gravitate, oralitate, solemnitate).
+Nu explica stilul, nu comenta ce faci, nu ieși din rol.
+Evită formulările explicative sau abstractizante de tip eseistic („X este Y", „are rolul de", „ordonează", „cristalizează").
+Preferă imagini metaforice continue, comparații implicite și asocieri simbolice, fără concluzii explicite.
+Lungime: 50–100 de cuvinte.
+Fără emoticoane. Fără note explicative. Fără ghilimele.
+
+Context util (folosește doar dacă ajută la autenticitate):  
+${bioSnippet || '—'}
+
+Returnează exclusiv textul final al descrierii, ca și cum ar fi fost scris direct de autor sau un critic contemporan.`;
+
+      const poemSnippet = poemText
+        .replace(/\s+/g, ' ')
+        .trim()
+        .slice(0, 800);
+
+      const userMessage = `Generează descrierea pentru următoarea poezie:
+
+${poemSnippet}
+
+Descrierea trebuie să fie relevantă pentru poezia de mai sus.
+
+Returnează exclusiv textul final al descrierii.`;
+
+      const requestBody = {
+        model: 'moonshotai/kimi-k2-instruct-0905',
+        messages: [
+          {
+            role: 'system',
+            content: systemMessage
+          },
+          {
+            role: 'user',
+            content: userMessage
+          }
+        ],
+        temperature: 0.7,
+        max_tokens: 320
+      };
+
+      const response = await fetch(groqApiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${groqApiKey}`
+        },
+        body: JSON.stringify(requestBody)
+      });
+
+      if (!response.ok) {
+        return; // Nu afișăm eroare pentru generarea automată
+      }
+
+      const data = await response.json();
+      const generated = data.choices[0]?.message?.content?.trim();
+      
+      if (generated) {
+        setPostForm((prev) => ({ ...prev, descriere: generated }));
+      }
+    } catch (error) {
+      console.error('Eroare la generarea automată a descrierii:', error);
+      // Nu afișăm eroare pentru generarea automată
+    } finally {
+      setIsGeneratingDescription(false);
+    }
+  }, [selectedScriitor, postForm.isPoem]);
+
+  // Generare automată a descrierii când se introduce textul poeziei
+  useEffect(() => {
+    // Curăță timeout-ul anterior
+    if (poemTextDebounceRef.current) {
+      clearTimeout(poemTextDebounceRef.current);
+    }
+
+    // Dacă este poezie și există text, generează descrierea după 2 secunde de la ultima tastă
+    // Doar dacă descrierea este goală sau foarte scurtă (posibil generată anterior dar incompletă)
+    const shouldGenerate = postForm.isPoem && 
+                          postForm.poemText && 
+                          postForm.poemText.trim() && 
+                          selectedScriitor && 
+                          !isGeneratingDescription &&
+                          (!postForm.descriere || postForm.descriere.trim().length < 20); // Nu regenerăm dacă există deja o descriere semnificativă
+
+    if (shouldGenerate) {
+      poemTextDebounceRef.current = setTimeout(() => {
+        generatePoemDescription(postForm.poemText);
+      }, 2000); // 2 secunde debounce
+    }
+
+    // Cleanup
+    return () => {
+      if (poemTextDebounceRef.current) {
+        clearTimeout(poemTextDebounceRef.current);
+      }
+    };
+  }, [postForm.poemText, postForm.isPoem, postForm.descriere, selectedScriitor, generatePoemDescription, isGeneratingDescription]);
 
   // Load scriitori when tab is active
   useEffect(() => {
@@ -2911,7 +3042,11 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
                   className="admin-textarea"
                 />
                 <small style={{ color: darkTheme ? '#c3b7a4' : '#666' }}>
-                  Poți completa manual sau apasă cubul pentru a genera automat descrierea.
+                  {postForm.isPoem 
+                    ? (isGeneratingDescription 
+                        ? '⏳ Se generează descrierea automat...' 
+                        : 'Descrierea se generează automat când introduci textul poeziei. Poți completa manual sau apasă cubul pentru a regenera.')
+                    : 'Poți completa manual sau apasă cubul pentru a genera automat descrierea.'}
                 </small>
               </div>
 
