@@ -133,6 +133,9 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
           nume: s.nume || '',
           img: s.img || '',
           key: s.key || s.id,
+          biografie: s.biografie || '',
+          date: s.date || '',
+          categorie: s.categorie || '',
         }));
         setAllScriitoriForSearch(scriitoriArray);
       } catch (error) {
@@ -482,7 +485,9 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
   const [aiPostPrompt, setAiPostPrompt] = useState('');
   const [aiCommentPrompt, setAiCommentPrompt] = useState('');
   const [isGeneratingDescription, setIsGeneratingDescription] = useState(false);
+  const [isGeneratingReactions, setIsGeneratingReactions] = useState(false);
   const poemTextDebounceRef = useRef(null);
+  const reactionsDebounceRef = useRef(null);
 
   // Funcție pentru generarea automată a descrierii poeziei
   const generatePoemDescription = useCallback(async (poemText) => {
@@ -583,6 +588,385 @@ Returnează exclusiv textul final al descrierii.`;
     }
   }, [selectedScriitor, postForm.isPoem]);
 
+  // Funcție pentru generarea automată a unei reacții pentru un prieten
+  const generateReactionForFriend = useCallback(async (friend, poemText) => {
+    if (!friend || !poemText || !poemText.trim() || !selectedScriitor) {
+      return null;
+    }
+
+    const groqApiKey = import.meta.env.VITE_GROQ_API_KEY;
+    const groqApiUrl = import.meta.env.VITE_GROQ_API_URL || 'https://api.groq.com/openai/v1/chat/completions';
+
+    if (!groqApiKey) {
+      return null;
+    }
+
+    try {
+      const friendName = friend.nume || 'prietenul';
+      const friendPeriod = friend.date || '';
+      const friendCategory = friend.categorie || '';
+      const friendBio = (friend.biografie || '')
+        .replace(/\s+/g, ' ')
+        .trim()
+        .slice(0, 300);
+
+      const poemSnippet = poemText
+        .replace(/\s+/g, ' ')
+        .trim()
+        .slice(0, 600);
+
+      const systemMessage = `Ești ${friendName}${friendPeriod ? ` (${friendPeriod})` : ''}${friendCategory ? `, ${friendCategory}` : ''}, prieten/contemporan al lui ${selectedScriitor?.nume || 'autorul'}.
+
+Analizează poezia și alege o reacție emoțională adecvată bazată pe:
+- Tema și tonul poeziei (tristețe, melancolie, frumusețe, etc.)
+- Stilul și estetica poeziei
+- Relația ta cu autorul și cu literatura
+- Personalitatea ta literară
+
+Reacții disponibile: like, love, ador, wow, haha, sad, cry, angry, strengh, multumire, fire, cool, clap, Romania
+
+Context despre tine (folosește doar dacă ajută): ${friendBio || '—'}
+
+Returnează DOAR tipul reacției (unul dintre: like, love, ador, wow, haha, sad, cry, angry, strengh, multumire, fire, cool, clap, Romania), fără explicații, fără text suplimentar.`;
+
+      const userMessage = `Poezia lui ${selectedScriitor?.nume || 'autorul'}:
+
+${poemSnippet}
+
+Analizează poezia: ce teme, ce imagini, ce ton, ce emoții transmite?
+Alege reacția emoțională care se potrivește cel mai bine cu ceea ce simți la această poezie specifică.
+
+Returnează DOAR tipul reacției (like, love, ador, wow, haha, sad, cry, angry, strengh, multumire, fire, cool, clap, Romania).`;
+
+      const requestBody = {
+        model: 'moonshotai/kimi-k2-instruct-0905',
+        messages: [
+          {
+            role: 'system',
+            content: systemMessage
+          },
+          {
+            role: 'user',
+            content: userMessage
+          }
+        ],
+        temperature: 0.7,
+        max_tokens: 50
+      };
+
+      const response = await fetch(groqApiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${groqApiKey}`
+        },
+        body: JSON.stringify(requestBody)
+      });
+
+      if (!response.ok) {
+        return null;
+      }
+
+      const data = await response.json();
+      const generated = data.choices[0]?.message?.content?.trim().toLowerCase();
+      
+      // Verifică dacă reacția generată este validă
+      const validReactions = REACTIONS.map(r => r.type);
+      const reactionType = validReactions.find(r => generated?.includes(r)) || 'like';
+      
+      return {
+        friendKey: friend.key,
+        reaction: reactionType
+      };
+    } catch (error) {
+      console.error('Eroare la generarea reacției:', error);
+      return null;
+    }
+  }, [selectedScriitor]);
+
+  // Funcție pentru generarea automată a unui comentariu pentru un prieten
+  const generateCommentForFriend = useCallback(async (friend, poemText, descriere, existingReactions = []) => {
+    if (!friend || !poemText || !poemText.trim() || !selectedScriitor) {
+      return null;
+    }
+
+    const groqApiKey = import.meta.env.VITE_GROQ_API_KEY;
+    const groqApiUrl = import.meta.env.VITE_GROQ_API_URL || 'https://api.groq.com/openai/v1/chat/completions';
+
+    if (!groqApiKey) {
+      return null;
+    }
+
+    try {
+      const friendName = friend.nume || 'prietenul';
+      const friendPeriod = friend.date || '';
+      const friendCategory = friend.categorie || '';
+      const friendBio = (friend.biografie || '')
+        .replace(/\s+/g, ' ')
+        .trim()
+        .slice(0, 300);
+
+      const poemSnippet = poemText
+        .replace(/\s+/g, ' ')
+        .trim()
+        .slice(0, 1000);
+
+      const descriereSnippet = descriere
+        ? descriere.replace(/\s+/g, ' ').trim().slice(0, 320)
+        : '';
+
+      const reactionMood = existingReactions.length > 0
+        ? existingReactions.map(r => {
+            const reaction = REACTIONS.find(react => react.type === r.reaction);
+            return reaction ? reaction.label : r.reaction;
+          }).join(', ')
+        : 'apreciere calmă';
+
+      const systemMessage = `Ești ${friendName}${friendPeriod ? ` (${friendPeriod})` : ''}${friendCategory ? `, ${friendCategory}` : ''}, prieten/contemporan al lui ${selectedScriitor?.nume || 'autorul'}.
+
+Scrie un comentariu scurt (30-70 cuvinte) la poezia lui, ca și cum ai citi-o acum și ai reacționa la ea.
+IMPORTANT: Comentariul TREBUIE să se refere explicit la poezia de mai jos - la imagini, teme, versuri specifice, ton, stil.
+Comentariul trebuie să fie autentic pentru stilul tău literar și personalitatea ta.
+Ton: ${reactionMood}.
+Stil: coerent cu epoca, fără termeni moderni, autentic pentru personalitatea ta literară.
+Nu folosi ghilimele, nu explica ce faci, scrie direct comentariul ca și cum ai vorbi cu autorul.
+
+Context despre tine (folosește doar dacă ajută): ${friendBio || '—'}`;
+
+      const userMessage = `Scrie un comentariu scurt (30-70 cuvinte) la poezia lui ${selectedScriitor?.nume || 'autorul'}.
+
+${descriereSnippet ? `DESCRIERE: ${descriereSnippet}\n\n` : ''}POEZIA COMPLETĂ:
+${poemSnippet}
+
+IMPORTANT: Comentariul TREBUIE să se refere explicit la poezia de mai sus:
+- La imagini specifice din poezie (ex: "salonul alb", "vals de voaluri", "sărutări", etc.)
+- La teme și emoții transmise
+- La versuri care te-au impresionat
+- La stilul și tonul poeziei
+
+Comentariul trebuie să fie relevant pentru poezia specifică și să reflecte personalitatea ta literară.
+
+Returnează doar textul comentariului, fără explicații.`;
+
+      const requestBody = {
+        model: 'moonshotai/kimi-k2-instruct-0905',
+        messages: [
+          {
+            role: 'system',
+            content: systemMessage
+          },
+          {
+            role: 'user',
+            content: userMessage
+          }
+        ],
+        temperature: 0.65,
+        max_tokens: 200
+      };
+
+      const response = await fetch(groqApiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${groqApiKey}`
+        },
+        body: JSON.stringify(requestBody)
+      });
+
+      if (!response.ok) {
+        return null;
+      }
+
+      const data = await response.json();
+      const generated = data.choices[0]?.message?.content?.trim();
+      
+      if (generated) {
+        return {
+          key: friend.key,
+          author: friend.nume,
+          text: generated
+        };
+      }
+      
+      return null;
+    } catch (error) {
+      console.error('Eroare la generarea comentariului:', error);
+      return null;
+    }
+  }, [selectedScriitor]);
+
+  // Funcție pentru generarea automată a reacțiilor și comentariilor pentru toți prietenii
+  const generateReactionsAndComments = useCallback(async (poemText, descriere) => {
+    if (!poemText || !poemText.trim() || !selectedScriitor) {
+      console.log('❌ Condiții neîndeplinite pentru generare:', {
+        hasPoemText: !!poemText,
+        hasSelectedScriitor: !!selectedScriitor
+      });
+      return;
+    }
+
+    // Folosește scriitoriList dacă este disponibil (are același format ca selectedScriitor)
+    // Altfel folosește allScriitoriForSearch, sau încarcă datele
+    let scriitoriData = [];
+    
+    // Încearcă să folosească scriitoriList (are același format ca selectedScriitor)
+    if (scriitoriList.length > 0) {
+      scriitoriData = scriitoriList.map(s => ({
+        nume: s.nume || '',
+        img: s.img || '',
+        key: s.key || s.id,
+        biografie: s.biografie || '',
+        date: s.date || '',
+        categorie: s.categorie || '',
+      }));
+    } else if (allScriitoriForSearch.length > 0) {
+      scriitoriData = allScriitoriForSearch;
+    } else {
+      // Dacă niciunul nu este disponibil, încarcă datele
+      try {
+        const scriitoriDataRaw = await getScriitoriData();
+        scriitoriData = Object.values(scriitoriDataRaw).map(s => ({
+          nume: s.nume || '',
+          img: s.img || '',
+          key: s.key || s.id,
+          biografie: s.biografie || '',
+          date: s.date || '',
+          categorie: s.categorie || '',
+        }));
+        setAllScriitoriForSearch(scriitoriData);
+      } catch (error) {
+        console.error('Eroare la încărcarea scriitorilor:', error);
+        return;
+      }
+    }
+
+    console.log('🔍 Debug căutare prieteni:', {
+      friendsRaw: selectedScriitor.friends || [],
+      firstFriendType: typeof (selectedScriitor.friends || [])[0],
+      firstFriendValue: (selectedScriitor.friends || [])[0],
+      scriitoriDataKeys: scriitoriData.map(s => s.key).slice(0, 10), // Primele 10 pentru debugging
+      scriitoriDataCount: scriitoriData.length
+    });
+
+    const friends = (selectedScriitor.friends || [])
+      .map(friendItem => {
+        // Extrage cheia - poate fi string direct sau obiect cu proprietatea key/nume
+        let friendKey = null;
+        if (typeof friendItem === 'string') {
+          friendKey = friendItem;
+        } else if (typeof friendItem === 'object' && friendItem !== null) {
+          // Poate fi obiect cu key, id, sau nume
+          friendKey = friendItem.key || friendItem.id || friendItem.nume || friendItem.name;
+        }
+        
+        if (!friendKey) {
+          console.log('⚠️ Nu s-a putut extrage cheia din:', friendItem);
+          return null;
+        }
+        
+        // Încearcă să găsească prietenul după key (exact match)
+        let friend = scriitoriData.find(s => s.key === friendKey);
+        
+        // Dacă nu găsește, încearcă să găsească după key fără case sensitivity
+        if (!friend && typeof friendKey === 'string') {
+          friend = scriitoriData.find(s => 
+            s.key && s.key.toLowerCase() === friendKey.toLowerCase()
+          );
+        }
+        
+        // Dacă încă nu găsește, încearcă să găsească după nume (pentru compatibilitate)
+        if (!friend && typeof friendKey === 'string') {
+          friend = scriitoriData.find(s => 
+            s.nume && s.nume.toLowerCase() === friendKey.toLowerCase()
+          );
+        }
+        
+        // Debug pentru fiecare prieten
+        if (!friend) {
+          console.log(`⚠️ Nu s-a găsit prieten pentru cheia: "${friendKey}" (din:`, friendItem, ')');
+        }
+        
+        return friend;
+      })
+      .filter(Boolean);
+
+    console.log('👥 Prieteni găsiți:', {
+      friendKeys: selectedScriitor.friends || [],
+      friendsFound: friends.length,
+      friendsNames: friends.map(f => f.nume),
+      friendsKeys: friends.map(f => f.key),
+      scriitoriDataCount: scriitoriData.length
+    });
+
+    if (friends.length === 0) {
+      console.log('❌ Nu există prieteni pentru generare');
+      return;
+    }
+
+    console.log(`✅ Generare reacții și comentarii pentru ${friends.length} prieteni...`);
+    setIsGeneratingReactions(true);
+
+    try {
+      const newReactions = [];
+      const newComments = [];
+
+      // Număr aleator de reacții: minim 2, maxim 6 (sau numărul de prieteni disponibili)
+      const numReactions = Math.min(
+        Math.max(2, Math.floor(Math.random() * 5) + 2), // 2-6
+        friends.length
+      );
+      
+      // Amestecă prietenii și selectează aleatoriu pentru reacții
+      const shuffledFriends = [...friends].sort(() => Math.random() - 0.5);
+      const friendsToReact = shuffledFriends.slice(0, numReactions);
+      
+      console.log(`🎲 Generare ${numReactions} reacții din ${friends.length} prieteni disponibili`);
+      
+      for (const friend of friendsToReact) {
+        const reaction = await generateReactionForFriend(friend, poemText);
+        if (reaction) {
+          newReactions.push(reaction);
+          // Așteaptă puțin între apeluri pentru a evita rate limiting
+          await new Promise(resolve => setTimeout(resolve, 500));
+        }
+      }
+
+      // Număr aleator de comentarii: minim 1, maxim 6 (sau numărul de prieteni disponibili)
+      const numComments = Math.min(
+        Math.max(1, Math.floor(Math.random() * 6) + 1), // 1-6
+        friends.length
+      );
+      
+      // Amestecă prietenii și selectează aleatoriu pentru comentarii (poate include și pe cei cu reacții)
+      const shuffledFriendsForComments = [...friends].sort(() => Math.random() - 0.5);
+      const friendsToComment = shuffledFriendsForComments.slice(0, numComments);
+      
+      console.log(`💬 Generare ${numComments} comentarii din ${friends.length} prieteni disponibili`);
+      
+      for (const friend of friendsToComment) {
+        const comment = await generateCommentForFriend(friend, poemText, descriere, newReactions);
+        if (comment) {
+          newComments.push(comment);
+          // Așteaptă puțin între apeluri pentru a evita rate limiting
+          await new Promise(resolve => setTimeout(resolve, 500));
+        }
+      }
+
+      // Actualizează formularul cu reacțiile și comentariile generate
+      if (newReactions.length > 0 || newComments.length > 0) {
+        setPostForm((prev) => ({
+          ...prev,
+          reactions: [...(prev.reactions || []), ...newReactions],
+          comments: [...(prev.comments || []), ...newComments]
+        }));
+      }
+    } catch (error) {
+      console.error('Eroare la generarea reacțiilor și comentariilor:', error);
+    } finally {
+      setIsGeneratingReactions(false);
+    }
+  }, [selectedScriitor, allScriitoriForSearch, scriitoriList, generateReactionForFriend, generateCommentForFriend, setAllScriitoriForSearch]);
+
   // Generare automată a descrierii când se introduce textul poeziei
   useEffect(() => {
     // Curăță timeout-ul anterior
@@ -612,6 +996,79 @@ Returnează exclusiv textul final al descrierii.`;
       }
     };
   }, [postForm.poemText, postForm.isPoem, postForm.descriere, selectedScriitor, generatePoemDescription, isGeneratingDescription]);
+
+  // Generare automată a reacțiilor și comentariilor după ce se generează descrierea
+  useEffect(() => {
+    // Curăță timeout-ul anterior
+    if (reactionsDebounceRef.current) {
+      clearTimeout(reactionsDebounceRef.current);
+    }
+
+    // Generează reacții și comentarii doar dacă:
+    // - Este poezie
+    // - Există text poezie (minim 10 caractere)
+    // - Există descriere (generată sau introdusă manual) - minim 20 caractere
+    // - Nu se generează deja
+    // - Nu există deja reacții sau comentarii (pentru a nu regenera)
+    // - Descrierea nu se generează în acest moment
+    // - Există prieteni
+    const hasPoemText = postForm.poemText && postForm.poemText.trim().length > 10;
+    const hasDescriere = postForm.descriere && postForm.descriere.trim().length >= 20;
+    const hasFriends = selectedScriitor && (selectedScriitor.friends || []).length > 0;
+    // Nu mai verificăm allScriitoriForSearch.length > 0 pentru că funcția va încărca datele dacă nu sunt disponibile
+    const noExistingReactions = (postForm.reactions || []).length === 0;
+    const noExistingComments = (postForm.comments || []).length === 0;
+
+    const shouldGenerate = postForm.isPoem && 
+                          hasPoemText && 
+                          hasDescriere &&
+                          selectedScriitor && 
+                          !isGeneratingReactions &&
+                          !isGeneratingDescription &&
+                          noExistingReactions &&
+                          noExistingComments &&
+                          hasFriends;
+
+    if (shouldGenerate) {
+      console.log('🔄 Declanșare generare reacții și comentarii...', {
+        isPoem: postForm.isPoem,
+        hasPoemText,
+        hasDescriere,
+        hasFriends,
+        friendsCount: (selectedScriitor.friends || []).length,
+        scriitoriCount: allScriitoriForSearch.length
+      });
+
+      // Așteaptă 3 secunde după ce s-a generat descrierea pentru a se asigura că totul e gata
+      reactionsDebounceRef.current = setTimeout(() => {
+        console.log('🚀 Generare reacții și comentarii...');
+        generateReactionsAndComments(postForm.poemText, postForm.descriere);
+      }, 3000);
+    } else {
+      // Debug: de ce nu se generează
+      if (postForm.isPoem && hasPoemText && hasDescriere && selectedScriitor) {
+        console.log('❌ Condiții neîndeplinite pentru generare:', {
+          isPoem: postForm.isPoem,
+          hasPoemText,
+          hasDescriere,
+          hasFriends,
+          isGeneratingReactions,
+          isGeneratingDescription,
+          noExistingReactions,
+          noExistingComments,
+          friendsCount: (selectedScriitor.friends || []).length,
+          scriitoriCount: allScriitoriForSearch.length
+        });
+      }
+    }
+
+    // Cleanup
+    return () => {
+      if (reactionsDebounceRef.current) {
+        clearTimeout(reactionsDebounceRef.current);
+      }
+    };
+  }, [postForm.isPoem, postForm.poemText, postForm.descriere, postForm.reactions, postForm.comments, selectedScriitor, allScriitoriForSearch, isGeneratingReactions, isGeneratingDescription, generateReactionsAndComments]);
 
   // Load scriitori when tab is active
   useEffect(() => {
@@ -3045,7 +3502,9 @@ Returnează exclusiv textul final al descrierii.`;
                   {postForm.isPoem 
                     ? (isGeneratingDescription 
                         ? '⏳ Se generează descrierea automat...' 
-                        : 'Descrierea se generează automat când introduci textul poeziei. Poți completa manual sau apasă cubul pentru a regenera.')
+                        : isGeneratingReactions
+                        ? '⏳ Se generează reacțiile și comentariile automat...'
+                        : 'Descrierea, reacțiile și comentariile se generează automat când introduci textul poeziei. Poți completa manual sau apasă cubul pentru a regenera.')
                     : 'Poți completa manual sau apasă cubul pentru a genera automat descrierea.'}
                 </small>
               </div>
