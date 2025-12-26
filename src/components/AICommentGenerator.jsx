@@ -132,10 +132,22 @@ const AICommentGenerator = ({
 
       // Construiește systemMessage simplu
       const systemMessage = `Ești ${persona}, prieten/contemporan al lui ${scriitorName}${scriitorPeriod ? ` (${scriitorPeriod})` : ''}.
-Scrie un comentariu scurt (30-70 cuvinte) la postarea lui.
-Ton: ${reactionMood}.
-Stil: coerent cu epoca, fără termeni moderni.
-Nu folosi ghilimele, nu explica ce faci, scrie direct comentariul.`;
+
+Scrie un comentariu scurt (30-70 cuvinte) la postarea lui, folosind un limbaj literar sofisticat, metaforic și misterios.
+
+REGLAMENTE STRICTE:
+- INTERZIS: cuvântul "frate" sau orice formă de adresare familiară excesivă
+- INTERZIS: ton jocos, batjocoritor sau superficial
+- INTERZIS: comentarii care "bat câmpii" sau se îndepărtează de subiect
+- OBLIGATORIU: limbaj inteligent, metaforic, cu imagini simbolice
+- OBLIGATORIU: ton misterios, profund, contemplativ
+- OBLIGATORIU: referințe specifice la conținutul postării (imagini, teme, versuri)
+- OBLIGATORIU: stil coerent cu epoca, fără termeni moderni
+
+Ton: ${reactionMood}, dar exprimat prin metafore și imagini literare, nu direct.
+Stil: literar, sofisticat, cu straturi de sens, evocativ, nu explicativ.
+
+Nu folosi ghilimele, nu explica ce faci, scrie direct comentariul ca un scriitor contemporan care vorbește cu un alt scriitor.`;
 
       // Construiește userMessage cu prompt-ul și conținutul
       let userMessage = '';

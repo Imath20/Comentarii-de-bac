@@ -123,6 +123,19 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
     });
     setSearchParams(newParams, { replace: true });
   }, [searchParams, setSearchParams]);
+
+  // Helper function to count stanzas (strofe) in a poem
+  const countStanzas = useCallback((poemText) => {
+    if (!poemText || !poemText.trim()) return 0;
+    // Split by double newlines or empty lines to get stanzas
+    const stanzas = poemText.split(/\n\s*\n/).filter(stanza => stanza.trim().length > 0);
+    // If no double newlines, count by single newlines (each line could be a stanza)
+    if (stanzas.length === 1) {
+      const lines = poemText.split('\n').filter(line => line.trim().length > 0);
+      return lines.length > 0 ? 1 : 0;
+    }
+    return stanzas.length;
+  }, []);
   
   // Load all scriitori for searchbars
   useEffect(() => {
@@ -3283,55 +3296,75 @@ Returnează doar textul comentariului, fără explicații.`;
                         {post.isPoem && (
                           <div style={{ marginTop: '10px', padding: '10px', backgroundColor: darkTheme ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.03)', borderRadius: '6px' }}>
                             <strong>Poezie:</strong> {post.poemTitle || 'Fără titlu'}
-                            {post.poemText && (
-                              <>
-                                <div style={{ marginTop: '10px' }}>
-                                  <div style={{ fontSize: '13px', fontWeight: '600', marginBottom: '5px', color: darkTheme ? '#d4a574' : '#8b6b42' }}>
-                                    Poezia preview
-                                  </div>
-                                  <div style={{ fontSize: '12px', color: darkTheme ? '#ccc' : '#666', maxHeight: '100px', overflow: 'hidden', whiteSpace: 'pre-wrap' }}>
-                                    {post.poemText.substring(0, 150)}...
-                                  </div>
-                                </div>
-                                <div style={{ marginTop: '10px' }}>
-                                  <button
-                                    onClick={() => {
-                                      setExpandedPoems(prev => {
-                                        const newSet = new Set(prev);
-                                        if (newSet.has(post.id)) {
-                                          newSet.delete(post.id);
-                                        } else {
-                                          newSet.add(post.id);
-                                        }
-                                        return newSet;
-                                      });
-                                    }}
-                                    style={{
-                                      background: 'transparent',
-                                      border: `1px solid ${darkTheme ? '#d4a574' : '#8b6b42'}`,
-                                      color: darkTheme ? '#d4a574' : '#8b6b42',
-                                      padding: '4px 12px',
-                                      borderRadius: '4px',
-                                      cursor: 'pointer',
-                                      fontSize: '12px',
-                                      fontWeight: '500'
-                                    }}
-                                  >
-                                    {expandedPoems.has(post.id) ? 'Ascunde' : 'Vezi tot'}
-                                  </button>
-                                </div>
-                                {expandedPoems.has(post.id) && (
+                            {post.poemText && (() => {
+                              const stanzaCount = countStanzas(post.poemText);
+                              const hasMoreThanTwoStanzas = stanzaCount > 2;
+                              
+                              if (!hasMoreThanTwoStanzas) {
+                                // Dacă are 2 sau mai puține strofe, afișează textul complet direct
+                                return (
                                   <div style={{ marginTop: '10px' }}>
                                     <div style={{ fontSize: '13px', fontWeight: '600', marginBottom: '5px', color: darkTheme ? '#d4a574' : '#8b6b42' }}>
-                                      Poezia full
+                                      Poezia
                                     </div>
                                     <div style={{ fontSize: '12px', color: darkTheme ? '#ccc' : '#666', whiteSpace: 'pre-wrap' }}>
                                       {post.poemText}
                                     </div>
                                   </div>
-                                )}
-                              </>
-                            )}
+                                );
+                              }
+                              
+                              // Dacă are mai mult de 2 strofe, afișează preview și butonul
+                              return (
+                                <>
+                                  <div style={{ marginTop: '10px' }}>
+                                    <div style={{ fontSize: '13px', fontWeight: '600', marginBottom: '5px', color: darkTheme ? '#d4a574' : '#8b6b42' }}>
+                                      Poezia preview
+                                    </div>
+                                    <div style={{ fontSize: '12px', color: darkTheme ? '#ccc' : '#666', maxHeight: '100px', overflow: 'hidden', whiteSpace: 'pre-wrap' }}>
+                                      {post.poemText.substring(0, 150)}...
+                                    </div>
+                                  </div>
+                                  <div style={{ marginTop: '10px' }}>
+                                    <button
+                                      onClick={() => {
+                                        setExpandedPoems(prev => {
+                                          const newSet = new Set(prev);
+                                          if (newSet.has(post.id)) {
+                                            newSet.delete(post.id);
+                                          } else {
+                                            newSet.add(post.id);
+                                          }
+                                          return newSet;
+                                        });
+                                      }}
+                                      style={{
+                                        background: 'transparent',
+                                        border: `1px solid ${darkTheme ? '#d4a574' : '#8b6b42'}`,
+                                        color: darkTheme ? '#d4a574' : '#8b6b42',
+                                        padding: '4px 12px',
+                                        borderRadius: '4px',
+                                        cursor: 'pointer',
+                                        fontSize: '12px',
+                                        fontWeight: '500'
+                                      }}
+                                    >
+                                      {expandedPoems.has(post.id) ? 'Ascunde' : 'Vezi tot'}
+                                    </button>
+                                  </div>
+                                  {expandedPoems.has(post.id) && (
+                                    <div style={{ marginTop: '10px' }}>
+                                      <div style={{ fontSize: '13px', fontWeight: '600', marginBottom: '5px', color: darkTheme ? '#d4a574' : '#8b6b42' }}>
+                                        Poezia full
+                                      </div>
+                                      <div style={{ fontSize: '12px', color: darkTheme ? '#ccc' : '#666', whiteSpace: 'pre-wrap' }}>
+                                        {post.poemText}
+                                      </div>
+                                    </div>
+                                  )}
+                                </>
+                              );
+                            })()}
                           </div>
                         )}
                         <div className="admin-post-stats">

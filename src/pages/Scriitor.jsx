@@ -1230,7 +1230,7 @@ const Scriitor = () => {
                   </div>
                 )}
                 {post.isPoem ? (
-                  <div className="scriitor-poem-container">
+                  <div className={`scriitor-poem-container ${post.poemImagesOnLeft === false ? 'scriitor-poem-reversed' : ''}`}>
                     {/* Stânga: imagini poezie */}
                     <div className="scriitor-poem-images">
                       {post.poemImages && post.poemImages.map((img, idx) => (

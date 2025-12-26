@@ -608,6 +608,10 @@
   gap: 20px;
   align-items: flex-start;
 
+  &.scriitor-poem-reversed {
+    flex-direction: row-reverse;
+  }
+
   .scriitor-poem-images {
     flex: 0 0 200px;
     display: flex;
