@@ -1195,7 +1195,10 @@ const Scriitor = () => {
                 {post.isPoem && post.descriere && (
                   <div className="scriitor-post-text">{post.descriere}</div>
                 )}
-                {!post.isPoem && post.text && (
+                {post.isStory && post.descriere && (
+                  <div className="scriitor-post-text">{post.descriere}</div>
+                )}
+                {!post.isPoem && !post.isStory && post.text && (
                   <div className="scriitor-post-text">{post.text}</div>
                 )}
                 
@@ -1272,7 +1275,7 @@ const Scriitor = () => {
                   </div>
                 ) : post.isStory ? (
                   <div className="scriitor-story-container">
-                    {/* Stânga: imagine poveste */}
+                    {/* Stânga: imagine poveste (verticală, ca la poezie) */}
                     <div className="scriitor-story-image">
                       {post.image && (
                         <div className="scriitor-story-image-wrapper"
@@ -1292,7 +1295,7 @@ const Scriitor = () => {
                     {/* Dreapta: text poveste */}
                     <div className="scriitor-story-content">
                       <h3 className="scriitor-story-title">
-                        {post.storyTitle}
+                        {post.storyTitle || 'Poveste'}
                       </h3>
                       <div className="scriitor-story-text">
                         {expandedPoems[post.id]
@@ -1311,7 +1314,7 @@ const Scriitor = () => {
                                 title: post.storyTitle || post.poemTitle || "Poveste",
                                 storyTitle: post.storyTitle,
                                 poemTitle: post.poemTitle,
-                                text: post.storyText || post.poemText,
+                                text: post.storyMoreText || post.storyText || post.poemText,
                                 storyText: post.storyText,
                                 poemText: post.poemText,
                                 showReadAllButton: post.showReadAllButton,
@@ -1340,7 +1343,7 @@ const Scriitor = () => {
                               });
                             }}
                           >
-                            {post.readAllButtonText || 'Citește tot'}
+                            Citește tot
                           </button>
                         )}
                       </div>
@@ -1688,7 +1691,7 @@ const Scriitor = () => {
           onClick={closePoemPreview}
         >
           <div
-            className="scriitor-poem-preview-modal"
+            className={`scriitor-poem-preview-modal ${poemPreviewModal.post.storyTitle || poemPreviewModal.post.storyText ? 'story' : ''}`}
             onClick={e => e.stopPropagation()}
           >
             {/* Header cu titlu centrat și buton închidere */}
@@ -1708,19 +1711,19 @@ const Scriitor = () => {
             {/* Conținut cu scroll - poezie sau poveste */}
                             <div className="scriitor-poem-preview-content">
                   <div className="scriitor-poem-preview-text">
-                    {poemPreviewModal.post.poemText || poemPreviewModal.post.storyText || poemPreviewModal.post.text}
-                    {poemPreviewModal.post.showReadAllButton && (
+                    {poemPreviewModal.post.text || poemPreviewModal.post.poemText || poemPreviewModal.post.storyText}
+                    {poemPreviewModal.post.showReadAllButton && poemPreviewModal.post.readAllButtonLink && (
                       <div className="scriitor-poem-preview-actions">
                         <button
                           onClick={() => {
                             closePoemPreview();
-                            navigate(poemPreviewModal.post.readAllButtonLink || '/carte/amintiri-din-copilarie', { 
+                            navigate(poemPreviewModal.post.readAllButtonLink, { 
                               state: { from: location.pathname + location.search } 
                             });
                           }}
                           className="scriitor-poem-preview-read-btn"
                         >
-                          {poemPreviewModal.post.readAllButtonText || 'Citește tot'}
+                          Citește tot
                         </button>
                       </div>
                     )}

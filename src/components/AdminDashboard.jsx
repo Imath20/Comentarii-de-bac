@@ -468,6 +468,10 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
     poemImagesOnLeft: true,
     storyTitle: '',
     storyText: '',
+    showReadAllButton: false,
+    readAllButtonText: '',
+    readAllButtonLink: '',
+    storyMoreText: '',
     pinnedActions: [],
     reactions: [],
     comments: [],
@@ -490,9 +494,9 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
   const poemTextDebounceRef = useRef(null);
   const reactionsDebounceRef = useRef(null);
 
-  // Funcție pentru generarea automată a descrierii poeziei
+  // Funcție pentru generarea automată a descrierii poeziei / poveștii
   const generatePoemDescription = useCallback(async (poemText) => {
-    if (!poemText || !poemText.trim() || !selectedScriitor || !postForm.isPoem) {
+    if (!poemText || !poemText.trim() || !selectedScriitor || (!postForm.isPoem && !postForm.isStory)) {
       return;
     }
 
@@ -516,7 +520,7 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
 
       const systemMessage = `Asumă-ți pe deplin identitatea literară a lui ${scriitorName}${scriitorPeriod ? ` (${scriitorPeriod})` : ''}${scriitorCategory ? `, ${scriitorCategory}` : ''}.
 
-Scrie o descriere scurtă pentru o poezie, ca și cum autorul ar prezenta propria operă.
+Scrie o descriere scurtă pentru o ${postForm.isPoem ? 'poezie' : 'povestire / fragment de proză'}, ca și cum autorul ar prezenta propria operă.
 Descrierea este scrisă la persoana I sau a III-a și pare destinată cititorilor contemporani autorului.
 
 Public: oameni ai vremii respective (evită orice referință modernă: internet, social media, termeni actuali).
@@ -538,11 +542,11 @@ Returnează exclusiv textul final al descrierii, ca și cum ar fi fost scris dir
         .trim()
         .slice(0, 800);
 
-      const userMessage = `Generează descrierea pentru următoarea poezie:
+      const userMessage = `Generează descrierea pentru următoarea ${postForm.isPoem ? 'poezie' : 'poveste / proză scurtă'}:
 
 ${poemSnippet}
 
-Descrierea trebuie să fie relevantă pentru poezia de mai sus.
+Descrierea trebuie să fie relevantă pentru textul literar de mai sus.
 
 Returnează exclusiv textul final al descrierii.`;
 
@@ -587,7 +591,7 @@ Returnează exclusiv textul final al descrierii.`;
     } finally {
       setIsGeneratingDescription(false);
     }
-  }, [selectedScriitor, postForm.isPoem]);
+  }, [selectedScriitor, postForm.isPoem, postForm.isStory]);
 
   // Funcție pentru generarea automată a unei reacții pentru un prieten
   const generateReactionForFriend = useCallback(async (friend, poemText) => {
@@ -1034,18 +1038,22 @@ Returnează doar textul comentariului, fără explicații.`;
       clearTimeout(poemTextDebounceRef.current);
     }
 
-    // Dacă este poezie și există text, generează descrierea după 2 secunde de la ultima tastă
+    // Dacă este poezie sau poveste și există text, generează descrierea după 2 secunde de la ultima tastă
     // Doar dacă descrierea este goală sau foarte scurtă (posibil generată anterior dar incompletă)
-    const shouldGenerate = postForm.isPoem && 
-                          postForm.poemText && 
-                          postForm.poemText.trim() && 
+    const fullTextForDescription = postForm.isPoem 
+      ? postForm.poemText 
+      : (postForm.isStory ? [postForm.storyText, postForm.storyMoreText].filter(Boolean).join('\n\n') : '');
+
+    const shouldGenerate = (postForm.isPoem || postForm.isStory) && 
+                          fullTextForDescription && 
+                          fullTextForDescription.trim() && 
                           selectedScriitor && 
                           !isGeneratingDescription &&
                           (!postForm.descriere || postForm.descriere.trim().length < 20); // Nu regenerăm dacă există deja o descriere semnificativă
 
     if (shouldGenerate) {
       poemTextDebounceRef.current = setTimeout(() => {
-        generatePoemDescription(postForm.poemText);
+        generatePoemDescription(fullTextForDescription);
       }, 2000); // 2 secunde debounce
     }
 
@@ -1055,7 +1063,7 @@ Returnează doar textul comentariului, fără explicații.`;
         clearTimeout(poemTextDebounceRef.current);
       }
     };
-  }, [postForm.poemText, postForm.isPoem, postForm.descriere, selectedScriitor, generatePoemDescription, isGeneratingDescription]);
+  }, [postForm.poemText, postForm.storyText, postForm.storyMoreText, postForm.isPoem, postForm.isStory, postForm.descriere, selectedScriitor, generatePoemDescription, isGeneratingDescription]);
 
   // Generare automată a reacțiilor și comentariilor după ce se generează descrierea
   useEffect(() => {
@@ -1065,21 +1073,25 @@ Returnează doar textul comentariului, fără explicații.`;
     }
 
     // Generează reacții și comentarii doar dacă:
-    // - Este poezie
-    // - Există text poezie (minim 10 caractere)
+    // - Este poezie sau poveste
+    // - Există text suficient (minim 10 caractere)
     // - Există descriere (generată sau introdusă manual) - minim 20 caractere
     // - Nu se generează deja
     // - Nu există deja reacții sau comentarii (pentru a nu regenera)
     // - Descrierea nu se generează în acest moment
     // - Există prieteni
-    const hasPoemText = postForm.poemText && postForm.poemText.trim().length > 10;
+    const fullTextForReactions = postForm.isPoem 
+      ? postForm.poemText 
+      : (postForm.isStory ? [postForm.storyText, postForm.storyMoreText].filter(Boolean).join('\n\n') : '');
+
+    const hasPoemText = fullTextForReactions && fullTextForReactions.trim().length > 10;
     const hasDescriere = postForm.descriere && postForm.descriere.trim().length >= 20;
     const hasFriends = selectedScriitor && (selectedScriitor.friends || []).length > 0;
     // Nu mai verificăm allScriitoriForSearch.length > 0 pentru că funcția va încărca datele dacă nu sunt disponibile
     const noExistingReactions = (postForm.reactions || []).length === 0;
     const noExistingComments = (postForm.comments || []).length === 0;
 
-    const shouldGenerate = postForm.isPoem && 
+    const shouldGenerate = (postForm.isPoem || postForm.isStory) && 
                           hasPoemText && 
                           hasDescriere &&
                           selectedScriitor && 
@@ -1092,6 +1104,7 @@ Returnează doar textul comentariului, fără explicații.`;
     if (shouldGenerate) {
       console.log('🔄 Declanșare generare reacții și comentarii...', {
         isPoem: postForm.isPoem,
+        isStory: postForm.isStory,
         hasPoemText,
         hasDescriere,
         hasFriends,
@@ -1102,13 +1115,14 @@ Returnează doar textul comentariului, fără explicații.`;
       // Așteaptă 3 secunde după ce s-a generat descrierea pentru a se asigura că totul e gata
       reactionsDebounceRef.current = setTimeout(() => {
         console.log('🚀 Generare reacții și comentarii...');
-        generateReactionsAndComments(postForm.poemText, postForm.descriere);
+        generateReactionsAndComments(fullTextForReactions, postForm.descriere);
       }, 3000);
     } else {
       // Debug: de ce nu se generează
-      if (postForm.isPoem && hasPoemText && hasDescriere && selectedScriitor) {
+      if ((postForm.isPoem || postForm.isStory) && hasPoemText && hasDescriere && selectedScriitor) {
         console.log('❌ Condiții neîndeplinite pentru generare:', {
           isPoem: postForm.isPoem,
+          isStory: postForm.isStory,
           hasPoemText,
           hasDescriere,
           hasFriends,
@@ -1128,7 +1142,7 @@ Returnează doar textul comentariului, fără explicații.`;
         clearTimeout(reactionsDebounceRef.current);
       }
     };
-  }, [postForm.isPoem, postForm.poemText, postForm.descriere, postForm.reactions, postForm.comments, selectedScriitor, allScriitoriForSearch, isGeneratingReactions, isGeneratingDescription, generateReactionsAndComments]);
+  }, [postForm.isPoem, postForm.isStory, postForm.poemText, postForm.storyText, postForm.storyMoreText, postForm.descriere, postForm.reactions, postForm.comments, selectedScriitor, allScriitoriForSearch, isGeneratingReactions, isGeneratingDescription, generateReactionsAndComments]);
 
   // Load scriitori when tab is active
   useEffect(() => {
@@ -1221,6 +1235,10 @@ Returnează doar textul comentariului, fără explicații.`;
               poemImagesOnLeft: true,
               storyTitle: '',
               storyText: '',
+                showReadAllButton: false,
+                readAllButtonText: '',
+                readAllButtonLink: '',
+                storyMoreText: '',
               pinnedActions: [],
               reactions: [],
               comments: [],
@@ -1256,6 +1274,10 @@ Returnează doar textul comentariului, fără explicații.`;
                   poemImagesOnLeft: post.poemImagesOnLeft !== undefined ? post.poemImagesOnLeft : true,
                   storyTitle: post.storyTitle || '',
                   storyText: post.storyText || '',
+                  showReadAllButton: post.showReadAllButton || false,
+                  readAllButtonText: post.readAllButtonText || '',
+                  readAllButtonLink: post.readAllButtonLink || '',
+                  storyMoreText: post.storyMoreText || '',
                   pinnedActions: post.pinnedActions || [],
                   reactions: post.reactions || [],
                   comments: post.comments || [],
@@ -1301,6 +1323,10 @@ Returnează doar textul comentariului, fără explicații.`;
                 createdBy: post.createdBy || '',
                 createdByEmail: post.createdByEmail || '',
                 createdByName: post.createdByName || '',
+                showReadAllButton: post.showReadAllButton || false,
+                readAllButtonText: post.readAllButtonText || '',
+                readAllButtonLink: post.readAllButtonLink || '',
+                storyMoreText: post.storyMoreText || '',
                 editingCommentText: commentToEdit.text || '',
               });
               setScriitorView('post-edit');
@@ -2073,6 +2099,10 @@ Returnează doar textul comentariului, fără explicații.`;
         poemImagesOnLeft: true,
         storyTitle: '',
         storyText: '',
+        showReadAllButton: false,
+        readAllButtonText: '',
+        readAllButtonLink: '',
+        storyMoreText: '',
         pinnedActions: [],
         reactions: [],
         comments: [],
@@ -3264,6 +3294,10 @@ Returnează doar textul comentariului, fără explicații.`;
                         poemImagesOnLeft: true,
                         storyTitle: '',
                         storyText: '',
+                    showReadAllButton: false,
+                    readAllButtonText: '',
+                    readAllButtonLink: '',
+                    readMoreText: '',
                         pinnedActions: [],
                         reactions: [],
                         comments: [],
@@ -3426,6 +3460,10 @@ Returnează doar textul comentariului, fără explicații.`;
                                   poemImagesOnLeft: post.poemImagesOnLeft !== undefined ? post.poemImagesOnLeft : true,
                                   storyTitle: post.storyTitle || '',
                                   storyText: post.storyText || '',
+                                  showReadAllButton: post.showReadAllButton || false,
+                                  readAllButtonText: post.readAllButtonText || '',
+                                  readAllButtonLink: post.readAllButtonLink || '',
+                                  readMoreText: post.readMoreText || '',
                                   pinnedActions: post.pinnedActions || [],
                                   reactions: post.reactions || [],
                                   comments: post.comments || [],
@@ -3601,14 +3639,46 @@ Returnează doar textul comentariului, fără explicații.`;
                 </label>
               </div>
 
+              {/* Tip special de postare: Poveste / text cu card ca în pagina scriitorului */}
+              {!postForm.isPoem && (
+                <div className="admin-form-group">
+                  <label>
+                    <input
+                      type="checkbox"
+                      checked={postForm.isStory}
+                      onChange={(e) => {
+                        const isStory = e.target.checked;
+                        setPostForm({
+                          ...postForm,
+                          isStory,
+                          // Dacă devine poveste, mutăm textul curent în storyText (dacă nu e deja setat)
+                          storyText: isStory ? (postForm.storyText || postForm.text) : postForm.storyText,
+                          storyTitle: isStory ? (postForm.storyTitle || selectedScriitor.nume) : postForm.storyTitle,
+                        });
+                      }}
+                      style={{ marginRight: '5px' }}
+                    />
+                    Poveste / text cu imagine pe lateral (tip „Amintiri din copilărie”)
+                  </label>
+                </div>
+              )}
+
               {!postForm.isPoem ? (
                 <>
+                  {/* Text principal: în funcție de tipul de postare */}
                   <div className="admin-form-group">
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '10px' }}>
-                      <label htmlFor="post-text" style={{ marginBottom: 0 }}>Text *</label>
+                      <label htmlFor="post-text" style={{ marginBottom: 0 }}>
+                        {postForm.isStory ? 'Text poveste *' : 'Text *'}
+                      </label>
                       <AIPostGenerator
                         prompt={aiPostPrompt}
-                        onTextGenerated={(generatedText) => setPostForm((prev) => ({ ...prev, text: generatedText }))}
+                        onTextGenerated={(generatedText) =>
+                          setPostForm((prev) => ({
+                            ...prev,
+                            ...(prev.isStory ? { storyText: generatedText } : { text: generatedText }),
+                          }))
+                        }
                         scriitor={selectedScriitor}
                         setMessage={setMessage}
                         darkTheme={darkTheme}
@@ -3616,9 +3686,14 @@ Returnează doar textul comentariului, fără explicații.`;
                     </div>
                     <textarea
                       id="post-text"
-                      value={postForm.text}
-                      onChange={(e) => setPostForm({ ...postForm, text: e.target.value })}
-                      placeholder="Textul postării..."
+                      value={postForm.isStory ? (postForm.storyText || '') : (postForm.text || '')}
+                      onChange={(e) =>
+                        setPostForm({
+                          ...postForm,
+                          ...(postForm.isStory ? { storyText: e.target.value } : { text: e.target.value }),
+                        })
+                      }
+                      placeholder={postForm.isStory ? 'Textul poveștii / fragmentului de proză...' : 'Textul postării...'}
                       required
                       rows={5}
                       className="admin-textarea"
@@ -3628,9 +3703,49 @@ Returnează doar textul comentariului, fără explicații.`;
                     </small>
                   </div>
 
+                  {/* Câmpuri suplimentare pentru poveste: titlu operă + text buton „Vezi mai mult” */}
+                  {postForm.isStory && (
+                    <>
+                      <div className="admin-form-group">
+                        <label htmlFor="story-title">Titlu operă / poveste</label>
+                        <input
+                          type="text"
+                          id="story-title"
+                          value={postForm.storyTitle || ''}
+                          onChange={(e) =>
+                            setPostForm({
+                              ...postForm,
+                              storyTitle: e.target.value,
+                            })
+                          }
+                          placeholder="Amintiri din copilărie"
+                          className="admin-input"
+                        />
+                      </div>
+                      <div className="admin-form-group">
+                        <label htmlFor="story-more-text">Continuarea textului (se afișează doar în popup „Vezi mai mult”)</label>
+                        <textarea
+                          id="story-more-text"
+                          value={postForm.storyMoreText || ''}
+                          onChange={(e) =>
+                            setPostForm({
+                              ...postForm,
+                              storyMoreText: e.target.value,
+                            })
+                          }
+                          placeholder="Continuarea poveștii, paragrafe suplimentare care apar doar în fereastra mare..."
+                          rows={5}
+                          className="admin-textarea"
+                        />
+                      </div>
+                    </>
+                  )}
+
                   <div className="admin-form-row">
                     <div className="admin-form-group" style={{ flex: 1 }}>
-                      <label htmlFor="post-image">Imagine (dreptunghiulară)</label>
+                      <label htmlFor="post-image">
+                        {postForm.isStory ? 'Imagine (verticală, ca la ilustrațiile de poveste)' : 'Imagine (dreptunghiulară)'}
+                      </label>
                       {postForm.image ? (
                         <div style={{ marginBottom: '10px' }}>
                           <img 
@@ -3712,6 +3827,51 @@ Returnează doar textul comentariului, fără explicații.`;
                       </label>
                     </div>
                   </div>
+
+                  {/* Opțiuni „Citește tot” pentru povești / texte mai lungi (doar link, textul rămâne „Citește tot”) */}
+                  {postForm.isStory && (
+                    <div className="admin-form-group">
+                      <label style={{ display: 'block', marginBottom: '8px', fontWeight: 600 }}>
+                        Opțiuni „Citește tot” (deschide cartea în BookReader)
+                      </label>
+                      <div style={{ marginBottom: '10px' }}>
+                        <label>
+                          <input
+                            type="checkbox"
+                            checked={postForm.showReadAllButton}
+                            onChange={(e) =>
+                              setPostForm({
+                                ...postForm,
+                                showReadAllButton: e.target.checked,
+                              })
+                            }
+                            style={{ marginRight: '5px' }}
+                          />
+                          Afișează butonul „Citește tot”
+                        </label>
+                      </div>
+                      {postForm.showReadAllButton && (
+                        <div className="admin-form-group">
+                            <label htmlFor="readall-link">Link către pagina cărții (BookReader) *</label>
+                            <input
+                              type="text"
+                              id="readall-link"
+                              value={postForm.readAllButtonLink || ''}
+                              onChange={(e) =>
+                                setPostForm({ ...postForm, readAllButtonLink: e.target.value })
+                              }
+                              placeholder="/carte/amintiri-din-copilarie"
+                              className="admin-input"
+                              required
+                            />
+                            <small style={{ color: darkTheme ? '#c3b7a4' : '#666' }}>
+                              Acesta este link-ul care se deschide când utilizatorul apasă „Citește tot”
+                              (de exemplu `/carte/amintiri-din-copilarie`).
+                            </small>
+                          </div>
+                      )}
+                    </div>
+                  )}
                 </>
               ) : (
                 <>
