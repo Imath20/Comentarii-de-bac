@@ -1274,7 +1274,7 @@ const Scriitor = () => {
                     </div>
                   </div>
                 ) : post.isStory ? (
-                  <div className="scriitor-story-container">
+                  <div className={`scriitor-story-container ${post.storyImageOnLeft === false ? 'scriitor-story-reversed' : ''}`}>
                     {/* Stânga: imagine poveste (verticală, ca la poezie) */}
                     <div className="scriitor-story-image">
                       {post.image && (

@@ -692,6 +692,10 @@
   gap: 20px;
   align-items: flex-start;
 
+  &.scriitor-story-reversed {
+    flex-direction: row-reverse;
+  }
+
   .scriitor-story-image {
     flex: 0 0 200px;
     display: flex;

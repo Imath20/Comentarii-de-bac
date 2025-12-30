@@ -468,6 +468,7 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
     poemImagesOnLeft: true,
     storyTitle: '',
     storyText: '',
+    storyImageOnLeft: true,
     showReadAllButton: false,
     readAllButtonText: '',
     readAllButtonLink: '',
@@ -1235,6 +1236,7 @@ Returnează doar textul comentariului, fără explicații.`;
               poemImagesOnLeft: true,
               storyTitle: '',
               storyText: '',
+              storyImageOnLeft: true,
                 showReadAllButton: false,
                 readAllButtonText: '',
                 readAllButtonLink: '',
@@ -1274,6 +1276,7 @@ Returnează doar textul comentariului, fără explicații.`;
                   poemImagesOnLeft: post.poemImagesOnLeft !== undefined ? post.poemImagesOnLeft : true,
                   storyTitle: post.storyTitle || '',
                   storyText: post.storyText || '',
+                  storyImageOnLeft: post.storyImageOnLeft !== undefined ? post.storyImageOnLeft : true,
                   showReadAllButton: post.showReadAllButton || false,
                   readAllButtonText: post.readAllButtonText || '',
                   readAllButtonLink: post.readAllButtonLink || '',
@@ -1317,6 +1320,7 @@ Returnează doar textul comentariului, fără explicații.`;
                 poemImagesOnLeft: post.poemImagesOnLeft !== undefined ? post.poemImagesOnLeft : true,
                 storyTitle: post.storyTitle || '',
                 storyText: post.storyText || '',
+                storyImageOnLeft: post.storyImageOnLeft !== undefined ? post.storyImageOnLeft : true,
                 pinnedActions: post.pinnedActions || [],
                 reactions: post.reactions || [],
                 comments: post.comments || [],
@@ -2099,6 +2103,7 @@ Returnează doar textul comentariului, fără explicații.`;
         poemImagesOnLeft: true,
         storyTitle: '',
         storyText: '',
+        storyImageOnLeft: true,
         showReadAllButton: false,
         readAllButtonText: '',
         readAllButtonLink: '',
@@ -3294,6 +3299,7 @@ Returnează doar textul comentariului, fără explicații.`;
                         poemImagesOnLeft: true,
                         storyTitle: '',
                         storyText: '',
+                        storyImageOnLeft: true,
                     showReadAllButton: false,
                     readAllButtonText: '',
                     readAllButtonLink: '',
@@ -3460,6 +3466,7 @@ Returnează doar textul comentariului, fără explicații.`;
                                   poemImagesOnLeft: post.poemImagesOnLeft !== undefined ? post.poemImagesOnLeft : true,
                                   storyTitle: post.storyTitle || '',
                                   storyText: post.storyText || '',
+                                  storyImageOnLeft: post.storyImageOnLeft !== undefined ? post.storyImageOnLeft : true,
                                   showReadAllButton: post.showReadAllButton || false,
                                   readAllButtonText: post.readAllButtonText || '',
                                   readAllButtonLink: post.readAllButtonLink || '',
@@ -3827,6 +3834,26 @@ Returnează doar textul comentariului, fără explicații.`;
                       </label>
                     </div>
                   </div>
+
+                  {/* Opțiune poziție imagine pentru povești */}
+                  {postForm.isStory && (
+                    <div className="admin-form-group">
+                      <label>
+                        <input
+                          type="checkbox"
+                          checked={postForm.storyImageOnLeft !== false}
+                          onChange={(e) => {
+                            setPostForm({ 
+                              ...postForm, 
+                              storyImageOnLeft: e.target.checked 
+                            });
+                          }}
+                          style={{ marginRight: '5px' }}
+                        />
+                        Imagine pe stânga (debifat = imagine pe dreapta)
+                      </label>
+                    </div>
+                  )}
 
                   {/* Opțiuni „Citește tot” pentru povești / texte mai lungi (doar link, textul rămâne „Citește tot”) */}
                   {postForm.isStory && (
