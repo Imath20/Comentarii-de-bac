@@ -242,6 +242,20 @@ const BOOKS = {
     maxWidth: "880px",
     width: "80vw"
   },
+  "pacala-in-satul-lui": {
+    path: "/src/data/opere/pacala-in-satul-lui.json",
+    title: "Păcală în satul lui",
+    bookmarkKey: "pacala-in-satul-lui_bookmark",
+    maxWidth: "640px",
+    width: "80vw"
+  },
+  "limir-imparat": {
+    path: "/src/data/opere/limir-imparat.json",
+    title: "Limir-împărat",
+    bookmarkKey: "limir-imparat_bookmark",
+    maxWidth: "640px",
+    width: "80vw"
+  },
 };
 
 export default function BookReader() {

@@ -427,6 +427,26 @@ const cartiList = [
         canonic: false,
         jsonFile: 'nunta-in-cer',
         tip: 'carte'
+    },
+    {
+        titlu: 'Păcală în satul lui',
+        autor: 'Ioan Slavici',
+        data: 'Redactare: 1881',
+        img: '/opere/pacala.webp',
+        categorie: 'nuvela',
+        canonic: false,
+        jsonFile: 'pacala-in-satul-lui',
+        tip: 'opera'
+    },
+    {
+        titlu: 'Limir-împărat',
+        autor: 'Ioan Slavici',
+        data: 'Redactare: 1881',
+        img: '/opere/limir-imparat.webp',
+        categorie: 'nuvela',
+        canonic: false,
+        jsonFile: 'limir-imparat',
+        tip: 'opera'
     }
 ];
 

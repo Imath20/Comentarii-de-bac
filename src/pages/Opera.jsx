@@ -303,7 +303,8 @@ const OPERA_JSON_FILES = {
   'Patul lui Procust': 'patul-lui-procust',
   'Popa Tanda': 'popa-tanda',
   'Ursul păcălit de vulpe': 'ursul-pacalit-de-vulpe',
-  'Viață ca o pradă': 'viata-ca-o-prada'
+  'Viață ca o pradă': 'viata-ca-o-prada',
+  'Păcală în satul lui': 'pacala-in-satul-lui',
 };
 
 // Fallback imagine pentru opera (bazat pe titlu), folosită când navigarea prin taburi
@@ -334,6 +335,7 @@ const OPERA_IMAGES_BY_TITLE = {
   'Alexandru Lăpușneanu': '/opere/lapusneanu.webp',
   'Aci sosi pe vremuri': '/opere/aci-sosi.webp',
   'În Grădina Ghetsimani': '/opere/gradina-ghetsimani.webp',
+  'Păcală în satul lui': '/opere/pacala-in-satul-lui.webp',
 };
 
 export default function Opera() {
