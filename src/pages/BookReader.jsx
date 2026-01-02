@@ -96,7 +96,14 @@ const BOOKS = {
       bookmarkKey: "iona_bookmark",
       maxWidth: "600px",
       width: "80vw"
-    },
+  },
+  "un-pedagog-de-scoala-noua": {
+    path: "/src/data/opere/un-pedagog-de-scoala-noua.json",
+    title: "Un pedagog de scoala noua",
+    bookmarkKey: "un-pedagog-de-scoala-noua_bookmark",
+    maxWidth: "600px",
+    width: "80vw"
+  },
   "critice": {
     path: "/src/data/opere/critice.json",
     title: "Critice",
@@ -139,7 +146,6 @@ const BOOKS = {
     maxWidth: "500px",
     width: "80vw"
   },
-  // Added missing books from data/opere
   "amintiri-de-la-junimea-din-iasi": {
     path: "/src/data/opere/amintiri-de-la-junimea-din-iasi.json",
     title: "Amintiri de la Junimea din Iași",
@@ -267,6 +273,34 @@ const BOOKS = {
     path: "/src/data/opere/petrea-prostul.json",
     title: "Petrea Prostul",
     bookmarkKey: "petrea-prostul_bookmark",
+    maxWidth: "640px",
+    width: "80vw"
+  },
+  "lantul-slabiciunilor": {
+    path: "/src/data/opere/lantul-slabiciunilor.json",
+    title: "Lantul slabiciunilor",
+    bookmarkKey: "lantul-slabiciunilor_bookmark",
+    maxWidth: "640px",
+    width: "80vw"
+  },
+  "d-ale-carnavalului": {
+    path: "/src/data/opere/d-ale-carnavalului.json",
+    title: "Dale Carnavalului",
+    bookmarkKey: "d-ale-carnavalului_bookmark",
+    maxWidth: "640px",
+    width: "80vw"
+  },
+  "conu-leonida": {
+    path: "/src/data/opere/conu-leonida.json",
+    title: "Conu Leonida",
+    bookmarkKey: "conu-leonida_bookmark",
+    maxWidth: "640px",
+    width: "80vw"
+  },
+  "doua-loturi": {
+    path: "/src/data/opere/doua-loturi.json",
+    title: "Doua loturi",
+    bookmarkKey: "doua-loturi_bookmark",
     maxWidth: "640px",
     width: "80vw"
   }

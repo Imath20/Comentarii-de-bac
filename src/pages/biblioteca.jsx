@@ -358,7 +358,7 @@ const cartiList = [
         titlu: 'O noapte furtunoasă',
         autor: 'I.L. Caragiale',
         data: 'Redactare: 1879',
-        img: '/opere/noapte-furtunoasa.webp',
+        img: '/opere/noapte_furtunoasa.webp',
         categorie: 'comedie',
         canonic: true,
         jsonFile: 'o-noapte-furtunoasa',
@@ -466,6 +466,56 @@ const cartiList = [
         categorie: 'basm',
         canonic: false,
         jsonFile: 'petrea-prostul',
+        tip: 'opera'
+    },
+    {
+        titlu: 'Un pedagog de școală nouă',
+        autor: 'Ion Luca Caragiale',
+        data: 'Redactare: 1874',
+        img: '/opere/pedagog_scoala.webp',
+        categorie: 'schita',
+        canonic: false,
+        jsonFile: 'un-pedagog-de-scoala-noua',
+        tip: 'opera'
+    },
+    {
+        titlu: 'Lanțul slabiciunilor',
+        autor: 'Ion Luca Caragiale',
+        data: 'Redactare: 1892',
+        img: '/opere/lant_slabiciuni.webp',
+        categorie: 'comedie',
+        canonic: false,
+        jsonFile: 'lantul-slabiciunilor',
+        tip: 'opera'
+    },
+    {
+        titlu: 'D-ale Carnavalului',
+        autor: 'Ion Luca Caragiale',
+        data: 'Redactare: 1885',
+        img: '/opere/dale_carnavalului.webp',
+        categorie: 'comedie',
+        canonic: false,
+        jsonFile: 'd-ale-carnavalului',
+        tip: 'opera'
+    },
+    {
+        titlu: 'Conu Leonida fata cu reacțiunea',
+        autor: 'Ion Luca Caragiale',
+        data: 'Redactare: 1880',
+        img: '/opere/conu_leonida.webp',
+        categorie: 'comedie',
+        canonic: false,
+        jsonFile: 'conu-leonida',
+        tip: 'opera'
+    },
+    {
+        titlu: 'Două loturi',
+        autor: 'Ion Luca Caragiale',
+        data: 'Redactare: 1898',
+        img: '/opere/doua_loturi.webp',
+        categorie: 'comedie',
+        canonic: false,
+        jsonFile: 'doua-loturi',
         tip: 'opera'
     }
 ];
