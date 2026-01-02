@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect, useCallback } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { getScriitoriData } from '../firebase/scriitoriService';
-import { fetchScriitor, deleteCommentFromPost } from '../firebase/scriitoriService';
+import { fetchScriitor, deleteCommentFromPost, updateScriitor } from '../firebase/scriitoriService';
 import ScriitorInfo from '../assets/ScriitorInfo';
 import AvatarSearchBar from '../assets/AvatarSearchBar';
 import ScriitorChat from '../assets/ScriitorChat';
@@ -635,6 +635,64 @@ const Scriitor = () => {
     document.body.style.top = 'unset';
     document.body.style.width = 'unset';
     window.scrollTo(0, scrollPosition);
+  };
+
+  // Funcție pentru ștergerea unei imagini din galerie (doar pentru admini)
+  const handleDeleteGalleryImage = async (imageIndex, e) => {
+    if (e) {
+      e.stopPropagation(); // Previne deschiderea preview-ului când se apasă butonul
+    }
+    
+    if (!isAdmin) {
+      alert('Doar administratorii pot șterge imagini din galerie.');
+      return;
+    }
+
+    if (!data || !data.key) {
+      alert('Eroare: Datele scriitorului nu sunt disponibile.');
+      return;
+    }
+
+    const gallery = data.gallery || [];
+    if (imageIndex < 0 || imageIndex >= gallery.length) {
+      alert('Eroare: Index imagine invalid.');
+      return;
+    }
+
+    const imageToDelete = gallery[imageIndex];
+    if (!window.confirm(`Ești sigur că vrei să ștergi această imagine din galerie?`)) {
+      return;
+    }
+
+    try {
+      // Șterge imaginea din array
+      const updatedGallery = gallery.filter((_, idx) => idx !== imageIndex);
+      
+      // Actualizează în Firestore
+      await updateScriitor(data.key, { gallery: updatedGallery });
+      
+      // Actualizează datele locale
+      const updatedData = { ...data, gallery: updatedGallery };
+      setData(updatedData);
+      
+      // Dacă era deschis preview-ul pentru această imagine sau următoarea, închide-l sau ajustează index-ul
+      if (galleryImagePreviewOpen && galleryImagePreviewIndex === imageIndex) {
+        setGalleryImagePreviewOpen(false);
+      } else if (galleryImagePreviewIndex > imageIndex) {
+        setGalleryImagePreviewIndex(prev => prev - 1);
+      }
+      
+      // Dacă nu mai sunt imagini, închide modalul
+      if (updatedGallery.length === 0) {
+        setGalleryAllModalOpen(false);
+        setGalleryImagePreviewOpen(false);
+      }
+      
+      console.log('✅ Imagine ștearsă din galerie cu succes');
+    } catch (error) {
+      console.error('❌ Eroare la ștergerea imaginii din galerie:', error);
+      alert('Eroare la ștergerea imaginii. Te rugăm să încerci din nou.');
+    }
   };
 
   // Keyboard navigation for gallery modals (left/right, A/D; Space/Enter => forward)
@@ -2070,6 +2128,15 @@ const Scriitor = () => {
                           alt={`Galerie ${globalIdx + 1}`}
                           loading="lazy"
                         />
+                        {isAdmin && (
+                          <button
+                            className="scriitor-gallery-delete-button"
+                            onClick={(e) => handleDeleteGalleryImage(globalIdx, e)}
+                            title="Șterge imagine"
+                          >
+                            ×
+                          </button>
+                        )}
                       </div>
                     );
                   });
@@ -2117,6 +2184,18 @@ const Scriitor = () => {
             >
               ×
             </button>
+            {isAdmin && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleDeleteGalleryImage(galleryImagePreviewIndex, e);
+                }}
+                className="scriitor-gallery-image-preview-delete"
+                title="Șterge imagine"
+              >
+                🗑️
+              </button>
+            )}
             <div className="scriitor-gallery-image-preview-content">
               <img
                 src={gallery[galleryImagePreviewIndex]}
