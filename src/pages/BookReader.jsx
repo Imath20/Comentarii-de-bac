@@ -256,6 +256,20 @@ const BOOKS = {
     maxWidth: "640px",
     width: "80vw"
   },
+  "doi-feti-cu-stea": {
+    path: "/src/data/opere/doi-feti-cu-stea.json",
+    title: "Doi feti cu stele",
+    bookmarkKey: "doi-feti-cu-stea_bookmark",
+    maxWidth: "640px",
+    width: "80vw"
+  },
+  "petrea-prostul": {
+    path: "/src/data/opere/petrea-prostul.json",
+    title: "Petrea Prostul",
+    bookmarkKey: "petrea-prostul_bookmark",
+    maxWidth: "640px",
+    width: "80vw"
+  }
 };
 
 export default function BookReader() {

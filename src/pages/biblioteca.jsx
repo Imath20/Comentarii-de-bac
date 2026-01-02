@@ -433,7 +433,7 @@ const cartiList = [
         autor: 'Ioan Slavici',
         data: 'Redactare: 1881',
         img: '/opere/pacala.webp',
-        categorie: 'nuvela',
+        categorie: 'poveste',
         canonic: false,
         jsonFile: 'pacala-in-satul-lui',
         tip: 'opera'
@@ -443,9 +443,29 @@ const cartiList = [
         autor: 'Ioan Slavici',
         data: 'Redactare: 1881',
         img: '/opere/limir-imparat.webp',
-        categorie: 'nuvela',
+        categorie: 'basm',
         canonic: false,
         jsonFile: 'limir-imparat',
+        tip: 'opera'
+    },
+    {
+        titlu: 'Doi feti cu stea în frunte',
+        autor: 'Ion Creangă',
+        data: 'Redactare: 1877',
+        img: '/opere/doi_feti.webp',
+        categorie: 'basm',
+        canonic: false,
+        jsonFile: 'doi-feti-cu-stea',
+        tip: 'opera'
+    },
+    {
+        titlu: 'Petrea Prostul',
+        autor: 'Ion Creangă',
+        data: 'Redactare: 1877',
+        img: '/opere/petrea_prostul.webp',
+        categorie: 'basm',
+        canonic: false,
+        jsonFile: 'petrea-prostul',
         tip: 'opera'
     }
 ];
