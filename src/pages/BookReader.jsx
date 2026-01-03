@@ -303,7 +303,56 @@ const BOOKS = {
     bookmarkKey: "doua-loturi_bookmark",
     maxWidth: "640px",
     width: "80vw"
-  }
+  },
+  "adam-si-eva": {
+    path: "/src/data/opere/adam-si-eva.json",
+    title: "Adam si Eva",
+    bookmarkKey: "adam-si-eva_bookmark",
+    maxWidth: "640px",
+    width: "80vw"
+  },
+  "catastrofa": {
+    path: "/src/data/opere/catastrofa.json",
+    title: "Catastrofa",
+    bookmarkKey: "catastrofa_bookmark",
+    maxWidth: "640px",
+    width: "80vw"
+  },
+  "cersetorul": {
+    path: "/src/data/opere/cersetorul.json",
+    title: "Cersetorul",
+    bookmarkKey: "cersetorul_bookmark",
+    maxWidth: "640px",
+    width: "80vw"
+  },
+  "itic-strul-dezertor": {
+    path: "/src/data/opere/itic-strul-dezertor.json",
+    title: "Itic, strul, dezertor",
+    bookmarkKey: "itic-strul-dezertor_bookmark",
+    maxWidth: "640px",
+    width: "80vw"
+  },
+  "cantecul-iubirii": {
+    path: "/src/data/opere/cantecul-iubirii.json",
+    title: "Cantecul iubirii",
+    bookmarkKey: "cantecul-iubirii_bookmark",
+    maxWidth: "640px",
+    width: "80vw"
+  },
+  "ciuleandra": {
+    path: "/src/data/opere/ciuleandra.json",
+    title: "Ciuleandra",
+    bookmarkKey: "ciuleandra_bookmark",
+    maxWidth: "640px",
+    width: "80vw"
+  },
+  "neamul-soimarestilor": {
+    path: "/src/data/opere/neamul-soimarestilor.json",
+    title: "Neamul Şoimăreştilor",
+    bookmarkKey: "neamul-soimarestilor_bookmark",
+    maxWidth: "500px",
+    width: "80vw"
+  },
 };
 
 export default function BookReader() {

@@ -1,0 +1,27 @@
+[
+  {
+    "pdf_path": "public/Pdf/Mihail Sadoveanu - Neamul Soimarestilor.pdf",
+    "output": "src/data/opere/neamul-soimarestilor.json"
+  },
+  {
+    "pdf_path": "public/Pdf/Mihail_Sadoveanu_-_Creanga_de_aur_v.2.0.pdf",
+    "output": "src/data/opere/creanga-de-aur.json"
+  },
+  {
+    "pdf_path": "public/Pdf/Mihail-Sadoveanu-Domnu-Trandafir.pdf",
+    "output": "src/data/opere/domnul-trandafir.json"
+  },
+  {
+    "pdf_path": "public/Pdf/Mihail Sadoveanu - Dumbrava-minunata.pdf",
+    "output": "src/data/opere/dumbrava-minunata.json"
+  },
+  {
+    "pdf_path": "public/Pdf/Mihail Sadoveanu - Fratii Jderi vol 1-3.pdf",
+    "output": "src/data/opere/fratii-jderi.json"
+  },
+  {
+    "pdf_path": "public/Pdf/Mihail_Sadoveanu_Zodia_Cancerului_sau_vremea_Ducai_Voda_1_0.pdf",
+    "output": "src/data/opere/zodia-cancerului.json"
+  }
+]
+

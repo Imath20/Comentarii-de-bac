@@ -517,7 +517,77 @@ const cartiList = [
         canonic: false,
         jsonFile: 'doua-loturi',
         tip: 'opera'
-    }
+    },
+    {
+        titlu: 'Adam și Eva',
+        autor: 'Liviu Rebreanu',
+        data: 'Redactare: 1925',
+        img: '/opere/adam_eva.webp',
+        categorie: 'roman',
+        canonic: false,
+        jsonFile: 'adam-si-eva',
+        tip: 'opera'
+    },
+    {
+        titlu: 'Catastrofa',
+        autor: 'Liviu Rebreanu',
+        data: 'Redactare: 1922',
+        img: '/opere/catastrofa.webp',
+        categorie: 'nuvela',
+        canonic: false,
+        jsonFile: 'catastrofa',
+        tip: 'opera'
+    },
+    {
+        titlu: 'Cerșetorul',
+        autor: 'Liviu Rebreanu',
+        data: 'Redactare: 1916',
+        img: '/opere/cersetor.webp',
+        categorie: 'nuvela',
+        canonic: false,
+        jsonFile: 'cersetorul',
+        tip: 'opera'
+    },
+    {
+        titlu: 'Iţic ştrul dezertor',
+        autor: 'Liviu Rebreanu',
+        data: 'Redactare: 1918',
+        img: '/opere/itic_strula.webp',
+        categorie: 'nuvela',
+        canonic: false,
+        jsonFile: 'itic-strul-dezertor',
+        tip: 'opera'
+    },
+    {
+        titlu: 'Cântecul iubirii',
+        autor: 'Liviu Rebreanu',
+        data: 'Redactare: 1919',
+        img: '/opere/cantecul_iubirii.webp',
+        categorie: 'nuvela',
+        canonic: false,
+        jsonFile: 'cantecul-iubirii',
+        tip: 'opera'
+    },
+    {
+        titlu: 'Ciuleandra',
+        autor: 'Liviu Rebreanu',
+        data: 'Redactare: 1927',
+        img: '/opere/ciuleandra.webp',
+        categorie: 'roman',
+        canonic: false,
+        jsonFile: 'ciuleandra',
+        tip: 'opera'
+    },
+    {
+        titlu: 'Neamul Şoimăreştilor',
+        autor: 'Mihail Sadoveanu',
+        data: 'Redactare: 1915',
+        img: '/opere/neamul_soimarestilor.webp',
+        categorie: 'roman',
+        canonic: false,
+        jsonFile: 'neamul-soimarestilor',
+        tip: 'opera'
+    },
 ];
 
 const categorii = [
