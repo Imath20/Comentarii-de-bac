@@ -588,6 +588,56 @@ const cartiList = [
         jsonFile: 'neamul-soimarestilor',
         tip: 'opera'
     },
+    {
+        titlu: 'Creanga de aur',
+        autor: 'Mihail Sadoveanu',
+        data: 'Redactare: 1933',
+        img: '/opere/creanga_de_aur.webp',
+        categorie: 'roman',
+        canonic: false,
+        jsonFile: 'creanga-de-aur',
+        tip: 'opera'
+    },
+    {
+        titlu: 'Domnul Trandafir',
+        autor: 'Mihail Sadoveanu',
+        data: 'Redactare: 1906',
+        img: '/opere/domnul_trandafir.webp',
+        categorie: 'roman',
+        canonic: false,
+        jsonFile: 'domnul-trandafir',
+        tip: 'opera'
+    },
+    {
+        titlu: 'Dumbrava minunata',
+        autor: 'Mihail Sadoveanu',
+        data: 'Redactare: 1926',
+        img: '/opere/dumbrava_minunata.webp',
+        categorie: 'roman',
+        canonic: false,
+        jsonFile: 'dumbrava-minunata',
+        tip: 'opera'
+    },
+    {
+        titlu: 'Fratii Jderi',
+        autor: 'Mihail Sadoveanu',
+        data: 'Redactare: 1935-1942',
+        img: '/opere/fratii_jderi.webp',
+        categorie: 'roman',
+        canonic: false,
+        jsonFile: 'fratii-jderi',
+        tip: 'opera'
+    },
+    {
+        titlu: 'Zodia Cancerului',
+        autor: 'Mihail Sadoveanu',
+        data: 'Redactare: 1929',
+        img: '/opere/zodia_cancerului.webp',
+        categorie: 'roman',
+        canonic: false,
+        jsonFile: 'zodia-cancerului',
+        tip: 'opera'
+    }
 ];
 
 const categorii = [

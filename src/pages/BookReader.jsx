@@ -353,6 +353,41 @@ const BOOKS = {
     maxWidth: "500px",
     width: "80vw"
   },
+  "creanga-de-aur": {
+    path: "/src/data/opere/creanga-de-aur.json",
+    title: "Creanga de aur",
+    bookmarkKey: "creanga-de-aur_bookmark",
+    maxWidth: "540px",
+    width: "80vw"
+  },
+  "domnul-trandafir": {
+    path: "/src/data/opere/domnul-trandafir.json",
+    title: "Domnul Trandafir",
+    bookmarkKey: "domnul-trandafir_bookmark",
+    maxWidth: "550px",
+    width: "80vw"
+  },
+  "dumbrava-minunata": {
+    path: "/src/data/opere/dumbrava-minunata.json",
+    title: "Dumbrava minunata",
+    bookmarkKey: "dumbrava-minunata_bookmark",
+    maxWidth: "640px",
+    width: "80vw"
+  },
+  "fratii-jderi": {
+    path: "/src/data/opere/fratii-jderi.json",
+    title: "Fratii Jderi",
+    bookmarkKey: "fratii-jderi_bookmark",
+    maxWidth: "640px",
+    width: "80vw"
+  },
+  "zodia-cancerului": {
+    path: "/src/data/opere/zodia-cancerului.json",
+    title: "Zodia Cancerului",
+    bookmarkKey: "zodia-cancerului_bookmark",
+    maxWidth: "530px",
+    width: "80vw"
+  }
 };
 
 export default function BookReader() {
