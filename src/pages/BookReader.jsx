@@ -224,7 +224,7 @@ const BOOKS = {
     path: "/src/data/opere/patul-lui-procust.json",
     title: "Patul lui Procust",
     bookmarkKey: "patul-lui-procust_bookmark",
-    maxWidth: "850px",
+    maxWidth: "700px",
     width: "80vw"
   },
   "popa-tanda": {
@@ -386,6 +386,83 @@ const BOOKS = {
     title: "Zodia Cancerului",
     bookmarkKey: "zodia-cancerului_bookmark",
     maxWidth: "530px",
+    width: "80vw"
+  },
+  "act-venetian": {
+    path: "/src/data/opere/act-venetian.json",
+    title: "Act Venetian",
+    bookmarkKey: "act-venetian_bookmark",
+    maxWidth: "850px",
+    width: "80vw"
+  },
+  "un-om-intre-oameni": {
+    path: "/src/data/opere/un-om-intre-oameni.json",
+    title: "Un om intre oameni",
+    bookmarkKey: "un-om-intre-oameni_bookmark",
+    maxWidth: "640px",
+    width: "80vw"
+  },
+  "scrinul-negru": {
+    path: "/src/data/opere/scrinul-negru.json",
+    title: "Scrinul negru",
+    bookmarkKey: "scrinul-negru_bookmark",
+    maxWidth: "640px",
+    width: "80vw"
+  },
+  "viata-lui-mihai-eminescu": {
+    path: "/src/data/opere/viata-lui-mihai-eminescu.json",
+    title: "Viata lui Mihai Eminescu",
+    bookmarkKey: "viata-lui-mihai-eminescu_bookmark",
+    maxWidth: "640px",
+    width: "80vw"
+  },
+  "cartea-nuntii": {
+    path: "/src/data/opere/cartea-nuntii.json",
+    title: "Cartea nuntii",
+    bookmarkKey: "cartea-nuntii_bookmark",
+    maxWidth: "400px",
+    width: "80vw"
+  },
+  "bietul-ioanide": {
+    path: "/src/data/opere/bietul-ioanide.json",
+    title: "Bietul Ioanide",
+    bookmarkKey: "bietul-ioanide_bookmark",
+    maxWidth: "640px",
+    width: "80vw"
+  },
+  "ulysses": {
+    path: "/src/data/opere/ulysses.json",
+    title: "Ulysses",
+    bookmarkKey: "ulysses_bookmark",
+    maxWidth: "640px",
+    width: "80vw"
+  },
+  "cel-mai-iubit-dintre-pamanteni": {
+    path: "/src/data/opere/cel-mai-iubit-dintre-pamanteni.json",
+    title: "Cel mai iubit dintre pamanteni",
+    bookmarkKey: "cel-mai-iubit-dintre-pamanteni_bookmark",
+    maxWidth: "640px",
+    width: "80vw"
+  },
+  "intalnirea-din-pamanturi": {
+    path: "/src/data/opere/intalnirea-din-pamanturi.json",
+    title: "Intalnirea din pamanturi",
+    bookmarkKey: "intalnirea-din-pamanturi_bookmark",
+    maxWidth: "800px",
+    width: "80vw"
+  },
+  "scrieri-de-tinerete": {
+    path: "/src/data/opere/scrieri-de-tinerete.json",
+    title: "Scrieri de tinerete",
+    bookmarkKey: "scrieri-de-tinerete_bookmark",
+    maxWidth: "500px",
+    width: "80vw"
+  },
+  "jurnal-intim": {
+    path: "/src/data/opere/jurnal-intim.json",
+    title: "Jurnal intim",
+    bookmarkKey: "jurnal-intim_bookmark",
+    maxWidth: "640px",
     width: "80vw"
   }
 };

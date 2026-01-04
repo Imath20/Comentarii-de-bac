@@ -637,9 +637,82 @@ const cartiList = [
         canonic: false,
         jsonFile: 'zodia-cancerului',
         tip: 'opera'
-    }
+    },
+    {
+        titlu: 'Act Venetian',
+        autor: 'Camil Petrescu',
+        data: 'Redactare: 1929',
+        img: '/opere/act-venetian.webp',
+        categorie: 'teatru',
+        canonic: false,
+        jsonFile: 'act-venetian',
+        tip: 'opera'
+    },
+    {
+        titlu: 'Un om intre oameni',
+        autor: 'Camil Petrescu',
+        data: 'Redactare: 1953',
+        img: '/opere/un-om-intre-oameni.webp',
+        categorie: 'teatru',
+        canonic: false,
+        jsonFile: 'un-om-intre-oameni',
+        tip: 'opera'
+    },
+    {
+        titlu: 'Scrinul negru',
+        autor: 'George Calinescu',
+        data: 'Redactare: 1960',
+        img: '/opere/scrinul-negru.webp',
+        categorie: 'roman',
+        romanSubcategorie: 'roman-balzacian',
+        canonic: false,
+        jsonFile: 'scrinul-negru',
+        tip: 'opera'
+    },
+    {
+        titlu: 'Viata lui Mihai Eminescu',
+        autor: 'George Calinescu',
+        data: 'Redactare: 1932',
+        img: '/opere/viata-lui-mihai-eminescu.webp',
+        categorie: 'critica',
+        canonic: false,
+        jsonFile: 'viata-lui-mihai-eminescu',
+        tip: 'opera'
+    },
+    {
+        titlu: 'Cartea nuntii',
+        autor: 'George Calinescu',
+        data: 'Redactare: 1933',
+        img: '/opere/cartea-nuntii.webp',
+        categorie: 'roman',
+        romanSubcategorie: 'roman-balzacian',
+        canonic: false,
+        jsonFile: 'cartea-nuntii',
+        tip: 'opera'
+    },
+    {
+        titlu: 'Bietul Ioanide',
+        autor: 'George Calinescu',
+        data: 'Redactare: 1953',
+        img: '/opere/bietul-ioanide.webp',
+        categorie: 'roman',
+        romanSubcategorie: 'roman-balzacian',
+        canonic: false,
+        jsonFile: 'bietul-ioanide',
+        tip: 'opera'
+    },
+    {
+        titlu: 'Ulysses',
+        autor: 'George Calinescu',
+        data: 'Redactare: 1933',
+        img: '/opere/ulysses.webp',
+        categorie: 'roman',
+        romanSubcategorie: 'roman-balzacian',
+        canonic: false,
+        jsonFile: 'ulysses',
+        tip: 'opera'
+    },
 ];
-
 const categorii = [
     { id: 'toate', nume: 'Toate categoriile' },
     { id: 'poezie', nume: 'Poezie' },
@@ -652,9 +725,8 @@ const categorii = [
     { id: 'poveste', nume: 'Poveste'},
     { id: 'schita', nume: 'Schiţă'}
 ];
-
 // Listează categoriile pentru butoanele de prompturi rapide (fără memorii, poveste, schiță)
-const categoriiQuick = categorii.filter(c => !['toate', 'memorii', 'poveste', 'schita'].includes(c.id));
+const categoriiQuick = categorii.filter(c => !['toate', 'memorii', 'poveste', 'schita', 'teatru'].includes(c.id));
 
 // Opțiuni pentru react-select
 const genOptions = categorii.map(categorie => ({ value: categorie.id, label: categorie.nume }));
