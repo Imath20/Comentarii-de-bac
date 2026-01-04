@@ -712,6 +712,48 @@ const cartiList = [
         jsonFile: 'ulysses',
         tip: 'opera'
     },
+    {
+        titlu: 'Cel mai iubit dintre pamanteni',
+        autor: 'Marin Preda',
+        data: 'Redactare: 1980',
+        img: '/opere/cel-mai-iubit-dintre-pamanteni.webp',
+        categorie: 'roman',
+        romanSubcategorie: 'roman-social',
+        canonic: false,
+        jsonFile: 'cel-mai-iubit-dintre-pamanteni',
+        tip: 'opera'
+    },
+    {
+        titlu: 'Intalnirea din pamanturi',
+        autor: 'Marin Preda',
+        data: 'Redactare: 1948',
+        img: '/opere/intalnirea-din-pamanturi.webp',
+        categorie: 'Volum de proză scurtă',
+        canonic: false,
+        jsonFile: 'intalnirea-din-pamanturi',
+        tip: 'opera'
+    },
+    {
+        titlu: 'Scrieri de tinerete',
+        autor: 'Marin Preda',
+        data: 'Redactare: 1966',
+        img: '/opere/scrieri-de-tinerete.webp',
+        categorie: 'Volum de proză scurtă',
+        romanSubcategorie: 'roman-balzacian',
+        canonic: false,
+        jsonFile: 'scrieri-de-tinerete',
+        tip: 'opera'
+    },
+    {
+        titlu: 'Jurnal intim',
+        autor: 'Marin Preda',
+        data: 'Redactare: 2001',
+        img: '/opere/jurnal-intim.webp',
+        categorie: 'Memorii',
+        canonic: false,
+        jsonFile: 'jurnal-intim',
+        tip: 'opera'
+    },
 ];
 const categorii = [
     { id: 'toate', nume: 'Toate categoriile' },
@@ -723,10 +765,11 @@ const categorii = [
     { id: 'critica', nume: 'Critică literară' },
     { id: 'memorii', nume: 'Memorii' },
     { id: 'poveste', nume: 'Poveste'},
-    { id: 'schita', nume: 'Schiţă'}
+    { id: 'schita', nume: 'Schiţă'},
+    { id: 'Volum de proză scurtă', nume: 'Volum de proză scurtă'}
 ];
 // Listează categoriile pentru butoanele de prompturi rapide (fără memorii, poveste, schiță)
-const categoriiQuick = categorii.filter(c => !['toate', 'memorii', 'poveste', 'schita', 'teatru'].includes(c.id));
+const categoriiQuick = categorii.filter(c => !['toate', 'memorii', 'poveste', 'schita', 'teatru', 'Volum de proză scurtă'].includes(c.id));
 
 // Opțiuni pentru react-select
 const genOptions = categorii.map(categorie => ({ value: categorie.id, label: categorie.nume }));

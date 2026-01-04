@@ -245,7 +245,7 @@ const BOOKS = {
     path: "/src/data/opere/viata-ca-o-prada.json",
     title: "Viață ca o pradă",
     bookmarkKey: "viata-ca-o-prada_bookmark",
-    maxWidth: "880px",
+    maxWidth: "900px",
     width: "80vw"
   },
   "pacala-in-satul-lui": {
