@@ -464,6 +464,34 @@ const BOOKS = {
     bookmarkKey: "jurnal-intim_bookmark",
     maxWidth: "640px",
     width: "80vw"
+  },
+  "asupra-poeziei-noastre-populare": {
+    path: "/src/data/opere/asupra-poeziei-noastre-populare.json",
+    title: "Asupra poeziei noastre populare",
+    bookmarkKey: "asupra-poeziei-noastre-populare_bookmark",
+    maxWidth: "640px",
+    width: "80vw"
+  },
+  "directia-noua-in-poezia-si-proza-romana": {
+    path: "/src/data/opere/directia-noua-in-poezia-si-proza-romana.json",
+    title: "Directia noua in poezia si proza romana",
+    bookmarkKey: "directia-noua-in-poezia-si-proza-romana_bookmark",
+    maxWidth: "790px",
+    width: "80vw"
+  },
+  "in-contra-directiei-de-asta-zi-in-cultura-romana": {
+    path: "/src/data/opere/in-contra-directiei-de-asta-zi-in-cultura-romana.json",
+    title: "In contra directiei de asta zi in cultura romana",
+    bookmarkKey: "in-contra-directiei-de-asta-zi-in-cultura-romana_bookmark",
+    maxWidth: "800px",
+    width: "80vw"
+  },
+  "betia-de-cuvinte": {
+    path: "/src/data/opere/betia-de-cuvinte.json",
+    title: "Betia de cuvinte",
+    bookmarkKey: "betia-de-cuvinte_bookmark",
+    maxWidth: "670px",
+    width: "80vw"
   }
 };
 

@@ -754,6 +754,46 @@ const cartiList = [
         jsonFile: 'jurnal-intim',
         tip: 'opera'
     },
+    {
+        titlu: 'Asupra poeziei noastre populare',
+        autor: 'Titu Maiorescu',
+        data: 'Redactare: 1867',
+        img: '/opere/asupra-poeziei.webp',
+        categorie: 'critica',
+        canonic: false,
+        jsonFile: 'asupra-poeziei-noastre-populare',
+        tip: 'opera'
+    },
+    {
+        titlu: 'Directia noua in poezia si proza romana',
+        autor: 'Titu Maiorescu',
+        data: 'Redactare: 1872',
+        img: '/opere/directia-noua.webp',
+        categorie: 'critica',
+        canonic: false,
+        jsonFile: 'directia-noua-in-poezia-si-proza-romana',
+        tip: 'opera'
+    },
+    {
+        titlu: 'In contra directiei de asta zi in cultura romana',
+        autor: 'Titu Maiorescu',
+        data: 'Redactare: 1868',
+        img: '/opere/in-contra-directiei.webp',
+        categorie: 'critica',
+        canonic: false,
+        jsonFile: 'in-contra-directiei-de-asta-zi-in-cultura-romana',
+        tip: 'opera'
+    },
+    {
+        titlu: 'Betia de cuvinte',
+        autor: 'Titu Maiorescu',
+        data: 'Redactare: 1873',
+        img: '/opere/betie-de-cuvinte.webp',
+        categorie: 'critica',
+        canonic: false,
+        jsonFile: 'betia-de-cuvinte',
+        tip: 'opera'
+    },
 ];
 const categorii = [
     { id: 'toate', nume: 'Toate categoriile' },
