@@ -1,19 +1,11 @@
 [
   {
-    "pdf_path": "public/Pdf/395896399-Marin-Sorescu-Unde-Fugim-de-Acasa.pdf",
-    "output": "src/data/opere/unde-fugim-de-acasa.json"
+    "pdf_path": "public/Pdf/titu-maiorescu-de-eugen-lovinescu_compress.pdf",
+    "output": "src/data/opere/titu-maiorescu-de-eugen-lovinescu.json"
   },
   {
-    "pdf_path": "public/Pdf/marin-sorescu-la-lilieci_compress.pdf",
-    "output": "src/data/opere/la-lilieci.json"
-  },
-  {
-    "pdf_path": "public/Pdf/Marin-Sorescu-Poezii.pdf",
-    "output": "src/data/opere/poezii.json"
-  },
-  {
-    "pdf_path": "public/Pdf/paracliserul-de-marin-sorescu_compress.pdf",
-    "output": "src/data/opere/paracliserul.json"
+    "pdf_path": "public/Pdf/22396188-Principii-de-Estetica-de-George-Calinescu.pdf",
+    "output": "src/data/opere/principii-de-estetica-de-george-calinescu.json"
   }
 ]
 

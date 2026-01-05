@@ -520,6 +520,83 @@ const BOOKS = {
     bookmarkKey: "paracliserul_bookmark",
     maxWidth: "800px",
     width: "80vw"
+  },
+  "romanul-adolescentului-miop": {
+    path: "/src/data/opere/romanul-adolescentului-miop.json",
+    title: "Romanul adolescentului miop",
+    bookmarkKey: "romanul-adolescentului-miop_bookmark",
+    maxWidth: "900px",
+    width: "80vw"
+  },
+  "nopti-la-serampore": {
+    path: "/src/data/opere/nopti-la-serampore.json",
+    title: "Nopti la serampore",
+    bookmarkKey: "nopti-la-serampore_bookmark",
+    maxWidth: "640px",
+    width: "80vw"
+  },
+  "domnisoara-cristina": {
+    path: "/src/data/opere/domnisoara-cristina.json",
+    title: "Domnisoara Cristina",
+    bookmarkKey: "domnisoara-cristina_bookmark",
+    maxWidth: "640px",
+    width: "80vw"
+  },
+  "sarpele": {
+    path: "/src/data/opere/sarpele.json",
+    title: "Sarpele",
+    bookmarkKey: "sarpele_bookmark",
+    maxWidth: "640px",
+    width: "80vw"
+  },
+  "negru-pe-alb": {
+    path: "/src/data/opere/negru-pe-alb.json",
+    title: "Negru pe alb",
+    bookmarkKey: "negru-pe-alb_bookmark",
+    maxWidth: "640px",
+    width: "80vw"
+  },
+  "o-alergare-de-cai": {
+    path: "/src/data/opere/o-alergare-de-cai.json",
+    title: "O alergare de cai",
+    bookmarkKey: "o-alergare-de-cai_bookmark",
+    maxWidth: "640px",
+    width: "80vw"
+  },
+  "sobieski-si-romanii": {
+    path: "/src/data/opere/sobieski-si-romanii.json",
+    title: "Sobieski si romanii",
+    bookmarkKey: "sobieski-si-romanii_bookmark",
+    maxWidth: "700px",
+    width: "80vw"
+  },
+  "istoria-civilizatiei-romane": {
+    path: "/src/data/opere/istoria-civilizatiei-romane.json",
+    title: "Istoria civilizatiei romane",
+    bookmarkKey: "istoria-civilizatiei-romane_bookmark",
+    maxWidth: "700px",
+    width: "80vw"
+  },
+  "istoria-literaturii-romane-contemporane": {
+    path: "/src/data/opere/istoria-literaturii-romane-contemporane.json",
+    title: "Istoria literaturii romane contemporane",
+    bookmarkKey: "istoria-literaturii-romane-contemporane_bookmark",
+    maxWidth: "640px",
+    width: "80vw"
+  },
+  "principii-de-estetica-de-george-calinescu": {
+    path: "/src/data/opere/principii-de-estetica-de-george-calinescu.json",
+    title: "Principii de estetica de George Calinescu",
+    bookmarkKey: "principii-de-estetica-de-george-calinescu_bookmark",
+    maxWidth: "750px",
+    width: "80vw"
+  },
+  "titu-maiorescu-de-eugen-lovinescu": {
+    path: "/src/data/opere/titu-maiorescu-de-eugen-lovinescu.json",
+    title: "Titu Maiorescu de Eugen Lovinescu",
+    bookmarkKey: "titu-maiorescu-de-eugen-lovinescu_bookmark",
+    maxWidth: "750px",
+    width: "80vw"
   }
 };
 

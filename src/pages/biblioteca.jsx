@@ -834,6 +834,108 @@ const cartiList = [
         jsonFile: 'paracliserul',
         tip: 'opera'
     },
+    {
+        titlu: 'Romanul adolescentului miop',
+        autor: 'Mircea Eliade',
+        data: 'Redactare: 1934',
+        img: '/opere/romanul-adolescentului-miop.webp',
+        categorie: 'roman',
+        romanSubcategorie: 'roman-autobiografic',
+        canonic: false,
+        jsonFile: 'romanul-adolescentului-miop',
+        tip: 'opera'
+    },
+    {
+        titlu: 'Nopti la serampore',
+        autor: 'Mircea Eliade',
+        data: 'Redactare: 1933',
+        img: '/opere/nopti-la-serampore.webp',
+        categorie: 'nuvela',
+        canonic: false,
+        jsonFile: 'nopti-la-serampore',
+        tip: 'opera'
+    },
+    {
+        titlu: 'Domnisoara Cristina',
+        autor: 'Mircea Eliade',
+        data: 'Redactare: 1936',
+        img: '/opere/domnisoara-cristina.webp',
+        categorie: 'roman',
+        romanSubcategorie: 'roman-psihologic',
+        canonic: false,
+        jsonFile: 'domnisoara-cristina',
+        tip: 'opera'
+    },
+    {
+        titlu: 'Sarpele',
+        autor: 'Mircea Eliade',
+        data: 'Redactare: 1937',
+        img: '/opere/sarpele.webp',
+        categorie: 'nuvela',
+        canonic: false,
+        jsonFile: 'sarpele',
+        tip: 'opera'
+    },
+    {
+        titlu: 'Negru pe alb',
+        autor: 'Costache Negruzzi',
+        data: 'Redactare: 1840',
+        img: '/opere/negru-pe-alb.webp',
+        categorie: 'scrisori',
+        canonic: false,
+        jsonFile: 'negru-pe-alb',
+        tip: 'opera'
+    },
+    {
+        titlu: 'Sobieski si romanii',
+        autor: 'Costache Negruzzi',
+        data: 'Redactare: 1845',
+        img: '/opere/sobieski-si-romani.webp',
+        categorie: 'nuvela',
+        canonic: false,
+        jsonFile: 'sobieski-si-romanii',
+        tip: 'opera'
+    },
+    {
+        titlu: 'Istoria literaturii romane contemporane',
+        autor: 'Eugen Lovinescu',
+        data: 'Redactare: 1926-1929',
+        img: '/opere/istoria-literaturii.webp',
+        categorie: 'istorie',
+        canonic: true,
+        jsonFile: 'istoria-literaturii-romane-contemporane',
+        tip: 'opera'
+    },
+    {
+        titlu: 'Istoria civilizatiei romane',
+        autor: 'Eugen Lovinescu',
+        data: 'Redactare: 1924-125',
+        img: '/opere/istoria-civilizatiei.webp',
+        categorie: 'istorie',
+        canonic: false,
+        jsonFile: 'istoria-civilizatiei-romane',
+        tip: 'opera'
+    },
+    {
+        titlu: 'Titu Maiorescu de Eugen Lovinescu',
+        autor: 'Eugen Lovinescu',
+        data: 'Redactare: 1940',
+        img: '/opere/titu-maiorescu.webp',
+        categorie: 'istorie',
+        canonic: false,
+        jsonFile: 'titu-maiorescu-de-eugen-lovinescu',
+        tip: 'opera'
+    },
+    {
+        titlu: 'Principii de estetica',
+        autor: 'George Calinescu',
+        data: 'Redactare: 1930',
+        img: '/opere/principii-estetica.webp',
+        categorie: 'estetica',
+        canonic: false,
+        jsonFile: 'principii-de-estetica',
+        tip: 'opera'
+    }
 ];
 const categorii = [
     { id: 'toate', nume: 'Toate categoriile' },
@@ -847,10 +949,13 @@ const categorii = [
     { id: 'poveste', nume: 'Poveste'},
     { id: 'schita', nume: 'Schiţă'},
     { id: 'Volum de proză scurtă', nume: 'Volum de proză scurtă'},
-    { id: 'volum de poezii', nume: 'Volum de poezii'}
+    { id: 'volum de poezii', nume: 'Volum de poezii'},
+    { id: 'scrisori', nume: 'Scrisori'},
+    { id: 'istorie', nume: 'Istorie'},
+    { id: 'estetica', nume: 'Estetică'}
 ];
 // Listează categoriile pentru butoanele de prompturi rapide (fără memorii, poveste, schiță)
-const categoriiQuick = categorii.filter(c => !['toate', 'basm', 'memorii', 'poveste', 'schita', 'teatru', 'Volum de proză scurtă', 'volum de poezii'].includes(c.id));
+const categoriiQuick = categorii.filter(c => !['toate', 'basm', 'memorii', 'poveste', 'schita', 'teatru', 'Volum de proză scurtă', 'volum de poezii', 'scrisori', 'istorie', 'estetica'].includes(c.id));
 
 // Opțiuni pentru react-select
 const genOptions = categorii.map(categorie => ({ value: categorie.id, label: categorie.nume }));
@@ -874,7 +979,8 @@ const romanSubcategoriiOptions = [
     { value: 'roman-mitic', label: 'Roman mitic' },
     { value: 'roman-social', label: 'Roman social' },
     { value: 'roman-istoric', label: 'Roman istoric' },
-    { value: 'roman-fantastic', label: 'Roman fantastic' }
+    { value: 'roman-fantastic', label: 'Roman fantastic' },
+    { value: 'roman-psihologic', label: 'Roman psihologic' }
 ];
 
 const customSelectStyles = (darkTheme) => ({
