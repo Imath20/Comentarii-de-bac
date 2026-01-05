@@ -245,11 +245,23 @@
   
 }
 
-.opere-sort-container {
+.opere-dropdowns-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
   margin-left: auto;
-  min-width: 260px;
-  margin-right: 10rem;
+  flex-shrink: 0;
 }
+
+.opere-sort-container {
+  min-width: 260px;
+  flex-shrink: 0;
+}
+
+.opere-roman-subcategory-container {
+  min-width: 260px;
+  flex-shrink: 0;
+} 
 
 .opere-filter-button {
   padding: 0.7rem 1.5rem;
@@ -434,12 +446,6 @@
 .opere-select-container {
   min-width: 200px;
   flex-shrink: 0;
-}
-
-.opere-roman-subcategory-container {
-  min-width: 200px;
-  flex-shrink: 0;
-  margin-left: 8rem;
 } 
 
 // Poem popup styles for biblioteca

@@ -77,9 +77,22 @@
     min-width: 100%;
   }
   
+  .opere-dropdowns-wrapper {
+    margin-left: 0;
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.9rem;
+    margin-top: 0.9rem;
+  }
+  
   .opere-roman-subcategory-container {
     margin-left: 0;
-    margin-top: 0.5rem;
+    width: 100%;
+  }
+  
+  .opere-sort-container {
+    width: 100%;
   }
 }
 
@@ -256,6 +269,41 @@
       rgba(0,0,0,0.4) 50%,
       rgba(0,0,0,0.9) 100%
     );
+  }
+}
+
+.biblioteca-card-subcategory-badge {
+  position: absolute;
+  top: 0.9rem;
+  right: 0.9rem;
+  z-index: 3;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(8px);
+  color: #4e2e1e;
+  padding: 0.35rem 0.75rem;
+  border-radius: 1rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: capitalize;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  letter-spacing: 0.02em;
+  opacity: 0.95;
+  transition: all 0.2s ease;
+
+  &.dark-theme {
+    background: rgba(42, 23, 10, 0.92);
+    color: #ffd591;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  &:hover {
+    opacity: 1;
+    transform: translateY(-1px);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+
+    &.dark-theme {
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
+    }
   }
 }
 

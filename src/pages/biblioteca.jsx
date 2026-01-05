@@ -794,6 +794,46 @@ const cartiList = [
         jsonFile: 'betia-de-cuvinte',
         tip: 'opera'
     },
+    {
+        titlu: 'Unde fugim de acasa',
+        autor: 'Marin Sorescu',
+        data: 'Redactare: 1967',
+        img: '/opere/unde-fugim-de-acasa.webp',
+        categorie: 'teatru',
+        canonic: false,
+        jsonFile: 'unde-fugim-de-acasa',
+        tip: 'opera'
+    },
+    {
+        titlu: 'La lilieci',
+        autor: 'Marin Sorescu',
+        data: 'Redactare: 1973',
+        img: '/opere/la-lilieci.webp',
+        categorie: 'volum de poezii',
+        canonic: false,
+        jsonFile: 'la-lilieci',
+        tip: 'opera'
+    },
+    {
+        titlu: 'Poezii',
+        autor: 'Marin Sorescu',
+        data: 'Redactare: 1965',
+        img: '/opere/poeme.webp',
+        categorie: 'volum de poezii',
+        canonic: false,
+        jsonFile: 'poezii',
+        tip: 'opera'
+    },
+    {
+        titlu: 'Paracliserul',
+        autor: 'Marin Sorescu',
+        data: 'Redactare: 1970',
+        img: '/opere/paracliserul.webp',
+        categorie: 'teatru',
+        canonic: false,
+        jsonFile: 'paracliserul',
+        tip: 'opera'
+    },
 ];
 const categorii = [
     { id: 'toate', nume: 'Toate categoriile' },
@@ -806,10 +846,11 @@ const categorii = [
     { id: 'memorii', nume: 'Memorii' },
     { id: 'poveste', nume: 'Poveste'},
     { id: 'schita', nume: 'Schiţă'},
-    { id: 'Volum de proză scurtă', nume: 'Volum de proză scurtă'}
+    { id: 'Volum de proză scurtă', nume: 'Volum de proză scurtă'},
+    { id: 'volum de poezii', nume: 'Volum de poezii'}
 ];
 // Listează categoriile pentru butoanele de prompturi rapide (fără memorii, poveste, schiță)
-const categoriiQuick = categorii.filter(c => !['toate', 'memorii', 'poveste', 'schita', 'teatru', 'Volum de proză scurtă'].includes(c.id));
+const categoriiQuick = categorii.filter(c => !['toate', 'basm', 'memorii', 'poveste', 'schita', 'teatru', 'Volum de proză scurtă', 'volum de poezii'].includes(c.id));
 
 // Opțiuni pentru react-select
 const genOptions = categorii.map(categorie => ({ value: categorie.id, label: categorie.nume }));
@@ -1259,6 +1300,12 @@ Treceau bătăi de aripi prin vraiștea grădinii
         }
     });
 
+    // Funcție helper pentru a obține label-ul subcategoriei de roman
+    const getRomanSubcategorieLabel = (subcategorieValue) => {
+        const subcategorie = romanSubcategoriiOptions.find(opt => opt.value === subcategorieValue);
+        return subcategorie ? subcategorie.label : '';
+    };
+
     const handleCardClick = (carte) => {
         if (carte.jsonFile) {
             // Redirecționează către BookReader cu fișierul JSON
@@ -1378,17 +1425,44 @@ Treceau bătăi de aripi prin vraiștea grădinii
                         </button>
                     ))}
                     
-                    {/* Dropdown Subcategorii Roman - în linie cu butoanele */}
-                    {selectedCategory === 'roman' && (
-                        <div className="opere-roman-subcategory-container">
+                    {/* Container pentru dropdown-uri (subcategorii și sortare) - pe același rând */}
+                    <div className="opere-dropdowns-wrapper">
+                        {/* Dropdown Subcategorii Roman - în linie cu butoanele */}
+                        {selectedCategory === 'roman' && (
+                            <div className="opere-roman-subcategory-container">
+                                <Select
+                                    options={romanSubcategoriiOptions}
+                                    value={romanSubcategoriiOptions.find(opt => opt.value === romanSubcategorieFilter)}
+                                    onChange={opt => setRomanSubcategorieFilter(opt.value)}
+                                    styles={customSelectStyles(darkTheme)}
+                                    isSearchable={false}
+                                    menuPlacement="auto"
+                                    placeholder="Subcategorii roman"
+                                    theme={theme => ({
+                                        ...theme,
+                                        borderRadius: 20,
+                                        colors: {
+                                            ...theme.colors,
+                                            primary25: darkTheme ? '#3a2312' : '#f7f8fa',
+                                            primary: darkTheme ? '#ffd591' : '#a97c50',
+                                            neutral0: darkTheme ? '#2a170a' : '#fffbeee',
+                                            neutral80: darkTheme ? '#ffd591' : '#4e2e1e',
+                                        },
+                                    })}
+                                />
+                            </div>
+                        )}
+
+                        {/* Dropdown Sortare - pe același rând cu subcategoria */}
+                        <div className="opere-sort-container">
                             <Select
-                                options={romanSubcategoriiOptions}
-                                value={romanSubcategoriiOptions.find(opt => opt.value === romanSubcategorieFilter)}
-                                onChange={opt => setRomanSubcategorieFilter(opt.value)}
+                                options={sortOptions}
+                                value={sortOptions.find(opt => opt.value === sortOption)}
+                                onChange={opt => setSortOption(opt.value)}
                                 styles={customSelectStyles(darkTheme)}
                                 isSearchable={false}
                                 menuPlacement="auto"
-                                placeholder="Subcategorii roman"
+                                placeholder="Sortează"
                                 theme={theme => ({
                                     ...theme,
                                     borderRadius: 20,
@@ -1402,30 +1476,6 @@ Treceau bătăi de aripi prin vraiștea grădinii
                                 })}
                             />
                         </div>
-                    )}
-
-                    {/* Dropdown Sortare - mutat aici pe același rând cu prompturile */}
-                    <div className="opere-sort-container">
-                        <Select
-                            options={sortOptions}
-                            value={sortOptions.find(opt => opt.value === sortOption)}
-                            onChange={opt => setSortOption(opt.value)}
-                            styles={customSelectStyles(darkTheme)}
-                            isSearchable={false}
-                            menuPlacement="auto"
-                            placeholder="Sortează"
-                            theme={theme => ({
-                                ...theme,
-                                borderRadius: 20,
-                                colors: {
-                                    ...theme.colors,
-                                    primary25: darkTheme ? '#3a2312' : '#f7f8fa',
-                                    primary: darkTheme ? '#ffd591' : '#a97c50',
-                                    neutral0: darkTheme ? '#2a170a' : '#fffbeee',
-                                    neutral80: darkTheme ? '#ffd591' : '#4e2e1e',
-                                },
-                            })}
-                        />
                     </div>
                 </div>
 
@@ -1459,6 +1509,13 @@ Treceau bătăi de aripi prin vraiștea grădinii
                             />
                             {/* Gradient overlay for readability */}
                             <div className={`biblioteca-card-overlay ${darkTheme ? 'dark-theme' : ''}`} />
+                            
+                            {/* Subcategoria de roman - colțul din dreapta sus */}
+                            {carte.categorie === 'roman' && carte.romanSubcategorie && (
+                                <div className={`biblioteca-card-subcategory-badge ${darkTheme ? 'dark-theme' : ''}`}>
+                                    {getRomanSubcategorieLabel(carte.romanSubcategorie)}
+                                </div>
+                            )}
                             
                             {/* Content overlay */}
                             <div className="biblioteca-card-content">

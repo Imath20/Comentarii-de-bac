@@ -1,19 +1,19 @@
 [
   {
-    "pdf_path": "public/Pdf/asupra-poeziei-noastre-populare.pdf",
-    "output": "src/data/opere/asupra-poeziei-noastre-populare.json"
+    "pdf_path": "public/Pdf/395896399-Marin-Sorescu-Unde-Fugim-de-Acasa.pdf",
+    "output": "src/data/opere/unde-fugim-de-acasa.json"
   },
   {
-    "pdf_path": "public/Pdf/Maiorescu_Direcţia nouă în poezia şi proza română.pdf",
-    "output": "src/data/opere/directia-noua-in-poezia-si-proza-romana.json"
+    "pdf_path": "public/Pdf/marin-sorescu-la-lilieci_compress.pdf",
+    "output": "src/data/opere/la-lilieci.json"
   },
   {
-    "pdf_path": "public/Pdf/Maiorescu_În contra direcţiei de astăzi în cultura română.pdf",
-    "output": "src/data/opere/in-contra-directiei-de-asta-zi-in-cultura-romana.json"
+    "pdf_path": "public/Pdf/Marin-Sorescu-Poezii.pdf",
+    "output": "src/data/opere/poezii.json"
   },
   {
-    "pdf_path": "public/Pdf/betia-de-cuvinte.pdf",
-    "output": "src/data/opere/betia-de-cuvinte.json"
+    "pdf_path": "public/Pdf/paracliserul-de-marin-sorescu_compress.pdf",
+    "output": "src/data/opere/paracliserul.json"
   }
 ]
 

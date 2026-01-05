@@ -492,6 +492,34 @@ const BOOKS = {
     bookmarkKey: "betia-de-cuvinte_bookmark",
     maxWidth: "670px",
     width: "80vw"
+  },
+  "unde-fugim-de-acasa": {
+    path: "/src/data/opere/unde-fugim-de-acasa.json",
+    title: "Unde fugim de acasa",
+    bookmarkKey: "unde-fugim-de-acasa_bookmark",
+    maxWidth: "500px",
+    width: "80vw"
+  },
+  "la-lilieci": {
+    path: "/src/data/opere/la-lilieci.json",
+    title: "La lilieci",
+    bookmarkKey: "la-lilieci_bookmark",
+    maxWidth: "500px",
+    width: "80vw"
+  },
+  "poezii": {
+    path: "/src/data/opere/poezii.json",
+    title: "Poezii",
+    bookmarkKey: "poezii_bookmark",
+    maxWidth: "640px",
+    width: "80vw"
+  },
+  "paracliserul": {
+    path: "/src/data/opere/paracliserul.json",
+    title: "Paracliserul",
+    bookmarkKey: "paracliserul_bookmark",
+    maxWidth: "800px",
+    width: "80vw"
   }
 };
 

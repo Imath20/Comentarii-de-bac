@@ -50,7 +50,7 @@ def main():
         print("   python clean.py src/data/opere/popa-tanda.json")
         print()
         print("💡 Exemplu pentru popa-tanda.json:")
-        clean_page_numbers("src/data/opere/popa-tanda.json")
+        clean_page_numbers("src/data/opere/unde-fugim-de-acasa.json")
 
 if __name__ == "__main__":
     main()
