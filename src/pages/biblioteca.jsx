@@ -140,7 +140,7 @@ const cartiList = [
         data: 'Redactare: 1955/1967',
         img: '/opere/morometii.webp',
         categorie: 'roman',
-        romanSubcategorie: 'roman-autobiografic',
+        romanSubcategorie: 'roman-realist',
         canonic: true,
         jsonFile: 'morometii',
         tip: 'opera'
@@ -161,7 +161,7 @@ const cartiList = [
         autor: 'Marin Sorescu',
         data: 'Redactare: 1968',
         img: '/opere/iona.webp',
-        categorie: 'comedie',
+        categorie: 'teatru',
         canonic: true,
         jsonFile: 'iona',
         tip: 'opera'
@@ -182,6 +182,7 @@ const cartiList = [
         data: 'Redactare: 1894',
         img: '/opere/mara.webp',
         categorie: 'roman',
+        romanSubcategorie: 'roman-realist',
         canonic: false,
         jsonFile: 'mara',
         tip: 'opera'
@@ -202,8 +203,7 @@ const cartiList = [
         autor: 'Costache Negruzzi',
         data: 'Redactare: 1840',
         img: '/opere/lapusneanu.webp',
-        categorie: 'roman',
-        romanSubcategorie: 'roman-istoric',
+        categorie: 'nuvela',
         canonic: false,
         jsonFile: 'lapusneanu',
         tip: 'opera'
@@ -213,8 +213,7 @@ const cartiList = [
         autor: 'Ion Creangă',
         data: 'Redactare: 1881-1892',
         img: '/opere/amintiri-copil.webp',
-        categorie: 'roman',
-        romanSubcategorie: 'roman-autobiografic',
+        categorie: 'memorii',
         canonic: false,
         jsonFile: 'amintiri-din-copilarie',
         tip: 'opera'
@@ -370,7 +369,7 @@ const cartiList = [
         data: 'Redactare: 1922',
         img: '/opere/padure-spanzurati.webp',
         categorie: 'roman',
-        romanSubcategorie: 'roman-de-razboi',
+        romanSubcategorie: 'roman-psihologic',
         canonic: true,
         jsonFile: 'padurea-spanzuratilor',
         tip: 'opera'
@@ -513,7 +512,7 @@ const cartiList = [
         autor: 'Ion Luca Caragiale',
         data: 'Redactare: 1898',
         img: '/opere/doua_loturi.webp',
-        categorie: 'comedie',
+        categorie: 'nuvela',
         canonic: false,
         jsonFile: 'doua-loturi',
         tip: 'opera'
@@ -524,6 +523,7 @@ const cartiList = [
         data: 'Redactare: 1925',
         img: '/opere/adam_eva.webp',
         categorie: 'roman',
+        romanSubcategorie: 'roman-mitic',
         canonic: false,
         jsonFile: 'adam-si-eva',
         tip: 'opera'
@@ -574,6 +574,7 @@ const cartiList = [
         data: 'Redactare: 1927',
         img: '/opere/ciuleandra.webp',
         categorie: 'roman',
+        romanSubcategorie: 'roman-psihologic',
         canonic: false,
         jsonFile: 'ciuleandra',
         tip: 'opera'
@@ -584,6 +585,7 @@ const cartiList = [
         data: 'Redactare: 1915',
         img: '/opere/neamul_soimarestilor.webp',
         categorie: 'roman',
+        romanSubcategorie: 'roman-istoric',
         canonic: false,
         jsonFile: 'neamul-soimarestilor',
         tip: 'opera'
@@ -594,6 +596,7 @@ const cartiList = [
         data: 'Redactare: 1933',
         img: '/opere/creanga_de_aur.webp',
         categorie: 'roman',
+        romanSubcategorie: 'roman-mitic',
         canonic: false,
         jsonFile: 'creanga-de-aur',
         tip: 'opera'
@@ -603,7 +606,7 @@ const cartiList = [
         autor: 'Mihail Sadoveanu',
         data: 'Redactare: 1906',
         img: '/opere/domnul_trandafir.webp',
-        categorie: 'roman',
+        categorie: 'nuvela',
         canonic: false,
         jsonFile: 'domnul-trandafir',
         tip: 'opera'
@@ -613,7 +616,7 @@ const cartiList = [
         autor: 'Mihail Sadoveanu',
         data: 'Redactare: 1926',
         img: '/opere/dumbrava_minunata.webp',
-        categorie: 'roman',
+        categorie: 'poveste',
         canonic: false,
         jsonFile: 'dumbrava-minunata',
         tip: 'opera'
@@ -624,6 +627,7 @@ const cartiList = [
         data: 'Redactare: 1935-1942',
         img: '/opere/fratii_jderi.webp',
         categorie: 'roman',
+        romanSubcategorie: 'roman-istoric',
         canonic: false,
         jsonFile: 'fratii-jderi',
         tip: 'opera'
@@ -634,6 +638,7 @@ const cartiList = [
         data: 'Redactare: 1929',
         img: '/opere/zodia_cancerului.webp',
         categorie: 'roman',
+        romanSubcategorie: 'roman-istoric',
         canonic: false,
         jsonFile: 'zodia-cancerului',
         tip: 'opera'
@@ -707,7 +712,7 @@ const cartiList = [
         data: 'Redactare: 1933',
         img: '/opere/ulysses.webp',
         categorie: 'roman',
-        romanSubcategorie: 'roman-balzacian',
+        romanSubcategorie: 'roman-parodic',
         canonic: false,
         jsonFile: 'ulysses',
         tip: 'opera'
@@ -861,7 +866,7 @@ const cartiList = [
         data: 'Redactare: 1936',
         img: '/opere/domnisoara-cristina.webp',
         categorie: 'roman',
-        romanSubcategorie: 'roman-psihologic',
+        romanSubcategorie: 'roman-fantastic',
         canonic: false,
         jsonFile: 'domnisoara-cristina',
         tip: 'opera'
@@ -909,7 +914,7 @@ const cartiList = [
     {
         titlu: 'Istoria civilizatiei romane',
         autor: 'Eugen Lovinescu',
-        data: 'Redactare: 1924-125',
+        data: 'Redactare: 1924-1925',
         img: '/opere/istoria-civilizatiei.webp',
         categorie: 'istorie',
         canonic: false,
@@ -980,7 +985,9 @@ const romanSubcategoriiOptions = [
     { value: 'roman-social', label: 'Roman social' },
     { value: 'roman-istoric', label: 'Roman istoric' },
     { value: 'roman-fantastic', label: 'Roman fantastic' },
-    { value: 'roman-psihologic', label: 'Roman psihologic' }
+    { value: 'roman-psihologic', label: 'Roman psihologic' },
+    { value: 'roman-realist', label: 'Roman realist' },
+    { value: 'roman-parodic', label: 'Roman parodic' }
 ];
 
 const customSelectStyles = (darkTheme) => ({
