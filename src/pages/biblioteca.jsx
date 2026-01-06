@@ -933,7 +933,7 @@ const cartiList = [
         img: '/opere/principii-estetica.webp',
         categorie: 'estetica',
         canonic: false,
-        jsonFile: 'principii-de-estetica',
+        jsonFile: 'principii-de-estetica-de-george-calinescu',
         tip: 'opera'
     }
 ];

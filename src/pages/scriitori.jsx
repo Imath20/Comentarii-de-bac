@@ -148,22 +148,53 @@ export default function Scriitori() {
         setLoading(true);
         const scriitori = await fetchScriitori();
         // Convert to format expected by the page
-        // Filtrează Veronica Micle din lista principală (apare doar în searchbar)
         const formattedScriitori = scriitori
-          .filter(s => {
+          .map(s => {
             const key = s.key || s.id;
-            return key !== 'veronica'; // Exclude Veronica Micle
+            // Asigură-te că Veronica Micle are datele corecte
+            if (key === 'veronica') {
+              return {
+                nume: s.nume || 'Veronica Micle',
+                date: '1850 – 1889',
+                img: s.img || '',
+                color: s.color || 'rgba(255,179,71,0.82)',
+                categorie: s.categorie || '',
+                canonic: false, // Marcăm ca necanonic
+                ordine: s.ordine !== undefined ? s.ordine : 999,
+                key: key,
+              };
+            }
+            return {
+              nume: s.nume || '',
+              date: s.date || '',
+              img: s.img || '',
+              color: s.color || 'rgba(255,179,71,0.82)',
+              categorie: s.categorie || '',
+              canonic: s.canonic !== undefined ? s.canonic : true,
+              ordine: s.ordine !== undefined ? s.ordine : 999,
+              key: key,
+            };
           })
-          .map(s => ({
-            nume: s.nume || '',
-            date: s.date || '',
-            img: s.img || '',
-            color: s.color || 'rgba(255,179,71,0.82)',
-            categorie: s.categorie || '',
-            canonic: s.canonic !== undefined ? s.canonic : true,
-            ordine: s.ordine !== undefined ? s.ordine : 999,
-            key: s.key || s.id,
-          }));
+          .sort((a, b) => {
+            // Sortează după ordine, dar asigură-te că Veronica Micle vine după Voiculescu
+            const ordineA = a.ordine !== undefined ? a.ordine : 999;
+            const ordineB = b.ordine !== undefined ? b.ordine : 999;
+            
+            // Dacă unul dintre ei este Voiculescu și celălalt este Veronica Micle
+            const aIsVoiculescu = a.key === 'voiculescu';
+            const bIsVoiculescu = b.key === 'voiculescu';
+            const aIsVeronica = a.key === 'veronica';
+            const bIsVeronica = b.key === 'veronica';
+            
+            if (aIsVoiculescu && bIsVeronica) return -1; // Voiculescu înainte
+            if (aIsVeronica && bIsVoiculescu) return 1;  // Veronica după
+            
+            // Sortare normală după ordine
+            if (ordineA !== ordineB) {
+              return ordineA - ordineB;
+            }
+            return a.nume.localeCompare(b.nume, 'ro', { sensitivity: 'base' });
+          });
         
         setScriitoriList(formattedScriitori);
         setError(null);
@@ -218,6 +249,15 @@ export default function Scriitori() {
       case 'ordine':
       default:
         // Sortare implicită după ordine (din Firestore), apoi după nume
+        // Asigură-te că Veronica Micle apare după Voiculescu
+        const aIsVoiculescu = a.key === 'voiculescu';
+        const bIsVoiculescu = b.key === 'voiculescu';
+        const aIsVeronica = a.key === 'veronica';
+        const bIsVeronica = b.key === 'veronica';
+        
+        if (aIsVoiculescu && bIsVeronica) return -1; // Voiculescu înainte
+        if (aIsVeronica && bIsVoiculescu) return 1;  // Veronica după
+        
         const ordineA = a.ordine !== undefined ? a.ordine : 999;
         const ordineB = b.ordine !== undefined ? b.ordine : 999;
         if (ordineA !== ordineB) {

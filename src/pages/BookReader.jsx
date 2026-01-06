@@ -525,7 +525,7 @@ const BOOKS = {
     path: "/src/data/opere/romanul-adolescentului-miop.json",
     title: "Romanul adolescentului miop",
     bookmarkKey: "romanul-adolescentului-miop_bookmark",
-    maxWidth: "900px",
+    maxWidth: "700px",
     width: "80vw"
   },
   "nopti-la-serampore": {
