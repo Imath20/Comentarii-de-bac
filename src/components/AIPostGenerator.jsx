@@ -8,6 +8,7 @@ const AIPostGenerator = ({
   prompt,
   poemText = null,
   text = null,
+  descriere = null,
   onTextGenerated,
   scriitor,
   setMessage,
@@ -51,10 +52,18 @@ const AIPostGenerator = ({
         console.log('Brief trimis către AI:', brief);
       }
 
+      // Determină tipul de conținut pentru mesajul sistem
+      let contentType = 'postare';
+      if (poemText) {
+        contentType = 'poezie';
+      } else if (text) {
+        contentType = 'postare';
+      }
+
       const systemMessage = skipBrief 
         ? `Asumă-ți pe deplin identitatea literară a lui ${scriitorName}${scriitorPeriod ? ` (${scriitorPeriod})` : ''}${scriitorCategory ? `, ${scriitorCategory}` : ''}.
 
-Scrie o descriere scurtă pentru o poezie, ca și cum autorul ar prezenta propria operă.
+Scrie o descriere scurtă pentru o ${contentType}, ca și cum autorul ar prezenta propria operă.
 Descrierea este scrisă la persoana I sau a III-a și pare destinată cititorilor contemporani autorului.
 
 Public: oameni ai vremii respective (evită orice referință modernă: internet, social media, termeni actuali).

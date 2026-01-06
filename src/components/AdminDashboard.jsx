@@ -495,9 +495,9 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
   const poemTextDebounceRef = useRef(null);
   const reactionsDebounceRef = useRef(null);
 
-  // Funcție pentru generarea automată a descrierii poeziei / poveștii
+  // Funcție pentru generarea automată a descrierii poeziei / poveștii / postării generale
   const generatePoemDescription = useCallback(async (poemText) => {
-    if (!poemText || !poemText.trim() || !selectedScriitor || (!postForm.isPoem && !postForm.isStory)) {
+    if (!poemText || !poemText.trim() || !selectedScriitor) {
       return;
     }
 
@@ -519,9 +519,19 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
         .trim()
         .slice(0, 480);
 
+      // Determină tipul de conținut pentru mesajul sistem
+      let contentType = 'postare';
+      if (postForm.isPoem) {
+        contentType = 'poezie';
+      } else if (postForm.isStory) {
+        contentType = 'povestire / fragment de proză';
+      } else {
+        contentType = 'postare';
+      }
+
       const systemMessage = `Asumă-ți pe deplin identitatea literară a lui ${scriitorName}${scriitorPeriod ? ` (${scriitorPeriod})` : ''}${scriitorCategory ? `, ${scriitorCategory}` : ''}.
 
-Scrie o descriere scurtă pentru o ${postForm.isPoem ? 'poezie' : 'povestire / fragment de proză'}, ca și cum autorul ar prezenta propria operă.
+Scrie o descriere scurtă pentru o ${contentType}, ca și cum autorul ar prezenta propria operă.
 Descrierea este scrisă la persoana I sau a III-a și pare destinată cititorilor contemporani autorului.
 
 Public: oameni ai vremii respective (evită orice referință modernă: internet, social media, termeni actuali).
@@ -543,13 +553,33 @@ Returnează exclusiv textul final al descrierii, ca și cum ar fi fost scris dir
         .trim()
         .slice(0, 800);
 
-      const userMessage = `Generează descrierea pentru următoarea ${postForm.isPoem ? 'poezie' : 'poveste / proză scurtă'}:
+      let userMessage = '';
+      if (postForm.isPoem) {
+        userMessage = `Generează descrierea pentru următoarea poezie:
+
+${poemSnippet}
+
+Descrierea trebuie să fie relevantă pentru poezia de mai sus.
+
+Returnează exclusiv textul final al descrierii.`;
+      } else if (postForm.isStory) {
+        userMessage = `Generează descrierea pentru următoarea poveste / proză scurtă:
 
 ${poemSnippet}
 
 Descrierea trebuie să fie relevantă pentru textul literar de mai sus.
 
 Returnează exclusiv textul final al descrierii.`;
+      } else {
+        // Pentru postări generale
+        userMessage = `Generează descrierea pentru următoarea postare:
+
+${poemSnippet}
+
+Descrierea trebuie să fie relevantă pentru conținutul postării de mai sus.
+
+Returnează exclusiv textul final al descrierii.`;
+      }
 
       const requestBody = {
         model: 'moonshotai/kimi-k2-instruct-0905',
@@ -592,7 +622,7 @@ Returnează exclusiv textul final al descrierii.`;
     } finally {
       setIsGeneratingDescription(false);
     }
-  }, [selectedScriitor, postForm.isPoem, postForm.isStory]);
+  }, [selectedScriitor, postForm.isPoem, postForm.isStory, postForm]);
 
   // Funcție pentru generarea automată a unei reacții pentru un prieten
   const generateReactionForFriend = useCallback(async (friend, poemText) => {
@@ -621,11 +651,21 @@ Returnează exclusiv textul final al descrierii.`;
         .trim()
         .slice(0, 600);
 
+      // Determină tipul de conținut
+      let contentType = 'postarea';
+      if (postForm.isPoem) {
+        contentType = 'poezia';
+      } else if (postForm.isStory) {
+        contentType = 'povestea';
+      } else {
+        contentType = 'postarea';
+      }
+
       const systemMessage = `Ești ${friendName}${friendPeriod ? ` (${friendPeriod})` : ''}${friendCategory ? `, ${friendCategory}` : ''}, prieten/contemporan al lui ${selectedScriitor?.nume || 'autorul'}.
 
-Analizează poezia și alege o reacție emoțională adecvată bazată pe:
-- Tema și tonul poeziei (tristețe, melancolie, frumusețe, etc.)
-- Stilul și estetica poeziei
+Analizează ${contentType} și alege o reacție emoțională adecvată bazată pe:
+- Tema și tonul ${contentType === 'poezia' ? 'poeziei' : contentType === 'povestea' ? 'poveștii' : 'postării'} (tristețe, melancolie, frumusețe, etc.)
+- Stilul și estetica ${contentType === 'poezia' ? 'poeziei' : contentType === 'povestea' ? 'poveștii' : 'postării'}
 - Relația ta cu autorul și cu literatura
 - Personalitatea ta literară
 
@@ -635,12 +675,12 @@ Context despre tine (folosește doar dacă ajută): ${friendBio || '—'}
 
 Returnează DOAR tipul reacției (unul dintre: like, love, ador, wow, haha, sad, cry, angry, strengh, multumire, fire, cool, clap, Romania), fără explicații, fără text suplimentar.`;
 
-      const userMessage = `Poezia lui ${selectedScriitor?.nume || 'autorul'}:
+      const userMessage = `${contentType.charAt(0).toUpperCase() + contentType.slice(1)} lui ${selectedScriitor?.nume || 'autorul'}:
 
 ${poemSnippet}
 
-Analizează poezia: ce teme, ce imagini, ce ton, ce emoții transmite?
-Alege reacția emoțională care se potrivește cel mai bine cu ceea ce simți la această poezie specifică.
+Analizează ${contentType}: ce teme, ce imagini, ce ton, ce emoții transmite?
+Alege reacția emoțională care se potrivește cel mai bine cu ceea ce simți la această ${contentType === 'poezia' ? 'poezie' : contentType === 'povestea' ? 'poveste' : 'postare'} specifică.
 
 Returnează DOAR tipul reacției (like, love, ador, wow, haha, sad, cry, angry, strengh, multumire, fire, cool, clap, Romania).`;
 
@@ -688,7 +728,7 @@ Returnează DOAR tipul reacției (like, love, ador, wow, haha, sad, cry, angry, 
       console.error('Eroare la generarea reacției:', error);
       return null;
     }
-  }, [selectedScriitor]);
+  }, [selectedScriitor, postForm.isPoem, postForm.isStory]);
 
   // Funcție pentru generarea automată a unui comentariu pentru un prieten
   const generateCommentForFriend = useCallback(async (friend, poemText, descriere, existingReactions = []) => {
@@ -728,9 +768,23 @@ Returnează DOAR tipul reacției (like, love, ador, wow, haha, sad, cry, angry, 
           }).join(', ')
         : 'apreciere calmă';
 
+      // Determină tipul de conținut
+      let contentType = 'postarea';
+      let contentTypeGen = 'postării';
+      if (postForm.isPoem) {
+        contentType = 'poezia';
+        contentTypeGen = 'poeziei';
+      } else if (postForm.isStory) {
+        contentType = 'povestea';
+        contentTypeGen = 'poveștii';
+      } else {
+        contentType = 'postarea';
+        contentTypeGen = 'postării';
+      }
+
       const systemMessage = `Ești ${friendName}${friendPeriod ? ` (${friendPeriod})` : ''}${friendCategory ? `, ${friendCategory}` : ''}, prieten/contemporan al lui ${selectedScriitor?.nume || 'autorul'}.
 
-SARCINA TA: Scrie un comentariu scurt (30-70 cuvinte) la poezia lui, folosind EXCLUSIV un limbaj literar sofisticat, metaforic și misterios.
+SARCINA TA: Scrie un comentariu scurt (30-70 cuvinte) la ${contentTypeGen} lui, folosind EXCLUSIV un limbaj literar sofisticat, metaforic și misterios.
 
 ⚠️⚠️⚠️ REGLAMENTE ABSOLUTE - VIOLAREA LOR INVALIDEZĂ COMENTARIUL ⚠️⚠️⚠️
 
@@ -750,9 +804,9 @@ INTERZIS ABSOLUT:
 OBLIGATORIU ABSOLUT:
 ✅ Limbaj inteligent, metaforic, cu imagini simbolice și straturi de sens
 ✅ Ton misterios, profund, contemplativ, evocativ
-✅ Referințe SPECIFICE și CONCRETE la poezia de mai jos (imagini exacte, versuri specifice, teme identificate, ton, stil)
+✅ Referințe SPECIFICE și CONCRETE la ${contentTypeGen} de mai jos (imagini exacte, ${postForm.isPoem ? 'versuri specifice' : 'fragmente specifice'}, teme identificate, ton, stil)
 ✅ Stil coerent cu epoca și autentic pentru personalitatea ta literară
-✅ Comentariul trebuie să fie RELEVANT și CONECTAT direct la poezia specifică
+✅ Comentariul trebuie să fie RELEVANT și CONECTAT direct la ${contentTypeGen} specifică
 ✅ UNICITATE ABSOLUTĂ: Fiecare comentariu TREBUIE să fie complet ORIGINAL, cu expresii, metafore și imagini UNICE, diferite de orice alt comentariu
 ✅ Creativitate: Folosește imagini, metafore și formulări PERSONALE și INOVATOARE, specifice stilului tău literar
 ✅ Varietate: Evită formulări comune, clișee sau expresii care ar putea fi folosite de alți scriitori - fiecare comentariu trebuie să reflecte personalitatea ta UNICĂ
@@ -778,7 +832,7 @@ Ton: ${reactionMood}, dar EXPRIMAT EXCLUSIV prin metafore, imagini simbolice și
 Stil: literar, sofisticat, cu straturi de sens, evocativ, misterios, profund, autentic pentru personalitatea ta literară. Fiecare cuvânt trebuie să poarte sens și să creeze atmosferă.
 
 VERIFICARE FINALĂ ÎNAINTE DE A SCRIE:
-1. Comentariul se referă SPECIFIC la poezia de mai jos (imagini, versuri, teme)? DA/NU
+1. Comentariul se referă SPECIFIC la ${contentTypeGen} de mai jos (imagini, ${postForm.isPoem ? 'versuri' : 'fragmente'}, teme)? DA/NU
 2. Folosești metafore și imagini simbolice? DA/NU
 3. Eviti cuvântul "frate" și adresările familiare? DA/NU
 4. Tonul este misterios și profund, nu jocos? DA/NU
@@ -798,7 +852,9 @@ CRITICAL: Prima frază a comentariului TREBUIE să fie COMPLET UNICĂ și ORIGIN
 
 Context despre tine (folosește doar dacă ajută la autenticitate): ${friendBio || '—'}`;
 
-      const userMessage = `Scrie un comentariu scurt (30-70 cuvinte) la poezia lui ${selectedScriitor?.nume || 'autorul'}.
+      let userMessage = '';
+      if (postForm.isPoem) {
+        userMessage = `Scrie un comentariu scurt (30-70 cuvinte) la poezia lui ${selectedScriitor?.nume || 'autorul'}.
 
 ${descriereSnippet ? `DESCRIERE: ${descriereSnippet}\n\n` : ''}POEZIA COMPLETĂ:
 ${poemSnippet}
@@ -812,6 +868,37 @@ IMPORTANT: Comentariul TREBUIE să se refere explicit la poezia de mai sus:
 Comentariul trebuie să fie relevant pentru poezia specifică și să reflecte personalitatea ta literară.
 
 Returnează doar textul comentariului, fără explicații.`;
+      } else if (postForm.isStory) {
+        userMessage = `Scrie un comentariu scurt (30-70 cuvinte) la povestea lui ${selectedScriitor?.nume || 'autorul'}.
+
+${descriereSnippet ? `DESCRIERE: ${descriereSnippet}\n\n` : ''}POVESTEA COMPLETĂ:
+${poemSnippet}
+
+IMPORTANT: Comentariul TREBUIE să se refere explicit la povestea de mai sus:
+- La imagini specifice din poveste
+- La teme și emoții transmise
+- La fragmente care te-au impresionat
+- La stilul și tonul poveștii
+
+Comentariul trebuie să fie relevant pentru povestea specifică și să reflecte personalitatea ta literară.
+
+Returnează doar textul comentariului, fără explicații.`;
+      } else {
+        userMessage = `Scrie un comentariu scurt (30-70 cuvinte) la postarea lui ${selectedScriitor?.nume || 'autorul'}.
+
+${descriereSnippet ? `DESCRIERE: ${descriereSnippet}\n\n` : ''}POSTAREA COMPLETĂ:
+${poemSnippet}
+
+IMPORTANT: Comentariul TREBUIE să se refere explicit la postarea de mai sus:
+- La imagini specifice din postare
+- La teme și emoții transmise
+- La fragmente care te-au impresionat
+- La stilul și tonul postării
+
+Comentariul trebuie să fie relevant pentru postarea specifică și să reflecte personalitatea ta literară.
+
+Returnează doar textul comentariului, fără explicații.`;
+      }
 
       const requestBody = {
         model: 'moonshotai/kimi-k2-instruct-0905',
@@ -858,13 +945,13 @@ Returnează doar textul comentariului, fără explicații.`;
       console.error('Eroare la generarea comentariului:', error);
       return null;
     }
-  }, [selectedScriitor]);
+  }, [selectedScriitor, postForm.isPoem, postForm.isStory]);
 
   // Funcție pentru generarea automată a reacțiilor și comentariilor pentru toți prietenii
-  const generateReactionsAndComments = useCallback(async (poemText, descriere) => {
-    if (!poemText || !poemText.trim() || !selectedScriitor) {
+  const generateReactionsAndComments = useCallback(async (textContent, descriere) => {
+    if (!textContent || !textContent.trim() || !selectedScriitor) {
       console.log('❌ Condiții neîndeplinite pentru generare:', {
-        hasPoemText: !!poemText,
+        hasTextContent: !!textContent,
         hasSelectedScriitor: !!selectedScriitor
       });
       return;
@@ -988,7 +1075,7 @@ Returnează doar textul comentariului, fără explicații.`;
       console.log(`🎲 Generare ${numReactions} reacții din ${friends.length} prieteni disponibili`);
       
       for (const friend of friendsToReact) {
-        const reaction = await generateReactionForFriend(friend, poemText);
+        const reaction = await generateReactionForFriend(friend, textContent);
         if (reaction) {
           newReactions.push(reaction);
           // Așteaptă puțin între apeluri pentru a evita rate limiting
@@ -1009,7 +1096,7 @@ Returnează doar textul comentariului, fără explicații.`;
       console.log(`💬 Generare ${numComments} comentarii din ${friends.length} prieteni disponibili`);
       
       for (const friend of friendsToComment) {
-        const comment = await generateCommentForFriend(friend, poemText, descriere, newReactions);
+        const comment = await generateCommentForFriend(friend, textContent, descriere, newReactions);
         if (comment) {
           newComments.push(comment);
           // Așteaptă puțin între apeluri pentru a evita rate limiting
@@ -1039,14 +1126,13 @@ Returnează doar textul comentariului, fără explicații.`;
       clearTimeout(poemTextDebounceRef.current);
     }
 
-    // Dacă este poezie sau poveste și există text, generează descrierea după 2 secunde de la ultima tastă
+    // Dacă există text (poezie, poveste sau postare generală), generează descrierea după 2 secunde de la ultima tastă
     // Doar dacă descrierea este goală sau foarte scurtă (posibil generată anterior dar incompletă)
     const fullTextForDescription = postForm.isPoem 
       ? postForm.poemText 
-      : (postForm.isStory ? [postForm.storyText, postForm.storyMoreText].filter(Boolean).join('\n\n') : '');
+      : (postForm.isStory ? [postForm.storyText, postForm.storyMoreText].filter(Boolean).join('\n\n') : postForm.text);
 
-    const shouldGenerate = (postForm.isPoem || postForm.isStory) && 
-                          fullTextForDescription && 
+    const shouldGenerate = fullTextForDescription && 
                           fullTextForDescription.trim() && 
                           selectedScriitor && 
                           !isGeneratingDescription &&
@@ -1064,7 +1150,7 @@ Returnează doar textul comentariului, fără explicații.`;
         clearTimeout(poemTextDebounceRef.current);
       }
     };
-  }, [postForm.poemText, postForm.storyText, postForm.storyMoreText, postForm.isPoem, postForm.isStory, postForm.descriere, selectedScriitor, generatePoemDescription, isGeneratingDescription]);
+  }, [postForm.poemText, postForm.storyText, postForm.storyMoreText, postForm.text, postForm.isPoem, postForm.isStory, postForm.descriere, selectedScriitor, generatePoemDescription, isGeneratingDescription]);
 
   // Generare automată a reacțiilor și comentariilor după ce se generează descrierea
   useEffect(() => {
@@ -1073,27 +1159,26 @@ Returnează doar textul comentariului, fără explicații.`;
       clearTimeout(reactionsDebounceRef.current);
     }
 
-    // Generează reacții și comentarii doar dacă:
-    // - Este poezie sau poveste
-    // - Există text suficient (minim 10 caractere)
+    // Generează reacții și comentarii dacă:
+    // - Există text suficient (minim 10 caractere) - poezie, poveste sau postare generală
     // - Există descriere (generată sau introdusă manual) - minim 20 caractere
     // - Nu se generează deja
     // - Nu există deja reacții sau comentarii (pentru a nu regenera)
     // - Descrierea nu se generează în acest moment
     // - Există prieteni
+    // Pentru postările generale, folosim descrierea în loc de textul complet
     const fullTextForReactions = postForm.isPoem 
       ? postForm.poemText 
-      : (postForm.isStory ? [postForm.storyText, postForm.storyMoreText].filter(Boolean).join('\n\n') : '');
+      : (postForm.isStory ? [postForm.storyText, postForm.storyMoreText].filter(Boolean).join('\n\n') : (postForm.descriere || postForm.text));
 
-    const hasPoemText = fullTextForReactions && fullTextForReactions.trim().length > 10;
+    const hasText = fullTextForReactions && fullTextForReactions.trim().length > 10;
     const hasDescriere = postForm.descriere && postForm.descriere.trim().length >= 20;
     const hasFriends = selectedScriitor && (selectedScriitor.friends || []).length > 0;
     // Nu mai verificăm allScriitoriForSearch.length > 0 pentru că funcția va încărca datele dacă nu sunt disponibile
     const noExistingReactions = (postForm.reactions || []).length === 0;
     const noExistingComments = (postForm.comments || []).length === 0;
 
-    const shouldGenerate = (postForm.isPoem || postForm.isStory) && 
-                          hasPoemText && 
+    const shouldGenerate = hasText && 
                           hasDescriere &&
                           selectedScriitor && 
                           !isGeneratingReactions &&
@@ -1106,7 +1191,7 @@ Returnează doar textul comentariului, fără explicații.`;
       console.log('🔄 Declanșare generare reacții și comentarii...', {
         isPoem: postForm.isPoem,
         isStory: postForm.isStory,
-        hasPoemText,
+        hasText,
         hasDescriere,
         hasFriends,
         friendsCount: (selectedScriitor.friends || []).length,
@@ -1116,15 +1201,19 @@ Returnează doar textul comentariului, fără explicații.`;
       // Așteaptă 3 secunde după ce s-a generat descrierea pentru a se asigura că totul e gata
       reactionsDebounceRef.current = setTimeout(() => {
         console.log('🚀 Generare reacții și comentarii...');
-        generateReactionsAndComments(fullTextForReactions, postForm.descriere);
+        // Pentru postările generale, folosim descrierea ca text principal pentru reacții și comentarii
+        const textForReactions = (!postForm.isPoem && !postForm.isStory) 
+          ? postForm.descriere 
+          : fullTextForReactions;
+        generateReactionsAndComments(textForReactions, postForm.descriere);
       }, 3000);
     } else {
       // Debug: de ce nu se generează
-      if ((postForm.isPoem || postForm.isStory) && hasPoemText && hasDescriere && selectedScriitor) {
+      if (hasText && hasDescriere && selectedScriitor) {
         console.log('❌ Condiții neîndeplinite pentru generare:', {
           isPoem: postForm.isPoem,
           isStory: postForm.isStory,
-          hasPoemText,
+          hasText,
           hasDescriere,
           hasFriends,
           isGeneratingReactions,
@@ -1143,7 +1232,7 @@ Returnează doar textul comentariului, fără explicații.`;
         clearTimeout(reactionsDebounceRef.current);
       }
     };
-  }, [postForm.isPoem, postForm.isStory, postForm.poemText, postForm.storyText, postForm.storyMoreText, postForm.descriere, postForm.reactions, postForm.comments, selectedScriitor, allScriitoriForSearch, isGeneratingReactions, isGeneratingDescription, generateReactionsAndComments]);
+  }, [postForm.isPoem, postForm.isStory, postForm.poemText, postForm.storyText, postForm.storyMoreText, postForm.text, postForm.descriere, postForm.reactions, postForm.comments, selectedScriitor, allScriitoriForSearch, isGeneratingReactions, isGeneratingDescription, generateReactionsAndComments]);
 
   // Load scriitori when tab is active
   useEffect(() => {
@@ -3593,7 +3682,8 @@ Returnează doar textul comentariului, fără explicații.`;
                   <AIPostGenerator
                     prompt={aiPostPrompt}
                     poemText={postForm.isPoem ? postForm.poemText : null}
-                    text={!postForm.isPoem ? postForm.text : null}
+                    text={!postForm.isPoem && !postForm.isStory ? postForm.text : null}
+                    descriere={postForm.descriere || null}
                     onTextGenerated={(generatedText) => setPostForm((prev) => ({ ...prev, descriere: generatedText }))}
                     scriitor={selectedScriitor}
                     setMessage={setMessage}
@@ -3616,7 +3706,17 @@ Returnează doar textul comentariului, fără explicații.`;
                         : isGeneratingReactions
                         ? '⏳ Se generează reacțiile și comentariile automat...'
                         : 'Descrierea, reacțiile și comentariile se generează automat când introduci textul poeziei. Poți completa manual sau apasă cubul pentru a regenera.')
-                    : 'Poți completa manual sau apasă cubul pentru a genera automat descrierea.'}
+                    : (postForm.isStory
+                        ? (isGeneratingDescription 
+                            ? '⏳ Se generează descrierea automat...' 
+                            : isGeneratingReactions
+                            ? '⏳ Se generează reacțiile și comentariile automat...'
+                            : 'Descrierea, reacțiile și comentariile se generează automat când introduci textul poveștii. Poți completa manual sau apasă cubul pentru a regenera.')
+                        : (isGeneratingDescription 
+                            ? '⏳ Se generează descrierea automat...' 
+                            : isGeneratingReactions
+                            ? '⏳ Se generează reacțiile și comentariile automat...'
+                            : 'Descrierea, reacțiile și comentariile se generează automat când introduci textul postării. Poți completa manual sau apasă cubul pentru a regenera.'))}
                 </small>
               </div>
 
