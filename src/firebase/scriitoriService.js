@@ -385,6 +385,120 @@ export async function deleteCommentFromPost(scriitorKey, postId, commentIndex) {
 }
 
 /**
+ * Delete a reaction from a post
+ * @param {string} scriitorKey - The key/id of the scriitor
+ * @param {number|string} postId - The id of the post
+ * @param {number} reactionIndex - The index of the reaction to delete
+ * @returns {Promise<void>}
+ */
+export async function deleteReactionFromPost(scriitorKey, postId, reactionIndex) {
+  try {
+    const scriitor = await fetchScriitor(scriitorKey);
+    if (!scriitor) {
+      throw new Error('Scriitorul nu a fost găsit');
+    }
+
+    const posts = scriitor.posts || [];
+    const postIndex = posts.findIndex(p => p.id === postId);
+    
+    if (postIndex === -1) {
+      throw new Error('Postarea nu a fost găsită');
+    }
+
+    const reactions = (posts[postIndex].reactions || []).filter((_, idx) => idx !== reactionIndex);
+    posts[postIndex].reactions = reactions;
+    
+    await updateScriitor(scriitorKey, { posts });
+    console.log('✅ Reacție ștearsă cu succes');
+  } catch (error) {
+    console.error('❌ Eroare la ștergerea reacției:', error);
+    throw error;
+  }
+}
+
+/**
+ * Apply moderation corrections (for AI moderator)
+ * @param {string} scriitorKey - The key/id of the scriitor
+ * @param {Array} corrections - Array of correction objects
+ * @returns {Promise<void>}
+ */
+export async function applyModerationCorrections(scriitorKey, corrections) {
+  try {
+    const scriitor = await fetchScriitor(scriitorKey);
+    if (!scriitor) {
+      throw new Error('Scriitorul nu a fost găsit');
+    }
+
+    const posts = [...(scriitor.posts || [])];
+    let modified = false;
+
+    for (const correction of corrections) {
+      const postIndex = posts.findIndex(p => p.id === correction.postId);
+      if (postIndex === -1) continue;
+
+      if (correction.type === 'comment') {
+        if (correction.action === 'delete') {
+          const comments = [...(posts[postIndex].comments || [])];
+          if (correction.index < comments.length) {
+            comments.splice(correction.index, 1);
+            posts[postIndex].comments = comments;
+            modified = true;
+            console.log(`🗑️ Șters comentariu ${correction.index} din postarea ${correction.postId}`);
+          }
+        } else if (correction.action === 'correct') {
+          const comments = [...(posts[postIndex].comments || [])];
+          if (correction.index < comments.length && correction.corrected) {
+            comments[correction.index] = {
+              ...comments[correction.index],
+              text: correction.corrected,
+              moderatedAt: new Date().toISOString(),
+              moderationReason: correction.reason
+            };
+            posts[postIndex].comments = comments;
+            modified = true;
+            console.log(`✏️ Corectat comentariu ${correction.index} din postarea ${correction.postId}`);
+          }
+        } else if (correction.action === 'add') {
+          // Adaugă comentariu nou
+          const comments = [...(posts[postIndex].comments || [])];
+          comments.push(correction.commentData);
+          posts[postIndex].comments = comments;
+          modified = true;
+          console.log(`➕ Adăugat comentariu nou la postarea ${correction.postId}`);
+        }
+      } else if (correction.type === 'reaction') {
+        if (correction.action === 'delete') {
+          const reactions = [...(posts[postIndex].reactions || [])];
+          if (correction.index < reactions.length) {
+            reactions.splice(correction.index, 1);
+            posts[postIndex].reactions = reactions;
+            modified = true;
+            console.log(`🗑️ Ștearsă reacție ${correction.index} din postarea ${correction.postId}`);
+          }
+        } else if (correction.action === 'add') {
+          // Adaugă reacție nouă
+          const reactions = [...(posts[postIndex].reactions || [])];
+          reactions.push(correction.reactionData);
+          posts[postIndex].reactions = reactions;
+          modified = true;
+          console.log(`➕ Adăugată reacție nouă la postarea ${correction.postId}`);
+        }
+      }
+    }
+
+    if (modified) {
+      await updateScriitor(scriitorKey, { posts });
+      console.log('✅ Corectări de moderare aplicate cu succes');
+    } else {
+      console.log('ℹ️ Nicio modificare aplicată');
+    }
+  } catch (error) {
+    console.error('❌ Eroare la aplicarea corectărilor de moderare:', error);
+    throw error;
+  }
+}
+
+/**
  * Get all scriitori as an object with keys (for backward compatibility)
  * @returns {Promise<Object>} Object with scriitor keys as properties
  */

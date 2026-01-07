@@ -1,10 +1,11 @@
 import React, { useRef, useState, useEffect, useCallback } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { getScriitoriData } from '../firebase/scriitoriService';
-import { fetchScriitor, deleteCommentFromPost, updateScriitor } from '../firebase/scriitoriService';
+import { fetchScriitor, deleteCommentFromPost, updateScriitor, applyModerationCorrections } from '../firebase/scriitoriService';
 import ScriitorInfo from '../assets/ScriitorInfo';
 import AvatarSearchBar from '../assets/AvatarSearchBar';
 import ScriitorChat from '../assets/ScriitorChat';
+import AIContentModerator from '../components/AIContentModerator';
 import { useAuth } from '../firebase/AuthContext';
 import ScrollToTop from '../components/ScrollToTop';
 import '../styles/adminAddButton.scss';
@@ -291,6 +292,7 @@ const Scriitor = () => {
   const [fullscreenTarget, setFullscreenTarget] = useState(null); // 'banner' | 'profile' | null
   const [likesModal, setLikesModal] = useState({ open: false, postId: null });
   const [showChat, setShowChat] = useState(false);
+  const [showModerator, setShowModerator] = useState(false);
   const [profilePreviewOpen, setProfilePreviewOpen] = useState(false);
   const [darkTheme, setDarkTheme] = useState(() => localStorage.getItem('theme') === 'dark');
   const navigate = useNavigate();
@@ -962,6 +964,63 @@ const Scriitor = () => {
     if (link) navigate(link);
   };
 
+  // Handler pentru moderare AI
+  const handleModerate = async (corrections) => {
+    try {
+      await applyModerationCorrections(name, corrections);
+      
+      // Reîncarcă datele scriitorului după moderare
+      const updatedScriitor = await fetchScriitor(name);
+      if (updatedScriitor) {
+        setData(updatedScriitor);
+      }
+      
+      alert(`✅ Moderate cu succes! ${corrections.length} acțiuni aplicate.`);
+    } catch (error) {
+      console.error('Eroare la moderare:', error);
+      alert('❌ Eroare la aplicarea moderării. Verifică consola pentru detalii.');
+    }
+  };
+
+  // Șterge un prieten
+  const handleDeleteFriend = async (friendKey) => {
+    if (!window.confirm('Ești sigur că vrei să ștergi acest prieten?')) {
+      return;
+    }
+
+    try {
+      const currentFriends = [...(data.friends || [])];
+      
+      // Normalizează cheile pentru comparație
+      const normalizeKey = (key) => {
+        if (typeof key === 'string') return key.trim().toLowerCase();
+        if (key && typeof key === 'object' && key.key) return String(key.key).trim().toLowerCase();
+        return String(key || '').trim().toLowerCase();
+      };
+      
+      const normalizedTargetKey = normalizeKey(friendKey);
+      
+      // Șterge prietenul
+      const updatedFriends = currentFriends.filter(f => {
+        const friendKeyNormalized = normalizeKey(typeof f === 'string' ? f : (f.key || f));
+        return friendKeyNormalized !== normalizedTargetKey;
+      });
+      
+      await updateScriitor(name, { friends: updatedFriends });
+      
+      // Reîncarcă datele
+      const updatedScriitor = await fetchScriitor(name);
+      if (updatedScriitor) {
+        setData(updatedScriitor);
+      }
+      
+      alert('✅ Prieten șters cu succes!');
+    } catch (error) {
+      console.error('Eroare la ștergerea prietenului:', error);
+      alert('❌ Eroare la ștergerea prietenului. Verifică consola pentru detalii.');
+    }
+  };
+
   // Helper: get likes from friends with specific reactions
   function getFriendLikes(post) {
     if (!post.reactions) {
@@ -1221,8 +1280,26 @@ const Scriitor = () => {
                 <div
                   key={friend.key}
                   className="scriitor-friend-item"
-                  onClick={() => goToScriitor(friend.key)}
+                  onClick={(e) => {
+                    // Nu naviga dacă click-ul este pe butonul de ștergere
+                    if (e.target.closest('.scriitor-friend-delete-btn')) {
+                      return;
+                    }
+                    goToScriitor(friend.key);
+                  }}
                 >
+                  {(isAdmin || isSemiAdmin) && (
+                    <button
+                      className="scriitor-friend-delete-btn"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleDeleteFriend(friend.key);
+                      }}
+                      title="Șterge prieten"
+                    >
+                      ×
+                    </button>
+                  )}
                   <img
                     src={friend.img}
                     alt={friend.name}
@@ -1925,6 +2002,16 @@ const Scriitor = () => {
         />
       )}
 
+      {/* AI Content Moderator */}
+      {showModerator && (
+        <AIContentModerator
+          scriitor={data}
+          allScriitori={scriitoriData}
+          onModerate={handleModerate}
+          onClose={() => setShowModerator(false)}
+        />
+      )}
+
       {/* Modal "Citește tot" */}
       {readAllModal && (
         <div
@@ -2066,11 +2153,28 @@ const Scriitor = () => {
                   <div
                     key={friend.key}
                     className="scriitor-friends-modal-item"
-                    onClick={() => {
+                    onClick={(e) => {
+                      // Nu naviga dacă click-ul este pe butonul de ștergere
+                      if (e.target.closest('.scriitor-friend-delete-btn')) {
+                        return;
+                      }
                       closeAllFriendsModal();
                       goToScriitor(friend.key);
                     }}
                   >
+                    {(isAdmin || isSemiAdmin) && (
+                      <button
+                        className="scriitor-friend-delete-btn"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleDeleteFriend(friend.key);
+                          closeAllFriendsModal();
+                        }}
+                        title="Șterge prieten"
+                      >
+                        ×
+                      </button>
+                    )}
                     <img
                       src={friend.img}
                       alt={friend.name}
@@ -2278,6 +2382,17 @@ const Scriitor = () => {
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <circle cx="12" cy="12" r="3"></circle>
               <path d="M12 1v6m0 6v6M5.64 5.64l4.24 4.24m4.24 4.24l4.24 4.24M1 12h6m6 0h6M5.64 18.36l4.24-4.24m4.24-4.24l4.24-4.24"></path>
+            </svg>
+          </button>
+          <button
+            onClick={() => setShowModerator(true)}
+            className={`admin-moderate-button ${darkTheme ? 'dark-theme' : ''}`}
+            title="Moderare AI - Verifică comentarii și reacții"
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+              <path d="M2 17l10 5 10-5"></path>
+              <path d="M2 12l10 5 10-5"></path>
             </svg>
           </button>
           <button

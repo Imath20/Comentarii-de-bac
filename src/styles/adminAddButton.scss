@@ -8,7 +8,8 @@
   z-index: 1000;
 
   .admin-add-button,
-  .admin-manage-button {
+  .admin-manage-button,
+  .admin-moderate-button {
     position: relative;
     right: auto;
     bottom: auto;
@@ -22,7 +23,8 @@
 }
 
 .admin-add-button,
-.admin-manage-button {
+.admin-manage-button,
+.admin-moderate-button {
   position: fixed;
   right: 2rem;
   bottom: 2rem;
@@ -83,6 +85,24 @@
     svg {
       width: 20px;
       height: 20px;
+    }
+  }
+}
+
+// Special styling for moderate button
+.admin-moderate-button {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+
+  &:hover {
+    background: linear-gradient(135deg, #5568d3 0%, #653a8b 100%);
+  }
+
+  &.dark-theme {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    
+    &:hover {
+      background: linear-gradient(135deg, #5568d3 0%, #653a8b 100%);
     }
   }
 }
