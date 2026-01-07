@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import NotificationsButton from '../components/NotificationsButton';
+import ScrollToTop from '../components/ScrollToTop';
 
 export default function Layout({
   children,
@@ -50,6 +51,7 @@ export default function Layout({
       </main>
       <Footer darkTheme={darkTheme} />
       <NotificationsButton />
+      <ScrollToTop />
     </>
   );
 }

@@ -6,6 +6,7 @@ import ScriitorInfo from '../assets/ScriitorInfo';
 import AvatarSearchBar from '../assets/AvatarSearchBar';
 import ScriitorChat from '../assets/ScriitorChat';
 import { useAuth } from '../firebase/AuthContext';
+import ScrollToTop from '../components/ScrollToTop';
 import '../styles/adminAddButton.scss';
 
 // Date pentru poeziile scurte
@@ -2291,6 +2292,7 @@ const Scriitor = () => {
           </button>
         </div>
       )}
+      <ScrollToTop />
     </div>
   );
 };

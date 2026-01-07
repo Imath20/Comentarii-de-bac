@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import ScrollToTop from "../components/ScrollToTop";
 
 // Bundle JSON content at build time to avoid runtime fetch issues on Vercel
 // Keys look like: '../data/opere/ion.json'
@@ -868,6 +869,7 @@ export default function BookReader() {
           </div>
         </div>
       )}
+      <ScrollToTop />
     </div>
   );
 }

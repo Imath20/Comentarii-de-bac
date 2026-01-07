@@ -1,0 +1,112 @@
+.scroll-to-top {
+  position: fixed;
+  bottom: 2rem;
+  left: 2rem;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #fbeec1 0%, #d4af8a 100%);
+  border: 2px solid rgba(78, 46, 30, 0.3);
+  color: #4e2e1e;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 16px rgba(251, 238, 193, 0.2);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px) scale(0.8);
+  z-index: 1000;
+  padding: 0;
+  font-size: 0;
+
+  &:hover {
+    transform: translateY(-4px) scale(1.05);
+    box-shadow: 0 8px 24px rgba(251, 238, 193, 0.3);
+    background: linear-gradient(135deg, #fbeec1 0%, #e8d4b0 100%);
+    border-color: rgba(78, 46, 30, 0.5);
+  }
+
+  &:active {
+    transform: translateY(-2px) scale(1);
+  }
+
+  &.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+  }
+
+  svg {
+    stroke-width: 2.5;
+    transition: transform 0.2s;
+  }
+
+  &:hover svg {
+    transform: translateY(-2px);
+  }
+}
+
+// Dark theme styles
+body.dark-theme .scroll-to-top {
+  background: linear-gradient(135deg, #4e2e1e 0%, #7c4f2b 100%);
+  border-color: rgba(251, 238, 193, 0.3);
+  color: #fbeec1;
+  box-shadow: 0 4px 16px rgba(78, 46, 30, 0.3);
+
+  &:hover {
+    background: linear-gradient(135deg, #6e3a0f 0%, #7c4f2b 100%);
+    border-color: rgba(251, 238, 193, 0.5);
+    box-shadow: 0 8px 24px rgba(78, 46, 30, 0.4);
+  }
+}
+
+// BookReader specific - butonul pe dreapta, lângă indicatorul de bookmark
+.book-reader-wrapper .scroll-to-top {
+  left: auto;
+  right: 20px;
+  bottom: 80px; // Poziționat deasupra indicatorului de bookmark (care e la bottom: 20px)
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .scroll-to-top {
+    bottom: 1.5rem;
+    left: 1.5rem;
+    width: 45px;
+    height: 45px;
+
+    svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  .book-reader-wrapper .scroll-to-top {
+    left: auto;
+    right: 1.5rem;
+    bottom: 70px; // Ajustat pentru mobile
+  }
+}
+
+@media (max-width: 480px) {
+  .scroll-to-top {
+    bottom: 1rem;
+    left: 1rem;
+    width: 40px;
+    height: 40px;
+
+    svg {
+      width: 18px;
+      height: 18px;
+    }
+  }
+
+  .book-reader-wrapper .scroll-to-top {
+    left: auto;
+    right: 1rem;
+    bottom: 65px; // Ajustat pentru mobile mic
+  }
+}
+
