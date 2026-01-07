@@ -598,6 +598,20 @@ const BOOKS = {
     bookmarkKey: "titu-maiorescu-de-eugen-lovinescu_bookmark",
     maxWidth: "750px",
     width: "80vw"
+  },
+  "mite": {
+    path: "/src/data/opere/mite.json",
+    title: "Mite",
+    bookmarkKey: "mite_bookmark",
+    maxWidth: "640px",
+    width: "80vw"
+  },
+  "balauca": {
+    path: "/src/data/opere/balauca.json",
+    title: "Balauca",
+    bookmarkKey: "balauca_bookmark",
+    maxWidth: "640px",
+    width: "80vw"
   }
 };
 

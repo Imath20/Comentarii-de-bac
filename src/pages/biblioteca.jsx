@@ -940,6 +940,28 @@ const cartiList = [
         canonic: false,
         jsonFile: 'principii-de-estetica-de-george-calinescu',
         tip: 'opera'
+    },
+    {
+        titlu: 'Mite',
+        autor: 'Mite',
+        data: 'Redactare: 1935',
+        img: '/opere/mite.webp',
+        categorie: 'roman',
+        romanSubcategorie: 'roman-psihologic',
+        canonic: false,
+        jsonFile: 'mite',
+        tip: 'opera'
+    },
+    {
+        titlu: 'Balauca',
+        autor: 'Balauca',
+        data: 'Redactare: 1935',
+        img: '/opere/balauca.webp',
+        categorie: 'roman',
+        romanSubcategorie: 'roman-psihologic',
+        canonic: false,
+        jsonFile: 'balauca',
+        tip: 'opera'
     }
 ];
 const categorii = [

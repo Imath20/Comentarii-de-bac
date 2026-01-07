@@ -1,7 +1,11 @@
 [
   {
-    "pdf_path": "public/Pdf/titu-maiorescu-de-eugen-lovinescu_compress.pdf",
-    "output": "src/data/opere/titu-maiorescu-de-eugen-lovinescu.json"
+    "pdf_path": "public/Pdf/mite.pdf",
+    "output": "src/data/opere/mite.json"
+  },
+  {
+    "pdf_path": "public/Pdf/balauca.pdf",
+    "output": "src/data/opere/balauca.json"
   }
 ]
 
