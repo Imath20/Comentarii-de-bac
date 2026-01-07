@@ -285,6 +285,7 @@ const Scriitor = () => {
   const name = query.get('name');
   const bannerRef = useRef(null);
   const profileImgRef = useRef(null);
+  const leftColumnRef = useRef(null);
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [fullscreenTarget, setFullscreenTarget] = useState(null); // 'banner' | 'profile' | null
   const [likesModal, setLikesModal] = useState({ open: false, postId: null });
@@ -843,6 +844,169 @@ const Scriitor = () => {
     }
   }, [galleryOverviewOpen, overviewIndex]);
 
+
+
+  // Simulează sticky-bottom - optimizat maxim, fără feedback loop
+  useEffect(() => {
+    const leftSticky = leftColumnRef.current?.querySelector('.scriitor-left-sticky');
+    const leftColumn = leftColumnRef.current;
+    if (!leftSticky || !leftColumn) return;
+
+    // Optimizare hardware - setate o singură dată
+    leftSticky.style.willChange = 'transform';
+    leftSticky.style.transform = 'translate3d(0, 0, 0)';
+    
+    const mainLayout = leftColumn.parentElement;
+    if (!mainLayout) return;
+    
+    // Cache pentru valori statice - calculate o singură dată la mount, FIXĂ
+    let sidebarEndScrollY = 0; // Poziția de scroll unde se termină sidebar-ul (absolută, fixă, NICIODATĂ nu se schimbă)
+    let initialized = false;
+    let lastOffset = 0;
+
+    let rafId = null;
+    let ticking = false;
+    let lastProgrammaticScrollTime = 0; // Timestamp pentru ultimul scroll programatic
+
+    const init = () => {
+      // IMPORTANT: Calculează poziția când sidebar-ul este în poziția inițială (fără transform)
+      // Această valoare va rămâne FIXĂ pentru tot restul scroll-ului
+      leftSticky.style.transform = 'translate3d(0, 0, 0)';
+      
+      // Forțează reflow sincron pentru a obține pozițiile corecte
+      leftSticky.offsetHeight;
+      
+      // Calculează poziția exactă folosind getBoundingClientRect când transform e 0
+      const scrollY = window.scrollY;
+      const leftStickyRect = leftSticky.getBoundingClientRect();
+      
+      // Poziția absolută de scroll unde începe sidebar-ul (când transform e 0)
+      const sidebarTop = scrollY + leftStickyRect.top;
+      // Înălțimea sidebar-ului (folosim height din rect pentru precizie)
+      const sidebarHeight = leftStickyRect.height;
+      
+      // Poziția absolută de scroll unde se termină sidebar-ul
+      // ACEASTĂ VALOARE RĂMÂNE FIXĂ - nu se recalculează niciodată în timpul scroll-ului
+      sidebarEndScrollY = sidebarTop + sidebarHeight;
+      
+      initialized = true;
+    };
+
+    const updateSidebar = () => {
+      ticking = false;
+      
+      if (!initialized) {
+        init();
+        return;
+      }
+      
+      // O singură citire - window properties (optimizat)
+      const scrollY = window.scrollY;
+      const viewportBottom = scrollY + window.innerHeight;
+      
+      // Calculează offset-ul smooth și continuu
+      // FOLOSIM sidebarEndScrollY FIXĂ - nu o recalculăm niciodată
+      let newOffset = 0;
+      
+      // Dacă viewport-ul a trecut de sfârșitul conținutului sidebar-ului
+      if (viewportBottom > sidebarEndScrollY) {
+        // Calculează exact cât trebuie să coboare pentru a rămâne la 20px de fund
+        const rawOffset = viewportBottom - sidebarEndScrollY - 20;
+        // Asigură-te că nu e negativ și rotunjește pentru smooth (fără sub-pixel)
+        newOffset = Math.max(0, Math.round(rawOffset));
+      }
+      // Altfel, newOffset rămâne 0 (sidebar-ul urmează scroll-ul normal)
+      
+      // Actualizează doar dacă s-a schimbat (evită writes inutile și glitch-uri)
+      if (newOffset !== lastOffset) {
+        leftSticky.style.transform = `translate3d(0, ${newOffset}px, 0)`;
+        lastOffset = newOffset;
+      }
+      
+      rafId = null;
+    };
+
+    const handleScroll = () => {
+      // Ignoră scroll-ul dacă a fost declanșat programatic în ultimele 50ms
+      const now = performance.now();
+      if (now - lastProgrammaticScrollTime < 50) {
+        return;
+      }
+      
+      if (!ticking) {
+        ticking = true;
+        rafId = requestAnimationFrame(updateSidebar);
+      }
+    };
+
+    // Previne scroll-ul pe coloana stângă și redirecționează la window
+    const handleWheel = (e) => {
+      const rect = leftColumn.getBoundingClientRect();
+      const x = e.clientX || 0;
+      const y = e.clientY || 0;
+      
+      if (x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom) {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        // Marchează timestamp-ul pentru scroll-ul programatic
+        lastProgrammaticScrollTime = performance.now();
+        
+        // Folosește scrollBy direct pentru scroll smooth
+        const deltaY = e.deltaY;
+        const currentScrollY = window.scrollY;
+        const newScrollY = currentScrollY + deltaY;
+        
+        // Actualizează scroll-ul direct
+        window.scrollTo(0, newScrollY);
+        
+        // Forțează o actualizare a sidebar-ului după scroll-ul programatic
+        // Folosim un delay scurt pentru a permite scroll-ului să se finalizeze
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            // Actualizează sidebar-ul manual după scroll-ul programatic
+            if (!ticking) {
+              ticking = true;
+              rafId = requestAnimationFrame(updateSidebar);
+            }
+          });
+        });
+      }
+    };
+
+    // Throttle resize pentru performanță
+    let resizeTimer = null;
+    const handleResize = () => {
+      if (resizeTimer) clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        initialized = false;
+        init(); // Recalculează pozițiile doar la resize
+        updateSidebar();
+      }, 150);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleResize, { passive: true });
+    leftColumn.addEventListener('wheel', handleWheel, { passive: false });
+    
+    // Inițializează după un mic delay pentru a se asigura că layout-ul e complet renderat
+    const initTimer = setTimeout(() => {
+      init();
+      updateSidebar();
+    }, 10);
+
+    return () => {
+      clearTimeout(initTimer);
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleResize);
+      leftColumn.removeEventListener('wheel', handleWheel);
+      if (rafId !== null) cancelAnimationFrame(rafId);
+      if (resizeTimer) clearTimeout(resizeTimer);
+      leftSticky.style.willChange = '';
+      leftSticky.style.transform = '';
+    };
+  }, [data]);
+
   // RETURN CONDITIONAL - TREBUIE SĂ FIE DUPĂ TOATE HOOKS-URILE
   if (loading) {
     return (
@@ -1055,7 +1219,8 @@ const Scriitor = () => {
       {/* Layout principal: stânga (info, galerie, prieteni), dreapta (postări) */}
       <div className="scriitor-main-layout">
         {/* Stânga */}
-        <div className="scriitor-left-column">
+        <div className="scriitor-left-column" ref={leftColumnRef}>
+          <div className="scriitor-left-sticky">
           {/* AvatarSearchBar eliminat de aici */}
           {/* Buton înapoi - stil ca fullscreen button */}
                      <button onClick={() => {
@@ -1238,6 +1403,7 @@ const Scriitor = () => {
                 </button>
               </div>
             )}
+          </div>
           </div>
         </div>
         {/* Dreapta: postări */}
