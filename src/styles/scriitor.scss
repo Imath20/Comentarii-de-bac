@@ -218,15 +218,11 @@
 }
 
 .scriitor-left-sticky {
-  position: relative;
+  position: sticky;
+  top: 0;
   height: fit-content;
   overflow-x: visible;
   overflow-y: visible;
-  // Transform va fi aplicat prin JavaScript pentru a simula sticky-bottom
-  // Optimizări pentru smooth scrolling
-  will-change: transform;
-  backface-visibility: hidden;
-  transform: translate3d(0, 0, 0); // Force hardware acceleration
 }
 
 .scriitor-back-btn {
