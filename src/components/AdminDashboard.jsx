@@ -25,6 +25,7 @@ import AICerinteProcessor from './AICerinteProcessor';
 import AIPostGenerator from './AIPostGenerator';
 import AIComentariuFormatter from './AIComentariuFormatter';
 import AICommentGenerator from './AICommentGenerator';
+import AIComentariuDescriptionGenerator from './AIComentariuDescriptionGenerator';
 import '../styles/admin.scss';
 
 const REACTIONS = [
@@ -492,8 +493,10 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
   const [aiCommentPrompt, setAiCommentPrompt] = useState('');
   const [isGeneratingDescription, setIsGeneratingDescription] = useState(false);
   const [isGeneratingReactions, setIsGeneratingReactions] = useState(false);
+  const [isGeneratingComentariuDescription, setIsGeneratingComentariuDescription] = useState(false);
   const poemTextDebounceRef = useRef(null);
   const reactionsDebounceRef = useRef(null);
+  const comentariuDescriereDebounceRef = useRef(null);
 
   // Funcție pentru generarea automată a descrierii poeziei / poveștii / postării generale
   const generatePoemDescription = useCallback(async (poemText) => {
@@ -946,6 +949,133 @@ Returnează doar textul comentariului, fără explicații.`;
       return null;
     }
   }, [selectedScriitor, postForm.isPoem, postForm.isStory]);
+
+  // Funcție pentru generarea automată a descrierii comentariului
+  const generateComentariuDescription = useCallback(async (titlu, autor) => {
+    if (!titlu || !titlu.trim() || !autor || !autor.trim()) {
+      return;
+    }
+
+    const groqApiKey = import.meta.env.VITE_GROQ_API_KEY;
+    const groqApiKeyBackup = import.meta.env.VITE_GROQ_API_KEY_1;
+    const groqApiUrl = import.meta.env.VITE_GROQ_API_URL || 'https://api.groq.com/openai/v1/chat/completions';
+    const groqApiKeys = [groqApiKey, groqApiKeyBackup].filter(k => k && k !== 'undefined');
+
+    if (groqApiKeys.length === 0) {
+      return; // Nu afișăm eroare, doar nu generăm
+    }
+
+    setIsGeneratingComentariuDescription(true);
+
+    try {
+      const systemMessage = `Ești un expert în literatura română. Scrie o descriere scurtă și profesională pentru un comentariu literar.
+
+Descrierea trebuie să fie:
+- Concisă (40-80 de cuvinte)
+- Profesională și academică
+- Relevante pentru comentariul literar
+- Fără emoticoane sau simboluri
+- În limba română
+
+Descrierea trebuie să menționeze pe scurt temele principale, stilul sau aspectele esențiale despre operă/autor, într-un mod care să fie util pentru cititori care doresc să înțeleagă rapid conținutul comentariului.`;
+
+      const userMessage = `Titlu comentariu: "${titlu.trim()}"
+Autor operă comentată: "${autor.trim()}"
+
+Generează o descriere scurtă și profesională pentru acest comentariu literar, bazându-te pe cunoștințele tale despre opera și autorul menționat.`;
+
+      const requestBody = {
+        model: 'moonshotai/kimi-k2-instruct-0905',
+        messages: [
+          {
+            role: 'system',
+            content: systemMessage
+          },
+          {
+            role: 'user',
+            content: userMessage
+          }
+        ],
+        temperature: 0.7,
+        max_tokens: 200
+      };
+
+      let generatedDescription = null;
+
+      for (const key of groqApiKeys) {
+        try {
+          const response = await fetch(groqApiUrl, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${key}`
+            },
+            body: JSON.stringify(requestBody)
+          });
+
+          if (!response.ok) {
+            console.warn('Groq API error:', response.status);
+            continue;
+          }
+
+          const data = await response.json();
+          const content = data?.choices?.[0]?.message?.content?.trim();
+          
+          if (content) {
+            generatedDescription = content;
+            break;
+          }
+        } catch (err) {
+          console.warn('Groq API exception:', err);
+          continue;
+        }
+      }
+
+      if (generatedDescription) {
+        setComentariuForm((prev) => ({ ...prev, descriere: generatedDescription }));
+      }
+    } catch (error) {
+      console.error('Eroare la generarea descrierii:', error);
+    } finally {
+      setIsGeneratingComentariuDescription(false);
+    }
+  }, []);
+
+  // Generare automată a descrierii comentariului când se completează titlul și autorul
+  useEffect(() => {
+    // Curăță timeout-ul anterior
+    if (comentariuDescriereDebounceRef.current) {
+      clearTimeout(comentariuDescriereDebounceRef.current);
+    }
+
+    const titlu = comentariuForm.titlu?.trim();
+    const autor = comentariuForm.autor?.trim();
+    const descriere = comentariuForm.descriere?.trim();
+
+    // Generează descrierea doar dacă:
+    // - Ambele câmpuri sunt completate
+    // - Nu se generează deja
+    // - Descrierea nu există sau este goală/scurtă (sub 20 caractere) - nu regenerăm dacă există deja o descriere semnificativă
+    // - Suntem în tab-ul comentarii
+    const shouldGenerate = titlu && 
+                          autor && 
+                          !isGeneratingComentariuDescription &&
+                          (!descriere || descriere.trim().length < 20) &&
+                          activeTab === 'comentarii';
+
+    if (shouldGenerate) {
+      comentariuDescriereDebounceRef.current = setTimeout(() => {
+        generateComentariuDescription(titlu, autor);
+      }, 2000); // 2 secunde debounce
+    }
+
+    // Cleanup
+    return () => {
+      if (comentariuDescriereDebounceRef.current) {
+        clearTimeout(comentariuDescriereDebounceRef.current);
+      }
+    };
+  }, [comentariuForm.titlu, comentariuForm.autor, comentariuForm.descriere, isGeneratingComentariuDescription, activeTab, generateComentariuDescription]);
 
   // Funcție pentru generarea automată a reacțiilor și comentariilor pentru toți prietenii
   const generateReactionsAndComments = useCallback(async (textContent, descriere) => {
@@ -2517,15 +2647,30 @@ Returnează doar textul comentariului, fără explicații.`;
           </div>
 
           <div className="admin-form-group">
-            <label htmlFor="comentariu-descriere">Descriere</label>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '10px' }}>
+              <label htmlFor="comentariu-descriere" style={{ marginBottom: 0 }}>Descriere</label>
+              <AIComentariuDescriptionGenerator
+                titlu={comentariuForm.titlu}
+                autor={comentariuForm.autor}
+                onDescriptionGenerated={(generatedDescription) => setComentariuForm((prev) => ({ ...prev, descriere: generatedDescription }))}
+                setMessage={setMessage}
+                darkTheme={darkTheme}
+                isGenerating={isGeneratingComentariuDescription}
+              />
+            </div>
             <input
               type="text"
               id="comentariu-descriere"
               value={comentariuForm.descriere}
               onChange={(e) => setComentariuForm({ ...comentariuForm, descriere: e.target.value })}
-              placeholder="Teme, motive, viziune, specii și interpretare succintă."
+              placeholder={isGeneratingComentariuDescription ? "Se generează descrierea automat..." : "Teme, motive, viziune, specii și interpretare succintă."}
               className="admin-input"
             />
+            {isGeneratingComentariuDescription && (
+              <small style={{ color: darkTheme ? '#c3b7a4' : '#666', display: 'block', marginTop: '4px' }}>
+                ⏳ Se generează descrierea automat...
+              </small>
+            )}
           </div>
 
           <div className="admin-form-group">
