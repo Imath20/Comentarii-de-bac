@@ -5,7 +5,7 @@
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #fbeec1 0%, #d4af8a 100%);
+  background: linear-gradient(135deg, #fbeec1 0%, #fef7ef 100%);
   border: 2px solid rgba(78, 46, 30, 0.3);
   color: #4e2e1e;
   cursor: pointer;
@@ -20,6 +20,10 @@
   z-index: 1000;
   padding: 0;
   font-size: 0;
+  outline: none;
+  &:focus{
+    outline: none;
+  }
 
   &:hover {
     transform: translateY(-4px) scale(1.05);
@@ -50,7 +54,7 @@
 
 // Dark theme styles
 body.dark-theme .scroll-to-top {
-  background: linear-gradient(135deg, #4e2e1e 0%, #7c4f2b 100%);
+  background: linear-gradient(135deg, #4e2e1e 0%, #3c1e05 100%);
   border-color: rgba(251, 238, 193, 0.3);
   color: #fbeec1;
   box-shadow: 0 4px 16px rgba(78, 46, 30, 0.3);
