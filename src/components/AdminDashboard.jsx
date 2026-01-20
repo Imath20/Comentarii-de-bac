@@ -1646,16 +1646,18 @@ Generează o descriere scurtă și profesională pentru acest comentariu literar
         }, 500);
       } else {
         // Add new comentariu
-        // Generate ID if not provided
+        // Generate ID if not provided - add timestamp to allow multiple comments for same opera
         const id = comentariuForm.id || 
-          `${comentariuForm.autor.toLowerCase().replace(/\s+/g, '-')}-${comentariuForm.titlu.toLowerCase().replace(/\s+/g, '-')}`;
+          `${comentariuForm.autor.toLowerCase().replace(/\s+/g, '-')}-${comentariuForm.titlu.toLowerCase().replace(/\s+/g, '-')}-${Date.now()}`;
 
         const payload = attachOwnershipMetadata({
           ...comentariuForm,
           id,
         });
 
+        console.log('Adding comentariu with payload:', payload);
         await addComentariu(payload);
+        console.log('Comentariu added successfully to database');
 
         setMessage({ type: 'success', text: 'Comentariul a fost adăugat cu succes!' });
         
@@ -1675,10 +1677,8 @@ Generează o descriere scurtă și profesională pentru acest comentariu literar
         } catch (notifError) {
           console.error('Error creating notification:', notifError);
         }
-      }
-
-      // Reset form after successful submit (only if not editing, as we navigate away)
-      if (!isEditing) {
+        
+        // Reset form
         setComentariuForm({
           id: '',
           titlu: '',
@@ -1693,6 +1693,11 @@ Generează o descriere scurtă și profesională pentru acest comentariu literar
         });
         setIsEditing(false);
         setEditingCommentId(null);
+        
+        // Navigate to comentarii page after successful add (same delay as edit)
+        setTimeout(() => {
+          navigate('/comentarii');
+        }, 500);
       }
     } catch (error) {
       console.error(`Error ${isEditing ? 'updating' : 'adding'} comentariu:`, error);
