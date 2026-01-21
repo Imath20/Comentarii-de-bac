@@ -358,8 +358,8 @@ export function TabsProvider({ children }) {
           // Show notification
           setNotification({
             message: newValue 
-              ? 'Dropdown-urile sunt activate' 
-              : 'Dropdown-urile sunt dezactivate',
+              ? 'Tab-urile sunt activate' 
+              : 'Tab-urile sunt dezactivate',
             enabled: newValue
           });
           // Auto-hide notification after 2 seconds
