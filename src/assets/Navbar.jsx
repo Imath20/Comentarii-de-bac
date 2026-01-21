@@ -15,7 +15,6 @@ import CommentIcon from './icons/CommentIcon';
 import Logo from './Logo';
 import { useAuth } from '../firebase/AuthContext';
 import { getProfileImageUrl } from '../utils/cloudinary';
-import { useTabs } from './TabsProvider';
 
 const NAV_CATEGORIES = [
   { name: 'Acasa', href: '/', icon: <HomeIcon className="nav-icon" /> },
@@ -44,7 +43,6 @@ export default function Navbar({ darkTheme, setDarkTheme, scrolled }) {
   const location = useLocation();
   const navigate = useNavigate();
   const { currentUser, userProfile, logout } = useAuth();
-  const { tabOpeningEnabled } = useTabs();
 
   const updateActiveUnderline = () => {
     const menu = menuRef.current;
@@ -101,10 +99,6 @@ export default function Navbar({ darkTheme, setDarkTheme, scrolled }) {
   };
 
   const handleDropdownEnter = (categoryName) => {
-    // Prevent dropdown from opening if tab opening is disabled
-    if (!tabOpeningEnabled) {
-      return;
-    }
     setActiveDropdown(categoryName);
   };
 
