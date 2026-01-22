@@ -177,11 +177,15 @@ const CURENTE = [
     id: 'clasicism',
     nume: 'Clasicismul',
     interval: 'sec. XVII–XVIII',
-    an: 1700,
+    an: 1600,
     img: '/curente/clasicismul.webp',
     glowColor: 'rgba(247, 194, 97, 0.85)',
-    descriere: 'Clasicismul valorizează echilibrul, rigoarea, ordinea și respectarea modelelor antice, urmărind perfecțiunea morală și estetică.',
+    descriere: 'Clasicismul valorizează echilibrul, rigoarea, ordinea și respectarea modelelor antice, urmărind perfecțiunea morală și estetică. Literatura veche română.',
     autori: [
+      { nume: 'Grigore Ureche', slug: null, img: '/scriitori/gheorghe_ureche.png' },
+      { nume: 'Miron Costin', slug: null, img: '/scriitori/miron_costin.png' },
+      { nume: 'Ion Neculce', slug: null, img: '/scriitori/ion_neculce.png' },
+      { nume: 'Dimitrie Cantemir', slug: null, img: '/scriitori/dimitrie_cantemir.png' },
       { nume: 'Nicolas Boileau', slug: null, img: '/scriitori/boileau.webp' },
     ],
     sections: [
@@ -492,8 +496,14 @@ const CURENTE = [
     an: 1848,
     img: '/curente/pasoptismul.webp',
     glowColor: 'rgba(161, 112, 14, 0.85)',
-    descriere: 'Pașoptismul susține modernizarea societății prin cultură, promovând patriotismul, identitatea națională și aspirațiile civice.',
-    autori: [],
+    descriere: 'Pașoptismul susține modernizarea societății prin cultură, promovând patriotismul, identitatea națională și aspirațiile civice. Literatura modernă.',
+    autori: [
+      { nume: 'Vasile Alecsandri', slug: 'alecsandri', img: '/scriitori/vasile_alexandri.png' },
+      { nume: 'Costache Negruzzi', slug: null, img: '/scriitori/costache-negruzzi.webp' },
+      { nume: 'Alexandru Lăpușneanu', slug: null, img: '/scriitori/lapusneanu.webp' },
+      { nume: 'Grigore Alexandrescu', slug: null, img: '/scriitori/alexandrescu.webp' },
+      { nume: 'Mihail Kogălniceanu', slug: null, img: '/scriitori/kogalniceanu.webp' },
+    ],
     sections: [
       {
         title: 'Ce este Pasoptismul?',
@@ -998,11 +1008,16 @@ const CURENTE = [
     id: 'junimism',
     nume: 'Criticismul junimist',
     interval: 'cca. 1863–1900',
-    an: 1870,
+    an: 1860,
     img: '/curente/criticismul.webp',
     glowColor: 'rgba(122,58,0,0.85)',
-    descriere: 'Criticismul junimist pune accent pe rigoare estetică, echilibru și selecția valorilor, criticând excesul retoric și lipsa de autenticitate.',
-    autori: [],
+    descriere: 'Criticismul junimist pune accent pe rigoare estetică, echilibru și selecția valorilor, criticând excesul retoric și lipsa de autenticitate. MARII CLASICI.',
+    autori: [
+      { nume: 'Mihai Eminescu', slug: 'eminescu', img: '/scriitori/eminescu_mihai.webp' },
+      { nume: 'Ion Creangă', slug: 'creanga', img: '/scriitori/creanga_ion.webp' },
+      { nume: 'I.L. Caragiale', slug: 'caragiale', img: '/scriitori/il-caragiale.webp' },
+      { nume: 'Ioan Slavici', slug: 'slavici', img: '/scriitori/ioan_slavici.webp' },
+    ],
     sections: [
       {
         title: 'Ce este Criticismul Junimist?',
@@ -1335,10 +1350,10 @@ const CURENTE = [
     id: 'simbolism',
     nume: 'Simbolismul',
     interval: 'cca. 1886–1910',
-    an: 1895,
+    an: 1916,
     img: '/curente/simbolismul.webp',
     glowColor: 'rgba(103, 58, 183, 0.9)',
-    descriere: 'Simbolismul explorează lumea interioară prin sugestie, muzicalitate și corespondențe, transformând poezia într-o expresie a stărilor sufletești.',
+    descriere: 'Simbolismul explorează lumea interioară prin sugestie, muzicalitate și corespondențe, transformând poezia într-o expresie a stărilor sufletești. Realism în proză, Simbolism în poezie.',
     autori: [
       { nume: 'George Bacovia', slug: 'bacovia', img: '/scriitori/bacovia_rezerva.webp' },
     ],
@@ -1991,11 +2006,16 @@ const CURENTE = [
     id: 'modern-interbelic',
     nume: 'Modernismul interbelic',
     interval: 'cca. 1918–1945',
-    an: 1930,
+    an: 1918,
     img: '/curente/interbelic.webp',
     glowColor: 'rgba(139, 69, 19, 0.85)',
-    descriere: 'Modernismul interbelic combină inovație formală, sincronizare europeană și experiment estetic, reflectând o perioadă de tranziție între două războaie mondiale.',
-    autori: [],
+    descriere: 'Modernismul interbelic combină inovație formală, sincronizare europeană și experiment estetic, reflectând o perioadă de tranziție între două războaie mondiale. Modernism în poezie, Realism în proză.',
+    autori: [
+      { nume: 'Liviu Rebreanu', slug: 'rebreanu', img: '/scriitori/liviu_rebreanu_nou.webp' },
+      { nume: 'George Călinescu', slug: 'calinescu', img: '/scriitori/george_calinescu.webp' },
+      { nume: 'Mihail Sadoveanu', slug: 'sadoveanu', img: '/scriitori/mihail-sadoveanu-3.webp' },
+      { nume: 'Camil Petrescu', slug: 'petrescu', img: '/scriitori/camil_rezerva.webp' },
+    ],
     sections: [
       {
         title: 'Modernismul târziu în România',
@@ -2057,11 +2077,15 @@ const CURENTE = [
     id: 'traditionalism',
     nume: 'Traditionalismul',
     interval: 'cca. 1920–1940',
-    an: 1930,
+    an: 1944,
     img: '/curente/traditionalismul.webp',
     glowColor: 'rgba(34, 139, 34, 0.85)',
-    descriere: 'Traditionalismul valorizează satul, natura, spiritualitatea și continuitatea culturală, idealizând rădăcinile identității românești.',
-    autori: [],
+    descriere: 'Traditionalismul valorizează satul, natura, spiritualitatea și continuitatea culturală, idealizând rădăcinile identității românești. Poezie.',
+    autori: [
+      { nume: 'Tudor Arghezi', slug: 'arghezi', img: '/scriitori/tudor_arghezi.webp' },
+      { nume: 'Lucian Blaga', slug: 'blaga', img: '/scriitori/lucian_blaga.webp' },
+      { nume: 'Ion Barbu', slug: 'barbu', img: '/scriitori/barbu_ion.webp' },
+    ],
     sections: [
       {
         title: 'Ce este Tradiționalismul?',
@@ -2206,8 +2230,12 @@ const CURENTE = [
     an: 1965,
     img: '/curente/postbelic.webp',
     glowColor: 'rgba(105, 105, 105, 0.85)',
-    descriere: 'Literatura postbelică reflectă condiția umană marcată de traume istorice, restricții ideologice și căutări existențiale, diversificând stilurile și temele.',
-    autori: [],
+    descriere: 'Literatura postbelică reflectă condiția umană marcată de traume istorice, restricții ideologice și căutări existențiale, diversificând stilurile și temele. Perioada postbelică / postmodernistă.',
+    autori: [
+      { nume: 'Marin Sorescu', slug: 'sorescu', img: '/scriitori/marin_sorescu.webp' },
+      { nume: 'Nichita Stănescu', slug: 'stanescu', img: '/scriitori/nichita_stanescu_rezerva.webp' },
+      { nume: 'Marin Preda', slug: 'preda', img: '/scriitori/marin_preda.webp' },
+    ],
     sections: [
       {
         title: 'Literatura română postbelică',
