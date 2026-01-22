@@ -1,0 +1,11 @@
+PyMuPDF>=1.23.0
+Pillow>=10.0.0
+pdfplumber>=0.10.0
+requests>=2.31.0
+# OCR (Tesseract)
+pytesseract>=0.3.10
+opencv-python>=4.8.0.76
+numpy>=1.24.0
+# Opțional: pdf2image (dacă preferi Poppler în loc de PyMuPDF)
+# pdf2image>=1.16.3
+

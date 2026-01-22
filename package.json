@@ -12,6 +12,7 @@
   "dependencies": {
     "cloudinary": "^2.8.0",
     "firebase": "^12.5.0",
+    "html2pdf.js": "^0.14.0",
     "lucide-react": "^0.544.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
