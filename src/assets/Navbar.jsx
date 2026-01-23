@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, Menu, X } from 'lucide-react';
 import HomeIcon from './icons/HomeIcon';
 import PenPaperIcon from './icons/PenPaperIcon';
 import SlideIcon from './icons/SlideIcon';
@@ -40,6 +40,8 @@ export default function Navbar({ darkTheme, setDarkTheme, scrolled }) {
   const menuRef = useRef(null);
   const [underline, setUnderline] = useState({ left: 0, width: 0, visible: false });
   const [activeDropdown, setActiveDropdown] = useState(null);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [mobileDropdown, setMobileDropdown] = useState(null);
   const location = useLocation();
   const navigate = useNavigate();
   const { currentUser, userProfile, logout } = useAuth();
@@ -115,6 +117,83 @@ export default function Navbar({ darkTheme, setDarkTheme, scrolled }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname]);
 
+  useEffect(() => {
+    // Close mobile menu on route change
+    setMobileMenuOpen(false);
+    setMobileDropdown(null);
+  }, [location.pathname]);
+
+  useEffect(() => {
+    const onKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        setMobileMenuOpen(false);
+        setMobileDropdown(null);
+      }
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, []);
+
+  const navbarActions = (
+    <>
+      {currentUser ? (
+        <div className="navbar-auth">
+          <Link to="/profil" className="navbar-profile-link" aria-label="Profil">
+            {(userProfile?.photoURL || currentUser.photoURL) ? (
+              <img
+                src={getProfileImageUrl(userProfile?.photoURL || currentUser.photoURL)}
+                alt={userProfile?.displayName || currentUser.displayName || 'User'}
+                className="navbar-profile-image"
+                onError={(e) => {
+                  e.currentTarget.style.display = 'none';
+                  const fallback = e.currentTarget.parentElement?.querySelector('.navbar-profile-fallback');
+                  if (fallback) fallback.style.display = 'flex';
+                }}
+              />
+            ) : null}
+            <div
+              className="navbar-profile-fallback"
+              style={{
+                display: (userProfile?.photoURL || currentUser.photoURL) ? 'none' : 'flex',
+              }}
+            >
+              {(userProfile?.displayName || currentUser.displayName || 'U').charAt(0).toUpperCase()}
+            </div>
+          </Link>
+          <button
+            onClick={async () => {
+              try {
+                await logout();
+              } catch (error) {
+                console.error('Error logging out:', error);
+              }
+            }}
+            className="navbar-logout-button"
+            type="button"
+          >
+            Deconectare
+          </button>
+        </div>
+      ) : (
+        <button
+          onClick={() => navigate('/login')}
+          className="navbar-login-button"
+          type="button"
+        >
+          Autentificare
+        </button>
+      )}
+      <button
+        className="theme-toggle"
+        aria-label="Schimbă tema"
+        onClick={() => setDarkTheme(t => !t)}
+        type="button"
+      >
+        {darkTheme ? '🌙' : '🌞'}
+      </button>
+    </>
+  );
+
   return (
     <nav
       className={`navbar${scrolled ? ' scrolled' : ''}`}
@@ -175,170 +254,135 @@ export default function Navbar({ darkTheme, setDarkTheme, scrolled }) {
           }}
         />
       </ul>
-      <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-        {currentUser ? (
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-            {/* Profile Image - Clickable */}
-            <Link
-              to="/profil"
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                textDecoration: 'none',
-                cursor: 'pointer',
-                position: 'relative',
-                transition: 'transform 0.3s ease',
-              }}
-              onMouseOver={(e) => {
-                e.currentTarget.style.transform = 'scale(1.1)';
-              }}
-              onMouseOut={(e) => {
-                e.currentTarget.style.transform = 'scale(1)';
-              }}
-            >
-              {(userProfile?.photoURL || currentUser.photoURL) ? (
-                <img
-                  src={getProfileImageUrl(userProfile?.photoURL || currentUser.photoURL)}
-                  alt={userProfile?.displayName || currentUser.displayName || 'User'}
-                  style={{
-                    width: '40px',
-                    height: '40px',
-                    borderRadius: '50%',
-                    objectFit: 'cover',
-                    border: darkTheme
-                      ? '2px solid rgba(255, 213, 145, 0.3)'
-                      : '2px solid rgba(255, 179, 71, 0.3)',
-                    transition: 'all 0.3s ease',
-                    boxShadow: darkTheme
-                      ? '0 2px 8px rgba(0, 0, 0, 0.2)'
-                      : '0 2px 8px rgba(124, 79, 43, 0.15)',
-                  }}
-                  onError={(e) => {
-                    e.target.style.display = 'none';
-                    if (e.target.nextSibling) {
-                      e.target.nextSibling.style.display = 'flex';
-                    }
-                  }}
-                />
-              ) : null}
-              <div
-                style={{
-                  width: '40px',
-                  height: '40px',
-                  borderRadius: '50%',
-                  background: darkTheme
-                    ? 'rgba(255, 213, 145, 0.1)'
-                    : 'rgba(255, 179, 71, 0.1)',
-                  display: (userProfile?.photoURL || currentUser.photoURL) ? 'none' : 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  border: darkTheme
-                    ? '2px solid rgba(255, 213, 145, 0.3)'
-                    : '2px solid rgba(255, 179, 71, 0.3)',
-                  fontSize: '1.2rem',
-                  fontWeight: 'bold',
-                  color: darkTheme ? '#ffd591' : '#7a3a00',
-                  transition: 'all 0.3s ease',
-                  boxShadow: darkTheme
-                    ? '0 2px 8px rgba(0, 0, 0, 0.2)'
-                    : '0 2px 8px rgba(124, 79, 43, 0.15)',
-                }}
-              >
-                {(userProfile?.displayName || currentUser.displayName || 'U').charAt(0).toUpperCase()}
-              </div>
-            </Link>
-            <button
-              onClick={async () => {
-                try {
-                  await logout();
-                } catch (error) {
-                  console.error('Error logging out:', error);
-                }
-              }}
-              className="navbar-logout-button"
-              style={{
-                padding: '0.5rem 1rem',
-                fontSize: '0.9rem',
-                fontWeight: '500',
-                borderRadius: '6px',
-                cursor: 'pointer',
-                background: darkTheme
-                  ? 'rgba(255, 87, 87, 0.1)'
-                  : 'rgba(255, 87, 87, 0.1)',
-                color: darkTheme ? '#ff5757' : '#ff5757',
-                border: darkTheme
-                  ? '1px solid rgba(255, 87, 87, 0.3)'
-                  : '1px solid rgba(255, 87, 87, 0.3)',
-                transition: 'all 0.3s ease',
-                outline: 'none',
-                '&:focus': {
-                  outline: 'none',
-                },
-              }}
-              onMouseOver={(e) => {
-                e.currentTarget.style.background = darkTheme
-                  ? 'rgba(255, 87, 87, 0.2)'
-                  : 'rgba(255, 87, 87, 0.15)';
-                e.currentTarget.style.transform = 'scale(1.05)';
-              }}
-              onMouseOut={(e) => {
-                e.currentTarget.style.background = darkTheme
-                  ? 'rgba(255, 87, 87, 0.1)'
-                  : 'rgba(255, 87, 87, 0.1)';
-                e.currentTarget.style.transform = 'scale(1)';
-              }}
-            >
-              Deconectare
-            </button>
-          </div>
-        ) : (
-          <button
-            onClick={() => navigate('/login')}
-            className="navbar-login-button"
-            style={{
-              padding: '0.5rem 1rem',
-              fontSize: '0.9rem',
-              fontWeight: '500',
-              borderRadius: '6px',
-              cursor: 'pointer',
-              background: darkTheme
-                ? 'rgba(255, 179, 71, 0.1)'
-                : 'rgba(255, 179, 71, 0.92)',
-              color: darkTheme ? '#ffb347' : '#7a3a00',
-              border: darkTheme
-                ? '1px solid rgba(255, 179, 71, 0.3)'
-                : '1px solid rgba(122, 58, 0, 0.2)',
-              transition: 'all 0.3s ease',
-              outline: 'none',
-              '&:focus': {
-                outline: 'none',
-              },
-            }}
-            onMouseOver={(e) => {
-              e.currentTarget.style.background = darkTheme
-                ? 'rgba(255, 179, 71, 0.2)'
-                : '#ffd591';
-              e.currentTarget.style.transform = 'scale(1.05)';
-            }}
-            onMouseOut={(e) => {
-              e.currentTarget.style.background = darkTheme
-                ? 'rgba(255, 179, 71, 0.1)'
-                : 'rgba(255, 179, 71, 0.92)';
-              e.currentTarget.style.transform = 'scale(1)';
-            }}
-          >
-            Autentificare
-          </button>
-        )}
+      <div className="navbar-right">
+        <div className="navbar-actions">
+          {navbarActions}
+        </div>
         <button
-          className="theme-toggle"
-          aria-label="Schimbă tema"
-          onClick={() => setDarkTheme(t => !t)}
+          className="navbar-hamburger"
+          type="button"
+          aria-label={mobileMenuOpen ? 'Închide meniul' : 'Deschide meniul'}
+          aria-expanded={mobileMenuOpen ? 'true' : 'false'}
+          onClick={() => setMobileMenuOpen(o => !o)}
         >
-          {darkTheme ? '🌙' : '🌞'}
+          {mobileMenuOpen ? <X size={32} strokeWidth={3.5} /> : <Menu size={32} strokeWidth={3.5} />}
         </button>
       </div>
+
+      {mobileMenuOpen && (
+        <div className="navbar-mobile-panel" role="dialog" aria-label="Meniu navigare">
+            <button
+              className="navbar-mobile-theme-toggle"
+              type="button"
+              aria-label="Schimbă tema"
+              onClick={() => setDarkTheme(t => !t)}
+            >
+              {darkTheme ? '🌙' : '🌞'}
+            </button>
+            <button
+              className="navbar-mobile-close"
+              type="button"
+              aria-label="Închide meniul"
+              onClick={() => {
+                setMobileMenuOpen(false);
+                setMobileDropdown(null);
+              }}
+            >
+              <X size={28} strokeWidth={3} />
+            </button>
+            <div className="navbar-mobile-content">
+              <h2 className="navbar-mobile-title">Meniu</h2>
+              <ul className="navbar-mobile-menu">
+                {NAV_CATEGORIES.map(cat => (
+                  <li key={cat.name} className="navbar-mobile-item">
+                    {cat.dropdown ? (
+                      <>
+                        <button
+                          type="button"
+                          className="navbar-mobile-dropdown-trigger"
+                          onClick={() => setMobileDropdown(d => (d === cat.name ? null : cat.name))}
+                        >
+                          <span className="nav-icon-wrapper">{cat.icon}</span>
+                          <span className="navbar-mobile-item-label">{cat.name}</span>
+                          <ChevronDown
+                            className={`dropdown-arrow ${mobileDropdown === cat.name ? 'open' : ''}`}
+                            size={20}
+                          />
+                        </button>
+                        {mobileDropdown === cat.name && (
+                          <ul className="navbar-mobile-submenu">
+                            {cat.dropdown.map(item => (
+                              <li key={item.name}>
+                                <Link to={item.href} className="navbar-mobile-link">
+                                  <span className="nav-icon-wrapper">{item.icon}</span>
+                                  {item.name}
+                                </Link>
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+                      </>
+                    ) : (
+                      <Link to={cat.href} className="navbar-mobile-link">
+                        <span className="nav-icon-wrapper">{cat.icon}</span>
+                        {cat.name}
+                      </Link>
+                    )}
+                  </li>
+                ))}
+              </ul>
+              <div className="navbar-mobile-actions">
+                {currentUser ? (
+                  <div className="navbar-mobile-auth">
+                    <Link to="/profil" className="navbar-profile-link" aria-label="Profil">
+                      {(userProfile?.photoURL || currentUser.photoURL) ? (
+                        <img
+                          src={getProfileImageUrl(userProfile?.photoURL || currentUser.photoURL)}
+                          alt={userProfile?.displayName || currentUser.displayName || 'User'}
+                          className="navbar-profile-image"
+                          onError={(e) => {
+                            e.currentTarget.style.display = 'none';
+                            const fallback = e.currentTarget.parentElement?.querySelector('.navbar-profile-fallback');
+                            if (fallback) fallback.style.display = 'flex';
+                          }}
+                        />
+                      ) : null}
+                      <div
+                        className="navbar-profile-fallback"
+                        style={{
+                          display: (userProfile?.photoURL || currentUser.photoURL) ? 'none' : 'flex',
+                        }}
+                      >
+                        {(userProfile?.displayName || currentUser.displayName || 'U').charAt(0).toUpperCase()}
+                      </div>
+                    </Link>
+                    <button
+                      onClick={async () => {
+                        try {
+                          await logout();
+                        } catch (error) {
+                          console.error('Error logging out:', error);
+                        }
+                      }}
+                      className="navbar-logout-button"
+                      type="button"
+                    >
+                      Deconectare
+                    </button>
+                  </div>
+                ) : (
+                  <button
+                    onClick={() => navigate('/login')}
+                    className="navbar-login-button"
+                    type="button"
+                  >
+                    Autentificare
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
+      )}
     </nav>
   );
 } 
