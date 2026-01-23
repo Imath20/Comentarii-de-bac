@@ -1,6 +1,7 @@
 import argparse
 import os
 import re
+import sys
 from pathlib import Path
 from typing import Iterable, Optional, Tuple
 
@@ -163,6 +164,13 @@ def ensure_tesseract_hint():
 
 
 def main():
+    # Fix encoding pentru Windows console (suport emoji)
+    if sys.platform == "win32":
+        if hasattr(sys.stdout, "reconfigure"):
+            sys.stdout.reconfigure(encoding="utf-8")
+        if hasattr(sys.stderr, "reconfigure"):
+            sys.stderr.reconfigure(encoding="utf-8")
+    
     parser = argparse.ArgumentParser(
         description="OCR cu Tesseract (detaliat) pentru toate imaginile dintr-un folder."
     )
@@ -216,6 +224,17 @@ def main():
 
     if args.tesseract_cmd:
         pytesseract.pytesseract.tesseract_cmd = args.tesseract_cmd
+        # Setează TESSDATA_PREFIX automat dacă nu e deja setat
+        if "TESSDATA_PREFIX" not in os.environ:
+            tesseract_dir = Path(args.tesseract_cmd).parent
+            tessdata_path = tesseract_dir / "tessdata"
+            if tessdata_path.exists():
+                os.environ["TESSDATA_PREFIX"] = str(tessdata_path)
+            else:
+                # Încearcă și varianta cu slash în loc de backslash
+                tessdata_path_alt = Path(str(tesseract_dir).replace("\\", "/")) / "tessdata"
+                if tessdata_path_alt.exists():
+                    os.environ["TESSDATA_PREFIX"] = str(tessdata_path_alt)
 
     input_dir = Path(args.input)
     if not input_dir.exists():
