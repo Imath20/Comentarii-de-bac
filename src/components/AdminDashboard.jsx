@@ -154,6 +154,7 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
     titlu: '',
     autor: '',
     categorie: '',
+    tip: 'general',
     plan: 'free',
     descriere: '',
     content: [], // Changed from text to content (array of blocks)
@@ -184,6 +185,7 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
         titlu: initialCommentData.titlu || '',
         autor: initialCommentData.autor || '',
         categorie: initialCommentData.categorie || '',
+        tip: initialCommentData.tip || 'general',
         plan: initialCommentData.plan || 'free',
         descriere: initialCommentData.descriere || '',
         content: initialCommentData.content || (initialCommentData.text ? [{ type: 'paragraph', text: initialCommentData.text }] : []),
@@ -403,6 +405,13 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
   const categorii = [
     'poezie', 'roman', 'comedie', 'basm', 'nuvela', 
     'critica', 'memorii', 'poveste', 'schita'
+  ];
+
+  const comentariuTipOptions = [
+    { value: 'general', label: 'Comentariu general' },
+    { value: 'tema-viziune', label: 'Tema și viziunea' },
+    { value: 'caracterizare-personaj', label: 'Caracterizarea personajului' },
+    { value: 'relatie-doua-personaje', label: 'Relația dintre două personaje' },
   ];
 
   const categoriiFilme = [
@@ -1684,6 +1693,7 @@ Generează o descriere scurtă și profesională pentru acest comentariu literar
           titlu: '',
           autor: '',
           categorie: '',
+          tip: 'general',
           plan: 'free',
           descriere: '',
           content: [],
@@ -2647,6 +2657,20 @@ Generează o descriere scurtă și profesională pentru acest comentariu literar
               <option value="">Selectează categoria</option>
               {categorii.map(cat => (
                 <option key={cat} value={cat}>{cat}</option>
+              ))}
+            </select>
+          </div>
+
+          <div className="admin-form-group">
+            <label htmlFor="comentariu-tip">Tip comentariu</label>
+            <select
+              id="comentariu-tip"
+              value={comentariuForm.tip}
+              onChange={(e) => setComentariuForm({ ...comentariuForm, tip: e.target.value })}
+              className="admin-select"
+            >
+              {comentariuTipOptions.map(opt => (
+                <option key={opt.value} value={opt.value}>{opt.label}</option>
               ))}
             </select>
           </div>

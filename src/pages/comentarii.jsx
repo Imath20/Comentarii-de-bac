@@ -116,6 +116,14 @@ const planOptions = [
     { value: 'premium', label: 'Premium' },
 ];
 
+const tipComentariuOptions = [
+    { value: 'toate', label: 'Toate tipurile' },
+    { value: 'general', label: 'Comentariu general' },
+    { value: 'tema-viziune', label: 'Tema și viziunea' },
+    { value: 'caracterizare-personaj', label: 'Caracterizarea personajului' },
+    { value: 'relatie-doua-personaje', label: 'Relația dintre personaje' },
+];
+
 const sortOptions = [
     { value: 'none', label: 'Fără sortare' },
     { value: 'az', label: 'A-Z' },
@@ -142,6 +150,7 @@ export default function Comentarii() {
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedCategorie, setSelectedCategorie] = useState('toate');
     const [selectedPlan, setSelectedPlan] = useState('toate');
+    const [selectedTip, setSelectedTip] = useState('toate');
     const [sortOption, setSortOption] = useState('none');
     const [selectedComentariu, setSelectedComentariu] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -203,9 +212,10 @@ export default function Comentarii() {
             const matchesSearch = !q || c.titlu.toLowerCase().includes(q) || (c.descriere || '').toLowerCase().includes(q) || (c.categorie || '').toLowerCase().includes(q);
             const matchesCategorie = selectedCategorie === 'toate' || c.categorie === selectedCategorie;
             const matchesPlan = selectedPlan === 'toate' || c.plan === selectedPlan;
-            return matchesSearch && matchesCategorie && matchesPlan;
+            const matchesTip = selectedTip === 'toate' || (c.tip || 'general') === selectedTip;
+            return matchesSearch && matchesCategorie && matchesPlan && matchesTip;
         });
-    }, [comentarii, searchTerm, selectedCategorie, selectedPlan]);
+    }, [comentarii, searchTerm, selectedCategorie, selectedPlan, selectedTip]);
 
     const sorted = useMemo(() => {
         const arr = [...filtered];
@@ -324,16 +334,29 @@ export default function Comentarii() {
                                     </button>
                                 ))}
                             </div>
-                            <div className="comentarii-select-container comentarii-sort-container">
-                                <Select
-                                    options={sortOptions}
-                                    value={sortOptions.find(opt => opt.value === sortOption)}
-                                    onChange={opt => setSortOption(opt.value)}
-                                    styles={customSelectStyles(darkTheme)}
-                                    isSearchable={false}
-                                    menuPlacement="auto"
-                                    placeholder="Sortare"
-                                />
+                            <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+                                <div className="comentarii-select-container">
+                                    <Select
+                                        options={tipComentariuOptions}
+                                        value={tipComentariuOptions.find(opt => opt.value === selectedTip)}
+                                        onChange={opt => setSelectedTip(opt.value)}
+                                        styles={customSelectStyles(darkTheme)}
+                                        isSearchable={false}
+                                        menuPlacement="auto"
+                                        placeholder="Tip comentariu"
+                                    />
+                                </div>
+                                <div className="comentarii-select-container comentarii-sort-container">
+                                    <Select
+                                        options={sortOptions}
+                                        value={sortOptions.find(opt => opt.value === sortOption)}
+                                        onChange={opt => setSortOption(opt.value)}
+                                        styles={customSelectStyles(darkTheme)}
+                                        isSearchable={false}
+                                        menuPlacement="auto"
+                                        placeholder="Sortare"
+                                    />
+                                </div>
                             </div>
                         </div>
 
