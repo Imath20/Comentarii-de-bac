@@ -389,4 +389,568 @@
 .scriitori-select-container {
   min-width: 200px;
   flex-shrink: 0;
+}
+
+// Responsive styles
+@media (max-width: 1400px) {
+  .scriitori-grid-container {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+  
+  .scriitori-card {
+    width: 100%;
+    max-width: 320px;
+  }
+  
+  .scriitori-filters-container {
+    padding: 0 1.5rem;
+  }
+  
+  .opere-filters-container {
+    padding: 0 1.5rem;
+  }
+}
+
+@media (max-width: 1200px) {
+  .scriitori-filters-container {
+    gap: 1.2rem;
+  }
+  
+  .opere-filters-container {
+    gap: 1.2rem;
+  }
+  
+  .scriitori-custom-select-control {
+    min-width: 240px;
+    max-width: 280px;
+    font-size: 1.1rem;
+  }
+  
+  .scriitori-select-container {
+    min-width: 180px;
+  }
+  
+  .scriitori-sort-container {
+    margin-right: 3rem;
+    min-width: 240px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .scriitori-grid-container {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+  
+  .scriitori-sort-container {
+    margin-right: 2rem !important;
+    min-width: 220px !important;
+    max-width: 220px !important;
+  }
+  
+  .scriitori-filters-container {
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 0 1.5rem;
+  }
+  
+  .opere-filters-container {
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 0 1.5rem;
+  }
+  
+  .opere-select-container {
+    min-width: 180px;
+    flex: 1;
+    min-width: calc(50% - 0.5rem);
+    max-width: calc(50% - 0.5rem);
+  }
+  
+  .opere-search-container {
+    width: 100%;
+    flex: 1 1 100%;
+    order: 1;
+  }
+  
+  .opere-search-input {
+    width: 100%;
+  }
+  
+  .scriitori-filter-buttons {
+    padding: 0 1.5rem;
+    gap: 0.8rem;
+  }
+  
+  .scriitori-custom-select-control {
+    min-width: 100%;
+    max-width: 100%;
+    font-size: 1.08rem;
+    height: 54px;
+  }
+  
+  .scriitori-select-container {
+    min-width: calc(50% - 0.5rem);
+    max-width: calc(50% - 0.5rem);
+  }
+}
+
+@media (max-width: 768px) {
+  .scriitori-grid-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    padding: 0 1rem;
+  }
+  
+  .scriitori-card {
+    width: 100%;
+    max-width: none;
+    height: 280px;
+  }
+  
+  .scriitori-card-info {
+    font-size: 0.95rem;
+    padding: 0.4em 0 0.25em 0;
+    
+    .scriitori-card-dates {
+      font-size: 0.88em;
+    }
+  }
+  
+  .scriitori-filters-container {
+    flex-direction: column;
+    padding: 0 1rem;
+    gap: 1rem;
+    align-items: stretch;
+  }
+  
+  .scriitori-filter-buttons {
+    padding: 0 1rem !important;
+    gap: 0.7rem !important;
+    margin-bottom: 1.2rem !important;
+    flex-wrap: wrap !important;
+    justify-content: flex-start;
+  }
+  
+  .scriitori-filter-button {
+    padding: 0.6rem 1.2rem !important;
+    font-size: 0.9rem !important;
+    flex: 0 1 auto !important;
+    min-width: fit-content !important;
+  }
+  
+  .scriitori-sort-container {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    min-width: 100% !important;
+    width: 100% !important;
+    margin-top: 0.5rem;
+    order: 10;
+    
+    // React-select responsive styles for sort
+    :global(.css-1pahdxg-control),
+    :global(.css-1s2u09g-control),
+    :global(.css-13cymwt-control) {
+      min-width: 100% !important;
+      max-width: 100% !important;
+      width: 100% !important;
+      height: 52px !important;
+      font-size: 1.05rem !important;
+    }
+    
+    :global(.css-1pahdxg-control .css-1hb7zxy-IndicatorsContainer),
+    :global(.css-1s2u09g-control .css-1hb7zxy-IndicatorsContainer),
+    :global(.css-13cymwt-control .css-1hb7zxy-IndicatorsContainer) {
+      height: 52px !important;
+    }
+    
+    :global(.css-1pahdxg-control .css-1d8n9bt),
+    :global(.css-1s2u09g-control .css-1d8n9bt),
+    :global(.css-13cymwt-control .css-1d8n9bt) {
+      height: 52px !important;
+      padding: 0 1.3rem !important;
+    }
+  }
+  
+  .opere-filters-container {
+    flex-direction: column;
+    padding: 0 1rem;
+    gap: 1rem;
+    align-items: stretch;
+  }
+  
+  .opere-search-container {
+    width: 100%;
+    flex: 1 1 100%;
+    order: 1;
+  }
+  
+  .opere-select-container {
+    width: 100%;
+    min-width: 100%;
+    flex: 1 1 100%;
+    order: 2;
+  }
+  
+  .opere-search-input {
+    width: 100%;
+    padding: 1rem 1.3rem 1rem 3rem;
+    font-size: 1rem;
+  }
+  
+  .opere-search-icon {
+    left: 1rem;
+    font-size: 1.1rem;
+  }
+  
+  .scriitori-custom-select-control {
+    min-width: 100% !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    height: 52px !important;
+    font-size: 1.05rem !important;
+  }
+  
+  .scriitori-custom-select-value-container {
+    height: 52px !important;
+    padding: 0 1.3rem !important;
+  }
+  
+  .scriitori-custom-select-single-value {
+    height: 52px !important;
+    font-size: 1.05rem !important;
+    left: 1.3rem !important;
+    right: 1.3rem !important;
+  }
+  
+  .scriitori-custom-select-dropdown-indicator {
+    height: 52px !important;
+    right: 1.3rem !important;
+  }
+  
+  .scriitori-select-container {
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+  }
+  
+  // React-select responsive styles
+  .opere-select-container {
+    :global(.css-1pahdxg-control),
+    :global(.css-1s2u09g-control),
+    :global(.css-13cymwt-control) {
+      min-width: 100% !important;
+      max-width: 100% !important;
+      width: 100% !important;
+      height: 52px !important;
+      font-size: 1.05rem !important;
+    }
+    
+    :global(.css-1pahdxg-control .css-1hb7zxy-IndicatorsContainer),
+    :global(.css-1s2u09g-control .css-1hb7zxy-IndicatorsContainer),
+    :global(.css-13cymwt-control .css-1hb7zxy-IndicatorsContainer) {
+      height: 52px !important;
+    }
+    
+    :global(.css-1pahdxg-control .css-1d8n9bt),
+    :global(.css-1s2u09g-control .css-1d8n9bt),
+    :global(.css-13cymwt-control .css-1d8n9bt) {
+      height: 52px !important;
+      padding: 0 1.3rem !important;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .scriitori-grid-container {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding: 0 0.75rem;
+  }
+  
+  .scriitori-card {
+    width: 100%;
+    max-width: 100%;
+    height: 300px;
+  }
+  
+  .scriitori-card-info {
+    font-size: 0.9rem;
+    padding: 0.35em 0 0.2em 0;
+    
+    .scriitori-card-dates {
+      font-size: 0.85em;
+    }
+  }
+  
+  .scriitori-filters-container {
+    padding: 0 0.75rem;
+    gap: 0.9rem;
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .scriitori-filter-buttons {
+    padding: 0 0.75rem !important;
+    gap: 0.6rem !important;
+    margin-bottom: 1rem !important;
+    flex-wrap: wrap !important;
+    justify-content: flex-start !important;
+  }
+  
+  .scriitori-filter-button {
+    padding: 0.55rem 1rem !important;
+    font-size: 0.85rem !important;
+    border-radius: 1.8rem !important;
+    flex: 0 1 auto !important;
+    min-width: fit-content !important;
+  }
+  
+  .scriitori-sort-container {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    min-width: 100% !important;
+    width: 100% !important;
+    margin-top: 0.5rem;
+    
+    // React-select responsive styles for sort on mobile
+    :global(.css-1pahdxg-control),
+    :global(.css-1s2u09g-control),
+    :global(.css-13cymwt-control) {
+      min-width: 100% !important;
+      max-width: 100% !important;
+      width: 100% !important;
+      height: 50px !important;
+      font-size: 0.95rem !important;
+      border-radius: 2rem !important;
+    }
+    
+    :global(.css-1pahdxg-control .css-1hb7zxy-IndicatorsContainer),
+    :global(.css-1s2u09g-control .css-1hb7zxy-IndicatorsContainer),
+    :global(.css-13cymwt-control .css-1hb7zxy-IndicatorsContainer) {
+      height: 50px !important;
+    }
+    
+    :global(.css-1pahdxg-control .css-1d8n9bt),
+    :global(.css-1s2u09g-control .css-1d8n9bt),
+    :global(.css-13cymwt-control .css-1d8n9bt) {
+      height: 50px !important;
+      padding: 0 1.2rem !important;
+    }
+  }
+  
+  .opere-filters-container {
+    padding: 0 0.75rem;
+    gap: 0.9rem;
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .opere-search-container {
+    width: 100%;
+    order: 1;
+  }
+  
+  .opere-select-container {
+    width: 100%;
+    min-width: 100%;
+    order: 2;
+  }
+  
+  .opere-search-input {
+    padding: 0.9rem 1.2rem 0.9rem 2.8rem;
+    font-size: 0.95rem;
+    border-radius: 2rem;
+    width: 100%;
+  }
+  
+  .opere-search-icon {
+    left: 0.9rem;
+    font-size: 1rem;
+  }
+  
+  .scriitori-custom-select-control {
+    min-width: 100% !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    height: 50px !important;
+    font-size: 0.95rem !important;
+    border-radius: 2rem !important;
+  }
+  
+  .scriitori-custom-select-value-container {
+    height: 50px !important;
+    padding: 0 1.2rem !important;
+  }
+  
+  .scriitori-custom-select-single-value {
+    height: 50px !important;
+    font-size: 0.95rem !important;
+    left: 1.2rem !important;
+    right: 1.2rem !important;
+  }
+  
+  .scriitori-custom-select-dropdown-indicator {
+    height: 50px !important;
+    right: 1.2rem !important;
+  }
+  
+  .scriitori-select-container {
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+  }
+  
+  .scriitori-no-results {
+    padding: 2rem 0.75rem;
+    font-size: 1rem;
+    margin-bottom: 3rem;
+  }
+  
+  // React-select responsive styles for small mobile
+  .opere-select-container {
+    :global(.css-1pahdxg-control),
+    :global(.css-1s2u09g-control),
+    :global(.css-13cymwt-control) {
+      min-width: 100% !important;
+      max-width: 100% !important;
+      width: 100% !important;
+      height: 50px !important;
+      font-size: 0.95rem !important;
+      border-radius: 2rem !important;
+    }
+    
+    :global(.css-1pahdxg-control .css-1hb7zxy-IndicatorsContainer),
+    :global(.css-1s2u09g-control .css-1hb7zxy-IndicatorsContainer),
+    :global(.css-13cymwt-control .css-1hb7zxy-IndicatorsContainer) {
+      height: 50px !important;
+    }
+    
+    :global(.css-1pahdxg-control .css-1d8n9bt),
+    :global(.css-1s2u09g-control .css-1d8n9bt),
+    :global(.css-13cymwt-control .css-1d8n9bt) {
+      height: 50px !important;
+      padding: 0 1.2rem !important;
+    }
+    
+    :global(.css-1pahdxg-control .css-1n7v3ny-option),
+    :global(.css-1s2u09g-control .css-1n7v3ny-option),
+    :global(.css-13cymwt-control .css-1n7v3ny-option) {
+      font-size: 0.95rem !important;
+      padding: 0.6rem 0 !important;
+    }
+  }
+}
+
+// Extra small devices
+@media (max-width: 360px) {
+  .scriitori-card {
+    height: 280px;
+  }
+  
+  .scriitori-card-info {
+    font-size: 0.85rem;
+    
+    .scriitori-card-dates {
+      font-size: 0.8em;
+    }
+  }
+  
+  .scriitori-filters-container {
+    padding: 0 0.5rem;
+    gap: 0.8rem;
+  }
+  
+  .scriitori-filter-button {
+    padding: 0.5rem 0.9rem !important;
+    font-size: 0.8rem !important;
+    flex: 0 1 auto !important;
+  }
+  
+  .scriitori-sort-container {
+    :global(.css-1pahdxg-control),
+    :global(.css-1s2u09g-control),
+    :global(.css-13cymwt-control) {
+      height: 48px !important;
+      font-size: 0.9rem !important;
+    }
+    
+    :global(.css-1pahdxg-control .css-1hb7zxy-IndicatorsContainer),
+    :global(.css-1s2u09g-control .css-1hb7zxy-IndicatorsContainer),
+    :global(.css-13cymwt-control .css-1hb7zxy-IndicatorsContainer) {
+      height: 48px !important;
+    }
+    
+    :global(.css-1pahdxg-control .css-1d8n9bt),
+    :global(.css-1s2u09g-control .css-1d8n9bt),
+    :global(.css-13cymwt-control .css-1d8n9bt) {
+      height: 48px !important;
+      padding: 0 1.1rem !important;
+    }
+  }
+  
+  .opere-search-input {
+    padding: 0.85rem 1.1rem 0.85rem 2.6rem;
+    font-size: 0.9rem;
+  }
+  
+  .opere-search-icon {
+    left: 0.85rem;
+    font-size: 0.95rem;
+  }
+  
+  .opere-filters-container {
+    padding: 0 0.5rem;
+    gap: 0.8rem;
+  }
+  
+  .opere-select-container {
+    :global(.css-1pahdxg-control),
+    :global(.css-1s2u09g-control),
+    :global(.css-13cymwt-control) {
+      height: 48px !important;
+      font-size: 0.9rem !important;
+    }
+    
+    :global(.css-1pahdxg-control .css-1hb7zxy-IndicatorsContainer),
+    :global(.css-1s2u09g-control .css-1hb7zxy-IndicatorsContainer),
+    :global(.css-13cymwt-control .css-1hb7zxy-IndicatorsContainer) {
+      height: 48px !important;
+    }
+    
+    :global(.css-1pahdxg-control .css-1d8n9bt),
+    :global(.css-1s2u09g-control .css-1d8n9bt),
+    :global(.css-13cymwt-control .css-1d8n9bt) {
+      height: 48px !important;
+      padding: 0 1.1rem !important;
+    }
+  }
+  
+  .scriitori-custom-select-control {
+    height: 48px !important;
+    font-size: 0.9rem !important;
+  }
+  
+  .scriitori-custom-select-value-container {
+    height: 48px !important;
+    padding: 0 1.1rem !important;
+  }
+  
+  .scriitori-custom-select-single-value {
+    height: 48px !important;
+    font-size: 0.9rem !important;
+    left: 1.1rem !important;
+    right: 1.1rem !important;
+  }
+  
+  .scriitori-custom-select-dropdown-indicator {
+    height: 48px !important;
+    right: 1.1rem !important;
+  }
+  
+  .scriitori-filter-buttons {
+    padding: 0 0.5rem !important;
+    gap: 0.5rem !important;
+  }
 } 

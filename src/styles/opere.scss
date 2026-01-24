@@ -446,7 +446,154 @@
 .opere-select-container {
   min-width: 200px;
   flex-shrink: 0;
-} 
+}
+
+// Responsive styles for filters (used in scriitori page)
+@media (max-width: 1024px) {
+  .opere-filters-container {
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 0 1.5rem;
+  }
+  
+  .opere-select-container {
+    min-width: 180px;
+    flex: 1;
+    min-width: calc(50% - 0.5rem);
+  }
+  
+  .opere-search-container {
+    width: 100%;
+    flex: 1 1 100%;
+  }
+  
+  .opere-search-input {
+    width: 100% !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .opere-filters-container {
+    flex-direction: column;
+    padding: 0 1rem;
+    gap: 1rem;
+    align-items: stretch;
+  }
+  
+  .opere-search-container {
+    width: 100%;
+    flex: 1 1 100%;
+    order: 1;
+  }
+  
+  .opere-select-container {
+    width: 100%;
+    min-width: 100% !important;
+    flex: 1 1 100%;
+    order: 2;
+  }
+  
+  .opere-search-input {
+    width: 100% !important;
+    padding: 1rem 1.3rem 1rem 3rem !important;
+    font-size: 1rem !important;
+  }
+  
+  .opere-search-icon {
+    left: 1rem !important;
+    font-size: 1.1rem !important;
+  }
+  
+  // React-select responsive styles
+  .opere-select-container {
+    :global(.css-1pahdxg-control),
+    :global(.css-1s2u09g-control),
+    :global(.css-13cymwt-control) {
+      min-width: 100% !important;
+      max-width: 100% !important;
+      width: 100% !important;
+      height: 52px !important;
+      font-size: 1.05rem !important;
+    }
+    
+    :global(.css-1pahdxg-control .css-1hb7zxy-IndicatorsContainer),
+    :global(.css-1s2u09g-control .css-1hb7zxy-IndicatorsContainer),
+    :global(.css-13cymwt-control .css-1hb7zxy-IndicatorsContainer) {
+      height: 52px !important;
+    }
+    
+    :global(.css-1pahdxg-control .css-1d8n9bt),
+    :global(.css-1s2u09g-control .css-1d8n9bt),
+    :global(.css-13cymwt-control .css-1d8n9bt) {
+      height: 52px !important;
+      padding: 0 1.3rem !important;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .opere-filters-container {
+    padding: 0 0.75rem;
+    gap: 0.9rem;
+  }
+  
+  .opere-search-input {
+    padding: 0.9rem 1.2rem 0.9rem 2.8rem !important;
+    font-size: 0.95rem !important;
+    border-radius: 2rem !important;
+  }
+  
+  .opere-search-icon {
+    left: 0.9rem !important;
+    font-size: 1rem !important;
+  }
+  
+  // React-select responsive styles for small mobile
+  .opere-select-container {
+    :global(.css-1pahdxg-control),
+    :global(.css-1s2u09g-control),
+    :global(.css-13cymwt-control) {
+      min-width: 100% !important;
+      max-width: 100% !important;
+      width: 100% !important;
+      height: 50px !important;
+      font-size: 0.95rem !important;
+      border-radius: 2rem !important;
+    }
+    
+    :global(.css-1pahdxg-control .css-1hb7zxy-IndicatorsContainer),
+    :global(.css-1s2u09g-control .css-1hb7zxy-IndicatorsContainer),
+    :global(.css-13cymwt-control .css-1hb7zxy-IndicatorsContainer) {
+      height: 50px !important;
+    }
+    
+    :global(.css-1pahdxg-control .css-1d8n9bt),
+    :global(.css-1s2u09g-control .css-1d8n9bt),
+    :global(.css-13cymwt-control .css-1d8n9bt) {
+      height: 50px !important;
+      padding: 0 1.2rem !important;
+    }
+    
+    :global(.css-1pahdxg-control .css-1n7v3ny-option),
+    :global(.css-1s2u09g-control .css-1n7v3ny-option),
+    :global(.css-13cymwt-control .css-1n7v3ny-option) {
+      font-size: 0.95rem !important;
+      padding: 0.6rem 0 !important;
+    }
+  }
+}
+
+@media (max-width: 360px) {
+  .opere-filters-container {
+    padding: 0 0.5rem;
+    gap: 0.8rem;
+  }
+  
+  .opere-search-input {
+    padding: 0.85rem 1.1rem 0.85rem 2.6rem !important;
+    font-size: 0.9rem !important;
+  }
+}
 
 // Poem popup styles for biblioteca
 .biblioteca-poem-modal-overlay {
