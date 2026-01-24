@@ -793,10 +793,13 @@
 
   .subiecte-card-date,
   .subiecte-card-number {
-    width: 100%;
+    width: 20%;
     text-align: center;
     padding: 0.6rem 1rem;
     font-size: 0.85rem;
+  }
+  .subiecte-card-number {
+    margin-right: 10px;
   }
 
   .subiecte-card-profil {
