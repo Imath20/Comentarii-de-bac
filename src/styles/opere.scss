@@ -313,6 +313,36 @@
   margin-bottom: 4rem;
 }
 
+@media (max-width: 1024px) {
+  .opere-grid-container {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+}
+@media (max-width: 768px) {
+  .opere-grid-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    padding: 0 0rem !important;
+
+  }
+}
+@media (max-width: 480px) {
+  .opere-grid-container {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding: 0 0rem !important;
+
+  }
+}
+@media (max-width: 360px) {
+  .opere-grid-container {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding: 0 0rem !important;
+
+  }
+}
 // Card styles
 .opere-card {
   width: 400px;
@@ -848,7 +878,33 @@
   }
 }
 
-// Responsive adjustments
+// Responsive adjustments pentru modalul de poezie
+@media (max-width: 1024px) {
+  .biblioteca-poem-modal {
+    width: 92vw;
+    height: 88vh;
+    max-width: 850px;
+  }
+
+  .biblioteca-poem-modal-header {
+    padding: 2.2rem 2rem 1.5rem 2rem;
+
+    h2 {
+      font-size: 2.2rem;
+    }
+  }
+
+  .biblioteca-poem-modal-content {
+    padding: 2rem;
+
+    .biblioteca-poem-text {
+      max-width: 100%;
+      font-size: 1.3rem;
+      padding: 2.5rem;
+    }
+  }
+}
+
 @media (max-width: 768px) {
   .biblioteca-poem-modal {
     width: 95vw;
@@ -862,6 +918,7 @@
 
     h2 {
       font-size: 2rem;
+      line-height: 1.3;
     }
 
     .biblioteca-poem-modal-close {
@@ -875,6 +932,7 @@
 
   .biblioteca-poem-modal-content {
     padding: 1.5rem;
+    gap: 1.5rem;
 
     .biblioteca-poem-author {
       font-size: 1.3rem;
@@ -882,18 +940,134 @@
 
     .biblioteca-poem-date {
       font-size: 1.1rem;
+      margin-bottom: 1.5rem;
     }
 
     .biblioteca-poem-text {
       font-size: 1.2rem;
       padding: 2rem;
       border-radius: 16px;
+      line-height: 2;
     }
 
     .biblioteca-poem-read-btn {
       min-width: 180px;
       padding: 14px 28px;
       font-size: 15px;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .biblioteca-poem-modal {
+    width: 98vw;
+    height: 90vh;
+    margin: 0.5rem;
+    border-radius: 18px;
+  }
+
+  .biblioteca-poem-modal-header {
+    padding: 1.5rem 1rem 0.8rem 1rem;
+
+    h2 {
+      font-size: 1.6rem;
+      line-height: 1.25;
+      padding-bottom: 4px;
+    }
+
+    .biblioteca-poem-modal-close {
+      width: 32px;
+      height: 32px;
+      font-size: 18px;
+      right: 0.8rem;
+      top: 0.8rem;
+    }
+  }
+
+  .biblioteca-poem-modal-content {
+    padding: 1.2rem;
+    gap: 1.2rem;
+    max-height: calc(90vh - 100px);
+
+    .biblioteca-poem-author {
+      font-size: 1.15rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .biblioteca-poem-date {
+      font-size: 1rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .biblioteca-poem-text {
+      font-size: 1.1rem;
+      padding: 1.5rem;
+      border-radius: 14px;
+      line-height: 1.9;
+    }
+
+    .biblioteca-poem-read-btn {
+      min-width: 160px;
+      padding: 12px 24px;
+      font-size: 14px;
+      border-radius: 24px;
+    }
+  }
+}
+
+@media (max-width: 360px) {
+  .biblioteca-poem-modal {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    border-radius: 0;
+    max-width: 100vw;
+  }
+
+  .biblioteca-poem-modal-header {
+    padding: 1.2rem 0.8rem 0.6rem 0.8rem;
+
+    h2 {
+      font-size: 1.4rem;
+      line-height: 1.2;
+    }
+
+    .biblioteca-poem-modal-close {
+      width: 30px;
+      height: 30px;
+      font-size: 16px;
+      right: 0.6rem;
+      top: 0.6rem;
+    }
+  }
+
+  .biblioteca-poem-modal-content {
+    padding: 1rem;
+    gap: 1rem;
+    max-height: calc(100vh - 80px);
+
+    .biblioteca-poem-author {
+      font-size: 1.05rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .biblioteca-poem-date {
+      font-size: 0.95rem;
+      margin-bottom: 1rem;
+    }
+
+    .biblioteca-poem-text {
+      font-size: 1rem;
+      padding: 1.2rem;
+      border-radius: 12px;
+      line-height: 1.8;
+    }
+
+    .biblioteca-poem-read-btn {
+      min-width: 140px;
+      padding: 10px 20px;
+      font-size: 13px;
+      border-radius: 20px;
     }
   }
 }
