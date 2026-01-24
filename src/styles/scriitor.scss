@@ -1850,6 +1850,52 @@
   min-width: 220px;
   max-width: 320px;
 }
+@media (max-width: 900px) {
+  .avatar-searchbar-banner-wrapper {
+    display: none !important;
+  }
+}
+
+.scriitor-back-btn-banner {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  display: none; // Ascuns pe desktop, afișat doar pe mobile
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 12px 0 rgba(124, 79, 43, 0.15);
+  cursor: pointer;
+  z-index: 13;
+  transition: all 0.2s;
+  padding: 0;
+  outline: none !important;
+  backdrop-filter: blur(10px);
+
+  &:focus {
+    outline: none !important;
+  }
+
+  &:hover {
+    background: rgba(255, 255, 255, 1);
+    transform: translateX(-4px);
+    box-shadow: 0 4px 16px 0 rgba(124, 79, 43, 0.25);
+  }
+
+  &:active {
+    transform: translateX(-4px) scale(0.95);
+  }
+
+  svg {
+    color: #4e2e1e;
+    width: 20px;
+    height: 20px;
+  }
+}
 
 .avatar-searchbar-banner-bar {
   display: flex;
@@ -1976,7 +2022,460 @@
   transition: opacity 0.18s;
 }
 
-@media (max-width: 700px) {
+// Responsive Design - Tablet and Mobile
+@media (max-width: 1200px) {
+  .scriitor-main-layout {
+    max-width: 100%;
+    padding: 0 1rem;
+    gap: 32px;
+  }
+
+  .scriitor-left-column {
+    flex: 0 0 300px;
+    min-width: 260px;
+    max-width: 320px;
+  }
+
+  .scriitor-banner {
+    height: 400px;
+  }
+
+  .scriitor-profile-image {
+    width: 160px;
+    height: 160px;
+    bottom: -80px;
+    border: 6px solid #fff;
+  }
+
+  .scriitor-main-layout {
+    margin-top: 100px;
+  }
+}
+
+@media (max-width: 968px) {
+  .scriitor-main-layout {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 2rem;
+    margin-top: 100px;
+    padding: 0 1rem;
+  }
+
+  .scriitor-left-column {
+    flex: 1;
+    min-width: auto;
+    max-width: 100%;
+  }
+
+  .scriitor-left-sticky {
+    position: static;
+  }
+
+  .scriitor-right-column {
+    flex: 1;
+    width: 100%;
+  }
+
+  .scriitor-banner {
+    height: 350px;
+  }
+
+  .scriitor-profile-image {
+    width: 140px;
+    height: 140px;
+    bottom: -70px;
+    border: 5px solid #fff;
+  }
+
+  .scriitor-info-card {
+    padding: 1rem;
+    margin-bottom: 20px;
+
+    h2 {
+      font-size: 1.7rem;
+    }
+
+    .scriitor-dates {
+      font-size: 1.2rem;
+    }
+  }
+
+  .scriitor-section {
+    margin-bottom: 20px;
+
+    .scriitor-section-title {
+      font-size: 1.3rem;
+      text-align: center;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .scriitor-banner {
+    height: 300px;
+  }
+
+  .scriitor-profile-image {
+    width: 120px;
+    height: 120px;
+    bottom: -60px;
+    border: 4px solid #fff;
+  }
+
+  .scriitor-main-layout {
+    margin-top: 80px;
+    padding: 0 0.75rem;
+    gap: 1.5rem;
+    padding-bottom: 60px;
+  }
+
+  .scriitor-back-btn-inline {
+    display: none; // Ascuns pe mobile, afișat doar pe desktop
+  }
+
+  .scriitor-back-btn-banner {
+    display: flex !important; // Afișat pe mobile
+    top: 12px;
+    left: 12px;
+    width: 40px;
+    height: 40px;
+
+    svg {
+      width: 18px;
+      height: 18px;
+    }
+  }
+
+  .avatar-searchbar-banner-wrapper {
+    // display: flex !important; // Afișat pe mobile
+    top: -56px; // Sub butonul back
+    left: 12px;
+    right: 12px;
+    min-width: auto;
+    max-width: calc(100% - 24px);
+    width: auto;
+  }
+
+  .scriitor-info-card {
+    padding: 0.9rem;
+    margin-bottom: 18px;
+
+    h2 {
+      font-size: 1.7rem;
+    }
+
+    .scriitor-dates {
+      font-size: 1.2rem;
+    }
+  }
+
+  .scriitor-section {
+    margin-bottom: 18px;
+
+    .scriitor-section-title {
+      font-size: 1.3rem;
+      margin-bottom: 6px;
+      text-align: center;
+    }
+  }
+
+  .scriitor-presentation {
+    padding: 0.85rem;
+    font-size: 0.9rem;
+
+    .scriitor-presentation-actions {
+      margin-top: 16px;
+
+      .vezi-mai-mult {
+        padding: 8px 18px;
+        font-size: 0.9rem;
+      }
+    }
+  }
+
+  .scriitor-buttons-container {
+    margin-top: 16px;
+    gap: 10px;
+  }
+
+  .scriitor-chat-button,
+  .scriitor-readall-button {
+    padding: 10px 20px;
+    font-size: 13px;
+
+    svg {
+      width: 16px;
+      height: 16px;
+    }
+  }
+
+  .scriitor-gallery-grid {
+    gap: 6px;
+
+    .scriitor-gallery-item {
+      img {
+        width: 90px;
+        height: 90px;
+      }
+    }
+  }
+
+  .scriitor-friends-grid {
+    gap: 6px;
+    justify-content: center;
+    align-items: center;
+
+    .scriitor-friend-item {
+      width: 100px;
+      height: 100px;
+
+      .scriitor-friend-name {
+        font-size: 0.85rem;
+      }
+    }
+  }
+
+  .scriitor-post {
+    padding: 1.2rem 1rem;
+    border-radius: 16px;
+
+    .scriitor-post-pin {
+      font-size: 1rem;
+      top: 10px;
+      right: 14px;
+    }
+
+    .scriitor-post-date {
+      font-size: 1rem;
+    }
+
+    .scriitor-post-text {
+      font-size: 1.1rem;
+    }
+  }
+
+  .scriitor-poem-container,
+  .scriitor-story-container {
+    flex-direction: column;
+    gap: 16px;
+    margin: 14px 0;
+
+    &.scriitor-poem-reversed,
+    &.scriitor-story-reversed {
+      flex-direction: column;
+    }
+
+    .scriitor-poem-images,
+    .scriitor-story-image {
+      flex: 1;
+      width: 100%;
+      max-width: 100%;
+
+      .scriitor-poem-image,
+      .scriitor-story-image-wrapper {
+        width: 100%;
+      }
+    }
+
+    .scriitor-poem-content,
+    .scriitor-story-content {
+      flex: 1;
+      width: 100%;
+
+      .scriitor-poem-title,
+      .scriitor-story-title {
+        font-size: 1.15rem;
+        margin-bottom: 10px;
+      }
+
+      .scriitor-poem-text,
+      .scriitor-story-text {
+        font-size: 0.95rem;
+      }
+    }
+  }
+
+  .scriitor-post-actions {
+    gap: 14px;
+    font-size: 0.9rem;
+  }
+
+  .scriitor-comments {
+    padding: 0.6rem 0.85rem;
+
+    .scriitor-comment {
+      margin-bottom: 8px;
+
+      img {
+        width: 28px;
+        height: 28px;
+      }
+
+      .scriitor-comment-author {
+        font-size: 0.9rem;
+      }
+
+      .scriitor-comment-text {
+        font-size: 0.85rem;
+      }
+    }
+  }
+
+  .scriitor-post-admin-actions {
+    flex-direction: column;
+    gap: 8px;
+
+    .scriitor-post-edit-button,
+    .scriitor-post-delete-button {
+      width: 100%;
+      padding: 7px 14px;
+      font-size: 13px;
+    }
+  }
+
+  // Modals responsive
+  .scriitor-poem-preview-modal {
+    width: 95vw !important;
+    max-width: 95vw !important;
+
+    .scriitor-poem-preview-header {
+      padding: 1.5rem 1.5rem 1rem 1.5rem;
+
+      h2 {
+        font-size: 1.8rem;
+        padding-top: 1.5rem;
+      }
+    }
+
+    .scriitor-poem-preview-content {
+      padding: 2rem 1.5rem;
+
+      .scriitor-poem-preview-text {
+        font-size: 1.1rem;
+        line-height: 1.8;
+      }
+    }
+  }
+
+  .scriitor-readall-modal {
+    width: 95vw !important;
+    max-width: 95vw !important;
+
+    .scriitor-readall-header {
+      padding: 18px 18px 12px 18px;
+
+      h2 {
+        font-size: 1.3rem;
+      }
+    }
+
+    .scriitor-readall-content {
+      padding: 18px;
+
+      .scriitor-readall-section {
+        h3 {
+          font-size: 1.1rem;
+        }
+
+        ul li {
+          font-size: 0.9rem;
+        }
+      }
+    }
+  }
+
+  .scriitor-friends-modal {
+    width: 95vw !important;
+    max-width: 95vw !important;
+
+    .scriitor-friends-modal-header {
+      padding: 16px 18px;
+
+      h2 {
+        font-size: 1.2rem;
+      }
+    }
+
+    .scriitor-friends-modal-content {
+      padding: 18px;
+
+      .scriitor-friends-modal-grid {
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        gap: 12px;
+
+        .scriitor-friends-modal-item {
+          img {
+            width: 70px;
+            height: 70px;
+          }
+
+          .scriitor-friends-modal-name {
+            font-size: 0.8rem;
+          }
+        }
+      }
+    }
+  }
+
+  .scriitor-gallery-all-modal {
+    width: 95vw !important;
+    max-width: 95vw !important;
+
+    .scriitor-gallery-all-modal-header {
+      padding: 16px 18px;
+
+      h2 {
+        font-size: 1.2rem;
+      }
+    }
+
+    .scriitor-gallery-all-modal-content {
+      padding: 18px;
+
+      .scriitor-gallery-all-modal-grid {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        gap: 12px;
+      }
+    }
+  }
+
+  .scriitor-likes-modal {
+    min-width: 90vw;
+    max-width: 90vw;
+    padding: 1.5rem 1.2rem 1rem 1.2rem;
+
+    h3 {
+      font-size: 1.1rem;
+      margin-bottom: 14px;
+    }
+
+    table {
+      th {
+        font-size: 0.9rem;
+      }
+
+      tr td {
+        padding: 6px 0;
+        font-size: 0.85rem;
+
+        &:first-child {
+          img {
+            width: 32px;
+            height: 32px;
+          }
+
+          span {
+            font-size: 0.85rem;
+          }
+        }
+
+        &:last-child {
+          font-size: 24px;
+        }
+      }
+    }
+  }
+
   .avatar-searchbar-banner-bar {
     min-width: 120px;
     max-width: 98vw;
@@ -1998,6 +2497,679 @@
   .searchbar-input-inside-bar {
     font-size: 0.95rem;
     height: 32px;
+  }
+
+  .theme-toggle {
+    width: 36px;
+    height: 36px;
+    font-size: 18px;
+    top: 12px;
+    right: 12px;
+  }
+
+  // Gallery image preview overlay - enable scrolling on mobile/tablet
+  .scriitor-gallery-image-preview-overlay {
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    -webkit-overflow-scrolling: touch !important;
+    touch-action: pan-y pan-x !important;
+    align-items: flex-start !important;
+    padding-top: 20px !important;
+    padding-bottom: 20px !important;
+    overscroll-behavior: contain !important;
+    position: fixed !important;
+    height: 100vh !important;
+    height: 100dvh !important; // Dynamic viewport height for mobile
+
+    .scriitor-gallery-image-preview-modal {
+      overflow: visible !important;
+      max-height: none !important;
+      min-height: auto !important;
+      padding: 0 !important;
+      margin: auto 0 !important;
+
+      .scriitor-gallery-image-preview-content {
+        overflow: visible !important;
+        min-height: auto !important;
+        height: auto !important;
+        display: flex !important;
+        align-items: flex-start !important;
+        justify-content: center !important;
+        padding: 60px 20px !important;
+
+        img {
+          max-width: 95vw !important;
+          max-height: none !important;
+          height: auto !important;
+          width: auto !important;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .scriitor-banner {
+    height: 250px;
+  }
+
+  .scriitor-profile-image {
+    width: 100px;
+    height: 100px;
+    bottom: -50px;
+    border: 3px solid #fff;
+  }
+
+  .scriitor-main-layout {
+    margin-top: 60px;
+    padding: 0 0.5rem;
+    gap: 1.25rem;
+    padding-bottom: 50px;
+  }
+
+  .scriitor-back-btn-inline {
+    display: none; // Ascuns pe mobile
+  }
+
+  .scriitor-back-btn-banner {
+    display: flex !important;
+    top: 10px;
+    left: 10px;
+    width: 38px;
+    height: 38px;
+
+    svg {
+      width: 16px;
+      height: 16px;
+    }
+  }
+
+  .avatar-searchbar-banner-wrapper {
+    display: flex !important;
+    top: -56px; // Sub butonul back
+    left: 10px;
+    right: 10px;
+    max-width: calc(100% - 20px);
+    padding: 10px 14px 12px 10px;
+  }
+
+  .scriitor-info-card {
+    padding: 0.75rem;
+    margin-bottom: 16px;
+    border-radius: 14px;
+
+    h2 {
+      font-size: 1.7rem;
+    }
+
+    .scriitor-dates {
+      font-size: 1.2rem;
+      margin-top: 4px;
+    }
+  }
+
+  .scriitor-section {
+    margin-bottom: 16px;
+
+    .scriitor-section-title {
+      font-size: 1.3rem;
+      margin-bottom: 5px;
+      text-align:center;
+    }
+  }
+
+  .scriitor-presentation {
+    padding: 0.75rem;
+    font-size: 0.85rem;
+    border-radius: 10px;
+
+    .scriitor-presentation-extra {
+      margin-top: 12px;
+      padding-top: 12px;
+
+      p {
+        margin-bottom: 10px;
+        font-size: 0.85rem;
+      }
+    }
+
+    .scriitor-presentation-actions {
+      margin-top: 14px;
+
+      .vezi-mai-mult {
+        padding: 7px 16px;
+        font-size: 0.85rem;
+      }
+    }
+  }
+
+  .scriitor-buttons-container {
+    margin-top: 14px;
+    gap: 8px;
+  }
+
+  .scriitor-chat-button,
+  .scriitor-readall-button {
+    padding: 9px 18px;
+    font-size: 12px;
+    border-radius: 22px;
+
+    svg {
+      width: 15px;
+      height: 15px;
+    }
+
+    span {
+      font-size: 12px;
+    }
+  }
+
+  .scriitor-gallery-grid {
+    gap: 5px;
+    justify-content: center;
+    align-items: center;
+
+    .scriitor-gallery-item {
+      img {
+        width: 100px;
+        height: 100px;
+        border-radius: 8px;
+      }
+    }
+  }
+
+  .scriitor-gallery-view-all {
+    margin-top: 12px;
+
+    .scriitor-gallery-view-all-btn {
+      padding: 8px 16px;
+      font-size: 0.85rem;
+    }
+  }
+
+  .scriitor-friends {
+    .scriitor-friends-count {
+      font-size: 1.1rem;
+      margin-bottom: 4px;
+    }
+
+    .scriitor-friends-grid {
+      gap: 5px;
+      justify-content: center;
+      align-items: center;
+
+      .scriitor-friend-item {
+        width: 100px;
+        height: 100px;
+        border-radius: 8px;
+
+
+        .scriitor-friend-name {
+          font-size: 0.8rem;
+        }
+
+        .scriitor-friend-delete-btn {
+          width: 20px;
+          height: 20px;
+          font-size: 16px;
+          top: -6px;
+          right: -6px;
+        }
+      }
+    }
+
+    .scriitor-friends-view-all {
+      margin-top: 12px;
+
+      .scriitor-friends-view-all-btn {
+        padding: 8px 16px;
+        font-size: 0.85rem;
+      }
+    }
+  }
+
+  .scriitor-right-column {
+    .scriitor-posts-title {
+      font-size: 1.05rem;
+      margin-bottom: 14px;
+    }
+
+    .scriitor-posts-container {
+      gap: 24px;
+    }
+  }
+
+  .scriitor-post {
+    padding: 1rem 0.85rem;
+    border-radius: 14px;
+
+    .scriitor-post-pin {
+      font-size: 0.95rem;
+      top: 8px;
+      right: 12px;
+    }
+
+    .scriitor-post-date {
+      font-size: 0.95rem;
+      margin-bottom: 3px;
+    }
+
+    .scriitor-post-text {
+      font-size: 1.05rem;
+      margin-bottom: 6px;
+    }
+
+    .scriitor-pinned-actions {
+      gap: 8px;
+      margin-top: 12px;
+
+      .scriitor-pinned-action-btn {
+        padding: 8px 8.5px;
+        font-size: 0.85rem;
+        border-radius: 22px;
+
+        .scriitor-pinned-action-icon {
+          font-size: 1rem;
+        }
+      }
+    }
+  }
+
+  .scriitor-poem-container,
+  .scriitor-story-container {
+    gap: 12px;
+    margin: 12px 0;
+
+    .scriitor-poem-content,
+    .scriitor-story-content {
+      .scriitor-poem-title,
+      .scriitor-story-title {
+        font-size: 1.05rem;
+        margin-bottom: 8px;
+      }
+
+      .scriitor-poem-text,
+      .scriitor-story-text {
+        font-size: 0.9rem;
+        line-height: 1.5;
+      }
+
+      .scriitor-poem-expand,
+      .scriitor-story-expand {
+        margin-top: 12px;
+        gap: 8px;
+
+        button {
+          padding: 6px 16px;
+          font-size: 0.85rem;
+          border-radius: 18px;
+        }
+      }
+    }
+  }
+
+  .scriitor-post-image {
+    margin: 12px 0;
+    border-radius: 14px;
+
+    img {
+      max-height: 300px;
+    }
+  }
+
+  .scriitor-post-actions {
+    gap: 12px;
+    margin-top: 8px;
+    font-size: 0.85rem;
+    flex-wrap: wrap;
+  }
+
+  .scriitor-comments {
+    padding: 0.5rem 0.75rem;
+    border-radius: 8px;
+    margin-top: 12px;
+
+    .scriitor-comment {
+      margin-bottom: 6px;
+      column-gap: 8px;
+
+      img {
+        width: 26px;
+        height: 26px;
+      }
+
+      .scriitor-comment-author {
+        font-size: 0.85rem;
+      }
+
+      .scriitor-comment-text {
+        font-size: 0.8rem;
+      }
+
+      .scriitor-comment-actions {
+        gap: 4px;
+
+        .scriitor-comment-edit-button,
+        .scriitor-comment-delete-button {
+          padding: 3px 6px;
+          font-size: 11px;
+        }
+      }
+    }
+  }
+
+  .scriitor-post-admin-actions {
+    margin-top: 12px;
+
+    .scriitor-post-edit-button,
+    .scriitor-post-delete-button {
+      padding: 6px 12px;
+      font-size: 12px;
+    }
+  }
+
+  // Modals
+  .scriitor-poem-preview-modal {
+    .scriitor-poem-preview-header {
+      padding: 1.2rem 1.2rem 0.8rem 1.2rem;
+
+      h2 {
+        font-size: 1.5rem;
+        padding-top: 1.2rem;
+      }
+    }
+
+    .scriitor-poem-preview-content {
+      padding: 1.5rem 1.2rem;
+
+      .scriitor-poem-preview-text {
+        font-size: 1rem;
+        line-height: 1.7;
+      }
+    }
+  }
+
+  .scriitor-readall-modal {
+    .scriitor-readall-header {
+      padding: 16px 16px 10px 16px;
+
+      h2 {
+        font-size: 1.2rem;
+      }
+    }
+
+    .scriitor-readall-content {
+      padding: 16px;
+
+      .scriitor-readall-section {
+        gap: 16px;
+
+        h3 {
+          font-size: 1rem;
+          margin-bottom: 10px;
+        }
+
+        ul li {
+          font-size: 0.85rem;
+          margin-bottom: 6px;
+        }
+      }
+    }
+  }
+
+  .scriitor-friends-modal {
+    .scriitor-friends-modal-header {
+      padding: 14px 16px;
+
+      h2 {
+        font-size: 1.1rem;
+      }
+    }
+
+    .scriitor-friends-modal-content {
+      padding: 16px;
+
+      .scriitor-friends-modal-grid {
+        grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+        gap: 10px;
+
+        .scriitor-friends-modal-item {
+          padding: 8px;
+
+          img {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 6px;
+          }
+
+          .scriitor-friends-modal-name {
+            font-size: 0.75rem;
+          }
+        }
+      }
+    }
+  }
+
+  .scriitor-gallery-all-modal {
+    .scriitor-gallery-all-modal-header {
+      padding: 14px 16px;
+
+      h2 {
+        font-size: 1.1rem;
+      }
+    }
+
+    .scriitor-gallery-all-modal-content {
+      padding: 16px;
+
+      .scriitor-gallery-all-modal-grid {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+        gap: 10px;
+      }
+
+      .scriitor-gallery-all-modal-pagination {
+        margin-top: 16px;
+        padding-top: 16px;
+        flex-direction: column;
+        gap: 12px;
+
+        .scriitor-gallery-pagination-btn {
+          width: 100%;
+          padding: 8px 16px;
+          font-size: 0.9rem;
+        }
+
+        .scriitor-gallery-pagination-info {
+          font-size: 0.9rem;
+        }
+      }
+    }
+  }
+
+  .scriitor-likes-modal {
+    min-width: 95vw;
+    max-width: 95vw;
+    padding: 1.2rem 1rem 0.8rem 1rem;
+
+    h3 {
+      font-size: 1rem;
+      margin-bottom: 12px;
+    }
+
+    table {
+      th {
+        font-size: 0.85rem;
+        padding-bottom: 6px;
+      }
+
+      tr td {
+        padding: 5px 0;
+        font-size: 0.8rem;
+
+        &:first-child {
+          gap: 8px;
+
+          img {
+            width: 28px;
+            height: 28px;
+          }
+
+          span {
+            font-size: 0.8rem;
+          }
+        }
+
+        &:last-child {
+          font-size: 20px;
+        }
+      }
+    }
+  }
+
+  .scriitor-gallery-modal {
+    img {
+      max-width: 95vw;
+      max-height: 85vh;
+    }
+  }
+
+  .scriitor-modal-close-btn {
+    width: 50px;
+    height: 50px;
+    font-size: 38px;
+    top: 10px;
+    right: 10px;
+  }
+
+  .scriitor-nav-btn-left,
+  .scriitor-nav-btn-right {
+    width: 50px;
+    height: 50px;
+    font-size: 36px;
+  }
+
+  .scriitor-modal-indicators {
+    bottom: 15px;
+    gap: 6px;
+
+    .scriitor-modal-indicator {
+      width: 10px;
+      height: 10px;
+    }
+  }
+
+  .theme-toggle {
+    width: 32px;
+    height: 32px;
+    font-size: 16px;
+    top: 10px;
+    right: 10px;
+  }
+
+  .avatar-searchbar-banner-wrapper {
+    left: 10px;
+    padding: 10px 14px 12px 10px;
+    min-width: 180px;
+    max-width: 85vw;
+  }
+
+  // Gallery image preview overlay - enable scrolling on mobile
+  .scriitor-gallery-image-preview-overlay {
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    -webkit-overflow-scrolling: touch !important;
+    touch-action: pan-y pan-x !important;
+    align-items: flex-start !important;
+    padding-top: 20px !important;
+    padding-bottom: 20px !important;
+    overscroll-behavior: contain !important;
+    position: fixed !important;
+    height: 100vh !important;
+    height: 100dvh !important; // Dynamic viewport height for mobile
+
+    .scriitor-gallery-image-preview-modal {
+      overflow: visible !important;
+      max-height: none !important;
+      min-height: auto !important;
+      padding: 0 !important;
+      margin: auto 0 !important;
+
+      .scriitor-gallery-image-preview-content {
+        overflow: visible !important;
+        min-height: auto !important;
+        height: auto !important;
+        display: flex !important;
+        align-items: flex-start !important;
+        justify-content: center !important;
+        padding: 60px 20px !important;
+
+        img {
+          max-width: 95vw !important;
+          max-height: none !important;
+          height: auto !important;
+          width: auto !important;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 360px) {
+  .scriitor-banner {
+    height: 220px;
+  }
+
+  .scriitor-profile-image {
+    width: 90px;
+    height: 90px;
+    bottom: -45px;
+  }
+
+  .scriitor-main-layout {
+    margin-top: 55px;
+    padding: 0 0.4rem;
+  }
+
+  .scriitor-info-card {
+    padding: 0.65rem;
+
+    h2 {
+      font-size: 1.7rem;
+    }
+
+    .scriitor-dates {
+      font-size: 1.2rem;
+    }
+  }
+
+  .scriitor-section {
+    .scriitor-section-title {
+      font-size: 1.3rem;
+      text-align:center;
+    }
+  }
+
+  .scriitor-gallery-grid,
+  .scriitor-friends-grid {
+    .scriitor-gallery-item img,
+    .scriitor-friend-item {
+      width: 100px;
+      height: 100px;
+    }
+  }
+
+  .scriitor-post {
+    padding: 0.9rem 0.75rem;
+
+    .scriitor-post-text {
+      font-size: 1rem;
+    }
+  }
+
+  .scriitor-chat-button,
+  .scriitor-readall-button {
+    padding: 8px 16px;
+    font-size: 11px;
   }
 }
 
@@ -2322,6 +3494,12 @@
   justify-content: center;
   backdrop-filter: blur(4px);
   animation: fadeIn 0.2s ease-out;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y pan-x;
 
   @keyframes fadeIn {
     from {
@@ -2335,13 +3513,15 @@
   .scriitor-gallery-image-preview-modal {
     position: relative;
     max-width: 90vw;
-    max-height: 90vh;
+    max-height: none;
     width: auto;
     height: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
+    min-height: 100vh;
+    padding: 20px 0;
 
     .scriitor-gallery-image-preview-close {
       position: absolute;
@@ -2415,10 +3595,12 @@
       justify-content: center;
       width: 100%;
       height: 100%;
+      min-height: 100vh;
+      padding: 60px 20px;
 
       img {
         max-width: 90vw;
-        max-height: 85vh;
+        max-height: none;
         width: auto;
         height: auto;
         object-fit: contain;
@@ -2856,6 +4038,28 @@
     svg {
       filter: none;
       color: inherit;
+    }
+  }
+
+  .scriitor-back-btn-banner {
+    background: rgba(42, 23, 10, 0.9);
+    border: 1px solid rgba(255, 179, 71, 0.3);
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+
+    &:hover {
+      background: rgba(42, 23, 10, 1);
+      border-color: rgba(255, 179, 71, 0.5);
+      box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.4);
+    }
+
+    svg {
+      color: #ffd591;
+      filter: none;
+    }
+
+    &:hover svg {
+      color: #ffb347;
     }
   }
 

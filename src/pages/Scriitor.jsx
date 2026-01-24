@@ -1079,7 +1079,7 @@ const Scriitor = () => {
          onClick={handleFullScreen}
          title={isFullScreen ? 'Ieși din full screen' : 'Click pentru full screen'}
        >
-        {/* AvatarSearchBar pe stânga sus, doar dacă nu e fullscreen */}
+        {/* AvatarSearchBar pe stânga sus, doar dacă nu e fullscreen - doar pe mobile */}
         {!isFullScreen && (
           <div className="avatar-searchbar-banner-wrapper" onClick={(e) => e.stopPropagation()}>
             <AvatarSearchBar onSelect={s => {
@@ -1087,6 +1087,35 @@ const Scriitor = () => {
               if (key) goToScriitor(key);
             }} />
           </div>
+        )}
+        {/* Buton back în banner - doar pe mobile */}
+        {!isFullScreen && (
+          <button 
+            onClick={(e) => {
+              e.stopPropagation();
+              const y = (location.state && location.state.from && typeof location.state.from.scrollY === 'number') ? location.state.from.scrollY : 0;
+              const fromPath = (location.state && location.state.from && location.state.from.pathname) || '/scriitori';
+              navigate(fromPath, { replace: true, state: { restoreScroll: y } });
+            }}
+            className="scriitor-back-btn-banner"
+            title="Înapoi"
+          >
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M19 12H5M12 19L5 12L12 5"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </button>
         )}
         {/* Theme toggle button - floating in banner top-right */}
         {!isFullScreen && (
@@ -2247,6 +2276,13 @@ const Scriitor = () => {
                         onClick={() => {
                           setGalleryImagePreviewIndex(globalIdx);
                           setGalleryImagePreviewOpen(true);
+                          // Pe mobile, permite scroll-ul în overlay
+                          if (window.innerWidth <= 768) {
+                            document.body.style.overflow = '';
+                            document.body.style.position = '';
+                            document.body.style.top = '';
+                            document.body.style.width = '';
+                          }
                         }}
                       >
                         <img
@@ -2297,14 +2333,36 @@ const Scriitor = () => {
       {galleryImagePreviewOpen && galleryAllModalOpen && (
         <div 
           className="scriitor-gallery-image-preview-overlay"
-          onClick={() => setGalleryImagePreviewOpen(false)}
+          onClick={() => {
+            setGalleryImagePreviewOpen(false);
+            // Restaurează body-ul pe mobile
+            if (window.innerWidth <= 768) {
+              const currentScrollY = window.scrollY;
+              setScrollPosition(currentScrollY);
+              document.body.style.overflow = 'hidden';
+              document.body.style.position = 'fixed';
+              document.body.style.top = `-${currentScrollY}px`;
+              document.body.style.width = '100%';
+            }
+          }}
         >
           <div 
             className="scriitor-gallery-image-preview-modal"
             onClick={e => e.stopPropagation()}
           >
             <button
-              onClick={() => setGalleryImagePreviewOpen(false)}
+              onClick={() => {
+                setGalleryImagePreviewOpen(false);
+                // Restaurează body-ul pe mobile
+                if (window.innerWidth <= 768) {
+                  const currentScrollY = window.scrollY;
+                  setScrollPosition(currentScrollY);
+                  document.body.style.overflow = 'hidden';
+                  document.body.style.position = 'fixed';
+                  document.body.style.top = `-${currentScrollY}px`;
+                  document.body.style.width = '100%';
+                }
+              }}
               className="scriitor-gallery-image-preview-close"
               title="Închide"
             >
