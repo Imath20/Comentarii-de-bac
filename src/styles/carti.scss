@@ -93,6 +93,8 @@
   
   .opere-sort-container {
     width: 100%;
+    justify-content: center !important;
+    align-items: center !important;
   }
 }
 
@@ -110,7 +112,10 @@
       min-width: 100%;
     }
   }
-  
+  .opere-sort-container {
+    justify-content: center !important;
+    align-items: center !important;
+  }
   .opere-card {
     width: 100%;
     max-width: 350px;
@@ -144,7 +149,10 @@
       font-size: 1rem;
     }
   }
-  
+  .opere-sort-container {
+    justify-content: center !important;
+    align-items: center !important;
+  }
   .opere-filter-buttons {
     padding: 0 1rem;
     gap: 0.6rem;
@@ -419,6 +427,8 @@
   .opere-sort-container {
     width: 100%;
     min-width: 100%;
+    justify-content: center !important;
+    align-items: center !important;
   }
   
   // Filter buttons
@@ -502,15 +512,19 @@
 @media (max-width: 768px) {
   // Filters container
   .opere-filters-container {
-    padding: 0 1rem;
+    // padding: 0 1rem;
     gap: 0.9rem;
+    justify-content: center !important;
+    align-items: center !important;
   }
   
   .opere-search-container {
     .opere-search-input {
-      padding: 1rem 1.3rem 1rem 3rem;
-      font-size: 1rem;
+      padding: 1rem 1.3rem 1rem 3rem !important;
+      font-size: 1rem !important;
       border-radius: 2rem;
+      min-width: 64% !important;
+      // flex: 1 1 60% !important;
     }
   }
   
@@ -529,12 +543,16 @@
       width: 100% !important;
       height: 52px !important;
       font-size: 1rem !important;
+      justify-content: center !important;
+      align-items: center !important;
     }
     
     :global(.css-1pahdxg-control .css-1hb7zxy-IndicatorsContainer),
     :global(.css-1s2u09g-control .css-1hb7zxy-IndicatorsContainer),
     :global(.css-13cymwt-control .css-1hb7zxy-IndicatorsContainer) {
       height: 52px !important;
+      justify-content: center !important;
+      align-items: center !important;
     }
     
     :global(.css-1pahdxg-control .css-1d8n9bt),
@@ -542,6 +560,8 @@
     :global(.css-13cymwt-control .css-1d8n9bt) {
       height: 52px !important;
       padding: 0 1.3rem !important;
+      justify-content: center !important;
+      align-items: center !important;
     }
   }
   
@@ -550,12 +570,14 @@
     padding: 0 1rem;
     gap: 0.7rem;
     margin-bottom: 1.2rem;
+    // display: none;
   }
   
   .opere-filter-button {
     padding: 0.65rem 1.3rem;
     font-size: 0.95rem;
     border-radius: 1.8rem;
+    display: none;
   }
   
   // Dropdowns wrapper
@@ -626,7 +648,9 @@
 @media (max-width: 480px) {
   // Filters container
   .opere-filters-container {
-    padding: 0 0.75rem;
+    // padding: 0 0.75rem;
+    justify-content: center !important;
+    align-items: center !important;
     gap: 0.8rem;
   }
   
@@ -635,6 +659,8 @@
       padding: 0.9rem 1.2rem 0.9rem 2.8rem;
       font-size: 0.95rem;
       border-radius: 1.8rem;
+      width: 60% !important;
+      flex: 1 1 60% !important;
     }
   }
   
@@ -653,6 +679,8 @@
       height: 50px !important;
       font-size: 0.95rem !important;
       border-radius: 1.8rem !important;
+      justify-content: center !important;
+      align-items: center !important;
     }
     
     :global(.css-1pahdxg-control .css-1hb7zxy-IndicatorsContainer),

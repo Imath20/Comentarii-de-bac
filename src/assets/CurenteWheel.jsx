@@ -8,6 +8,7 @@ const CurenteWheel = ({ darkTheme }) => {
   const [isDragging, setIsDragging] = useState(false);
   const [startAngle, setStartAngle] = useState(0);
   const [currentRotation, setCurrentRotation] = useState(0);
+  const [translateX, setTranslateX] = useState(260); // Default desktop value
   const wheelRef = useRef(null);
   const rotationRef = useRef(0);
   const navigate = useNavigate();
@@ -32,30 +33,40 @@ const CurenteWheel = ({ darkTheme }) => {
 
   const currentCurent = getCurrentCurent();
 
-  // Gestionează începutul drag-ului
-  const handleMouseDown = (e) => {
+  // Gestionează începutul drag-ului (mouse și touch)
+  const handleStart = (clientX, clientY) => {
     setIsDragging(true);
     const rect = wheelRef.current.getBoundingClientRect();
     const centerX = rect.left + rect.width / 2;
     const centerY = rect.top + rect.height / 2;
-    const startAngle = Math.atan2(e.clientY - centerY, e.clientX - centerX);
+    const startAngle = Math.atan2(clientY - centerY, clientX - centerX);
     setStartAngle(startAngle);
     setCurrentRotation(rotation);
+  };
+
+  const handleMouseDown = (e) => {
+    handleStart(e.clientX, e.clientY);
     e.preventDefault();
     e.stopPropagation();
   };
 
-  // Gestionează drag-ul
-  const handleMouseMove = (e) => {
+  const handleTouchStart = (e) => {
+    if (e.touches.length === 1) {
+      const touch = e.touches[0];
+      handleStart(touch.clientX, touch.clientY);
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  };
+
+  // Gestionează drag-ul (mouse și touch)
+  const handleMove = (clientX, clientY) => {
     if (!isDragging) return;
-    
-    e.preventDefault();
-    e.stopPropagation();
     
     const rect = wheelRef.current.getBoundingClientRect();
     const centerX = rect.left + rect.width / 2;
     const centerY = rect.top + rect.height / 2;
-    const currentAngle = Math.atan2(e.clientY - centerY, e.clientX - centerX);
+    const currentAngle = Math.atan2(clientY - centerY, clientX - centerX);
     const angleDiff = currentAngle - startAngle;
     const newRotation = currentRotation + (angleDiff * 180 / Math.PI);
     
@@ -63,10 +74,23 @@ const CurenteWheel = ({ darkTheme }) => {
     rotationRef.current = newRotation;
   };
 
-  // Gestionează sfârșitul drag-ului
-  const handleMouseUp = (e) => {
+  const handleMouseMove = (e) => {
     e.preventDefault();
     e.stopPropagation();
+    handleMove(e.clientX, e.clientY);
+  };
+
+  const handleTouchMove = (e) => {
+    if (e.touches.length === 1 && isDragging) {
+      const touch = e.touches[0];
+      e.preventDefault();
+      e.stopPropagation();
+      handleMove(touch.clientX, touch.clientY);
+    }
+  };
+
+  // Gestionează sfârșitul drag-ului (mouse și touch)
+  const handleEnd = () => {
     setIsDragging(false);
 
     // Snap la cel mai apropiat curent (comportament general)
@@ -90,25 +114,46 @@ const CurenteWheel = ({ darkTheme }) => {
     rotationRef.current = snapped;
   };
 
-  // Adaugă event listeners pentru drag
+  const handleMouseUp = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    handleEnd();
+  };
+
+  const handleTouchEnd = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    handleEnd();
+  };
+
+  // Adaugă event listeners pentru drag (mouse și touch)
   useEffect(() => {
     if (isDragging) {
       document.addEventListener('mousemove', handleMouseMove);
       document.addEventListener('mouseup', handleMouseUp);
+      document.addEventListener('touchmove', handleTouchMove, { passive: false });
+      document.addEventListener('touchend', handleTouchEnd);
       document.body.style.cursor = 'grabbing';
       document.body.style.userSelect = 'none';
+      document.body.style.touchAction = 'none';
     } else {
       document.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('mouseup', handleMouseUp);
+      document.removeEventListener('touchmove', handleTouchMove);
+      document.removeEventListener('touchend', handleTouchEnd);
       document.body.style.cursor = '';
       document.body.style.userSelect = '';
+      document.body.style.touchAction = '';
     }
 
     return () => {
       document.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('mouseup', handleMouseUp);
+      document.removeEventListener('touchmove', handleTouchMove);
+      document.removeEventListener('touchend', handleTouchEnd);
       document.body.style.cursor = '';
       document.body.style.userSelect = '';
+      document.body.style.touchAction = '';
     };
   }, [isDragging, startAngle, currentRotation]);
 
@@ -130,6 +175,35 @@ const CurenteWheel = ({ darkTheme }) => {
     }
   };
 
+  // Calculează translateX bazat pe dimensiunea ecranului
+  useEffect(() => {
+    const updateTranslateX = () => {
+      const width = window.innerWidth;
+      let newTranslateX = 260; // Desktop default
+      
+      if (width <= 360) {
+        newTranslateX = 125; // Mobile small
+      } else if (width <= 480) {
+        newTranslateX = 150; // Mobile medium
+      } else if (width <= 600) {
+        newTranslateX = 170; // Mobile large
+      } else if (width <= 768) {
+        newTranslateX = 195; // Tablet
+      } else if (width <= 1024) {
+        newTranslateX = 240; // Tablet large
+      }
+      
+      setTranslateX(newTranslateX);
+    };
+
+    updateTranslateX();
+    window.addEventListener('resize', updateTranslateX);
+    
+    return () => {
+      window.removeEventListener('resize', updateTranslateX);
+    };
+  }, []);
+
   // Eliminat complet funcționalitatea de click pe cercuri
 
   return (
@@ -150,6 +224,7 @@ const CurenteWheel = ({ darkTheme }) => {
         className={`curente-wheel ${isDragging ? 'dragging' : ''} ${darkTheme ? 'dark-theme' : ''}`}
         style={{ transform: `rotate(${rotation}deg)` }}
         onMouseDown={handleMouseDown}
+        onTouchStart={handleTouchStart}
         onClick={(e) => e.stopPropagation()}
       >
         {CURENTE.map((curent, index) => {
@@ -172,7 +247,7 @@ const CurenteWheel = ({ darkTheme }) => {
               key={curent.id}
               className={`curent-circle ${isActive ? 'active' : ''} ${darkTheme ? 'dark-theme' : ''}`}
               style={{
-                transform: `rotate(${angle}deg) translateX(260px) rotate(-${angle}deg)`,
+                transform: `rotate(${angle}deg) translateX(${translateX}px) rotate(-${angle}deg)`,
                 '--glow-color': curent.glowColor
               }}
               onMouseDown={(e) => {

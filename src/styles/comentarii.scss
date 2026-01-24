@@ -94,9 +94,36 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
   gap: 2rem;
-  padding: 1rem 1rem 5rem;
+  padding: 1rem 0rem;
 }
-
+@media (max-width: 1200px) {
+  .comentarii-grid-container {
+    // grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    padding: 1rem 0rem;
+  }
+}
+@media (max-width: 768px) {
+  .comentarii-grid-container {
+    // grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+    padding: 1rem 0rem;
+  }
+}
+@media (max-width: 480px) {
+  .comentarii-grid-container {
+    // grid-template-columns: repeat(auto-fill, minmax(3px, 1fr));
+    gap: 1.5rem;
+    padding: 1rem 0rem; 
+  }
+}
+@media (max-width: 360px) {
+  .comentarii-grid-container {
+    // grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1.5rem;
+    padding: 1rem 0rem;
+  }
+}
 
 // Card styles
 .comentarii-card {
@@ -182,6 +209,34 @@ body.dark-theme .comentarii-card-content {
   }
 }
 
+@media (max-width: 1200px) {
+  .comentarii-card-profil {
+    // font-size: 0.85rem;
+    padding: 0.3rem 1rem;
+    margin-right: 25px;
+  }
+}
+@media (max-width: 768px) {
+  .comentarii-card-profil {
+    // font-size: 0.75rem;
+    padding: 0.3rem 1rem;
+    margin-right: 25px;
+  }
+}
+@media (max-width: 480px) {
+  .comentarii-card-profil {
+    // font-size: 0.65rem;
+    padding: 0.3rem 1rem;
+    margin-right: 25px;
+  }
+}
+@media (max-width: 360px) {
+  .comentarii-card-profil {
+    // font-size: 0.55rem;
+    padding: 0.3rem 1rem;
+    margin-right: 25px;
+  }
+}
 // Badge sesiune (stânga sus, deasupra titlului)
 .comentarii-card-sesiune {
   margin-bottom: 0.5rem;

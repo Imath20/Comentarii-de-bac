@@ -221,6 +221,57 @@
 }
 
 // Responsive design
+// Tablet large (1024px and below)
+@media (max-width: 1024px) {
+  .curente-wheel-container {
+    padding: 50px 15px;
+    margin: 30px 0;
+    min-height: 550px;
+  }
+
+  .curente-wheel {
+    width: 550px;
+    height: 550px;
+  }
+
+  .curente-wheel-arrow {
+    top: -4px;
+    
+    .arrow-head {
+      border-left: 7px solid transparent;
+      border-right: 7px solid transparent;
+      border-top: 11px solid #000000;
+    }
+  }
+
+  .curente-wheel-center {
+    gap: 11px;
+  }
+
+  .curente-wheel-button {
+    font-size: 17px;
+    padding: 11px 22px;
+  }
+
+  .curente-current-name {
+    font-size: 22px;
+    max-width: 180px;
+  }
+
+  .curent-circle {
+    width: 80px;
+    height: 80px;
+    margin: -40px 0 0 -40px;
+  }
+
+  .curent-circle.active {
+    width: 105px;
+    height: 105px;
+    margin: -52.5px 0 0 -52.5px;
+  }
+}
+
+// Tablet (768px and below)
 @media (max-width: 768px) {
   .curente-wheel-container {
     padding: 30px 10px;
@@ -253,8 +304,8 @@
   }
 
   .curente-current-name {
-    font-size: 16px;
-    max-width: 130px;
+    font-size: 18px;
+    max-width: 150px;
   }
 
   .curent-circle {
@@ -268,13 +319,59 @@
     height: 92px;
     margin: -46px 0 0 -46px;
   }
+}
 
-  .curent-image {
-    width: 55px;
-    height: 55px;
+// Mobile large (600px and below)
+@media (max-width: 600px) {
+  .curente-wheel-container {
+    padding: 25px 8px;
+    margin: 15px 0;
+    min-height: 450px;
+  }
+
+  .curente-wheel {
+    width: 400px;
+    height: 400px;
+  }
+
+  .curente-wheel-arrow {
+    top: -3px;
+    
+    .arrow-head {
+      border-left: 6px solid transparent;
+      border-right: 6px solid transparent;
+      border-top: 9px solid #000000;
+    }
+  }
+
+  .curente-wheel-center {
+    gap: 9px;
+  }
+
+  .curente-wheel-button {
+    font-size: 15px;
+    padding: 9px 18px;
+  }
+
+  .curente-current-name {
+    font-size: 16px;
+    max-width: 130px;
+  }
+
+  .curent-circle {
+    width: 65px;
+    height: 65px;
+    margin: -32.5px 0 0 -32.5px;
+  }
+
+  .curent-circle.active {
+    width: 85px;
+    height: 85px;
+    margin: -42.5px 0 0 -42.5px;
   }
 }
 
+// Mobile medium (480px and below)
 @media (max-width: 480px) {
   .curente-wheel-container {
     padding: 20px 5px;
@@ -321,9 +418,53 @@
     height: 80px;
     margin: -40px 0 0 -40px;
   }
+}
 
-  .curent-image {
-    width: 45px;
-    height: 45px;
+// Mobile small (360px and below)
+@media (max-width: 360px) {
+  .curente-wheel-container {
+    padding: 15px 5px;
+    min-height: 350px;
+  }
+
+  .curente-wheel {
+    width: 300px;
+    height: 300px;
+  }
+
+  .curente-wheel-arrow {
+    top: -2px;
+    
+    .arrow-head {
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+      border-top: 7px solid #000000;
+    }
+  }
+
+  .curente-wheel-center {
+    gap: 7px;
+  }
+
+  .curente-wheel-button {
+    font-size: 13px;
+    padding: 7px 14px;
+  }
+
+  .curente-current-name {
+    font-size: 13px;
+    max-width: 100px;
+  }
+
+  .curent-circle {
+    width: 50px;
+    height: 50px;
+    margin: -25px 0 0 -25px;
+  }
+
+  .curent-circle.active {
+    width: 70px;
+    height: 70px;
+    margin: -35px 0 0 -35px;
   }
 }
