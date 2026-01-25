@@ -357,7 +357,7 @@ const Index = () => {
           <ScriitoriHoraCanvas />
         </div>
       <section className={`index-welcome-section ${darkTheme ? 'dark-theme' : ''}`}>
-        <h2 className={`index-welcome-title ${darkTheme ? 'dark-theme' : ''}`}>Bine ați venit !</h2>
+        <h2 className={`index-welcome-title ${darkTheme ? 'dark-theme' : ''}`}>Bine ați venit!</h2>
         <p className={`index-welcome-text ${darkTheme ? 'dark-theme' : ''}`}>
           pe platforma <b>Comentarii de BAC</b><br /><br />
           Aici găsești tot ce ai nevoie pentru a te pregăti eficient la limba și literatura română: comentarii detaliate, rezumate, modele de subiecte, resurse pentru fiecare scriitor important și explicații pe înțelesul tuturor. Indiferent dacă vrei să aprofundezi operele literare, să recapitulezi rapid sau să descoperi perspective noi, ai la dispoziție materiale structurate, moderne și ușor de parcurs.<br /><br />

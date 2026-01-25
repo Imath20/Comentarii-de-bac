@@ -126,6 +126,12 @@ const CurenteWheel = ({ darkTheme }) => {
     handleEnd();
   };
 
+  // Previne scroll-ul paginii când utilizatorul interacționează cu roata
+  const handleWheel = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+  };
+
   // Adaugă event listeners pentru drag (mouse și touch)
   useEffect(() => {
     if (isDragging) {
@@ -133,17 +139,21 @@ const CurenteWheel = ({ darkTheme }) => {
       document.addEventListener('mouseup', handleMouseUp);
       document.addEventListener('touchmove', handleTouchMove, { passive: false });
       document.addEventListener('touchend', handleTouchEnd);
+      document.addEventListener('wheel', handleWheel, { passive: false });
       document.body.style.cursor = 'grabbing';
       document.body.style.userSelect = 'none';
       document.body.style.touchAction = 'none';
+      document.body.style.overflow = 'hidden';
     } else {
       document.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('mouseup', handleMouseUp);
       document.removeEventListener('touchmove', handleTouchMove);
       document.removeEventListener('touchend', handleTouchEnd);
+      document.removeEventListener('wheel', handleWheel);
       document.body.style.cursor = '';
       document.body.style.userSelect = '';
       document.body.style.touchAction = '';
+      document.body.style.overflow = '';
     }
 
     return () => {
@@ -151,9 +161,11 @@ const CurenteWheel = ({ darkTheme }) => {
       document.removeEventListener('mouseup', handleMouseUp);
       document.removeEventListener('touchmove', handleTouchMove);
       document.removeEventListener('touchend', handleTouchEnd);
+      document.removeEventListener('wheel', handleWheel);
       document.body.style.cursor = '';
       document.body.style.userSelect = '';
       document.body.style.touchAction = '';
+      document.body.style.overflow = '';
     };
   }, [isDragging, startAngle, currentRotation]);
 
@@ -211,6 +223,7 @@ const CurenteWheel = ({ darkTheme }) => {
       className={`curente-wheel-container ${darkTheme ? 'dark-theme' : ''}`}
       onMouseDown={(e) => e.stopPropagation()}
       onClick={(e) => e.stopPropagation()}
+      onWheel={handleWheel}
     >
       {/* Săgeata care arată curentul activ */}
       <div className="curente-wheel-arrow">
@@ -225,6 +238,7 @@ const CurenteWheel = ({ darkTheme }) => {
         style={{ transform: `rotate(${rotation}deg)` }}
         onMouseDown={handleMouseDown}
         onTouchStart={handleTouchStart}
+        onWheel={handleWheel}
         onClick={(e) => e.stopPropagation()}
       >
         {CURENTE.map((curent, index) => {
