@@ -206,9 +206,237 @@
   height: 0;
 }
 
+// Tablet styles (768px - 1024px)
+@media (max-width: 1024px) and (min-width: 769px) {
+  .curente-timeline-track {
+    gap: 80px;
+    padding: 140px 16px 100px;
+  }
+
+  .curente-item {
+    width: 240px;
+  }
+
+  .curente-checkpoint {
+    width: 130px;
+    height: 130px;
+  }
+
+  .curente-checkpoint-img {
+    width: 115px;
+    height: 115px;
+  }
+
+  .curente-timeline-axis {
+    top: 200px; // ajustat pentru checkpoint mai mic
+  }
+
+  .curente-popover {
+    width: 300px;
+    padding: 14px 16px;
+  }
+
+  .curente-desc {
+    max-width: 240px;
+    font-size: 0.95rem;
+  }
+
+  .curente-year {
+    font-size: 1.1rem;
+  }
+}
+
+// Mobile styles (< 768px)
 @media (max-width: 768px) {
-  .curente-item { width: 260px; }
-  .curente-popover { width: 300px; bottom: 122%; }
+  .curente-page .page-hero {
+    margin: 2.5rem 0 0.5rem 0;
+  }
+
+  .curente-page .page-title {
+    letter-spacing: 0.25em;
+    font-size: 1.8rem;
+  }
+
+  .curente-page .page-desc {
+    font-size: 0.95rem;
+    padding: 0 1rem;
+  }
+
+  .curente-timeline-wrapper {
+    margin: 16px 0 24px;
+  }
+
+  .curente-timeline-track {
+    gap: 60px;
+    padding: 120px 12px 80px;
+  }
+
+  .curente-item {
+    width: 220px;
+  }
+
+  .curente-checkpoint {
+    width: 110px;
+    height: 110px;
+  }
+
+  .curente-checkpoint-img {
+    width: 95px;
+    height: 95px;
+    border-width: 1.5px;
+  }
+
+  .curente-timeline-axis {
+    top: 165px; // ajustat pentru checkpoint mai mic
+    height: 1.5px;
+  }
+
+  .curente-popover {
+    width: 280px;
+    padding: 12px 14px;
+    bottom: 115%;
+    left: 50%;
+    transform: translateX(-50%) translateY(8px);
+  }
+
+  .curente-checkpoint:hover .curente-popover {
+    transform: translateX(-50%) translateY(0);
+  }
+
+  .curente-popover-title {
+    font-size: 1rem;
+  }
+
+  .curente-popover-date {
+    font-size: 0.85rem;
+  }
+
+  .curente-popover-authors {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+
+  .curente-author {
+    font-size: 0.9rem;
+  }
+
+  .curente-author img {
+    width: 24px;
+    height: 24px;
+  }
+
+  .curente-year {
+    font-size: 1rem;
+    margin-top: 12px;
+  }
+
+  .curente-desc {
+    max-width: 200px;
+    font-size: 0.9rem;
+    min-height: 48px;
+    margin-top: 4px;
+  }
+
+  .curente-button {
+    padding: 8px 14px;
+    font-size: 0.9rem;
+    margin-top: 8px;
+  }
+}
+
+// Small mobile styles (< 480px)
+@media (max-width: 480px) {
+  .curente-page .page-hero {
+    margin: 2rem 0 0.4rem 0;
+  }
+
+  .curente-page .page-title {
+    letter-spacing: 0.2em;
+    font-size: 1.5rem;
+  }
+
+  .curente-page .page-desc {
+    font-size: 0.85rem;
+    padding: 0 0.75rem;
+  }
+
+  .curente-timeline-wrapper {
+    margin: 12px 0 20px;
+  }
+
+  .curente-timeline-track {
+    gap: 50px;
+    padding: 100px 8px 70px;
+  }
+
+  .curente-item {
+    width: 180px;
+  }
+
+  .curente-checkpoint {
+    width: 90px;
+    height: 90px;
+  }
+
+  .curente-checkpoint-img {
+    width: 78px;
+    height: 78px;
+    border-width: 1.5px;
+  }
+
+  .curente-timeline-axis {
+    top: 135px; // ajustat pentru checkpoint mai mic
+    height: 1.5px;
+  }
+
+  .curente-popover {
+    width: 240px;
+    padding: 10px 12px;
+    bottom: 110%;
+    border-radius: 12px;
+  }
+
+  .curente-popover-title {
+    font-size: 0.95rem;
+    margin-bottom: 3px;
+  }
+
+  .curente-popover-date {
+    font-size: 0.8rem;
+    margin-bottom: 6px;
+  }
+
+  .curente-popover-authors {
+    gap: 5px;
+  }
+
+  .curente-author {
+    font-size: 0.85rem;
+    gap: 6px;
+  }
+
+  .curente-author img {
+    width: 22px;
+    height: 22px;
+  }
+
+  .curente-year {
+    font-size: 0.95rem;
+    margin-top: 10px;
+  }
+
+  .curente-desc {
+    max-width: 170px;
+    font-size: 0.85rem;
+    min-height: 44px;
+    margin-top: 3px;
+  }
+
+  .curente-button {
+    padding: 7px 12px;
+    font-size: 0.85rem;
+    margin-top: 6px;
+  }
 }
 
 /* Curent detail page authors section */
@@ -429,6 +657,242 @@
 
     .curent-list-dash li::before {
       color: #ffde9a;
+    }
+  }
+}
+// Responsive styles for curent detail page
+@media (max-width: 1024px) and (min-width: 769px) {
+  .curent-page {
+    .posts-section {
+      padding: 1rem 1.1rem 1.2rem;
+    }
+
+    .posts-header h3 {
+      font-size: 1.15rem;
+    }
+
+    .friends-grid {
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 12px;
+    }
+
+    .friend-avatar {
+      width: 90px;
+      height: 90px;
+    }
+
+    .curent-section {
+      padding: 18px 20px;
+
+      h3 {
+        font-size: 1.25rem;
+      }
+    }
+
+    .curent-subheading {
+      font-size: 1rem;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .curent-page {
+    margin-top: -15%;
+
+    .posts-section {
+      padding: 1rem;
+      border-radius: 14px;
+    }
+
+    .posts-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+      margin-bottom: 12px;
+
+      h3 {
+        font-size: 1.1rem;
+      }
+    }
+
+    .friends-grid {
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+      gap: 10px;
+    }
+
+    .friend-card {
+      padding: 12px 10px;
+      border-radius: 12px;
+    }
+
+    .friend-avatar {
+      width: 80px;
+      height: 80px;
+      border-width: 3px;
+    }
+
+    .friend-name {
+      font-size: 0.9rem;
+    }
+
+    .curent-content {
+      gap: 16px;
+    }
+
+    .curent-section {
+      padding: 16px 18px;
+      border-radius: 14px;
+
+      h3 {
+        font-size: 1.2rem;
+        margin-bottom: 6px;
+      }
+    }
+
+    .curent-section-subtitle {
+      font-size: 0.95rem;
+      margin-bottom: 10px;
+    }
+
+    .curent-paragraph {
+      font-size: 0.95rem;
+      margin-bottom: 10px;
+      line-height: 1.55;
+    }
+
+    .curent-subheading {
+      font-size: 0.95rem;
+      margin: 10px 0 6px;
+    }
+
+    .curent-list {
+      padding-left: 18px;
+      gap: 6px;
+
+      li {
+        font-size: 0.95rem;
+      }
+    }
+
+    .curent-list-intro {
+      font-size: 0.95rem;
+    }
+
+    .curent-list-item-title {
+      font-size: 0.95rem;
+    }
+
+    .curent-list-item-description {
+      font-size: 0.95rem;
+    }
+
+    .curent-sublist {
+      padding-left: 16px;
+      margin: 5px 0 0;
+
+      li {
+        font-size: 0.95rem;
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .curent-page {
+    margin-top: -12%;
+
+    .posts-section {
+      padding: 0.9rem;
+      border-radius: 12px;
+    }
+
+    .posts-header {
+      margin-bottom: 10px;
+
+      h3 {
+        font-size: 1rem;
+      }
+    }
+
+    .friends-grid {
+      grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+      gap: 8px;
+    }
+
+    .friend-card {
+      padding: 10px 8px;
+      border-radius: 10px;
+    }
+
+    .friend-avatar {
+      width: 70px;
+      height: 70px;
+      border-width: 2px;
+    }
+
+    .friend-name {
+      font-size: 0.85rem;
+    }
+
+    .curent-content {
+      gap: 14px;
+    }
+
+    .curent-section {
+      padding: 14px 16px;
+      border-radius: 12px;
+
+      h3 {
+        font-size: 1.1rem;
+        margin-bottom: 5px;
+      }
+    }
+
+    .curent-section-subtitle {
+      font-size: 0.9rem;
+      margin-bottom: 8px;
+    }
+
+    .curent-paragraph {
+      font-size: 0.9rem;
+      margin-bottom: 8px;
+      line-height: 1.5;
+    }
+
+    .curent-subheading {
+      font-size: 0.9rem;
+      margin: 8px 0 5px;
+    }
+
+    .curent-list {
+      padding-left: 16px;
+      gap: 5px;
+
+      li {
+        font-size: 0.9rem;
+        line-height: 1.4;
+      }
+    }
+
+    .curent-list-intro {
+      font-size: 0.9rem;
+    }
+
+    .curent-list-item-title {
+      font-size: 0.9rem;
+    }
+
+    .curent-list-item-description {
+      font-size: 0.9rem;
+    }
+
+    .curent-sublist {
+      padding-left: 14px;
+      margin: 4px 0 0;
+
+      li {
+        font-size: 0.9rem;
+      }
     }
   }
 }
