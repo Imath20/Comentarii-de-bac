@@ -324,6 +324,17 @@ body.tabs-revealed .opera-back-btn {
   }
 }
 
+@keyframes scrollCuePulse {
+  0%, 100% {
+    opacity: 0.4;
+    transform: translateY(-50%) translateX(0);
+  }
+  50% {
+    opacity: 0.8;
+    transform: translateY(-50%) translateX(4px);
+  }
+}
+
 @media (max-width: 900px) {
   .opere-hero-full {
     .opera-author-avatar {
@@ -382,13 +393,45 @@ body.tabs-revealed .opera-back-btn {
     backdrop-filter: blur(6px) saturate(120%);
     -webkit-backdrop-filter: blur(6px) saturate(120%);
 
+    .theme-toggle {
+      padding: 0.5rem;
+      border: 1px solid transparent;
+      background: transparent;
+      border-radius: 8px;
+      font-size: 1.3rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+      min-width: 40px;
+      min-height: 40px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      outline: none;
+
+      &:focus {
+        outline: none;
+        border-color: #a97c50;
+      }
+
+      &:hover {
+        background: rgba(169, 124, 80, 0.1);
+      }
+    }
+
     .opera-tabs-left {
       display: flex;
       flex-wrap: nowrap;
       gap: 0.5rem;
       overflow-x: auto;
+      overflow-y: hidden;
       scrollbar-width: none;
       -ms-overflow-style: none;
+      -webkit-overflow-scrolling: touch;
+      scroll-behavior: smooth;
+      position: relative;
+      flex: 1 1 auto;
+      min-width: 0;
       
       &::-webkit-scrollbar {
         display: none;
@@ -1258,8 +1301,120 @@ body.tabs-revealed .opera-back-btn {
   }
 }
 
-// Responsive design
+// Responsive design - Tablet (769px - 1024px)
+@media (max-width: 1024px) and (min-width: 769px) {
+  .opere-hero-full {
+    .opere-hero-content {
+      padding: 0 2rem;
+      padding-top: 60px;
+      max-width: 700px;
+
+      .opere-hero-title {
+        font-size: 2.8rem;
+        margin: 70px 0 0.75rem 0;
+      }
+
+      .opere-hero-subtitle {
+        font-size: 1.15rem;
+      }
+
+      .opere-hero-desc {
+        font-size: 1rem;
+        max-width: 650px;
+      }
+    }
+
+    .opera-author-avatar {
+      width: 110px;
+      height: 110px;
+      top: 160px;
+    }
+
+    .opere-scroll-cue {
+      width: 140px;
+      height: 140px;
+    }
+  }
+
+  .opera-content-container {
+    padding: 1.5rem;
+
+    .opera-tabs {
+      padding: 6px 8px;
+
+      .opera-tab {
+        padding: 0.75rem 1rem;
+        font-size: 0.95rem;
+      }
+    }
+
+    .opera-tab-content-wrapper {
+      padding: 1.75rem;
+
+      .opera-tab-content {
+        h3 {
+          font-size: 1.4rem;
+        }
+
+        p {
+          font-size: 1.02rem;
+        }
+      }
+    }
+  }
+}
+
+// Responsive design - Small Tablet & Large Mobile (481px - 768px)
 @media (max-width: 768px) {
+  .opere-hero-full {
+    max-height: 350px;
+    margin-top: -20%;
+
+    .opera-author-avatar {
+      width: 90px;
+      height: 90px;
+      top: 120px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-width: 2.5px;
+    }
+
+    .opere-hero-content {
+      padding: 0 1.25rem;
+      padding-top: 50px;
+      max-width: 100%;
+
+      .opere-hero-title {
+        font-size: 2rem;
+        margin: 60px 0 0.5rem 0;
+      }
+
+      .opere-hero-subtitle {
+        font-size: 1.2rem;
+        margin: 0 0 0.75rem 0;
+      }
+
+      .opere-hero-desc {
+        font-size: 1.2rem;
+        line-height: 1.6;
+        margin: 0 auto 1rem auto;
+        max-width: 100%;
+      }
+    }
+
+    .opere-scroll-cue {
+      width: 120px;
+      height: 120px;
+      bottom: 10px;
+      display: none;
+
+      svg {
+        width: 100px;
+        height: 100px;
+      }
+    }
+  }
+
   .opera-content-container {
     padding: 1rem;
 
@@ -1267,64 +1422,807 @@ body.tabs-revealed .opera-back-btn {
       flex-direction: row;
       align-items: center;
       gap: 0.5rem;
+      padding: 6px 8px;
+      margin-bottom: 1.5rem;
 
       .opera-tabs-left {
         flex: 1 1 auto;
         min-width: 0;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
       }
 
       .theme-toggle {
-        margin-left: 0.75rem;
+        margin-left: 0.5rem;
         flex-shrink: 0;
+        padding: 0.5rem;
+        font-size: 1.2rem;
+      }
+
+      // Scroll cue overlay - gradient fade-out și săgeată (doar pe mobile/tablet)
+      &::before {
+        content: '';
+        position: absolute;
+        right: 45px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 20px;
+        height: 20px;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23a97c50' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E");
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        pointer-events: none;
+        z-index: 2;
+        opacity: 0.6;
+        animation: scrollCuePulse 2s ease-in-out infinite;
+      }
+
+      // Gradient fade-out la capătul drept
+      &::after {
+        content: '';
+        position: absolute;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        width: 50px;
+        background: linear-gradient(to left, rgba(255, 250, 241, 0.98) 0%, rgba(255, 250, 241, 0) 100%);
+        pointer-events: none;
+        z-index: 1;
+      }
+    }
+
+    // Dark theme scroll cue pentru tablet/mobile
+    .dark-theme & {
+      .opera-tabs {
+        &::before {
+          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23ffd591' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E");
+          opacity: 0.7;
+        }
+
+        &::after {
+          background: linear-gradient(to left, rgba(61, 40, 21, 0.98) 0%, rgba(61, 40, 21, 0) 100%);
+        }
       }
     }
 
     .opera-tabs .opera-tab {
-      padding: 0.8rem 1.5rem;
-      font-size: 1rem;
+      padding: 0.7rem 1rem;
+      font-size: 0.9rem;
+      white-space: nowrap;
     }
 
     .opera-comment-dropdowns {
       grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.4rem;
+      margin-bottom: 0.75rem;
     }
 
     .opera-tab-content-wrapper {
-      padding: 1.5rem;
+      padding: 1.25rem;
+      border-radius: 10px;
 
       .opera-tab-content {
         h3 {
-          font-size: 1.3rem;
+          font-size: 1.25rem;
+          margin-bottom: 0.875rem;
+
+          &:before {
+            width: 3px;
+            height: 20px;
+          }
         }
 
         p {
-          font-size: 1rem;
+          font-size: 0.95rem;
+          line-height: 1.7;
+          margin-bottom: 1.25rem;
         }
 
         ul li {
-          font-size: 1rem;
+          font-size: 0.95rem;
           padding: 0.6rem 0;
+          padding-left: 1.75rem;
+
+          &:before {
+            width: 8px;
+            height: 8px;
+            top: 0.85rem;
+          }
+        }
+
+        .opera-description,
+        .opera-themes,
+        .opera-characters,
+        .opera-analysis,
+        .opera-comment-content,
+        .opera-quotes {
+          margin-bottom: 2rem;
+          padding: 1.25rem;
+          border-radius: 8px;
         }
 
         .opera-quote {
-          padding: 1.5rem;
-          font-size: 1rem;
+          padding: 1.25rem;
+          font-size: 0.95rem;
+          line-height: 1.6;
+
+          &:before {
+            font-size: 2.5rem;
+            top: -8px;
+            left: 10px;
+          }
+        }
+
+        .opera-curent-link {
+          padding: 0.875rem 1.75rem;
+          font-size: 1.1rem;
+          margin-top: 1.5rem;
+        }
+
+        .opera-rezumat {
+          .rezumat-title {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            padding-bottom: 0.875rem;
+          }
+
+          .rezumat-section {
+            margin-bottom: 2.5rem;
+            padding: 1.5rem;
+            border-radius: 10px;
+
+            .rezumat-section-title {
+              font-size: 1.5rem;
+              margin-bottom: 1.25rem;
+              padding-bottom: 0.625rem;
+
+              &:before {
+                width: 5px;
+                height: 24px;
+              }
+            }
+
+            .rezumat-subtitle {
+              font-size: 1.15rem;
+              margin: 1.5rem 0 1rem 0;
+            }
+
+            .rezumat-text {
+              font-size: 1rem;
+              line-height: 1.8;
+            }
+
+            .rezumat-list {
+              padding-left: 1.75rem;
+              margin: 1.25rem 0;
+
+              .rezumat-list-item {
+                font-size: 1rem;
+                margin-bottom: 0.625rem;
+              }
+            }
+
+            .rezumat-versuri {
+              padding-left: 1.5rem;
+              margin: 1.25rem 0;
+
+              .rezumat-vers {
+                font-size: 1rem;
+                line-height: 1.7;
+              }
+            }
+          }
+        }
+
+        .opera-themes ul li {
+          padding: 0.875rem 1rem;
+          margin: 0.4rem 0;
+        }
+
+        .opera-characters ul li {
+          margin: 0.4rem 0;
+
+          .opera-character-button {
+            padding: 0.875rem 1rem;
+
+            .opera-character-name {
+              font-size: 0.95rem;
+            }
+
+            .opera-character-toggle {
+              font-size: 1.1rem;
+            }
+          }
+
+          .opera-character-description {
+            padding: 0 1rem 0.875rem 1rem;
+            font-size: 0.92rem;
+          }
+        }
+
+        .opera-symbols-list {
+          gap: 1rem;
+
+          .opera-symbol-item {
+            padding: 1.25rem 1.25rem 1.25rem 3rem;
+
+            &:before {
+              left: 8px;
+              top: 22px;
+              width: 14px;
+              height: 14px;
+            }
+
+            h4 {
+              font-size: 1.1rem;
+              margin-bottom: 0.4rem;
+            }
+
+            p {
+              font-size: 0.95rem;
+            }
+          }
+        }
+
+        .opera-title-points {
+          padding: 1rem 1.25rem;
+
+          li {
+            padding: 0.875rem 0 0.875rem 2.25rem;
+            font-size: 0.98rem;
+
+            &:before {
+              left: 0.4rem;
+              top: 1.1rem;
+              width: 10px;
+              height: 10px;
+            }
+          }
         }
       }
     }
 
     .opera-actions {
+      margin-top: 2rem;
+      padding: 1.5rem;
+
       .opera-read-btn {
         padding: 1rem 2rem;
-        font-size: 1rem;
+        font-size: 0.95rem;
+        border-radius: 45px;
       }
+    }
+  }
+
+  .scroll-to-top-btn {
+    right: 16px;
+    bottom: 16px;
+    width: 50px;
+    height: 50px;
+
+    svg {
+      width: 24px;
+      height: 24px;
     }
   }
 }
 
+// Responsive design - Mobile (320px - 480px)
 @media (max-width: 480px) {
+  .opere-hero-full {
+    max-height: 350px;
+    margin-top: -20%;
+
+    .opera-author-avatar {
+      width: 90px;
+      height: 90px;
+      top: 90px;
+      border-width: 2px;
+    }
+
+    .opere-hero-content {
+      padding: 0 1rem;
+      padding-top: 60px;
+
+      .opere-hero-title {
+        font-size: 1.75rem;
+        margin: 50px 0 0.4rem 0;
+        letter-spacing: 0.02em;
+      }
+
+      .opere-hero-subtitle {
+        font-size: 1.2rem;
+        margin: 0 0 0.625rem 0;
+      }
+
+      .opere-hero-desc {
+        font-size: 1rem;
+        line-height: 1.55;
+        margin: 0 auto 0.875rem auto;
+      }
+    }
+
+    .opere-scroll-cue {
+      width: 100px;
+      height: 100px;
+      bottom: 8px;
+      display: none;
+
+      svg {
+        width: 80px;
+        height: 80px;
+      }
+    }
+  }
+
+  .opera-back-btn {
+    top: 12px;
+    left: 12px;
+    padding: 8px 12px;
+    gap: 6px;
+    font-size: 0.875rem;
+
+    .back-icon svg {
+      width: 18px;
+      height: 18px;
+    }
+  }
+
   .opera-content-container {
+    padding: 0.75rem;
+
+    .opera-tabs {
+      padding: 5px 6px;
+      margin-bottom: 1.25rem;
+      border-radius: 12px;
+
+      .opera-tabs-left {
+        gap: 0.4rem;
+      }
+
+      .theme-toggle {
+        margin-left: 0.4rem;
+        padding: 0.4rem;
+        font-size: 1.1rem;
+      }
+
+      // Scroll cue ajustat pentru mobile
+      &::before {
+        content: '';
+        position: absolute;
+        right: 40px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 18px;
+        height: 18px;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23a97c50' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E");
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        pointer-events: none;
+        z-index: 2;
+        opacity: 0.6;
+        animation: scrollCuePulse 2s ease-in-out infinite;
+      }
+
+      &::after {
+        content: '';
+        position: absolute;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        width: 45px;
+        background: linear-gradient(to left, rgba(255, 250, 241, 0.98) 0%, rgba(255, 250, 241, 0) 100%);
+        pointer-events: none;
+        z-index: 1;
+      }
+    }
+
+    // Dark theme scroll cue pentru mobile
+    .dark-theme & {
+      .opera-tabs {
+        &::before {
+          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23ffd591' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E");
+          opacity: 0.7;
+        }
+
+        &::after {
+          background: linear-gradient(to left, rgba(61, 40, 21, 0.98) 0%, rgba(61, 40, 21, 0) 100%);
+        }
+      }
+    }
+
+    .opera-tabs .opera-tab {
+      padding: 0.6rem 0.875rem;
+      font-size: 0.85rem;
+      border-radius: 10px;
+    }
+
     .opera-comment-dropdowns {
       grid-template-columns: 1fr;
+      gap: 0.5rem;
+    }
+
+    .opera-tab-content-wrapper {
+      padding: 1rem;
+      border-radius: 10px;
+
+      .opera-tab-content {
+        h3 {
+          font-size: 1.15rem;
+          margin-bottom: 0.75rem;
+
+          &:before {
+            width: 3px;
+            height: 18px;
+          }
+        }
+
+        p {
+          font-size: 0.9rem;
+          line-height: 1.65;
+          margin-bottom: 1rem;
+        }
+
+        ul li {
+          font-size: 0.9rem;
+          padding: 0.5rem 0;
+          padding-left: 1.5rem;
+
+          &:before {
+            width: 7px;
+            height: 7px;
+            top: 0.75rem;
+          }
+        }
+
+        .opera-description,
+        .opera-themes,
+        .opera-characters,
+        .opera-analysis,
+        .opera-comment-content,
+        .opera-quotes {
+          margin-bottom: 1.75rem;
+          padding: 1rem;
+          border-radius: 8px;
+          border-left-width: 3px;
+        }
+
+        .opera-quote {
+          padding: 1rem;
+          font-size: 0.9rem;
+          line-height: 1.55;
+          border-left-width: 3px;
+
+          &:before {
+            font-size: 2rem;
+            top: -6px;
+            left: 8px;
+          }
+        }
+
+        .opera-curent-link {
+          padding: 0.75rem 1.5rem;
+          font-size: 1rem;
+          margin-top: 1.25rem;
+          border-radius: 4rem;
+        }
+
+        .opera-rezumat {
+          .rezumat-title {
+            font-size: 1.75rem;
+            margin-bottom: 1.75rem;
+            padding-bottom: 0.75rem;
+            border-bottom-width: 2px;
+          }
+
+          .rezumat-section {
+            margin-bottom: 2rem;
+            padding: 1.25rem;
+            border-radius: 8px;
+            border-left-width: 4px;
+
+            .rezumat-section-title {
+              font-size: 1.3rem;
+              margin-bottom: 1rem;
+              padding-bottom: 0.5rem;
+              border-bottom-width: 2px;
+
+              &:before {
+                width: 4px;
+                height: 20px;
+              }
+            }
+
+            .rezumat-subtitle {
+              font-size: 1.05rem;
+              margin: 1.25rem 0 0.875rem 0;
+            }
+
+            .rezumat-text {
+              font-size: 0.95rem;
+              line-height: 1.75;
+            }
+
+            .rezumat-list {
+              padding-left: 1.5rem;
+              margin: 1rem 0;
+
+              .rezumat-list-item {
+                font-size: 0.95rem;
+                margin-bottom: 0.5rem;
+              }
+            }
+
+            .rezumat-versuri {
+              padding-left: 1.25rem;
+              margin: 1rem 0;
+
+              .rezumat-vers {
+                font-size: 0.95rem;
+                line-height: 1.65;
+              }
+            }
+          }
+        }
+
+        .opera-themes ul li {
+          padding: 0.75rem 0.875rem;
+          margin: 0.35rem 0;
+          border-left-width: 3px;
+          border-radius: 0 10px 10px 0;
+        }
+
+        .opera-characters ul li {
+          margin: 0.35rem 0;
+          border-left-width: 3px;
+          border-radius: 0 10px 10px 0;
+
+          .opera-character-button {
+            padding: 0.75rem 0.875rem;
+
+            .opera-character-name {
+              font-size: 0.9rem;
+            }
+
+            .opera-character-toggle {
+              font-size: 1rem;
+              margin-left: 0.75rem;
+            }
+          }
+
+          .opera-character-description {
+            padding: 0 0.875rem 0.75rem 0.875rem;
+            font-size: 0.88rem;
+            line-height: 1.65;
+          }
+        }
+
+        .opera-symbols-list {
+          gap: 0.875rem;
+
+          &:before {
+            left: 12px;
+            width: 2px;
+          }
+
+          .opera-symbol-item {
+            padding: 1rem 1rem 1rem 2.75rem;
+
+            &:before {
+              left: 6px;
+              top: 18px;
+              width: 12px;
+              height: 12px;
+              box-shadow: 0 0 0 5px rgba(194, 140, 82, 0.22);
+            }
+
+            h4 {
+              font-size: 1.05rem;
+              margin-bottom: 0.35rem;
+            }
+
+            p {
+              font-size: 0.9rem;
+              line-height: 1.65;
+            }
+          }
+        }
+
+        .opera-title-points {
+          padding: 0.875rem 1rem;
+          border-radius: 14px;
+
+          li {
+            padding: 0.75rem 0 0.75rem 2rem;
+            font-size: 0.95rem;
+            line-height: 1.6;
+
+            &:before {
+              left: 0.35rem;
+              top: 1rem;
+              width: 9px;
+              height: 9px;
+              box-shadow: 0 0 0 3px rgba(194, 140, 82, 0.15);
+            }
+
+            &:not(:last-child) {
+              border-bottom-width: 1px;
+            }
+          }
+        }
+      }
+    }
+
+    .opera-actions {
+      margin-top: 1.75rem;
+      padding: 1.25rem;
+
+      .opera-read-btn {
+        padding: 0.875rem 1.75rem;
+        font-size: 0.9rem;
+        border-radius: 40px;
+        letter-spacing: 0.3px;
+
+        svg {
+          width: 18px;
+          height: 18px;
+        }
+      }
+    }
+  }
+
+  .scroll-to-top-btn {
+    right: 12px;
+    bottom: 12px;
+    width: 46px;
+    height: 46px;
+
+    svg {
+      width: 22px;
+      height: 22px;
+    }
+  }
+
+  .opera-video-wrapper {
+    border-radius: 10px;
+  }
+
+  .quiz-container {
+    gap: 1rem;
+  }
+
+  .quiz-item {
+    padding: 0.875rem;
+    border-radius: 8px;
+  }
+
+  .quiz-question {
+    font-size: 0.95rem;
+    margin-bottom: 0.625rem;
+  }
+
+  .quiz-options {
+    gap: 0.4rem;
+  }
+
+  .quiz-option {
+    padding: 0.5rem 0.875rem;
+    font-size: 0.9rem;
+    border-radius: 20px;
+  }
+
+  .quiz-submit {
+    padding: 0.625rem 1.25rem;
+    font-size: 0.9rem;
+  }
+
+  .quiz-explanation {
+    padding: 0.625rem;
+    font-size: 0.85rem;
+    margin-top: 0.625rem;
+  }
+}
+
+// Responsive design - Very Small Mobile (< 320px)
+@media (max-width: 320px) {
+  .opere-hero-full {
+    min-height: 400px;
+
+    .opera-author-avatar {
+      width: 50px;
+      height: 50px;
+      top: 80px;
+    }
+
+    .opere-hero-content {
+      padding: 0 0.75rem;
+      padding-top: 30px;
+
+      .opere-hero-title {
+        font-size: 1.5rem;
+        margin: 40px 0 0.35rem 0;
+      }
+
+      .opere-hero-subtitle {
+        font-size: 0.8rem;
+      }
+
+      .opere-hero-desc {
+        font-size: 0.8rem;
+      }
+    }
+
+    .opere-scroll-cue {
+      width: 80px;
+      height: 80px;
+
+      svg {
+        width: 60px;
+        height: 60px;
+      }
+    }
+  }
+
+  .opera-back-btn {
+    top: 10px;
+    left: 10px;
+    padding: 6px 10px;
+    font-size: 0.8rem;
+
+    .back-icon svg {
+      width: 16px;
+      height: 16px;
+    }
+  }
+
+  .opera-content-container {
+    padding: 0.5rem;
+
+    .opera-tabs {
+      padding: 4px 5px;
+
+      .opera-tab {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.8rem;
+      }
+    }
+
+    .opera-tab-content-wrapper {
+      padding: 0.875rem;
+
+      .opera-tab-content {
+        h3 {
+          font-size: 1.05rem;
+        }
+
+        p {
+          font-size: 0.85rem;
+        }
+
+        ul li {
+          font-size: 0.85rem;
+          padding-left: 1.25rem;
+        }
+      }
+    }
+
+    .opera-actions .opera-read-btn {
+      padding: 0.75rem 1.5rem;
+      font-size: 0.85rem;
+    }
+  }
+
+  .scroll-to-top-btn {
+    right: 10px;
+    bottom: 10px;
+    width: 42px;
+    height: 42px;
+
+    svg {
+      width: 20px;
+      height: 20px;
     }
   }
 }
@@ -1879,12 +2777,15 @@ body.tabs-revealed .opera-back-btn {
   text-decoration: none;
   font-weight: 500;
   font-size: 1.2rem;
-  border-radius: 5 rem;
+  border-radius: 5rem;
   margin-top: 20px;
   display: inline-block;
+  cursor: pointer;
+  transition: all 0.3s ease;
   &:hover {
     background: linear-gradient(135deg, #8b6b42 0%, #6d5233 100%);
     box-shadow: 0 8px 25px rgba(169, 124, 80, 0.4);
+    transform: translateY(-2px);
   }
   &:focus {
     outline: none !important;
@@ -1893,7 +2794,7 @@ body.tabs-revealed .opera-back-btn {
     transform: translateY(1px);
   }
   &:visited {
-    color: #333;
+    color: white;
   }
   .dark-theme & {
     background: linear-gradient(135deg, #ffd591 0%, #ffb366 100%);
@@ -2028,19 +2929,33 @@ body.tabs-revealed .opera-back-btn {
   }
 }
 
-// Responsive design for poem modal - Same as Scriitor page
+// Responsive design for poem modal
+@media (max-width: 1024px) {
+  .opera-poem-modal {
+    width: 85vw;
+    max-width: 750px;
+  }
+}
+
 @media (max-width: 768px) {
   .opera-poem-modal {
     margin: 0.5rem;
     max-height: 90vh;
     width: 95vw;
+    border-radius: 16px;
 
     .opera-poem-modal-header {
       padding: 1.5rem 1.5rem 1rem 1.5rem;
 
       h2 {
-        font-size: 2rem;
+        font-size: 1.75rem;
         padding-top: 2rem;
+      }
+
+      .opera-poem-modal-close {
+        right: 0.75rem;
+        top: 0.4rem;
+        font-size: 28px;
       }
     }
 
@@ -2048,8 +2963,76 @@ body.tabs-revealed .opera-back-btn {
       padding: 2rem 1.5rem;
 
       .opera-poem-text {
-        font-size: 1.2rem;
-        line-height: 1.8;
+        font-size: 1.1rem;
+        line-height: 1.75;
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .opera-poem-modal {
+    width: 98vw;
+    margin: 0.25rem;
+    border-radius: 14px;
+    max-height: 95vh;
+
+    .opera-poem-modal-header {
+      padding: 1.25rem 1.25rem 0.875rem 1.25rem;
+
+      h2 {
+        font-size: 1.5rem;
+        padding-top: 1.75rem;
+      }
+
+      .opera-poem-modal-close {
+        right: 0.625rem;
+        top: 0.3rem;
+        font-size: 24px;
+        padding: 4px;
+      }
+    }
+
+    .opera-poem-modal-content {
+      padding: 1.5rem 1.25rem;
+
+      .opera-poem-text {
+        font-size: 1rem;
+        line-height: 1.7;
+        max-width: 100%;
+      }
+    }
+  }
+}
+
+@media (max-width: 320px) {
+  .opera-poem-modal {
+    width: 100vw;
+    margin: 0;
+    border-radius: 0;
+    max-height: 100vh;
+
+    .opera-poem-modal-header {
+      padding: 1rem 1rem 0.75rem 1rem;
+
+      h2 {
+        font-size: 1.35rem;
+        padding-top: 1.5rem;
+      }
+
+      .opera-poem-modal-close {
+        right: 0.5rem;
+        top: 0.25rem;
+        font-size: 22px;
+      }
+    }
+
+    .opera-poem-modal-content {
+      padding: 1.25rem 1rem;
+
+      .opera-poem-text {
+        font-size: 0.95rem;
+        line-height: 1.65;
       }
     }
   }
