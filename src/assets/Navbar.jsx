@@ -299,7 +299,7 @@ export default function Navbar({ darkTheme, setDarkTheme, scrolled }) {
                       <>
                         <button
                           type="button"
-                          className="navbar-mobile-dropdown-trigger"
+                          className={`navbar-mobile-dropdown-trigger ${mobileDropdown === cat.name ? 'dropdown-open' : ''}`}
                           onClick={() => setMobileDropdown(d => (d === cat.name ? null : cat.name))}
                         >
                           <span className="nav-icon-wrapper">{cat.icon}</span>

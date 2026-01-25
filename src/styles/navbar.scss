@@ -645,7 +645,12 @@ body.dark-theme .navbar-mobile-title {
   align-items: center;
   justify-content: center;
   gap: 0.75rem;
-  width: 100%;
+  
+  &.dropdown-open {
+    padding-left: 0.5rem;
+    width: 45%;
+    background-color: rgba(0, 0, 0, 0.06) !important;
+  }
 }
 
 .navbar-mobile-dropdown-trigger .nav-icon-wrapper {
@@ -684,23 +689,32 @@ body.dark-theme .navbar-mobile-dropdown-trigger:hover {
 
 .navbar-mobile-submenu {
   list-style: none;
-  padding: 0.5rem 0 0 0;
+  padding: 0.5rem 0 0 0.5rem;
+  // padding-left: 0px;
+  
+  // background-color: red;
   margin: 0;
+  margin-left: 1rem !important;
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
   width: 100%;
   align-items: center;
-}
 
-.navbar-mobile-submenu li {
-  width: 100%;
-  display: flex;
-  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.06);
+  width: 40%;
+  border-radius: 8px;
+  
+  li {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
 }
 
 .navbar-mobile-submenu .navbar-mobile-link {
   justify-content: center;
+  border-radius: 10px;
   padding: 0.65rem 0.85rem;
   font-size: 1rem;
   opacity: 0.9;
