@@ -16,6 +16,11 @@ export function TabsProvider({ children }) {
   const navigate = useNavigate();
   const location = useLocation();
 
+  // Helper function to check if we're on a mobile/tablet device
+  const isMobileDevice = useCallback(() => {
+    return window.innerWidth < 1024;
+  }, []);
+
   const [tabs, setTabs] = useState(() => {
     const stored = localStorage.getItem('tabs.state');
     if (stored) {
@@ -77,10 +82,10 @@ export function TabsProvider({ children }) {
       ...s,
       tabs: [...s.tabs, { id, title, path, history: [path], scrollY: 0 }],
       activeId: id,
-      revealed: true,
+      revealed: isMobileDevice() ? false : true, // Don't reveal on mobile
     }));
     navigate(path);
-  }, [ensureTitle, navigate, tabOpeningEnabled]);
+  }, [ensureTitle, navigate, tabOpeningEnabled, isMobileDevice]);
 
   const closeTab = useCallback((id) => {
     setTabs(s => {
@@ -183,8 +188,8 @@ export function TabsProvider({ children }) {
       }
       
       if (window.scrollY <= 0 && e.deltaY < 0) {
-        // Prevent opening tabs bar if tab opening is disabled
-        if (!tabOpeningEnabled) return;
+        // Prevent opening tabs bar if tab opening is disabled or on mobile
+        if (!tabOpeningEnabled || isMobileDevice()) return;
         // console.log('Opening tabs via wheel');
         setTabs(s => ({ ...s, revealed: true }));
       }
@@ -199,8 +204,8 @@ export function TabsProvider({ children }) {
       // Block reveal for a short delay after arriving at top
       if (now - lastTopArrivalTimeRef.current < delay) return;
       if (window.scrollY <= 0 && touchStartY != null) {
-        // Prevent opening tabs bar if tab opening is disabled
-        if (!tabOpeningEnabled) return;
+        // Prevent opening tabs bar if tab opening is disabled or on mobile
+        if (!tabOpeningEnabled || isMobileDevice()) return;
         const dy = e.touches[0].clientY - touchStartY;
         if (dy > 24) setTabs(s => ({ ...s, revealed: true }));
       }
@@ -215,7 +220,7 @@ export function TabsProvider({ children }) {
       window.removeEventListener('touchstart', onTouchStart);
       window.removeEventListener('touchmove', onTouchMove);
     };
-  }, [tabOpeningEnabled]);
+  }, [tabOpeningEnabled, isMobileDevice]);
 
   const hideTabs = useCallback(() => {
     // Start cooldown when tabs are explicitly hidden to avoid immediate reopen
@@ -388,8 +393,12 @@ export function TabsProvider({ children }) {
       }
       if (shiftKey && e.key === 'Tab') {
         e.preventDefault();
-        // Prevent opening tabs bar if tab opening is disabled
-        if (!tabOpeningEnabled && !tabs.revealed) {
+        // Prevent opening tabs bar if tab opening is disabled or on mobile
+        if ((!tabOpeningEnabled || isMobileDevice()) && !tabs.revealed) {
+          return;
+        }
+        // On mobile, only allow hiding, not showing
+        if (isMobileDevice() && !tabs.revealed) {
           return;
         }
         // When toggling with Shift+Tab, hide and start cooldown to prevent immediate reopen
@@ -404,14 +413,14 @@ export function TabsProvider({ children }) {
       const num = parseInt(e.key);
       if (e.shiftKey && num >= 1 && num <= 9) {
         e.preventDefault();
-        // Prevent opening tabs bar if tab opening is disabled
-        if (!tabOpeningEnabled && !tabs.revealed) {
+        // Prevent opening tabs bar if tab opening is disabled or on mobile
+        if ((!tabOpeningEnabled || isMobileDevice()) && !tabs.revealed) {
           return;
         }
         const tabIndex = num - 1;
         if (tabIndex < tabs.tabs.length) {
-          // Show tabs if not revealed
-          if (!tabs.revealed) {
+          // Show tabs if not revealed (only on desktop)
+          if (!tabs.revealed && !isMobileDevice()) {
             setTabs(s => ({ ...s, revealed: true }));
           }
           activateTab(tabs.tabs[tabIndex].id);
@@ -426,12 +435,12 @@ export function TabsProvider({ children }) {
       if (isTabNavigation) {
         e.preventDefault();
         
-        // Prevent opening tabs bar if tab opening is disabled
-        if (!tabOpeningEnabled && !tabs.revealed) {
+        // Prevent opening tabs bar if tab opening is disabled or on mobile
+        if ((!tabOpeningEnabled || isMobileDevice()) && !tabs.revealed) {
           return;
         }
-        // Show tabs if not revealed
-        if (!tabs.revealed) {
+        // Show tabs if not revealed (only on desktop)
+        if (!tabs.revealed && !isMobileDevice()) {
           setTabs(s => ({ ...s, revealed: true }));
         }
         
@@ -472,15 +481,15 @@ export function TabsProvider({ children }) {
     };
     window.addEventListener('keydown', onKeyDown);
     return () => window.removeEventListener('keydown', onKeyDown);
-  }, [openNewTab, closeTab, tabs.activeId, tabs.tabs, activateTab, tabs.revealed, setTabOpeningEnabled, resetAutoHideTimer, tabOpeningEnabled]);
+  }, [openNewTab, closeTab, tabs.activeId, tabs.tabs, activateTab, tabs.revealed, setTabOpeningEnabled, resetAutoHideTimer, tabOpeningEnabled, isMobileDevice]);
 
   const value = useMemo(() => ({
     tabs: tabs.tabs,
     activeId: tabs.activeId,
     revealed: tabs.revealed,
     setRevealed: (v) => {
-      // Prevent opening tabs bar if tab opening is disabled
-      if (v && !tabOpeningEnabled) {
+      // Prevent opening tabs bar if tab opening is disabled or on mobile
+      if (v && (!tabOpeningEnabled || isMobileDevice())) {
         return;
       }
       setTabs(s => ({ ...s, revealed: v }));
@@ -496,7 +505,7 @@ export function TabsProvider({ children }) {
     handleUserInteraction,
     tabOpeningEnabled,
     setTabOpeningEnabled,
-  }), [tabs, openNewTab, closeTab, activateTab, setTabTitle, reorderTabs, hideTabs, resetAutoHideTimer, cancelAutoHide, handleUserInteraction, tabOpeningEnabled]);
+  }), [tabs, openNewTab, closeTab, activateTab, setTabTitle, reorderTabs, hideTabs, resetAutoHideTimer, cancelAutoHide, handleUserInteraction, tabOpeningEnabled, isMobileDevice]);
 
   return (
     <TabsContext.Provider value={value}>
