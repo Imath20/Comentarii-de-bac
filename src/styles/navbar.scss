@@ -590,6 +590,12 @@ body.dark-theme .navbar-mobile-title {
 .navbar-mobile-item {
   margin: 0;
   width: 100%;
+  text-decoration: none;
+
+  a {
+    text-decoration: none;
+    color: #3e2723;
+  }
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -706,6 +712,7 @@ body.dark-theme .navbar-mobile-dropdown-trigger:hover {
   border-radius: 8px;
   
   li {
+    text-decoration: none;
     width: 100%;
     display: flex;
     justify-content: center;
