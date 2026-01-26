@@ -85,7 +85,6 @@ const opereList = [
 },
 ];
 
-// Lista cu primele 6 cărți pentru bibliotecă
 const bibliotecaList = [
   {
     titlu: 'Povestea lui Harap-Alb',
