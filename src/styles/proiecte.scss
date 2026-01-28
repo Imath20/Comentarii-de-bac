@@ -8,6 +8,46 @@
     align-items: center;
 }
 
+/* Pagina /proiecte: refolosește designul din landing (index-proiecte-*),
+   dar îl face "stretch" pe lungime (fără height fix + fără grid absolut). */
+.proiecte-page {
+  .index-proiecte-container {
+    height: auto !important;
+    min-height: 420px;
+    padding-bottom: 1.2rem;
+  }
+
+  .index-proiecte-grid {
+    position: relative !important;
+    top: auto !important;
+    height: auto !important;
+    padding: 12px 10px 0 10px;
+    pointer-events: auto;
+    grid-template-rows: none !important;
+    grid-auto-rows: auto;
+  }
+
+  .index-proiect-card {
+    width: 100%;
+    max-width: 170px;
+    transform: rotate(var(--angle, 0deg));
+    will-change: transform;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .index-proiect-card:hover {
+      transform: scale(1.07) rotate(var(--angle, 0deg));
+    }
+  }
+
+  .index-proiecte-footer {
+    position: relative !important;
+    bottom: auto !important;
+    left: auto !important;
+    margin-top: 16px;
+  }
+}
+
 .proiecte-board-container {
     width: min(1600px, 96vw);
     height: min(97vh, 800px);
@@ -29,6 +69,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
+    box-sizing: border-box;
 
     &::before {
         content: "";
@@ -55,7 +96,7 @@
 }
 
 .proiecte-title {
-    font-size: 2.2rem;
+    font-size: clamp(1.35rem, 1rem + 1.6vw, 2.2rem);
     font-weight: 900;
     letter-spacing: 0.12em;
     color: #fffbe6;
@@ -63,6 +104,7 @@
     text-align: center;
     text-shadow: 0 2px 8px rgba(60, 40, 20, 0.10);
     z-index: 2;
+    padding: 0 12px;
 
     &.dark-theme {
         color: rgba(255, 255, 255, 0.95);
@@ -70,7 +112,7 @@
 }
 
 .proiecte-desc {
-    font-size: 1.05rem;
+    font-size: clamp(0.95rem, 0.9rem + 0.4vw, 1.05rem);
     font-weight: 500;
     color: #fffbe6;
     text-align: center;
@@ -79,6 +121,7 @@
     text-shadow: 0 2px 8px rgba(60, 40, 20, 0.10);
     line-height: 1.5;
     z-index: 2;
+    padding: 0 12px;
 
     &.dark-theme {
         color: rgba(255, 255, 255, 0.92);
@@ -100,10 +143,12 @@
     pointer-events: none;
     z-index: 2;
     padding: 0 10px;
+    box-sizing: border-box;
 }
 
 .proiecte-card {
-    width: 160px;
+    width: 100%;
+    max-width: 170px;
     min-height: 86px;
     background: #fffdf3;
     border-radius: 0.7rem;
@@ -117,11 +162,16 @@
     justify-content: center;
     pointer-events: auto;
     transition: box-shadow 0.18s, transform 0.18s cubic-bezier(.4, 1.4, .6, 1);
+    transform: rotate(var(--angle, 0deg));
+    will-change: transform;
+    box-sizing: border-box;
 
-    &:hover {
-        box-shadow: 0 14px 28px rgba(60, 40, 20, 0.28);
-        transform: scale(1.07);
-        z-index: 3;
+    @media (hover: hover) and (pointer: fine) {
+        &:hover {
+            box-shadow: 0 14px 28px rgba(60, 40, 20, 0.28);
+            transform: scale(1.07) rotate(var(--angle, 0deg));
+            z-index: 3;
+        }
     }
 
     &::after {
@@ -194,32 +244,63 @@
     .proiecte-grid {
         grid-template-columns: repeat(5, 1fr);
     }
-
-    .proiecte-card {
-        width: 150px;
-    }
 }
 
 @media (max-width: 768px) {
+    .proiecte-board-container {
+        height: auto;
+        min-height: 70vh;
+        padding-bottom: 1.4rem;
+    }
+
     .proiecte-grid {
-        grid-template-columns: repeat(4, 1fr);
+        position: relative;
+        top: auto;
+        left: auto;
+        width: 100%;
+        height: auto;
+        padding: 12px 10px 6px 10px;
+        pointer-events: auto;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 12px 14px;
+        align-items: stretch;
     }
 
     .proiecte-card {
-        width: 150px;
+        max-width: none;
+        min-height: 96px;
+        transform: rotate(var(--angle, 0deg));
     }
 }
 
 @media (max-width: 576px) {
-    .proiecte-grid {
-        grid-template-columns: repeat(2, 1fr);
+    .proiecte-section {
+        margin-top: 2.5rem;
+        margin-bottom: 2.5rem;
     }
 
-    .proiecte-card {
-        width: 150px;
+    .proiecte-board-container {
+        width: min(1600px, 94vw);
+        border-width: 10px;
+        padding-top: 1.6rem;
+        padding-left: 0.8rem;
+        padding-right: 0.8rem;
+    }
+
+    .proiecte-grid {
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 10px 12px;
+        padding-left: 6px;
+        padding-right: 6px;
     }
 
     .proiecte-board-container {
         height: 78vh;
+    }
+}
+
+@media (max-width: 380px) {
+    .proiecte-grid {
+        grid-template-columns: 1fr;
     }
 }
