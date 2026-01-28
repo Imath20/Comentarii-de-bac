@@ -8,8 +8,8 @@ export default defineConfig({
     open: false,
     allowedHosts: [
       'localhost',
-      'puls-fizica.vercel.app',
-      'puls-fizica.ro',
+      'comentarii-de-bac.vercel.app',
+      'comentarii-de-bac.ro',
       '97738a7c05bd.ngrok-free.app',
       'hypertense-rebekah-jasminelike.ngrok-free.dev'
     ],
