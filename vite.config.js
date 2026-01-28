@@ -10,7 +10,8 @@ export default defineConfig({
       'localhost',
       'puls-fizica.vercel.app',
       'puls-fizica.ro',
-      '97738a7c05bd.ngrok-free.app'
+      '97738a7c05bd.ngrok-free.app',
+      'hypertense-rebekah-jasminelike.ngrok-free.dev'
     ],
     // cors: {
     //   origin: ['97738a7c05bd.ngrok-free.app']
