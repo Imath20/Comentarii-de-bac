@@ -47,6 +47,20 @@ body {
     overscroll-behavior-x: none; /* fără rubber-band lateral */
 }
 
+@media (max-width: 1500px) {
+    html {
+        // display: none !important;
+        // zoom: 90% !important;
+        // transform: scale(0.9);
+        // transform-origin: top left;
+        // transform-origin: center;
+        // width: 200%;
+        // height: 200%;
+        // transform-origin: top left;
+        // transform: scale(50%);
+    }
+}
+
 /* Hide scrollbar for Chrome, Safari and Opera */
 body::-webkit-scrollbar {
     display: none;
