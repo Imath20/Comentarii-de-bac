@@ -20,13 +20,18 @@
   body {
     padding-top: 72px;
   }
-}
 
-@media (max-width: 1500px) {
   .navbar {
     zoom: 110% !important;
     // zoom: 90%;
   }
+}
+
+@media (max-width: 1500px) {
+  // .navbar {
+  //   zoom: 110% !important;
+  //   // zoom: 90%;
+  // }
 }
 
 .navbar.scrolled {
@@ -610,6 +615,10 @@ body.dark-theme .navbar-mobile-title {
   justify-content: center;
 }
 
+body.dark-theme .navbar-mobile-item a {
+  color: #fbeec1;
+}
+
 .navbar-mobile-link {
   // width: 100%;
   display: flex;
@@ -685,6 +694,7 @@ body.dark-theme .navbar-mobile-link,
 body.dark-theme .navbar-mobile-dropdown-trigger {
   background: none;
   border: none !important;
+  color: #fbeec1;
 }
 
 .navbar-mobile-dropdown-trigger {
