@@ -11,6 +11,7 @@ export default defineConfig({
       'comentarii-de-bac.vercel.app',
       'comentarii-de-bac.ro',
       '.ngrok-free.dev',
+      '.ngrok-free.app'
     ],
     // cors: {
     //   origin: ['97738a7c05bd.ngrok-free.app']

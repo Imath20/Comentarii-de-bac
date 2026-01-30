@@ -623,8 +623,18 @@ export default function BookReader() {
   const [showBookmarkConfirm, setShowBookmarkConfirm] = useState(false);
   const [bookmarkedPage, setBookmarkedPage] = useState(null);
   const [currentBook, setCurrentBook] = useState(null);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const navigate = useNavigate();
   const location = useLocation();
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const getEffectiveMaxWidth = (bookConfig, pageIndex) => {
     if (!bookConfig) return undefined;
@@ -790,14 +800,31 @@ export default function BookReader() {
         </div>
       )}
       <div className="book-reader-header">
-        <button className="book-reader-back" onClick={goBack}>Înapoi</button>
-        <button 
-          className="book-reader-bookmark-btn" 
-          onClick={handleBookmarkClick}
-        >
-          {bookmarkedPage === page ? "Pagina fixată" : "Salvează pagina curentă"}
-        </button>
-        <span className="book-reader-title">{currentBook.title}</span>
+        {isMobile ? (
+          <>
+            <h1 className="book-reader-title">{currentBook.title}</h1>
+            <div className="book-reader-header-buttons">
+              <button className="book-reader-back" onClick={goBack}>Înapoi</button>
+              <button 
+                className="book-reader-bookmark-btn" 
+                onClick={handleBookmarkClick}
+              >
+                {bookmarkedPage === page ? "Pagina fixată" : "Salvează pagina curentă"}
+              </button>
+            </div>
+          </>
+        ) : (
+          <>
+            <button className="book-reader-back" onClick={goBack}>Înapoi</button>
+            <button 
+              className="book-reader-bookmark-btn" 
+              onClick={handleBookmarkClick}
+            >
+              {bookmarkedPage === page ? "Pagina fixată" : "Salvează pagina curentă"}
+            </button>
+            <span className="book-reader-title">{currentBook.title}</span>
+          </>
+        )}
       </div>
       <div 
         className="book-reader"

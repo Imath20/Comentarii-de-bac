@@ -23,6 +23,7 @@
 
 .book-reader-header {
   display: flex;
+  flex-direction: row;
   align-items: center;
   justify-content: space-between;
   padding: 18px 24px 0 24px;
@@ -38,6 +39,15 @@
   margin-right: 12px;
   flex: 1;
   text-align: end;
+  line-height: 1.3;
+}
+
+.book-reader-header-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 16px;
 }
 
 .book-reader-back {
@@ -485,4 +495,387 @@
 .book-reader-cancel-btn:hover {
   background: #5a6268;
   transform: translateY(-2px);
+}
+
+// ============================================
+// RESPONSIVE STYLES
+// ============================================
+
+// Mobile layout (up to 768px) - New layout with title on top
+@media (max-width: 768px) {
+  .book-reader-header {
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .book-reader-title {
+    font-size: 1.8rem;
+    margin-right: 0;
+    text-align: center;
+    width: 100%;
+    margin-bottom: 0;
+  }
+
+  .book-reader-header-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .book-reader-back {
+    margin-left: 0;
+  }
+
+  .book-reader-bookmark-btn {
+    position: relative;
+    left: auto;
+    transform: none;
+    margin-left: auto;
+  }
+
+  .book-reader-bookmark-btn:hover {
+    transform: translateY(-2px);
+  }
+
+  .book-reader-bookmark-btn:active {
+    transform: translateY(0);
+  }
+}
+
+// Mobile devices (up to 480px)
+@media (max-width: 480px) {
+  .book-reader-wrapper {
+    padding-bottom: 100px !important; // Extra space for floating controls
+    // padding-top: 0px !important;
+    margin-top: -60px !important;
+    padding-left: 5px !important;
+    padding-right: 5px !important;
+    // background-color: red;
+  }
+
+  .book-reader-header {
+    padding: 12px 16px 0 16px !important;
+    gap: 12px;
+  }
+
+  .book-reader-title {
+    font-size: 1.2rem;
+  }
+
+  .book-reader-header-buttons {
+    gap: 12px;
+  }
+
+  .book-reader-back {
+    padding: 6px 12px;
+    font-size: 0.9rem;
+  }
+
+  .book-reader-bookmark-btn {
+    font-size: 0.8rem;
+    padding: 6px 12px;
+  }
+
+  .book-reader {
+    width: 95vw !important;
+    padding: 0 0 24px 0;
+  }
+
+  .book-reader-content {
+    padding: 16px 16px 0 16px !important;
+    min-height: 200px;
+  }
+
+  .book-reader-page {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    padding: 16px;
+    border-radius: 8px;
+  }
+
+  .book-reader-floating-controls {
+    left: 12px;
+    bottom: 12px;
+    padding: 6px 10px;
+    gap: 8px;
+    border-radius: 24px;
+  }
+
+  .br-float-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 0.9rem;
+  }
+
+  .br-float-input {
+    width: 42px;
+    height: 30px;
+    font-size: 0.85rem;
+    padding: 0 22px 0 8px;
+  }
+
+  .br-float-total {
+    font-size: 0.85rem;
+  }
+
+  .book-reader-bookmark-indicator {
+    bottom: 12px;
+    right: 12px;
+    padding: 6px 10px;
+    font-size: 0.8rem;
+    border-radius: 16px;
+  }
+
+  .bookmark-icon {
+    font-size: 1rem;
+  }
+
+  .book-reader-confirm-modal {
+    padding: 20px;
+    max-width: 90%;
+  }
+
+  .book-reader-confirm-modal h3 {
+    font-size: 1.1rem;
+  }
+
+  .book-reader-confirm-modal p {
+    font-size: 0.9rem;
+  }
+}
+
+// Small mobile devices (up to 360px)
+@media (max-width: 360px) {
+  .book-reader-header {
+    padding: 10px 12px 0 12px !important;
+    gap: 10px;
+  }
+
+  .book-reader-title {
+    font-size: 1.1rem;
+  }
+
+  .book-reader-header-buttons {
+    gap: 10px;
+  }
+
+  .book-reader-back {
+    padding: 5px 10px;
+    font-size: 0.85rem;
+  }
+
+  .book-reader-bookmark-btn {
+    font-size: 0.75rem;
+    padding: 5px 10px;
+  }
+
+  .book-reader-content {
+    padding: 12px 12px 0 12px !important;
+  }
+
+  .book-reader-page {
+    font-size: 0.9rem;
+    padding: 12px;
+  }
+
+  .book-reader-floating-controls {
+    left: 8px;
+    bottom: 8px;
+    padding: 5px 8px;
+  }
+
+  .br-float-btn {
+    width: 28px;
+    height: 28px;
+  }
+
+  .br-float-input {
+    width: 38px;
+    height: 28px;
+    font-size: 0.8rem;
+  }
+}
+
+// Tablets (481px to 768px) - Keep mobile layout
+@media (min-width: 481px) and (max-width: 768px) {
+  .book-reader-wrapper {
+    padding-bottom: 80px !important;
+  }
+
+  .book-reader-header {
+    padding: 16px 20px 0 20px !important;
+    gap: 14px;
+  }
+
+  .book-reader-title {
+    font-size: 1.6rem;
+  }
+
+  .book-reader-header-buttons {
+    gap: 14px;
+  }
+
+  .book-reader-back {
+    padding: 6px 16px;
+    font-size: 0.95rem;
+  }
+
+  .book-reader-bookmark-btn {
+    font-size: 0.85rem;
+    padding: 7px 14px;
+  }
+
+  .book-reader {
+    width: 90vw !important;
+  }
+
+  .book-reader-content {
+    padding: 24px 24px 0 24px !important;
+  }
+
+  .book-reader-page {
+    font-size: 1.05rem;
+    padding: 20px;
+  }
+
+  .book-reader-floating-controls {
+    left: 20px;
+    bottom: 20px;
+  }
+
+  .book-reader-bookmark-indicator {
+    bottom: 16px;
+    right: 16px;
+  }
+}
+
+// Desktop (above 768px) - Restore original layout
+@media (min-width: 769px) {
+  .book-reader-header {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .book-reader-title {
+    font-size: 1.3rem;
+    margin-right: 12px;
+    text-align: end;
+    width: auto;
+    flex: 1;
+  }
+
+  .book-reader-back {
+    margin-left: 12px;
+  }
+
+  .book-reader-bookmark-btn {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-left: 0;
+  }
+
+  .book-reader-bookmark-btn:hover {
+    transform: translateX(-50%) translateY(-2px);
+  }
+
+  .book-reader-bookmark-btn:active {
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+// Small tablets and large phones (481px to 640px)
+@media (min-width: 481px) and (max-width: 640px) {
+  .book-reader-title {
+    font-size: 1.4rem;
+  }
+}
+
+// Large tablets and small desktops (769px to 1024px)
+@media (min-width: 769px) and (max-width: 1024px) {
+  .book-reader-header {
+    padding: 18px 24px 0 24px !important;
+  }
+
+  .book-reader-content {
+    padding: 28px 28px 0 28px !important;
+  }
+
+  .book-reader-page {
+    padding: 22px;
+  }
+}
+
+// Ensure content doesn't overflow on any screen size
+@media (max-width: 1024px) {
+  .book-reader {
+    max-width: 100% !important;
+  }
+
+  .book-reader-content {
+    box-sizing: border-box;
+  }
+
+  .book-reader-page {
+    box-sizing: border-box;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+}
+
+// Landscape orientation adjustments for mobile
+@media (max-width: 768px) and (orientation: landscape) {
+  .book-reader-wrapper {
+    padding-bottom: 60px !important;
+  }
+
+  .book-reader-header {
+    padding: 10px 16px 0 16px !important;
+  }
+
+  .book-reader-content {
+    padding: 20px 20px 0 20px !important;
+  }
+
+  .book-reader-page {
+    padding: 18px;
+  }
+
+  .book-reader-floating-controls {
+    bottom: 10px;
+  }
+
+  .book-reader-bookmark-indicator {
+    bottom: 10px;
+  }
+}
+
+// Touch device optimizations
+@media (hover: none) and (pointer: coarse) {
+  .book-reader-back,
+  .book-reader-bookmark-btn,
+  .br-float-btn,
+  .br-step {
+    min-height: 44px; // Minimum touch target size
+    min-width: 44px;
+  }
+
+  .book-reader-back {
+    min-height: auto;
+    min-width: auto;
+    padding: 8px 18px;
+  }
+
+  .book-reader-bookmark-btn {
+    min-height: auto;
+    min-width: auto;
+  }
+
+  .br-step {
+    min-height: 20px;
+    min-width: 20px;
+  }
 }
