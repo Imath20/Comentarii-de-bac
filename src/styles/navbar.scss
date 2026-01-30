@@ -14,17 +14,10 @@
   box-sizing: border-box;
   box-shadow: 0 4px 24px 0 rgba(124, 79, 43, 0.10);
 }
-
-@media (max-width: 900px)
+@media(max-width: 900px)
 {
   body {
     padding-top: 72px;
-  }
-}
-
-@media (max-width: 1500px) {
-  .navbar {
-    // zoom: 90%;
   }
 }
 

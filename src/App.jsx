@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Home from './pages/index';
 import Scriitori from './pages/scriitori';
@@ -22,11 +22,6 @@ import Admin from './pages/admin';
 // import MigrateScriitori from './pages/migrateScriitori';
 
 export default function App() {
-
-  useEffect(() => {
-    // console.log(document.body.clientWidth, document.body.clientHeight);
-  }, []);
-
   return (
     <Routes>
       <Route path="/" element={<Home />} />
