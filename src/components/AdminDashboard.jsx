@@ -26,6 +26,7 @@ import AIPostGenerator from './AIPostGenerator';
 import AIComentariuFormatter from './AIComentariuFormatter';
 import AICommentGenerator from './AICommentGenerator';
 import AIComentariuDescriptionGenerator from './AIComentariuDescriptionGenerator';
+import AIFullCommentProcessor from './AIFullCommentProcessor';
 import '../styles/admin.scss';
 
 const REACTIONS = [
@@ -163,6 +164,7 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
     createdByName: '',
   });
   const [editingCommentId, setEditingCommentId] = useState(null);
+  const [fullCommentText, setFullCommentText] = useState('');
 
   // Read tab from URL params only on initial mount
   useEffect(() => {
@@ -2703,7 +2705,55 @@ Generează o descriere scurtă și profesională pentru acest comentariu literar
           </div>
 
           <div className="admin-form-group">
-            <label htmlFor="comentariu-content">Text complet *</label>
+            <label htmlFor="comentariu-full-text">Text complet (nelimitat - până la 1500+ cuvinte)</label>
+            <textarea
+              id="comentariu-full-text"
+              value={fullCommentText}
+              onChange={(e) => {
+                setFullCommentText(e.target.value);
+                // Auto-expand textarea
+                e.target.style.height = 'auto';
+                e.target.style.height = `${e.target.scrollHeight}px`;
+              }}
+              placeholder="Lipește sau scrie aici textul complet al comentariului (nelimitat)..."
+              className="admin-textarea"
+              style={{
+                minHeight: '200px',
+                resize: 'vertical',
+                width: '100%',
+                fontFamily: 'inherit',
+                fontSize: '14px',
+                lineHeight: '1.5',
+                padding: '12px',
+                border: `1px solid ${darkTheme ? 'rgba(255, 255, 255, 0.2)' : 'rgba(0, 0, 0, 0.2)'}`,
+                borderRadius: '4px',
+                backgroundColor: darkTheme ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.02)',
+                color: darkTheme ? '#e0d5c4' : '#333',
+              }}
+              onInput={(e) => {
+                // Auto-expand on input
+                e.target.style.height = 'auto';
+                e.target.style.height = `${e.target.scrollHeight}px`;
+              }}
+            />
+            <AIFullCommentProcessor
+              fullText={fullCommentText}
+              darkTheme={darkTheme}
+              onProcessed={(structuredContent) => {
+                setComentariuForm({ ...comentariuForm, content: structuredContent });
+                setFullCommentText(''); // goliște textul
+                // resetează înălțimea la dimensiunea inițială
+                const el = document.getElementById('comentariu-full-text');
+                if (el) {
+                  el.style.height = '200px';
+                }
+              }}
+              onStatus={setMessage}
+            />
+          </div>
+
+          <div className="admin-form-group">
+            <label htmlFor="comentariu-content">Text structurat (paragrafe cu formatare) *</label>
             <RichTextEditor
               value={comentariuForm.content}
               onChange={(content) => setComentariuForm({ ...comentariuForm, content })}
