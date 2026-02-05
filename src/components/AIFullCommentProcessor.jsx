@@ -1,4 +1,5 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useEffect, useRef, useCallback } from 'react';
+import { extractConceptFromParagraph, searchCopyrightFreeImage, downloadAndUploadImage, generateBatchImagesFromJSON } from '../utils/imageSearch';
 
 const COLOR_PALETTE = [
   { name: 'Galben deschis', value: '#ffd591' },
@@ -96,6 +97,8 @@ const AIFullCommentProcessor = ({ fullText, onProcessed, darkTheme, onStatus }) 
   const [formatTheme, setFormatTheme] = useState('highlight'); // 'highlight', 'underline', 'textColor'
   const [processing, setProcessing] = useState(false);
   const [cubeSpinning, setCubeSpinning] = useState(false);
+  const lastProcessedTextRef = useRef('');
+  const processingTimeoutRef = useRef(null);
 
   const groqApiKey = import.meta.env.VITE_GROQ_API_KEY;
   const groqApiKeyBackup = import.meta.env.VITE_GROQ_API_KEY_1;
@@ -124,7 +127,7 @@ const AIFullCommentProcessor = ({ fullText, onProcessed, darkTheme, onStatus }) 
     });
   };
 
-  const handleProcess = async () => {
+  const handleProcess = useCallback(async () => {
     if (processing) return;
     if (!fullText || !fullText.trim()) {
       setFeedback('error', 'Adaugă textul complet al comentariului înainte să rulezi procesarea.');
@@ -140,6 +143,14 @@ const AIFullCommentProcessor = ({ fullText, onProcessed, darkTheme, onStatus }) 
       setFeedback('error', 'Selectează cel puțin o culoare (maxim 2).');
       return;
     }
+
+    // Modele alternative pentru fallback
+    const modelCandidates = [
+      'moonshotai/kimi-k2-instruct-0905',
+      'llama-3.2-90b-text-preview',
+      'llama-3.2-11b-text-preview',
+      'llama-3.1-8b-instant'
+    ];
 
     const prompt = `Procesează următorul comentariu literar complet și împarte-l în paragrafe structurate cu subtitluri și formatare.
 
@@ -166,122 +177,322 @@ REGULI ABSOLUTE:
 - Italic pentru citate sau fragmente speciale (max 3-5 per paragraf)
 - Highlight/underline/textColor pentru fragmente esențiale (max 8-12 per paragraf)
 
-Format JSON pentru evidențiere (folosește colorKey; NU returna substring-uri gen \"ana\" din \"analitic\"):
-- highlight / underline / textColors: [{ "text": "fragment EXACT (cuvânt/expresie întreagă)", "colorKey": 0 }]
-- bold / italic: ["cuvânt/expresie întreagă (nu substring)"]
+IMPORTANT: Returnează DOAR JSON valid, fără markdown, fără explicații, fără markdown code blocks.
 
-Returnează DOAR JSON:
+Format JSON obligatoriu:
 {
-  "formatMethod": "highlight", // sau "underline" sau "textColor"
+  "formatMethod": "highlight",
   "paragraphs": [
     {
       "title": "Subtitlu paragraf",
       "text": "Textul complet al paragrafului...",
-      "highlights": [{ "text": "fragment exact 1", "colorKey": 0 }, { "text": "fragment exact 2", "colorKey": 1 }], // doar dacă formatMethod este "highlight"
-      "underlines": [{ "text": "fragment exact 1", "colorKey": 0 }], // doar dacă formatMethod este "underline"
-      "textColors": [{ "text": "fragment exact 1", "colorKey": 0 }], // doar dacă formatMethod este "textColor"
-      "bold": ["termen cheie 1", "termen cheie 2"],
+      "highlights": [{ "text": "fragment exact 1", "colorKey": 0 }],
+      "bold": ["termen cheie 1"],
       "italic": ["citat sau fragment special"]
     }
   ]
 }`.trim();
 
-    const body = {
-      model: 'moonshotai/kimi-k2-instruct-0905',
+    const buildRequestBody = (model) => ({
+      model,
       messages: [
         {
           role: 'system',
-          content: 'Răspunde DOAR cu JSON valid în câmpul content. Nu folosi reasoning. Nu adăuga text, explicații sau ```. Răspunsul trebuie să fie direct JSON valid.',
+          content: 'Ești un asistent care procesează comentarii literare. Returnează DOAR JSON valid, fără markdown, fără text suplimentar, fără ```json```. Răspunsul trebuie să fie direct JSON valid care poate fi parsabil.',
         },
         { role: 'user', content: prompt },
       ],
       temperature: 0.3,
-      max_tokens: 4000,
-    };
+      max_tokens: 3000,
+      response_format: { type: 'json_object' }, // Forțează JSON
+    });
 
     setProcessing(true);
     setCubeSpinning(true);
     setFeedback('', '');
 
     let lastError = null;
+    const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-    for (const key of groqKeys) {
-      try {
-        const res = await fetch(groqApiUrl, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${key}`,
-          },
-          body: JSON.stringify(body),
-        });
-
-        if (!res.ok) {
-          const text = await res.text().catch(() => '');
-          lastError = text || `Eroare ${res.status}`;
-          continue;
+    // Fallback: împarte textul manual în paragrafe dacă AI-ul eșuează
+    const createFallbackContent = (text) => {
+      if (!text || !text.trim()) return [];
+      
+      // Împarte textul la paragrafe (linii goale sau puncte urmate de majuscule)
+      const paragraphs = text
+        .split(/\n\s*\n|\.\s+(?=[A-ZĂÂÎȘȚ])/)
+        .map(p => p.trim())
+        .filter(p => p.length > 20); // Filtrează paragrafe prea scurte
+      
+      if (paragraphs.length === 0) {
+        // Dacă nu găsește paragrafe, împarte la propoziții lungi
+        const sentences = text.match(/[^.!?]+[.!?]+/g) || [];
+        const chunkSize = Math.ceil(sentences.length / 4);
+        const chunks = [];
+        for (let i = 0; i < sentences.length; i += chunkSize) {
+          chunks.push(sentences.slice(i, i + chunkSize).join(' ').trim());
         }
+        return chunks.map((chunk, idx) => ({
+          type: 'paragraph',
+          title: `Paragraf ${idx + 1}`,
+          text: chunk,
+          highlights: [],
+          underlines: [],
+          formats: [],
+        }));
+      }
+      
+      return paragraphs.map((para, idx) => ({
+        type: 'paragraph',
+        title: `Paragraf ${idx + 1}`,
+        text: para,
+        highlights: [],
+        underlines: [],
+        formats: [],
+      }));
+    };
 
-        const rawText = await res.text();
-        console.warn('AI raw response (debug):', rawText);
+    // Încearcă cu fiecare model
+    for (const model of modelCandidates) {
+      for (const key of groqKeys) {
+        // Retry logic pentru rate limiting
+        let attempts = 0;
+        const maxAttempts = 2; // Redus la 2 pentru a nu consuma prea multe tokeni
+        
+        while (attempts < maxAttempts) {
+          attempts += 1;
+          try {
+            const body = buildRequestBody(model);
+            console.log(`[AI] Trying model: ${model}, attempt: ${attempts}, key: ${key.substring(0, 10)}...`);
+            
+            const res = await fetch(groqApiUrl, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${key}`,
+              },
+              body: JSON.stringify(body),
+            });
 
-        let data;
-        try {
-          data = JSON.parse(rawText);
-        } catch (err) {
-          lastError = 'Răspuns API nu este JSON parsabil.';
-          continue;
-        }
+          if (!res.ok) {
+            const text = await res.text().catch(() => '');
+            let errorData = null;
+            
+            // Încearcă să parseze eroarea ca JSON
+            try {
+              errorData = text ? JSON.parse(text) : null;
+            } catch (_) {
+              // Nu e JSON, folosește textul direct
+            }
 
-        const rawContent = data?.choices?.[0]?.message?.content || '';
-        if (!rawContent || typeof rawContent !== 'string') {
-          lastError = 'Răspuns AI este gol.';
-          continue;
-        }
-        console.warn('AI raw content (debug):', rawContent);
+            // Extrage mesajul de eroare
+            const errorMessage = errorData?.error?.message || text || `Eroare ${res.status}`;
+            
+            // Gestionează rate limiting (429 sau rate_limit_exceeded)
+            if (res.status === 429 || errorMessage.includes('rate_limit') || errorMessage.includes('Rate limit')) {
+              // Extrage timpul de așteptare din mesaj
+              const retryMatch = errorMessage.match(/try again in ([\d.]+)\s*(ms|s|second|seconds)/i) || 
+                                errorMessage.match(/([\d.]+)\s*(ms|s|second|seconds)/i);
+              
+              let retryMs = 2000; // default 2 secunde
+              if (retryMatch) {
+                const value = parseFloat(retryMatch[1]);
+                const unit = retryMatch[2]?.toLowerCase();
+                retryMs = unit === 'ms' || unit === 'millisecond' ? Math.ceil(value) : Math.ceil(value * 1000);
+                // Adaugă un buffer de 500ms pentru siguranță
+                retryMs += 500;
+              } else {
+                // Dacă nu găsește timp, folosește un delay progresiv
+                retryMs = 1000 * attempts;
+              }
 
-        let effectiveContent = rawContent;
-        if (!effectiveContent.trim()) {
-          const reasoning = data?.choices?.[0]?.message?.reasoning;
-          if (reasoning && typeof reasoning === 'string') {
-            effectiveContent = reasoning;
+              lastError = `Limită de solicitări depășită. Aștept ${Math.ceil(retryMs / 1000)} secunde...`;
+              setFeedback('info', lastError);
+
+              // Așteaptă înainte de retry
+              if (attempts < maxAttempts) {
+                await sleep(retryMs);
+                continue; // Reîncearcă
+              } else {
+                lastError = 'Limită de solicitări depășită. Te rog încearcă mai târziu.';
+                break; // Nu mai reîncearcă
+              }
+            }
+
+            // Alte erori
+            if (res.status === 401) {
+              lastError = 'Eroare de autentificare. Verifică cheia API Groq.';
+            } else if (res.status === 404) {
+              lastError = 'Endpoint-ul API nu a fost găsit.';
+            } else {
+              lastError = errorMessage;
+            }
+
+            // Pentru erori non-rate-limit, treci la următoarea cheie
+            if (attempts >= maxAttempts || res.status !== 429) {
+              break;
+            }
+            continue;
           }
-        }
 
-        if (!effectiveContent.trim()) {
-          const reasoning = data?.choices?.[0]?.message?.reasoning;
-          if (reasoning && typeof reasoning === 'string') {
-            const candidate = reasoning.match(/\{[\s\S]*\}/);
-            if (candidate && candidate[0]) {
-              effectiveContent = candidate[0];
+          const rawText = await res.text();
+          console.warn('AI raw response (debug):', rawText);
+
+          let data;
+          try {
+            data = JSON.parse(rawText);
+          } catch (err) {
+            lastError = 'Răspuns API nu este JSON parsabil.';
+            if (attempts < maxAttempts) {
+              await sleep(1000);
+              continue;
+            }
+            break;
+          }
+
+          const rawContent = data?.choices?.[0]?.message?.content || '';
+          if (!rawContent || typeof rawContent !== 'string') {
+            lastError = 'Răspuns AI este gol.';
+            if (attempts < maxAttempts) {
+              await sleep(1000);
+              continue;
+            }
+            break;
+          }
+          console.warn('AI raw content (debug):', rawContent);
+
+          let effectiveContent = rawContent;
+          if (!effectiveContent.trim()) {
+            const reasoning = data?.choices?.[0]?.message?.reasoning;
+            if (reasoning && typeof reasoning === 'string') {
+              effectiveContent = reasoning;
             }
           }
-        }
 
-        let parsed;
-        try {
-          parsed = safeParseJson(effectiveContent);
-        } catch (err) {
-          lastError = 'Răspuns AI nu este JSON valid.';
-          continue;
-        }
+          if (!effectiveContent.trim()) {
+            const reasoning = data?.choices?.[0]?.message?.reasoning;
+            if (reasoning && typeof reasoning === 'string') {
+              const candidate = reasoning.match(/\{[\s\S]*\}/);
+              if (candidate && candidate[0]) {
+                effectiveContent = candidate[0];
+              }
+            }
+          }
 
-        if (!parsed?.paragraphs || !Array.isArray(parsed.paragraphs)) {
-          lastError = 'Răspuns AI nu conține câmpul "paragraphs".';
-          continue;
-        }
+          let parsed;
+          try {
+            parsed = safeParseJson(effectiveContent);
+            console.log('[AI] Parsed JSON successfully:', { 
+              hasParagraphs: !!parsed?.paragraphs, 
+              paragraphsCount: parsed?.paragraphs?.length 
+            });
+          } catch (err) {
+            console.error('[AI] JSON parse error:', err, 'Content:', effectiveContent.substring(0, 200));
+            lastError = `Răspuns AI nu este JSON valid: ${err.message}`;
+            if (attempts < maxAttempts) {
+              await sleep(1000);
+              continue;
+            }
+            // Încearcă următorul model
+            break;
+          }
 
-        // Convert to RichTextEditor format
-        const formatMethod = parsed.formatMethod || 'highlight';
-        const structuredContent = parsed.paragraphs.map((para) => {
-          const block = {
-            type: 'paragraph',
-            title: para.title || '',
-            text: para.text || '',
-            highlights: [],
-            underlines: [],
-            formats: [],
-          };
+          if (!parsed || typeof parsed !== 'object') {
+            lastError = 'Răspuns AI nu este un obiect JSON valid.';
+            if (attempts < maxAttempts) {
+              await sleep(1000);
+              continue;
+            }
+            break;
+          }
+
+          if (!parsed?.paragraphs || !Array.isArray(parsed.paragraphs) || parsed.paragraphs.length === 0) {
+            console.warn('[AI] Invalid paragraphs structure:', parsed);
+            lastError = 'Răspuns AI nu conține paragrafe valide.';
+            if (attempts < maxAttempts) {
+              await sleep(1000);
+              continue;
+            }
+            // Fallback: încearcă să creeze paragrafe manual
+            console.log('[AI] Using fallback: creating paragraphs manually');
+            const fallbackContent = createFallbackContent(fullText);
+            if (fallbackContent.length > 0) {
+              lastProcessedTextRef.current = fullText.trim();
+              onProcessed(fallbackContent);
+              setFeedback('success', 'Comentariul a fost procesat cu fallback manual (fără formatare AI).');
+              setProcessing(false);
+              setTimeout(() => setCubeSpinning(false), 800);
+              return;
+            }
+            break;
+          }
+
+          // Convert to RichTextEditor format
+          const formatMethod = parsed.formatMethod || 'highlight';
+          
+          // First, extract keywords and search for images for each paragraph
+          setFeedback('info', 'Extragem concepte pentru imagini...');
+          
+          // Reset image cache for new processing
+          const { resetImageCache } = await import('../utils/imageSearch');
+          resetImageCache();
+          
+          // Track used keywords to avoid duplicates
+          const usedKeywords = new Set();
+          
+          // Step 1: Extract all concepts from all paragraphs first
+          const conceptsWithParagraphs = await Promise.all(
+            parsed.paragraphs.map(async (para, paraIndex) => {
+              const concept = await extractConceptFromParagraph(para.text || '', para.title || '', usedKeywords);
+              if (concept) {
+                usedKeywords.add(concept);
+              }
+              return { para, paraIndex, concept };
+            })
+          );
+          
+          // Step 2: Try batch generation with Hugging Face Spaces (if configured)
+          const hfSpaceUrl = import.meta.env.VITE_HF_SPACE_URL;
+          let batchImageMap = null;
+          
+          if (hfSpaceUrl) {
+            try {
+              setFeedback('info', 'Generăm imagini cu Hugging Face Spaces...');
+              const concepts = conceptsWithParagraphs
+                .map(item => item.concept)
+                .filter(c => c && c.trim());
+              
+              if (concepts.length > 0) {
+                const jsonInput = {
+                  concepts: concepts,
+                  type: 'icon',
+                  style: 'minimal',
+                  transparent: true
+                };
+                
+                batchImageMap = await generateBatchImagesFromJSON(jsonInput);
+                if (batchImageMap) {
+                  console.log(`[HF Batch] Generated ${Object.keys(batchImageMap).length} images`);
+                }
+              }
+            } catch (hfError) {
+              console.warn('[HF Batch] Error in batch generation, falling back to individual search:', hfError);
+            }
+          }
+          
+          // Step 3: Process paragraphs and assign images
+          setFeedback('info', 'Procesăm paragrafe și asignăm imagini...');
+          
+          const structuredContent = await Promise.all(
+          conceptsWithParagraphs.map(async ({ para, paraIndex, concept }) => {
+            const block = {
+              type: 'paragraph',
+              title: para.title || '',
+              text: para.text || '',
+              highlights: [],
+              underlines: [],
+              formats: [],
+            };
 
           const baseText = block.text;
           // folosit doar pentru evidențiere (nu blocăm bold/italic să se suprapună peste highlight)
@@ -356,23 +567,146 @@ Returnează DOAR JSON:
             });
           }
 
-          return block;
-        });
+          // Assign image to block if we have a concept
+          if (concept) {
+            console.log(`[Image] Extracted concept for paragraph "${block.title}": ${concept}`);
+            
+            try {
+              let imageUrl = null;
+              
+              // First, try to use batch-generated image from HF Spaces
+              if (batchImageMap && batchImageMap[concept]) {
+                imageUrl = batchImageMap[concept];
+                console.log(`[Image] Using batch-generated image from HF Spaces for "${concept}"`);
+              }
+              
+              // If no batch image, search individually (will try HF Spaces first, then fallback to others)
+              if (!imageUrl) {
+                imageUrl = await searchCopyrightFreeImage(concept, { 
+                  type: 'icon', 
+                  perPage: 5, // Fetch more results for variety
+                  resultIndex: paraIndex, // Rotate through results
+                  useHuggingFace: true // Try HF Spaces first
+                });
+              }
+              
+              if (imageUrl) {
+                // Skip zip files for now (would need extraction)
+                // In the future, we could add JSZip to extract images from zip
+                if (imageUrl.endsWith('.zip') || imageUrl.includes('blob:') || imageUrl.includes('application/zip')) {
+                  console.warn(`[Image] Received zip file for "${concept}" - skipping (requires extraction)`);
+                  // Could implement zip extraction here with JSZip
+                } else {
+                  // Download and upload to Cloudinary
+                  const cloudinaryUrl = await downloadAndUploadImage(imageUrl, `${concept}_${paraIndex}`);
+                  if (cloudinaryUrl) {
+                    // Add image to block (default alignment: left, mark as removedBg for transparent)
+                    block.image = {
+                      url: cloudinaryUrl,
+                      alignment: 'left',
+                      removedBg: true, // Mark as transparent/no background
+                    };
+                    console.log(`[Image] Added relevant image for concept "${concept}" (paragraph ${paraIndex + 1})`);
+                  } else {
+                    console.warn(`[Image] Failed to upload image for concept "${concept}"`);
+                  }
+                }
+              } else {
+                console.warn(`[Image] No image found for concept "${concept}"`);
+              }
+            } catch (error) {
+              console.warn(`[Image] Error searching image for concept "${concept}":`, error);
+              // Continue without image if search fails
+            }
+          } else {
+            console.warn(`[Image] No concept extracted for paragraph "${block.title}"`);
+          }
 
-        onProcessed(structuredContent);
-        setFeedback('success', 'Comentariul a fost procesat și formatat cu succes!');
+          return block;
+        })
+        );
+
+          // Mark text as processed
+          lastProcessedTextRef.current = fullText.trim();
+          
+          onProcessed(structuredContent);
+          setFeedback('success', 'Comentariul a fost procesat și formatat cu succes!');
+          setProcessing(false);
+          setTimeout(() => setCubeSpinning(false), 800);
+          return; // Succes - iesim din toate loop-urile
+        } catch (err) {
+          lastError = err?.message || 'Eroare necunoscută';
+          if (attempts < maxAttempts) {
+            await sleep(1000 * attempts);
+            continue;
+          }
+          break;
+        }
+      } // end while attempts
+      
+        // Dacă am ajuns aici și am eroare, treci la următoarea cheie
+        if (lastError && lastError.includes('Limită de solicitări')) {
+          // Pentru rate limit, nu mai încerca alte chei
+          break;
+        }
+      } // end for keys
+      
+      // Dacă am reușit cu un model, nu mai încerca altele
+      if (lastProcessedTextRef.current === fullText.trim()) {
+        return;
+      }
+    } // end for models
+
+    // Dacă toate modelele au eșuat, folosește fallback manual
+    if (!lastProcessedTextRef.current || lastProcessedTextRef.current !== fullText.trim()) {
+      console.log('[AI] All models failed, using manual fallback');
+      const fallbackContent = createFallbackContent(fullText);
+      if (fallbackContent.length > 0) {
+        lastProcessedTextRef.current = fullText.trim();
+        onProcessed(fallbackContent);
+        setFeedback('info', 'Comentariul a fost procesat manual (AI-ul nu a putut genera formatare).');
         setProcessing(false);
         setTimeout(() => setCubeSpinning(false), 800);
         return;
-      } catch (err) {
-        lastError = err?.message || 'Eroare necunoscută';
       }
     }
 
-    setFeedback('error', `Nu am putut procesa comentariul. ${lastError || ''}`);
+    setFeedback('error', `Nu am putut procesa comentariul. ${lastError || 'Eroare necunoscută'}`);
     setProcessing(false);
     setTimeout(() => setCubeSpinning(false), 800);
-  };
+  }, [fullText, selectedColors, groqKeys, groqApiUrl, onProcessed, onStatus]);
+
+  // Auto-generate when text changes (debounced)
+  useEffect(() => {
+    // Clear any pending timeout
+    if (processingTimeoutRef.current) {
+      clearTimeout(processingTimeoutRef.current);
+    }
+
+    // Skip if text is empty or same as last processed
+    if (!fullText || !fullText.trim() || fullText.trim() === lastProcessedTextRef.current) {
+      return;
+    }
+
+    // Skip if already processing
+    if (processing) {
+      return;
+    }
+
+    // Debounce: wait 2 seconds after user stops typing
+    processingTimeoutRef.current = setTimeout(() => {
+      // Check again if text is still valid and not already processed
+      if (fullText && fullText.trim() && fullText.trim() !== lastProcessedTextRef.current && !processing) {
+        handleProcess();
+      }
+    }, 2000);
+
+    return () => {
+      if (processingTimeoutRef.current) {
+        clearTimeout(processingTimeoutRef.current);
+      }
+    };
+  }, [fullText, processing, handleProcess]);
 
   return (
     <div className={`ai-formatting-card ${darkTheme ? 'dark-theme' : ''}`}>
@@ -380,108 +714,8 @@ Returnează DOAR JSON:
         <div className="ai-formatting-info">
           <div className="ai-formatting-title">Procesează comentariu complet cu AI</div>
           <div className="ai-formatting-subtitle">
-            AI-ul va împărți textul în paragrafe cu subtitluri și va aplica formatare consistentă.
-          </div>
-        </div>
-        <div
-          className={`ai-cube-wrapper ${cubeSpinning ? 'spinning' : ''} ${processing ? 'processing' : ''}`}
-          onClick={!processing ? handleProcess : undefined}
-          style={{
-            cursor: processing ? 'not-allowed' : 'pointer',
-            opacity: processing ? 0.6 : 1,
-          }}
-          title={processing ? 'Se procesează...' : 'Procesează comentariul complet'}
-        >
-          <div className="ai-cube-3d">
-            <div className="ai-cube-inner">
-              <div
-                className="ai-cube-side ai-cube-front"
-                style={{
-                  background: darkTheme
-                    ? 'linear-gradient(135deg, #a97c50 0%, #8b6b42 100%)'
-                    : 'linear-gradient(135deg, #ffd591 0%, #ffb366 100%)',
-                }}
-              >
-                <div className="dice-dots dice-6">
-                  <span className="dot"></span>
-                  <span className="dot"></span>
-                  <span className="dot"></span>
-                  <span className="dot"></span>
-                  <span className="dot"></span>
-                  <span className="dot"></span>
-                </div>
-              </div>
-              <div
-                className="ai-cube-side ai-cube-back"
-                style={{
-                  background: darkTheme
-                    ? 'linear-gradient(135deg, #8b6b42 0%, #6d5233 100%)'
-                    : 'linear-gradient(135deg, #ffb366 0%, #ff9f33 100%)',
-                }}
-              >
-                <div className="dice-dots dice-1">
-                  <span className="dot"></span>
-                </div>
-              </div>
-              <div
-                className="ai-cube-side ai-cube-right"
-                style={{
-                  background: darkTheme
-                    ? 'linear-gradient(135deg, #8b6b42 0%, #6d5233 100%)'
-                    : 'linear-gradient(135deg, #ffb366 0%, #ff9f33 100%)',
-                }}
-              >
-                <div className="dice-dots dice-3">
-                  <span className="dot"></span>
-                  <span className="dot"></span>
-                  <span className="dot"></span>
-                </div>
-              </div>
-              <div
-                className="ai-cube-side ai-cube-left"
-                style={{
-                  background: darkTheme
-                    ? 'linear-gradient(135deg, #a97c50 0%, #8b6b42 100%)'
-                    : 'linear-gradient(135deg, #ffd591 0%, #ffb366 100%)',
-                }}
-              >
-                <div className="dice-dots dice-4">
-                  <span className="dot"></span>
-                  <span className="dot"></span>
-                  <span className="dot"></span>
-                  <span className="dot"></span>
-                </div>
-              </div>
-              <div
-                className="ai-cube-side ai-cube-top"
-                style={{
-                  background: darkTheme
-                    ? 'linear-gradient(135deg, #a97c50 0%, #8b6b42 100%)'
-                    : 'linear-gradient(135deg, #ffd591 0%, #ffb366 100%)',
-                }}
-              >
-                <div className="dice-dots dice-5">
-                  <span className="dot"></span>
-                  <span className="dot"></span>
-                  <span className="dot"></span>
-                  <span className="dot"></span>
-                  <span className="dot"></span>
-                </div>
-              </div>
-              <div
-                className="ai-cube-side ai-cube-bottom"
-                style={{
-                  background: darkTheme
-                    ? 'linear-gradient(135deg, #8b6b42 0%, #6d5233 100%)'
-                    : 'linear-gradient(135deg, #ffb366 0%, #ff9f33 100%)',
-                }}
-              >
-                <div className="dice-dots dice-2">
-                  <span className="dot"></span>
-                  <span className="dot"></span>
-                </div>
-              </div>
-            </div>
+            AI-ul va împărți textul în paragrafe cu subtitluri, va aplica formatare consistentă și va adăuga imagini relevante automat.
+            {processing && <span style={{ display: 'block', marginTop: '8px', color: darkTheme ? '#ffd591' : '#ff9f33' }}>Se procesează...</span>}
           </div>
         </div>
       </div>
