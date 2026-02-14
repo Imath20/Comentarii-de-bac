@@ -34,7 +34,7 @@ export function TabsProvider({ children }) {
 
   const [tabOpeningEnabled, setTabOpeningEnabled] = useState(() => {
     const stored = localStorage.getItem('tabs.openingEnabled');
-    return stored !== null ? stored === 'false' : false; // Default to disabled
+    return stored === 'true'; // Default off: doar Ctrl+G activează tab-urile
   });
 
   const [notification, setNotification] = useState(null);
