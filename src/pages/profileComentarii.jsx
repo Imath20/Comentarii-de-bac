@@ -5,19 +5,22 @@ import Layout from '../assets/Layout';
 import { ArrowLeft, FileText, Image, Trash2 } from 'lucide-react';
 import { getUserComments, addUserComment, deleteUserComment } from '../firebase/userCommentsService';
 import UserAddCommentModal from '../components/UserAddCommentModal';
+import UserCommentViewModal from '../components/UserCommentViewModal';
 import '../styles/style.scss';
 import '../styles/comentarii.scss';
 import '../styles/profile.scss';
 import '../styles/userAddCommentModal.scss';
+import '../styles/userCommentViewModal.scss';
 
 const ProfileComentarii = () => {
-  const { currentUser } = useAuth();
+  const { currentUser, userProfile } = useAuth();
   const navigate = useNavigate();
   const [darkTheme, setDarkTheme] = useState(() => localStorage.getItem('theme') === 'dark');
   const [userComments, setUserComments] = useState([]);
   const [commentsLoading, setCommentsLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [viewComment, setViewComment] = useState(null);
   const [deletingId, setDeletingId] = useState(null);
   const [scrolled, setScrolled] = useState(false);
 
@@ -75,8 +78,14 @@ const ProfileComentarii = () => {
     const q = searchTerm.trim().toLowerCase();
     if (!q) return userComments;
     return userComments.filter((c) => {
-      if (c.type === 'text') return c.content.toLowerCase().includes(q);
-      return true; // images - no text to search
+      const searchIn = [
+        c.content || '',
+        c.titlu || '',
+        c.autor || '',
+        c.descriere || '',
+        c.categorie || '',
+      ].join(' ').toLowerCase();
+      return searchIn.includes(q);
     });
   }, [userComments, searchTerm]);
 
@@ -164,32 +173,41 @@ const ProfileComentarii = () => {
               {filteredComments.map((comment) => (
                 <div
                   key={comment.id}
-                  className={`comentarii-card profile-comentarii-card ${darkTheme ? 'dark-theme' : ''}`}
+                  role="button"
+                  tabIndex={0}
+                  className={`comentarii-card profile-comentarii-card profile-comentarii-card-clickable ${darkTheme ? 'dark-theme' : ''}`}
+                  onClick={() => setViewComment(comment)}
+                  onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setViewComment(comment); } }}
                 >
                   <div className={`comentarii-card-bg ${darkTheme ? 'dark-theme' : ''}`} />
                   <div className="comentarii-card-content">
                     <div className={`comentarii-card-profil profile-comentarii-badge ${darkTheme ? 'dark-theme' : ''}`}>
-                      {comment.type === 'text' ? (
-                        <><FileText size={14} /> Text</>
-                      ) : (
-                        <><Image size={14} /> Imagine</>
-                      )}
+                      {comment.plan === 'premium' ? 'Premium' : comment.plan === 'pro' ? 'Pro' : 'GRATIS'}
                     </div>
-                    {comment.type === 'text' ? (
-                      <div className="comentarii-card-description profile-comentarii-card-text">
-                        {comment.content}
+                    <div className="comentarii-card-title profile-comentarii-card-title">
+                      {comment.titlu || (comment.type === 'text' ? (comment.content?.slice(0, 60) + (comment.content?.length > 60 ? '...' : '')) : 'Imagine')}
+                    </div>
+                    <div className="comentarii-card-description profile-comentarii-card-text">
+                      {comment.autor || comment.descriere
+                        ? `${comment.autor || ''}${comment.descriere ? ` — ${comment.descriere}` : ''}`
+                        : ''}
+                      {comment.type === 'text' && !comment.autor && !comment.descriere ? comment.content : ''}
+                    </div>
+                    {comment.type === 'image' && (
+                      <div className="profile-comentarii-card-image-wrap">
+                        <img src={comment.content} alt="Comentariu" className="profile-comentarii-card-image" />
                       </div>
-                    ) : (
-                      <>
-                        <div className="profile-comentarii-card-image-wrap">
-                          <img src={comment.content} alt="Comentariu" className="profile-comentarii-card-image" />
-                        </div>
-                      </>
                     )}
-                    <div className="comentarii-card-footer">
+                    <div className="comentarii-card-footer profile-comentarii-card-footer">
                       <div className={`comentarii-card-date ${darkTheme ? 'dark-theme' : ''}`}>
-                        {formatDate(comment.createdAt)}
+                        {comment.autor || formatDate(comment.createdAt)}
                       </div>
+                      <div className="profile-comentarii-footer-right">
+                        {comment.categorie && (
+                          <div className={`comentarii-card-number ${darkTheme ? 'dark-theme' : ''}`}>
+                            {comment.categorie}
+                          </div>
+                        )}
                       <button
                         type="button"
                         onClick={(e) => { e.stopPropagation(); handleDeleteComment(comment.id); }}
@@ -203,6 +221,7 @@ const ProfileComentarii = () => {
                           <Trash2 size={18} />
                         )}
                       </button>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -238,6 +257,15 @@ const ProfileComentarii = () => {
         onClose={() => setIsModalOpen(false)}
         onSubmit={handleAddComment}
         darkTheme={darkTheme}
+        userDisplayName={userProfile?.displayName || currentUser?.displayName}
+      />
+
+      <UserCommentViewModal
+        comment={viewComment}
+        isOpen={!!viewComment}
+        onClose={() => setViewComment(null)}
+        darkTheme={darkTheme}
+        formatDate={formatDate}
       />
     </Layout>
   );

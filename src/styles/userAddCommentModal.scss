@@ -30,10 +30,56 @@
   border: 1px solid rgba(255, 179, 71, 0.3);
   animation: userAddCommentSlideIn 0.25s ease;
 
+  // Custom scrollbar - light theme
+  // scrollbar-width: thin;
+  scrollbar-width: none;
+  scrollbar-color: rgba(169, 124, 80, 0.5) rgba(255, 213, 145, 0.15);
+
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: rgba(255, 213, 145, 0.12);
+    border-radius: 4px;
+    margin: 4px 0;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba(169, 124, 80, 0.45);
+    border-radius: 4px;
+
+    &:hover {
+      background: rgba(169, 124, 80, 0.65);
+    }
+
+    &:active {
+      background: rgba(122, 58, 0, 0.6);
+    }
+  }
+
   &.dark-theme {
     background: rgba(47, 24, 0, 0.98);
     border-color: rgba(255, 213, 145, 0.2);
     box-shadow: 0 12px 48px rgba(0, 0, 0, 0.5);
+
+    scrollbar-color: rgba(255, 213, 145, 0.4) rgba(255, 213, 145, 0.08);
+
+    &::-webkit-scrollbar-track {
+      background: rgba(255, 213, 145, 0.08);
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: rgba(255, 213, 145, 0.35);
+
+      &:hover {
+        background: rgba(255, 213, 145, 0.5);
+      }
+
+      &:active {
+        background: rgba(255, 213, 145, 0.65);
+      }
+    }
   }
 }
 
@@ -92,8 +138,36 @@
   }
 }
 
+.user-add-comment-modal-expanded {
+  max-width: 640px;
+}
+
+.user-add-comment-form-row {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+
+  .admin-form-group {
+    flex: 1;
+    min-width: 200px;
+  }
+}
+
 .user-add-comment-form {
   padding: 0 1.5rem 1.5rem;
+
+  .admin-input,
+  .admin-select {
+    .user-add-comment-modal.dark-theme & {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 213, 145, 0.3);
+      color: #ffd591;
+
+      &::placeholder {
+        color: rgba(255, 213, 145, 0.5);
+      }
+    }
+  }
 
   .admin-form-group {
     margin-bottom: 1.25rem;
@@ -299,6 +373,7 @@
   border: 1px solid rgba(122, 58, 0, 0.3);
   background: transparent;
   color: #7a3a00;
+  max-height: 3rem;
   cursor: pointer;
   transition: all 0.2s;
 
@@ -322,6 +397,7 @@
   gap: 0.5rem;
   padding: 0.75rem 1.5rem !important;
   width: auto !important;
+  margin-bottom: 0px;
 }
 
 .user-add-comment-spinner {

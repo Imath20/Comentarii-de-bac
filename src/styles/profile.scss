@@ -297,6 +297,14 @@
   &:hover {
     cursor: default;
   }
+
+  &.profile-comentarii-card-clickable {
+    cursor: pointer;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
 }
 
 .profile-comentarii-badge {
@@ -318,7 +326,7 @@
 }
 
 .profile-comentarii-card-image-wrap {
-  flex: 1;
+  // flex: 1;
   min-height: 120px;
   display: flex;
   align-items: center;
@@ -333,9 +341,16 @@
   border-radius: 8px;
 }
 
-.profile-comentarii-card .comentarii-card-footer {
+.profile-comentarii-card .comentarii-card-footer.profile-comentarii-card-footer {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.profile-comentarii-footer-right {
+  display: flex;
   align-items: center;
   gap: 0.5rem;
 }

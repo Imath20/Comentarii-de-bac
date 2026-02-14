@@ -20,6 +20,12 @@ export async function getUserComments(userId) {
         id: docSnap.id,
         type: data.type || 'text',
         content: data.content || '',
+        titlu: data.titlu || '',
+        autor: data.autor || '',
+        categorie: data.categorie || '',
+        tip: data.tip || 'general',
+        descriere: data.descriere || '',
+        plan: data.plan || 'free',
         createdAt: data.createdAt || '',
       };
     });
@@ -32,7 +38,7 @@ export async function getUserComments(userId) {
 /**
  * Add a personal comment for the user
  * @param {string} userId - The user's UID
- * @param {Object} commentData - { type: 'text' | 'image', content: string }
+ * @param {Object} commentData - { type, content, titlu?, autor?, categorie?, tip?, descriere?, plan? }
  * @returns {Promise<string>} The new comment's ID
  */
 export async function addUserComment(userId, commentData) {
@@ -48,6 +54,12 @@ export async function addUserComment(userId, commentData) {
     const dataToSave = {
       type: commentData.type,
       content: commentData.content.trim(),
+      titlu: commentData.titlu || '',
+      autor: commentData.autor || '',
+      categorie: commentData.categorie || '',
+      tip: commentData.tip || 'general',
+      descriere: commentData.descriere || '',
+      plan: commentData.plan || 'free',
       createdAt: new Date().toISOString(),
     };
 

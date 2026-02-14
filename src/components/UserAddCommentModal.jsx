@@ -1,10 +1,29 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { FileText, Image, Plus, X } from 'lucide-react';
 import { uploadImageToCloudinary } from '../utils/cloudinary';
+import '../styles/admin.scss';
 import '../styles/userAddCommentModal.scss';
 
-const UserAddCommentModal = ({ isOpen, onClose, onSubmit, darkTheme }) => {
+const CATEGORII = [
+  'poezie', 'roman', 'comedie', 'basm', 'nuvela',
+  'critica', 'memorii', 'poveste', 'schita',
+];
+
+const TIP_COMENTARIU_OPTIONS = [
+  { value: 'general', label: 'Comentariu general' },
+  { value: 'tema-viziune', label: 'Tema și viziunea' },
+  { value: 'caracterizare-personaj', label: 'Caracterizarea personajului' },
+  { value: 'relatie-doua-personaje', label: 'Relația dintre două personaje' },
+];
+
+const UserAddCommentModal = ({ isOpen, onClose, onSubmit, darkTheme, userDisplayName }) => {
   const [addMode, setAddMode] = useState('text');
+  const [titlu, setTitlu] = useState('');
+  const [autor, setAutor] = useState('');
+  const [categorie, setCategorie] = useState('');
+  const [tip, setTip] = useState('general');
+  const [descriere, setDescriere] = useState('');
+  const [plan, setPlan] = useState('free');
   const [textContent, setTextContent] = useState('');
   const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
@@ -12,8 +31,42 @@ const UserAddCommentModal = ({ isOpen, onClose, onSubmit, darkTheme }) => {
   const [error, setError] = useState('');
   const fileInputRef = useRef(null);
 
+  useEffect(() => {
+    if (userDisplayName && isOpen) {
+      setAutor(userDisplayName);
+    }
+  }, [userDisplayName, isOpen]);
+
+  // Disable body scroll when modal is open
+  useEffect(() => {
+    if (isOpen) {
+      // Save current scroll position
+      const scrollY = window.scrollY;
+      // Disable scroll
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.width = '100%';
+      document.body.style.overflow = 'hidden';
+
+      return () => {
+        // Restore scroll position when modal closes
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.style.width = '';
+        document.body.style.overflow = '';
+        window.scrollTo(0, scrollY);
+      };
+    }
+  }, [isOpen]);
+
   const resetForm = () => {
     setAddMode('text');
+    setTitlu('');
+    setAutor(userDisplayName || '');
+    setCategorie('');
+    setTip('general');
+    setDescriere('');
+    setPlan('free');
     setTextContent('');
     setImageFile(null);
     setImagePreview(null);
@@ -52,12 +105,21 @@ const UserAddCommentModal = ({ isOpen, onClose, onSubmit, darkTheme }) => {
     if (addMode === 'text') {
       const trimmed = textContent.trim();
       if (!trimmed) {
-        setError('Te rog introdu un comentariu');
+        setError('Te rog introdu textul comentariului');
         return;
       }
       setUploading(true);
       try {
-        await onSubmit({ type: 'text', content: trimmed });
+        await onSubmit({
+          type: 'text',
+          content: trimmed,
+          titlu,
+          autor,
+          categorie,
+          tip,
+          descriere,
+          plan,
+        });
         handleClose();
       } catch (err) {
         setError(err.message || 'Eroare la adăugarea comentariului');
@@ -72,7 +134,16 @@ const UserAddCommentModal = ({ isOpen, onClose, onSubmit, darkTheme }) => {
       setUploading(true);
       try {
         const url = await uploadImageToCloudinary(imageFile, 'user-comments');
-        await onSubmit({ type: 'image', content: url });
+        await onSubmit({
+          type: 'image',
+          content: url,
+          titlu,
+          autor,
+          categorie,
+          tip,
+          descriere,
+          plan,
+        });
         handleClose();
       } catch (err) {
         setError(err.message || 'Eroare la încărcarea imaginii');
@@ -87,7 +158,7 @@ const UserAddCommentModal = ({ isOpen, onClose, onSubmit, darkTheme }) => {
   return (
     <div className={`user-add-comment-modal-overlay ${darkTheme ? 'dark-theme' : ''}`} onClick={handleClose}>
       <div
-        className={`user-add-comment-modal ${darkTheme ? 'dark-theme' : ''}`}
+        className={`user-add-comment-modal user-add-comment-modal-expanded ${darkTheme ? 'dark-theme' : ''}`}
         onClick={(e) => e.stopPropagation()}
       >
         <div className="user-add-comment-modal-header">
@@ -117,15 +188,101 @@ const UserAddCommentModal = ({ isOpen, onClose, onSubmit, darkTheme }) => {
             </button>
           </div>
 
+          <div className="user-add-comment-form-row">
+            <div className="admin-form-group">
+              <label htmlFor="user-comment-titlu">Titlu *</label>
+              <input
+                id="user-comment-titlu"
+                type="text"
+                value={titlu}
+                onChange={(e) => { setTitlu(e.target.value); setError(''); }}
+                placeholder="Luceafărul — comentariu"
+                className="admin-input"
+                disabled={uploading}
+              />
+            </div>
+            <div className="admin-form-group">
+              <label htmlFor="user-comment-plan">Plan</label>
+              <select
+                id="user-comment-plan"
+                value={plan}
+                onChange={(e) => setPlan(e.target.value)}
+                className="admin-select"
+                disabled={uploading}
+              >
+                <option value="free">Gratis</option>
+                <option value="pro">Pro</option>
+                <option value="premium">Premium</option>
+              </select>
+            </div>
+          </div>
+
+          <div className="admin-form-group">
+            <label htmlFor="user-comment-autor">Autor *</label>
+            <input
+              id="user-comment-autor"
+              type="text"
+              value={autor}
+              onChange={(e) => { setAutor(e.target.value); setError(''); }}
+              placeholder="Mihai Eminescu"
+              className="admin-input"
+              disabled={uploading}
+            />
+          </div>
+
+          <div className="admin-form-group">
+            <label htmlFor="user-comment-categorie">Categorie *</label>
+            <select
+              id="user-comment-categorie"
+              value={categorie}
+              onChange={(e) => { setCategorie(e.target.value); setError(''); }}
+              className="admin-select"
+              disabled={uploading}
+            >
+              <option value="">Selectează categoria</option>
+              {CATEGORII.map((cat) => (
+                <option key={cat} value={cat}>{cat}</option>
+              ))}
+            </select>
+          </div>
+
+          <div className="admin-form-group">
+            <label htmlFor="user-comment-tip">Tip comentariu</label>
+            <select
+              id="user-comment-tip"
+              value={tip}
+              onChange={(e) => setTip(e.target.value)}
+              className="admin-select"
+              disabled={uploading}
+            >
+              {TIP_COMENTARIU_OPTIONS.map((opt) => (
+                <option key={opt.value} value={opt.value}>{opt.label}</option>
+              ))}
+            </select>
+          </div>
+
+          <div className="admin-form-group">
+            <label htmlFor="user-comment-descriere">Descriere</label>
+            <input
+              id="user-comment-descriere"
+              type="text"
+              value={descriere}
+              onChange={(e) => { setDescriere(e.target.value); setError(''); }}
+              placeholder="Teme, motive, viziune, specii și interpretare succintă."
+              className="admin-input"
+              disabled={uploading}
+            />
+          </div>
+
           {addMode === 'text' ? (
             <div className="admin-form-group">
-              <label htmlFor="user-comment-text">Comentariul tău *</label>
+              <label htmlFor="user-comment-text">Text complet *</label>
               <textarea
                 id="user-comment-text"
                 value={textContent}
                 onChange={(e) => { setTextContent(e.target.value); setError(''); }}
-                placeholder="Scrie comentariul tău..."
-                rows={6}
+                placeholder="Lipește sau scrie aici textul complet al comentariului..."
+                rows={8}
                 className="admin-textarea"
                 disabled={uploading}
               />
