@@ -280,12 +280,10 @@ export const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    // Set loading to false immediately to allow app to render
-    setLoading(false);
-    
-    // Load authentication in background (non-blocking)
+    // Keep loading true until first auth state is known (prevents redirect to login on profile refresh)
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       setCurrentUser(user);
+      setLoading(false);
       
       if (user) {
         // Load user profile from Firestore in background (non-blocking, no loading indicator)

@@ -8,7 +8,7 @@ import '../styles/style.scss';
 import '../styles/profile.scss';
 
 const Profile = () => {
-  const { currentUser, userProfile, loadUserProfile } = useAuth();
+  const { currentUser, userProfile, loadUserProfile, loading: authLoading } = useAuth();
   const navigate = useNavigate();
   const [darkTheme, setDarkTheme] = useState(() => localStorage.getItem('theme') === 'dark');
   const [loading, setLoading] = useState(true);
@@ -40,6 +40,7 @@ const Profile = () => {
   }, []);
 
   useEffect(() => {
+    if (authLoading) return; // Wait for auth to finish before redirecting
     if (!currentUser) {
       navigate('/login');
       return;
@@ -53,9 +54,20 @@ const Profile = () => {
       setLoading(false);
     };
     loadData();
-  }, [currentUser, navigate, loadUserProfile]);
+  }, [currentUser, navigate, loadUserProfile, authLoading]);
 
-  if (!currentUser) {
+  if (authLoading || !currentUser) {
+    if (authLoading) {
+      return (
+        <div className="page-wrapper">
+          <Layout darkTheme={darkTheme} setDarkTheme={setDarkTheme}>
+            <div className={`profile-loading ${darkTheme ? 'dark-theme' : ''}`}>
+              <div className="profile-loading-text">Se încarcă...</div>
+            </div>
+          </Layout>
+        </div>
+      );
+    }
     return null;
   }
 

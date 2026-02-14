@@ -13,7 +13,7 @@ import '../styles/userAddCommentModal.scss';
 import '../styles/userCommentViewModal.scss';
 
 const ProfileComentarii = () => {
-  const { currentUser, userProfile } = useAuth();
+  const { currentUser, userProfile, loading: authLoading } = useAuth();
   const navigate = useNavigate();
   const [darkTheme, setDarkTheme] = useState(() => localStorage.getItem('theme') === 'dark');
   const [userComments, setUserComments] = useState([]);
@@ -50,11 +50,12 @@ const ProfileComentarii = () => {
   }, [darkTheme]);
 
   useEffect(() => {
+    if (authLoading) return;
     if (!currentUser) {
       navigate('/login');
       return;
     }
-  }, [currentUser, navigate]);
+  }, [currentUser, navigate, authLoading]);
 
   useEffect(() => {
     if (!currentUser?.uid) return;
@@ -122,7 +123,16 @@ const ProfileComentarii = () => {
     }
   };
 
-  if (!currentUser) {
+  if (authLoading || !currentUser) {
+    if (authLoading) {
+      return (
+        <Layout darkTheme={darkTheme} setDarkTheme={setDarkTheme} scrolled={false}>
+          <div className={`comentarii-loading ${darkTheme ? 'dark-theme' : ''}`} style={{ padding: '3rem', textAlign: 'center' }}>
+            Se încarcă...
+          </div>
+        </Layout>
+      );
+    }
     return null;
   }
 

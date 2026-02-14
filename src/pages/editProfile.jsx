@@ -15,7 +15,7 @@ const DEFAULT_CROP_SIZE = 300;
 const FINAL_PROFILE_SIZE = 300;
 
 const EditProfile = () => {
-  const { currentUser, userProfile, updateUserProfileData, profileLoading } = useAuth();
+  const { currentUser, userProfile, updateUserProfileData, profileLoading, loading: authLoading } = useAuth();
   const navigate = useNavigate();
   const [darkTheme, setDarkTheme] = useState(() => localStorage.getItem('theme') === 'dark');
   const [loading, setLoading] = useState(true);
@@ -72,6 +72,7 @@ const EditProfile = () => {
   });
 
   useEffect(() => {
+    if (authLoading) return;
     if (!currentUser) {
       navigate('/login');
       return;
@@ -92,7 +93,7 @@ const EditProfile = () => {
     });
     
     setLoading(false);
-  }, [currentUser, userProfile, navigate]);
+  }, [currentUser, userProfile, navigate, authLoading]);
 
   // Add global mouse event listeners for dragging
   useEffect(() => {
@@ -399,7 +400,18 @@ const EditProfile = () => {
     }
   };
 
-  if (!currentUser || loading) {
+  if (authLoading || !currentUser || loading) {
+    if (authLoading) {
+      return (
+        <div className="page-wrapper">
+          <Layout darkTheme={darkTheme} setDarkTheme={setDarkTheme}>
+            <div className={`edit-profile-loading ${darkTheme ? 'dark-theme' : ''}`}>
+              <div className="edit-profile-loading-text">Se încarcă...</div>
+            </div>
+          </Layout>
+        </div>
+      );
+    }
     return (
       <div className="page-wrapper">
         <Layout darkTheme={darkTheme} setDarkTheme={setDarkTheme}>
