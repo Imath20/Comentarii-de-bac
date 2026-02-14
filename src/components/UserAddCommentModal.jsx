@@ -31,12 +31,6 @@ const UserAddCommentModal = ({ isOpen, onClose, onSubmit, darkTheme, userDisplay
   const [error, setError] = useState('');
   const fileInputRef = useRef(null);
 
-  useEffect(() => {
-    if (userDisplayName && isOpen) {
-      setAutor(userDisplayName);
-    }
-  }, [userDisplayName, isOpen]);
-
   // Disable body scroll when modal is open
   useEffect(() => {
     if (isOpen) {
@@ -62,7 +56,7 @@ const UserAddCommentModal = ({ isOpen, onClose, onSubmit, darkTheme, userDisplay
   const resetForm = () => {
     setAddMode('text');
     setTitlu('');
-    setAutor(userDisplayName || '');
+    setAutor('');
     setCategorie('');
     setTip('general');
     setDescriere('');
@@ -198,6 +192,7 @@ const UserAddCommentModal = ({ isOpen, onClose, onSubmit, darkTheme, userDisplay
                 onChange={(e) => { setTitlu(e.target.value); setError(''); }}
                 placeholder="Luceafărul — comentariu"
                 className="admin-input"
+                autoComplete="off"
                 disabled={uploading}
               />
             </div>
@@ -226,6 +221,7 @@ const UserAddCommentModal = ({ isOpen, onClose, onSubmit, darkTheme, userDisplay
               onChange={(e) => { setAutor(e.target.value); setError(''); }}
               placeholder="Mihai Eminescu"
               className="admin-input"
+              autoComplete="off"
               disabled={uploading}
             />
           </div>
@@ -270,6 +266,7 @@ const UserAddCommentModal = ({ isOpen, onClose, onSubmit, darkTheme, userDisplay
               onChange={(e) => { setDescriere(e.target.value); setError(''); }}
               placeholder="Teme, motive, viziune, specii și interpretare succintă."
               className="admin-input"
+              autoComplete="off"
               disabled={uploading}
             />
           </div>
@@ -284,6 +281,7 @@ const UserAddCommentModal = ({ isOpen, onClose, onSubmit, darkTheme, userDisplay
                 placeholder="Lipește sau scrie aici textul complet al comentariului..."
                 rows={8}
                 className="admin-textarea"
+                autoComplete="off"
                 disabled={uploading}
               />
             </div>
