@@ -34,7 +34,7 @@ export function TabsProvider({ children }) {
 
   const [tabOpeningEnabled, setTabOpeningEnabled] = useState(() => {
     const stored = localStorage.getItem('tabs.openingEnabled');
-    return stored !== null ? stored === 'true' : true; // Default to enabled
+    return stored !== null ? stored === 'false' : false; // Default to disabled
   });
 
   const [notification, setNotification] = useState(null);
