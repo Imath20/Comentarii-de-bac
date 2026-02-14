@@ -94,8 +94,12 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
   gap: 2rem;
-  padding: 1rem 0rem;
+  padding: 1rem 10rem;
+  padding-bottom: 10rem;
+  // background-color: red;
 }
+
+
 @media (max-width: 1200px) {
   .comentarii-grid-container {
     // grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));

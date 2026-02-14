@@ -15,6 +15,7 @@ import Opera from './pages/Opera';
 import Login from './pages/login';
 import Profile from './pages/profile';
 import EditProfile from './pages/editProfile';
+import ProfileComentarii from './pages/profileComentarii';
 import './styles/style.scss';
 import Curente from './pages/curente';
 import Curent from './pages/Curent';
@@ -28,6 +29,7 @@ export default function App() {
       <Route path="/login" element={<Login />} />
       <Route path="/profil" element={<Profile />} />
       <Route path="/profil/edit" element={<EditProfile />} />
+      <Route path="/profil/comentarii" element={<ProfileComentarii />} />
       <Route path="/scriitori" element={<Scriitori />} />
       <Route path="/subiecte" element={<Subiecte />} />
       <Route path="/comentarii" element={<Comentarii />} />

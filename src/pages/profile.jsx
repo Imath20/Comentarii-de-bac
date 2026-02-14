@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../firebase/AuthContext';
 import Layout from '../assets/Layout';
-import { Edit, Mail, Calendar, User, Shield } from 'lucide-react';
+import { Edit, Mail, Calendar, User, Shield, FileText } from 'lucide-react';
 import { getProfileImageUrl } from '../utils/cloudinary';
 import '../styles/style.scss';
 import '../styles/profile.scss';
@@ -149,13 +149,22 @@ const Profile = () => {
               </div>
 
               {/* Edit Button */}
-              <Link
-                to="/profil/edit"
-                className="profile-edit-button"
-              >
-                <Edit size={18} />
-                <span>Editează profilul</span>
-              </Link>
+              <div className="profile-edit-buttons">
+                <Link
+                  to="/profil/edit"
+                  className="profile-edit-button"
+                >
+                  <Edit size={18} />
+                  <span>Editează profilul</span>
+                </Link>
+                <Link
+                  to="/profil/comentarii"
+                  className="profile-edit-button profile-comentarii-link"
+                >
+                  <FileText size={18} />
+                  <span>Comentariile mele</span>
+                </Link>
+              </div>
             </div>
           </div>
 
@@ -207,6 +216,7 @@ const Profile = () => {
               )}
             </div>
           </div>
+
         </div>
       </Layout>
     </div>

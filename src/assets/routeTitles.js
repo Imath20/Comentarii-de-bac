@@ -14,6 +14,7 @@ export const ROUTE_TITLES = [
   [/^\/curente$/, 'Curente'],
   [/^\/curent\//, 'Curent'],
   [/^\/carte(?:\b|\/|$)/, 'Cititor de carte'],
+  [/^\/profil\/comentarii$/, 'Comentariile mele'],
   [/^\/profil(?:\b|\/|$)/, 'Profil'],
   [/^\/login$/, 'Autentificare'],
   [/^\/admin$/, 'Admin'],
