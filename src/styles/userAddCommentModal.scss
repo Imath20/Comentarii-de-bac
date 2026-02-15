@@ -312,6 +312,46 @@
   border-radius: 8px;
 }
 
+.user-add-comment-image-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.user-add-comment-extract-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  color: #7a3a00;
+  background: rgba(34, 139, 34, 0.15);
+  border: 1px solid rgba(34, 139, 34, 0.4);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover:not(:disabled) {
+    background: rgba(34, 139, 34, 0.25);
+  }
+
+  &:disabled {
+    opacity: 0.8;
+    cursor: not-allowed;
+  }
+
+  .dark-theme & {
+    color: #7cb87c;
+    background: rgba(34, 139, 34, 0.2);
+    border-color: rgba(34, 139, 34, 0.5);
+
+    &:hover:not(:disabled) {
+      background: rgba(34, 139, 34, 0.3);
+    }
+  }
+}
+
 .user-add-comment-clear-preview {
   align-self: flex-start;
   padding: 0.4rem 1rem;

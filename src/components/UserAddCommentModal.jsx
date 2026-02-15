@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { FileText, Image, Plus, X } from 'lucide-react';
+import { FileText, Image, Plus, X, Scan } from 'lucide-react';
+import { createWorker } from 'tesseract.js';
 import { uploadImageToCloudinary } from '../utils/cloudinary';
 import '../styles/admin.scss';
 import '../styles/userAddCommentModal.scss';
@@ -16,6 +17,40 @@ const TIP_COMENTARIU_OPTIONS = [
   { value: 'relatie-doua-personaje', label: 'Relația dintre două personaje' },
 ];
 
+/**
+ * Uneste liniile care sunt doar wrap (aproape vertical) cu spațiu.
+ * Păstrează newline doar când există spațiu gol evident între linii (paragraf).
+ */
+function mergeWrappedLines(blocks) {
+  const lines = [];
+  for (const block of blocks || []) {
+    for (const para of block.paragraphs || []) {
+      for (const line of para.lines || []) {
+        const text = (line.text || '').trim();
+        if (!text) continue;
+        const bbox = line.bbox || {};
+        const y0 = bbox.y0 ?? 0;
+        const y1 = bbox.y1 ?? y0;
+        const rowH = line.rowAttributes?.rowHeight ?? Math.max(1, y1 - y0);
+        lines.push({ text, y0, y1, rowHeight: rowH });
+      }
+    }
+  }
+  if (lines.length === 0) return '';
+  const avgRowHeight = lines.reduce((s, l) => s + l.rowHeight, 0) / lines.length;
+  const PARAGRAPH_GAP_THRESHOLD = 0.85;
+  const parts = [];
+  for (let i = 0; i < lines.length; i++) {
+    parts.push(lines[i].text);
+    if (i < lines.length - 1) {
+      const gap = lines[i + 1].y0 - lines[i].y1;
+      const isParagraphBreak = gap > PARAGRAPH_GAP_THRESHOLD * avgRowHeight;
+      parts.push(isParagraphBreak ? '\n' : ' ');
+    }
+  }
+  return parts.join('').trim();
+}
+
 const UserAddCommentModal = ({ isOpen, onClose, onSubmit, darkTheme, userDisplayName }) => {
   const [addMode, setAddMode] = useState('text');
   const [titlu, setTitlu] = useState('');
@@ -28,6 +63,7 @@ const UserAddCommentModal = ({ isOpen, onClose, onSubmit, darkTheme, userDisplay
   const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
   const [uploading, setUploading] = useState(false);
+  const [ocrExtracting, setOcrExtracting] = useState(false);
   const [error, setError] = useState('');
   const fileInputRef = useRef(null);
 
@@ -64,6 +100,7 @@ const UserAddCommentModal = ({ isOpen, onClose, onSubmit, darkTheme, userDisplay
     setTextContent('');
     setImageFile(null);
     setImagePreview(null);
+    setOcrExtracting(false);
     setError('');
   };
 
@@ -90,6 +127,36 @@ const UserAddCommentModal = ({ isOpen, onClose, onSubmit, darkTheme, userDisplay
     reader.readAsDataURL(file);
     setError('');
     if (fileInputRef.current) fileInputRef.current.value = '';
+  };
+
+  const handleExtractTextFromImage = async () => {
+    const source = imagePreview || (imageFile ? URL.createObjectURL(imageFile) : null);
+    if (!source) return;
+    setOcrExtracting(true);
+    setError('');
+    try {
+      const worker = await createWorker('ron+eng');
+      const { data } = await worker.recognize(source, {}, { text: true, blocks: true });
+      if (imageFile && source.startsWith('blob:')) URL.revokeObjectURL(source);
+      await worker.terminate();
+      let extracted = (data?.text || '').trim();
+      if (extracted && data?.blocks?.length) {
+        const merged = mergeWrappedLines(data.blocks);
+        if (merged) extracted = merged;
+      }
+      if (extracted) {
+        setTextContent(extracted);
+        setAddMode('text');
+        setImageFile(null);
+        setImagePreview(null);
+      } else {
+        setError('Nu s-a putut extrage text din imagine. Încearcă o imagine mai clară.');
+      }
+    } catch (err) {
+      setError(err?.message || 'Eroare la extragerea textului din imagine');
+    } finally {
+      setOcrExtracting(false);
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -312,13 +379,34 @@ const UserAddCommentModal = ({ isOpen, onClose, onSubmit, darkTheme, userDisplay
                   )}
                 </button>
                 {imagePreview && (
-                  <button
-                    type="button"
-                    onClick={() => { setImageFile(null); setImagePreview(null); }}
-                    className="user-add-comment-clear-preview"
-                  >
-                    Șterge imaginea
-                  </button>
+                  <div className="user-add-comment-image-actions">
+                    <button
+                      type="button"
+                      onClick={handleExtractTextFromImage}
+                      disabled={ocrExtracting}
+                      className="user-add-comment-extract-btn"
+                      title="Extrage textul din imagine folosind OCR"
+                    >
+                      {ocrExtracting ? (
+                        <>
+                          <span className="user-add-comment-spinner" />
+                          Se extrage textul...
+                        </>
+                      ) : (
+                        <>
+                          <Scan size={18} />
+                          Extrage textul din imagine
+                        </>
+                      )}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => { setImageFile(null); setImagePreview(null); }}
+                      className="user-add-comment-clear-preview"
+                    >
+                      Șterge imaginea
+                    </button>
+                  </div>
                 )}
               </div>
             </div>
