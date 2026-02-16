@@ -319,6 +319,52 @@
   align-items: center;
 }
 
+.user-add-comment-text-actions {
+  margin-top: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.user-add-comment-generate-desc {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #7a3a00;
+  background: rgba(255, 179, 71, 0.2);
+  border: 1px solid rgba(122, 58, 0, 0.35);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover:not(:disabled) {
+    background: rgba(255, 179, 71, 0.35);
+    border-color: rgba(122, 58, 0, 0.5);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.user-add-comment-generate-desc {
+  .dark-theme & {
+    color: #ffd591;
+    background: rgba(255, 179, 71, 0.15);
+    border-color: rgba(255, 213, 145, 0.35);
+
+    &:hover:not(:disabled) {
+      background: rgba(255, 179, 71, 0.25);
+      border-color: rgba(255, 213, 145, 0.5);
+    }
+  }
+}
+
 .user-add-comment-extract-btn {
   display: inline-flex;
   align-items: center;

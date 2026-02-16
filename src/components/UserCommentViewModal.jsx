@@ -2,6 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { X } from 'lucide-react';
 import '../styles/userCommentViewModal.scss';
 
+const TIP_COMENTARIU_LABELS = {
+  'general': 'Comentariu general',
+  'tema-viziune': 'Tema și viziunea',
+  'caracterizare-personaj': 'Caracterizarea personajului',
+  'relatie-doua-personaje': 'Relația dintre două personaje',
+};
+
 const UserCommentViewModal = ({ comment, isOpen, onClose, darkTheme, formatDate }) => {
   const [imageFullscreen, setImageFullscreen] = useState(false);
   useEffect(() => {
@@ -44,7 +51,6 @@ const UserCommentViewModal = ({ comment, isOpen, onClose, darkTheme, formatDate 
   return (
     <div
       className={`user-comment-view-overlay ${darkTheme ? 'dark-theme' : ''}`}
-      onClick={onClose}
       role="dialog"
       aria-modal="true"
       aria-labelledby="user-comment-view-title"
@@ -68,7 +74,7 @@ const UserCommentViewModal = ({ comment, isOpen, onClose, darkTheme, formatDate 
         </div>
 
         <div className="user-comment-view-body">
-          {(comment.autor || comment.categorie || comment.descriere) && (
+          {(comment.autor || comment.categorie || comment.tip || comment.descriere) && (
             <div className="user-comment-view-meta">
               {comment.autor && (
                 <div className="user-comment-view-meta-item">
@@ -80,6 +86,12 @@ const UserCommentViewModal = ({ comment, isOpen, onClose, darkTheme, formatDate 
                 <div className="user-comment-view-meta-item">
                   <span className="user-comment-view-label">Categorie:</span>
                   <span>{comment.categorie}</span>
+                </div>
+              )}
+              {comment.tip && (
+                <div className="user-comment-view-meta-item">
+                  <span className="user-comment-view-label">Tip comentariu:</span>
+                  <span>{TIP_COMENTARIU_LABELS[comment.tip] || comment.tip}</span>
                 </div>
               )}
               {comment.descriere && (
@@ -104,6 +116,7 @@ const UserCommentViewModal = ({ comment, isOpen, onClose, darkTheme, formatDate 
             </div>
           ) : (
             <div className="user-comment-view-text">
+              {/* {(comment.content || '').replace(/\n/g, '\n\n')} */}
               {comment.content}
             </div>
           )}

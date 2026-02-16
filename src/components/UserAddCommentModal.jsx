@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { FileText, Image, Plus, X, Scan } from 'lucide-react';
-import { createWorker } from 'tesseract.js';
+import { FileText, Image, Plus, X, Scan, Sparkles } from 'lucide-react';
 import { uploadImageToCloudinary } from '../utils/cloudinary';
 import '../styles/admin.scss';
 import '../styles/userAddCommentModal.scss';
@@ -18,37 +17,110 @@ const TIP_COMENTARIU_OPTIONS = [
 ];
 
 /**
- * Uneste liniile care sunt doar wrap (aproape vertical) cu spațiu.
- * Păstrează newline doar când există spațiu gol evident între linii (paragraf).
+ * Corectează caracterele românești corupte (encodare greșită sau erori OCR).
+ * Când textul e copiat din PDF/Word cu encoding diferit sau extras prin OCR,
+ * diacriticele (ș, ă, î, ţ, â) pot apărea ca ¥, þ, N y etc.
  */
-function mergeWrappedLines(blocks) {
-  const lines = [];
-  for (const block of blocks || []) {
-    for (const para of block.paragraphs || []) {
-      for (const line of para.lines || []) {
-        const text = (line.text || '').trim();
-        if (!text) continue;
-        const bbox = line.bbox || {};
-        const y0 = bbox.y0 ?? 0;
-        const y1 = bbox.y1 ?? y0;
-        const rowH = line.rowAttributes?.rowHeight ?? Math.max(1, y1 - y0);
-        lines.push({ text, y0, y1, rowHeight: rowH });
+function fixRomanianEncoding(text) {
+  if (!text || typeof text !== 'string') return text;
+  let result = text;
+  // Encodare greșită (Windows-1250/ISO-8859-2 interpretat ca Latin-1)
+  const encodingFixes = [
+    ['¥', 'ș'],   // ș citit greșit
+    ['þ', 'ț'],   // ț citit greșit
+    ['Ÿ', 'ț'],   // ţ citit greșit
+    ['ž', 'ș'],   // ş citit greșit
+    ['º', 'ș'],   // unele variante
+    ['ª', 'ț'],   // unele variante
+  ];
+  for (const [wrong, correct] of encodingFixes) {
+    result = result.split(wrong).join(correct);
+  }
+  // Erori OCR frecvente pentru română
+  result = result.replace(/\bN\s*y\b/gi, 'și');
+  result = result.replace(/\bny\b/g, 'și');
+  return result;
+}
+
+/**
+ * Generează descrierea cu AI (Groq): extrage din text teme, motive, viziune, specii și interpretare succintă.
+ * Încearcă fiecare cheie din groqApiKeys până reușește.
+ */
+async function generateDescriereWithAI(text, groqApiKeys, groqApiUrl) {
+  const t = (text || '').trim();
+  if (!t) return null;
+  const body = {
+    model: 'llama-3.3-70b-versatile',
+    messages: [
+      {
+        role: 'system',
+        content: `Ești expert în literatura română. Analizează textul de comentariu literar și extrage o descriere succintă care să conțină:
+- Teme principale
+- Motive literare
+- Viziunea autorului
+- Specii (genuri, tipuri)
+- Interpretare succintă
+
+Răspunde doar cu descrierea extrasă, fără titluri sau explicații. Maxim 250 caractere. În limba română.`,
+      },
+      {
+        role: 'user',
+        content: `Extrage din acest comentariu literar teme, motive, viziune, specii și interpretare succintă:\n\n${t}`,
+      },
+    ],
+    temperature: 0.3,
+    max_tokens: 200,
+  };
+  let lastError;
+  for (const key of groqApiKeys) {
+    try {
+      const res = await fetch(groqApiUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${key}` },
+        body: JSON.stringify(body),
+      });
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        lastError = new Error(err?.error?.message || `Groq API: ${res.status}`);
+        continue;
       }
+      const json = await res.json();
+      const content = (json?.choices?.[0]?.message?.content || '').trim();
+      if (content) return content;
+    } catch (e) {
+      lastError = e;
     }
   }
-  if (lines.length === 0) return '';
-  const avgRowHeight = lines.reduce((s, l) => s + l.rowHeight, 0) / lines.length;
-  const PARAGRAPH_GAP_THRESHOLD = 0.85;
-  const parts = [];
-  for (let i = 0; i < lines.length; i++) {
-    parts.push(lines[i].text);
-    if (i < lines.length - 1) {
-      const gap = lines[i + 1].y0 - lines[i].y1;
-      const isParagraphBreak = gap > PARAGRAPH_GAP_THRESHOLD * avgRowHeight;
-      parts.push(isParagraphBreak ? '\n' : ' ');
-    }
-  }
-  return parts.join('').trim();
+  throw lastError || new Error('Nu s-a putut genera descrierea.');
+}
+
+/** Groq limitează base64 la 4MB. Redimensionează imaginea dacă e prea mare. */
+async function ensureImageUnderSizeLimit(dataUrl, maxBytes = 3.5 * 1024 * 1024) {
+  const base64 = dataUrl?.split(',')[1];
+  if (!base64) return dataUrl;
+  const byteLength = (base64.length * 3) / 4;
+  if (byteLength <= maxBytes) return dataUrl;
+  return new Promise((resolve) => {
+    const img = new window.Image();
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      let { width, height } = img;
+      const scale = Math.sqrt(maxBytes / byteLength);
+      width = Math.floor(width * scale);
+      height = Math.floor(height * scale);
+      width = Math.max(200, width);
+      height = Math.max(200, height);
+      canvas.width = width;
+      canvas.height = height;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0, width, height);
+      const mime = dataUrl.match(/data:([^;]+);/)?.[1] || 'image/jpeg';
+      const quality = 0.85;
+      resolve(canvas.toDataURL(mime, quality));
+    };
+    img.onerror = () => resolve(dataUrl);
+    img.src = dataUrl;
+  });
 }
 
 const UserAddCommentModal = ({ isOpen, onClose, onSubmit, darkTheme, userDisplayName }) => {
@@ -64,6 +136,7 @@ const UserAddCommentModal = ({ isOpen, onClose, onSubmit, darkTheme, userDisplay
   const [imagePreview, setImagePreview] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [ocrExtracting, setOcrExtracting] = useState(false);
+  const [descriereGenerating, setDescriereGenerating] = useState(false);
   const [error, setError] = useState('');
   const fileInputRef = useRef(null);
 
@@ -101,11 +174,11 @@ const UserAddCommentModal = ({ isOpen, onClose, onSubmit, darkTheme, userDisplay
     setImageFile(null);
     setImagePreview(null);
     setOcrExtracting(false);
+    setDescriereGenerating(false);
     setError('');
   };
 
   const handleClose = () => {
-    resetForm();
     onClose();
   };
 
@@ -132,20 +205,59 @@ const UserAddCommentModal = ({ isOpen, onClose, onSubmit, darkTheme, userDisplay
   const handleExtractTextFromImage = async () => {
     const source = imagePreview || (imageFile ? URL.createObjectURL(imageFile) : null);
     if (!source) return;
+    const groqApiKey = import.meta.env.VITE_GROQ_API_KEY || import.meta.env.VITE_GROQ_API_KEY_1;
+    const groqApiUrl = import.meta.env.VITE_GROQ_API_URL || 'https://api.groq.com/openai/v1/chat/completions';
+    if (!groqApiKey) {
+      setError('Setează VITE_GROQ_API_KEY în .env.local pentru extragerea textului cu AI.');
+      return;
+    }
     setOcrExtracting(true);
     setError('');
     try {
-      const worker = await createWorker('ron+eng');
-      const { data } = await worker.recognize(source, {}, { text: true, blocks: true });
-      if (imageFile && source.startsWith('blob:')) URL.revokeObjectURL(source);
-      await worker.terminate();
-      let extracted = (data?.text || '').trim();
-      if (extracted && data?.blocks?.length) {
-        const merged = mergeWrappedLines(data.blocks);
-        if (merged) extracted = merged;
+      let dataUrl = source;
+      if (source.startsWith('data:')) {
+        dataUrl = await ensureImageUnderSizeLimit(source);
+      } else if (source.startsWith('blob:')) {
+        const resp = await fetch(source);
+        const blob = await resp.blob();
+        dataUrl = await new Promise((resolve, reject) => {
+          const r = new FileReader();
+          r.onload = () => resolve(r.result);
+          r.onerror = reject;
+          r.readAsDataURL(blob);
+        });
+        dataUrl = await ensureImageUnderSizeLimit(dataUrl);
+        URL.revokeObjectURL(source);
       }
+      const res = await fetch(groqApiUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${groqApiKey}` },
+        body: JSON.stringify({
+          model: 'meta-llama/llama-4-scout-17b-16e-instruct',
+          messages: [
+            {
+              role: 'user',
+              content: [
+                {
+                  type: 'text',
+                  text: 'Extrage textul exact din această imagine (OCR). Păstrează structura, paragrafele și formatarea. Limba este română. Returnează doar textul extras, fără explicații.',
+                },
+                { type: 'image_url', image_url: { url: dataUrl } },
+              ],
+            },
+          ],
+          max_tokens: 4096,
+          temperature: 0.1,
+        }),
+      });
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err?.error?.message || `Groq API: ${res.status}`);
+      }
+      const json = await res.json();
+      const extracted = (json?.choices?.[0]?.message?.content || '').trim();
       if (extracted) {
-        setTextContent(extracted);
+        setTextContent(fixRomanianEncoding(extracted));
         setAddMode('text');
         setImageFile(null);
         setImagePreview(null);
@@ -181,7 +293,8 @@ const UserAddCommentModal = ({ isOpen, onClose, onSubmit, darkTheme, userDisplay
           descriere,
           plan,
         });
-        handleClose();
+        resetForm();
+        onClose();
       } catch (err) {
         setError(err.message || 'Eroare la adăugarea comentariului');
       } finally {
@@ -205,7 +318,8 @@ const UserAddCommentModal = ({ isOpen, onClose, onSubmit, darkTheme, userDisplay
           descriere,
           plan,
         });
-        handleClose();
+        resetForm();
+        onClose();
       } catch (err) {
         setError(err.message || 'Eroare la încărcarea imaginii');
       } finally {
@@ -217,7 +331,7 @@ const UserAddCommentModal = ({ isOpen, onClose, onSubmit, darkTheme, userDisplay
   if (!isOpen) return null;
 
   return (
-    <div className={`user-add-comment-modal-overlay ${darkTheme ? 'dark-theme' : ''}`} onClick={handleClose}>
+    <div className={`user-add-comment-modal-overlay ${darkTheme ? 'dark-theme' : ''}`}>
       <div
         className={`user-add-comment-modal user-add-comment-modal-expanded ${darkTheme ? 'dark-theme' : ''}`}
         onClick={(e) => e.stopPropagation()}
@@ -351,6 +465,53 @@ const UserAddCommentModal = ({ isOpen, onClose, onSubmit, darkTheme, userDisplay
                 autoComplete="off"
                 disabled={uploading}
               />
+              <div className="user-add-comment-text-actions">
+                <button
+                  type="button"
+                  onClick={async () => {
+                    const t = textContent?.trim();
+                    if (!t) {
+                      setError('Introdu mai întâi textul complet pentru a genera descrierea.');
+                      return;
+                    }
+                    const groqKeys = [import.meta.env.VITE_GROQ_API_KEY, import.meta.env.VITE_GROQ_API_KEY_1]
+                      .filter((k) => k && k !== 'undefined');
+                    if (!groqKeys.length) {
+                      setError('Setează VITE_GROQ_API_KEY în .env pentru generarea descrierii cu AI.');
+                      return;
+                    }
+                    setDescriereGenerating(true);
+                    setError('');
+                    try {
+                      const generated = await generateDescriereWithAI(
+                        t,
+                        groqKeys,
+                        import.meta.env.VITE_GROQ_API_URL || 'https://api.groq.com/openai/v1/chat/completions'
+                      );
+                      if (generated) setDescriere(generated);
+                    } catch (err) {
+                      setError(err?.message || 'Eroare la generarea descrierii cu AI.');
+                    } finally {
+                      setDescriereGenerating(false);
+                    }
+                  }}
+                  disabled={uploading || descriereGenerating || !textContent?.trim()}
+                  className="user-add-comment-generate-desc"
+                  title="Extrage cu AI teme, motive, viziune, specii și interpretare succintă din text"
+                >
+                  {descriereGenerating ? (
+                    <>
+                      <span className="user-add-comment-spinner" />
+                      Se generează...
+                    </>
+                  ) : (
+                    <>
+                      <Sparkles size={16} />
+                      Generează descriere cu AI
+                    </>
+                  )}
+                </button>
+              </div>
             </div>
           ) : (
             <div className="admin-form-group">
@@ -385,7 +546,7 @@ const UserAddCommentModal = ({ isOpen, onClose, onSubmit, darkTheme, userDisplay
                       onClick={handleExtractTextFromImage}
                       disabled={ocrExtracting}
                       className="user-add-comment-extract-btn"
-                      title="Extrage textul din imagine folosind OCR"
+                      title="Extrage textul din imagine folosind AI (Groq Vision)"
                     >
                       {ocrExtracting ? (
                         <>
@@ -395,7 +556,7 @@ const UserAddCommentModal = ({ isOpen, onClose, onSubmit, darkTheme, userDisplay
                       ) : (
                         <>
                           <Scan size={18} />
-                          Extrage textul din imagine
+                          Extrage text cu AI
                         </>
                       )}
                     </button>
