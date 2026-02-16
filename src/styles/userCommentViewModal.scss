@@ -100,6 +100,62 @@
   padding: 1.5rem 1.5rem 0;
   margin-bottom: 1rem;
 
+  .user-comment-view-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+
+  .user-comment-view-action {
+    position: relative;
+    padding: 0.5rem;
+    border: none;
+    background: transparent;
+    color: #7a3a00;
+    cursor: pointer;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, color 0.2s;
+
+    &:hover {
+      background: rgba(122, 58, 0, 0.1);
+    }
+
+    &.copied {
+      color: #2e7d32;
+    }
+
+    .dark-theme & {
+      color: #ffd591;
+
+      &:hover {
+        background: rgba(255, 213, 145, 0.1);
+      }
+
+      &.copied {
+        color: #81c784;
+      }
+    }
+  }
+
+  .user-comment-view-copy-feedback {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-bottom: 0.25rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    white-space: nowrap;
+    color: #2e7d32;
+
+    .dark-theme & {
+      color: #81c784;
+    }
+  }
+
   h2 {
     font-size: 1.35rem;
     font-weight: 700;

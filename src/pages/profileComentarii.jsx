@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../firebase/AuthContext';
 import Layout from '../assets/Layout';
 import { ArrowLeft, FileText, Image, Trash2 } from 'lucide-react';
-import { getUserComments, addUserComment, deleteUserComment } from '../firebase/userCommentsService';
+import { getUserComments, addUserComment, updateUserComment, deleteUserComment } from '../firebase/userCommentsService';
 import UserAddCommentModal from '../components/UserAddCommentModal';
 import UserCommentViewModal from '../components/UserCommentViewModal';
 import '../styles/style.scss';
@@ -20,6 +20,7 @@ const ProfileComentarii = () => {
   const [commentsLoading, setCommentsLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editComment, setEditComment] = useState(null);
   const [viewComment, setViewComment] = useState(null);
   const [deletingId, setDeletingId] = useState(null);
   const [scrolled, setScrolled] = useState(false);
@@ -92,6 +93,12 @@ const ProfileComentarii = () => {
 
   const handleAddComment = async (commentData) => {
     await addUserComment(currentUser.uid, commentData);
+    const comments = await getUserComments(currentUser.uid);
+    setUserComments(comments);
+  };
+
+  const handleEditComment = async (commentId, commentData) => {
+    await updateUserComment(currentUser.uid, commentId, commentData);
     const comments = await getUserComments(currentUser.uid);
     setUserComments(comments);
   };
@@ -252,7 +259,7 @@ const ProfileComentarii = () => {
       <button
         type="button"
         className={`profile-comentarii-fab ${darkTheme ? 'dark-theme' : ''}`}
-        onClick={() => setIsModalOpen(true)}
+        onClick={() => { setEditComment(null); setIsModalOpen(true); }}
         aria-label="Adaugă comentariu"
         title="Adaugă comentariu"
       >
@@ -264,8 +271,10 @@ const ProfileComentarii = () => {
 
       <UserAddCommentModal
         isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
+        onClose={() => { setIsModalOpen(false); setEditComment(null); }}
         onSubmit={handleAddComment}
+        onEditSubmit={handleEditComment}
+        initialComment={editComment}
         darkTheme={darkTheme}
         userDisplayName={userProfile?.displayName || currentUser?.displayName}
       />
@@ -274,6 +283,7 @@ const ProfileComentarii = () => {
         comment={viewComment}
         isOpen={!!viewComment}
         onClose={() => setViewComment(null)}
+        onEdit={(c) => { setViewComment(null); setEditComment(c); setIsModalOpen(true); }}
         darkTheme={darkTheme}
         formatDate={formatDate}
       />

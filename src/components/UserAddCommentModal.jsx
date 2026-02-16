@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { FileText, Image, Plus, X, Scan, Sparkles } from 'lucide-react';
+import { FileText, Image, Plus, Pencil, X, Scan, Sparkles } from 'lucide-react';
 import { uploadImageToCloudinary } from '../utils/cloudinary';
 import '../styles/admin.scss';
 import '../styles/userAddCommentModal.scss';
@@ -123,7 +123,7 @@ async function ensureImageUnderSizeLimit(dataUrl, maxBytes = 3.5 * 1024 * 1024) 
   });
 }
 
-const UserAddCommentModal = ({ isOpen, onClose, onSubmit, darkTheme, userDisplayName }) => {
+const UserAddCommentModal = ({ isOpen, onClose, onSubmit, onEditSubmit, initialComment, darkTheme, userDisplayName }) => {
   const [addMode, setAddMode] = useState('text');
   const [titlu, setTitlu] = useState('');
   const [autor, setAutor] = useState('');
@@ -139,6 +139,26 @@ const UserAddCommentModal = ({ isOpen, onClose, onSubmit, darkTheme, userDisplay
   const [descriereGenerating, setDescriereGenerating] = useState(false);
   const [error, setError] = useState('');
   const fileInputRef = useRef(null);
+
+  const isEditMode = !!(initialComment?.id);
+
+  useEffect(() => {
+    if (isOpen && initialComment) {
+      setAddMode(initialComment.type === 'image' ? 'image' : 'text');
+      setTitlu(initialComment.titlu || '');
+      setAutor(initialComment.autor || '');
+      setCategorie(initialComment.categorie || '');
+      setTip(initialComment.tip || 'general');
+      setDescriere(initialComment.descriere || '');
+      setPlan(initialComment.plan || 'free');
+      setTextContent(initialComment.type === 'text' ? (initialComment.content || '') : '');
+      setImageFile(null);
+      setImagePreview(initialComment.type === 'image' ? (initialComment.content || null) : null);
+      setError('');
+    } else if (isOpen && !initialComment) {
+      resetForm();
+    }
+  }, [isOpen, initialComment?.id]);
 
   // Disable body scroll when modal is open
   useEffect(() => {
@@ -275,6 +295,13 @@ const UserAddCommentModal = ({ isOpen, onClose, onSubmit, darkTheme, userDisplay
     e.preventDefault();
     setError('');
 
+    const submitData = (data) => {
+      if (isEditMode && onEditSubmit) {
+        return onEditSubmit(initialComment.id, data);
+      }
+      return onSubmit(data);
+    };
+
     if (addMode === 'text') {
       const trimmed = textContent.trim();
       if (!trimmed) {
@@ -283,7 +310,7 @@ const UserAddCommentModal = ({ isOpen, onClose, onSubmit, darkTheme, userDisplay
       }
       setUploading(true);
       try {
-        await onSubmit({
+        await submitData({
           type: 'text',
           content: trimmed,
           titlu,
@@ -296,21 +323,32 @@ const UserAddCommentModal = ({ isOpen, onClose, onSubmit, darkTheme, userDisplay
         resetForm();
         onClose();
       } catch (err) {
-        setError(err.message || 'Eroare la adăugarea comentariului');
+        setError(err.message || (isEditMode ? 'Eroare la actualizarea comentariului' : 'Eroare la adăugarea comentariului'));
       } finally {
         setUploading(false);
       }
     } else {
-      if (!imageFile) {
+      let imageUrl;
+      if (imageFile) {
+        setUploading(true);
+        try {
+          imageUrl = await uploadImageToCloudinary(imageFile, 'user-comments');
+        } catch (err) {
+          setError(err.message || 'Eroare la încărcarea imaginii');
+          setUploading(false);
+          return;
+        }
+      } else if (isEditMode && initialComment?.type === 'image' && imagePreview) {
+        imageUrl = imagePreview;
+      } else {
         setError('Te rog selectează o imagine');
         return;
       }
-      setUploading(true);
+      if (!imageFile) setUploading(true);
       try {
-        const url = await uploadImageToCloudinary(imageFile, 'user-comments');
-        await onSubmit({
+        await submitData({
           type: 'image',
-          content: url,
+          content: imageUrl,
           titlu,
           autor,
           categorie,
@@ -321,7 +359,7 @@ const UserAddCommentModal = ({ isOpen, onClose, onSubmit, darkTheme, userDisplay
         resetForm();
         onClose();
       } catch (err) {
-        setError(err.message || 'Eroare la încărcarea imaginii');
+        setError(err.message || (isEditMode ? 'Eroare la actualizarea comentariului' : 'Eroare la încărcarea imaginii'));
       } finally {
         setUploading(false);
       }
@@ -337,7 +375,7 @@ const UserAddCommentModal = ({ isOpen, onClose, onSubmit, darkTheme, userDisplay
         onClick={(e) => e.stopPropagation()}
       >
         <div className="user-add-comment-modal-header">
-          <h2>Adaugă comentariu</h2>
+          <h2>{isEditMode ? 'Editează comentariu' : 'Adaugă comentariu'}</h2>
           <button type="button" onClick={handleClose} className="user-add-comment-modal-close" aria-label="Închide">
             <X size={24} />
           </button>
@@ -581,16 +619,16 @@ const UserAddCommentModal = ({ isOpen, onClose, onSubmit, darkTheme, userDisplay
             <button type="button" onClick={handleClose} className="user-add-comment-cancel">
               Anulează
             </button>
-            <button type="submit" disabled={uploading || (addMode === 'image' && !imageFile)} className="admin-submit-button user-add-comment-submit">
+            <button type="submit" disabled={uploading || (addMode === 'image' && !imageFile && !(isEditMode && imagePreview))} className="admin-submit-button user-add-comment-submit">
               {uploading ? (
                 <>
                   <span className="user-add-comment-spinner" />
-                  Se adaugă...
+                  {isEditMode ? 'Se actualizează...' : 'Se adaugă...'}
                 </>
               ) : (
                 <>
-                  <Plus size={18} />
-                  Adaugă comentariu
+                  {isEditMode ? <Pencil size={18} /> : <Plus size={18} />}
+                  {isEditMode ? 'Actualizează comentariu' : 'Adaugă comentariu'}
                 </>
               )}
             </button>

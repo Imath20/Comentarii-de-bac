@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { X } from 'lucide-react';
+import { X, Copy, Pencil } from 'lucide-react';
 import '../styles/userCommentViewModal.scss';
 
 const TIP_COMENTARIU_LABELS = {
@@ -9,8 +9,23 @@ const TIP_COMENTARIU_LABELS = {
   'relatie-doua-personaje': 'Relația dintre două personaje',
 };
 
-const UserCommentViewModal = ({ comment, isOpen, onClose, darkTheme, formatDate }) => {
+const UserCommentViewModal = ({ comment, isOpen, onClose, onEdit, darkTheme, formatDate }) => {
   const [imageFullscreen, setImageFullscreen] = useState(false);
+  const [copyFeedback, setCopyFeedback] = useState(false);
+
+  const handleCopy = async () => {
+    const textToCopy = comment?.type === 'text'
+      ? (comment.content || '')
+      : (comment?.content || '');
+    if (!textToCopy) return;
+    try {
+      await navigator.clipboard.writeText(textToCopy);
+      setCopyFeedback(true);
+      setTimeout(() => setCopyFeedback(false), 1500);
+    } catch {
+      setCopyFeedback(false);
+    }
+  };
   useEffect(() => {
     if (isOpen) {
       const scrollY = window.scrollY;
@@ -48,12 +63,26 @@ const UserCommentViewModal = ({ comment, isOpen, onClose, darkTheme, formatDate 
 
   if (!isOpen || !comment) return null;
 
+  const handleOverlayPointerDown = (e) => {
+    if (e.target !== e.currentTarget) return;
+    const sel = window.getSelection();
+    if (sel && sel.rangeCount > 0 && sel.toString().length > 0) {
+      const range = sel.getRangeAt(0);
+      const modal = e.currentTarget.querySelector('.user-comment-view-modal');
+      if (modal && modal.contains(range.commonAncestorContainer)) {
+        return; // utilizatorul deselectează textul, nu închide
+      }
+    }
+    onClose();
+  };
+
   return (
     <div
       className={`user-comment-view-overlay ${darkTheme ? 'dark-theme' : ''}`}
       role="dialog"
       aria-modal="true"
       aria-labelledby="user-comment-view-title"
+      onPointerDown={handleOverlayPointerDown}
     >
       <div
         className={`user-comment-view-modal ${darkTheme ? 'dark-theme' : ''}`}
@@ -63,14 +92,37 @@ const UserCommentViewModal = ({ comment, isOpen, onClose, darkTheme, formatDate 
           <h2 id="user-comment-view-title">
             {comment.titlu || (comment.type === 'text' ? 'Comentariu' : 'Imagine')}
           </h2>
-          <button
-            type="button"
-            onClick={onClose}
-            className="user-comment-view-close"
-            aria-label="Închide"
-          >
-            <X size={24} />
-          </button>
+          <div className="user-comment-view-header-actions">
+            <button
+              type="button"
+              onClick={handleCopy}
+              className={`user-comment-view-action ${copyFeedback ? 'copied' : ''}`}
+              aria-label="Copiază comentariul"
+              title="Copiază"
+            >
+              <Copy size={20} />
+              {copyFeedback && <span className="user-comment-view-copy-feedback">Copiat!</span>}
+            </button>
+            {onEdit && (
+              <button
+                type="button"
+                onClick={() => { onClose(); onEdit(comment); }}
+                className="user-comment-view-action"
+                aria-label="Editează comentariul"
+                title="Editează"
+              >
+                <Pencil size={20} />
+              </button>
+            )}
+            <button
+              type="button"
+              onClick={onClose}
+              className="user-comment-view-close"
+              aria-label="Închide"
+            >
+              <X size={24} />
+            </button>
+          </div>
         </div>
 
         <div className="user-comment-view-body">

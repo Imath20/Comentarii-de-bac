@@ -1,4 +1,4 @@
-import { collection, getDocs, query, orderBy, addDoc, deleteDoc, doc } from 'firebase/firestore';
+import { collection, getDocs, query, orderBy, addDoc, deleteDoc, doc, updateDoc } from 'firebase/firestore';
 import { db } from './firebase';
 
 /**
@@ -68,6 +68,42 @@ export async function addUserComment(userId, commentData) {
     return docRef.id;
   } catch (error) {
     console.error('❌ Eroare la adăugarea comentariului personal:', error);
+    throw error;
+  }
+}
+
+/**
+ * Update a personal comment
+ * @param {string} userId - The user's UID
+ * @param {string} commentId - The comment's ID
+ * @param {Object} commentData - { type, content, titlu?, autor?, categorie?, tip?, descriere?, plan? }
+ * @returns {Promise<void>}
+ */
+export async function updateUserComment(userId, commentId, commentData) {
+  try {
+    if (!userId || !commentId) {
+      throw new Error('ID-ul utilizatorului și al comentariului sunt obligatorii');
+    }
+    if (!commentData?.type || !commentData?.content?.trim()) {
+      throw new Error('Tipul și conținutul comentariului sunt obligatorii');
+    }
+
+    const commentRef = doc(db, 'users', userId, 'userComments', commentId);
+    const dataToSave = {
+      type: commentData.type,
+      content: commentData.content.trim(),
+      titlu: commentData.titlu || '',
+      autor: commentData.autor || '',
+      categorie: commentData.categorie || '',
+      tip: commentData.tip || 'general',
+      descriere: commentData.descriere || '',
+      plan: commentData.plan || 'free',
+    };
+
+    await updateDoc(commentRef, dataToSave);
+    console.log('✅ Comentariu personal actualizat cu succes:', commentId);
+  } catch (error) {
+    console.error('❌ Eroare la actualizarea comentariului personal:', error);
     throw error;
   }
 }
