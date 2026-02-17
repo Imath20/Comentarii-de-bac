@@ -84,8 +84,16 @@ const ProfileComentarii = () => {
         c.content || '',
         c.titlu || '',
         c.autor || '',
+        c.anAparitie || '',
+        c.curentLiterar || '',
+        c.specieLiterara || c.categorie || '',
+        c.genLiterar || '',
+        c.tipOpera || '',
+        c.teme || '',
+        c.motive || '',
+        c.viziune || '',
+        c.interpretare || '',
         c.descriere || '',
-        c.categorie || '',
       ].join(' ').toLowerCase();
       return searchIn.includes(q);
     });
@@ -204,11 +212,32 @@ const ProfileComentarii = () => {
                     <div className="comentarii-card-title profile-comentarii-card-title">
                       {comment.titlu || (comment.type === 'text' ? (comment.content?.slice(0, 60) + (comment.content?.length > 60 ? '...' : '')) : 'Imagine')}
                     </div>
-                    <div className="comentarii-card-description profile-comentarii-card-text">
-                      {comment.autor || comment.descriere
-                        ? `${comment.autor || ''}${comment.descriere ? ` — ${comment.descriere}` : ''}`
-                        : ''}
-                      {comment.type === 'text' && !comment.autor && !comment.descriere ? comment.content : ''}
+                    <div className="comentarii-card-description profile-comentarii-card-fields">
+                      {(() => {
+                        const hasMeta = comment.autor || comment.anAparitie || comment.curentLiterar || comment.specieLiterara || comment.categorie || comment.genLiterar || comment.tipOpera || comment.tip;
+                        const TIP_LABELS = { general: 'General', 'tema-viziune': 'Tema și viziunea', 'caracterizare-personaj': 'Caracterizare personaj', 'relatie-doua-personaje': 'Relația personaje' };
+                        if (hasMeta) {
+                          const items = [];
+                          if (comment.autor) items.push({ label: 'Autor', value: comment.autor });
+                          if (comment.anAparitie) items.push({ label: 'An', value: comment.anAparitie });
+                          if (comment.curentLiterar) items.push({ label: 'Curent', value: comment.curentLiterar });
+                          if (comment.specieLiterara || comment.categorie) items.push({ label: 'Specie', value: comment.specieLiterara || comment.categorie });
+                          if (comment.genLiterar) items.push({ label: 'Gen', value: comment.genLiterar });
+                          if (comment.tipOpera) items.push({ label: 'Tip operă', value: comment.tipOpera });
+                          if (comment.tip) items.push({ label: 'Tip comentariu', value: TIP_LABELS[comment.tip] || comment.tip });
+                          return (
+                            <div className="profile-comentarii-card-meta">
+                              {items.map(({ label, value }, i) => (
+                                <div key={i} className="profile-comentarii-meta-line">
+                                  <span className="profile-comentarii-meta-label">{label}:</span> {value}
+                                </div>
+                              ))}
+                            </div>
+                          );
+                        }
+                        if (comment.type === 'text') return <span className="profile-comentarii-card-plain-text">{comment.content}</span>;
+                        return null;
+                      })()}
                     </div>
                     {comment.type === 'image' && (
                       <div className="profile-comentarii-card-image-wrap">
@@ -217,12 +246,12 @@ const ProfileComentarii = () => {
                     )}
                     <div className="comentarii-card-footer profile-comentarii-card-footer">
                       <div className={`comentarii-card-date ${darkTheme ? 'dark-theme' : ''}`}>
-                        {comment.autor || formatDate(comment.createdAt)}
+                        {formatDate(comment.createdAt)}
                       </div>
                       <div className="profile-comentarii-footer-right">
-                        {comment.categorie && (
+                        {(comment.specieLiterara || comment.categorie) && (
                           <div className={`comentarii-card-number ${darkTheme ? 'dark-theme' : ''}`}>
-                            {comment.categorie}
+                            {comment.specieLiterara || comment.categorie}
                           </div>
                         )}
                       <button

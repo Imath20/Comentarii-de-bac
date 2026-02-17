@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { X, Copy, Pencil } from 'lucide-react';
+import { X, Copy, Pencil, ChevronDown, ChevronUp } from 'lucide-react';
 import '../styles/userCommentViewModal.scss';
 
 const TIP_COMENTARIU_LABELS = {
@@ -9,9 +9,21 @@ const TIP_COMENTARIU_LABELS = {
   'relatie-doua-personaje': 'Relația dintre două personaje',
 };
 
+const parseListField = (str) => {
+  if (!str || typeof str !== 'string') return [];
+  return str.split(',').map((s) => s.trim()).filter(Boolean);
+};
+
+const isListLike = (str) => {
+  const items = parseListField(str);
+  if (items.length <= 1) return false;
+  return items.every((s) => s.length < 50);
+};
+
 const UserCommentViewModal = ({ comment, isOpen, onClose, onEdit, darkTheme, formatDate }) => {
   const [imageFullscreen, setImageFullscreen] = useState(false);
   const [copyFeedback, setCopyFeedback] = useState(false);
+  const [metaExpanded, setMetaExpanded] = useState(true);
 
   const handleCopy = async () => {
     const textToCopy = comment?.type === 'text'
@@ -58,7 +70,11 @@ const UserCommentViewModal = ({ comment, isOpen, onClose, onEdit, darkTheme, for
   }, [isOpen, onClose, imageFullscreen]);
 
   useEffect(() => {
-    if (!isOpen) setImageFullscreen(false);
+    if (!isOpen) {
+      setImageFullscreen(false);
+    } else {
+      setMetaExpanded(true);
+    }
   }, [isOpen]);
 
   if (!isOpen || !comment) return null;
@@ -126,32 +142,123 @@ const UserCommentViewModal = ({ comment, isOpen, onClose, onEdit, darkTheme, for
         </div>
 
         <div className="user-comment-view-body">
-          {(comment.autor || comment.categorie || comment.tip || comment.descriere) && (
+          {(comment.autor || comment.anAparitie || comment.curentLiterar || comment.specieLiterara || comment.genLiterar || comment.tipOpera || comment.tip || comment.teme || comment.motive || comment.viziune || comment.interpretare || comment.descriere) && (
             <div className="user-comment-view-meta">
-              {comment.autor && (
-                <div className="user-comment-view-meta-item">
-                  <span className="user-comment-view-label">Autor:</span>
-                  <span>{comment.autor}</span>
-                </div>
-              )}
-              {comment.categorie && (
-                <div className="user-comment-view-meta-item">
-                  <span className="user-comment-view-label">Categorie:</span>
-                  <span>{comment.categorie}</span>
-                </div>
-              )}
-              {comment.tip && (
-                <div className="user-comment-view-meta-item">
-                  <span className="user-comment-view-label">Tip comentariu:</span>
-                  <span>{TIP_COMENTARIU_LABELS[comment.tip] || comment.tip}</span>
-                </div>
-              )}
-              {comment.descriere && (
-                <div className="user-comment-view-meta-item">
-                  <span className="user-comment-view-label">Descriere:</span>
-                  <span>{comment.descriere}</span>
-                </div>
-              )}
+              <div className="user-comment-view-meta-toggle-wrap">
+                <button
+                  type="button"
+                  className="user-comment-view-meta-toggle"
+                  onClick={() => setMetaExpanded((e) => !e)}
+                  aria-expanded={metaExpanded}
+                >
+                  <span>Informații operă</span>
+                  {metaExpanded ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+                </button>
+                {metaExpanded && (
+                  <>
+                    {(comment.autor || comment.anAparitie || comment.curentLiterar || comment.specieLiterara || comment.genLiterar || comment.tipOpera || comment.tip) && (
+                      <div className="user-comment-view-meta-row user-comment-view-meta-inline">
+                        {comment.autor && (
+                          <div className="user-comment-view-meta-item">
+                            <span className="user-comment-view-label">Autor:</span>
+                            <span>{comment.autor}</span>
+                          </div>
+                        )}
+                        {comment.anAparitie && (
+                          <div className="user-comment-view-meta-item">
+                            <span className="user-comment-view-label">An apariție:</span>
+                            <span>{comment.anAparitie}</span>
+                          </div>
+                        )}
+                        {comment.curentLiterar && (
+                          <div className="user-comment-view-meta-item">
+                            <span className="user-comment-view-label">Curent literar:</span>
+                            <span>{comment.curentLiterar}</span>
+                          </div>
+                        )}
+                        {comment.specieLiterara && (
+                          <div className="user-comment-view-meta-item">
+                            <span className="user-comment-view-label">Specie literară:</span>
+                            <span>{comment.specieLiterara}</span>
+                          </div>
+                        )}
+                        {comment.genLiterar && (
+                          <div className="user-comment-view-meta-item">
+                            <span className="user-comment-view-label">Gen literar:</span>
+                            <span>{comment.genLiterar}</span>
+                          </div>
+                        )}
+                        {comment.tipOpera && (
+                          <div className="user-comment-view-meta-item">
+                            <span className="user-comment-view-label">Tip operă:</span>
+                            <span>{comment.tipOpera}</span>
+                          </div>
+                        )}
+                        {comment.tip && (
+                          <div className="user-comment-view-meta-item">
+                            <span className="user-comment-view-label">Tip comentariu:</span>
+                            <span>{TIP_COMENTARIU_LABELS[comment.tip] || comment.tip}</span>
+                          </div>
+                        )}
+                      </div>
+                    )}
+                    {(comment.teme || comment.motive) && (
+                      <div className="user-comment-view-meta-row user-comment-view-meta-tags">
+                        {comment.teme && (
+                          <div className="user-comment-view-field-block">
+                            <span className="user-comment-view-label">Teme:</span>
+                            {isListLike(comment.teme) ? (
+                              <div className="user-comment-view-tags">
+                                {parseListField(comment.teme).map((item, i) => (
+                                  <span key={i} className="user-comment-view-tag">{item}</span>
+                                ))}
+                              </div>
+                            ) : (
+                              <span className="user-comment-view-value">{comment.teme}</span>
+                            )}
+                          </div>
+                        )}
+                        {comment.motive && (
+                          <div className="user-comment-view-field-block">
+                            <span className="user-comment-view-label">Motive:</span>
+                            {isListLike(comment.motive) ? (
+                              <div className="user-comment-view-tags">
+                                {parseListField(comment.motive).map((item, i) => (
+                                  <span key={i} className="user-comment-view-tag">{item}</span>
+                                ))}
+                              </div>
+                            ) : (
+                              <span className="user-comment-view-value">{comment.motive}</span>
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    )}
+                    {(comment.viziune || comment.interpretare || (comment.descriere && !comment.teme && !comment.motive && !comment.viziune && !comment.interpretare)) && (
+                      <div className="user-comment-view-meta-row user-comment-view-meta-descriptive">
+                        {comment.viziune && (
+                          <div className="user-comment-view-field-block">
+                            <span className="user-comment-view-label">Viziune:</span>
+                            <span className="user-comment-view-value">{comment.viziune}</span>
+                          </div>
+                        )}
+                        {comment.interpretare && (
+                          <div className="user-comment-view-field-block">
+                            <span className="user-comment-view-label">Interpretare:</span>
+                            <span className="user-comment-view-value">{comment.interpretare}</span>
+                          </div>
+                        )}
+                        {comment.descriere && !comment.teme && !comment.motive && !comment.viziune && !comment.interpretare && (
+                          <div className="user-comment-view-field-block">
+                            <span className="user-comment-view-label">Descriere:</span>
+                            <span className="user-comment-view-value">{comment.descriere}</span>
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </>
+                )}
+              </div>
             </div>
           )}
 

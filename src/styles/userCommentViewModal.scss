@@ -200,11 +200,8 @@
 }
 
 .user-comment-view-meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  margin-bottom: 1rem;
-  padding-bottom: 1rem;
+  margin-bottom: 1.25rem;
+  padding-bottom: 1.25rem;
   border-bottom: 1px solid rgba(122, 58, 0, 0.15);
 
   .dark-theme & {
@@ -212,9 +209,60 @@
   }
 }
 
+.user-comment-view-meta-toggle-wrap {
+  margin-bottom: 0.75rem;
+
+  .user-comment-view-meta-inline {
+    margin-top: 0.5rem;
+  }
+}
+
+.user-comment-view-meta-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.5rem 0;
+  border: none;
+  background: transparent;
+  color: #7a3a00;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: left;
+  border-radius: 6px;
+  transition: background 0.2s;
+
+  &:hover {
+    background: rgba(122, 58, 0, 0.08);
+  }
+
+  .dark-theme & {
+    color: #ffd591;
+
+    &:hover {
+      background: rgba(255, 213, 145, 0.08);
+    }
+  }
+}
+
+.user-comment-view-meta-row {
+  margin-bottom: 0.75rem;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.user-comment-view-meta-inline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.25rem;
+}
+
 .user-comment-view-meta-item {
   display: flex;
-  gap: 0.35rem;
+  gap: 0.4rem;
   font-size: 0.95rem;
   color: rgba(122, 58, 0, 0.9);
 
@@ -225,10 +273,60 @@
 
 .user-comment-view-label {
   font-weight: 600;
-  color: rgba(122, 58, 0, 0.75);
+  color: rgba(122, 58, 0, 0.8);
+  flex-shrink: 0;
 
   .dark-theme & {
-    color: rgba(255, 213, 145, 0.75);
+    color: rgba(255, 213, 145, 0.85);
+  }
+}
+
+.user-comment-view-meta-tags {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.user-comment-view-field-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.user-comment-view-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.user-comment-view-tag {
+  display: inline-block;
+  padding: 0.25rem 0.6rem;
+  font-size: 0.875rem;
+  background: rgba(169, 124, 80, 0.15);
+  color: #5a3510;
+  border-radius: 6px;
+  font-weight: 500;
+
+  .dark-theme & {
+    background: rgba(255, 213, 145, 0.15);
+    color: #ffd591;
+  }
+}
+
+.user-comment-view-meta-descriptive {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.user-comment-view-value {
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: rgba(60, 40, 20, 0.9);
+
+  .dark-theme & {
+    color: rgba(251, 238, 193, 0.9);
   }
 }
 

@@ -325,6 +325,58 @@
   line-clamp: 5;
 }
 
+.profile-comentarii-card-fields {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.profile-comentarii-card-meta {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: #7a5c3a;
+  word-break: break-word;
+
+  body.dark-theme & {
+    color: #c4a484;
+  }
+}
+
+.profile-comentarii-meta-line {
+  margin-bottom: 0.2rem;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.profile-comentarii-meta-label {
+  font-weight: 700;
+}
+
+
+.profile-comentarii-meta-tip {
+  font-weight: 600;
+  background: rgba(169, 124, 80, 0.18);
+
+  body.dark-theme & {
+    background: rgba(255, 213, 145, 0.18);
+  }
+}
+
+.profile-comentarii-card-plain-text {
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  line-clamp: 5;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
 .profile-comentarii-card-image-wrap {
   // flex: 1;
   min-height: 120px;

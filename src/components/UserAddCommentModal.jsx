@@ -4,9 +4,23 @@ import { uploadImageToCloudinary } from '../utils/cloudinary';
 import '../styles/admin.scss';
 import '../styles/userAddCommentModal.scss';
 
-const CATEGORII = [
-  'poezie', 'roman', 'comedie', 'basm', 'nuvela',
-  'critica', 'memorii', 'poveste', 'schita',
+const SPECII_LITERARE = [
+  'roman', 'nuvelă', 'poezie simbolistă', 'poezie romantică', 'poezie modernistă',
+  'comedie', 'basm', 'poveste', 'schiță', 'critică', 'memorii', 'dramă',
+];
+
+const CURENTE_LITERARE = [
+  'realism', 'romantism', 'simbolism', 'modernism', 'postmodernism',
+  'clasicism', 'baroc', 'iluminism', 'naturalism', 'expresionism',
+];
+
+const GENURI_LITERARE = [
+  'epic', 'liric', 'dramatic', 'epic-liric', 'liric-dramatic',
+];
+
+const TIPURI_OPERA = [
+  'obiectivă', 'subiectivă', 'realistă', 'modernistă', 'simbolistă',
+  'romantică', 'naturalistă', 'expresionistă',
 ];
 
 const TIP_COMENTARIU_OPTIONS = [
@@ -43,10 +57,10 @@ function fixRomanianEncoding(text) {
 }
 
 /**
- * Generează descrierea cu AI (Groq): extrage din text teme, motive, viziune, specii și interpretare succintă.
- * Încearcă fiecare cheie din groqApiKeys până reușește.
+ * Extrage cu AI (Groq) teme, motive, viziune și interpretare din textul comentariului.
+ * Returnează { teme, motive, viziune, interpretare }.
  */
-async function generateDescriereWithAI(text, groqApiKeys, groqApiUrl) {
+async function generateTemeMotiveViziuneInterpretareWithAI(text, groqApiKeys, groqApiUrl) {
   const t = (text || '').trim();
   if (!t) return null;
   const body = {
@@ -54,22 +68,23 @@ async function generateDescriereWithAI(text, groqApiKeys, groqApiUrl) {
     messages: [
       {
         role: 'system',
-        content: `Ești expert în literatura română. Analizează textul de comentariu literar și extrage o descriere succintă care să conțină:
-- Teme principale
-- Motive literare
-- Viziunea autorului
-- Specii (genuri, tipuri)
-- Interpretare succintă
+        content: `Ești expert în literatura română. Analizează textul de comentariu literar și extrage:
+- teme: temele principale (separate prin virgulă)
+- motive: motivele literare (separate prin virgulă)
+- viziune: viziunea autorului asupra lumii
+- interpretare: interpretare succintă
 
-Răspunde doar cu descrierea extrasă, fără titluri sau explicații. Maxim 250 caractere. În limba română.`,
+Răspunde DOAR cu un JSON valid, fără alt text:
+{"teme":"...","motive":"...","viziune":"...","interpretare":"..."}
+Fiecare câmp maxim 80 caractere. În limba română.`,
       },
       {
         role: 'user',
-        content: `Extrage din acest comentariu literar teme, motive, viziune, specii și interpretare succintă:\n\n${t}`,
+        content: `Extrage din acest comentariu literar teme, motive, viziune și interpretare:\n\n${t}`,
       },
     ],
     temperature: 0.3,
-    max_tokens: 200,
+    max_tokens: 300,
   };
   let lastError;
   for (const key of groqApiKeys) {
@@ -86,12 +101,20 @@ Răspunde doar cu descrierea extrasă, fără titluri sau explicații. Maxim 250
       }
       const json = await res.json();
       const content = (json?.choices?.[0]?.message?.content || '').trim();
-      if (content) return content;
+      if (content) {
+        const parsed = JSON.parse(content.replace(/```json?\s*|\s*```/g, '').trim());
+        return {
+          teme: (parsed.teme || '').trim(),
+          motive: (parsed.motive || '').trim(),
+          viziune: (parsed.viziune || '').trim(),
+          interpretare: (parsed.interpretare || '').trim(),
+        };
+      }
     } catch (e) {
       lastError = e;
     }
   }
-  throw lastError || new Error('Nu s-a putut genera descrierea.');
+  throw lastError || new Error('Nu s-a putut extrage cu AI.');
 }
 
 /** Groq limitează base64 la 4MB. Redimensionează imaginea dacă e prea mare. */
@@ -127,16 +150,23 @@ const UserAddCommentModal = ({ isOpen, onClose, onSubmit, onEditSubmit, initialC
   const [addMode, setAddMode] = useState('text');
   const [titlu, setTitlu] = useState('');
   const [autor, setAutor] = useState('');
-  const [categorie, setCategorie] = useState('');
+  const [anAparitie, setAnAparitie] = useState('');
+  const [curentLiterar, setCurentLiterar] = useState('');
+  const [specieLiterara, setSpecieLiterara] = useState('');
+  const [genLiterar, setGenLiterar] = useState('');
+  const [tipOpera, setTipOpera] = useState('');
   const [tip, setTip] = useState('general');
-  const [descriere, setDescriere] = useState('');
+  const [teme, setTeme] = useState('');
+  const [motive, setMotive] = useState('');
+  const [viziune, setViziune] = useState('');
+  const [interpretare, setInterpretare] = useState('');
   const [plan, setPlan] = useState('free');
   const [textContent, setTextContent] = useState('');
   const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [ocrExtracting, setOcrExtracting] = useState(false);
-  const [descriereGenerating, setDescriereGenerating] = useState(false);
+  const [extractAILoading, setExtractAILoading] = useState(false);
   const [error, setError] = useState('');
   const fileInputRef = useRef(null);
 
@@ -147,9 +177,16 @@ const UserAddCommentModal = ({ isOpen, onClose, onSubmit, onEditSubmit, initialC
       setAddMode(initialComment.type === 'image' ? 'image' : 'text');
       setTitlu(initialComment.titlu || '');
       setAutor(initialComment.autor || '');
-      setCategorie(initialComment.categorie || '');
+      setAnAparitie(initialComment.anAparitie || '');
+      setCurentLiterar(initialComment.curentLiterar || '');
+      setSpecieLiterara(initialComment.specieLiterara || initialComment.categorie || '');
+      setGenLiterar(initialComment.genLiterar || '');
+      setTipOpera(initialComment.tipOpera || '');
       setTip(initialComment.tip || 'general');
-      setDescriere(initialComment.descriere || '');
+      setTeme(initialComment.teme || '');
+      setMotive(initialComment.motive || '');
+      setViziune(initialComment.viziune || '');
+      setInterpretare(initialComment.interpretare || '');
       setPlan(initialComment.plan || 'free');
       setTextContent(initialComment.type === 'text' ? (initialComment.content || '') : '');
       setImageFile(null);
@@ -186,15 +223,22 @@ const UserAddCommentModal = ({ isOpen, onClose, onSubmit, onEditSubmit, initialC
     setAddMode('text');
     setTitlu('');
     setAutor('');
-    setCategorie('');
+    setAnAparitie('');
+    setCurentLiterar('');
+    setSpecieLiterara('');
+    setGenLiterar('');
+    setTipOpera('');
     setTip('general');
-    setDescriere('');
+    setTeme('');
+    setMotive('');
+    setViziune('');
+    setInterpretare('');
     setPlan('free');
     setTextContent('');
     setImageFile(null);
     setImagePreview(null);
     setOcrExtracting(false);
-    setDescriereGenerating(false);
+    setExtractAILoading(false);
     setError('');
   };
 
@@ -315,9 +359,16 @@ const UserAddCommentModal = ({ isOpen, onClose, onSubmit, onEditSubmit, initialC
           content: trimmed,
           titlu,
           autor,
-          categorie,
+          anAparitie,
+          curentLiterar,
+          specieLiterara,
+          genLiterar,
+          tipOpera,
           tip,
-          descriere,
+          teme,
+          motive,
+          viziune,
+          interpretare,
           plan,
         });
         resetForm();
@@ -351,9 +402,16 @@ const UserAddCommentModal = ({ isOpen, onClose, onSubmit, onEditSubmit, initialC
           content: imageUrl,
           titlu,
           autor,
-          categorie,
+          anAparitie,
+          curentLiterar,
+          specieLiterara,
+          genLiterar,
+          tipOpera,
           tip,
-          descriere,
+          teme,
+          motive,
+          viziune,
+          interpretare,
           plan,
         });
         resetForm();
@@ -445,18 +503,82 @@ const UserAddCommentModal = ({ isOpen, onClose, onSubmit, onEditSubmit, initialC
             />
           </div>
 
+          <div className="user-add-comment-form-row">
+            <div className="admin-form-group">
+              <label htmlFor="user-comment-an-aparitie">An apariție</label>
+              <input
+                id="user-comment-an-aparitie"
+                type="text"
+                value={anAparitie}
+                onChange={(e) => { setAnAparitie(e.target.value); setError(''); }}
+                placeholder="1920"
+                className="admin-input"
+                autoComplete="off"
+                disabled={uploading}
+              />
+            </div>
+            <div className="admin-form-group">
+              <label htmlFor="user-comment-curent-literar">Curent literar</label>
+              <select
+                id="user-comment-curent-literar"
+                value={curentLiterar}
+                onChange={(e) => setCurentLiterar(e.target.value)}
+                className="admin-select"
+                disabled={uploading}
+              >
+                <option value="">Selectează</option>
+                {CURENTE_LITERARE.map((c) => (
+                  <option key={c} value={c}>{c}</option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          <div className="user-add-comment-form-row">
+            <div className="admin-form-group">
+              <label htmlFor="user-comment-specie-literara">Specie literară</label>
+              <select
+                id="user-comment-specie-literara"
+                value={specieLiterara}
+                onChange={(e) => { setSpecieLiterara(e.target.value); setError(''); }}
+                className="admin-select"
+                disabled={uploading}
+              >
+                <option value="">Selectează</option>
+                {SPECII_LITERARE.map((s) => (
+                  <option key={s} value={s}>{s}</option>
+                ))}
+              </select>
+            </div>
+            <div className="admin-form-group">
+              <label htmlFor="user-comment-gen-literar">Gen literar</label>
+              <select
+                id="user-comment-gen-literar"
+                value={genLiterar}
+                onChange={(e) => setGenLiterar(e.target.value)}
+                className="admin-select"
+                disabled={uploading}
+              >
+                <option value="">Selectează</option>
+                {GENURI_LITERARE.map((g) => (
+                  <option key={g} value={g}>{g}</option>
+                ))}
+              </select>
+            </div>
+          </div>
+
           <div className="admin-form-group">
-            <label htmlFor="user-comment-categorie">Categorie *</label>
+            <label htmlFor="user-comment-tip-opera">Tip operă</label>
             <select
-              id="user-comment-categorie"
-              value={categorie}
-              onChange={(e) => { setCategorie(e.target.value); setError(''); }}
+              id="user-comment-tip-opera"
+              value={tipOpera}
+              onChange={(e) => setTipOpera(e.target.value)}
               className="admin-select"
               disabled={uploading}
             >
-              <option value="">Selectează categoria</option>
-              {CATEGORII.map((cat) => (
-                <option key={cat} value={cat}>{cat}</option>
+              <option value="">Selectează</option>
+              {TIPURI_OPERA.map((t) => (
+                <option key={t} value={t}>{t}</option>
               ))}
             </select>
           </div>
@@ -477,13 +599,55 @@ const UserAddCommentModal = ({ isOpen, onClose, onSubmit, onEditSubmit, initialC
           </div>
 
           <div className="admin-form-group">
-            <label htmlFor="user-comment-descriere">Descriere</label>
+            <label htmlFor="user-comment-teme">Teme</label>
             <input
-              id="user-comment-descriere"
+              id="user-comment-teme"
               type="text"
-              value={descriere}
-              onChange={(e) => { setDescriere(e.target.value); setError(''); }}
-              placeholder="Teme, motive, viziune, specii și interpretare succintă."
+              value={teme}
+              onChange={(e) => { setTeme(e.target.value); setError(''); }}
+              placeholder="pământ, iubire, destin, națională..."
+              className="admin-input"
+              autoComplete="off"
+              disabled={uploading}
+            />
+          </div>
+
+          <div className="admin-form-group">
+            <label htmlFor="user-comment-motive">Motive</label>
+            <input
+              id="user-comment-motive"
+              type="text"
+              value={motive}
+              onChange={(e) => { setMotive(e.target.value); setError(''); }}
+              placeholder="drumul, crucea..."
+              className="admin-input"
+              autoComplete="off"
+              disabled={uploading}
+            />
+          </div>
+
+          <div className="admin-form-group">
+            <label htmlFor="user-comment-viziune">Viziune</label>
+            <input
+              id="user-comment-viziune"
+              type="text"
+              value={viziune}
+              onChange={(e) => { setViziune(e.target.value); setError(''); }}
+              placeholder="realistă, obiectivă..."
+              className="admin-input"
+              autoComplete="off"
+              disabled={uploading}
+            />
+          </div>
+
+          <div className="admin-form-group">
+            <label htmlFor="user-comment-interpretare">Interpretare</label>
+            <input
+              id="user-comment-interpretare"
+              type="text"
+              value={interpretare}
+              onChange={(e) => { setInterpretare(e.target.value); setError(''); }}
+              placeholder="drama țăranului sărac în lupta pentru pământ..."
               className="admin-input"
               autoComplete="off"
               disabled={uploading}
@@ -509,43 +673,48 @@ const UserAddCommentModal = ({ isOpen, onClose, onSubmit, onEditSubmit, initialC
                   onClick={async () => {
                     const t = textContent?.trim();
                     if (!t) {
-                      setError('Introdu mai întâi textul complet pentru a genera descrierea.');
+                      setError('Introdu mai întâi textul complet pentru extragere cu AI.');
                       return;
                     }
                     const groqKeys = [import.meta.env.VITE_GROQ_API_KEY, import.meta.env.VITE_GROQ_API_KEY_1]
                       .filter((k) => k && k !== 'undefined');
                     if (!groqKeys.length) {
-                      setError('Setează VITE_GROQ_API_KEY în .env pentru generarea descrierii cu AI.');
+                      setError('Setează VITE_GROQ_API_KEY în .env pentru extragerea cu AI.');
                       return;
                     }
-                    setDescriereGenerating(true);
+                    setExtractAILoading(true);
                     setError('');
                     try {
-                      const generated = await generateDescriereWithAI(
+                      const result = await generateTemeMotiveViziuneInterpretareWithAI(
                         t,
                         groqKeys,
                         import.meta.env.VITE_GROQ_API_URL || 'https://api.groq.com/openai/v1/chat/completions'
                       );
-                      if (generated) setDescriere(generated);
+                      if (result) {
+                        setTeme(result.teme);
+                        setMotive(result.motive);
+                        setViziune(result.viziune);
+                        setInterpretare(result.interpretare);
+                      }
                     } catch (err) {
-                      setError(err?.message || 'Eroare la generarea descrierii cu AI.');
+                      setError(err?.message || 'Eroare la extragerea cu AI.');
                     } finally {
-                      setDescriereGenerating(false);
+                      setExtractAILoading(false);
                     }
                   }}
-                  disabled={uploading || descriereGenerating || !textContent?.trim()}
+                  disabled={uploading || extractAILoading || !textContent?.trim()}
                   className="user-add-comment-generate-desc"
-                  title="Extrage cu AI teme, motive, viziune, specii și interpretare succintă din text"
+                  title="Extrage cu AI teme, motive, viziune și interpretare din text"
                 >
-                  {descriereGenerating ? (
+                  {extractAILoading ? (
                     <>
                       <span className="user-add-comment-spinner" />
-                      Se generează...
+                      Se extrage...
                     </>
                   ) : (
                     <>
                       <Sparkles size={16} />
-                      Generează descriere cu AI
+                      Extrage teme, motive, viziune, interpretare cu AI
                     </>
                   )}
                 </button>
