@@ -312,6 +312,44 @@
   border-radius: 8px;
 }
 
+.user-add-comment-previews-grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.65rem;
+}
+
+.user-add-comment-preview-item {
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid rgba(122, 58, 0, 0.25);
+
+  .dark-theme & {
+    border-color: rgba(255, 213, 145, 0.28);
+  }
+}
+
+.user-add-comment-preview-remove {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 24px;
+  height: 24px;
+  border: none;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #fff;
+  background: rgba(201, 42, 42, 0.9);
+
+  &:hover {
+    background: rgba(201, 42, 42, 1);
+  }
+}
+
 .user-add-comment-image-actions {
   display: flex;
   flex-wrap: wrap;
@@ -349,6 +387,42 @@
   &:disabled {
     opacity: 0.5;
     cursor: not-allowed;
+  }
+}
+
+.user-add-comment-remix-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #7a3a00;
+  background: rgba(111, 66, 193, 0.12);
+  border: 1px solid rgba(111, 66, 193, 0.38);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover:not(:disabled) {
+    background: rgba(111, 66, 193, 0.2);
+    border-color: rgba(111, 66, 193, 0.55);
+  }
+
+  &:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+  }
+
+  .dark-theme & {
+    color: #e9d8ff;
+    background: rgba(154, 106, 255, 0.18);
+    border-color: rgba(185, 152, 255, 0.45);
+
+    &:hover:not(:disabled) {
+      background: rgba(154, 106, 255, 0.26);
+      border-color: rgba(200, 173, 255, 0.62);
+    }
   }
 }
 

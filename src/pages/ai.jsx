@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import Layout from '../assets/Layout';
 import '../styles/style.scss';
 import '../styles/ai.scss';
+import AICommentsFromImages from '../components/AICommentsFromImages';
 
 // Minimal, safe Markdown -> HTML converter (headings, lists, bold/italic, code, links)
 const escapeHtml = (str) =>
@@ -124,6 +125,8 @@ const inlineMd = (s) => {
   t = t.replace(/\[([^\]]+)\]\((https?:[^\s)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1<\/a>');
   // Bold **text**
   t = t.replace(/\*\*([^*]+)\*\*/g, '<strong>$1<\/strong>');
+  // Underline ++text++ (custom safe syntax)
+  t = t.replace(/\+\+([^+]+)\+\+/g, '<u>$1<\/u>');
   // Italic _text_ or *text*
   t = t.replace(/(^|[^*])\*([^*]+)\*(?!\*)/g, '$1<em>$2<\/em>');
   t = t.replace(/(^|[^_])_([^_]+)_(?!_)/g, '$1<em>$2<\/em>');
@@ -140,6 +143,7 @@ export default function AI() {
   const [isLoading, setIsLoading] = useState(false);
   const [evaluation, setEvaluation] = useState(null);
   const [inputType, setInputType] = useState('text');
+  const [aiMode, setAiMode] = useState('evaluator'); // 'evaluator' | 'commentsFromImages'
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [imagePreview, setImagePreview] = useState(null);
   const [formData, setFormData] = useState({
@@ -534,14 +538,32 @@ export default function AI() {
 
       <div className="container">
         <div className="ai-container">
-          {/* Main Form Section */}
+          {/* Mode Selector */}
           <div className={`ai-main-section ${darkTheme ? 'dark-theme' : 'light-theme'}`}>
             <div className="ai-header">
               <h2 className="ai-main-title">Evaluator Lucrări AI</h2>
               <p className="ai-subtitle">Introduceți rezolvarea și baremul pentru a primi un punctaj estimativ, feedback și sfaturi de îmbunătățire</p>
               
             </div>
+
+            <div className="ai-input-type-selector" style={{ marginBottom: 14 }}>
+              <button
+                type="button"
+                onClick={() => setAiMode('evaluator')}
+                className={`ai-type-tab ${darkTheme ? 'dark-theme' : ''} ${aiMode === 'evaluator' ? 'active' : ''}`}
+              >
+                Evaluator lucrări
+              </button>
+              <button
+                type="button"
+                onClick={() => setAiMode('commentsFromImages')}
+                className={`ai-type-tab ${darkTheme ? 'dark-theme' : ''} ${aiMode === 'commentsFromImages' ? 'active' : ''}`}
+              >
+                Comentarii din poze
+              </button>
+            </div>
             
+            {aiMode === 'evaluator' && (
             <form onSubmit={handleSubmit} className="ai-form">
               {/* Input Type Selector */}
               <div className="ai-input-type-selector">
@@ -676,10 +698,11 @@ export default function AI() {
                 )}
               </button>
             </form>
+            )}
           </div>
 
           {/* Results Section */}
-          {evaluation && (
+          {aiMode === 'evaluator' && evaluation && (
             <div className={`ai-results-section ${darkTheme ? 'dark-theme' : 'light-theme'}`}>
               <div className="ai-results-header">
                 <h2 className="ai-results-title">Rezultatele evaluării</h2>
@@ -738,6 +761,10 @@ export default function AI() {
                 </div>
               )}
             </div>
+          )}
+
+          {aiMode === 'commentsFromImages' && (
+            <AICommentsFromImages darkTheme={darkTheme} markdownToHtml={markdownToHtml} />
           )}
         </div>
       </div>
