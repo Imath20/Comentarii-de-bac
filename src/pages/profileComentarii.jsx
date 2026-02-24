@@ -2,10 +2,11 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../firebase/AuthContext';
 import Layout from '../assets/Layout';
-import { ArrowLeft, FileText, Image, Trash2 } from 'lucide-react';
+import { ArrowLeft, FileText, Image, Trash2, Upload } from 'lucide-react';
 import { getUserComments, addUserComment, updateUserComment, deleteUserComment } from '../firebase/userCommentsService';
 import UserAddCommentModal from '../components/UserAddCommentModal';
 import UserCommentViewModal from '../components/UserCommentViewModal';
+import AddToComentariiModal from '../components/AddToComentariiModal';
 import '../styles/style.scss';
 import '../styles/comentarii.scss';
 import '../styles/profile.scss';
@@ -22,8 +23,11 @@ const ProfileComentarii = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editComment, setEditComment] = useState(null);
   const [viewComment, setViewComment] = useState(null);
+  const [addToComentariiComment, setAddToComentariiComment] = useState(null);
   const [deletingId, setDeletingId] = useState(null);
   const [scrolled, setScrolled] = useState(false);
+
+  const isAdminOrSemiAdmin = userProfile?.isAdmin === true || userProfile?.isSemiAdmin === true;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
@@ -254,6 +258,17 @@ const ProfileComentarii = () => {
                             {comment.specieLiterara || comment.categorie}
                           </div>
                         )}
+                        {isAdminOrSemiAdmin && comment.type === 'text' && (
+                          <button
+                            type="button"
+                            onClick={(e) => { e.stopPropagation(); setAddToComentariiComment(comment); }}
+                            className="profile-comentarii-add-to-page-btn"
+                            title="Adaugă la pagina Comentarii"
+                          >
+                            <Upload size={18} />
+                            <span>Adaugă la Comentarii</span>
+                          </button>
+                        )}
                       <button
                         type="button"
                         onClick={(e) => { e.stopPropagation(); handleDeleteComment(comment.id); }}
@@ -313,8 +328,17 @@ const ProfileComentarii = () => {
         isOpen={!!viewComment}
         onClose={() => setViewComment(null)}
         onEdit={(c) => { setViewComment(null); setEditComment(c); setIsModalOpen(true); }}
+        onAddToComentarii={isAdminOrSemiAdmin ? (c) => { setViewComment(null); setAddToComentariiComment(c); } : undefined}
         darkTheme={darkTheme}
         formatDate={formatDate}
+      />
+
+      <AddToComentariiModal
+        comment={addToComentariiComment}
+        isOpen={!!addToComentariiComment}
+        onClose={() => setAddToComentariiComment(null)}
+        darkTheme={darkTheme}
+        onSuccess={() => setAddToComentariiComment(null)}
       />
     </Layout>
   );

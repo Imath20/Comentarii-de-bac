@@ -407,6 +407,36 @@
   gap: 0.5rem;
 }
 
+.profile-comentarii-add-to-page-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.4rem 0.65rem;
+  border: none;
+  border-radius: 8px;
+  background: rgba(169, 124, 80, 0.2);
+  color: #5c4033;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+
+  &:hover {
+    background: rgba(169, 124, 80, 0.35);
+    color: #2c1810;
+  }
+
+  body.dark-theme & {
+    background: rgba(255, 213, 145, 0.15);
+    color: #c4a574;
+
+    &:hover {
+      background: rgba(255, 213, 145, 0.25);
+      color: #ffd591;
+    }
+  }
+}
+
 .profile-comentarii-delete-btn {
   padding: 0.5rem;
   border: none;

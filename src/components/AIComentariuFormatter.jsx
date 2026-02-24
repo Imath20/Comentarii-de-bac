@@ -148,6 +148,8 @@ const applyAiInstructions = (content, instructions, colorChoices, formatMethod =
   });
 };
 
+export { COLOR_PALETTE, sanitizeText, stripJson, safeParseJson, applyAiInstructions };
+
 const AIComentariuFormatter = ({ content, onApply, darkTheme, onStatus }) => {
   const [selectedColors, setSelectedColors] = useState([COLOR_PALETTE[0].value, COLOR_PALETTE[1].value]);
   const [formatMethod, setFormatMethod] = useState('highlight'); // 'highlight', 'underline', 'textColor'

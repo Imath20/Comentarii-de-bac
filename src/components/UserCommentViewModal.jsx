@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { X, Copy, Pencil, ChevronDown, ChevronUp } from 'lucide-react';
+import { X, Copy, Pencil, ChevronDown, ChevronUp, Upload } from 'lucide-react';
 import '../styles/userCommentViewModal.scss';
 
 const TIP_COMENTARIU_LABELS = {
@@ -20,7 +20,7 @@ const isListLike = (str) => {
   return items.every((s) => s.length < 50);
 };
 
-const UserCommentViewModal = ({ comment, isOpen, onClose, onEdit, darkTheme, formatDate }) => {
+const UserCommentViewModal = ({ comment, isOpen, onClose, onEdit, onAddToComentarii, darkTheme, formatDate }) => {
   const [imageFullscreen, setImageFullscreen] = useState(false);
   const [copyFeedback, setCopyFeedback] = useState(false);
   const [metaExpanded, setMetaExpanded] = useState(true);
@@ -128,6 +128,18 @@ const UserCommentViewModal = ({ comment, isOpen, onClose, onEdit, darkTheme, for
                 title="Editează"
               >
                 <Pencil size={20} />
+              </button>
+            )}
+            {onAddToComentarii && comment?.type === 'text' && (
+              <button
+                type="button"
+                onClick={() => { onClose(); onAddToComentarii(comment); }}
+                className="user-comment-view-action user-comment-view-action-add"
+                aria-label="Adaugă la pagina Comentarii"
+                title="Adaugă la Comentarii"
+              >
+                <Upload size={20} />
+                <span>Adaugă la Comentarii</span>
               </button>
             )}
             <button
