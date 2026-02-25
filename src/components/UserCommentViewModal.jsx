@@ -154,7 +154,7 @@ const UserCommentViewModal = ({ comment, isOpen, onClose, onEdit, onAddToComenta
         </div>
 
         <div className="user-comment-view-body">
-          {(comment.autor || comment.anAparitie || comment.curentLiterar || comment.specieLiterara || comment.genLiterar || comment.tipOpera || comment.tip || comment.teme || comment.motive || comment.viziune || comment.interpretare || comment.descriere) && (
+          {(comment.autor || comment.anAparitie || comment.curentLiterar || comment.specieLiterara || comment.genLiterar || comment.tip || comment.teme || comment.motive || comment.viziune || comment.interpretare || comment.descriere) && (
             <div className="user-comment-view-meta">
               <div className="user-comment-view-meta-toggle-wrap">
                 <button
@@ -168,7 +168,7 @@ const UserCommentViewModal = ({ comment, isOpen, onClose, onEdit, onAddToComenta
                 </button>
                 {metaExpanded && (
                   <>
-                    {(comment.autor || comment.anAparitie || comment.curentLiterar || comment.specieLiterara || comment.genLiterar || comment.tipOpera || comment.tip) && (
+                    {(comment.autor || comment.anAparitie || comment.curentLiterar || comment.specieLiterara || comment.genLiterar || comment.tip) && (
                       <div className="user-comment-view-meta-row user-comment-view-meta-inline">
                         {comment.autor && (
                           <div className="user-comment-view-meta-item">
@@ -198,12 +198,6 @@ const UserCommentViewModal = ({ comment, isOpen, onClose, onEdit, onAddToComenta
                           <div className="user-comment-view-meta-item">
                             <span className="user-comment-view-label">Gen literar:</span>
                             <span>{comment.genLiterar}</span>
-                          </div>
-                        )}
-                        {comment.tipOpera && (
-                          <div className="user-comment-view-meta-item">
-                            <span className="user-comment-view-label">Tip operă:</span>
-                            <span>{comment.tipOpera}</span>
                           </div>
                         )}
                         {comment.tip && (

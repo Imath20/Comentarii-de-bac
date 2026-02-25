@@ -18,11 +18,6 @@ const GENURI_LITERARE = [
   'epic', 'liric', 'dramatic', 'epic-liric', 'liric-dramatic',
 ];
 
-const TIPURI_OPERA = [
-  'obiectivă', 'subiectivă', 'realistă', 'modernistă', 'simbolistă',
-  'romantică', 'naturalistă', 'expresionistă',
-];
-
 const TIP_COMENTARIU_OPTIONS = [
   { value: 'general', label: 'Comentariu general' },
   { value: 'tema-viziune', label: 'Tema și viziunea' },
@@ -74,10 +69,10 @@ function countWords(text) {
 }
 
 /**
- * Extrage cu AI (Groq) teme, motive, viziune și interpretare din textul comentariului.
- * Returnează { teme, motive, viziune, interpretare }.
+ * Extrage cu AI (Groq) din textul comentariului: titlu, autor, an, curent, specie, gen, teme, motive, viziune, interpretare.
+ * Returnează { titlu, autor, anAparitie, curentLiterar, specieLiterara, genLiterar, teme, motive, viziune, interpretare }.
  */
-async function generateTemeMotiveViziuneInterpretareWithAI(text, groqApiKeys, groqApiUrl) {
+async function generateMetaWithAI(text, groqApiKeys, groqApiUrl) {
   const t = (text || '').trim();
   if (!t) return null;
   const body = {
@@ -86,22 +81,28 @@ async function generateTemeMotiveViziuneInterpretareWithAI(text, groqApiKeys, gr
       {
         role: 'system',
         content: `Ești expert în literatura română. Analizează textul de comentariu literar și extrage:
+- titlu: titlul operei comentate (scurt)
+- autor: autorul operei
+- anAparitie: anul apariției (număr de 4 cifre sau gol)
+- curentLiterar: unul din: realism, romantism, simbolism, modernism, postmodernism, clasicism, baroc, iluminism, naturalism, expresionism (sau gol)
+- specieLiterara: unul din: roman, nuvelă, poezie simbolistă, poezie romantică, poezie modernistă, comedie, basm, poveste, schiță, critică, memorii, dramă (sau gol)
+- genLiterar: unul din: epic, liric, dramatic, epic-liric, liric-dramatic (sau gol)
 - teme: temele principale (separate prin virgulă)
 - motive: motivele literare (separate prin virgulă)
 - viziune: viziunea autorului asupra lumii
 - interpretare: interpretare succintă
 
 Răspunde DOAR cu un JSON valid, fără alt text:
-{"teme":"...","motive":"...","viziune":"...","interpretare":"..."}
-Fiecare câmp maxim 80 caractere. În limba română.`,
+{"titlu":"...","autor":"...","anAparitie":"...","curentLiterar":"...","specieLiterara":"...","genLiterar":"...","teme":"...","motive":"...","viziune":"...","interpretare":"..."}
+Câmpurile teme/motive/viziune/interpretare maxim 80 caractere. În limba română.`,
       },
       {
         role: 'user',
-        content: `Extrage din acest comentariu literar teme, motive, viziune și interpretare:\n\n${t}`,
+        content: `Extrage din acest comentariu literar toate câmpurile: titlu operă, autor, an apariție, curent literar, specie literară, gen literar, teme, motive, viziune, interpretare:\n\n${t}`,
       },
     ],
     temperature: 0.3,
-    max_tokens: 300,
+    max_tokens: 450,
   };
   let lastError;
   for (const key of groqApiKeys) {
@@ -121,6 +122,12 @@ Fiecare câmp maxim 80 caractere. În limba română.`,
       if (content) {
         const parsed = JSON.parse(content.replace(/```json?\s*|\s*```/g, '').trim());
         return {
+          titlu: (parsed.titlu || '').trim(),
+          autor: (parsed.autor || '').trim(),
+          anAparitie: (parsed.anAparitie || '').toString().trim(),
+          curentLiterar: (parsed.curentLiterar || '').trim(),
+          specieLiterara: (parsed.specieLiterara || '').trim(),
+          genLiterar: (parsed.genLiterar || '').trim(),
           teme: (parsed.teme || '').trim(),
           motive: (parsed.motive || '').trim(),
           viziune: (parsed.viziune || '').trim(),
@@ -171,7 +178,6 @@ const UserAddCommentModal = ({ isOpen, onClose, onSubmit, onEditSubmit, initialC
   const [curentLiterar, setCurentLiterar] = useState('');
   const [specieLiterara, setSpecieLiterara] = useState('');
   const [genLiterar, setGenLiterar] = useState('');
-  const [tipOpera, setTipOpera] = useState('');
   const [tip, setTip] = useState('general');
   const [teme, setTeme] = useState('');
   const [motive, setMotive] = useState('');
@@ -201,7 +207,6 @@ const UserAddCommentModal = ({ isOpen, onClose, onSubmit, onEditSubmit, initialC
       setCurentLiterar(initialComment.curentLiterar || '');
       setSpecieLiterara(initialComment.specieLiterara || initialComment.categorie || '');
       setGenLiterar(initialComment.genLiterar || '');
-      setTipOpera(initialComment.tipOpera || '');
       setTip(initialComment.tip || 'general');
       setTeme(initialComment.teme || '');
       setMotive(initialComment.motive || '');
@@ -252,7 +257,6 @@ const UserAddCommentModal = ({ isOpen, onClose, onSubmit, onEditSubmit, initialC
     setCurentLiterar('');
     setSpecieLiterara('');
     setGenLiterar('');
-    setTipOpera('');
     setTip('general');
     setTeme('');
     setMotive('');
@@ -627,7 +631,6 @@ const UserAddCommentModal = ({ isOpen, onClose, onSubmit, onEditSubmit, initialC
           curentLiterar,
           specieLiterara,
           genLiterar,
-          tipOpera,
           tip,
           teme,
           motive,
@@ -656,7 +659,6 @@ const UserAddCommentModal = ({ isOpen, onClose, onSubmit, onEditSubmit, initialC
             curentLiterar,
             specieLiterara,
             genLiterar,
-            tipOpera,
             tip,
             teme,
             motive,
@@ -705,7 +707,6 @@ const UserAddCommentModal = ({ isOpen, onClose, onSubmit, onEditSubmit, initialC
           curentLiterar,
           specieLiterara,
           genLiterar,
-          tipOpera,
           tip,
           teme,
           motive,
@@ -867,22 +868,6 @@ const UserAddCommentModal = ({ isOpen, onClose, onSubmit, onEditSubmit, initialC
           </div>
 
           <div className="admin-form-group">
-            <label htmlFor="user-comment-tip-opera">Tip operă</label>
-            <select
-              id="user-comment-tip-opera"
-              value={tipOpera}
-              onChange={(e) => setTipOpera(e.target.value)}
-              className="admin-select"
-              disabled={uploading}
-            >
-              <option value="">Selectează</option>
-              {TIPURI_OPERA.map((t) => (
-                <option key={t} value={t}>{t}</option>
-              ))}
-            </select>
-          </div>
-
-          <div className="admin-form-group">
             <label htmlFor="user-comment-tip">Tip comentariu</label>
             <select
               id="user-comment-tip"
@@ -995,16 +980,22 @@ const UserAddCommentModal = ({ isOpen, onClose, onSubmit, onEditSubmit, initialC
                     setExtractAILoading(true);
                     setError('');
                     try {
-                      const result = await generateTemeMotiveViziuneInterpretareWithAI(
+                      const result = await generateMetaWithAI(
                         t,
                         groqKeys,
                         import.meta.env.VITE_GROQ_API_URL || 'https://api.groq.com/openai/v1/chat/completions'
                       );
                       if (result) {
-                        setTeme(result.teme);
-                        setMotive(result.motive);
-                        setViziune(result.viziune);
-                        setInterpretare(result.interpretare);
+                        if (result.titlu) setTitlu(result.titlu);
+                        if (result.autor) setAutor(result.autor);
+                        if (result.anAparitie !== undefined) setAnAparitie(result.anAparitie);
+                        if (result.curentLiterar) setCurentLiterar(result.curentLiterar);
+                        if (result.specieLiterara) setSpecieLiterara(result.specieLiterara);
+                        if (result.genLiterar) setGenLiterar(result.genLiterar);
+                        setTeme(result.teme || '');
+                        setMotive(result.motive || '');
+                        setViziune(result.viziune || '');
+                        setInterpretare(result.interpretare || '');
                       }
                     } catch (err) {
                       setError(err?.message || 'Eroare la extragerea cu AI.');
@@ -1014,7 +1005,7 @@ const UserAddCommentModal = ({ isOpen, onClose, onSubmit, onEditSubmit, initialC
                   }}
                   disabled={uploading || extractAILoading || !sourceText?.trim()}
                   className="user-add-comment-generate-desc"
-                  title="Extrage cu AI teme, motive, viziune și interpretare din text"
+                  title="Extrage cu AI titlu, autor, an, curent, specie, gen, teme, motive, viziune și interpretare din text"
                 >
                   {extractAILoading ? (
                     <>
@@ -1024,7 +1015,7 @@ const UserAddCommentModal = ({ isOpen, onClose, onSubmit, onEditSubmit, initialC
                   ) : (
                     <>
                       <Sparkles size={16} />
-                      Extrage teme, motive, viziune, interpretare cu AI
+                      Extrage cu AI
                     </>
                   )}
                 </button>

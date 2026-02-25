@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../firebase/AuthContext';
 import Layout from '../assets/Layout';
-import { ArrowLeft, FileText, Image, Trash2, Upload } from 'lucide-react';
+import { ArrowLeft, FileText, Image, Trash2, Upload, Share2 } from 'lucide-react';
 import { getUserComments, addUserComment, updateUserComment, deleteUserComment } from '../firebase/userCommentsService';
 import UserAddCommentModal from '../components/UserAddCommentModal';
 import UserCommentViewModal from '../components/UserCommentViewModal';
@@ -26,6 +26,7 @@ const ProfileComentarii = () => {
   const [addToComentariiComment, setAddToComentariiComment] = useState(null);
   const [deletingId, setDeletingId] = useState(null);
   const [scrolled, setScrolled] = useState(false);
+  const [shareCopiedId, setShareCopiedId] = useState(null);
 
   const isAdminOrSemiAdmin = userProfile?.isAdmin === true || userProfile?.isSemiAdmin === true;
 
@@ -92,7 +93,6 @@ const ProfileComentarii = () => {
         c.curentLiterar || '',
         c.specieLiterara || c.categorie || '',
         c.genLiterar || '',
-        c.tipOpera || '',
         c.teme || '',
         c.motive || '',
         c.viziune || '',
@@ -125,6 +125,35 @@ const ProfileComentarii = () => {
       console.error('Error deleting comment:', err);
     } finally {
       setDeletingId(null);
+    }
+  };
+
+  const handleShareComment = async (e, comment) => {
+    e.stopPropagation();
+    const title = comment.titlu || 'Comentariu';
+    const text = comment.type === 'text'
+      ? (comment.content?.slice(0, 500) + (comment.content?.length > 500 ? '…' : '')) || ''
+      : '';
+    const shareData = { title, text: text ? `${title}\n\n${text}` : title };
+    try {
+      if (navigator.share) {
+        await navigator.share({
+          ...shareData,
+          url: window.location.href,
+        });
+      } else {
+        await navigator.clipboard.writeText(shareData.text || shareData.title);
+        setShareCopiedId(comment.id);
+        setTimeout(() => setShareCopiedId(null), 2000);
+      }
+    } catch (err) {
+      if (err?.name !== 'AbortError') {
+        try {
+          await navigator.clipboard.writeText(shareData.text || shareData.title);
+          setShareCopiedId(comment.id);
+          setTimeout(() => setShareCopiedId(null), 2000);
+        } catch (_) {}
+      }
     }
   };
 
@@ -213,12 +242,34 @@ const ProfileComentarii = () => {
                     <div className={`comentarii-card-profil profile-comentarii-badge ${darkTheme ? 'dark-theme' : ''}`}>
                       {comment.plan === 'premium' ? 'Premium' : comment.plan === 'pro' ? 'Pro' : 'GRATIS'}
                     </div>
+                    <div className="profile-comentarii-card-top">
+                      <div className="profile-comentarii-card-top-actions">
+                        {isAdminOrSemiAdmin && comment.type === 'text' && (
+                          <button
+                            type="button"
+                            onClick={(e) => { e.stopPropagation(); setAddToComentariiComment(comment); }}
+                            className="profile-comentarii-icon-btn"
+                            title="Adaugă la pagina Comentarii"
+                          >
+                            <Upload size={18} />
+                          </button>
+                        )}
+                        <button
+                          type="button"
+                          onClick={(e) => handleShareComment(e, comment)}
+                          className="profile-comentarii-icon-btn"
+                          title={shareCopiedId === comment.id ? 'Copiat!' : 'Share'}
+                        >
+                          <Share2 size={18} />
+                        </button>
+                      </div>
+                    </div>
                     <div className="comentarii-card-title profile-comentarii-card-title">
                       {comment.titlu || (comment.type === 'text' ? (comment.content?.slice(0, 60) + (comment.content?.length > 60 ? '...' : '')) : 'Imagine')}
                     </div>
                     <div className="comentarii-card-description profile-comentarii-card-fields">
                       {(() => {
-                        const hasMeta = comment.autor || comment.anAparitie || comment.curentLiterar || comment.specieLiterara || comment.categorie || comment.genLiterar || comment.tipOpera || comment.tip;
+                        const hasMeta = comment.autor || comment.anAparitie || comment.curentLiterar || comment.specieLiterara || comment.categorie || comment.genLiterar || comment.tip;
                         const TIP_LABELS = { general: 'General', 'tema-viziune': 'Tema și viziunea', 'caracterizare-personaj': 'Caracterizare personaj', 'relatie-doua-personaje': 'Relația personaje' };
                         if (hasMeta) {
                           const items = [];
@@ -227,7 +278,6 @@ const ProfileComentarii = () => {
                           if (comment.curentLiterar) items.push({ label: 'Curent', value: comment.curentLiterar });
                           if (comment.specieLiterara || comment.categorie) items.push({ label: 'Specie', value: comment.specieLiterara || comment.categorie });
                           if (comment.genLiterar) items.push({ label: 'Gen', value: comment.genLiterar });
-                          if (comment.tipOpera) items.push({ label: 'Tip operă', value: comment.tipOpera });
                           if (comment.tip) items.push({ label: 'Tip comentariu', value: TIP_LABELS[comment.tip] || comment.tip });
                           return (
                             <div className="profile-comentarii-card-meta">
@@ -257,17 +307,6 @@ const ProfileComentarii = () => {
                           <div className={`comentarii-card-number ${darkTheme ? 'dark-theme' : ''}`}>
                             {comment.specieLiterara || comment.categorie}
                           </div>
-                        )}
-                        {isAdminOrSemiAdmin && comment.type === 'text' && (
-                          <button
-                            type="button"
-                            onClick={(e) => { e.stopPropagation(); setAddToComentariiComment(comment); }}
-                            className="profile-comentarii-add-to-page-btn"
-                            title="Adaugă la pagina Comentarii"
-                          >
-                            <Upload size={18} />
-                            <span>Adaugă la Comentarii</span>
-                          </button>
                         )}
                       <button
                         type="button"
