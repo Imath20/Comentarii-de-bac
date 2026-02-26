@@ -288,6 +288,22 @@
       color: #ffd591;
     }
   }
+
+  .comentarii-grid-container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media (max-width: 1200px) {
+    .comentarii-grid-container {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .comentarii-grid-container {
+      grid-template-columns: 1fr;
+    }
+  }
 }
 
 .profile-comentarii-card {
@@ -448,6 +464,69 @@
 
   .comentarii-card-date {
     flex-shrink: 0;
+  }
+}
+
+.profile-comentarii-card-visibility {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem 0.75rem;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid rgba(169, 124, 80, 0.15);
+
+  body.dark-theme & {
+    border-top-color: rgba(255, 213, 145, 0.12);
+  }
+}
+
+.profile-comentarii-visibility-badge {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+
+  &.public {
+    background: rgba(34, 139, 34, 0.15);
+    color: #1a6b1a;
+
+    body.dark-theme &,
+    &.dark-theme {
+      background: rgba(100, 200, 100, 0.2);
+      color: #7ade7a;
+    }
+  }
+
+  &.private {
+    background: rgba(128, 128, 128, 0.2);
+    color: #555;
+
+    body.dark-theme &,
+    &.dark-theme {
+      background: rgba(255, 255, 255, 0.1);
+      color: #b0b0b0;
+    }
+  }
+}
+
+.profile-comentarii-slug-preview {
+  font-size: 0.8rem;
+  color: #7a5c3a;
+  font-family: ui-monospace, monospace;
+
+  body.dark-theme & {
+    color: #c4a484;
+  }
+}
+
+.profile-comentarii-slug-empty {
+  font-size: 0.8rem;
+  color: rgba(122, 92, 58, 0.7);
+
+  body.dark-theme & {
+    color: rgba(196, 164, 132, 0.7);
   }
 }
 

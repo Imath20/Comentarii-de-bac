@@ -155,17 +155,129 @@
     bottom: 100%;
     left: 50%;
     transform: translateX(-50%);
-    margin-bottom: 0.25rem;
-    font-size: 0.75rem;
-    font-weight: 600;
-    white-space: nowrap;
-    color: #2e7d32;
+  }
+}
+
+.user-comment-view-share-info {
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  background: rgba(169, 124, 80, 0.08);
+  border-radius: 10px;
+  border: 1px solid rgba(169, 124, 80, 0.15);
+
+  .dark-theme & {
+    background: rgba(255, 213, 145, 0.06);
+    border-color: rgba(255, 213, 145, 0.12);
+  }
+}
+
+.user-comment-view-share-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.35rem;
+  font-size: 0.9rem;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  &.user-comment-view-share-link-row {
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 0.5rem;
+
+    .user-comment-view-share-url {
+      flex: 1;
+      min-width: 0;
+      word-break: break-all;
+      font-size: 0.8rem;
+      padding: 0.35rem 0.5rem;
+      background: rgba(0, 0, 0, 0.06);
+      border-radius: 6px;
+
+      .dark-theme & {
+        background: rgba(255, 255, 255, 0.08);
+      }
+    }
+  }
+}
+
+.user-comment-view-visibility-badge {
+  display: inline-block;
+  padding: 0.2rem 0.5rem;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+
+  &.public {
+    background: rgba(34, 139, 34, 0.2);
+    color: #1a6b1a;
 
     .dark-theme & {
-      color: #81c784;
+      background: rgba(100, 200, 100, 0.2);
+      color: #7ade7a;
     }
   }
 
+  &.private {
+    background: rgba(128, 128, 128, 0.2);
+    color: #555;
+
+    .dark-theme & {
+      background: rgba(255, 255, 255, 0.1);
+      color: #b0b0b0;
+    }
+  }
+}
+
+.user-comment-view-slug-value {
+  font-family: ui-monospace, monospace;
+  color: #5c4033;
+
+  .dark-theme & {
+    color: #c4a484;
+  }
+}
+
+.user-comment-view-copy-link-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.6rem;
+  font-size: 0.8rem;
+  border: none;
+  border-radius: 6px;
+  background: rgba(169, 124, 80, 0.25);
+  color: #5c4033;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+
+  &:hover {
+    background: rgba(169, 124, 80, 0.35);
+  }
+
+  &.copied {
+    background: rgba(34, 139, 34, 0.2);
+    color: #1a6b1a;
+  }
+
+  .dark-theme & {
+    background: rgba(255, 213, 145, 0.15);
+    color: #c4a574;
+
+    &:hover {
+      background: rgba(255, 213, 145, 0.25);
+    }
+
+    &.copied {
+      background: rgba(100, 200, 100, 0.2);
+      color: #7ade7a;
+    }
+  }
+}
+
+.user-comment-view-header {
   h2 {
     font-size: 1.35rem;
     font-weight: 700;
@@ -439,4 +551,29 @@
   max-height: 100%;
   object-fit: contain;
   cursor: default;
+}
+
+// Pagina de vizualizare partajată (link public)
+.user-comment-view-shareable {
+  max-height: none;
+  margin: 0 auto;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(60, 40, 20, 0.15);
+
+  &.dark-theme {
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  }
+}
+
+.user-comment-view-title-shareable {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin: 0 0 1.25rem 0;
+  line-height: 1.3;
+  color: #4e2e1e;
+
+  .dark-theme & {
+    color: #ffd591;
+  }
 }

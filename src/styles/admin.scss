@@ -96,6 +96,40 @@ body.dark-theme .admin-login-subtitle {
   }
 }
 
+.admin-form-hint {
+  display: block;
+  margin-top: 0.35rem;
+  font-size: 0.8rem;
+  color: rgba(122, 58, 0, 0.7);
+  body.dark-theme & {
+    color: rgba(255, 213, 145, 0.65);
+  }
+}
+
+.admin-form-group-checkbox {
+  .admin-form-hint {
+    margin-top: 0.2rem;
+  }
+}
+
+.admin-checkbox-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500;
+  cursor: pointer;
+  user-select: none;
+
+  input[type="checkbox"] {
+    width: 1.1rem;
+    height: 1.1rem;
+    accent-color: #7a3a00;
+    body.dark-theme & {
+      accent-color: #ffd591;
+    }
+  }
+}
+
 .admin-input {
   width: 100%;
   padding: 0.875rem 1rem;

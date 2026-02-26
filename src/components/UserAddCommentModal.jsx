@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { FileText, Image, Plus, Pencil, X, Scan, Sparkles } from 'lucide-react';
 import { uploadImageToCloudinary } from '../utils/cloudinary';
+import { slugify } from '../utils/slugify';
 import '../styles/admin.scss';
 import '../styles/userAddCommentModal.scss';
 
@@ -179,6 +180,8 @@ const UserAddCommentModal = ({ isOpen, onClose, onSubmit, onEditSubmit, initialC
   const [specieLiterara, setSpecieLiterara] = useState('');
   const [genLiterar, setGenLiterar] = useState('');
   const [tip, setTip] = useState('general');
+  const [slug, setSlug] = useState('');
+  const [isPublic, setIsPublic] = useState(false);
   const [teme, setTeme] = useState('');
   const [motive, setMotive] = useState('');
   const [viziune, setViziune] = useState('');
@@ -208,6 +211,8 @@ const UserAddCommentModal = ({ isOpen, onClose, onSubmit, onEditSubmit, initialC
       setSpecieLiterara(initialComment.specieLiterara || initialComment.categorie || '');
       setGenLiterar(initialComment.genLiterar || '');
       setTip(initialComment.tip || 'general');
+      setSlug(initialComment.slug || '');
+      setIsPublic(initialComment.isPublic === true);
       setTeme(initialComment.teme || '');
       setMotive(initialComment.motive || '');
       setViziune(initialComment.viziune || '');
@@ -258,6 +263,8 @@ const UserAddCommentModal = ({ isOpen, onClose, onSubmit, onEditSubmit, initialC
     setSpecieLiterara('');
     setGenLiterar('');
     setTip('general');
+    setSlug('');
+    setIsPublic(false);
     setTeme('');
     setMotive('');
     setViziune('');
@@ -632,6 +639,8 @@ const UserAddCommentModal = ({ isOpen, onClose, onSubmit, onEditSubmit, initialC
           specieLiterara,
           genLiterar,
           tip,
+          slug,
+          isPublic,
           teme,
           motive,
           viziune,
@@ -660,6 +669,8 @@ const UserAddCommentModal = ({ isOpen, onClose, onSubmit, onEditSubmit, initialC
             specieLiterara,
             genLiterar,
             tip,
+            slug,
+            isPublic,
             teme,
             motive,
             viziune,
@@ -708,6 +719,8 @@ const UserAddCommentModal = ({ isOpen, onClose, onSubmit, onEditSubmit, initialC
           specieLiterara,
           genLiterar,
           tip,
+          slug,
+          isPublic,
           teme,
           motive,
           viziune,
@@ -760,18 +773,23 @@ const UserAddCommentModal = ({ isOpen, onClose, onSubmit, onEditSubmit, initialC
           </div>
 
           <div className="user-add-comment-form-row">
-            <div className="admin-form-group">
-              <label htmlFor="user-comment-titlu">Titlu *</label>
-              <input
-                id="user-comment-titlu"
-                type="text"
-                value={titlu}
-                onChange={(e) => { setTitlu(e.target.value); setError(''); }}
-                placeholder="Luceafărul — comentariu"
-                className="admin-input"
-                autoComplete="off"
-                disabled={uploading}
-              />
+          <div className="admin-form-group">
+            <label htmlFor="user-comment-titlu">Titlu *</label>
+            <input
+              id="user-comment-titlu"
+              type="text"
+              value={titlu}
+              onChange={(e) => {
+                const v = e.target.value;
+                setTitlu(v);
+                setError('');
+                if (!isEditMode && !slug) setSlug(slugify(v));
+              }}
+              placeholder="Luceafărul — comentariu"
+              className="admin-input"
+              autoComplete="off"
+              disabled={uploading}
+            />
             </div>
             <div className="admin-form-group">
               <label htmlFor="user-comment-plan">Plan</label>
@@ -880,6 +898,35 @@ const UserAddCommentModal = ({ isOpen, onClose, onSubmit, onEditSubmit, initialC
                 <option key={opt.value} value={opt.value}>{opt.label}</option>
               ))}
             </select>
+          </div>
+
+          <div className="admin-form-group">
+            <label htmlFor="user-comment-slug">Link partajat (slug)</label>
+            <input
+              id="user-comment-slug"
+              type="text"
+              value={slug}
+              onChange={(e) => { setSlug(e.target.value); setError(''); }}
+              onBlur={() => { if (slug && slug !== slugify(slug)) setSlug(slugify(slug) || slug); }}
+              placeholder="povestea-lui-harap-alb"
+              className="admin-input"
+              autoComplete="off"
+              disabled={uploading}
+            />
+            <small className="admin-form-hint">Folosit în linkul de share. Doar litere, cifre și cratimă.</small>
+          </div>
+
+          <div className="admin-form-group admin-form-group-checkbox">
+            <label className="admin-checkbox-label">
+              <input
+                type="checkbox"
+                checked={isPublic}
+                onChange={(e) => setIsPublic(e.target.checked)}
+                disabled={uploading}
+              />
+              <span>Comentariu public</span>
+            </label>
+            <small className="admin-form-hint">Dacă e bifat, oricine are linkul poate vedea comentariul.</small>
           </div>
 
           <div className="admin-form-group">

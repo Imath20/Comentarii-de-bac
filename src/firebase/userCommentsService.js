@@ -1,5 +1,6 @@
-import { collection, getDocs, query, orderBy, addDoc, deleteDoc, doc, updateDoc } from 'firebase/firestore';
+import { collection, getDocs, query, orderBy, addDoc, deleteDoc, doc, updateDoc, where } from 'firebase/firestore';
 import { db } from './firebase';
+import { slugify } from '../utils/slugify';
 
 /**
  * Get user's personal comments from Firestore
@@ -34,6 +35,8 @@ export async function getUserComments(userId) {
         interpretare: data.interpretare || '',
         descriere: data.descriere || '',
         plan: data.plan || 'free',
+        slug: data.slug || '',
+        isPublic: data.isPublic === true,
         createdAt: data.createdAt || '',
       };
     });
@@ -59,6 +62,12 @@ export async function addUserComment(userId, commentData) {
     }
 
     const colRef = collection(db, 'users', userId, 'userComments');
+    let slug = (commentData.slug || '').trim() || slugify(commentData.titlu || '');
+    if (!slug) slug = 'comentariu';
+    // asigură unicitate slug per user
+    const existing = await getDocs(query(colRef, where('slug', '==', slug)));
+    if (!existing.empty) slug = `${slug}-${Date.now().toString(36)}`;
+
     const dataToSave = {
       type: commentData.type,
       content: commentData.content.trim(),
@@ -76,6 +85,8 @@ export async function addUserComment(userId, commentData) {
       interpretare: commentData.interpretare || '',
       descriere: commentData.descriere || '',
       plan: commentData.plan || 'free',
+      slug,
+      isPublic: commentData.isPublic === true,
       createdAt: new Date().toISOString(),
     };
 
@@ -104,6 +115,12 @@ export async function updateUserComment(userId, commentId, commentData) {
       throw new Error('Tipul și conținutul comentariului sunt obligatorii');
     }
 
+    const colRef = collection(db, 'users', userId, 'userComments');
+    let slug = (commentData.slug || '').trim() || slugify(commentData.titlu || '') || 'comentariu';
+    const existingSlug = await getDocs(query(colRef, where('slug', '==', slug)));
+    const otherWithSlug = existingSlug.docs.filter((d) => d.id !== commentId);
+    if (otherWithSlug.length > 0) slug = `${slug}-${Date.now().toString(36)}`;
+
     const commentRef = doc(db, 'users', userId, 'userComments', commentId);
     const dataToSave = {
       type: commentData.type,
@@ -122,6 +139,8 @@ export async function updateUserComment(userId, commentId, commentData) {
       interpretare: commentData.interpretare || '',
       descriere: commentData.descriere || '',
       plan: commentData.plan || 'free',
+      slug,
+      isPublic: commentData.isPublic === true,
     };
 
     await updateDoc(commentRef, dataToSave);
@@ -129,6 +148,48 @@ export async function updateUserComment(userId, commentId, commentData) {
   } catch (error) {
     console.error('❌ Eroare la actualizarea comentariului personal:', error);
     throw error;
+  }
+}
+
+/**
+ * Get a single comment by slug (for public share link). Returns null if not found or not public.
+ * @param {string} userId - The user's UID
+ * @param {string} slug - The comment's slug
+ * @returns {Promise<{ id, ...data } | null>}
+ */
+export async function getUserCommentBySlug(userId, slug) {
+  try {
+    if (!userId || !slug) return null;
+    const colRef = collection(db, 'users', userId, 'userComments');
+    const q = query(colRef, where('slug', '==', slug));
+    const snap = await getDocs(q);
+    if (snap.empty) return null;
+    const docSnap = snap.docs[0];
+    const data = docSnap.data();
+    if (data.isPublic !== true) return null;
+    return {
+      id: docSnap.id,
+      type: data.type || 'text',
+      content: data.content || '',
+      titlu: data.titlu || '',
+      autor: data.autor || '',
+      anAparitie: data.anAparitie || '',
+      curentLiterar: data.curentLiterar || '',
+      specieLiterara: data.specieLiterara || data.categorie || '',
+      genLiterar: data.genLiterar || '',
+      tip: data.tip || 'general',
+      teme: data.teme || '',
+      motive: data.motive || '',
+      viziune: data.viziune || '',
+      interpretare: data.interpretare || '',
+      plan: data.plan || 'free',
+      slug: data.slug || '',
+      isPublic: true,
+      createdAt: data.createdAt || '',
+    };
+  } catch (error) {
+    console.error('Error fetching comment by slug:', error);
+    return null;
   }
 }
 

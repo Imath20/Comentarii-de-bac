@@ -20,10 +20,26 @@ const isListLike = (str) => {
   return items.every((s) => s.length < 50);
 };
 
-const UserCommentViewModal = ({ comment, isOpen, onClose, onEdit, onAddToComentarii, darkTheme, formatDate }) => {
+const UserCommentViewModal = ({ comment, isOpen, onClose, onEdit, onAddToComentarii, darkTheme, formatDate, shareUserId }) => {
   const [imageFullscreen, setImageFullscreen] = useState(false);
   const [copyFeedback, setCopyFeedback] = useState(false);
+  const [copyLinkFeedback, setCopyLinkFeedback] = useState(false);
   const [metaExpanded, setMetaExpanded] = useState(true);
+
+  const shareUrl = shareUserId && comment?.slug
+    ? `${typeof window !== 'undefined' ? window.location.origin : ''}/profil/comentarii/vizualizare/${shareUserId}/${comment.slug}`
+    : null;
+
+  const handleCopyLink = async () => {
+    if (!shareUrl) return;
+    try {
+      await navigator.clipboard.writeText(shareUrl);
+      setCopyLinkFeedback(true);
+      setTimeout(() => setCopyLinkFeedback(false), 1500);
+    } catch {
+      setCopyLinkFeedback(false);
+    }
+  };
 
   const handleCopy = async () => {
     const textToCopy = comment?.type === 'text'
@@ -154,6 +170,36 @@ const UserCommentViewModal = ({ comment, isOpen, onClose, onEdit, onAddToComenta
         </div>
 
         <div className="user-comment-view-body">
+          <div className="user-comment-view-share-info">
+            <div className="user-comment-view-share-row">
+              <span className="user-comment-view-label">Vizibilitate:</span>
+              <span className={`user-comment-view-visibility-badge ${comment.isPublic ? 'public' : 'private'}`}>
+                {comment.isPublic ? 'Public' : 'Privat'}
+              </span>
+            </div>
+            <div className="user-comment-view-share-row">
+              <span className="user-comment-view-label">Slug (link):</span>
+              <span className="user-comment-view-slug-value">
+                {comment.slug ? `/${comment.slug}` : '—'}
+              </span>
+            </div>
+            {shareUrl && (
+              <div className="user-comment-view-share-row user-comment-view-share-link-row">
+                <span className="user-comment-view-label">Link partajat:</span>
+                <code className="user-comment-view-share-url">{shareUrl}</code>
+                <button
+                  type="button"
+                  onClick={handleCopyLink}
+                  className={`user-comment-view-copy-link-btn ${copyLinkFeedback ? 'copied' : ''}`}
+                  title="Copiază link"
+                >
+                  <Copy size={16} />
+                  {copyLinkFeedback ? ' Copiat!' : ' Copiază'}
+                </button>
+              </div>
+            )}
+          </div>
+
           {(comment.autor || comment.anAparitie || comment.curentLiterar || comment.specieLiterara || comment.genLiterar || comment.tip || comment.teme || comment.motive || comment.viziune || comment.interpretare || comment.descriere) && (
             <div className="user-comment-view-meta">
               <div className="user-comment-view-meta-toggle-wrap">

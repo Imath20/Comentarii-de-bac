@@ -16,6 +16,7 @@ import Login from './pages/login';
 import Profile from './pages/profile';
 import EditProfile from './pages/editProfile';
 import ProfileComentarii from './pages/profileComentarii';
+import ShareableCommentView from './pages/ShareableCommentView';
 import './styles/style.scss';
 import Curente from './pages/curente';
 import Curent from './pages/Curent';
@@ -30,6 +31,7 @@ export default function App() {
       <Route path="/profil" element={<Profile />} />
       <Route path="/profil/edit" element={<EditProfile />} />
       <Route path="/profil/comentarii" element={<ProfileComentarii />} />
+      <Route path="/profil/comentarii/vizualizare/:userId/:slug" element={<ShareableCommentView />} />
       <Route path="/scriitori" element={<Scriitori />} />
       <Route path="/subiecte" element={<Subiecte />} />
       <Route path="/comentarii" element={<Comentarii />} />

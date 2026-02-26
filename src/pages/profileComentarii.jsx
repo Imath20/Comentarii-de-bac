@@ -131,16 +131,28 @@ const ProfileComentarii = () => {
   const handleShareComment = async (e, comment) => {
     e.stopPropagation();
     const title = comment.titlu || 'Comentariu';
+    const shareUrl = comment.slug
+      ? `${window.location.origin}/profil/comentarii/vizualizare/${currentUser.uid}/${comment.slug}`
+      : null;
     const text = comment.type === 'text'
       ? (comment.content?.slice(0, 500) + (comment.content?.length > 500 ? '…' : '')) || ''
       : '';
-    const shareData = { title, text: text ? `${title}\n\n${text}` : title };
+    const shareData = {
+      title,
+      text: text ? `${title}\n\n${text}` : title,
+      url: shareUrl || undefined,
+    };
     try {
-      if (navigator.share) {
+      if (navigator.share && shareUrl) {
         await navigator.share({
-          ...shareData,
-          url: window.location.href,
+          title: shareData.title,
+          text: shareData.text,
+          url: shareUrl,
         });
+      } else if (shareUrl) {
+        await navigator.clipboard.writeText(shareUrl);
+        setShareCopiedId(comment.id);
+        setTimeout(() => setShareCopiedId(null), 2000);
       } else {
         await navigator.clipboard.writeText(shareData.text || shareData.title);
         setShareCopiedId(comment.id);
@@ -149,9 +161,15 @@ const ProfileComentarii = () => {
     } catch (err) {
       if (err?.name !== 'AbortError') {
         try {
-          await navigator.clipboard.writeText(shareData.text || shareData.title);
-          setShareCopiedId(comment.id);
-          setTimeout(() => setShareCopiedId(null), 2000);
+          if (shareUrl) {
+            await navigator.clipboard.writeText(shareUrl);
+            setShareCopiedId(comment.id);
+            setTimeout(() => setShareCopiedId(null), 2000);
+          } else {
+            await navigator.clipboard.writeText(shareData.text || shareData.title);
+            setShareCopiedId(comment.id);
+            setTimeout(() => setShareCopiedId(null), 2000);
+          }
         } catch (_) {}
       }
     }
@@ -258,7 +276,13 @@ const ProfileComentarii = () => {
                           type="button"
                           onClick={(e) => handleShareComment(e, comment)}
                           className="profile-comentarii-icon-btn"
-                          title={shareCopiedId === comment.id ? 'Copiat!' : 'Share'}
+                          title={
+                            shareCopiedId === comment.id
+                              ? 'Copiat!'
+                              : comment.slug
+                                ? 'Copiază link partajat'
+                                : 'Editează comentariul și setează link partajat (slug) pentru a partaja prin URL'
+                          }
                         >
                           <Share2 size={18} />
                         </button>
@@ -298,6 +322,18 @@ const ProfileComentarii = () => {
                         <img src={comment.content} alt="Comentariu" className="profile-comentarii-card-image" />
                       </div>
                     )}
+                    <div className="profile-comentarii-card-visibility">
+                      <span className={`profile-comentarii-visibility-badge ${darkTheme ? 'dark-theme' : ''} ${comment.isPublic ? 'public' : 'private'}`}>
+                        {comment.isPublic ? 'Public' : 'Privat'}
+                      </span>
+                      {comment.slug ? (
+                        <span className="profile-comentarii-slug-preview" title="Slug pentru link partajat">
+                          /{comment.slug}
+                        </span>
+                      ) : (
+                        <span className="profile-comentarii-slug-empty">Fără link</span>
+                      )}
+                    </div>
                     <div className="comentarii-card-footer profile-comentarii-card-footer">
                       <div className={`comentarii-card-date ${darkTheme ? 'dark-theme' : ''}`}>
                         {formatDate(comment.createdAt)}
@@ -370,6 +406,7 @@ const ProfileComentarii = () => {
         onAddToComentarii={isAdminOrSemiAdmin ? (c) => { setViewComment(null); setAddToComentariiComment(c); } : undefined}
         darkTheme={darkTheme}
         formatDate={formatDate}
+        shareUserId={currentUser?.uid}
       />
 
       <AddToComentariiModal
