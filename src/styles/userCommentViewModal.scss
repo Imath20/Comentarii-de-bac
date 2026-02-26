@@ -22,9 +22,9 @@
 .user-comment-view-modal {
   background: rgba(255, 255, 255, 0.98);
   border-radius: 16px;
-  max-width: 640px;
+  max-width: 720px;
   width: 100%;
-  max-height: 90vh;
+  max-height: 94vh;
   overflow-y: auto;
   box-shadow: 0 12px 48px rgba(60, 40, 20, 0.25);
   border: 1px solid rgba(255, 179, 71, 0.3);
@@ -504,6 +504,16 @@
 
   .dark-theme & {
     color: rgba(255, 213, 145, 0.6);
+  }
+}
+
+.user-comment-view-share-info-footer {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(122, 58, 0, 0.15);
+
+  .dark-theme & {
+    border-top-color: rgba(255, 213, 145, 0.15);
   }
 }
 
