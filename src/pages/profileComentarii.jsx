@@ -237,6 +237,16 @@ const ProfileComentarii = () => {
                     </div>
                     <div className="profile-comentarii-card-top">
                       <div className="profile-comentarii-card-top-actions">
+                      {isAdminOrSemiAdmin && comment.type === 'text' && (
+                          <button
+                            type="button"
+                            onClick={(e) => { e.stopPropagation(); setAddToComentariiComment(comment); }}
+                            className="profile-comentarii-icon-btn"
+                            title="Adaugă la pagina Comentarii"
+                          >
+                            <Upload size={18} />
+                          </button>
+                        )}
                         <button
                           type="button"
                           onClick={(e) => { e.stopPropagation(); handleDuplicateComment(comment); }}
@@ -252,16 +262,6 @@ const ProfileComentarii = () => {
                             <CopyPlus size={18} />
                           )}
                         </button>
-                        {isAdminOrSemiAdmin && comment.type === 'text' && (
-                          <button
-                            type="button"
-                            onClick={(e) => { e.stopPropagation(); setAddToComentariiComment(comment); }}
-                            className="profile-comentarii-icon-btn"
-                            title="Adaugă la pagina Comentarii"
-                          >
-                            <Upload size={18} />
-                          </button>
-                        )}
                       </div>
                     </div>
                     <div className="comentarii-card-title profile-comentarii-card-title">
