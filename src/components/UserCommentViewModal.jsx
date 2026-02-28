@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { X, Copy, Pencil, ChevronDown, ChevronUp, Upload } from 'lucide-react';
+import { X, Copy, CopyPlus, Pencil, ChevronDown, ChevronUp, Upload } from 'lucide-react';
 import '../styles/userCommentViewModal.scss';
 
 const TIP_COMENTARIU_LABELS = {
@@ -20,26 +20,10 @@ const isListLike = (str) => {
   return items.every((s) => s.length < 50);
 };
 
-const UserCommentViewModal = ({ comment, isOpen, onClose, onEdit, onAddToComentarii, darkTheme, formatDate, shareUserId }) => {
+const UserCommentViewModal = ({ comment, isOpen, onClose, onEdit, onDuplicate, onAddToComentarii, darkTheme, formatDate }) => {
   const [imageFullscreen, setImageFullscreen] = useState(false);
   const [copyFeedback, setCopyFeedback] = useState(false);
-  const [copyLinkFeedback, setCopyLinkFeedback] = useState(false);
   const [metaExpanded, setMetaExpanded] = useState(true);
-
-  const shareUrl = shareUserId && comment?.slug
-    ? `${typeof window !== 'undefined' ? window.location.origin : ''}/profil/comentarii/vizualizare/${shareUserId}/${comment.slug}`
-    : null;
-
-  const handleCopyLink = async () => {
-    if (!shareUrl) return;
-    try {
-      await navigator.clipboard.writeText(shareUrl);
-      setCopyLinkFeedback(true);
-      setTimeout(() => setCopyLinkFeedback(false), 1500);
-    } catch {
-      setCopyLinkFeedback(false);
-    }
-  };
 
   const handleCopy = async () => {
     const textToCopy = comment?.type === 'text'
@@ -144,6 +128,21 @@ const UserCommentViewModal = ({ comment, isOpen, onClose, onEdit, onAddToComenta
                 title="Editează"
               >
                 <Pencil size={20} />
+              </button>
+            )}
+            {onDuplicate && (
+              <button
+                type="button"
+                onClick={async () => {
+                  await onDuplicate(comment);
+                  onClose();
+                }}
+                className="user-comment-view-action"
+                aria-label="Duplică comentariul"
+                title="Duplică"
+              >
+                <CopyPlus size={20} />
+                <span>Duplică</span>
               </button>
             )}
             {onAddToComentarii && comment?.type === 'text' && (
@@ -307,36 +306,6 @@ const UserCommentViewModal = ({ comment, isOpen, onClose, onEdit, onAddToComenta
               {formatDate ? formatDate(comment.createdAt) : comment.createdAt}
             </div>
           )}
-
-          <div className="user-comment-view-share-info user-comment-view-share-info-footer">
-            <div className="user-comment-view-share-row">
-              <span className="user-comment-view-label">Vizibilitate:</span>
-              <span className={`user-comment-view-visibility-badge ${comment.isPublic ? 'public' : 'private'}`}>
-                {comment.isPublic ? 'Public' : 'Privat'}
-              </span>
-            </div>
-            <div className="user-comment-view-share-row">
-              <span className="user-comment-view-label">Slug (link):</span>
-              <span className="user-comment-view-slug-value">
-                {comment.slug ? `/${comment.slug}` : '—'}
-              </span>
-            </div>
-            {shareUrl && (
-              <div className="user-comment-view-share-row user-comment-view-share-link-row">
-                <span className="user-comment-view-label">Link partajat:</span>
-                <code className="user-comment-view-share-url">{shareUrl}</code>
-                <button
-                  type="button"
-                  onClick={handleCopyLink}
-                  className={`user-comment-view-copy-link-btn ${copyLinkFeedback ? 'copied' : ''}`}
-                  title="Copiază link"
-                >
-                  <Copy size={16} />
-                  {copyLinkFeedback ? ' Copiat!' : ' Copiază'}
-                </button>
-              </div>
-            )}
-          </div>
         </div>
       </div>
 

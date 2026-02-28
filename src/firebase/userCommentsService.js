@@ -152,48 +152,6 @@ export async function updateUserComment(userId, commentId, commentData) {
 }
 
 /**
- * Get a single comment by slug (for public share link). Returns null if not found or not public.
- * @param {string} userId - The user's UID
- * @param {string} slug - The comment's slug
- * @returns {Promise<{ id, ...data } | null>}
- */
-export async function getUserCommentBySlug(userId, slug) {
-  try {
-    if (!userId || !slug) return null;
-    const colRef = collection(db, 'users', userId, 'userComments');
-    const q = query(colRef, where('slug', '==', slug));
-    const snap = await getDocs(q);
-    if (snap.empty) return null;
-    const docSnap = snap.docs[0];
-    const data = docSnap.data();
-    if (data.isPublic !== true) return null;
-    return {
-      id: docSnap.id,
-      type: data.type || 'text',
-      content: data.content || '',
-      titlu: data.titlu || '',
-      autor: data.autor || '',
-      anAparitie: data.anAparitie || '',
-      curentLiterar: data.curentLiterar || '',
-      specieLiterara: data.specieLiterara || data.categorie || '',
-      genLiterar: data.genLiterar || '',
-      tip: data.tip || 'general',
-      teme: data.teme || '',
-      motive: data.motive || '',
-      viziune: data.viziune || '',
-      interpretare: data.interpretare || '',
-      plan: data.plan || 'free',
-      slug: data.slug || '',
-      isPublic: true,
-      createdAt: data.createdAt || '',
-    };
-  } catch (error) {
-    console.error('Error fetching comment by slug:', error);
-    return null;
-  }
-}
-
-/**
  * Delete a personal comment
  * @param {string} userId - The user's UID
  * @param {string} commentId - The comment's ID

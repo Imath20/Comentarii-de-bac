@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../firebase/AuthContext';
 import Layout from '../assets/Layout';
-import { ArrowLeft, FileText, Image, Trash2, Upload, Share2 } from 'lucide-react';
+import { ArrowLeft, CopyPlus, FileText, Image, Trash2, Upload } from 'lucide-react';
 import { getUserComments, addUserComment, updateUserComment, deleteUserComment } from '../firebase/userCommentsService';
 import UserAddCommentModal from '../components/UserAddCommentModal';
 import UserCommentViewModal from '../components/UserCommentViewModal';
@@ -25,8 +25,9 @@ const ProfileComentarii = () => {
   const [viewComment, setViewComment] = useState(null);
   const [addToComentariiComment, setAddToComentariiComment] = useState(null);
   const [deletingId, setDeletingId] = useState(null);
+  const [duplicatingId, setDuplicatingId] = useState(null);
+  const [duplicateSuccessId, setDuplicateSuccessId] = useState(null);
   const [scrolled, setScrolled] = useState(false);
-  const [shareCopiedId, setShareCopiedId] = useState(null);
 
   const isAdminOrSemiAdmin = userProfile?.isAdmin === true || userProfile?.isSemiAdmin === true;
 
@@ -128,50 +129,24 @@ const ProfileComentarii = () => {
     }
   };
 
-  const handleShareComment = async (e, comment) => {
-    e.stopPropagation();
-    const title = comment.titlu || 'Comentariu';
-    const shareUrl = comment.slug
-      ? `${window.location.origin}/profil/comentarii/vizualizare/${currentUser.uid}/${comment.slug}`
-      : null;
-    const text = comment.type === 'text'
-      ? (comment.content?.slice(0, 500) + (comment.content?.length > 500 ? '…' : '')) || ''
-      : '';
-    const shareData = {
-      title,
-      text: text ? `${title}\n\n${text}` : title,
-      url: shareUrl || undefined,
+  const handleDuplicateComment = async (comment) => {
+    if (!comment) return;
+    const { id, createdAt, ...rest } = comment;
+    const duplicateData = {
+      ...rest,
+      titlu: (rest.titlu || '').trim() ? `${rest.titlu.trim()} (copie)` : 'Comentariu (copie)',
     };
+    setDuplicatingId(id);
     try {
-      if (navigator.share && shareUrl) {
-        await navigator.share({
-          title: shareData.title,
-          text: shareData.text,
-          url: shareUrl,
-        });
-      } else if (shareUrl) {
-        await navigator.clipboard.writeText(shareUrl);
-        setShareCopiedId(comment.id);
-        setTimeout(() => setShareCopiedId(null), 2000);
-      } else {
-        await navigator.clipboard.writeText(shareData.text || shareData.title);
-        setShareCopiedId(comment.id);
-        setTimeout(() => setShareCopiedId(null), 2000);
-      }
+      const newId = await addUserComment(currentUser.uid, duplicateData);
+      const comments = await getUserComments(currentUser.uid);
+      setUserComments(comments);
+      setDuplicateSuccessId(newId);
+      setTimeout(() => setDuplicateSuccessId(null), 1800);
     } catch (err) {
-      if (err?.name !== 'AbortError') {
-        try {
-          if (shareUrl) {
-            await navigator.clipboard.writeText(shareUrl);
-            setShareCopiedId(comment.id);
-            setTimeout(() => setShareCopiedId(null), 2000);
-          } else {
-            await navigator.clipboard.writeText(shareData.text || shareData.title);
-            setShareCopiedId(comment.id);
-            setTimeout(() => setShareCopiedId(null), 2000);
-          }
-        } catch (_) {}
-      }
+      console.error('Error duplicating comment:', err);
+    } finally {
+      setDuplicatingId(null);
     }
   };
 
@@ -262,6 +237,21 @@ const ProfileComentarii = () => {
                     </div>
                     <div className="profile-comentarii-card-top">
                       <div className="profile-comentarii-card-top-actions">
+                        <button
+                          type="button"
+                          onClick={(e) => { e.stopPropagation(); handleDuplicateComment(comment); }}
+                          disabled={duplicatingId === comment.id}
+                          className={`profile-comentarii-icon-btn profile-comentarii-duplicate-btn ${duplicateSuccessId === comment.id ? 'success' : ''}`}
+                          title="Duplică"
+                        >
+                          {duplicatingId === comment.id ? (
+                            <span className="profile-comentarii-duplicate-spinner" />
+                          ) : duplicateSuccessId === comment.id ? (
+                            <span className="profile-comentarii-duplicate-success">Duplicat!</span>
+                          ) : (
+                            <CopyPlus size={18} />
+                          )}
+                        </button>
                         {isAdminOrSemiAdmin && comment.type === 'text' && (
                           <button
                             type="button"
@@ -272,20 +262,6 @@ const ProfileComentarii = () => {
                             <Upload size={18} />
                           </button>
                         )}
-                        <button
-                          type="button"
-                          onClick={(e) => handleShareComment(e, comment)}
-                          className="profile-comentarii-icon-btn"
-                          title={
-                            shareCopiedId === comment.id
-                              ? 'Copiat!'
-                              : comment.slug
-                                ? 'Copiază link partajat'
-                                : 'Editează comentariul și setează link partajat (slug) pentru a partaja prin URL'
-                          }
-                        >
-                          <Share2 size={18} />
-                        </button>
                       </div>
                     </div>
                     <div className="comentarii-card-title profile-comentarii-card-title">
@@ -322,18 +298,6 @@ const ProfileComentarii = () => {
                         <img src={comment.content} alt="Comentariu" className="profile-comentarii-card-image" />
                       </div>
                     )}
-                    <div className="profile-comentarii-card-visibility">
-                      <span className={`profile-comentarii-visibility-badge ${darkTheme ? 'dark-theme' : ''} ${comment.isPublic ? 'public' : 'private'}`}>
-                        {comment.isPublic ? 'Public' : 'Privat'}
-                      </span>
-                      {comment.slug ? (
-                        <span className="profile-comentarii-slug-preview" title="Slug pentru link partajat">
-                          /{comment.slug}
-                        </span>
-                      ) : (
-                        <span className="profile-comentarii-slug-empty">Fără link</span>
-                      )}
-                    </div>
                     <div className="comentarii-card-footer profile-comentarii-card-footer">
                       <div className={`comentarii-card-date ${darkTheme ? 'dark-theme' : ''}`}>
                         {formatDate(comment.createdAt)}
@@ -403,10 +367,10 @@ const ProfileComentarii = () => {
         isOpen={!!viewComment}
         onClose={() => setViewComment(null)}
         onEdit={(c) => { setViewComment(null); setEditComment(c); setIsModalOpen(true); }}
+        onDuplicate={handleDuplicateComment}
         onAddToComentarii={isAdminOrSemiAdmin ? (c) => { setViewComment(null); setAddToComentariiComment(c); } : undefined}
         darkTheme={darkTheme}
         formatDate={formatDate}
-        shareUserId={currentUser?.uid}
       />
 
       <AddToComentariiModal
