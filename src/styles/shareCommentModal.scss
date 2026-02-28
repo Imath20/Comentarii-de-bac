@@ -1,0 +1,252 @@
+.share-comment-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(60, 40, 20, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2100;
+  padding: 1rem;
+  overflow-x: hidden;
+  overflow-y: auto;
+  animation: shareCommentFadeIn 0.2s ease;
+
+  &.dark-theme {
+    background: rgba(0, 0, 0, 0.65);
+  }
+}
+
+@keyframes shareCommentFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.share-comment-modal {
+  background: rgba(255, 255, 255, 0.98);
+  border-radius: 16px;
+  max-width: 480px;
+  width: 100%;
+  box-shadow: 0 12px 48px rgba(60, 40, 20, 0.25);
+  border: 1px solid rgba(255, 179, 71, 0.3);
+  box-sizing: border-box;
+  animation: shareCommentSlideIn 0.25s ease;
+
+  &.dark-theme {
+    background: rgba(47, 24, 0, 0.98);
+    border-color: rgba(255, 213, 145, 0.2);
+    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.5);
+  }
+}
+
+@keyframes shareCommentSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.share-comment-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid rgba(169, 124, 80, 0.25);
+
+  .dark-theme & {
+    border-bottom-color: rgba(255, 213, 145, 0.15);
+  }
+
+  h2 {
+    margin: 0;
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: #2c1810;
+
+    .dark-theme & {
+      color: #e8ddd0;
+    }
+  }
+}
+
+.share-comment-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.35rem;
+  border: none;
+  background: transparent;
+  color: #6b5344;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background 0.2s, color 0.2s;
+
+  .dark-theme & {
+    color: #c4a574;
+  }
+
+  &:hover {
+    background: rgba(169, 124, 80, 0.15);
+    color: #4e2e1e;
+
+    .dark-theme & {
+      background: rgba(255, 213, 145, 0.1);
+      color: #ffd591;
+    }
+  }
+}
+
+.share-comment-body {
+  padding: 1.25rem;
+}
+
+.share-comment-message {
+  font-size: 0.95rem;
+  color: #4e2e1e;
+  line-height: 1.5;
+  margin-bottom: 1rem;
+
+  .dark-theme & {
+    color: #e0d5c4;
+  }
+}
+
+.share-comment-link-wrap {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  align-items: center;
+}
+
+.share-comment-link-input {
+  flex: 1;
+  min-width: 0;
+  padding: 0.6rem 0.85rem;
+  border-radius: 10px;
+  border: 1px solid rgba(169, 124, 80, 0.35);
+  background: #fdfbf7;
+  color: #2c1810;
+  font-size: 0.9rem;
+  box-sizing: border-box;
+
+  .dark-theme & {
+    background: rgba(74, 44, 26, 0.6);
+    border-color: rgba(255, 213, 145, 0.25);
+    color: #e8ddd0;
+  }
+}
+
+.share-comment-copy-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.6rem 1rem;
+  border-radius: 10px;
+  border: none;
+  background: linear-gradient(135deg, #a97c50 0%, #8b6b42 100%);
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  flex-shrink: 0;
+
+  .dark-theme & {
+    background: linear-gradient(135deg, #c49a6c 0%, #a97c50 100%);
+    color: #1a0f08;
+  }
+
+  &:hover {
+    opacity: 0.95;
+  }
+
+  &.copied {
+    background: rgba(92, 184, 92, 0.9);
+    color: #fff;
+
+    .dark-theme & {
+      background: rgba(92, 184, 92, 0.8);
+    }
+  }
+}
+
+.share-comment-spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: shareCommentSpin 0.8s linear infinite;
+
+  .dark-theme & {
+    border-color: rgba(0, 0, 0, 0.2);
+    border-top-color: #1a0f08;
+  }
+}
+
+@keyframes shareCommentSpin {
+  to { transform: rotate(360deg); }
+}
+
+.share-comment-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(169, 124, 80, 0.2);
+
+  .dark-theme & {
+    border-top-color: rgba(255, 213, 145, 0.12);
+  }
+}
+
+.share-comment-btn {
+  padding: 0.6rem 1.2rem;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  transition: opacity 0.2s, background 0.2s;
+
+  &.secondary {
+    background: rgba(169, 124, 80, 0.2);
+    color: #4e2e1e;
+
+    .dark-theme & {
+      background: rgba(255, 213, 145, 0.12);
+      color: #e8ddd0;
+    }
+
+    &:hover {
+      background: rgba(169, 124, 80, 0.3);
+
+      .dark-theme & {
+        background: rgba(255, 213, 145, 0.2);
+      }
+    }
+  }
+
+  &.primary {
+    background: linear-gradient(135deg, #a97c50 0%, #8b6b42 100%);
+    color: #fff;
+
+    .dark-theme & {
+      background: linear-gradient(135deg, #c49a6c 0%, #a97c50 100%);
+      color: #1a0f08;
+    }
+
+    &:hover:not(:disabled) {
+      opacity: 0.95;
+    }
+
+    &:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+  }
+}

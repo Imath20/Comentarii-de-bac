@@ -9,6 +9,7 @@ export const ROUTE_TITLES = [
   [/^\/videoclipuri$/, 'Videoclipuri'],
   [/^\/proiecte$/, 'Proiecte'],
   [/^\/subiecte$/, 'Subiecte'],
+  [/^\/comentarii\/share\//, 'Comentariu partajat'],
   [/^\/comentarii$/, 'Comentarii'],
   [/^\/ai$/, 'AI'],
   [/^\/curente$/, 'Curente'],

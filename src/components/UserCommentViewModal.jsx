@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { X, Copy, CopyPlus, Pencil, ChevronDown, ChevronUp, Upload } from 'lucide-react';
+import { X, Copy, CopyPlus, Pencil, ChevronDown, ChevronUp, Share2, Upload } from 'lucide-react';
 import '../styles/userCommentViewModal.scss';
 
 const TIP_COMENTARIU_LABELS = {
@@ -20,7 +20,7 @@ const isListLike = (str) => {
   return items.every((s) => s.length < 50);
 };
 
-const UserCommentViewModal = ({ comment, isOpen, onClose, onEdit, onDuplicate, onAddToComentarii, darkTheme, formatDate }) => {
+const UserCommentViewModal = ({ comment, isOpen, onClose, onEdit, onDuplicate, onShare, onAddToComentarii, darkTheme, formatDate }) => {
   const [imageFullscreen, setImageFullscreen] = useState(false);
   const [copyFeedback, setCopyFeedback] = useState(false);
   const [metaExpanded, setMetaExpanded] = useState(true);
@@ -143,6 +143,18 @@ const UserCommentViewModal = ({ comment, isOpen, onClose, onEdit, onDuplicate, o
               >
                 <CopyPlus size={20} />
                 <span>Duplică</span>
+              </button>
+            )}
+            {onShare && (
+              <button
+                type="button"
+                onClick={() => { onClose(); onShare(comment); }}
+                className="user-comment-view-action"
+                aria-label="Partajează comentariul"
+                title="Partajează"
+              >
+                <Share2 size={20} />
+                <span>Partajează</span>
               </button>
             )}
             {onAddToComentarii && comment?.type === 'text' && (

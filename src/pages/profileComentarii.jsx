@@ -2,16 +2,18 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../firebase/AuthContext';
 import Layout from '../assets/Layout';
-import { ArrowLeft, CopyPlus, FileText, Image, Trash2, Upload } from 'lucide-react';
+import { ArrowLeft, CopyPlus, FileText, Image, Share2, Trash2, Upload } from 'lucide-react';
 import { getUserComments, addUserComment, updateUserComment, deleteUserComment } from '../firebase/userCommentsService';
 import UserAddCommentModal from '../components/UserAddCommentModal';
 import UserCommentViewModal from '../components/UserCommentViewModal';
+import ShareCommentModal from '../components/ShareCommentModal';
 import AddToComentariiModal from '../components/AddToComentariiModal';
 import '../styles/style.scss';
 import '../styles/comentarii.scss';
 import '../styles/profile.scss';
 import '../styles/userAddCommentModal.scss';
 import '../styles/userCommentViewModal.scss';
+import '../styles/shareCommentModal.scss';
 
 const ProfileComentarii = () => {
   const { currentUser, userProfile, loading: authLoading } = useAuth();
@@ -24,6 +26,7 @@ const ProfileComentarii = () => {
   const [editComment, setEditComment] = useState(null);
   const [viewComment, setViewComment] = useState(null);
   const [addToComentariiComment, setAddToComentariiComment] = useState(null);
+  const [shareComment, setShareComment] = useState(null);
   const [deletingId, setDeletingId] = useState(null);
   const [duplicatingId, setDuplicatingId] = useState(null);
   const [duplicateSuccessId, setDuplicateSuccessId] = useState(null);
@@ -237,6 +240,14 @@ const ProfileComentarii = () => {
                     </div>
                     <div className="profile-comentarii-card-top">
                       <div className="profile-comentarii-card-top-actions">
+                        <button
+                          type="button"
+                          onClick={(e) => { e.stopPropagation(); setShareComment(comment); }}
+                          className="profile-comentarii-icon-btn"
+                          title="Partajează"
+                        >
+                          <Share2 size={18} />
+                        </button>
                       {isAdminOrSemiAdmin && comment.type === 'text' && (
                           <button
                             type="button"
@@ -368,9 +379,18 @@ const ProfileComentarii = () => {
         onClose={() => setViewComment(null)}
         onEdit={(c) => { setViewComment(null); setEditComment(c); setIsModalOpen(true); }}
         onDuplicate={handleDuplicateComment}
+        onShare={(c) => { setViewComment(null); setShareComment(c); }}
         onAddToComentarii={isAdminOrSemiAdmin ? (c) => { setViewComment(null); setAddToComentariiComment(c); } : undefined}
         darkTheme={darkTheme}
         formatDate={formatDate}
+      />
+
+      <ShareCommentModal
+        comment={shareComment}
+        isOpen={!!shareComment}
+        onClose={() => setShareComment(null)}
+        darkTheme={darkTheme}
+        userId={currentUser?.uid}
       />
 
       <AddToComentariiModal
