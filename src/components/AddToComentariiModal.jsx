@@ -331,7 +331,7 @@ Reguli: fragmente EXACTE din text (copiat literal); max 8-12 evidențieri/paragr
           <div className="add-to-comentarii-meta-row">
             <div className="add-to-comentarii-field">
               <label>Titlu</label>
-              <input type="text" value={titlu} onChange={(e) => setTitlu(e.target.value)} placeholder="ex. Luceafărul — comentariu" className="add-to-comentarii-input" disabled={generatingMeta} />
+              <input type="text" value={titlu} onChange={(e) => setTitlu(e.target.value)} placeholder="ex. Luceafărul — comentariu" className="add-to-comentarii-input" disabled={generatingMeta} autoComplete="off" />
             </div>
             <div className="add-to-comentarii-field">
               <label>Descriere</label>

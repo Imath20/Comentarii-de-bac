@@ -14,6 +14,7 @@ const Admin = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [initialCommentData, setInitialCommentData] = useState(null);
+  const [addFromUserComment, setAddFromUserComment] = useState(false);
   const [initialSubjectData, setInitialSubjectData] = useState(null);
 
   // Force reload profile when accessing admin page to ensure isAdmin is up to date
@@ -28,17 +29,21 @@ const Admin = () => {
   // Parse comment data from URL params
   useEffect(() => {
     const editParam = searchParams.get('edit');
+    const addFromUser = searchParams.get('addFromUser') === '1';
     if (editParam) {
       try {
         const decoded = decodeURIComponent(editParam);
         const commentData = JSON.parse(decoded);
         setInitialCommentData(commentData);
+        setAddFromUserComment(addFromUser);
       } catch (error) {
         console.error('Error parsing comment data from URL:', error);
         setInitialCommentData(null);
+        setAddFromUserComment(false);
       }
     } else {
       setInitialCommentData(null);
+      setAddFromUserComment(false);
     }
   }, [searchParams]);
 
@@ -112,6 +117,7 @@ const Admin = () => {
           darkTheme={darkTheme} 
           onLogout={handleLogout} 
           initialCommentData={initialCommentData}
+          addFromUserComment={addFromUserComment}
           initialSubjectData={initialSubjectData}
         />
       </Layout>

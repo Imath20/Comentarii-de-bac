@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react';
+import React, { useState, useEffect, useLayoutEffect, useCallback, useRef, useMemo } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { addComentariu, updateComentariu } from '../firebase/comentariiService';
 import { addSubiect, updateSubiect } from '../firebase/subiecteService';
@@ -23,7 +23,7 @@ import { useAuth } from '../firebase/AuthContext';
 import { createNotification } from '../firebase/notificationsService';
 import AICerinteProcessor from './AICerinteProcessor';
 import AIPostGenerator from './AIPostGenerator';
-import AIComentariuFormatter from './AIComentariuFormatter';
+import AIComentariuFormatter, { safeParseJson } from './AIComentariuFormatter';
 import AICommentGenerator from './AICommentGenerator';
 import AIComentariuDescriptionGenerator from './AIComentariuDescriptionGenerator';
 import AIFullCommentProcessor from './AIFullCommentProcessor';
@@ -46,7 +46,7 @@ const REACTIONS = [
   { type: 'Romania', label: 'Romania', emoji: '🇷🇴' }
 ];
 
-const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjectData }) => {
+const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, addFromUserComment, initialSubjectData }) => {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const [activeTab, setActiveTab] = useState('comentarii');
@@ -125,7 +125,10 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
     });
     setSearchParams(newParams, { replace: true });
   }, [searchParams, setSearchParams]);
-  
+
+  const metaGeneratedForCommentRef = useRef(null);
+  const generateMetaFromContentRef = useRef(null);
+
   // Load all scriitori for searchbars
   useEffect(() => {
     const loadScriitoriForSearch = async () => {
@@ -180,27 +183,48 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
   useEffect(() => {
     if (initialCommentData) {
       const resolvedId = initialCommentData.id || initialCommentData.docId || initialCommentData.docID || '';
-      setIsEditing(true);
-      setEditingCommentId(resolvedId || null);
+      const isAddFromUser = addFromUserComment === true;
+      setIsEditing(!isAddFromUser && !!resolvedId);
+      setEditingCommentId(isAddFromUser ? null : (resolvedId || null));
+      const rawContent = initialCommentData.content ?? initialCommentData.text ?? '';
+      const contentBlocks = Array.isArray(rawContent)
+        ? rawContent
+        : (typeof rawContent === 'string' && rawContent
+            ? rawContent.split(/\n\n+/).map((t) => ({ type: 'paragraph', text: t.trim() })).filter((b) => b.text)
+            : []);
+      if (contentBlocks.length === 0 && typeof rawContent === 'string' && rawContent.trim()) {
+        contentBlocks.push({ type: 'paragraph', text: rawContent.trim() });
+      }
       setComentariuForm({
-        id: resolvedId || '',
+        id: isAddFromUser ? '' : (resolvedId || ''),
         titlu: initialCommentData.titlu || '',
         autor: initialCommentData.autor || '',
-        categorie: initialCommentData.categorie || '',
+        categorie: initialCommentData.categorie || initialCommentData.specieLiterara || '',
         tip: initialCommentData.tip || 'general',
-        plan: initialCommentData.plan || 'free',
+        plan: initialCommentData.plan === 'premium' ? 'premium' : initialCommentData.plan === 'pro' ? 'pro' : 'free',
         descriere: initialCommentData.descriere || '',
-        content: initialCommentData.content || (initialCommentData.text ? [{ type: 'paragraph', text: initialCommentData.text }] : []),
+        content: contentBlocks.length ? contentBlocks : (initialCommentData.text ? [{ type: 'paragraph', text: initialCommentData.text }] : []),
         createdBy: initialCommentData.createdBy || '',
         createdByEmail: initialCommentData.createdByEmail || '',
         createdByName: initialCommentData.createdByName || '',
       });
       setActiveTab('comentarii');
       updateUrlParams({ tab: 'comentarii' });
+
+      const contentStr = typeof rawContent === 'string'
+        ? rawContent
+        : (Array.isArray(rawContent) ? rawContent.map((b) => (typeof b === 'string' ? b : b?.text || '')).join('\n\n') : '');
+      const needsMeta = isAddFromUser && contentStr.trim();
+      const commentKey = initialCommentData.id || contentStr.slice(0, 100);
+      if (needsMeta && metaGeneratedForCommentRef.current !== commentKey) {
+        metaGeneratedForCommentRef.current = commentKey;
+        generateMetaFromContentRef.current?.(contentStr, contentBlocks);
+      }
     } else {
       setEditingCommentId(null);
+      metaGeneratedForCommentRef.current = null;
     }
-  }, [initialCommentData, updateUrlParams]);
+  }, [initialCommentData, addFromUserComment, updateUrlParams]);
 
   // Helper function to extract year from subject data (checks both 'an' and 'data' fields)
   const extractYearFromSubject = (subjectData) => {
@@ -505,9 +529,232 @@ const AdminDashboard = ({ darkTheme, onLogout, initialCommentData, initialSubjec
   const [isGeneratingDescription, setIsGeneratingDescription] = useState(false);
   const [isGeneratingReactions, setIsGeneratingReactions] = useState(false);
   const [isGeneratingComentariuDescription, setIsGeneratingComentariuDescription] = useState(false);
+  const [isGeneratingComentariuMeta, setIsGeneratingComentariuMeta] = useState(false);
+  const [isGeneratingTitlesOnly, setIsGeneratingTitlesOnly] = useState(false);
+  const [richTextEditorKey, setRichTextEditorKey] = useState(0);
   const poemTextDebounceRef = useRef(null);
   const reactionsDebounceRef = useRef(null);
   const comentariuDescriereDebounceRef = useRef(null);
+
+  // Generează doar id, categorie și titlurile paragrafelor cu Groq (pentru addFromUserComment)
+  const generateMetaFromContent = useCallback(async (content, contentBlocks) => {
+    if (!content || typeof content !== 'string' || !content.trim()) return;
+    const groqApiKey = import.meta.env.VITE_GROQ_API_KEY;
+    const groqApiKeyBackup = import.meta.env.VITE_GROQ_API_KEY_1;
+    const groqApiUrl = import.meta.env.VITE_GROQ_API_URL || 'https://api.groq.com/openai/v1/chat/completions';
+    const groqKeys = [groqApiKey, groqApiKeyBackup].filter((k) => k && typeof k === 'string' && k.trim() && k !== 'undefined');
+    if (groqKeys.length === 0) return;
+
+    setIsGeneratingComentariuMeta(true);
+    const numParagraphs = Array.isArray(contentBlocks) ? contentBlocks.length : 1;
+    const textSnippet = content.length > 2800 ? content.slice(0, 2800) + '...' : content;
+    const prompt = `Pe baza următorului text de comentariu literar, generează DOAR un obiect JSON valid cu exact aceste chei:
+- "id": string, id URL-friendly (ex: mihai-eminescu-luceafarul-1234567890) - autor-titlu-sau-tema-timestamp
+- "categorie": string, UNA din: poezie, roman, comedie, basm, nuvela, critica, memorii, poveste, schita
+- "titluriParagrafe": array de ${numParagraphs} string-uri - câte un titlu scurt (3-8 cuvinte) pentru fiecare paragraf, în ordine
+
+Text comentariu:
+${textSnippet}
+
+Returnează DOAR JSON valid, fără markdown, fără \`\`\`. Exemplu: {"id":"autor-operă-123","categorie":"poezie","titluriParagrafe":["Tema centrală","Structura","Simbolistica"]}`;
+
+    try {
+      for (const key of groqKeys) {
+        try {
+          const res = await fetch(groqApiUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${key.trim()}` },
+            body: JSON.stringify({
+              model: 'openai/gpt-oss-120b',
+              messages: [
+                { role: 'system', content: 'Răspunde DOAR cu JSON valid. Fără markdown, fără explicatii.' },
+                { role: 'user', content: prompt },
+              ],
+              temperature: 0.25,
+              max_tokens: 500,
+            }),
+          });
+          if (!res.ok) {
+            if (res.status === 401) {
+              setMessage({ type: 'error', text: 'Cheia API Groq (VITE_GROQ_API_KEY) este invalidă sau a expirat. Verifică .env și console.groq.com' });
+            }
+            continue;
+          }
+          const data = await res.json();
+          const raw = data?.choices?.[0]?.message?.content || '';
+          if (!raw || typeof raw !== 'string') continue;
+          const parsed = safeParseJson(raw);
+          const validCats = ['poezie', 'roman', 'comedie', 'basm', 'nuvela', 'critica', 'memorii', 'poveste', 'schita'];
+          const cat = validCats.includes(parsed.categorie) ? parsed.categorie : 'poezie';
+          const titles = Array.isArray(parsed.titluriParagrafe) ? parsed.titluriParagrafe : [];
+          const updatedContent = (contentBlocks || []).map((block, i) => ({
+            ...block,
+            title: titles[i] != null ? String(titles[i]).trim() : (block.title || ''),
+          }));
+          setComentariuForm((prev) => ({
+            ...prev,
+            ...(parsed.id != null && { id: String(parsed.id).trim() }),
+            categorie: cat,
+            content: updatedContent.length ? updatedContent : prev.content,
+          }));
+          break;
+        } catch {
+          continue;
+        }
+      }
+    } catch (err) {
+      console.warn('Eroare la generarea meta din conținut:', err);
+    } finally {
+      setIsGeneratingComentariuMeta(false);
+    }
+  }, []);
+
+  useLayoutEffect(() => {
+    generateMetaFromContentRef.current = generateMetaFromContent;
+  }, [generateMetaFromContent]);
+
+  const generateTitlesOnly = useCallback(async () => {
+    const contentBlocks = comentariuForm.content || [];
+    const paragraphsWithText = contentBlocks.filter((b) => (b?.text || '').trim().length > 0);
+    const contentStr = paragraphsWithText.map((b) => (b?.text || '').trim()).join('\n\n');
+
+    console.log('[generateTitlesOnly] START', {
+      contentBlocks,
+      paragraphsWithText,
+      numParagraphs: paragraphsWithText.length,
+      contentStrLength: contentStr.length,
+    });
+
+    if (!contentStr.trim()) {
+      console.log('[generateTitlesOnly] ABORT: niciun paragraf cu text');
+      setMessage({ type: 'error', text: 'Adaugă paragrafe cu text înainte de a genera titlurile.' });
+      return;
+    }
+
+    const groqApiKey = import.meta.env.VITE_GROQ_API_KEY;
+    const groqApiKeyBackup = import.meta.env.VITE_GROQ_API_KEY_1;
+    const groqApiUrl = import.meta.env.VITE_GROQ_API_URL || 'https://api.groq.com/openai/v1/chat/completions';
+    const groqKeys = [groqApiKey, groqApiKeyBackup].filter((k) => k && typeof k === 'string' && k.trim() && k !== 'undefined');
+
+    console.log('[generateTitlesOnly] Groq config', {
+      hasKey: !!groqApiKey,
+      groqKeysLength: groqKeys.length,
+      groqApiUrl,
+    });
+
+    if (groqKeys.length === 0) {
+      console.log('[generateTitlesOnly] ABORT: VITE_GROQ_API_KEY lipsește în .env');
+      setMessage({ type: 'error', text: 'Setează VITE_GROQ_API_KEY în .env' });
+      return;
+    }
+
+    setIsGeneratingTitlesOnly(true);
+    setMessage({ type: '', text: '' });
+    const numParagraphs = paragraphsWithText.length;
+    const textSnippet = contentStr.length > 2800 ? contentStr.slice(0, 2800) + '...' : contentStr;
+    const prompt = `Pe baza textului de mai jos, generează DOAR un obiect JSON cu cheia "titluriParagrafe": un array de ${numParagraphs} string-uri - câte un titlu scurt (3-8 cuvinte) pentru fiecare paragraf, în ordine.
+
+Text:
+${textSnippet}
+
+Returnează DOAR JSON valid. Exemplu: {"titluriParagrafe":["Tema centrală","Structura","Simbolistica"]}`;
+
+    console.log('[generateTitlesOnly] Request', { numParagraphs, promptLength: prompt.length });
+
+    const groqModels = ['llama-3.1-8b-instant', 'openai/gpt-oss-120b', 'llama-3.1-70b-versatile'];
+    let succeeded = false;
+    try {
+      for (const key of groqKeys) {
+        for (const model of groqModels) {
+          try {
+            const res = await fetch(groqApiUrl, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${key.trim()}` },
+              body: JSON.stringify({
+                model,
+                messages: [
+                  { role: 'system', content: 'Răspunde DOAR cu JSON valid. Fără markdown.' },
+                  { role: 'user', content: prompt },
+                ],
+                temperature: 0.25,
+                max_tokens: 400,
+              }),
+            });
+
+            const data = await res.json();
+            const raw = data?.choices?.[0]?.message?.content || '';
+            const groqError = data?.error;
+
+            console.log('[generateTitlesOnly] Groq response', {
+              ok: res.ok,
+              status: res.status,
+              model,
+              raw: raw ? raw.slice(0, 200) : raw,
+              groqError: groqError || null,
+              data,
+            });
+
+            if (!res.ok) {
+              console.warn('[generateTitlesOnly] Groq error body:', groqError || data);
+              if (res.status === 401) setMessage({ type: 'error', text: 'Cheia API Groq invalidă.' });
+              if (res.status === 400) setMessage({ type: 'error', text: groqError?.message || 'Request invalid (400). Încearcă alt model.' });
+              continue;
+            }
+          if (!raw || typeof raw !== 'string') {
+            console.log('[generateTitlesOnly] SKIP: răspuns gol');
+            continue;
+          }
+
+          const parsed = safeParseJson(raw);
+          const titles = Array.isArray(parsed?.titluriParagrafe) ? parsed.titluriParagrafe : [];
+
+          console.log('[generateTitlesOnly] Parsed', { parsed, titles });
+
+          if (titles.length === 0) {
+            setMessage({ type: 'error', text: 'AI nu a returnat titluri. Încearcă din nou.' });
+            continue;
+          }
+
+          let titleIdx = 0;
+          const updatedContent = contentBlocks.map((block) => {
+            const hasText = (block?.text || '').trim().length > 0;
+            const newTitle = hasText && titles[titleIdx] != null ? String(titles[titleIdx++]).trim() : (block?.title || '');
+            return { ...block, title: newTitle };
+          });
+
+          console.log('[generateTitlesOnly] SUCCESS', {
+            titles,
+            updatedContent,
+          });
+
+          setComentariuForm((prev) => ({ ...prev, content: updatedContent }));
+          setRichTextEditorKey((k) => k + 1);
+          setMessage({ type: 'success', text: `Titlurile au fost completate (${titles.length} paragrafe).` });
+          succeeded = true;
+          break;
+        } catch (innerErr) {
+          console.warn('[generateTitlesOnly] Inner error', innerErr);
+          continue;
+        }
+        if (succeeded) break;
+      }
+      if (!succeeded) {
+        console.log('[generateTitlesOnly] FAIL: niciun key nu a funcționat');
+        setMessage({ type: 'error', text: 'Nu s-a putut genera. Verifică cheia API Groq în .env' });
+      }
+      }
+    } catch (err) {
+      console.warn('[generateTitlesOnly] Eroare la generarea titlurilor:', err);
+      setMessage({ type: 'error', text: err?.message || 'Eroare la generare.' });
+    } finally {
+      setIsGeneratingTitlesOnly(false);
+      console.log('[generateTitlesOnly] DONE');
+    }
+  }, [comentariuForm.content]);
+
+  const handleComentariuContentChange = useCallback((content) => {
+    setComentariuForm((prev) => ({ ...prev, content }));
+  }, []);
 
   // Funcție pentru generarea automată a descrierii poeziei / poveștii / postării generale
   const generatePoemDescription = useCallback(async (poemText) => {
@@ -2599,7 +2846,7 @@ Generează o descriere scurtă și profesională pentru acest comentariu literar
                 id="comentariu-id"
                 value={comentariuForm.id}
                 onChange={(e) => setComentariuForm({ ...comentariuForm, id: e.target.value })}
-                placeholder="eminescu-luceafarul"
+                placeholder={isGeneratingComentariuMeta ? "Se generează cu AI..." : "eminescu-luceafarul"}
                 className="admin-input"
                 disabled={isEditing}
                 style={isEditing ? { opacity: 0.6, cursor: 'not-allowed' } : {}}
@@ -2631,6 +2878,7 @@ Generează o descriere scurtă și profesională pentru acest comentariu literar
               placeholder="Luceafărul — comentariu"
               required
               className="admin-input"
+              autoComplete="off"
             />
           </div>
 
@@ -2661,6 +2909,11 @@ Generează o descriere scurtă și profesională pentru acest comentariu literar
                 <option key={cat} value={cat}>{cat}</option>
               ))}
             </select>
+            {isGeneratingComentariuMeta && (
+              <small style={{ color: darkTheme ? '#c3b7a4' : '#666', display: 'block', marginTop: '4px' }}>
+                ⏳ Se generează id, categorie și titlurile paragrafelor...
+              </small>
+            )}
           </div>
 
           <div className="admin-form-group">
@@ -2754,9 +3007,24 @@ Generează o descriere scurtă și profesională pentru acest comentariu literar
 
           <div className="admin-form-group">
             <label htmlFor="comentariu-content">Text structurat (paragrafe cu formatare) *</label>
+            <div style={{ marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <button
+                type="button"
+                onClick={generateTitlesOnly}
+                disabled={isGeneratingTitlesOnly || !comentariuForm.content?.length}
+                className="admin-submit-button"
+                style={{ padding: '10px 20px', fontSize: '14px' }}
+              >
+                {isGeneratingTitlesOnly ? 'Se completează titlurile...' : 'Completează titlurile paragrafelor cu AI'}
+              </button>
+              <span style={{ fontSize: '13px', color: darkTheme ? '#999' : '#666' }}>
+                Generează titluri pentru fiecare paragraf din textul existent
+              </span>
+            </div>
             <RichTextEditor
+              key={richTextEditorKey}
               value={comentariuForm.content}
-              onChange={(content) => setComentariuForm({ ...comentariuForm, content })}
+              onChange={handleComentariuContentChange}
               darkTheme={darkTheme}
             />
             <AIComentariuFormatter
@@ -2788,6 +3056,7 @@ Generează o descriere scurtă și profesională pentru acest comentariu literar
                 placeholder="Părintele Geticei"
                 required
                 className="admin-input"
+                autoComplete="off"
               />
             </div>
 
@@ -3009,6 +3278,7 @@ Generează o descriere scurtă și profesională pentru acest comentariu literar
               placeholder="Ion Creangă - Povestea lui Harap-Alb"
               required
               className="admin-input"
+              autoComplete="off"
             />
           </div>
 
@@ -3507,6 +3777,7 @@ Generează o descriere scurtă și profesională pentru acest comentariu literar
                     })}
                     placeholder="Titlul prezentării"
                     className="admin-input"
+                    autoComplete="off"
                   />
                 </div>
                 <div style={{ marginBottom: '10px' }}>

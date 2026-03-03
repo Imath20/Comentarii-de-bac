@@ -1769,6 +1769,7 @@ const RichTextEditor = ({ value, onChange, darkTheme }) => {
                 onChange={(e) => handleTitleChange(index, e.target.value)}
                 placeholder="Adaugă un titlu pentru paragraf..."
                 className="rich-text-title-input"
+                autoComplete="off"
               />
             </div>
             {block.title && (

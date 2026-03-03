@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../firebase/AuthContext';
 import Layout from '../assets/Layout';
-import { Edit, Mail, Calendar, User, Shield, FileText } from 'lucide-react';
+import { Edit, Mail, Calendar, User, Shield, FileText, LayoutDashboard } from 'lucide-react';
 import { getProfileImageUrl } from '../utils/cloudinary';
 import '../styles/style.scss';
 import '../styles/profile.scss';
@@ -176,6 +176,15 @@ const Profile = () => {
                   <FileText size={18} />
                   <span>Comentariile mele</span>
                 </Link>
+                {(isAdmin || isSemiAdmin) && (
+                  <Link
+                    to="/admin"
+                    className="profile-edit-button profile-admin-dashboard-link"
+                  >
+                    <LayoutDashboard size={18} />
+                    <span>Admin Dashboard</span>
+                  </Link>
+                )}
               </div>
             </div>
           </div>

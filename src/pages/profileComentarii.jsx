@@ -7,7 +7,6 @@ import { getUserComments, addUserComment, updateUserComment, deleteUserComment }
 import UserAddCommentModal from '../components/UserAddCommentModal';
 import UserCommentViewModal from '../components/UserCommentViewModal';
 import ShareCommentModal from '../components/ShareCommentModal';
-import AddToComentariiModal from '../components/AddToComentariiModal';
 import '../styles/style.scss';
 import '../styles/comentarii.scss';
 import '../styles/profile.scss';
@@ -25,7 +24,6 @@ const ProfileComentarii = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editComment, setEditComment] = useState(null);
   const [viewComment, setViewComment] = useState(null);
-  const [addToComentariiComment, setAddToComentariiComment] = useState(null);
   const [shareComment, setShareComment] = useState(null);
   const [deletingId, setDeletingId] = useState(null);
   const [duplicatingId, setDuplicatingId] = useState(null);
@@ -251,7 +249,7 @@ const ProfileComentarii = () => {
                       {isAdminOrSemiAdmin && comment.type === 'text' && (
                           <button
                             type="button"
-                            onClick={(e) => { e.stopPropagation(); setAddToComentariiComment(comment); }}
+                            onClick={(e) => { e.stopPropagation(); navigate(`/admin?tab=comentarii&addFromUser=1&edit=${encodeURIComponent(JSON.stringify(comment))}`); }}
                             className="profile-comentarii-icon-btn"
                             title="Adaugă la pagina Comentarii"
                           >
@@ -380,7 +378,7 @@ const ProfileComentarii = () => {
         onEdit={(c) => { setViewComment(null); setEditComment(c); setIsModalOpen(true); }}
         onDuplicate={handleDuplicateComment}
         onShare={(c) => { setViewComment(null); setShareComment(c); }}
-        onAddToComentarii={isAdminOrSemiAdmin ? (c) => { setViewComment(null); setAddToComentariiComment(c); } : undefined}
+        onAddToComentarii={isAdminOrSemiAdmin ? (c) => { setViewComment(null); navigate(`/admin?tab=comentarii&addFromUser=1&edit=${encodeURIComponent(JSON.stringify(c))}`); } : undefined}
         darkTheme={darkTheme}
         formatDate={formatDate}
       />
@@ -393,13 +391,6 @@ const ProfileComentarii = () => {
         userId={currentUser?.uid}
       />
 
-      <AddToComentariiModal
-        comment={addToComentariiComment}
-        isOpen={!!addToComentariiComment}
-        onClose={() => setAddToComentariiComment(null)}
-        darkTheme={darkTheme}
-        onSuccess={() => setAddToComentariiComment(null)}
-      />
     </Layout>
   );
 };
