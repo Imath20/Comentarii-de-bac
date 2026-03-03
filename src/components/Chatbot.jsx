@@ -1,5 +1,5 @@
 import React, { useMemo, useState, useRef, useEffect, useCallback } from 'react';
-import { MessageCircle, Plus, Trash2, X, Send, Maximize2 } from 'lucide-react';
+import { BookOpen, Plus, Trash2, X, Send, Maximize2 } from 'lucide-react';
 import { useAuth } from '../firebase/AuthContext';
 import {
   getChatbotSessions,
@@ -16,7 +16,7 @@ const MAX_MESSAGES_PER_SESSION = 60;
 const createWelcomeMessages = () => [
   {
     id: Date.now(),
-    text: `Bună! Sunt ${ASSISTANT_NAME}. Te pot ajuta cu întrebări despre opere, scriitori, curente literare, comentarii și subiecte pentru bacalaureat. Cu ce te pot ajuta?`,
+    text: `Bună! Sunt ${ASSISTANT_NAME}. Scrie-mi orice întrebare despre opere, scriitori, curente literare sau comentarii — și voi răspunde aici, în jurnalul tău. Cu ce începem?`,
     sender: 'assistant',
     timestamp: new Date(),
   },
@@ -33,6 +33,7 @@ export default function Chatbot() {
   const [inputMessage, setInputMessage] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const [isLoadingSessions, setIsLoadingSessions] = useState(true);
+  const [lastCompletedMessageId, setLastCompletedMessageId] = useState(null);
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
   const typingIntervalRef = useRef(null);
@@ -410,6 +411,8 @@ export default function Chatbot() {
           }).catch((err) => console.warn('Chatbot persist AI response:', err));
           console.log('[Chatbot] Răspuns AI salvat:', sessionIdToUpdate);
         }
+        setLastCompletedMessageId(completedMessageId);
+        setTimeout(() => setLastCompletedMessageId(null), 1400);
       });
     } catch (err) {
       console.error('Chatbot error:', err);
@@ -437,6 +440,8 @@ export default function Chatbot() {
         }).catch((e) => console.warn('Chatbot persist fallback:', e));
       }
       setIsTyping(false);
+      setLastCompletedMessageId(messageId);
+      setTimeout(() => setLastCompletedMessageId(null), 1400);
     }
   };
 
@@ -528,10 +533,10 @@ export default function Chatbot() {
       <button
         className={`chatbot-fab ${themeClass}`}
         onClick={() => setIsOpen(true)}
-        aria-label="Deschide asistentul BAC"
+        aria-label="Deschide Jurnalul de BAC"
         type="button"
       >
-        <MessageCircle size={28} />
+        <BookOpen size={26} strokeWidth={2} />
       </button>
 
       {/* Panel overlay */}
@@ -545,17 +550,15 @@ export default function Chatbot() {
             <div className="chatbot-sidebar">
               <div className="chatbot-sidebar-header">
                 <div className="chatbot-avatar chatbot-avatar-assistant">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M12 14l9-5-9-5-9 5 9 5z" />
-                    <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
-                  </svg>
+                  <BookOpen size={20} strokeWidth={2} />
                 </div>
                 <span className="chatbot-sidebar-title">{ASSISTANT_NAME}</span>
               </div>
               <button className="chatbot-btn-new" onClick={startNewChat} type="button">
-                <Plus size={18} />
-                Chat nou
+                <Plus size={18} strokeWidth={2} />
+                Pagină nouă
               </button>
+              <p className="chatbot-cuprins-label">Cuprins</p>
               <div className="chatbot-sessions-list">
                 {isLoadingSessions ? (
                   <div className="chatbot-loading">Se încarcă...</div>
@@ -591,31 +594,42 @@ export default function Chatbot() {
             {/* Right main area */}
             <div className="chatbot-main">
               <div className="chatbot-main-header">
-                <button className="chatbot-icon-btn" title="Maximizează" type="button">
-                  <Maximize2 size={18} />
-                </button>
-                <button
-                  className="chatbot-icon-btn chatbot-close"
-                  onClick={() => setIsOpen(false)}
-                  title="Închide"
-                  type="button"
-                >
-                  <X size={22} strokeWidth={2.5} />
-                </button>
+                <div>
+                  <span className="chatbot-main-title">Jurnalul meu</span>
+                  <span className="chatbot-journal-date">
+                    {new Date().toLocaleDateString('ro-RO', { day: 'numeric', month: 'long', year: 'numeric' })}
+                  </span>
+                </div>
+                <div className="chatbot-header-actions">
+                  <button className="chatbot-icon-btn" title="Maximizează" type="button">
+                    <Maximize2 size={16} />
+                  </button>
+                  <button
+                    className="chatbot-icon-btn chatbot-close"
+                    onClick={() => setIsOpen(false)}
+                    title="Închide"
+                    type="button"
+                  >
+                    <X size={20} strokeWidth={2.5} />
+                  </button>
+                </div>
               </div>
 
               <div className="chatbot-messages">
                 {messages.map((msg) => (
                   <div
                     key={msg.id}
-                    className={`chatbot-message ${msg.sender === 'user' ? 'user' : 'assistant'}`}
+                    className={`chatbot-message ${msg.sender === 'user' ? 'user' : 'assistant'} ${
+                      msg.sender === 'assistant' && isTyping && messages[messages.length - 1]?.id === msg.id
+                        ? 'chatbot-message-typing'
+                        : ''
+                    } ${
+                      msg.sender === 'assistant' && lastCompletedMessageId === msg.id ? 'chatbot-message-magic' : ''
+                    }`}
                   >
                     {msg.sender === 'assistant' && (
                       <div className="chatbot-avatar chatbot-avatar-assistant chatbot-avatar-small">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                          <path d="M12 14l9-5-9-5-9 5 9 5z" />
-                          <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
-                        </svg>
+                        <BookOpen size={16} strokeWidth={2} />
                       </div>
                     )}
                     <div className="chatbot-message-content">
@@ -640,7 +654,7 @@ export default function Chatbot() {
                     value={inputMessage}
                     onChange={(e) => setInputMessage(e.target.value)}
                     onKeyDown={handleKeyPress}
-                    placeholder="Scrie un mesaj..."
+                    placeholder="Scrie aici..."
                     className="chatbot-input"
                     disabled={isTyping}
                   />
@@ -651,7 +665,7 @@ export default function Chatbot() {
                     title="Trimite"
                     type="button"
                   >
-                    <Send size={20} color='white' />
+                    <Send size={18} />
                   </button>
                 </div>
               </div>
