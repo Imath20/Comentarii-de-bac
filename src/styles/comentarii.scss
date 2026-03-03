@@ -197,6 +197,9 @@ body.dark-theme .comentarii-card-content {
   position: absolute;
   top: 5px;
   right: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: 0.35rem 0.75rem;
   font-weight: 900;
   letter-spacing: 0.04em;
