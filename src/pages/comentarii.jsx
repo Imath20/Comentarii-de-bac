@@ -151,7 +151,7 @@ export default function Comentarii() {
     const [selectedCategorie, setSelectedCategorie] = useState('toate');
     const [selectedPlan, setSelectedPlan] = useState('toate');
     const [selectedTip, setSelectedTip] = useState('toate');
-    const [sortOption, setSortOption] = useState('none');
+    const [sortOption, setSortOption] = useState('az');
     const [selectedComentariu, setSelectedComentariu] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -209,7 +209,7 @@ export default function Comentarii() {
     const filtered = useMemo(() => {
         const q = searchTerm.trim().toLowerCase();
         return comentarii.filter(c => {
-            const matchesSearch = !q || c.titlu.toLowerCase().includes(q) || (c.descriere || '').toLowerCase().includes(q) || (c.categorie || '').toLowerCase().includes(q);
+            const matchesSearch = !q || c.titlu.toLowerCase().includes(q);
             const matchesCategorie = selectedCategorie === 'toate' || c.categorie === selectedCategorie;
             const matchesPlan = selectedPlan === 'toate' || c.plan === selectedPlan;
             const matchesTip = selectedTip === 'toate' || (c.tip || 'general') === selectedTip;

@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../firebase/AuthContext';
 import { deleteComentariu } from '../firebase/comentariiService';
-import { Trash2, Edit } from 'lucide-react';
+import { addUserComment } from '../firebase/userCommentsService';
+import { Trash2, Edit, BookmarkPlus } from 'lucide-react';
 import '../styles/comentariiModal.scss';
 
 // Helper function to convert hex color to rgba with reduced alpha
@@ -33,10 +34,30 @@ const hexToRgba = (color, alpha = 0.5) => {
   return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 };
 
+// Convertește conținutul unui comentariu (array de blocuri sau text) în string pentru comentariul personal
+function comentariuToText(comentariu) {
+  if (!comentariu) return '';
+  if (comentariu.text) return comentariu.text;
+  if (comentariu.content && Array.isArray(comentariu.content)) {
+    return comentariu.content
+      .map((block) => {
+        const parts = [];
+        if (block.title) parts.push(block.title);
+        if (block.text) parts.push(block.text);
+        return parts.join('\n\n');
+      })
+      .filter(Boolean)
+      .join('\n\n');
+  }
+  return '';
+}
+
 export default function ComentariiModal({ isOpen, comentariu, darkTheme, onClose, onDelete }) {
   const { currentUser, userProfile } = useAuth();
   const navigate = useNavigate();
   const [isDeleting, setIsDeleting] = useState(false);
+  const [isClaiming, setIsClaiming] = useState(false);
+  const [claimStatus, setClaimStatus] = useState(null);
   const isAdmin = userProfile?.isAdmin === true;
   const isSemiAdmin = userProfile?.isSemiAdmin === true;
   const isOwner = !!(comentariu?.createdBy && currentUser?.uid === comentariu.createdBy);
@@ -71,6 +92,34 @@ export default function ComentariiModal({ isOpen, comentariu, darkTheme, onClose
     const commentData = encodeURIComponent(JSON.stringify(comentariu));
     onClose();
     navigate(`/admin?edit=${commentData}`);
+  };
+
+  const handleClaim = async () => {
+    if (!currentUser?.uid || !comentariu || isClaiming) return;
+    const content = comentariuToText(comentariu);
+    if (!content.trim()) {
+      setClaimStatus({ type: 'error', text: 'Comentariul nu are conținut de salvat.' });
+      return;
+    }
+    setIsClaiming(true);
+    setClaimStatus(null);
+    try {
+      await addUserComment(currentUser.uid, {
+        type: 'text',
+        content,
+        titlu: comentariu.titlu || '',
+        autor: comentariu.autor || '',
+        categorie: comentariu.categorie || comentariu.specieLiterara || '',
+        tip: comentariu.tip || 'general',
+        descriere: comentariu.descriere || '',
+        plan: comentariu.plan || 'free',
+      });
+      setClaimStatus({ type: 'success', text: 'Comentariul a fost adăugat la comentariile tale personale.' });
+    } catch (err) {
+      setClaimStatus({ type: 'error', text: err?.message || 'Eroare la adăugare.' });
+    } finally {
+      setIsClaiming(false);
+    }
   };
     const renderContent = () => {
         // Check if content is structured (new format) or plain text (old format)
@@ -239,6 +288,12 @@ export default function ComentariiModal({ isOpen, comentariu, darkTheme, onClose
         return <div className="comentarii-modal-empty">Nu există text disponibil pentru acest comentariu.</div>;
     };
     useEffect(() => {
+        if (!isOpen) {
+            setClaimStatus(null);
+        }
+    }, [isOpen]);
+
+    useEffect(() => {
         if (isOpen) {
             // Store current scroll position
             const scrollY = window.scrollY;
@@ -285,15 +340,49 @@ export default function ComentariiModal({ isOpen, comentariu, darkTheme, onClose
                     <div className={`comentarii-modal-text ${darkTheme ? 'dark-theme' : ''}`}>
                         {renderContent()}
                     </div>
-                    {(canEdit || canDelete) && (
+                    {(canEdit || canDelete || currentUser) && (
                         <div className="comentarii-modal-footer" style={{
                             marginTop: '24px',
                             paddingTop: '16px',
                             borderTop: `1px solid ${darkTheme ? '#6a4322' : '#e0e0e0'}`,
                             display: 'flex',
+                            flexWrap: 'wrap',
                             justifyContent: 'flex-end',
+                            alignItems: 'center',
                             gap: '12px'
                         }}>
+                            {claimStatus && (
+                                <span className={`comentarii-modal-claim-status ${claimStatus.type}`} style={{ flexBasis: '100%', textAlign: 'right', fontSize: '0.9rem' }}>
+                                    {claimStatus.text}
+                                </span>
+                            )}
+                            {currentUser && (
+                                <button
+                                    onClick={handleClaim}
+                                    disabled={isClaiming}
+                                    className={`comentarii-modal-claim ${darkTheme ? 'dark-theme' : ''}`}
+                                    style={{
+                                        padding: '10px 20px',
+                                        borderRadius: '8px',
+                                        border: 'none',
+                                        background: darkTheme ? '#2d5a3d' : '#e8f5e9',
+                                        color: darkTheme ? '#81c784' : '#2e7d32',
+                                        cursor: isClaiming ? 'not-allowed' : 'pointer',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        gap: '8px',
+                                        fontSize: '0.9rem',
+                                        fontWeight: 500,
+                                        opacity: isClaiming ? 0.6 : 1,
+                                        transition: 'all 0.2s',
+                                        outline: 'none',
+                                    }}
+                                    title="Adaugă la comentariile tale personale"
+                                >
+                                    <BookmarkPlus size={16} />
+                                    {isClaiming ? 'Se adaugă...' : 'Adaugă la comentariile mele'}
+                                </button>
+                            )}
                             {canEdit && (
                               <button
                                   onClick={handleEdit}

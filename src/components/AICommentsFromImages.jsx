@@ -255,9 +255,9 @@ export default function AICommentsFromImages({ darkTheme, markdownToHtml }) {
         'Fiecare variantă trebuie să fie în limba română, cu subtitluri clare și paragrafe bine delimitate.',
         'Formatare: folosește markdown cu titluri (##) și liste unde e util. Pentru subliniere folosește sintaxa ++text++ (NU folosi HTML).',
         'CONDIȚII DE LUNGIME (obligatorii, nu aproximative):',
-        '- Free: MINIM 450 de cuvinte și MAXIM 500 de cuvinte.',
-        '- Pro: MINIM 500 de cuvinte și MAXIM 600 de cuvinte.',
-        '- Premium: MINIM 700 de cuvinte și MAXIM 900 de cuvinte.',
+        '- Free: MINIM 400 de cuvinte și MAXIM 550 de cuvinte.',
+        '- Pro: MINIM 600 de cuvinte și MAXIM 700 de cuvinte.',
+        '- Premium: MINIM 800 de cuvinte și MAXIM 900 de cuvinte.',
         'Dacă o variantă ar ieși mai scurtă decât minimul cerut, trebuie să o EXTINZI (adaugă explicații, analize, conexiuni) până ajungi în interval.',
         'Dacă o variantă ar depăși maximul, trebuie să o SCURTEZI păstrând ideile esențiale.',
         'Returnează DOAR JSON valid, fără ``` și fără text extra.',
@@ -406,10 +406,10 @@ export default function AICommentsFromImages({ darkTheme, markdownToHtml }) {
           {(['free', 'pro', 'premium']).map((tier) => {
             const label =
               tier === 'free'
-                ? 'Free (450-500 cuvinte)'
+                ? 'Free (400-550 cuvinte)'
                 : tier === 'pro'
-                ? 'Pro (500-600 cuvinte)'
-                : 'Premium (700-900 cuvinte)';
+                ? 'Pro (600-700 cuvinte)'
+                : 'Premium (800-900 cuvinte)';
             const md = results?.[tier]?.markdown || '';
             const wc = results?.[tier]?.wordCount ?? countWords(md);
             return (

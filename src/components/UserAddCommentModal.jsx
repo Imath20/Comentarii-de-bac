@@ -26,9 +26,9 @@ const TIP_COMENTARIU_OPTIONS = [
 ];
 
 const PLAN_WORD_RANGES = {
-  free: { min: 400, max: 450, label: 'Gratis' },
-  pro: { min: 500, max: 600, label: 'Pro' },
-  premium: { min: 700, max: 800, label: 'Premium' },
+  free: { min: 400, max: 550, label: 'Gratis' },
+  pro: { min: 600, max: 700, label: 'Pro' },
+  premium: { min: 800, max: 900, label: 'Premium' },
 };
 const MAX_IMAGES = 4;
 
@@ -375,6 +375,12 @@ const UserAddCommentModal = ({ isOpen, onClose, onSubmit, onEditSubmit, initialC
     }
   };
 
+  const getRemixTextFromParsed = (parsed) => {
+    if (!parsed || typeof parsed !== 'object') return '';
+    const text = parsed.markdown ?? parsed.content ?? parsed.text ?? '';
+    return (text || '').toString().trim();
+  };
+
   const stripMarkdownHeadings = (text) => {
     if (!text || typeof text !== 'string') return '';
     return text
@@ -506,19 +512,18 @@ const UserAddCommentModal = ({ isOpen, onClose, onSubmit, onEditSubmit, initialC
       }
 
       const models = [
-        'moonshotai/kimi-k2-instruct-0905',
-        'openai/gpt-oss-120b',
         'llama-3.3-70b-versatile',
+        'openai/gpt-oss-120b',
+        'moonshotai/kimi-k2-instruct-0905',
       ];
 
       const buildPrompt = (extraInstruction = '') => ({
         system: [
           'Ești profesor de limba și literatura română.',
           'Rescrii (remixezi) un comentariu literar păstrând ideile de bază, dar cu exprimare mai clară, coerentă și matură.',
-          `LUNGIME OBLIGATORIE: textul final trebuie să fie între ${min} și ${max} cuvinte.`,
-          'Nu folosi liste numerotate pentru tot textul; preferă paragrafe bine structurate.',
-          'Nu inventa opere, personaje sau citate inexistente.',
-          'Răspunde DOAR JSON valid: {"markdown":"...","wordCount":number}',
+          `LUNGIME: între ${min} și ${max} cuvinte.`,
+          'Nu folosi liste numerotate; preferă paragrafe bine structurate. Nu inventa opere sau citate inexistente.',
+          'Răspunde DOAR cu textul remixat, fără JSON, fără explicații, fără titluri înainte de text.',
           extraInstruction,
         ].filter(Boolean).join('\n'),
         user: `Remixează următorul comentariu:\n\n${inputText}`,
@@ -559,15 +564,19 @@ const UserAddCommentModal = ({ isOpen, onClose, onSubmit, onEditSubmit, initialC
                 continue;
               }
               const data = JSON.parse(raw);
-              const content = (data?.choices?.[0]?.message?.content || '').trim();
+              let content = (data?.choices?.[0]?.message?.content || '').trim();
               const parsed = parseRemixJson(content);
-              const markdown = stripMarkdownHeadings((parsed?.markdown || '').toString().trim());
+              let markdown = getRemixTextFromParsed(parsed);
+              if (!markdown && content.length > 30) {
+                markdown = content.replace(/^```\w*\s*|\s*```$/g, '').trim();
+              }
+              markdown = stripMarkdownHeadings(markdown || '');
               if (!markdown) {
                 lastErr = 'Răspuns AI fără text remixat.';
                 continue;
               }
               remixed = markdown;
-              remixedWords = Number(parsed?.wordCount) || countWords(markdown);
+              remixedWords = countWords(markdown);
               return true;
             } catch (err) {
               lastErr = err?.message || 'Eroare la Remix AI.';
@@ -584,7 +593,7 @@ const UserAddCommentModal = ({ isOpen, onClose, onSubmit, onEditSubmit, initialC
 
       if (remixedWords < min || remixedWords > max) {
         await runOnce(
-          `Corectează strict lungimea: MINIM ${min} și MAXIM ${max} cuvinte. Nu returna în afara intervalului.`
+          `Corectează lungimea: MINIM ${min}, MAXIM ${max} cuvinte. Răspunde doar cu textul.`
         );
       }
 

@@ -296,6 +296,24 @@ body.dark-theme .comentarii-modal-empty {
   color: #c4a484;
 }
 
+.comentarii-modal-claim-status {
+  &.success {
+    color: #2e7d32;
+  }
+  &.error {
+    color: #c62828;
+  }
+}
+
+body.dark-theme .comentarii-modal-claim-status {
+  &.success {
+    color: #81c784;
+  }
+  &.error {
+    color: #ff6b6b;
+  }
+}
+
 /* Tablet landscape */
 @media (max-width: 1400px) {
   .comentarii-modal {

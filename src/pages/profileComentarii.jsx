@@ -86,24 +86,14 @@ const ProfileComentarii = () => {
   const filteredComments = useMemo(() => {
     const q = searchTerm.trim().toLowerCase();
     if (!q) return userComments;
-    return userComments.filter((c) => {
-      const searchIn = [
-        c.content || '',
-        c.titlu || '',
-        c.autor || '',
-        c.anAparitie || '',
-        c.curentLiterar || '',
-        c.specieLiterara || c.categorie || '',
-        c.genLiterar || '',
-        c.teme || '',
-        c.motive || '',
-        c.viziune || '',
-        c.interpretare || '',
-        c.descriere || '',
-      ].join(' ').toLowerCase();
-      return searchIn.includes(q);
-    });
+    return userComments.filter((c) => (c.titlu || '').toLowerCase().includes(q));
   }, [userComments, searchTerm]);
+
+  const sortedComments = useMemo(() => {
+    return [...filteredComments].sort((a, b) =>
+      (a.titlu || '').localeCompare(b.titlu || '', 'ro', { sensitivity: 'base' })
+    );
+  }, [filteredComments]);
 
   const handleAddComment = async (commentData) => {
     await addUserComment(currentUser.uid, commentData);
@@ -219,10 +209,10 @@ const ProfileComentarii = () => {
             </div>
 
             <div className="comentarii-grid-container">
-              {commentsLoading && filteredComments.length === 0 && (
+              {commentsLoading && sortedComments.length === 0 && (
                 <div className={`comentarii-loading ${darkTheme ? 'dark-theme' : ''}`}>Se încarcă...</div>
               )}
-              {filteredComments.map((comment) => (
+              {sortedComments.map((comment) => (
                 <div
                   key={comment.id}
                   role="button"
@@ -337,7 +327,7 @@ const ProfileComentarii = () => {
               ))}
             </div>
 
-            {!commentsLoading && filteredComments.length === 0 && (
+            {!commentsLoading && sortedComments.length === 0 && (
               <div className={`comentarii-no-results ${darkTheme ? 'dark-theme' : ''}`}>
                 {userComments.length === 0
                   ? 'Nu ai comentarii încă. Apasă butonul + pentru a adăuga primul comentariu.'
