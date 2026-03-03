@@ -391,6 +391,81 @@
   }
 }
 
+// Banner ghid Subiect II
+.subiecte-ghid-banner {
+  margin: 0 auto 1.5rem;
+  max-width: 1320px;
+  padding: 0 1rem;
+  border-radius: 1rem;
+  background: linear-gradient(135deg, rgba(255, 213, 145, 0.25) 0%, rgba(255, 179, 71, 0.15) 100%);
+  border: 1px solid rgba(169, 124, 80, 0.35);
+  box-shadow: 0 2px 12px rgba(124, 79, 43, 0.12);
+
+  &.dark-theme {
+    background: linear-gradient(135deg, rgba(255, 213, 145, 0.12) 0%, rgba(169, 124, 80, 0.08) 100%);
+    border-color: rgba(255, 213, 145, 0.25);
+    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.2);
+  }
+}
+
+.subiecte-ghid-banner-content {
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+}
+
+.subiecte-ghid-banner-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #4e2e1e;
+
+  .dark-theme & {
+    color: #ffd591;
+  }
+}
+
+.subiecte-ghid-banner-desc {
+  flex: 1;
+  min-width: 200px;
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.45;
+  color: #5c3d2a;
+
+  .dark-theme & {
+    color: rgba(255, 255, 255, 0.85);
+  }
+}
+
+.subiecte-ghid-banner-btn {
+  padding: 0.6rem 1.25rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-radius: 2rem;
+  border: 1.5px solid #a97c50;
+  background: rgba(255, 213, 145, 0.35);
+  color: #4e2e1e;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+
+  &:hover {
+    background: rgba(255, 213, 145, 0.55);
+    transform: scale(1.04);
+  }
+
+  &.dark-theme {
+    border-color: #ffd591;
+    background: rgba(255, 213, 145, 0.2);
+    color: #ffd591;
+
+    &:hover {
+      background: rgba(255, 213, 145, 0.35);
+    }
+  }
+}
+
 // Grid container
 .subiecte-grid-container {
   display: grid;

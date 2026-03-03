@@ -638,6 +638,15 @@ const Index = () => {
               >
                 Vezi cerințele
               </button>
+              {sub.nr === 'II' && (
+                <button
+                  type="button"
+                  onClick={e => { e.stopPropagation(); navigate('/subiecte/ghid-subiect-2'); }}
+                  className={`index-subiect-ghid-link ${darkTheme ? 'dark-theme' : ''}`}
+                >
+                  Ghid Subiect II
+                </button>
+              )}
             </div>
           ))}
         </div>

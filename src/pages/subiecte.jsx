@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState, useCallback } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import SubiectModal from '../assets/SubiectModal';
 import Layout from '../assets/Layout';
 import AdminAddButton from '../components/AdminAddButton';
@@ -136,6 +136,7 @@ const customSelectStyles = (darkTheme) => ({
 
 export default function Subiecte() {
     const location = useLocation();
+    const navigate = useNavigate();
     const PAGE_SIZE = 12;
     const [darkTheme, setDarkTheme] = useState(() => localStorage.getItem('theme') === 'dark');
     const [scrolled, setScrolled] = useState(false);
@@ -755,6 +756,26 @@ export default function Subiecte() {
                                 </button>
                             </div>
                         </div>
+
+                        {selectedTip === '2' && (
+                            <div
+                                className={`subiecte-ghid-banner ${darkTheme ? 'dark-theme' : ''}`}
+                                role="region"
+                                aria-label="Ghid Subiect II"
+                            >
+                                <div className="subiecte-ghid-banner-content">
+                                    <span className="subiecte-ghid-banner-title">Subiectul II. Înțelege, Aplică, Scrie</span>
+                                    <p className="subiecte-ghid-banner-desc">Ghid cu naratorul, notațiile autorului și semnificația textului liric — modele de redactare și exerciții.</p>
+                                    <button
+                                        type="button"
+                                        className={`subiecte-ghid-banner-btn ${darkTheme ? 'dark-theme' : ''}`}
+                                        onClick={() => navigate('/subiecte/ghid-subiect-2')}
+                                    >
+                                        Deschide ghidul
+                                    </button>
+                                </div>
+                            </div>
+                        )}
 
                         {fetchError && (
                             <div className={`subiecte-no-results ${darkTheme ? 'dark-theme' : ''}`}>

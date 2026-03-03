@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Mail, Home, BookOpen, MessageSquare, Users, GraduationCap, Brain, Library, Video, Presentation, TrendingUp } from 'lucide-react';
 import Logo from './Logo';
+import GhidSubiect2Icon from './icons/GhidSubiect2Icon';
 
 export default function Footer({ darkTheme: darkThemeProp }) {
   const [darkTheme, setDarkTheme] = useState(() => {
@@ -111,6 +112,12 @@ export default function Footer({ darkTheme: darkThemeProp }) {
               <Link to="/curente">
                 <TrendingUp size={16} />
                 <span>Curente literare</span>
+              </Link>
+            </li>
+            <li>
+              <Link to="/subiecte/ghid-subiect-2">
+                <GhidSubiect2Icon size={16} />
+                <span>Ghid Subiect II</span>
               </Link>
             </li>
           </ul>

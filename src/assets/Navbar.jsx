@@ -11,6 +11,7 @@ import OpereIcon from './icons/OpereIcon';
 import BookIcon from './icons/BookIcon';
 import ResurseIcon from './icons/ResurseIcon';
 import CurenteIcon from './icons/CurenteIcon';
+import GhidSubiect2Icon from './icons/GhidSubiect2Icon';
 import CommentIcon from './icons/CommentIcon';
 import Logo from './Logo';
 import { useAuth } from '../firebase/AuthContext';
@@ -30,6 +31,7 @@ const NAV_CATEGORIES = [
       { name: 'Videoclipuri', href: '/videoclipuri', icon: <VideoIcon className="nav-icon" /> },
       { name: 'Proiecte', href: '/proiecte', icon: <SlideIcon className="nav-icon" /> },
       { name: 'Curente', href: '/curente', icon: <CurenteIcon className="nav-icon" /> },
+      { name: 'Subiectul II', href: '/subiecte/ghid-subiect-2', icon: <GhidSubiect2Icon className="nav-icon" /> },
     ]
   },
   { name: 'Subiecte', href: '/subiecte', icon: <ExamPaperIcon className="nav-icon" /> },
