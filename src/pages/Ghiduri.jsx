@@ -8,7 +8,7 @@ const GHIDURI = [
     nr: 'I',
     titlu: 'Subiectul I',
     subtitlu: 'Înțelege și Răspunde',
-    descriere: 'Subpuncte A și B — cerințe grilă, răspuns scurt și argumentare pe baza textului.',
+    descriere: 'Subpuncte A și B — 5 cerințe cu răspuns deschis și text argumentativ (min. 150 cuvinte).',
     href: '/subiecte/ghid-subiect-1',
   },
   {

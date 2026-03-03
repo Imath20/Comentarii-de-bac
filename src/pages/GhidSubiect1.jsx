@@ -4,8 +4,8 @@ import Layout from '../assets/Layout';
 import '../styles/style.scss';
 
 const SECTII = [
-  { slug: 'a', titlu: 'Subpunct A', subtitlu: 'Cerințe de tip grilă și răspuns scurt', numar: 'A' },
-  { slug: 'b', titlu: 'Subpunct B', subtitlu: 'Argumentare pe baza textului', numar: 'B' },
+  { slug: 'a', titlu: 'Subpunct A', subtitlu: '5 cerințe cu răspuns deschis', numar: 'A' },
+  { slug: 'b', titlu: 'Subpunct B', subtitlu: 'Text argumentativ (min. 150 cuvinte)', numar: 'B' },
 ];
 
 export default function GhidSubiect1() {
@@ -27,6 +27,18 @@ export default function GhidSubiect1() {
   return (
     <Layout darkTheme={darkTheme} setDarkTheme={setDarkTheme} scrolled={scrolled}>
       <div className={`ghid-s2-page ${darkTheme ? 'dark-theme' : ''}`}>
+        <div className="ghid-s2-container">
+          <nav className="ghid-s2-breadcrumb" aria-label="Navigare ghid">
+            <Link to="/ghiduri" className={`ghid-s2-breadcrumb-arrow ${darkTheme ? 'dark-theme' : ''}`} aria-label="Înapoi">
+              ←
+            </Link>
+            <Link to="/ghiduri" className={`ghid-s2-breadcrumb-back ${darkTheme ? 'dark-theme' : ''}`}>
+              Ghiduri BAC
+            </Link>
+            <span className="ghid-s2-breadcrumb-sep">/</span>
+            <span className="ghid-s2-breadcrumb-current">Subiectul I</span>
+          </nav>
+        </div>
         <header className="ghid-s2-hero">
           <h1 className="ghid-s2-main-title">Subiectul I. Înțelege și Răspunde</h1>
           <p className="ghid-s2-intro">
@@ -34,7 +46,7 @@ export default function GhidSubiect1() {
           </p>
           <div className="ghid-s2-enunt">
             <p className="ghid-s2-enunt-text">
-              La bac, Subiectul I testează înțelegerea textului și capacitatea de a răspunde precis la cerințe. Subpunctul A include cerințe de tip grilă sau răspuns scurt; Subpunctul B cere argumentare pe baza textului.
+              La bac, Subiectul I testează înțelegerea textului și capacitatea de a răspunde precis la cerințe. Subpunctul A include 5 cerințe cu răspuns deschis (Indică, Menționează, Precizează, Explică, Prezintă); Subpunctul B cere un text argumentativ de minimum 150 cuvinte, argumentat cu fragmentul și experiența personală sau culturală.
             </p>
           </div>
           <nav className="ghid-s2-cards" aria-label="Secțiuni ghid">

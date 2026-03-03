@@ -28,6 +28,18 @@ export default function GhidSubiect2() {
   return (
     <Layout darkTheme={darkTheme} setDarkTheme={setDarkTheme} scrolled={scrolled}>
       <div className={`ghid-s2-page ${darkTheme ? 'dark-theme' : ''}`}>
+        <div className="ghid-s2-container">
+          <nav className="ghid-s2-breadcrumb" aria-label="Navigare ghid">
+            <Link to="/ghiduri" className={`ghid-s2-breadcrumb-arrow ${darkTheme ? 'dark-theme' : ''}`} aria-label="Înapoi">
+              ←
+            </Link>
+            <Link to="/ghiduri" className={`ghid-s2-breadcrumb-back ${darkTheme ? 'dark-theme' : ''}`}>
+              Ghiduri BAC
+            </Link>
+            <span className="ghid-s2-breadcrumb-sep">/</span>
+            <span className="ghid-s2-breadcrumb-current">Subiectul II</span>
+          </nav>
+        </div>
         <header className="ghid-s2-hero">
           <h1 className="ghid-s2-main-title">Subiectul II. Înțelege, Aplică, Scrie</h1>
           <p className="ghid-s2-intro">

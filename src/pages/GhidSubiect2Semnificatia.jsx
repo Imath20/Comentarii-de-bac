@@ -24,6 +24,9 @@ export default function GhidSubiect2Semnificatia() {
       <div className={`ghid-s2-page ${darkTheme ? 'dark-theme' : ''}`}>
         <div className="ghid-s2-container">
           <nav className="ghid-s2-breadcrumb" aria-label="Navigare ghid">
+            <Link to="/subiecte/ghid-subiect-2" className={`ghid-s2-breadcrumb-arrow ${darkTheme ? 'dark-theme' : ''}`} aria-label="Înapoi">
+              ←
+            </Link>
             <Link to="/subiecte/ghid-subiect-2" className={`ghid-s2-breadcrumb-back ${darkTheme ? 'dark-theme' : ''}`}>
               Ghid Subiect II
             </Link>
@@ -100,8 +103,8 @@ export default function GhidSubiect2Semnificatia() {
           </section>
 
           <div className="ghid-s2-cta">
-            <button type="button" className={`ghid-s2-back-btn ${darkTheme ? 'dark-theme' : ''}`} onClick={() => navigate('/subiecte/ghid-subiect-2')}>
-              Înapoi la ghid
+            <button type="button" className={`ghid-s2-next-btn ${darkTheme ? 'dark-theme' : ''}`} onClick={() => navigate('/subiecte/ghid-subiect-2')}>
+              Următorul →
             </button>
           </div>
         </div>

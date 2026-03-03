@@ -24,6 +24,9 @@ export default function GhidSubiect3Planuri() {
       <div className={`ghid-s2-page ${darkTheme ? 'dark-theme' : ''}`}>
         <div className="ghid-s2-container">
           <nav className="ghid-s2-breadcrumb" aria-label="Navigare ghid">
+            <Link to="/subiecte/ghid-subiect-3" className={`ghid-s2-breadcrumb-arrow ${darkTheme ? 'dark-theme' : ''}`} aria-label="Înapoi">
+              ←
+            </Link>
             <Link to="/subiecte/ghid-subiect-3" className={`ghid-s2-breadcrumb-back ${darkTheme ? 'dark-theme' : ''}`}>
               Ghid Subiect III
             </Link>
