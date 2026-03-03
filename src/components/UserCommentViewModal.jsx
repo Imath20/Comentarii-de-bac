@@ -105,9 +105,19 @@ const UserCommentViewModal = ({ comment, isOpen, onClose, onEdit, onDuplicate, o
         onClick={(e) => e.stopPropagation()}
       >
         <div className="user-comment-view-header">
-          <h2 id="user-comment-view-title">
-            {comment.titlu || (comment.type === 'text' ? 'Comentariu' : 'Imagine')}
-          </h2>
+          <div className="user-comment-view-header-top">
+            <h2 id="user-comment-view-title">
+              {comment.titlu || (comment.type === 'text' ? 'Comentariu' : 'Imagine')}
+            </h2>
+            <button
+              type="button"
+              onClick={onClose}
+              className="user-comment-view-close"
+              aria-label="Închide"
+            >
+              <X size={24} />
+            </button>
+          </div>
           <div className="user-comment-view-header-actions">
             <button
               type="button"
@@ -169,14 +179,6 @@ const UserCommentViewModal = ({ comment, isOpen, onClose, onEdit, onDuplicate, o
                 <span>Adaugă la Comentarii</span>
               </button>
             )}
-            <button
-              type="button"
-              onClick={onClose}
-              className="user-comment-view-close"
-              aria-label="Închide"
-            >
-              <X size={24} />
-            </button>
           </div>
         </div>
 
