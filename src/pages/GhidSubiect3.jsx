@@ -4,12 +4,12 @@ import Layout from '../assets/Layout';
 import '../styles/style.scss';
 
 const SECTII = [
-  { slug: 'naratorul', titlu: 'Naratorul și tipurile de perspectivă narativă', subtitlu: 'Text epic', numar: 'I' },
-  { slug: 'notatiile-autorului', titlu: 'Rolul notațiilor autorului', subtitlu: 'Text dramatic', numar: 'II' },
-  { slug: 'semnificatia-lirica', titlu: 'Semnificația textului liric', subtitlu: 'Poezie', numar: 'III' },
+  { slug: 'structura', titlu: 'Structura comentariului', subtitlu: 'Introducere, dezvoltare, încheiere', numar: 'I' },
+  { slug: 'planuri', titlu: 'Planuri și organizare', subtitlu: 'Cum structurezi răspunsul', numar: 'II' },
+  { slug: 'cerinte', titlu: 'Cerințe specifice', subtitlu: 'Tipuri de cerințe la Subiectul III', numar: 'III' },
 ];
 
-export default function GhidSubiect2() {
+export default function GhidSubiect3() {
   const [darkTheme, setDarkTheme] = useState(() => localStorage.getItem('theme') === 'dark');
   const [scrolled, setScrolled] = useState(false);
   const navigate = useNavigate();
@@ -29,20 +29,20 @@ export default function GhidSubiect2() {
     <Layout darkTheme={darkTheme} setDarkTheme={setDarkTheme} scrolled={scrolled}>
       <div className={`ghid-s2-page ${darkTheme ? 'dark-theme' : ''}`}>
         <header className="ghid-s2-hero">
-          <h1 className="ghid-s2-main-title">Subiectul II. Înțelege, Aplică, Scrie</h1>
+          <h1 className="ghid-s2-main-title">Subiectul III. Comentariu și Eseu</h1>
           <p className="ghid-s2-intro">
-            Fiecare tip de cerință din Subiectul II se desfășoară pe trei niveluri: înțelegerea conceptului, identificarea lui în text și modelul de redactare. Alege una dintre cele trei secțiuni de mai jos.
+            Subiectul III cere un eseu argumentativ sau comentariu pe baza unui fragment și a operelor studiate. Fiecare secțiune de mai jos te ghidează prin structură, planuri și cerințe specifice.
           </p>
           <div className="ghid-s2-enunt">
             <p className="ghid-s2-enunt-text">
-              La bac, cerința din Subiectul II cere de obicei un răspuns de minim 50–80 de cuvinte, argumentat cu elemente din text. Folosește modelele de redactare din fiecare secțiune ca punct de plecare.
+              La bac, Subiectul III presupune un răspuns lung (eseu sau comentariu), cu structură liberă, argumentare personală și opera literară la alegere. Folosește modelele din fiecare secțiune ca punct de plecare.
             </p>
           </div>
           <nav className="ghid-s2-cards" aria-label="Secțiuni ghid">
             {SECTII.map((s) => (
               <Link
                 key={s.slug}
-                to={`/subiecte/ghid-subiect-2/${s.slug}`}
+                to={`/subiecte/ghid-subiect-3/${s.slug}`}
                 className={`ghid-s2-card ${darkTheme ? 'dark-theme' : ''}`}
               >
                 <span className="ghid-s2-card-nr">{s.numar}</span>
@@ -57,10 +57,10 @@ export default function GhidSubiect2() {
           <section className="ghid-s2-concluzie">
             <h2 className="ghid-s2-concluzie-title">Concluzie generală</h2>
             <p className="ghid-s2-text">
-              Cele trei tipuri de cerințe presupun competențe diferite: analiză naratologică (epic), analiză structural-dramatică (dramatic), interpretare simbolică (liric).
+              Subiectul III verifică capacitatea de a structura un eseu argumentativ, de a argumenta cu opere literare și de a exprima o poziție personală coerentă.
             </p>
             <p className="ghid-s2-text">
-              Un răspuns reușit trebuie să fie: coerent, argumentat prin elemente din text, formulat într-un limbaj adecvat, structurat logic.
+              Un comentariu reușit trebuie să fie: structurat logic, argumentat cu opere studiate, formulat într-un limbaj adecvat, cu concluzie personală.
             </p>
           </section>
         </div>
@@ -69,9 +69,9 @@ export default function GhidSubiect2() {
           <button
             type="button"
             className={`ghid-s2-back-btn ${darkTheme ? 'dark-theme' : ''}`}
-            onClick={() => navigate('/subiecte?tip=2')}
+            onClick={() => navigate('/subiecte?tip=3')}
           >
-            Rezolvă Sub II
+            Rezolvă Sub III
           </button>
         </div>
       </div>

@@ -624,8 +624,7 @@ const Index = () => {
                   </li>
                 ))}
               </ul>
-              {sub.nr === 'II' ? (
-                <div className="index-subiect-buttons-row">
+              <div className="index-subiect-buttons-row">
                   <button
                     onClick={e => { e.stopPropagation(); navigate(sub.link); }}
                     className={`index-subiect-button index-subiect-button-half ${darkTheme ? 'dark-theme' : ''}`}
@@ -642,28 +641,15 @@ const Index = () => {
                   </button>
                   <button
                     type="button"
-                    onClick={e => { e.stopPropagation(); navigate('/subiecte/ghid-subiect-2'); }}
+                    onClick={e => {
+                      e.stopPropagation();
+                      navigate(sub.nr === 'I' ? '/subiecte/ghid-subiect-1' : sub.nr === 'II' ? '/subiecte/ghid-subiect-2' : '/subiecte/ghid-subiect-3');
+                    }}
                     className={`index-subiect-ghid-link index-subiect-ghid-link-half ${darkTheme ? 'dark-theme' : ''}`}
                   >
-                    Ghid Subiect II
+                    Ghid Subiect {sub.nr}
                   </button>
                 </div>
-              ) : (
-                <button
-                  onClick={e => { e.stopPropagation(); navigate(sub.link); }}
-                  className={`index-subiect-button ${darkTheme ? 'dark-theme' : ''}`}
-                  onMouseOver={e => {
-                    e.currentTarget.style.background = darkTheme ? '#ffd591' : '#ffd591';
-                    e.currentTarget.style.transform = 'scale(1.07)';
-                  }}
-                  onMouseOut={e => {
-                    e.currentTarget.style.background = darkTheme ? 'rgba(255,179,71,0.82)' : 'rgba(255,179,71,0.92)';
-                    e.currentTarget.style.transform = 'scale(1)';
-                  }}
-                >
-                  Vezi cerințele
-                </button>
-              )}
             </div>
           ))}
         </div>

@@ -4,12 +4,11 @@ import Layout from '../assets/Layout';
 import '../styles/style.scss';
 
 const SECTII = [
-  { slug: 'naratorul', titlu: 'Naratorul și tipurile de perspectivă narativă', subtitlu: 'Text epic', numar: 'I' },
-  { slug: 'notatiile-autorului', titlu: 'Rolul notațiilor autorului', subtitlu: 'Text dramatic', numar: 'II' },
-  { slug: 'semnificatia-lirica', titlu: 'Semnificația textului liric', subtitlu: 'Poezie', numar: 'III' },
+  { slug: 'a', titlu: 'Subpunct A', subtitlu: 'Cerințe de tip grilă și răspuns scurt', numar: 'A' },
+  { slug: 'b', titlu: 'Subpunct B', subtitlu: 'Argumentare pe baza textului', numar: 'B' },
 ];
 
-export default function GhidSubiect2() {
+export default function GhidSubiect1() {
   const [darkTheme, setDarkTheme] = useState(() => localStorage.getItem('theme') === 'dark');
   const [scrolled, setScrolled] = useState(false);
   const navigate = useNavigate();
@@ -29,20 +28,20 @@ export default function GhidSubiect2() {
     <Layout darkTheme={darkTheme} setDarkTheme={setDarkTheme} scrolled={scrolled}>
       <div className={`ghid-s2-page ${darkTheme ? 'dark-theme' : ''}`}>
         <header className="ghid-s2-hero">
-          <h1 className="ghid-s2-main-title">Subiectul II. Înțelege, Aplică, Scrie</h1>
+          <h1 className="ghid-s2-main-title">Subiectul I. Înțelege și Răspunde</h1>
           <p className="ghid-s2-intro">
-            Fiecare tip de cerință din Subiectul II se desfășoară pe trei niveluri: înțelegerea conceptului, identificarea lui în text și modelul de redactare. Alege una dintre cele trei secțiuni de mai jos.
+            Subiectul I cuprinde două subpuncte: A și B. Fiecare presupune tipuri diferite de cerințe și strategii de răspuns. Alege una dintre cele două secțiuni de mai jos.
           </p>
           <div className="ghid-s2-enunt">
             <p className="ghid-s2-enunt-text">
-              La bac, cerința din Subiectul II cere de obicei un răspuns de minim 50–80 de cuvinte, argumentat cu elemente din text. Folosește modelele de redactare din fiecare secțiune ca punct de plecare.
+              La bac, Subiectul I testează înțelegerea textului și capacitatea de a răspunde precis la cerințe. Subpunctul A include cerințe de tip grilă sau răspuns scurt; Subpunctul B cere argumentare pe baza textului.
             </p>
           </div>
           <nav className="ghid-s2-cards" aria-label="Secțiuni ghid">
             {SECTII.map((s) => (
               <Link
                 key={s.slug}
-                to={`/subiecte/ghid-subiect-2/${s.slug}`}
+                to={`/subiecte/ghid-subiect-1/${s.slug}`}
                 className={`ghid-s2-card ${darkTheme ? 'dark-theme' : ''}`}
               >
                 <span className="ghid-s2-card-nr">{s.numar}</span>
@@ -57,10 +56,10 @@ export default function GhidSubiect2() {
           <section className="ghid-s2-concluzie">
             <h2 className="ghid-s2-concluzie-title">Concluzie generală</h2>
             <p className="ghid-s2-text">
-              Cele trei tipuri de cerințe presupun competențe diferite: analiză naratologică (epic), analiză structural-dramatică (dramatic), interpretare simbolică (liric).
+              Subiectul I verifică competențele de lectură și înțelegere a textului. Un răspuns reușit trebuie să fie precis, concis și argumentat cu elemente din text.
             </p>
             <p className="ghid-s2-text">
-              Un răspuns reușit trebuie să fie: coerent, argumentat prin elemente din text, formulat într-un limbaj adecvat, structurat logic.
+              Citește cu atenție cerința, identifică informațiile relevante în text și formulează răspunsul în mod clar și coerent.
             </p>
           </section>
         </div>
@@ -69,9 +68,9 @@ export default function GhidSubiect2() {
           <button
             type="button"
             className={`ghid-s2-back-btn ${darkTheme ? 'dark-theme' : ''}`}
-            onClick={() => navigate('/subiecte?tip=2')}
+            onClick={() => navigate('/subiecte?tip=1')}
           >
-            Rezolvă Sub II
+            Rezolvă Sub I
           </button>
         </div>
       </div>

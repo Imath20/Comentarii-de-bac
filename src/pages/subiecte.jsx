@@ -757,6 +757,25 @@ export default function Subiecte() {
                             </div>
                         </div>
 
+                        {selectedTip === '1' && (
+                            <div
+                                className={`subiecte-ghid-banner ${darkTheme ? 'dark-theme' : ''}`}
+                                role="region"
+                                aria-label="Ghid Subiect I"
+                            >
+                                <div className="subiecte-ghid-banner-content">
+                                    <span className="subiecte-ghid-banner-title">Subiectul I. Înțelege și Răspunde</span>
+                                    <p className="subiecte-ghid-banner-desc">Ghid cu Subpunct A și B — cerințe grilă, răspuns scurt și argumentare pe baza textului.</p>
+                                    <button
+                                        type="button"
+                                        className={`subiecte-ghid-banner-btn ${darkTheme ? 'dark-theme' : ''}`}
+                                        onClick={() => navigate('/subiecte/ghid-subiect-1')}
+                                    >
+                                        Deschide ghidul
+                                    </button>
+                                </div>
+                            </div>
+                        )}
                         {selectedTip === '2' && (
                             <div
                                 className={`subiecte-ghid-banner ${darkTheme ? 'dark-theme' : ''}`}
@@ -770,6 +789,25 @@ export default function Subiecte() {
                                         type="button"
                                         className={`subiecte-ghid-banner-btn ${darkTheme ? 'dark-theme' : ''}`}
                                         onClick={() => navigate('/subiecte/ghid-subiect-2')}
+                                    >
+                                        Deschide ghidul
+                                    </button>
+                                </div>
+                            </div>
+                        )}
+                        {selectedTip === '3' && (
+                            <div
+                                className={`subiecte-ghid-banner ${darkTheme ? 'dark-theme' : ''}`}
+                                role="region"
+                                aria-label="Ghid Subiect III"
+                            >
+                                <div className="subiecte-ghid-banner-content">
+                                    <span className="subiecte-ghid-banner-title">Subiectul III. Comentariu și Eseu</span>
+                                    <p className="subiecte-ghid-banner-desc">Ghid cu structura comentariului, planuri și cerințe specifice — modele pentru eseu argumentativ.</p>
+                                    <button
+                                        type="button"
+                                        className={`subiecte-ghid-banner-btn ${darkTheme ? 'dark-theme' : ''}`}
+                                        onClick={() => navigate('/subiecte/ghid-subiect-3')}
                                     >
                                         Deschide ghidul
                                     </button>

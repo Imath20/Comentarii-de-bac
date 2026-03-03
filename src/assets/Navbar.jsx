@@ -31,7 +31,7 @@ const NAV_CATEGORIES = [
       { name: 'Videoclipuri', href: '/videoclipuri', icon: <VideoIcon className="nav-icon" /> },
       { name: 'Proiecte', href: '/proiecte', icon: <SlideIcon className="nav-icon" /> },
       { name: 'Curente', href: '/curente', icon: <CurenteIcon className="nav-icon" /> },
-      { name: 'Subiectul II', href: '/subiecte/ghid-subiect-2', icon: <GhidSubiect2Icon className="nav-icon" /> },
+      { name: 'Ghiduri BAC', href: '/ghiduri', icon: <GhidSubiect2Icon className="nav-icon" /> },
     ]
   },
   { name: 'Subiecte', href: '/subiecte', icon: <ExamPaperIcon className="nav-icon" /> },

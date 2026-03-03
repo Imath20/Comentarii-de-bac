@@ -1,0 +1,211 @@
+// Pagina Ghiduri BAC — overview cu cele 3 ghids
+
+.ghiduri-page {
+  min-height: 100vh;
+  padding-top: 5.5rem;
+  padding-bottom: 3rem;
+  background: linear-gradient(180deg, rgba(255, 249, 240, 0.5) 0%, rgba(255, 239, 220, 0.3) 50%, rgba(255, 251, 238, 0.6) 100%);
+
+  &.dark-theme {
+    background: linear-gradient(180deg, #2a170a 0%, #1f1208 50%, #2a170a 100%);
+  }
+}
+
+.ghiduri-hero {
+  text-align: center;
+  padding: 4rem 1.5rem 3rem;
+  max-width: 680px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.ghiduri-hero::after {
+  content: '';
+  display: block;
+  width: 4rem;
+  height: 3px;
+  margin: 1.5rem auto 0;
+  border-radius: 2px;
+  background: linear-gradient(90deg, transparent, rgba(169, 124, 80, 0.5), transparent);
+
+  .dark-theme & {
+    background: linear-gradient(90deg, transparent, rgba(255, 213, 145, 0.4), transparent);
+  }
+}
+
+.ghiduri-main-title {
+  font-size: clamp(1.8rem, 4.5vw, 2.5rem);
+  font-weight: 800;
+  color: #3d2618;
+  margin: 0 0 1rem 0;
+  line-height: 1.25;
+  letter-spacing: 0.03em;
+  text-shadow: 0 2px 4px rgba(60, 40, 20, 0.06);
+
+  .dark-theme & {
+    color: #ffd591;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  }
+}
+
+.ghiduri-intro {
+  font-size: 1.08rem;
+  line-height: 1.65;
+  color: #5c3d2a;
+  margin: 0;
+
+  .dark-theme & {
+    color: rgba(255, 255, 255, 0.88);
+  }
+}
+
+.ghiduri-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+
+  @media (max-width: 900px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+  }
+}
+
+.ghiduri-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 2.25rem 1.5rem 1.75rem;
+  border-radius: 1.25rem;
+  border: 1px solid rgba(169, 124, 80, 0.2);
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 248, 235, 0.85) 100%);
+  text-decoration: none;
+  color: #4e2e1e;
+
+  &:link,
+  &:visited,
+  &:hover,
+  &:focus,
+  &:active {
+    color: #4e2e1e;
+  }
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s, border-color 0.25s;
+  min-height: 300px;
+  position: relative;
+  box-shadow: 0 4px 20px rgba(124, 79, 43, 0.08);
+
+  &:hover {
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: 0 12px 32px rgba(124, 79, 43, 0.18);
+    border-color: rgba(169, 124, 80, 0.4);
+    color: #4e2e1e;
+  }
+
+  &.dark-theme {
+    background: linear-gradient(145deg, rgba(62, 38, 18, 0.7) 0%, rgba(45, 28, 12, 0.8) 100%);
+    border-color: rgba(255, 213, 145, 0.15);
+    color: #e8c9a0;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+
+    &:link,
+    &:visited,
+    &:hover,
+    &:focus,
+    &:active {
+      color: #e8c9a0;
+    }
+
+    &:hover {
+      background: linear-gradient(145deg, rgba(78, 46, 30, 0.85) 0%, rgba(55, 35, 18, 0.9) 100%);
+      border-color: rgba(255, 213, 145, 0.35);
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.35);
+    }
+  }
+}
+
+.ghiduri-card-nr {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  background: linear-gradient(145deg, rgba(255, 179, 71, 0.9) 0%, rgba(210, 140, 50, 0.95) 100%);
+  font-weight: 800;
+  font-size: 1.35rem;
+  color: #fff;
+  margin-bottom: 1.25rem;
+  box-shadow: 0 3px 12px rgba(124, 79, 43, 0.25);
+  border: 2px solid rgba(255, 255, 255, 0.6);
+
+  .dark-theme & {
+    background: linear-gradient(145deg, rgba(255, 213, 145, 0.35) 0%, rgba(169, 124, 80, 0.4) 100%);
+    color: #ffd591;
+    border-color: rgba(255, 213, 145, 0.3);
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.3);
+  }
+}
+
+.ghiduri-card-titlu {
+  font-size: 1.25rem;
+  font-weight: 800;
+  margin: 0 0 0.35rem 0;
+  color: inherit;
+  letter-spacing: 0.02em;
+}
+
+.ghiduri-card-subtitlu {
+  font-size: 0.95rem;
+  font-weight: 600;
+  opacity: 0.92;
+  margin-bottom: 0.9rem;
+  color: #7a3a00;
+}
+
+.ghiduri-card.dark-theme .ghiduri-card-subtitlu {
+  color: #ffd591;
+}
+
+.ghiduri-card-desc {
+  font-size: 0.95rem;
+  line-height: 1.55;
+  margin: 0 0 1.25rem 0;
+  opacity: 0.9;
+  flex: 1;
+}
+
+.ghiduri-card-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  padding: 0.5rem 1rem;
+  border-radius: 2rem;
+  background: rgba(169, 124, 80, 0.15);
+  color: #7a3a00 !important;
+  transition: background 0.2s, transform 0.2s, color 0.2s;
+}
+
+.ghiduri-card:hover .ghiduri-card-cta {
+  background: rgba(169, 124, 80, 0.35);
+  color: #5c2e00 !important;
+  transform: translateX(2px);
+}
+
+.ghiduri-card.dark-theme .ghiduri-card-cta {
+  background: rgba(255, 213, 145, 0.15);
+  color: #ffd591 !important;
+}
+
+.ghiduri-card.dark-theme:hover .ghiduri-card-cta {
+  background: rgba(255, 213, 145, 0.3);
+  color: #ffd591 !important;
+}

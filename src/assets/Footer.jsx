@@ -115,9 +115,9 @@ export default function Footer({ darkTheme: darkThemeProp }) {
               </Link>
             </li>
             <li>
-              <Link to="/subiecte/ghid-subiect-2">
+              <Link to="/ghiduri">
                 <GhidSubiect2Icon size={16} />
-                <span>Ghid Subiect II</span>
+                <span>Ghiduri BAC</span>
               </Link>
             </li>
           </ul>
