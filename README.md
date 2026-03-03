@@ -1,6 +1,6 @@
 # Comentarii de Bac
 
-**Documentație proiect – Concurs Pluridisciplinar PROSOFT@NT**
+**Documentație proiect**
 
 ---
 
@@ -10,7 +10,7 @@
 |------|---------|
 | **Titlul lucrării** | Comentarii de Bac |
 | **Tipul lucrării** | Soft educațional |
-| **Elev realizator** | Drosu Ștefan-Marian |
+| **Elevi realizatori** | Băjean Mateo <br> Drosu Ștefan-Marian |
 | **Clasa** | XII B |
 | **Școala de proveniență** | Colegiul Național „Mircea cel Bătrân”, Rm. Vâlcea |
 | **Profesor îndrumător** | Dumitrescu Ovidiu-Mihail |
@@ -94,4 +94,4 @@ Aplicația rulează implicit la `http://localhost:5173`.
 
 ## Licență
 
-Lucrare originală, realizată cu softuri cu licență sau free. Nu promovează violența sau discriminarea.
+Lucrarea este originală și a fost realizată cu ajutorul unor aplicații licențiate sau open-source. Conținutul are caracter educațional și este elaborat în conformitate cu cerințele programei școlare.
