@@ -57,6 +57,11 @@ service cloud.firestore {
       allow write: if request.auth != null && request.auth.uid == userId;
     }
 
+    // Chatbot sessions - owner can read/write their own
+    match /users/{userId}/chatbotSessions/{sessionId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+
     // Shared comments - public copies for share links
     match /sharedComments/{shareId} {
       allow read: if true;

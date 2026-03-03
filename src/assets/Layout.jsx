@@ -3,6 +3,7 @@ import Navbar from './Navbar';
 import Footer from './Footer';
 import NotificationsButton from '../components/NotificationsButton';
 import ScrollToTop from '../components/ScrollToTop';
+import Chatbot from '../components/Chatbot';
 
 export default function Layout({
   children,
@@ -52,6 +53,7 @@ export default function Layout({
       <Footer darkTheme={darkTheme} />
       <NotificationsButton />
       <ScrollToTop />
+      <Chatbot />
     </>
   );
 }

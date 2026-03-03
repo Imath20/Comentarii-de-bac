@@ -4,9 +4,31 @@
 
 ---
 
-## Ce spui la început (30 sec)
+## Intro și overview (1–2 min) – înainte de navigare
 
-> „Comentarii de BAC este o platformă pentru pregătirea la bacalaureat la limba română. Am construit-o împreună cu un coleg și un profesor. În 15 minute vă arăt ce face site-ul.”
+### Intro
+
+> „Bună ziua. În prezentarea de astăzi vă arăt **Comentarii de BAC** – o platformă web pentru pregătirea la examenul de bacalaureat la limba și literatura română.
+>
+> Proiectul s-a născut din ideea că elevii au nevoie de resurse clare, structurate și ușor de găsit – comentarii, opere, ghiduri și materiale pentru fiecare subiect. Am vrut să creăm un loc unde tot ce ți-e necesar pentru BAC să fie la un click distanță.
+>
+> Am construit platforma împreună cu un coleg și un profesor de limba română – combinația dintre perspectiva elevilor și experiența profesorului ne-a ajutat să facem ceva util și practic.
+>
+> În aproximativ 15 minute vă arăt ce face site-ul, navigând direct prin pagini și arătând funcționalitățile principale.”
+
+### Overview
+
+> „În mare, platforma oferă:
+>
+> - **Opere** – comentarii și detaliu pentru fiecare operă din programa de BAC
+> - **Biblioteca** – citire directă în platformă a operelor canonice
+> - **Scriitori** – biografii și resurse pentru fiecare autor
+> - **Comentarii** – comentarii literare cu filtre, partajare și export PDF
+> - **Subiecte și Ghiduri** – cerințe și ghiduri pentru Subiecte I, II, III
+> - **Resurse** – videoclipuri, curente literare, proiecte ale colegilor
+> - **AI** – asistent pentru rezolvare subiecte și generare comentarii
+>
+> Vă arăt acum cum funcționează fiecare parte.”
 
 ---
 
