@@ -1,6 +1,7 @@
 import React, { useMemo, useState, useRef, useEffect, useCallback } from 'react';
-import { MessageCircle, Plus, Trash2, X, Send, Maximize2 } from 'lucide-react';
+import { Plus, Trash2, X, Send, Maximize2, Minimize2 } from 'lucide-react';
 import { useAuth } from '../firebase/AuthContext';
+import { getProfileImageUrl } from '../utils/cloudinary';
 import {
   getChatbotSessions,
   addChatbotSession,
@@ -25,7 +26,7 @@ const createWelcomeMessages = () => [
 const systemPrompt = `Ești un asistent educațional pentru pregătirea la bacalaureat la limba și literatura română. Răspunde la întrebări despre opere, scriitori, curente literare, comentarii și subiecte. Fii concis, precis și util pentru elevi. Răspunde întotdeauna în limba română.`;
 
 export default function Chatbot() {
-  const { currentUser } = useAuth();
+  const { currentUser, userProfile } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const [sessions, setSessions] = useState([]);
   const [currentSessionId, setCurrentSessionId] = useState(null);
@@ -48,6 +49,7 @@ export default function Chatbot() {
   );
   const groqAvailable = useMemo(() => groqApiKeys.length > 0, [groqApiKeys]);
 
+  const [isMaximized, setIsMaximized] = useState(false);
   const [themeClass, setThemeClass] = useState(() =>
     document.body.classList.contains('dark-theme') || localStorage.getItem('theme') === 'dark'
       ? 'dark-theme'
@@ -63,6 +65,8 @@ export default function Chatbot() {
     checkTheme();
     return () => observer.disconnect();
   }, []);
+
+  const toggleMaximized = useCallback(() => setIsMaximized((prev) => !prev), []);
 
   const currentSession = useMemo(
     () => sessions.find((s) => s.id === currentSessionId),
@@ -235,9 +239,15 @@ export default function Chatbot() {
                   timestamp: m.timestamp ? new Date(m.timestamp) : new Date(),
                 })),
               }));
-              setSessions(normalized);
-              setCurrentSessionId(normalized[0].id);
-              setMessages(normalized[0].messages || []);
+              // Păstrează doar sesiunile cu conținut real; elimină duplicatele "Chat nou" goale
+              const withContent = normalized.filter((s) => (s.lastUserText || '').trim().length > 0);
+              const toUse =
+                withContent.length > 0
+                  ? withContent
+                  : [normalized[0]]; // un singur chat gol dacă toate sunt goale
+              setSessions(toUse);
+              setCurrentSessionId(toUse[0].id);
+              setMessages(toUse[0].messages || []);
             } else throw new Error('empty');
           } catch (_) {
             const welcome = createWelcomeMessages();
@@ -524,31 +534,40 @@ export default function Chatbot() {
 
   return (
     <>
-      {/* Floating button */}
+      {/* Floating button - Mr Wooh Smart */}
       <button
         className={`chatbot-fab ${themeClass}`}
         onClick={() => setIsOpen(true)}
         aria-label="Deschide asistentul BAC"
         type="button"
       >
-        <MessageCircle size={28} />
+        <img
+          src="/asistent/Mr_Wooh_Smart_Small.png"
+          alt={ASSISTANT_NAME}
+          className="chatbot-fab-avatar"
+        />
       </button>
 
       {/* Panel overlay */}
       {isOpen && (
-        <div className="chatbot-overlay" onClick={() => setIsOpen(false)}>
+        <div
+          className="chatbot-overlay"
+          onClick={() => {
+            setIsMaximized(false);
+            setIsOpen(false);
+          }}
+        >
           <div
-            className={`chatbot-panel ${themeClass}`}
+            className={`chatbot-panel chatbot-book ${themeClass} ${isMaximized ? 'chatbot-maximized' : ''}`}
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Left sidebar */}
+            {/* Pagina stânga - Cuprins */}
+            <div className="chatbot-page-left">
+              <span className="chatbot-page-number">i</span>
             <div className="chatbot-sidebar">
               <div className="chatbot-sidebar-header">
                 <div className="chatbot-avatar chatbot-avatar-assistant">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M12 14l9-5-9-5-9 5 9 5z" />
-                    <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
-                  </svg>
+                  <img src="/asistent/Mr_Wooh_Smart_Small.png" alt={ASSISTANT_NAME} />
                 </div>
                 <span className="chatbot-sidebar-title">{ASSISTANT_NAME}</span>
               </div>
@@ -587,16 +606,30 @@ export default function Chatbot() {
                 )}
               </div>
             </div>
+            </div>
 
-            {/* Right main area */}
+            {/* Cotor */}
+            <div className="chatbot-book-spine" />
+
+            {/* Pagina dreapta - Conversație */}
+            <div className="chatbot-page-right">
+              <span className="chatbot-page-number">ii</span>
             <div className="chatbot-main">
               <div className="chatbot-main-header">
-                <button className="chatbot-icon-btn" title="Maximizează" type="button">
-                  <Maximize2 size={18} />
+                <button
+                  className="chatbot-icon-btn"
+                  title={isMaximized ? 'Minimizează' : 'Maximizează'}
+                  onClick={toggleMaximized}
+                  type="button"
+                >
+                  {isMaximized ? <Minimize2 size={18} /> : <Maximize2 size={18} />}
                 </button>
                 <button
                   className="chatbot-icon-btn chatbot-close"
-                  onClick={() => setIsOpen(false)}
+                  onClick={() => {
+                    setIsMaximized(false);
+                    setIsOpen(false);
+                  }}
                   title="Închide"
                   type="button"
                 >
@@ -612,10 +645,7 @@ export default function Chatbot() {
                   >
                     {msg.sender === 'assistant' && (
                       <div className="chatbot-avatar chatbot-avatar-assistant chatbot-avatar-small">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                          <path d="M12 14l9-5-9-5-9 5 9 5z" />
-                          <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
-                        </svg>
+                        <img src="/asistent/Mr_Wooh_Smart_Small.png" alt={ASSISTANT_NAME} />
                       </div>
                     )}
                     <div className="chatbot-message-content">
@@ -625,7 +655,32 @@ export default function Chatbot() {
                       </div>
                     </div>
                     {msg.sender === 'user' && (
-                      <div className="chatbot-avatar chatbot-avatar-user">{userInitial}</div>
+                      <div className="chatbot-avatar chatbot-avatar-user">
+                        {(userProfile?.photoURL || currentUser?.photoURL) ? (
+                          <img
+                            src={getProfileImageUrl(userProfile?.photoURL || currentUser?.photoURL, {
+                              size: 64,
+                            })}
+                            alt={userProfile?.displayName || currentUser?.displayName || 'User'}
+                            onError={(e) => {
+                              e.currentTarget.style.display = 'none';
+                              const fallback = e.currentTarget.parentElement?.querySelector(
+                                '.chatbot-avatar-user-fallback'
+                              );
+                              if (fallback) fallback.style.display = 'flex';
+                            }}
+                          />
+                        ) : null}
+                        <span
+                          className="chatbot-avatar-user-fallback"
+                          style={{
+                            display:
+                              userProfile?.photoURL || currentUser?.photoURL ? 'none' : 'flex',
+                          }}
+                        >
+                          {userInitial}
+                        </span>
+                      </div>
                     )}
                   </div>
                 ))}
@@ -651,10 +706,11 @@ export default function Chatbot() {
                     title="Trimite"
                     type="button"
                   >
-                    <Send size={20} color='white' />
+                    <Send size={20} strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" />
                   </button>
                 </div>
               </div>
+            </div>
             </div>
           </div>
         </div>
