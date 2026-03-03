@@ -433,6 +433,25 @@
   }
 }
 
+.index-subiect-buttons-row {
+  margin-top: auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.index-subiect-button-half,
+.index-subiect-ghid-link-half {
+  flex: 1;
+  min-width: 0;
+}
+
+.index-subiect-button-half {
+  margin-left: 0;
+  margin-right: 0;
+}
+
 .index-subiect-ghid-link {
   margin-top: 0.5rem;
   padding: 0.4em 0.8em;
@@ -465,6 +484,10 @@
       border-color: #ffd591;
     }
   }
+}
+
+.index-subiect-ghid-link-half {
+  margin-top: 0;
 }
 
 // Responsive styles for subiecte section
