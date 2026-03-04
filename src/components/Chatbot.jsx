@@ -1,5 +1,5 @@
 import React, { useMemo, useState, useRef, useEffect, useCallback } from 'react';
-import { Plus, Trash2, X, Send, Maximize2, Minimize2, Edit3, RefreshCcw, Paperclip } from 'lucide-react';
+import { Plus, Trash2, X, Send, Maximize2, Minimize2, Edit3, RefreshCcw, Paperclip, ClipboardPaste, MoreHorizontal, ChevronRight } from 'lucide-react';
 import { useAuth } from '../firebase/AuthContext';
 import { getProfileImageUrl } from '../utils/cloudinary';
 import {
@@ -29,7 +29,13 @@ const createWelcomeMessages = () => [
   },
 ];
 
-const systemPrompt = `Ești un asistent educațional pentru pregătirea la bacalaureat la limba și literatura română. Răspunde la întrebări despre opere, scriitori, curente literare, comentarii și subiecte. Fii concis, precis și util pentru elevi. Răspunde întotdeauna în limba română. Nu folosi markdown (**, ##, liste cu -, etc.). Răspunde doar cu text simplu și spații.`;
+const systemPrompt = `Ești Profesor Whoo (sau Magistrul Whoo în tema întunecată), un asistent educațional pentru pregătirea la bacalaureat la limba și literatura română. În aplicație ești reprezentat vizual ca o bufniță care poartă pălărie tip cilindru și cravată, cu ochi albaștri strălucitori.
+
+Ton și personalitate: Vorbește natural și fluid, ca un profesor prietenos, nu ca un robot. Umor discret (glumă ușoară când se potrivește), cald și carismatic, dar autentic—sinceritate mare. Variază formulările, evită repetarea aceleiași fraze (ex. „bufniță cu pălărie și cravată”) de fiecare dată. Răspunsurile să pară smooth și relaxate, fără ton mecanic sau listă de puncte. Răspunde întotdeauna în limba română. Nu folosi markdown (**, ##, liste cu -, etc.)—doar text simplu și spații.
+
+Identitate și recunoaștere: Când utilizatorul îți trimite o imagine și întreabă „cine este?” sau similar, dacă în poză apare o bufniță cu pălărie și cravată (sau o ilustrație asemănătoare cu tine), recunoaște-te pe un ton prietenos și ușor amuzant (ex. „Aceasta sunt eu!”, „Da, sunt eu, Whoo.”), fără să repeți mecanic aceeași descriere.
+
+Rol: Ajută la opere, scriitori, curente literare, comentarii și subiecte pentru bac. Fii concis, precis și util, dar păstrează tonul cald și uman.`;
 
 export default function Chatbot() {
   const { currentUser, userProfile } = useAuth();
@@ -64,7 +70,9 @@ export default function Chatbot() {
   const [editingSessionId, setEditingSessionId] = useState(null);
   const [editingSessionTitle, setEditingSessionTitle] = useState('');
   const [editingMessageId, setEditingMessageId] = useState(null);
-  const [attachedImage, setAttachedImage] = useState(null);
+  const [attachedImages, setAttachedImages] = useState([]);
+  const [attachMenuOpen, setAttachMenuOpen] = useState(false);
+  const attachDropdownRef = useRef(null);
   const [themeClass, setThemeClass] = useState(() =>
     document.body.classList.contains('dark-theme') || localStorage.getItem('theme') === 'dark'
       ? 'dark-theme'
@@ -148,6 +156,22 @@ export default function Chatbot() {
     };
   }, [isOpen, themeAnnouncement]);
 
+  // Închide meniul de atașamente la click în afară
+  useEffect(() => {
+    if (!attachMenuOpen) return;
+    const handler = (e) => {
+      if (
+        attachDropdownRef.current &&
+        !attachDropdownRef.current.contains(e.target) &&
+        !e.target.closest('.chatbot-attach-btn')
+      ) {
+        setAttachMenuOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
+  }, [attachMenuOpen]);
+
   // Blochează scroll-ul paginii când asistentul e deschis (inclusiv scroll lateral)
   useEffect(() => {
     if (isOpen) {
@@ -230,7 +254,8 @@ export default function Chatbot() {
     }
     setIsTyping(true);
     try {
-      const reply = await fetchGroqResponse(lastUser.text, lastUser.imageDataUrl, true);
+      const imgs = lastUser.imageDataUrls ?? (lastUser.imageDataUrl ? [lastUser.imageDataUrl] : null);
+      const reply = await fetchGroqResponse(lastUser.text, imgs, true);
       typeMessage(reply, targetId, (fullText, completedMessageId) => {
         const current = messagesRef.current;
         const allMessages = current.map((m) =>
@@ -269,45 +294,55 @@ export default function Chatbot() {
     return 'A apărut o eroare la API. Verifică cheia Groq sau încearcă din nou mai târziu.';
   };
 
-  const VISION_MODEL = 'llama-3.2-90b-vision-preview';
+  const VISION_MODEL = 'meta-llama/llama-4-scout-17b-16e-instruct';
   const TEXT_MODEL = 'openai/gpt-oss-120b';
 
-  const buildGroqMessages = (userText, imageDataUrl = null, isRedo = false) => {
+  const buildGroqMessages = (userText, imageDataUrls = null, isRedo = false) => {
+    const urls = Array.isArray(imageDataUrls) ? imageDataUrls : (imageDataUrls ? [imageDataUrls] : []);
+    const hasImages = urls.length > 0;
     let source = messages;
     if (isRedo && messages.length > 0 && messages[messages.length - 1].sender === 'assistant') {
       source = messages.slice(0, -1);
     }
     const history = source.slice(-8).map((m) => {
-      const text = m.sender === 'user' && (m.imageDataUrl || m.hadImage)
+      const hasImg = m.sender === 'user' && (m.imageDataUrl || m.hadImage || (m.imageDataUrls && m.imageDataUrls.length > 0));
+      const text = hasImg
         ? `[Imagine atașată.] ${m.text || 'Ce vezi în imagine?'}`
         : m.text;
       return { role: m.sender === 'user' ? 'user' : 'assistant', content: text };
     });
+    const systemContent = systemPrompt + (hasImages ? ' Utilizatorul poate atașa imagini; analizează conținutul imaginii și răspunde în limba română.' : '');
     if (isRedo) {
       return [
-        { role: 'system', content: systemPrompt + (imageDataUrl ? ' Utilizatorul poate atașa imagini; analizează conținutul și răspunde în limba română.' : '') },
+        { role: 'system', content: systemContent },
         ...history,
       ];
     }
     const userPrompt = userText || 'Analizează imaginea atașată.';
-    const lastUserContent = imageDataUrl
-      ? `[Utilizatorul a atașat o imagine.] ${userPrompt}`
-      : userPrompt;
+    const lastUserMessage = hasImages
+      ? {
+          role: 'user',
+          content: [
+            { type: 'text', text: userPrompt },
+            ...urls.map((url) => ({ type: 'image_url', image_url: { url } })),
+          ],
+        }
+      : { role: 'user', content: userPrompt };
     return [
-      { role: 'system', content: systemPrompt + (imageDataUrl ? ' Utilizatorul poate atașa imagini; răspunde la întrebarea lui în limba română (dacă nu poți analiza imaginea, răspunde pe baza textului).' : '') },
+      { role: 'system', content: systemContent },
       ...history,
-      { role: 'user', content: lastUserContent },
+      lastUserMessage,
     ];
   };
 
-  const fetchGroqResponse = async (userText, imageDataUrl = null, isRedo = false) => {
+  const fetchGroqResponse = async (userText, imageDataUrls = null, isRedo = false) => {
     if (!groqAvailable || !groqApiUrl) return generateFallbackResponse(false);
-
-    // Model text mereu (vision e adesea indisponibil); când e imagine, trimitem doar text cu indiciu "[Utilizatorul a atașat o imagine.]"
-    const model = TEXT_MODEL;
+    const urls = Array.isArray(imageDataUrls) ? imageDataUrls : (imageDataUrls ? [imageDataUrls] : []);
+    const useVision = urls.length > 0;
+    const model = useVision ? VISION_MODEL : TEXT_MODEL;
     const body = {
       model,
-      messages: buildGroqMessages(userText, imageDataUrl, isRedo),
+      messages: buildGroqMessages(userText, urls.length ? urls : null, isRedo),
       temperature: 0.7,
       max_tokens: 512,
     };
@@ -534,9 +569,71 @@ export default function Chatbot() {
     };
   }, []);
 
+  const addAttachedImages = useCallback((dataUrls) => {
+    const valid = dataUrls.filter((url) => url && typeof url === 'string' && url.startsWith('data:'));
+    if (valid.length) {
+      setAttachedImages((prev) => [...prev, ...valid]);
+    }
+  }, []);
+
+  const removeAttachedImage = useCallback((index) => {
+    setAttachedImages((prev) => prev.filter((_, i) => i !== index));
+  }, []);
+
+  const handlePaste = useCallback(
+    (e) => {
+      const items = e.clipboardData?.items;
+      if (!items) return;
+      const images = [];
+      for (const item of items) {
+        if (item.type.startsWith('image/')) {
+          const file = item.getAsFile();
+          if (file) {
+            const reader = new FileReader();
+            reader.onload = () => {
+              if (reader.result) addAttachedImages([reader.result]);
+            };
+            reader.readAsDataURL(file);
+            e.preventDefault();
+            break;
+          }
+        }
+      }
+    },
+    [addAttachedImages]
+  );
+
+  const handlePasteFromClipboard = useCallback(async () => {
+    try {
+      const items = await navigator.clipboard?.read?.();
+      if (!items) return;
+      for (const item of items) {
+        for (const type of item.types) {
+          if (type.startsWith('image/')) {
+            const blob = await item.getType(type);
+            const reader = new FileReader();
+            reader.onload = () => {
+              if (reader.result) addAttachedImages([reader.result]);
+            };
+            reader.readAsDataURL(blob);
+            setAttachMenuOpen(false);
+            return;
+          }
+        }
+      }
+    } catch (_) {
+      // Permisiuni clipboard sau clipboard gol
+    }
+  }, [addAttachedImages]);
+
+  const openFilePicker = useCallback(() => {
+    setAttachMenuOpen(false);
+    imageInputRef.current?.click();
+  }, []);
+
   const handleSendMessage = async () => {
     const trimmed = (inputMessage || '').trim();
-    const hasImage = Boolean(attachedImage);
+    const hasImage = attachedImages.length > 0;
     if (!trimmed && !hasImage) return;
 
     const now = new Date().toISOString();
@@ -546,7 +643,7 @@ export default function Chatbot() {
       text: trimmed || (hasImage ? 'Analizează această imagine.' : ''),
       sender: 'user',
       timestamp: new Date(),
-      ...(hasImage && { imageDataUrl: attachedImage }),
+      ...(hasImage && { imageDataUrls: [...attachedImages] }),
     };
     let sessionIdToUpdate = currentSessionId;
     let targetAssistantId = null;
@@ -560,7 +657,7 @@ export default function Chatbot() {
         const next = [...prev];
         const idx = next.findIndex((m) => m.id === editingMessageId);
         if (idx === -1) return prev;
-        next[idx] = { ...next[idx], text: userMessage.text, ...(hasImage && { imageDataUrl: attachedImage }) };
+        next[idx] = { ...next[idx], text: userMessage.text, ...(hasImage && { imageDataUrls: [...attachedImages] }) };
         const aIdx = next.slice(idx + 1).findIndex((m) => m.sender === 'assistant');
         if (aIdx !== -1) {
           next[idx + 1 + aIdx] = { ...next[idx + 1 + aIdx], text: '' };
@@ -624,11 +721,11 @@ export default function Chatbot() {
     }
 
     setInputMessage('');
-    setAttachedImage(null);
+    setAttachedImages([]);
     if (imageInputRef.current) imageInputRef.current.value = '';
     setIsTyping(true);
 
-    const imageToSend = hasImage ? attachedImage : null;
+    const imageToSend = hasImage ? attachedImages : null;
     if (isEditing && !targetAssistantId) targetAssistantId = Date.now() + 1;
 
     try {
@@ -938,11 +1035,14 @@ export default function Chatbot() {
                       </button>
                     )}
                     <div className="chatbot-message-content">
-                      {msg.sender === 'user' && (msg.imageDataUrl || msg.hadImage) && (
-                        <div className="chatbot-message-image-wrap">
-                          {msg.imageDataUrl ? (
-                            <img src={msg.imageDataUrl} alt="Atașat" className="chatbot-message-image" />
-                          ) : (
+                      {msg.sender === 'user' && (msg.imageDataUrl || msg.imageDataUrls?.length || msg.hadImage) && (
+                        <div className="chatbot-message-images-wrap">
+                          {(msg.imageDataUrls || (msg.imageDataUrl ? [msg.imageDataUrl] : [])).map((src, i) => (
+                            <div key={i} className="chatbot-message-image-wrap">
+                              <img src={src} alt="Atașat" className="chatbot-message-image" />
+                            </div>
+                          ))}
+                          {!msg.imageDataUrl && !msg.imageDataUrls?.length && msg.hadImage && (
                             <span className="chatbot-message-image-placeholder">Imagine atașată (nu se reîncarcă)</span>
                           )}
                         </div>
@@ -1009,21 +1109,71 @@ export default function Chatbot() {
                 <div ref={messagesEndRef} />
               </div>
 
-              <div className="chatbot-input-container">
-                {attachedImage && (
-                  <div className="chatbot-attached-image-preview">
-                    <img src={attachedImage} alt="Atașat" />
-                    <button
-                      type="button"
-                      className="chatbot-attached-image-remove"
-                      onClick={() => {
-                        setAttachedImage(null);
-                        if (imageInputRef.current) imageInputRef.current.value = '';
-                      }}
-                      aria-label="Elimină imaginea"
-                    >
-                      <X size={16} />
-                    </button>
+              <div className="chatbot-input-container" onPaste={handlePaste}>
+                {attachMenuOpen && (
+                  <div
+                    ref={attachDropdownRef}
+                    className="chatbot-attach-menu chatbot-attach-menu-up"
+                    role="menu"
+                    aria-label="Opțiuni atașare"
+                  >
+                    {attachedImages.length > 0 && (
+                      <>
+                        <div className="chatbot-attach-menu-section">
+                          <div className="chatbot-attach-menu-section-title">
+                            {attachedImages.length} {attachedImages.length === 1 ? 'imagine' : 'imagini'} atașate
+                          </div>
+                          <div className="chatbot-attach-dropdown-list">
+                            {attachedImages.map((dataUrl, index) => (
+                              <div key={index} className="chatbot-attached-image-preview">
+                                <img src={dataUrl} alt={`Atașat ${index + 1}`} />
+                                <button
+                                  type="button"
+                                  className="chatbot-attached-image-remove"
+                                  onClick={() => removeAttachedImage(index)}
+                                  aria-label={`Elimină imaginea ${index + 1}`}
+                                >
+                                  <X size={16} />
+                                </button>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                        <div className="chatbot-attach-menu-divider" />
+                      </>
+                    )}
+                    <div className="chatbot-attach-menu-options">
+                      <button
+                        type="button"
+                        className="chatbot-attach-menu-item"
+                        onClick={openFilePicker}
+                        role="menuitem"
+                      >
+                        <Paperclip size={20} />
+                        <span>Adaugă fotografii și fișiere</span>
+                      </button>
+                      <button
+                        type="button"
+                        className="chatbot-attach-menu-item"
+                        onClick={handlePasteFromClipboard}
+                        role="menuitem"
+                        title="Sau folosește Ctrl+V în casetă"
+                      >
+                        <ClipboardPaste size={20} />
+                        <span>Lipește imagine (Ctrl+V)</span>
+                      </button>
+                      <button
+                        type="button"
+                        className="chatbot-attach-menu-item chatbot-attach-menu-item-more"
+                        disabled
+                        role="menuitem"
+                        title="Mai multe opțiuni în curând"
+                      >
+                        <MoreHorizontal size={20} />
+                        <span>Mai multe</span>
+                        <ChevronRight size={16} />
+                      </button>
+                    </div>
                   </div>
                 )}
                 <div className="chatbot-input-wrapper">
@@ -1031,25 +1181,52 @@ export default function Chatbot() {
                     ref={imageInputRef}
                     type="file"
                     accept="image/*"
+                    multiple
                     className="chatbot-file-input-hidden"
                     aria-hidden
                     onChange={(e) => {
-                      const file = e.target.files?.[0];
-                      if (!file || !file.type.startsWith('image/')) return;
-                      const reader = new FileReader();
-                      reader.onload = () => setAttachedImage(reader.result);
-                      reader.readAsDataURL(file);
+                      const files = e.target.files;
+                      if (!files?.length) return;
+                      const imageFiles = [...files].filter((f) => f.type.startsWith('image/'));
+                      if (!imageFiles.length) {
+                        e.target.value = '';
+                        return;
+                      }
+                      let done = 0;
+                      const toAdd = [];
+                      imageFiles.forEach((file) => {
+                        const reader = new FileReader();
+                        reader.onload = () => {
+                          if (reader.result) toAdd.push(reader.result);
+                          done++;
+                          if (done === imageFiles.length) {
+                            addAttachedImages(toAdd);
+                            e.target.value = '';
+                          }
+                        };
+                        reader.readAsDataURL(file);
+                      });
                     }}
                   />
                   <button
                     type="button"
                     className="chatbot-attach-btn"
-                    onClick={() => imageInputRef.current?.click()}
-                    title="Atașează imagine"
-                    aria-label="Atașează imagine"
+                    onClick={() => setAttachMenuOpen((open) => !open)}
+                    title={attachMenuOpen ? 'Închide meniul' : 'Atașează imagini'}
+                    aria-label={attachMenuOpen ? 'Închide meniul' : 'Atașează imagini'}
+                    aria-expanded={attachMenuOpen}
                     disabled={isTyping}
                   >
-                    <Paperclip size={20} />
+                    {attachMenuOpen ? (
+                      <X size={20} aria-hidden />
+                    ) : (
+                      <>
+                        <Paperclip size={20} />
+                        {attachedImages.length > 0 && (
+                          <span className="chatbot-attach-count">{attachedImages.length}</span>
+                        )}
+                      </>
+                    )}
                   </button>
                   <input
                     ref={inputRef}
@@ -1057,14 +1234,14 @@ export default function Chatbot() {
                     value={inputMessage}
                     onChange={(e) => setInputMessage(e.target.value)}
                     onKeyDown={handleKeyPress}
-                    placeholder={attachedImage ? 'Scrie ceva despre imagine (opțional)...' : 'Scrie un mesaj...'}
+                    placeholder={attachedImages.length > 0 ? 'Scrie ceva despre imagini (opțional)...' : 'Scrie un mesaj...'}
                     className="chatbot-input"
                     disabled={isTyping}
                   />
                   <button
                     className="chatbot-send-btn"
                     onClick={handleSendMessage}
-                    disabled={(!inputMessage.trim() && !attachedImage) || isTyping}
+                    disabled={(!inputMessage.trim() && !attachedImages.length) || isTyping}
                     title="Trimite"
                     type="button"
                   >
