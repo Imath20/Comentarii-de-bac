@@ -1,5 +1,5 @@
 import React, { useMemo, useState, useRef, useEffect, useCallback } from 'react';
-import { Plus, Trash2, X, Send, Maximize2, Minimize2 } from 'lucide-react';
+import { Plus, Trash2, X, Send, Maximize2, Minimize2, Edit3, RefreshCcw, Paperclip } from 'lucide-react';
 import { useAuth } from '../firebase/AuthContext';
 import { getProfileImageUrl } from '../utils/cloudinary';
 import {
@@ -44,6 +44,7 @@ export default function Chatbot() {
   const inputRef = useRef(null);
   const typingIntervalRef = useRef(null);
   const profilePopupRef = useRef(null);
+  const imageInputRef = useRef(null);
   const messagesRef = useRef(messages);
   messagesRef.current = messages;
 
@@ -60,6 +61,10 @@ export default function Chatbot() {
   const [showAssistantProfilePopup, setShowAssistantProfilePopup] = useState(false);
   const [themeAnnouncement, setThemeAnnouncement] = useState(null);
   const themeAnnouncementTimeoutRef = useRef(null);
+  const [editingSessionId, setEditingSessionId] = useState(null);
+  const [editingSessionTitle, setEditingSessionTitle] = useState('');
+  const [editingMessageId, setEditingMessageId] = useState(null);
+  const [attachedImage, setAttachedImage] = useState(null);
   const [themeClass, setThemeClass] = useState(() =>
     document.body.classList.contains('dark-theme') || localStorage.getItem('theme') === 'dark'
       ? 'dark-theme'
@@ -68,6 +73,15 @@ export default function Chatbot() {
 
   const assistantAvatarUrl = themeClass === 'dark-theme' ? ASSISTANT_AVATAR_DARK : ASSISTANT_AVATAR_LIGHT;
   const assistantDisplayName = themeClass === 'dark-theme' ? 'Magistrul Whoo' : ASSISTANT_NAME;
+
+  const currentSession = useMemo(
+    () => sessions.find((s) => s.id === currentSessionId),
+    [sessions, currentSessionId]
+  );
+  const lastUserMessageId = useMemo(() => {
+    const last = [...messages].reverse().find((m) => m.sender === 'user');
+    return last?.id ?? null;
+  }, [messages]);
 
   useEffect(() => {
     const checkTheme = () => {
@@ -150,14 +164,99 @@ export default function Chatbot() {
 
   const toggleMaximized = useCallback(() => setIsMaximized((prev) => !prev), []);
 
-  const currentSession = useMemo(
-    () => sessions.find((s) => s.id === currentSessionId),
-    [sessions, currentSessionId]
-  );
-
   const scrollToBottom = useCallback(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, []);
+
+  const startRenameSession = (id) => {
+    const session = sessions.find((s) => s.id === id);
+    if (session) {
+      setEditingSessionId(id);
+      setEditingSessionTitle(session.title || 'Chat nou');
+    }
+  };
+
+  const commitRenameSession = useCallback(() => {
+    const trimmed = (editingSessionTitle || '').trim();
+    if (!editingSessionId) return;
+    setSessions((prev) =>
+      prev.map((s) =>
+        s.id === editingSessionId ? { ...s, title: trimmed || s.title || 'Chat nou' } : s
+      )
+    );
+    if (currentUser?.uid && !editingSessionId.startsWith('session-')) {
+      updateChatbotSession(currentUser.uid, editingSessionId, {
+        title: trimmed || 'Chat nou',
+      }).catch((err) => console.warn('Chatbot rename persist:', err));
+    }
+    setEditingSessionId(null);
+    setEditingSessionTitle('');
+  }, [editingSessionId, editingSessionTitle, currentUser?.uid]);
+
+  const cancelRenameSession = () => {
+    setEditingSessionId(null);
+    setEditingSessionTitle('');
+  };
+
+  const editLastUserMessage = () => {
+    const lastUser = [...messages].reverse().find((m) => m.sender === 'user');
+    if (!lastUser) return;
+    setEditingMessageId(lastUser.id);
+    setInputMessage(lastUser.text || '');
+    setTimeout(() => inputRef.current?.focus(), 50);
+  };
+
+  const redoLastResponse = useCallback(async () => {
+    const lastUser = [...messages].reverse().find((m) => m.sender === 'user');
+    if (!lastUser?.text) return;
+    const lastUserIdx = messages.findIndex((m) => m.id === lastUser.id);
+    const followingAssistant = messages.slice(lastUserIdx + 1).find((m) => m.sender === 'assistant');
+    let targetId = followingAssistant?.id;
+    if (targetId) {
+      setMessages((prev) =>
+        prev.map((m) => (m.id === targetId ? { ...m, text: '' } : m))
+      );
+    } else {
+      targetId = Date.now() + 1;
+      setMessages((prev) => [
+        ...prev,
+        {
+          id: targetId,
+          text: '',
+          sender: 'assistant',
+          timestamp: new Date(),
+        },
+      ]);
+    }
+    setIsTyping(true);
+    try {
+      const reply = await fetchGroqResponse(lastUser.text, lastUser.imageDataUrl, true);
+      typeMessage(reply, targetId, (fullText, completedMessageId) => {
+        const current = messagesRef.current;
+        const allMessages = current.map((m) =>
+          m.id === completedMessageId ? { ...m, text: fullText } : m
+        );
+        setSessions((prev) =>
+          prev.map((s) =>
+            s.id === currentSessionId
+              ? { ...s, messages: allMessages, lastMessageAt: new Date().toISOString() }
+              : s
+          )
+        );
+        if (currentUser?.uid && !currentSessionId?.startsWith('session-')) {
+          updateChatbotSession(currentUser.uid, currentSessionId, {
+            messages: allMessages.slice(-MAX_MESSAGES_PER_SESSION),
+            lastMessageAt: new Date().toISOString(),
+          }).catch((err) => console.warn('Chatbot persist redo:', err));
+        }
+      });
+    } catch (err) {
+      console.error('Chatbot redo error:', err);
+      const fallback = generateFallbackResponse(groqAvailable);
+      typeMessage(fallback, targetId);
+      setIsTyping(false);
+    }
+  }, [messages, currentSessionId, currentUser?.uid]);
 
   useEffect(() => {
     scrollToBottom();
@@ -170,24 +269,45 @@ export default function Chatbot() {
     return 'A apărut o eroare la API. Verifică cheia Groq sau încearcă din nou mai târziu.';
   };
 
-  const buildGroqMessages = (userText) => {
-    const history = messages.slice(-8).map((m) => ({
-      role: m.sender === 'user' ? 'user' : 'assistant',
-      content: m.text,
-    }));
+  const VISION_MODEL = 'llama-3.2-90b-vision-preview';
+  const TEXT_MODEL = 'openai/gpt-oss-120b';
+
+  const buildGroqMessages = (userText, imageDataUrl = null, isRedo = false) => {
+    let source = messages;
+    if (isRedo && messages.length > 0 && messages[messages.length - 1].sender === 'assistant') {
+      source = messages.slice(0, -1);
+    }
+    const history = source.slice(-8).map((m) => {
+      const text = m.sender === 'user' && (m.imageDataUrl || m.hadImage)
+        ? `[Imagine atașată.] ${m.text || 'Ce vezi în imagine?'}`
+        : m.text;
+      return { role: m.sender === 'user' ? 'user' : 'assistant', content: text };
+    });
+    if (isRedo) {
+      return [
+        { role: 'system', content: systemPrompt + (imageDataUrl ? ' Utilizatorul poate atașa imagini; analizează conținutul și răspunde în limba română.' : '') },
+        ...history,
+      ];
+    }
+    const userPrompt = userText || 'Analizează imaginea atașată.';
+    const lastUserContent = imageDataUrl
+      ? `[Utilizatorul a atașat o imagine.] ${userPrompt}`
+      : userPrompt;
     return [
-      { role: 'system', content: systemPrompt },
+      { role: 'system', content: systemPrompt + (imageDataUrl ? ' Utilizatorul poate atașa imagini; răspunde la întrebarea lui în limba română (dacă nu poți analiza imaginea, răspunde pe baza textului).' : '') },
       ...history,
-      { role: 'user', content: userText },
+      { role: 'user', content: lastUserContent },
     ];
   };
 
-  const fetchGroqResponse = async (userText) => {
+  const fetchGroqResponse = async (userText, imageDataUrl = null, isRedo = false) => {
     if (!groqAvailable || !groqApiUrl) return generateFallbackResponse(false);
 
+    // Model text mereu (vision e adesea indisponibil); când e imagine, trimitem doar text cu indiciu "[Utilizatorul a atașat o imagine.]"
+    const model = TEXT_MODEL;
     const body = {
-      model: 'openai/gpt-oss-120b',
-      messages: buildGroqMessages(userText),
+      model,
+      messages: buildGroqMessages(userText, imageDataUrl, isRedo),
       temperature: 0.7,
       max_tokens: 512,
     };
@@ -213,7 +333,12 @@ export default function Chatbot() {
         }
 
         const data = await res.json();
-        const content = data?.choices?.[0]?.message?.content?.trim();
+        let content = data?.choices?.[0]?.message?.content;
+        if (typeof content === 'string') content = content.trim();
+        else if (Array.isArray(content)) {
+          const textPart = content.find((p) => p?.type === 'text');
+          content = textPart?.text ? String(textPart.text).trim() : '';
+        } else content = '';
         if (content) return content;
       } catch (err) {
         console.warn('Groq API error:', err);
@@ -411,43 +536,72 @@ export default function Chatbot() {
 
   const handleSendMessage = async () => {
     const trimmed = (inputMessage || '').trim();
-    if (!trimmed) return;
+    const hasImage = Boolean(attachedImage);
+    if (!trimmed && !hasImage) return;
 
     const now = new Date().toISOString();
+    const userTextForTitle = trimmed || 'Poza atașată';
     const userMessage = {
       id: Date.now(),
-      text: trimmed,
+      text: trimmed || (hasImage ? 'Analizează această imagine.' : ''),
       sender: 'user',
       timestamp: new Date(),
+      ...(hasImage && { imageDataUrl: attachedImage }),
     };
     let sessionIdToUpdate = currentSessionId;
+    let targetAssistantId = null;
+    const isEditing = Boolean(editingMessageId);
 
-    if (!currentSessionId) {
+    if (isEditing) {
+      const userIdx = messages.findIndex((m) => m.id === editingMessageId);
+      const followingAssistant = userIdx !== -1 ? messages.slice(userIdx + 1).find((m) => m.sender === 'assistant') : null;
+      targetAssistantId = followingAssistant?.id ?? Date.now() + 1;
+      setMessages((prev) => {
+        const next = [...prev];
+        const idx = next.findIndex((m) => m.id === editingMessageId);
+        if (idx === -1) return prev;
+        next[idx] = { ...next[idx], text: userMessage.text, ...(hasImage && { imageDataUrl: attachedImage }) };
+        const aIdx = next.slice(idx + 1).findIndex((m) => m.sender === 'assistant');
+        if (aIdx !== -1) {
+          next[idx + 1 + aIdx] = { ...next[idx + 1 + aIdx], text: '' };
+        } else {
+          next.splice(idx + 1, 0, {
+            id: targetAssistantId,
+            text: '',
+            sender: 'assistant',
+            timestamp: new Date(),
+          });
+        }
+        return next;
+      });
+      setEditingMessageId(null);
+    } else if (!currentSessionId) {
       const welcome = createWelcomeMessages();
       let newId;
       if (currentUser?.uid) {
         const messagesWithUser = [...welcome, userMessage];
         newId = await addChatbotSession(currentUser.uid, {
-          title: trimmed.slice(0, 40) + (trimmed.length > 40 ? '...' : ''),
+          title: userTextForTitle.slice(0, 40) + (userTextForTitle.length > 40 ? '...' : ''),
           messages: messagesWithUser,
-          lastUserText: trimmed,
+          lastUserText: userTextForTitle,
           createdAt: now,
           lastMessageAt: now,
         });
-        console.log('[Chatbot] Chat nou creat în Firebase:', newId, messagesWithUser);
       } else {
         newId = `session-${Date.now()}`;
       }
       sessionIdToUpdate = newId;
-      const newSession = {
-        id: newId,
-        title: trimmed.slice(0, 40) + (trimmed.length > 40 ? '...' : ''),
-        createdAt: now,
-        lastMessageAt: now,
-        messages: [...welcome, userMessage],
-        lastUserText: trimmed,
-      };
-      setSessions((prev) => [newSession, ...prev]);
+      setSessions((prev) => [
+        {
+          id: newId,
+          title: userTextForTitle.slice(0, 40) + (userTextForTitle.length > 40 ? '...' : ''),
+          createdAt: now,
+          lastMessageAt: now,
+          messages: [...welcome, userMessage],
+          lastUserText: userTextForTitle,
+        },
+        ...prev,
+      ]);
       setCurrentSessionId(newId);
       setMessages([...welcome, userMessage]);
     } else {
@@ -456,33 +610,37 @@ export default function Chatbot() {
       setSessions((prev) =>
         prev.map((s) =>
           s.id === sessionIdToUpdate
-            ? { ...s, lastUserText: trimmed, lastMessageAt: now, messages: updatedMessages }
+            ? { ...s, lastUserText: userTextForTitle, lastMessageAt: now, messages: updatedMessages }
             : s
         )
       );
       if (currentUser?.uid && !sessionIdToUpdate.startsWith('session-')) {
         updateChatbotSession(currentUser.uid, sessionIdToUpdate, {
           messages: updatedMessages.slice(-MAX_MESSAGES_PER_SESSION),
-          lastUserText: trimmed,
+          lastUserText: userTextForTitle,
           lastMessageAt: now,
         }).catch((err) => console.warn('Chatbot persist user msg:', err));
-        console.log('[Chatbot] Mesaj user salvat:', sessionIdToUpdate);
       }
     }
 
     setInputMessage('');
+    setAttachedImage(null);
+    if (imageInputRef.current) imageInputRef.current.value = '';
     setIsTyping(true);
 
+    const imageToSend = hasImage ? attachedImage : null;
+    if (isEditing && !targetAssistantId) targetAssistantId = Date.now() + 1;
+
     try {
-      const reply = await fetchGroqResponse(trimmed);
-      const messageId = Date.now() + 1;
-      const assistantMessage = {
-        id: messageId,
-        text: '',
-        sender: 'assistant',
-        timestamp: new Date(),
-      };
-      setMessages((prev) => [...prev, assistantMessage]);
+      let reply = await fetchGroqResponse(userMessage.text, imageToSend);
+      if (!reply || typeof reply !== 'string') reply = generateFallbackResponse(groqAvailable);
+      const messageId = isEditing ? targetAssistantId : Date.now() + 1;
+      if (!isEditing) {
+        setMessages((prev) => [
+          ...prev,
+          { id: messageId, text: '', sender: 'assistant', timestamp: new Date() },
+        ]);
+      }
       typeMessage(reply, messageId, (fullText, completedMessageId) => {
         const current = messagesRef.current;
         const allMessages = current.map((m) =>
@@ -500,13 +658,12 @@ export default function Chatbot() {
             messages: allMessages.slice(-MAX_MESSAGES_PER_SESSION),
             lastMessageAt: new Date().toISOString(),
           }).catch((err) => console.warn('Chatbot persist AI response:', err));
-          console.log('[Chatbot] Răspuns AI salvat:', sessionIdToUpdate);
         }
       });
     } catch (err) {
       console.error('Chatbot error:', err);
       const fallback = generateFallbackResponse(groqAvailable);
-      const messageId = Date.now() + 1;
+      const messageId = isEditing ? targetAssistantId : Date.now() + 1;
       const fallbackMessage = {
         id: messageId,
         text: fallback,
@@ -672,23 +829,55 @@ export default function Chatbot() {
                       key={s.id}
                       className={`chatbot-session-item ${s.id === currentSessionId ? 'active' : ''}`}
                     >
-                      <button
-                        className="chatbot-session-btn"
-                        onClick={() => selectSession(s.id)}
-                        type="button"
-                      >
-                        {(s.title || 'Chat').slice(0, 35)}
-                        {(s.title || '').length > 35 ? '...' : ''}
-                      </button>
-                      <button
-                        className="chatbot-session-delete"
-                        onClick={() => deleteSession(s.id)}
-                        disabled={sessions.length <= 1}
-                        title="Șterge chat"
-                        type="button"
-                      >
-                        <Trash2 size={14} />
-                      </button>
+                      {editingSessionId === s.id ? (
+                        <input
+                          type="text"
+                          className="chatbot-session-rename-input"
+                          value={editingSessionTitle}
+                          onChange={(e) => setEditingSessionTitle(e.target.value)}
+                          onBlur={commitRenameSession}
+                          onKeyDown={(e) => {
+                            if (e.key === 'Enter') commitRenameSession();
+                            if (e.key === 'Escape') cancelRenameSession();
+                          }}
+                          autoFocus
+                          aria-label="Redenumește chat"
+                        />
+                      ) : (
+                        <>
+                          <button
+                            className="chatbot-session-btn"
+                            onClick={() => selectSession(s.id)}
+                            type="button"
+                          >
+                            {(s.title || 'Chat').slice(0, 35)}
+                            {(s.title || '').length > 35 ? '...' : ''}
+                          </button>
+                          <div className="chatbot-session-actions">
+                            <button
+                              type="button"
+                              className="chatbot-session-rename-btn"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                startRenameSession(s.id);
+                              }}
+                              title="Redenumește"
+                              aria-label="Redenumește chat"
+                            >
+                              <Edit3 size={14} />
+                            </button>
+                            <button
+                              className="chatbot-session-delete"
+                              onClick={() => deleteSession(s.id)}
+                              disabled={sessions.length <= 1}
+                              title="Șterge chat"
+                              type="button"
+                            >
+                              <Trash2 size={14} />
+                            </button>
+                          </div>
+                        </>
+                      )}
                     </div>
                   ))
                 )}
@@ -749,9 +938,42 @@ export default function Chatbot() {
                       </button>
                     )}
                     <div className="chatbot-message-content">
+                      {msg.sender === 'user' && (msg.imageDataUrl || msg.hadImage) && (
+                        <div className="chatbot-message-image-wrap">
+                          {msg.imageDataUrl ? (
+                            <img src={msg.imageDataUrl} alt="Atașat" className="chatbot-message-image" />
+                          ) : (
+                            <span className="chatbot-message-image-placeholder">Imagine atașată (nu se reîncarcă)</span>
+                          )}
+                        </div>
+                      )}
                       <div className="chatbot-message-text">{msg.text}</div>
                       <div className="chatbot-message-meta">
                         <span className="chatbot-message-time">{formatTimestamp(msg.timestamp)}</span>
+                        {msg.sender === 'user' && msg.id === lastUserMessageId && (
+                          <div className="chatbot-message-actions">
+                            <button
+                              type="button"
+                              className="chatbot-message-action-btn"
+                              onClick={redoLastResponse}
+                              disabled={isTyping}
+                              title="Refă răspunsul"
+                              aria-label="Refă răspunsul"
+                            >
+                              <RefreshCcw size={14} />
+                            </button>
+                            <button
+                              type="button"
+                              className="chatbot-message-action-btn"
+                              onClick={editLastUserMessage}
+                              disabled={isTyping}
+                              title="Editează mesaj"
+                              aria-label="Editează mesaj"
+                            >
+                              <Edit3 size={14} />
+                            </button>
+                          </div>
+                        )}
                       </div>
                     </div>
                     {msg.sender === 'user' && (
@@ -788,21 +1010,61 @@ export default function Chatbot() {
               </div>
 
               <div className="chatbot-input-container">
+                {attachedImage && (
+                  <div className="chatbot-attached-image-preview">
+                    <img src={attachedImage} alt="Atașat" />
+                    <button
+                      type="button"
+                      className="chatbot-attached-image-remove"
+                      onClick={() => {
+                        setAttachedImage(null);
+                        if (imageInputRef.current) imageInputRef.current.value = '';
+                      }}
+                      aria-label="Elimină imaginea"
+                    >
+                      <X size={16} />
+                    </button>
+                  </div>
+                )}
                 <div className="chatbot-input-wrapper">
+                  <input
+                    ref={imageInputRef}
+                    type="file"
+                    accept="image/*"
+                    className="chatbot-file-input-hidden"
+                    aria-hidden
+                    onChange={(e) => {
+                      const file = e.target.files?.[0];
+                      if (!file || !file.type.startsWith('image/')) return;
+                      const reader = new FileReader();
+                      reader.onload = () => setAttachedImage(reader.result);
+                      reader.readAsDataURL(file);
+                    }}
+                  />
+                  <button
+                    type="button"
+                    className="chatbot-attach-btn"
+                    onClick={() => imageInputRef.current?.click()}
+                    title="Atașează imagine"
+                    aria-label="Atașează imagine"
+                    disabled={isTyping}
+                  >
+                    <Paperclip size={20} />
+                  </button>
                   <input
                     ref={inputRef}
                     type="text"
                     value={inputMessage}
                     onChange={(e) => setInputMessage(e.target.value)}
                     onKeyDown={handleKeyPress}
-                    placeholder="Scrie un mesaj..."
+                    placeholder={attachedImage ? 'Scrie ceva despre imagine (opțional)...' : 'Scrie un mesaj...'}
                     className="chatbot-input"
                     disabled={isTyping}
                   />
                   <button
                     className="chatbot-send-btn"
                     onClick={handleSendMessage}
-                    disabled={!inputMessage.trim() || isTyping}
+                    disabled={(!inputMessage.trim() && !attachedImage) || isTyping}
                     title="Trimite"
                     type="button"
                   >

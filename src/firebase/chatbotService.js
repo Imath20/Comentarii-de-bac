@@ -3,6 +3,19 @@ import { db } from './firebase';
 
 const SESSIONS_COLLECTION = 'chatbotSessions';
 
+/** Mesajele cu imageDataUrl (base64) depășesc limitele Firestore; salvăm doar câmpuri simple. */
+function messageForFirestore(m) {
+  const timestamp = m.timestamp instanceof Date ? m.timestamp.toISOString() : m.timestamp;
+  const out = {
+    id: m.id,
+    text: typeof m.text === 'string' ? m.text : '',
+    sender: typeof m.sender === 'string' ? m.sender : 'user',
+    timestamp,
+  };
+  if (m.imageDataUrl) out.hadImage = true;
+  return out;
+}
+
 /**
  * Get user's chatbot sessions from Firestore
  * @param {string} userId - The user's UID
@@ -61,10 +74,7 @@ export async function addChatbotSession(userId, session) {
     const colRef = collection(db, 'users', userId, SESSIONS_COLLECTION);
     const dataToSave = {
       title: session.title || 'Chat nou',
-      messages: (session.messages || []).map((m) => ({
-        ...m,
-        timestamp: m.timestamp instanceof Date ? m.timestamp.toISOString() : m.timestamp,
-      })),
+      messages: (session.messages || []).map(messageForFirestore),
       createdAt: now,
       lastMessageAt: session.lastMessageAt || now,
       lastUserText: session.lastUserText || '',
@@ -99,10 +109,7 @@ export async function updateChatbotSession(userId, sessionId, data) {
     if (data.lastUserText !== undefined) dataToSave.lastUserText = data.lastUserText;
     if (data.lastMessageAt !== undefined) dataToSave.lastMessageAt = data.lastMessageAt;
     if (data.messages !== undefined) {
-      dataToSave.messages = data.messages.map((m) => ({
-        ...m,
-        timestamp: m.timestamp instanceof Date ? m.timestamp.toISOString() : m.timestamp,
-      }));
+      dataToSave.messages = data.messages.map(messageForFirestore);
     }
 
     if (Object.keys(dataToSave).length > 0) {
