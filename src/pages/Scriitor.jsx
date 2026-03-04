@@ -8,7 +8,25 @@ import ScriitorChat from '../assets/ScriitorChat';
 import AIContentModerator from '../components/AIContentModerator';
 import { useAuth } from '../firebase/AuthContext';
 import ScrollToTop from '../components/ScrollToTop';
+import Layout from '../assets/Layout';
+import CURENTE from '../data/curente';
 import '../styles/adminAddButton.scss';
+
+/** Găsește un scriitor din curente după slug (pentru fallback când nu există în Firebase) */
+function getScriitorFromCurente(slug) {
+  if (!slug || typeof slug !== 'string') return null;
+  const s = slug.trim().toLowerCase();
+  let autor = null;
+  const curente = [];
+  for (const c of CURENTE) {
+    const a = (c.autori || []).find(x => x.slug && x.slug.toLowerCase() === s);
+    if (a) {
+      if (!autor) autor = { ...a };
+      curente.push(c);
+    }
+  }
+  return autor ? { ...autor, curente } : null;
+}
 
 // Date pentru poeziile scurte
 const shortPoems = {
@@ -349,8 +367,20 @@ const Scriitor = () => {
           };
           setData(cleanedScriitor);
         } else {
-          console.warn('Scriitor not found:', name);
-          setData(null);
+          // Fallback: scriitor din curente care nu are încă pagină în Firebase
+          const fromCurente = getScriitorFromCurente(name);
+          if (fromCurente) {
+            setData({
+              nume: fromCurente.nume,
+              img: fromCurente.img,
+              key: name,
+              isPlaceholder: true,
+              curente: fromCurente.curente || [],
+            });
+          } else {
+            console.warn('Scriitor not found:', name);
+            setData(null);
+          }
         }
       } catch (error) {
         console.error('Error loading scriitor data:', error);
@@ -861,24 +891,100 @@ const Scriitor = () => {
 
   if (!data) {
     return (
-      <div className="scriitor-not-found" style={{ padding: '40px', textAlign: 'center' }}>
-        <h2>Scriitorul nu a fost găsit.</h2>
-        <p>Key: {name}</p>
-        <button 
-          onClick={() => navigate('/scriitori')}
-          style={{
-            marginTop: '20px',
-            padding: '10px 20px',
-            backgroundColor: darkTheme ? '#a97c50' : '#ffd591',
-            color: darkTheme ? '#fff' : '#4e2e1e',
-            border: 'none',
-            borderRadius: '8px',
-            cursor: 'pointer',
-          }}
-        >
-          Înapoi la Scriitori
-        </button>
-      </div>
+      <Layout darkTheme={darkTheme} setDarkTheme={setDarkTheme}>
+        <div className="scriitor-not-found" style={{ padding: '40px', textAlign: 'center' }}>
+          <h2>Scriitorul nu a fost găsit.</h2>
+          <p>Key: {name}</p>
+          <button 
+            onClick={() => navigate('/scriitori')}
+            style={{
+              marginTop: '20px',
+              padding: '10px 20px',
+              backgroundColor: darkTheme ? '#a97c50' : '#ffd591',
+              color: darkTheme ? '#fff' : '#4e2e1e',
+              border: 'none',
+              borderRadius: '8px',
+              cursor: 'pointer',
+            }}
+          >
+            Înapoi la Scriitori
+          </button>
+        </div>
+      </Layout>
+    );
+  }
+
+  // Pagină placeholder pentru scriitori din curente care nu au încă pagină completă
+  if (data.isPlaceholder) {
+    const curente = data.curente || [];
+    return (
+      <Layout darkTheme={darkTheme} setDarkTheme={setDarkTheme}>
+        <div className="scriitor-placeholder-page" style={{
+          maxWidth: 600,
+          margin: '0 auto',
+          padding: '40px 20px',
+          textAlign: 'center',
+        }}>
+          <button
+            onClick={() => {
+              const fromPath = (location.state?.from?.pathname) || '/curente';
+              navigate(fromPath, { replace: true });
+            }}
+            className="scriitor-back-btn-inline"
+            style={{ marginBottom: 24 }}
+          >
+            Înapoi
+          </button>
+          <div style={{
+            width: 140,
+            height: 140,
+            margin: '0 auto 20px',
+            borderRadius: '50%',
+            overflow: 'hidden',
+            border: `3px solid ${darkTheme ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.1)'}`,
+          }}>
+            <img
+              src={data.img || ''}
+              alt={data.nume}
+              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+            />
+          </div>
+          <h1 style={{ marginBottom: 8, fontSize: '1.6rem' }}>{data.nume}</h1>
+          <p style={{
+            marginBottom: 24,
+            opacity: 0.85,
+            lineHeight: 1.5,
+          }}>
+            Pagina completă pentru acest scriitor este în curs de pregătire.
+          </p>
+          {curente.length > 0 && (
+            <div style={{ marginTop: 16 }}>
+              <p style={{ marginBottom: 12, fontSize: '0.95rem' }}>
+                Poți afla mai multe despre {data.nume} în curentele:
+              </p>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, justifyContent: 'center' }}>
+                {curente.map((c) => (
+                  <button
+                    key={c.id}
+                    onClick={() => navigate(`/curent/${c.id}`, { state: { from: location.state?.from } })}
+                    style={{
+                      padding: '8px 16px',
+                      borderRadius: 8,
+                      border: 'none',
+                      background: c.glowColor || (darkTheme ? 'rgba(255,255,255,0.15)' : 'rgba(0,0,0,0.08)'),
+                      color: darkTheme ? '#fff' : '#333',
+                      cursor: 'pointer',
+                      fontSize: '0.9rem',
+                    }}
+                  >
+                    {c.nume}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      </Layout>
     );
   }
 

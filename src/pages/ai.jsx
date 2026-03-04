@@ -367,11 +367,13 @@ export default function AI() {
       type: inputType
     });
 
-    // Current Groq-recommended models (text + vision) with fallbacks
+    // Modele Groq actuale (vision: Llama 4 Scout; text: Llama 3.3/3.1)
+    // Vision: meta-llama/llama-4-scout înlocuiește modelele decommissioned (llama-3.2-*-vision, llava)
+    // Kimi K2 nu acceptă content array cu imagini (messages[x].content must be a string)
     const modelCandidates =
       inputType === 'image'
-        ? ['moonshotai/kimi-k2-instruct-0905','llama-3.2-11b-vision-preview', 'llama-3.2-90b-vision-preview', 'llava-v1.5-7b-4096-preview']
-        : ['llama-3.2-90b-text-preview', 'llama-3.2-11b-text-preview', 'llama-3.2-3b-preview', 'llama-3.1-8b-instant'];
+        ? ['meta-llama/llama-4-scout-17b-16e-instruct']
+        : ['llama-3.3-70b-versatile', 'llama-3.1-8b-instant', 'openai/gpt-oss-120b'];
 
     const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 

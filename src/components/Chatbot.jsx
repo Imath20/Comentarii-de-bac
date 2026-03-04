@@ -11,7 +11,7 @@ import {
 import '../styles/chatbot.scss';
 
 const STORAGE_KEY_GUEST = 'chatbot-sessions-guest';
-const ASSISTANT_NAME = 'Asistentul BAC';
+const ASSISTANT_NAME = 'Asistentul de BAC';
 const MAX_MESSAGES_PER_SESSION = 60;
 
 const createWelcomeMessages = () => [
@@ -23,7 +23,7 @@ const createWelcomeMessages = () => [
   },
 ];
 
-const systemPrompt = `Ești un asistent educațional pentru pregătirea la bacalaureat la limba și literatura română. Răspunde la întrebări despre opere, scriitori, curente literare, comentarii și subiecte. Fii concis, precis și util pentru elevi. Răspunde întotdeauna în limba română.`;
+const systemPrompt = `Ești un asistent educațional pentru pregătirea la bacalaureat la limba și literatura română. Răspunde la întrebări despre opere, scriitori, curente literare, comentarii și subiecte. Fii concis, precis și util pentru elevi. Răspunde întotdeauna în limba română. Nu folosi markdown (**, ##, liste cu -, etc.). Răspunde doar cu text simplu și spații.`;
 
 export default function Chatbot() {
   const { currentUser, userProfile } = useAuth();

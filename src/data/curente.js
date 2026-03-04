@@ -841,7 +841,7 @@ const CURENTE = [
     descriere: 'Romantismul exprimă trăiri intense, idealuri ale libertății și evadarea în natură, istorie sau imaginar, valorizând geniul creator.',
     autori: [
       { nume: 'Mihai Eminescu', slug: 'eminescu', img: '/scriitori/eminescu_mihai.webp' },
-      { nume: 'Vasile Alecsandri', slug: 'alecsandri', img: '/scriitori/alecsandri.webp' },
+      { nume: 'Vasile Alecsandri', slug: 'alecsandri', img: '/scriitori/vasile_alexandri.png' },
     ],
     sections: [
       {
