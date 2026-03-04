@@ -83,7 +83,10 @@
   cursor: pointer;
   border-radius: 8px;
   transition: background 0.2s, color 0.2s;
-
+  outline: none;
+  &:focus {
+    outline: none;
+  }
   .dark-theme & {
     color: #c4a574;
   }
@@ -131,7 +134,13 @@
   color: #2c1810;
   font-size: 0.9rem;
   box-sizing: border-box;
-
+  outline: none;
+  &:focus {
+    outline: none;
+  }
+  &:hover {
+    background: rgba(255, 255, 255, 0.8);
+  }
   .dark-theme & {
     background: rgba(74, 44, 26, 0.6);
     border-color: rgba(255, 213, 145, 0.25);
@@ -153,7 +162,10 @@
   cursor: pointer;
   transition: opacity 0.2s;
   flex-shrink: 0;
-
+  outline: none;
+  &:focus {
+    outline: none;
+  }
   .dark-theme & {
     background: linear-gradient(135deg, #c49a6c 0%, #a97c50 100%);
     color: #1a0f08;
@@ -212,7 +224,10 @@
   cursor: pointer;
   border: none;
   transition: opacity 0.2s, background 0.2s;
-
+  outline: none;
+  &:focus {
+    outline: none;
+  }
   &.secondary {
     background: rgba(169, 124, 80, 0.2);
     color: #4e2e1e;

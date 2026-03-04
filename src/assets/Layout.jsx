@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import NotificationsButton from '../components/NotificationsButton';
@@ -19,6 +19,7 @@ export default function Layout({
     return localStorage.getItem('theme') === 'dark';
   });
   const [scrolledInternal, setScrolledInternal] = useState(false);
+  const prevDarkRef = useRef(undefined);
 
   const darkTheme = typeof darkThemeProp === 'boolean' ? darkThemeProp : darkThemeInternal;
   const setDarkTheme = controlsTheme ? setDarkThemeProp : setDarkThemeInternal;
@@ -34,6 +35,17 @@ export default function Layout({
       localStorage.setItem('theme', darkTheme ? 'dark' : 'light');
     }
   }, [darkTheme, darkThemeInternal, controlsTheme]);
+
+  // Notifică Chatbot-ul la schimbare temă (dark sau light)
+  useEffect(() => {
+    if (prevDarkRef.current === false && darkTheme === true) {
+      window.dispatchEvent(new CustomEvent('theme-changed-to-dark'));
+    }
+    if (prevDarkRef.current === true && darkTheme === false) {
+      window.dispatchEvent(new CustomEvent('theme-changed-to-light'));
+    }
+    prevDarkRef.current = darkTheme;
+  }, [darkTheme]);
 
   useEffect(() => {
     if (typeof scrolledProp === 'boolean') return;

@@ -123,7 +123,10 @@
     align-items: center;
     justify-content: center;
     transition: all 0.2s;
-
+    outline: none;
+    &:focus {
+      outline: none;
+    }
     &:hover {
       background: rgba(122, 58, 0, 0.1);
     }
@@ -232,7 +235,10 @@
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s;
-
+  outline: none;
+  &:focus {
+    outline: none;
+  }
   &:hover {
     background: rgba(255, 179, 71, 0.2);
   }
@@ -282,7 +288,10 @@
   color: #7a3a00;
   cursor: pointer;
   transition: all 0.2s;
-
+  outline: none;
+  &:focus {
+    outline: none;
+  }
   &:hover {
     border-color: rgba(122, 58, 0, 0.5);
     background: rgba(255, 179, 71, 0.1);
@@ -378,7 +387,10 @@
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.2s;
-
+  outline: none;
+  &:focus {
+    outline: none;
+  }
   &:hover:not(:disabled) {
     background: rgba(255, 179, 71, 0.35);
     border-color: rgba(122, 58, 0, 0.5);
@@ -403,7 +415,10 @@
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.2s;
-
+  outline: none;
+  &:focus {
+    outline: none;
+  }
   &:hover:not(:disabled) {
     background: rgba(111, 66, 193, 0.2);
     border-color: rgba(111, 66, 193, 0.55);
@@ -451,7 +466,10 @@
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.2s;
-
+  outline: none;
+  &:focus {
+    outline: none;
+  }
   &:hover:not(:disabled) {
     background: rgba(34, 139, 34, 0.25);
   }
@@ -482,7 +500,10 @@
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.2s;
-
+  outline: none;
+  &:focus {
+    outline: none;
+  }
   &:hover {
     background: rgba(255, 179, 71, 0.3);
   }
@@ -536,7 +557,10 @@
   max-height: 3rem;
   cursor: pointer;
   transition: all 0.2s;
-
+  outline: none;
+  &:focus {
+    outline: none;
+  }
   &:hover {
     background: rgba(122, 58, 0, 0.08);
   }

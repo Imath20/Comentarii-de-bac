@@ -11,8 +11,14 @@ import {
 import '../styles/chatbot.scss';
 
 const STORAGE_KEY_GUEST = 'chatbot-sessions-guest';
-const ASSISTANT_NAME = 'Asistentul de BAC';
+const ASSISTANT_NAME = 'Profesor Whoo';
+const ASSISTANT_AVATAR_LIGHT = '/asistent/Mr_Wooh_Smart_Small.png';
+const ASSISTANT_AVATAR_DARK = '/asistent/Mr_Whoo_Dark.png';
 const MAX_MESSAGES_PER_SESSION = 60;
+
+const DARK_THEME_MESSAGE = 'Biblioteca a intrat în modul nocturn. Magistrul Whoo este acum de serviciu. 🌙';
+const LIGHT_THEME_MESSAGE = 'Biblioteca s-a luminat. Profesor Whoo a revenit la catedră. ☀️';
+const THEME_ANNOUNCEMENT_DURATION_MS = 10000;
 
 const createWelcomeMessages = () => [
   {
@@ -37,6 +43,7 @@ export default function Chatbot() {
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
   const typingIntervalRef = useRef(null);
+  const profilePopupRef = useRef(null);
   const messagesRef = useRef(messages);
   messagesRef.current = messages;
 
@@ -50,11 +57,17 @@ export default function Chatbot() {
   const groqAvailable = useMemo(() => groqApiKeys.length > 0, [groqApiKeys]);
 
   const [isMaximized, setIsMaximized] = useState(false);
+  const [showAssistantProfilePopup, setShowAssistantProfilePopup] = useState(false);
+  const [themeAnnouncement, setThemeAnnouncement] = useState(null);
+  const themeAnnouncementTimeoutRef = useRef(null);
   const [themeClass, setThemeClass] = useState(() =>
     document.body.classList.contains('dark-theme') || localStorage.getItem('theme') === 'dark'
       ? 'dark-theme'
       : ''
   );
+
+  const assistantAvatarUrl = themeClass === 'dark-theme' ? ASSISTANT_AVATAR_DARK : ASSISTANT_AVATAR_LIGHT;
+  const assistantDisplayName = themeClass === 'dark-theme' ? 'Magistrul Whoo' : ASSISTANT_NAME;
 
   useEffect(() => {
     const checkTheme = () => {
@@ -65,6 +78,75 @@ export default function Chatbot() {
     checkTheme();
     return () => observer.disconnect();
   }, []);
+
+  // Focus popup la deschidere + Escape închide
+  useEffect(() => {
+    if (!showAssistantProfilePopup) return;
+    const id = requestAnimationFrame(() => profilePopupRef.current?.focus());
+    const onKey = (e) => {
+      if (e.key === 'Escape') setShowAssistantProfilePopup(false);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => {
+      cancelAnimationFrame(id);
+      window.removeEventListener('keydown', onKey);
+    };
+  }, [showAssistantProfilePopup]);
+
+  // Un singur mesaj temporar la schimbare temă: doar textul, fără adăugare în chat. Timer 10s (reset la nouă schimbare).
+  useEffect(() => {
+    const clearTimer = () => {
+      if (themeAnnouncementTimeoutRef.current) {
+        clearTimeout(themeAnnouncementTimeoutRef.current);
+        themeAnnouncementTimeoutRef.current = null;
+      }
+    };
+    const onDark = () => {
+      clearTimer();
+      setThemeAnnouncement(DARK_THEME_MESSAGE);
+    };
+    const onLight = () => {
+      clearTimer();
+      setThemeAnnouncement(LIGHT_THEME_MESSAGE);
+    };
+    window.addEventListener('theme-changed-to-dark', onDark);
+    window.addEventListener('theme-changed-to-light', onLight);
+    return () => {
+      clearTimer();
+      window.removeEventListener('theme-changed-to-dark', onDark);
+      window.removeEventListener('theme-changed-to-light', onLight);
+    };
+  }, []);
+
+  // Când panoul e deschis și există un anunț de temă: pornim/repornim timerul de 10s; la expirare ascundem mesajul.
+  useEffect(() => {
+    if (!isOpen || !themeAnnouncement) return;
+    if (themeAnnouncementTimeoutRef.current) clearTimeout(themeAnnouncementTimeoutRef.current);
+    themeAnnouncementTimeoutRef.current = setTimeout(() => {
+      setThemeAnnouncement(null);
+      themeAnnouncementTimeoutRef.current = null;
+    }, THEME_ANNOUNCEMENT_DURATION_MS);
+    return () => {
+      if (themeAnnouncementTimeoutRef.current) {
+        clearTimeout(themeAnnouncementTimeoutRef.current);
+        themeAnnouncementTimeoutRef.current = null;
+      }
+    };
+  }, [isOpen, themeAnnouncement]);
+
+  // Blochează scroll-ul paginii când asistentul e deschis (inclusiv scroll lateral)
+  useEffect(() => {
+    if (isOpen) {
+      const prevOverflow = document.body.style.overflow;
+      const prevTouchAction = document.body.style.touchAction;
+      document.body.style.overflow = 'hidden';
+      document.body.style.touchAction = 'none';
+      return () => {
+        document.body.style.overflow = prevOverflow;
+        document.body.style.touchAction = prevTouchAction;
+      };
+    }
+  }, [isOpen]);
 
   const toggleMaximized = useCallback(() => setIsMaximized((prev) => !prev), []);
 
@@ -534,7 +616,7 @@ export default function Chatbot() {
 
   return (
     <>
-      {/* Floating button - Mr Wooh Smart */}
+      {/* Floating button - Profesor Whoo / Mr Whoo Evil în dark mode */}
       <button
         className={`chatbot-fab ${themeClass}`}
         onClick={() => setIsOpen(true)}
@@ -542,8 +624,8 @@ export default function Chatbot() {
         type="button"
       >
         <img
-          src="/asistent/Mr_Wooh_Smart_Small.png"
-          alt={ASSISTANT_NAME}
+          src={assistantAvatarUrl}
+          alt={assistantDisplayName}
           className="chatbot-fab-avatar"
         />
       </button>
@@ -563,13 +645,19 @@ export default function Chatbot() {
           >
             {/* Pagina stânga - Cuprins */}
             <div className="chatbot-page-left">
-              <span className="chatbot-page-number">i</span>
+              {/* <span className="chatbot-page-number">i</span> */}
             <div className="chatbot-sidebar">
               <div className="chatbot-sidebar-header">
-                <div className="chatbot-avatar chatbot-avatar-assistant">
-                  <img src="/asistent/Mr_Wooh_Smart_Small.png" alt={ASSISTANT_NAME} />
-                </div>
-                <span className="chatbot-sidebar-title">{ASSISTANT_NAME}</span>
+                <button
+                  type="button"
+                  className="chatbot-avatar chatbot-avatar-assistant chatbot-avatar-clickable"
+                  onClick={() => setShowAssistantProfilePopup(true)}
+                  aria-label={`Profil ${assistantDisplayName}`}
+                  title="Deschide poza"
+                >
+                  <img src={assistantAvatarUrl} alt={assistantDisplayName} />
+                </button>
+                <span className="chatbot-sidebar-title">{assistantDisplayName}</span>
               </div>
               <button className="chatbot-btn-new" onClick={startNewChat} type="button">
                 <Plus size={18} />
@@ -613,7 +701,7 @@ export default function Chatbot() {
 
             {/* Pagina dreapta - Conversație */}
             <div className="chatbot-page-right">
-              <span className="chatbot-page-number">ii</span>
+              {/* <span className="chatbot-page-number">ii</span> */}
             <div className="chatbot-main">
               <div className="chatbot-main-header">
                 <button
@@ -637,6 +725,12 @@ export default function Chatbot() {
                 </button>
               </div>
 
+              {themeAnnouncement && (
+                <div className={`chatbot-theme-announcement ${themeClass}`} role="status" aria-live="polite">
+                  {themeAnnouncement}
+                </div>
+              )}
+
               <div className="chatbot-messages">
                 {messages.map((msg) => (
                   <div
@@ -644,9 +738,15 @@ export default function Chatbot() {
                     className={`chatbot-message ${msg.sender === 'user' ? 'user' : 'assistant'}`}
                   >
                     {msg.sender === 'assistant' && (
-                      <div className="chatbot-avatar chatbot-avatar-assistant chatbot-avatar-small">
-                        <img src="/asistent/Mr_Wooh_Smart_Small.png" alt={ASSISTANT_NAME} />
-                      </div>
+                      <button
+                        type="button"
+                        className="chatbot-avatar chatbot-avatar-assistant chatbot-avatar-small chatbot-avatar-clickable"
+                        onClick={() => setShowAssistantProfilePopup(true)}
+                        aria-label={`Profil ${assistantDisplayName}`}
+                        title="Deschide poza"
+                      >
+                        <img src={assistantAvatarUrl} alt={assistantDisplayName} />
+                      </button>
                     )}
                     <div className="chatbot-message-content">
                       <div className="chatbot-message-text">{msg.text}</div>
@@ -712,6 +812,37 @@ export default function Chatbot() {
               </div>
             </div>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* Popup profil asistent - poza mare la click pe avatar */}
+      {showAssistantProfilePopup && (
+        <div
+          ref={profilePopupRef}
+          className={`chatbot-assistant-profile-popup-overlay ${themeClass}`}
+          onClick={() => setShowAssistantProfilePopup(false)}
+          role="dialog"
+          aria-modal="true"
+          aria-label={`Profil ${assistantDisplayName}`}
+          tabIndex={-1}
+        >
+          <div
+            className="chatbot-assistant-profile-popup-content"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              type="button"
+              className="chatbot-assistant-profile-popup-close"
+              onClick={() => setShowAssistantProfilePopup(false)}
+              aria-label="Închide"
+            >
+              ×
+            </button>
+            <div className="chatbot-assistant-profile-popup-image-wrap">
+              <img src={assistantAvatarUrl} alt={assistantDisplayName} />
+            </div>
+            <p className="chatbot-assistant-profile-popup-name">{assistantDisplayName}</p>
           </div>
         </div>
       )}

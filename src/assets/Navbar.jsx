@@ -188,7 +188,7 @@ export default function Navbar({ darkTheme, setDarkTheme, scrolled }) {
       <button
         className="theme-toggle"
         aria-label="Schimbă tema"
-        onClick={() => setDarkTheme(t => !t)}
+        onClick={() => setDarkTheme((t) => !t)}
         type="button"
       >
         {darkTheme ? '🌙' : '🌞'}
@@ -277,7 +277,7 @@ export default function Navbar({ darkTheme, setDarkTheme, scrolled }) {
               className="navbar-mobile-theme-toggle"
               type="button"
               aria-label="Schimbă tema"
-              onClick={() => setDarkTheme(t => !t)}
+              onClick={() => setDarkTheme((t) => !t)}
             >
               {darkTheme ? '🌙' : '🌞'}
             </button>

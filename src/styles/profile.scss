@@ -354,6 +354,10 @@
   color: #5c4033;
   cursor: pointer;
   transition: background 0.2s, color 0.2s;
+  outline: none;
+  &:focus {
+    outline: none;
+  }
 
   &:hover {
     background: rgba(169, 124, 80, 0.35);
@@ -559,6 +563,10 @@
   white-space: nowrap;
   flex-shrink: 0;
   transition: background 0.2s, color 0.2s;
+  outline: none;
+  &:focus {
+    outline: none;
+  }
 
   &:hover {
     background: rgba(169, 124, 80, 0.35);
@@ -588,7 +596,10 @@
   justify-content: center;
   flex-shrink: 0;
   transition: all 0.2s;
-
+  outline: none;
+  &:focus {
+    outline: none;
+  }
   &:hover:not(:disabled) {
     background: rgba(220, 53, 69, 0.2);
   }
@@ -677,6 +688,10 @@
   box-shadow: 0 4px 16px rgba(60, 40, 20, 0.2);
   transition: all 0.3s ease;
   z-index: 1000;
+  outline: none;
+  &:focus {
+    outline: none;
+  }
 
   &:hover {
     transform: scale(1.1);

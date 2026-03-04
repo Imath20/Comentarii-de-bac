@@ -132,6 +132,10 @@
     justify-content: center;
     transition: background 0.2s, color 0.2s;
     gap: 5px;
+    outline: none;
+    &:focus {
+      outline: none;
+    }
 
     &:hover {
       background: rgba(122, 58, 0, 0.1);
@@ -196,6 +200,10 @@
     align-items: center;
     justify-content: center;
     transition: background 0.2s, color 0.2s;
+    outline: none;
+    &:focus {
+      outline: none;
+    }
 
     &:hover {
       background: rgba(122, 58, 0, 0.1);
@@ -248,10 +256,11 @@
   text-align: left;
   border-radius: 6px;
   transition: background 0.2s;
-
-  &:hover {
-    background: rgba(122, 58, 0, 0.08);
+  outline: none;
+  &:focus {
+    outline: none;
   }
+
 
   .dark-theme & {
     color: #ffd591;

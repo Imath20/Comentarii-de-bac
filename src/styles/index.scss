@@ -413,6 +413,7 @@
   margin-right: auto;
   display: block;
   outline: none;
+  white-space: nowrap;
 
   &:focus {
     outline: none;
@@ -450,6 +451,7 @@
 .index-subiect-button-half {
   margin-left: 0;
   margin-right: 0;
+  min-width: max-content; /* păstrează „Vezi cerințele” pe un rând */
 }
 
 .index-subiect-ghid-link {
@@ -468,6 +470,7 @@
   width: 100%;
   text-align: center;
   outline: none;
+  white-space: nowrap;
 
   &:hover {
     background: rgba(255, 213, 145, 0.25);

@@ -515,6 +515,10 @@
   color: #4e2e1e;
   cursor: pointer;
   transition: background 0.2s, color 0.2s, transform 0.2s;
+  outline: none;
+  &:focus {
+    outline: none;
+  }
 
   &:hover {
     background: rgba(255, 213, 145, 0.4);

@@ -1,8 +1,8 @@
-// Chatbot FAB - Mr Wooh Smart
+// Chatbot FAB - Mr Wooh Smart - poziționat sus-dreapta ca să nu acopere butoanele din colț
 .chatbot-fab {
   // background-color: gold !important;
   position: fixed;
-  bottom: 24px;
+  bottom: 6rem; // deasupra zonei de butoane (admin etc. la ~2rem)
   right: 24px;
   width: 82.5px;
   height: 82.5px;
@@ -20,6 +20,10 @@
   box-shadow: 0 4px 20px rgba(78, 46, 30, 0.25);
   transition: transform 0.2s, box-shadow 0.2s;
   // zoom: 1.2;
+  outline: none;
+  &:focus {
+    outline: none;
+  }
 
   &:hover {
     transform: scale(1.05);
@@ -43,9 +47,10 @@
   object-fit: cover;
   object-position: center;
   transform: scale(1.35);
+  
 }
 
-// Overlay
+// Overlay - blochează scroll-ul paginii (inclusiv lateral) când e deschis
 .chatbot-overlay {
   position: fixed;
   top: 0;
@@ -59,6 +64,8 @@
   z-index: 2001;
   backdrop-filter: blur(5px);
   animation: chatbotOverlayIn 0.25s ease-out;
+  overflow: hidden;
+  overscroll-behavior: contain;
 }
 
 @keyframes chatbotOverlayIn {
@@ -417,7 +424,10 @@
   font-family: Georgia, 'Times New Roman', serif;
   cursor: pointer;
   transition: background 0.2s, transform 0.15s;
-
+  outline: none;
+  &:focus {
+    outline: none;
+  }
   &:hover {
     background: #a97c50;
     transform: translateY(-1px);
@@ -488,6 +498,10 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  outline: none;
+  &:focus {
+    outline: none;
+  }
 
   &:hover {
     border-color: rgba(124, 79, 43, 0.4);
@@ -530,7 +544,10 @@
   align-items: center;
   justify-content: center;
   transition: color 0.15s, background 0.15s;
-
+  outline: none;
+  &:focus {
+    outline: none;
+  }
   &:hover:not(:disabled) {
     color: #e53935;
     background: rgba(229, 57, 53, 0.1);
@@ -587,7 +604,10 @@
   align-items: center;
   justify-content: center;
   transition: color 0.15s, background 0.15s;
-
+  outline: none;
+  &:focus {
+    outline: none;
+  }
   &:hover {
     color: #7c4f2b;
     background: rgba(78, 46, 30, 0.08);
@@ -610,6 +630,38 @@
       color: #ff8a80;
       background: rgba(255, 138, 128, 0.15);
     }
+  }
+}
+
+.chatbot-theme-announcement {
+  flex-shrink: 0;
+  padding: 12px 20px;
+  margin: 20px 16px 12px;
+  border-radius: 12px;
+  font-size: 14px;
+  line-height: 1.4;
+  text-align: center;
+  font-family: Georgia, 'Times New Roman', serif;
+  color: #4e2e1e;
+  background: rgba(255, 213, 145, 0.35);
+  border: 1px solid rgba(124, 79, 43, 0.2);
+  animation: chatbotThemeAnnouncementIn 0.3s ease-out;
+
+  &.dark-theme {
+    color: #fbeec1;
+    background: rgba(78, 46, 30, 0.5);
+    border-color: rgba(255, 238, 193, 0.15);
+  }
+}
+
+@keyframes chatbotThemeAnnouncementIn {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
@@ -784,6 +836,10 @@
   cursor: pointer;
   transition: transform 0.2s, background 0.2s;
   flex-shrink: 0;
+  outline: none;
+  &:focus {
+    outline: none;
+  }
 
   svg {
     width: 20px;
@@ -890,5 +946,165 @@
 
   .chatbot-message-content {
     max-width: 85%;
+  }
+}
+
+// Avatar asistent clickable - deschide popup cu poza
+.chatbot-avatar-clickable {
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  padding: 0;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: scale(1.08);
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  &:focus-visible {
+    outline: 2px solid rgba(255, 213, 145, 0.8);
+    outline-offset: 2px;
+  }
+}
+
+// Popup profil asistent - poza mare la click pe avatar
+.chatbot-assistant-profile-popup-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2010;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(8px);
+  animation: chatbotProfilePopupOverlayIn 0.25s ease-out;
+
+  &.dark-theme {
+    background: rgba(0, 0, 0, 0.88);
+  }
+}
+
+@keyframes chatbotProfilePopupOverlayIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.chatbot-assistant-profile-popup-content {
+  position: relative;
+  max-width: min(420px, 90vw);
+  padding: 52px 20px 20px;
+  background: #fffbe9;
+  border-radius: 20px;
+  box-shadow:
+    0 8px 32px rgba(78, 46, 30, 0.2),
+    0 0 0 1px rgba(78, 46, 30, 0.06),
+    0 0 60px rgba(255, 213, 145, 0.15);
+  animation: chatbotProfilePopupContentIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  .dark-theme & {
+    background: #2b1a10;
+    box-shadow:
+      0 8px 32px rgba(0, 0, 0, 0.5),
+      0 0 0 1px rgba(255, 238, 193, 0.08),
+      0 0 60px rgba(255, 213, 145, 0.12);
+  }
+}
+
+@keyframes chatbotProfilePopupContentIn {
+  from {
+    opacity: 0;
+    transform: scale(0.85) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.chatbot-assistant-profile-popup-close {
+  position: absolute;
+  top: 0px;
+  right: -5%;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 50%;
+  background: none;
+  color: #4e2e1e;
+  font-weight: 900;
+  font-size: 36px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+  z-index: 2;
+
+  &:hover {
+    color: #7c4f2b;
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  &:focus-visible {
+    outline: 2px solid rgba(255, 213, 145, 0.8);
+    outline-offset: 2px;
+  }
+
+  .dark-theme & {
+      background: none;
+      color: #fbeec1;
+
+    &:hover {
+      color: #fbeec1;
+    }
+  }
+}
+
+.chatbot-assistant-profile-popup-image-wrap {
+  width: 100%;
+  aspect-ratio: 1;
+  max-width: 280px;
+  margin: 0 auto 16px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: rgba(78, 46, 30, 0.06);
+  box-shadow: inset 0 0 20px rgba(78, 46, 30, 0.08);
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transform: scale(1.35);
+  }
+
+  .dark-theme & {
+    background: rgba(0, 0, 0, 0.3);
+    box-shadow: inset 0 0 24px rgba(0, 0, 0, 0.2);
+  }
+}
+
+.chatbot-assistant-profile-popup-name {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  text-align: center;
+  color: #4e2e1e;
+  font-family: Georgia, 'Times New Roman', serif;
+
+  .dark-theme & {
+    color: #fbeec1;
   }
 }
