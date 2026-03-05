@@ -3,6 +3,8 @@ import Layout from '../assets/Layout';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import ScriitoriHoraCanvas from '../assets/ScriitoriHoraCanvas';
 import CurenteWheel from '../assets/CurenteWheel';
+import ScrollRevealSection from '../assets/ScrollRevealSection';
+import { useInView } from '../hooks/useInView';
 import '../styles/style.scss';
 
 const scriitoriList = [
@@ -236,6 +238,41 @@ function slugify(text) {
     .replace(/-+/g, '-');
 }
 
+const LazyCurenteWheel = ({ darkTheme }) => {
+  const [ref, isInView] = useInView({ rootMargin: '150px' });
+  return (
+    <div ref={ref} style={{ minHeight: 320 }}>
+      {isInView && <CurenteWheel darkTheme={darkTheme} />}
+    </div>
+  );
+};
+
+const LazyVideoIframe = ({ videoId, title }) => {
+  const [ref, isInView] = useInView({ rootMargin: '100px' });
+  return (
+    <div ref={ref} className="index-videoclipuri-video-container">
+      {isInView ? (
+        <iframe
+          src={`https://www.youtube.com/embed/${videoId}`}
+          title={title}
+          frameBorder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+          className="index-videoclipuri-iframe"
+        />
+      ) : (
+        <div style={{
+          position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.1)',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          borderRadius: 'inherit'
+        }}>
+          <span style={{ opacity: 0.5, fontSize: '0.9rem' }}>Se încarcă...</span>
+        </div>
+      )}
+    </div>
+  );
+};
+
 const Index = () => {
   const [darkTheme, setDarkTheme] = useState(() => localStorage.getItem('theme') === 'dark');
   const [scrolled, setScrolled] = useState(false);
@@ -355,8 +392,9 @@ const Index = () => {
           <p className="page-desc">Platforma ta pentru comentarii, resurse și inspirații de BAC.</p>
           <ScriitoriHoraCanvas />
         </div>
-      <section className={`index-welcome-section ${darkTheme ? 'dark-theme' : ''}`}>
-        <h2 className={`index-welcome-title ${darkTheme ? 'dark-theme' : ''}`}>Bine ați venit!</h2>
+      <ScrollRevealSection>
+        <section className={`index-welcome-section ${darkTheme ? 'dark-theme' : ''}`}>
+          <h2 className={`index-welcome-title ${darkTheme ? 'dark-theme' : ''}`}>Bine ați venit!</h2>
         <p className={`index-welcome-text ${darkTheme ? 'dark-theme' : ''}`}>
           pe platforma <b>Comentarii de BAC</b><br /><br />
           Aici găsești tot ce ai nevoie pentru a te pregăti eficient la limba și literatura română: comentarii detaliate, rezumate, modele de subiecte, resurse pentru fiecare scriitor important și explicații pe înțelesul tuturor. Indiferent dacă vrei să aprofundezi operele literare, să recapitulezi rapid sau să descoperi perspective noi, ai la dispoziție materiale structurate, moderne și ușor de parcurs.<br /><br />
@@ -366,6 +404,8 @@ const Index = () => {
           Succes la BAC!
         </div>
       </section>
+      </ScrollRevealSection>
+      <ScrollRevealSection delay={100}>
       <section className={`index-section ${darkTheme ? 'dark-theme' : ''}`}>
         <h2 className={`index-section-title ${darkTheme ? 'dark-theme' : ''}`}>Opere</h2>
         <div className="index-opere-grid">
@@ -389,6 +429,7 @@ const Index = () => {
                 src={opera.img}
                 alt={opera.titlu}
                 className={darkTheme ? 'dark-theme' : ''}
+                loading="lazy"
               />
               {/* Gradient overlay for readability */}
               <div className={`index-opera-overlay ${darkTheme ? 'dark-theme' : ''}`} />
@@ -418,8 +459,10 @@ const Index = () => {
           Vezi toate operele
         </button>
       </section>
+      </ScrollRevealSection>
 
       {/* Secțiunea Bibliotecă */}
+      <ScrollRevealSection delay={100}>
       <section className={`index-section ${darkTheme ? 'dark-theme' : ''}`}>
         <div className={`index-biblioteca-container ${darkTheme ? 'dark-theme' : ''}`}>
           <div className="index-biblioteca-header">
@@ -450,6 +493,7 @@ const Index = () => {
                   src={carte.img}
                   alt={carte.titlu}
                   className="index-biblioteca-card-img"
+                  loading="lazy"
                 />
                 <div className={`index-biblioteca-card-overlay ${darkTheme ? 'dark-theme' : ''}`} />
                 <div className="index-biblioteca-card-content">
@@ -483,7 +527,9 @@ const Index = () => {
           </button>
         </div>
       </section>
+      </ScrollRevealSection>
       {/*sectiunea scriitori*/}
+      <ScrollRevealSection delay={100}>
       <section className={`index-section ${darkTheme ? 'dark-theme' : ''}`}>
         <h2 className={`index-section-title ${darkTheme ? 'dark-theme' : ''}`}>Scriitori</h2>
         <div className="index-scriitori-grid">
@@ -510,6 +556,7 @@ const Index = () => {
                   <img
                     src={scriitor.img}
                     alt={scriitor.nume}
+                    loading="lazy"
                   />
                   <div className={`index-scriitor-info ${darkTheme ? 'dark-theme' : ''}`}>
                     <div>{scriitor.nume}</div>
@@ -537,8 +584,10 @@ const Index = () => {
           Vezi toți scriitorii
         </button>
       </section>
+      </ScrollRevealSection>
 
       {/* Secțiunea Curente */}
+      <ScrollRevealSection delay={100}>
       <section className={`index-section ${darkTheme ? 'dark-theme' : ''}`}>
         <h2 className={`index-section-title ${darkTheme ? 'dark-theme' : ''}`}>Curente</h2>
         <div className={`index-curente-container ${darkTheme ? 'dark-theme' : ''}`}>
@@ -547,7 +596,7 @@ const Index = () => {
               Explorează curentele literare românești prin roata interactivă
             </div>
           </div>
-          <CurenteWheel darkTheme={darkTheme} />
+          <LazyCurenteWheel darkTheme={darkTheme} />
           <button
             onClick={() => navigate('/curente')}
             className={`index-primary-button ${darkTheme ? 'dark-theme' : ''}`}
@@ -566,7 +615,9 @@ const Index = () => {
           </button>
         </div>
       </section>
+      </ScrollRevealSection>
 
+      <ScrollRevealSection delay={100}>
       <section className={`index-section ${darkTheme ? 'dark-theme' : ''}`}>
         <h2 className={`index-section-title ${darkTheme ? 'dark-theme' : ''}`}>Subiecte</h2>
         <div className="index-subiecte-grid">
@@ -690,8 +741,10 @@ const Index = () => {
           </button>
         </div>
       </section>
+      </ScrollRevealSection>
 
       {/* Secțiunea Videoclipuri */}
+      <ScrollRevealSection delay={100}>
       <section className={`index-section ${darkTheme ? 'dark-theme' : ''}`}>
         <div className={`index-videoclipuri-container ${darkTheme ? 'dark-theme' : ''}`}>
           <div className="index-videoclipuri-header">
@@ -718,16 +771,7 @@ const Index = () => {
                   e.currentTarget.style.zIndex = 1;
                 }}
               >
-                <div className="index-videoclipuri-video-container">
-                  <iframe
-                    src={`https://www.youtube.com/embed/${film.videoId}`}
-                    title={film.titlu}
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                    className="index-videoclipuri-iframe"
-                  ></iframe>
-                </div>
+                <LazyVideoIframe videoId={film.videoId} title={film.titlu} />
                 <div className={`index-videoclipuri-card-info ${darkTheme ? 'dark-theme' : 'light-theme'}`}>
                   <h3 className="index-videoclipuri-card-title">{film.titlu}</h3>
                   <p className="index-videoclipuri-card-descriere">{film.descriere}</p>
@@ -760,7 +804,9 @@ const Index = () => {
           </button>
         </div>
       </section>
+      </ScrollRevealSection>
 
+      <ScrollRevealSection delay={100}>
       <section className={`index-section ${darkTheme ? 'dark-theme' : ''}`}>
         <div className={`index-proiecte-container ${darkTheme ? 'dark-theme' : ''}`}>
           <div className="index-proiecte-header">
@@ -869,6 +915,7 @@ const Index = () => {
           </div>
         </div>
       </section>
+      </ScrollRevealSection>
 
       {/* Modal Proiecte Full Screen */}
       {showProiecteModal && (
