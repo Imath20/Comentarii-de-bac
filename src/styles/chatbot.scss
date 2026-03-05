@@ -2,7 +2,7 @@
 .chatbot-fab {
   // background-color: gold !important;
   position: fixed;
-  bottom: 6rem; // deasupra zonei de butoane (admin etc. la ~2rem)
+  bottom: 24px;
   right: 24px;
   width: 82.5px;
   height: 82.5px;
@@ -37,6 +37,19 @@
 
     &:hover {
       box-shadow: 0 6px 24px rgba(255, 213, 145, 0.2);
+    }
+  }
+
+  // Pe paginile cu butoane în colțul dreapta-jos, pune FAB-ul deasupra
+  &.chatbot-fab-elevated {
+    bottom: 180px;
+
+    @media (max-width: 768px) {
+      bottom: 150px;
+    }
+
+    @media (max-width: 480px) {
+      bottom: 130px;
     }
   }
 }

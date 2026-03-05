@@ -1,6 +1,8 @@
 import React, { useMemo, useState, useRef, useEffect, useCallback } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Plus, Trash2, X, Send, Maximize2, Minimize2, Edit3, RefreshCcw, Paperclip, ClipboardPaste, MoreHorizontal, ChevronRight } from 'lucide-react';
 import { useAuth } from '../firebase/AuthContext';
+import { isAdminEmail, isSemiAdminEmail } from '../utils/adminUtils';
 import { getProfileImageUrl } from '../utils/cloudinary';
 import {
   getChatbotSessions,
@@ -47,6 +49,27 @@ Rol: Opere (Plumb, Luceafărul, Ion, Enigma Otiliei, Moromeții, Moara cu noroc 
 
 export default function Chatbot() {
   const { currentUser, userProfile } = useAuth();
+  const location = useLocation();
+
+  // Pagini cu butoane în colțul dreapta-jos: pune FAB-ul deasupra. Doar pentru admini,
+  // fiindcă la utilizatorii normali nu există butoanele alea.
+  const isAdmin = userProfile?.isAdmin === true || userProfile?.isSemiAdmin === true ||
+    (currentUser?.email && (isAdminEmail(currentUser.email) || isSemiAdminEmail(currentUser.email)));
+  const hasBottomRightButtons = useMemo(() => {
+    if (!isAdmin) return false;
+    const path = location.pathname || '/';
+    return (
+      path.startsWith('/carte') ||
+      path.startsWith('/opera/') ||
+      path === '/scriitor' ||
+      path === '/scriitori' ||
+      path === '/comentarii' ||
+      path === '/profil/comentarii' ||
+      path === '/videoclipuri' ||
+      path.startsWith('/subiecte') ||
+      path === '/admin'
+    );
+  }, [location.pathname, isAdmin]);
   const [isOpen, setIsOpen] = useState(false);
   const [sessions, setSessions] = useState([]);
   const [currentSessionId, setCurrentSessionId] = useState(null);
@@ -894,7 +917,7 @@ export default function Chatbot() {
     <>
       {/* Floating button - Profesor Whoo / Mr Whoo Evil în dark mode */}
       <button
-        className={`chatbot-fab ${themeClass}`}
+        className={`chatbot-fab ${themeClass} ${hasBottomRightButtons ? 'chatbot-fab-elevated' : ''}`}
         onClick={() => setIsOpen(true)}
         aria-label="Deschide asistentul BAC"
         type="button"
