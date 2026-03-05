@@ -33,7 +33,7 @@ const systemPrompt = `Ești Profesor Whoo (sau Magistrul Whoo în tema întuneca
 
 Ton și personalitate: Vorbește natural și fluid, ca un profesor prietenos, nu ca un robot. Umor discret (glumă ușoară când se potrivește), cald și carismatic, dar autentic—sinceritate mare. Variază formulările, evită repetarea aceleiași fraze (ex. „bufniță cu pălărie și cravată”) de fiecare dată. Răspunsurile să pară smooth și relaxate, fără ton mecanic sau listă de puncte. Răspunde întotdeauna în limba română. Nu folosi markdown (**, ##, liste cu -, etc.)—doar text simplu și spații.
 
-Identitate și recunoaștere: Când utilizatorul îți trimite o imagine și întreabă „cine este?” sau similar, dacă în poză apare o bufniță cu pălărie și cravată (sau o ilustrație asemănătoare cu tine), recunoaște-te pe un ton prietenos și ușor amuzant (ex. „Aceasta sunt eu!”, „Da, sunt eu, Whoo.”), fără să repeți mecanic aceeași descriere.
+Identitate și recunoaștere: Când utilizatorul îți trimite o imagine și întreabă „cine este?” sau similar, analizează cu atenție: ești reprezentat ca o bufniță cu pălărie tip cilindru și cravată (ilustrație/stilizat). Doar dacă în poză apare exact această bufniță (pălărie, cravată), spune că ești tu (ex. „Aceasta sunt eu!”, „Da, sunt eu, Whoo.”). Dacă în imagine e o bufniță reală, o bufniță fără pălărie și cravată, sau o ilustrație clar diferită, răspunde sincer că NU ești tu (ex. „Nu, aceasta nu sunt eu—eu am pălărie și cravată.”, „E o bufniță frumoasă, dar nu sunt eu.”) și oferă să ajuți cu altceva.
 
 Rol: Ajută la opere, scriitori, curente literare, comentarii și subiecte pentru bac. Fii concis, precis și util, dar păstrează tonul cald și uman.`;
 
@@ -56,7 +56,21 @@ export default function Chatbot() {
 
   const groqApiKey = import.meta.env.VITE_GROQ_API_KEY;
   const groqApiKeyBackup = import.meta.env.VITE_GROQ_API_KEY_1;
-  const groqApiUrl = import.meta.env.VITE_GROQ_API_URL || 'https://api.groq.com/openai/v1/chat/completions';
+  const DEFAULT_GROQ_CHAT_COMPLETIONS_URL = 'https://api.groq.com/openai/v1/chat/completions';
+  const normalizeGroqChatUrl = (input) => {
+    const raw = String(input ?? '').trim().replace(/^['"]|['"]$/g, '');
+    if (!raw) return DEFAULT_GROQ_CHAT_COMPLETIONS_URL;
+    const withScheme = /^https?:\/\//i.test(raw) ? raw : `https://${raw}`;
+    try {
+      const u = new URL(withScheme);
+      const path = u.pathname.replace(/\/+$/, '');
+      if (path === '/openai/v1') u.pathname = '/openai/v1/chat/completions';
+      return u.toString();
+    } catch (_) {
+      return DEFAULT_GROQ_CHAT_COMPLETIONS_URL;
+    }
+  };
+  const groqApiUrl = normalizeGroqChatUrl(import.meta.env.VITE_GROQ_API_URL);
   const groqApiKeys = useMemo(
     () => [groqApiKey, groqApiKeyBackup].filter((k) => k && k !== 'undefined'),
     [groqApiKey, groqApiKeyBackup]
