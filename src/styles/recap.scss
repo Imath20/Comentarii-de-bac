@@ -1,0 +1,565 @@
+// Recap rapid / Cheat Sheets — pagină principală și pagină operă
+
+.recap-page {
+  min-height: 100vh;
+  padding-top: 5.5rem;
+  padding-bottom: 3rem;
+  background: linear-gradient(180deg, rgba(255, 249, 240, 0.5) 0%, rgba(255, 239, 220, 0.3) 50%, rgba(255, 251, 238, 0.6) 100%);
+
+  &.dark-theme {
+    background: linear-gradient(180deg, #2a170a 0%, #1f1208 50%, #2a170a 100%);
+  }
+}
+
+.recap-hero {
+  text-align: center;
+  padding: 3rem 1.5rem 2.5rem;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.recap-hero::after {
+  content: '';
+  display: block;
+  width: 4rem;
+  height: 3px;
+  margin: 1.5rem auto 0;
+  border-radius: 2px;
+  background: linear-gradient(90deg, transparent, rgba(169, 124, 80, 0.5), transparent);
+
+  .dark-theme & {
+    background: linear-gradient(90deg, transparent, rgba(255, 213, 145, 0.4), transparent);
+  }
+}
+
+.recap-main-title {
+  font-size: clamp(1.6rem, 4vw, 2.2rem);
+  font-weight: 800;
+  color: #3d2618;
+  margin: 0 0 1rem 0;
+  line-height: 1.3;
+  letter-spacing: 0.02em;
+
+  .dark-theme & {
+    color: #ffd591;
+  }
+}
+
+.recap-intro {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: #5c3d2a;
+  margin: 0;
+
+  .dark-theme & {
+    color: rgba(255, 255, 255, 0.88);
+  }
+}
+
+.recap-sections {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.recap-sections-4 {
+  max-width: 1000px;
+}
+
+.recap-section {
+  margin-bottom: 2.5rem;
+}
+
+.recap-section-part {
+  margin-bottom: 3rem;
+}
+
+/* Titluri mari: Poezie, Proză, Text dramatic, Critice */
+.recap-part-title {
+  font-size: clamp(1.5rem, 3.5vw, 2rem);
+  font-weight: 800;
+  color: #3d2618;
+  margin: 0 0 1.25rem 0;
+  padding-bottom: 0.5rem;
+  border-bottom: 3px solid rgba(169, 124, 80, 0.4);
+  letter-spacing: 0.02em;
+
+  .dark-theme & {
+    color: #ffd591;
+    border-bottom-color: rgba(255, 213, 145, 0.35);
+  }
+}
+
+.recap-curent-block {
+  margin-bottom: 1.5rem;
+}
+
+.recap-curent-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #5c3d2a;
+  margin: 0 0 0.75rem 0;
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid rgba(169, 124, 80, 0.25);
+
+  .dark-theme & {
+    color: #e8c9a0;
+    border-bottom-color: rgba(255, 213, 145, 0.2);
+  }
+}
+
+.recap-section-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #4e2e1e;
+  margin: 0 0 1rem 0;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid rgba(169, 124, 80, 0.35);
+
+  .dark-theme & {
+    color: #e8c9a0;
+    border-bottom-color: rgba(255, 213, 145, 0.3);
+  }
+}
+
+.recap-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.25rem;
+
+  > li {
+    min-height: 140px;
+    display: flex;
+  }
+}
+
+.recap-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  padding: 1.5rem 1.25rem;
+  border-radius: 1rem;
+  border: 1px solid rgba(169, 124, 80, 0.2);
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.92) 0%, rgba(255, 248, 235, 0.88) 100%);
+  text-decoration: none;
+  color: #4e2e1e;
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+  box-shadow: 0 4px 16px rgba(124, 79, 43, 0.06);
+  min-height: 140px;
+  flex: 1;
+  width: 100%;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 28px rgba(124, 79, 43, 0.14);
+    border-color: rgba(169, 124, 80, 0.4);
+  }
+
+  &.dark-theme {
+    background: linear-gradient(145deg, rgba(62, 38, 18, 0.75) 0%, rgba(45, 28, 12, 0.85) 100%);
+    border-color: rgba(255, 213, 145, 0.15);
+    color: #e8c9a0;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+
+    &:hover {
+      border-color: rgba(255, 213, 145, 0.35);
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.3);
+    }
+  }
+}
+
+.recap-card-titlu {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 0.35rem;
+  color: inherit;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: 2.6em;
+  line-height: 1.3;
+}
+
+.recap-card-meta {
+  font-size: 0.9rem;
+  opacity: 0.85;
+  margin-bottom: 0.25rem;
+}
+
+.recap-card-canonic {
+  font-size: 0.8rem;
+  font-weight: 600;
+  opacity: 0.9;
+  margin-bottom: 0.5rem;
+  color: #7a3a00;
+
+  .recap-card.dark-theme & {
+    color: #ffd591;
+  }
+}
+
+.recap-card-cta {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #7a3a00;
+
+  .recap-card.dark-theme & {
+    color: #ffd591;
+  }
+}
+
+// ——— Pagina unei opere (cheat sheet) ———
+
+.recap-opera-page {
+  padding-bottom: 5rem;
+}
+
+.recap-opera-header {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 1.5rem;
+}
+
+.recap-opera-breadcrumb {
+  font-size: 0.9rem;
+  margin: 0 0 0.5rem 0;
+  color: #5c3d2a;
+
+  a {
+    color: #7a3a00;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .dark-theme & {
+    color: rgba(255, 255, 255, 0.75);
+
+    a {
+      color: #ffd591;
+    }
+  }
+}
+
+.recap-opera-title {
+  font-size: clamp(1.5rem, 3.5vw, 2rem);
+  font-weight: 800;
+  color: #3d2618;
+  margin: 0 0 0.5rem 0;
+  line-height: 1.25;
+
+  .dark-theme & {
+    color: #ffd591;
+  }
+}
+
+.recap-opera-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0;
+  font-size: 0.95rem;
+  color: #5c3d2a;
+
+  .dark-theme & {
+    color: rgba(255, 255, 255, 0.85);
+  }
+}
+
+.recap-opera-timp {
+  opacity: 0.9;
+}
+
+.recap-opera-badge {
+  padding: 0.25rem 0.6rem;
+  border-radius: 1rem;
+  background: rgba(255, 179, 71, 0.25);
+  color: #5c2e00;
+  font-weight: 600;
+  font-size: 0.85rem;
+
+  .dark-theme & {
+    background: rgba(255, 213, 145, 0.2);
+    color: #ffd591;
+  }
+}
+
+.recap-opera-content {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0 1.5rem 3rem;
+  background: transparent;
+  overflow: visible;
+
+  > .recap-opera-title {
+    margin-top: 0;
+  }
+
+  > .recap-opera-timp {
+    margin: 0 0 1rem 0;
+    font-size: 0.95rem;
+    opacity: 0.9;
+  }
+}
+
+.recap-opera-meta-list {
+  list-style: none;
+  margin: 0 0 1.5rem 0;
+  padding: 1rem 1.25rem;
+  border-radius: 0.75rem;
+  background: rgba(169, 124, 80, 0.08);
+  border: 1px solid rgba(169, 124, 80, 0.15);
+
+  .dark-theme & {
+    background: rgba(255, 213, 145, 0.06);
+    border-color: rgba(255, 213, 145, 0.12);
+  }
+
+  li {
+    margin: 0.35rem 0;
+    font-size: 0.98rem;
+    color: #4e2e1e;
+
+    .dark-theme & {
+      color: rgba(255, 255, 255, 0.9);
+    }
+  }
+}
+
+.recap-block {
+  margin-bottom: 1.5rem;
+  overflow: visible;
+
+  p {
+    overflow: visible;
+  }
+}
+
+/* Simboluri discrete (varianta subtilă, fără emoji) */
+.recap-symbol {
+  margin-right: 0.35em;
+  opacity: 0.85;
+}
+
+.recap-block-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #3d2618;
+  margin: 0 0 0.5rem 0;
+
+  .dark-theme & {
+    color: #e8c9a0;
+  }
+}
+
+.recap-block-text {
+  font-size: 0.98rem;
+  line-height: 1.55;
+  color: #4e2e1e;
+  margin: 0;
+  overflow: visible;
+  min-height: 1em;
+
+  .dark-theme & {
+    color: rgba(255, 255, 255, 0.9);
+  }
+}
+
+.recap-simbol-nume {
+  font-weight: 700;
+  margin: 0 0 0.35rem 0;
+  color: inherit;
+}
+
+.recap-simbol-sugestii-label {
+  font-size: 0.9rem;
+  margin: 0.5rem 0 0.25rem 0;
+  opacity: 0.9;
+}
+
+.recap-bullets {
+  margin: 0.25rem 0 0 1.25rem;
+  padding: 0;
+
+  li {
+    margin: 0.2rem 0;
+    font-size: 0.98rem;
+    line-height: 1.45;
+  }
+}
+
+.recap-inline-bullets li {
+  list-style: disc;
+}
+
+.recap-imagini-list {
+  list-style: none;
+  margin: 0.5rem 0 0 0;
+  padding: 0;
+
+  li {
+    margin: 0.6rem 0;
+    font-size: 0.98rem;
+    line-height: 1.5;
+  }
+}
+
+.recap-imagine-nr {
+  margin-right: 0.35rem;
+}
+
+.recap-imagine-explicatie {
+  opacity: 0.95;
+}
+
+.recap-pentru-eseu {
+  padding: 1rem 0;
+  border-top: 1px dashed rgba(169, 124, 80, 0.25);
+
+  .dark-theme & {
+    border-top-color: rgba(255, 213, 145, 0.2);
+  }
+}
+
+.recap-eseu-text {
+  font-style: italic;
+  opacity: 0.95;
+}
+
+.recap-opera-actions {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 1.5rem 1.5rem 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  border-top: 1px solid rgba(169, 124, 80, 0.2);
+
+  .dark-theme & {
+    border-top-color: rgba(255, 213, 145, 0.15);
+  }
+}
+
+.recap-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.65rem 1.25rem;
+  border-radius: 2rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.2s;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  outline: none;
+  &:focus{
+    outline: none;
+  }
+
+  &:disabled {
+    opacity: 0.7; 
+    cursor: not-allowed;
+  }
+}
+
+.recap-btn-primary {
+  background: linear-gradient(145deg, rgba(255, 179, 71, 0.9) 0%, rgba(210, 140, 50, 0.95) 100%);
+  color: #fff;
+  box-shadow: 0 2px 10px rgba(124, 79, 43, 0.25);
+
+  &:hover:not(:disabled) {
+    background: linear-gradient(145deg, rgba(255, 193, 100, 0.95) 0%, rgba(220, 155, 60, 1) 100%);
+    transform: translateY(-1px);
+  }
+
+  .dark-theme & {
+    background: linear-gradient(145deg, rgba(169, 124, 80, 0.6) 0%, rgba(124, 79, 43, 0.7) 100%);
+    color: #ffd591;
+
+    &:hover:not(:disabled) {
+      background: linear-gradient(145deg, rgba(200, 145, 90, 0.5) 0%, rgba(169, 124, 80, 0.6) 100%);
+    }
+  }
+}
+
+.recap-btn-secondary {
+  background: rgba(169, 124, 80, 0.15);
+  color: #5c2e00;
+
+  &:hover:not(:disabled) {
+    background: rgba(169, 124, 80, 0.28);
+  }
+
+  .dark-theme & {
+    background: rgba(255, 213, 145, 0.12);
+    color: #ffd591;
+
+    &:hover:not(:disabled) {
+      background: rgba(255, 213, 145, 0.25);
+    }
+  }
+}
+
+.recap-not-found {
+  text-align: center;
+  padding: 4rem 1.5rem;
+  color: #5c3d2a;
+
+  .dark-theme & {
+    color: rgba(255, 255, 255, 0.85);
+  }
+}
+
+.recap-back-link {
+  display: inline-block;
+  margin-top: 1rem;
+  color: #7a3a00;
+  font-weight: 600;
+
+  .dark-theme & {
+    color: #ffd591;
+  }
+}
+
+// Print: doar conținutul cheat sheet (elevul poate alege „Salvează ca PDF” în dialog)
+@media print {
+  .navbar,
+  .footer,
+  .recap-opera-header,
+  .recap-opera-actions,
+  .recap-print-hide,
+  .recap-opera-breadcrumb {
+    display: none !important;
+  }
+
+  .recap-page {
+    background: #fff;
+    padding-top: 0;
+  }
+
+  .recap-opera-content {
+    max-width: 100%;
+    padding: 0;
+    box-shadow: none;
+  }
+
+  .recap-opera-title,
+  .recap-block-title {
+    color: #1a1a1a;
+  }
+
+  .recap-block-text,
+  .recap-opera-meta-list,
+  .recap-bullets li {
+    color: #333;
+  }
+}

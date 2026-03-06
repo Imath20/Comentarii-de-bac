@@ -23,6 +23,8 @@ export const ROUTE_TITLES = [
   [/^\/subiecte\/ghid-subiect-3$/, 'Ghid Subiect III'],
   [/^\/comentarii\/share\//, 'Comentariu partajat'],
   [/^\/comentarii$/, 'Comentarii'],
+  [/^\/recap\/[^/]+$/, 'Recap'],
+  [/^\/recap$/, 'Recap rapid'],
   [/^\/ai$/, 'AI'],
   [/^\/curente$/, 'Curente'],
   [/^\/curent\//, 'Curent'],

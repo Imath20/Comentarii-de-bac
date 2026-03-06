@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Mail, Home, BookOpen, MessageSquare, Users, GraduationCap, Brain, Library, Video, Presentation, TrendingUp } from 'lucide-react';
+import { Mail, Home, BookOpen, MessageSquare, Users, GraduationCap, Brain, Library, Video, Presentation, TrendingUp, Zap } from 'lucide-react';
 import Logo from './Logo';
 import GhidSubiect2Icon from './icons/GhidSubiect2Icon';
 
@@ -118,6 +118,12 @@ export default function Footer({ darkTheme: darkThemeProp }) {
               <Link to="/ghiduri">
                 <GhidSubiect2Icon size={16} />
                 <span>Ghiduri BAC</span>
+              </Link>
+            </li>
+            <li>
+              <Link to="/recap">
+                <Zap size={16} />
+                <span>Recap rapid</span>
               </Link>
             </li>
           </ul>

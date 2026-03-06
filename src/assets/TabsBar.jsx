@@ -1,17 +1,59 @@
-import React, { useRef } from 'react';
-import { ChevronDown } from 'lucide-react';
+import React, { useRef, useState, useEffect } from 'react';
+import { ChevronDown, Zap } from 'lucide-react';
 import { useTabs } from './TabsProvider';
+import { RECAP_BY_PART } from '../data/recapSheets';
 
 export default function TabsBar() {
   const { tabs, activeId, revealed, setRevealed, openNewTab, closeTab, activateTab, resetAutoHideTimer, cancelAutoHide, reorderTabs, handleUserInteraction } = useTabs();
   const dragIdRef = useRef(null);
+  const [recapOpen, setRecapOpen] = useState(false);
+
+  useEffect(() => {
+    if (!revealed) setRecapOpen(false);
+  }, [revealed]);
+
+  const openRecap = (slug) => {
+    openNewTab(`/recap/${slug}`);
+    setRecapOpen(false);
+    handleUserInteraction();
+  };
 
   return (
     <div className={`tabs-bar tabs-overlay ${revealed ? 'tabs-visible' : ''}`}>
       <div className="tabs-bar-inner">
         <div className="tabs-header">
           <span className="tabs-title">File</span>
-          <button className="tabs-hide" onClick={() => setRevealed(false)} aria-label="Ascunde filele">
+          <div className="tabs-recap-dropdown">
+            <button
+              type="button"
+              className={`tabs-recap-trigger ${recapOpen ? 'open' : ''}`}
+              onClick={(e) => { e.stopPropagation(); setRecapOpen((o) => !o); handleUserInteraction(); }}
+              aria-expanded={recapOpen}
+              aria-haspopup="true"
+            >
+              <Zap size={16} />
+              <span>Recap rapid</span>
+              <ChevronDown size={14} className="tabs-recap-chevron" />
+            </button>
+            {recapOpen && (
+              <div className="tabs-recap-menu" role="menu">
+                <button type="button" className="tabs-recap-menu-item tabs-recap-menu-main" onClick={(e) => { e.stopPropagation(); openNewTab('/recap'); setRecapOpen(false); handleUserInteraction(); }}>
+                   Toate (pagina Recap)
+                </button>
+                {RECAP_BY_PART.map(({ part, items }) => (
+                  <div key={part} className="tabs-recap-group">
+                    <span className="tabs-recap-group-title">{part}</span>
+                    {items.map(({ titlu, slug }) => (
+                      <button key={slug} type="button" className="tabs-recap-menu-item" role="menuitem" onClick={(e) => { e.stopPropagation(); openRecap(slug); }}>
+                        {titlu}
+                      </button>
+                    ))}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+          <button className="tabs-hide" onClick={() => { setRecapOpen(false); setRevealed(false); }} aria-label="Ascunde filele">
             <ChevronDown size={20} />
           </button>
         </div>

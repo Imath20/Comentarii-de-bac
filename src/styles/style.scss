@@ -21,6 +21,7 @@
 @import './scrollToTop.scss';
 @import './ghidSubiect2.scss';
 @import './ghiduri.scss';
+@import './recap.scss';
 @import './chatbot.scss';
 
 .page-wrapper {
@@ -50,4 +51,20 @@
 
 .poem-modal-scroll::-webkit-scrollbar {
   display: none;
+}
+
+/* La print / PDF: ascunde asistentul, notificările, scroll-to-top */
+@media print {
+  .scroll-to-top,
+  .notifications-button,
+  .notifications-overlay,
+  .notifications-popup,
+  .chatbot-fab,
+  .chatbot-overlay,
+  .chatbot-panel,
+  .chatbot-mobile-wrapper,
+  .chatbot-assistant-profile-popup-overlay {
+    display: none !important;
+    visibility: hidden !important;
+  }
 }

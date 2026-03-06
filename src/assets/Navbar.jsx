@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { ChevronDown, Menu, X } from 'lucide-react';
+import { ChevronDown, Menu, X, Zap } from 'lucide-react';
 import HomeIcon from './icons/HomeIcon';
 import PenPaperIcon from './icons/PenPaperIcon';
 import SlideIcon from './icons/SlideIcon';
@@ -32,6 +32,7 @@ const NAV_CATEGORIES = [
       { name: 'Proiecte', href: '/proiecte', icon: <SlideIcon className="nav-icon" /> },
       { name: 'Curente', href: '/curente', icon: <CurenteIcon className="nav-icon" /> },
       { name: 'Ghiduri BAC', href: '/ghiduri', icon: <GhidSubiect2Icon className="nav-icon" /> },
+      { name: 'Recap rapid', href: '/recap', icon: <Zap className="nav-icon" size={20} /> },
     ]
   },
   { name: 'Subiecte', href: '/subiecte', icon: <ExamPaperIcon className="nav-icon" /> },

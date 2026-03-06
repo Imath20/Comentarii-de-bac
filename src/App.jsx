@@ -32,6 +32,8 @@ import SharedCommentView from './pages/SharedCommentView';
 import './styles/style.scss';
 import Curente from './pages/curente';
 import Curent from './pages/Curent';
+import RecapRapid from './pages/RecapRapid';
+import RecapOpera from './pages/RecapOpera';
 import Admin from './pages/admin';
 // import MigrateScriitori from './pages/migrateScriitori';
 
@@ -69,6 +71,8 @@ export default function App() {
       <Route path="/carte/*" element={<BookReader />} />
       <Route path="/curente" element={<Curente />} />
       <Route path="/curent/:id" element={<Curent />} />
+      <Route path="/recap" element={<RecapRapid />} />
+      <Route path="/recap/:slug" element={<RecapOpera />} />
       <Route path="/admin" element={<Admin />} />
       {/* <Route path="/migrate-scriitori" element={<MigrateScriitori />} /> */}
     </Routes>
