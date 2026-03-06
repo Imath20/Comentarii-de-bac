@@ -1,6 +1,6 @@
 import React, { useMemo, useState, useRef, useEffect, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
-import { Plus, Trash2, X, Send, Maximize2, Minimize2, Edit3, RefreshCcw, Paperclip, ClipboardPaste, MoreHorizontal, ChevronRight } from 'lucide-react';
+import { Plus, Trash2, X, Send, Maximize2, Minimize2, Edit3, RefreshCcw, Paperclip, ClipboardPaste, MoreHorizontal, ChevronRight, PanelLeftClose, PanelLeft } from 'lucide-react';
 import { useAuth } from '../firebase/AuthContext';
 import { isAdminEmail, isSemiAdminEmail } from '../utils/adminUtils';
 import { getProfileImageUrl } from '../utils/cloudinary';
@@ -65,7 +65,7 @@ export default function Chatbot() {
       path === '/scriitori' ||
       path === '/comentarii' ||
       path === '/profil/comentarii' ||
-      path === '/videoclipuri' ||
+      path === '/videoclipuri' || 
       path.startsWith('/subiecte') ||
       path === '/admin'
     );
@@ -123,6 +123,10 @@ export default function Chatbot() {
       ? 'dark-theme'
       : ''
   );
+  const [isChatListCollapsed, setIsChatListCollapsed] = useState(true);
+  const [isMobile, setIsMobile] = useState(() => typeof window !== 'undefined' && window.innerWidth <= 768);
+  const [isOverlayTransitioning, setIsOverlayTransitioning] = useState(false);
+  const overlayTransitionRef = useRef(null);
 
   const assistantAvatarUrl = themeClass === 'dark-theme' ? ASSISTANT_AVATAR_DARK : ASSISTANT_AVATAR_LIGHT;
   const assistantDisplayName = themeClass === 'dark-theme' ? 'Magistrul Whoo' : ASSISTANT_NAME;
@@ -144,6 +148,15 @@ export default function Chatbot() {
     observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
     checkTheme();
     return () => observer.disconnect();
+  }, []);
+
+  // Detect mobile pentru layout colapsabil
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 768px)');
+    const handler = () => setIsMobile(mq.matches);
+    handler();
+    mq.addEventListener('change', handler);
+    return () => mq.removeEventListener('change', handler);
   }, []);
 
   // Focus popup la deschidere + Escape închide
@@ -870,6 +883,28 @@ export default function Chatbot() {
     setInputMessage('');
   };
 
+  const OVERLAY_TRANSITION_MS = 300;
+
+  const setChatListCollapsedWithTransition = useCallback((collapsed) => {
+    if (!isMobile) {
+      setIsChatListCollapsed(collapsed);
+      return;
+    }
+    if (overlayTransitionRef.current) clearTimeout(overlayTransitionRef.current);
+    setIsOverlayTransitioning(true);
+    setIsChatListCollapsed(collapsed);
+    overlayTransitionRef.current = setTimeout(() => {
+      setIsOverlayTransitioning(false);
+      overlayTransitionRef.current = null;
+    }, OVERLAY_TRANSITION_MS);
+  }, [isMobile]);
+
+  useEffect(() => {
+    return () => {
+      if (overlayTransitionRef.current) clearTimeout(overlayTransitionRef.current);
+    };
+  }, []);
+
   const selectSession = (id) => {
     const session = sessions.find((s) => s.id === id);
     if (!session) return;
@@ -877,6 +912,7 @@ export default function Chatbot() {
     setMessages(session.messages || []);
     setIsTyping(false);
     setInputMessage('');
+    if (isMobile) setChatListCollapsedWithTransition(true);
   };
 
   const deleteSession = async (id) => {
@@ -939,14 +975,28 @@ export default function Chatbot() {
           }}
         >
           <div
-            className={`chatbot-panel chatbot-book ${themeClass} ${isMaximized ? 'chatbot-maximized' : ''}`}
+            className={`chatbot-mobile-wrapper ${isMobile ? 'chatbot-mobile-wrapper-active' : ''} ${isMobile && !isChatListCollapsed ? 'chatbot-chatlist-expanded' : ''}`}
             onClick={(e) => e.stopPropagation()}
+          >
+          <div
+            className={`chatbot-panel chatbot-book ${themeClass} ${isMaximized ? 'chatbot-maximized' : ''} ${isMobile && isChatListCollapsed ? 'chatbot-chatlist-collapsed' : ''} ${isMobile ? 'chatbot-mobile' : ''}`}
           >
             {/* Pagina stânga - Cuprins */}
             <div className="chatbot-page-left">
               {/* <span className="chatbot-page-number">i</span> */}
             <div className="chatbot-sidebar">
               <div className="chatbot-sidebar-header">
+                {isMobile && (
+                  <button
+                    type="button"
+                    className="chatbot-icon-btn chatbot-sidebar-collapse-btn"
+                    onClick={() => setChatListCollapsedWithTransition(true)}
+                    title="Ascunde lista de chat-uri"
+                    aria-label="Ascunde lista de chat-uri"
+                  >
+                    <PanelLeftClose size={18} />
+                  </button>
+                )}
                 <button
                   type="button"
                   className="chatbot-avatar chatbot-avatar-assistant chatbot-avatar-clickable"
@@ -1027,14 +1077,25 @@ export default function Chatbot() {
             </div>
             </div>
 
-            {/* Cotor */}
-            <div className="chatbot-book-spine" />
+            {/* Cotor desktop: între pagini */}
+            {!isMobile && <div className="chatbot-book-spine" />}
 
             {/* Pagina dreapta - Conversație */}
             <div className="chatbot-page-right">
               {/* <span className="chatbot-page-number">ii</span> */}
             <div className="chatbot-main">
               <div className="chatbot-main-header">
+                {isMobile && isChatListCollapsed && (
+                  <button
+                    className="chatbot-icon-btn chatbot-chatlist-toggle"
+                    onClick={() => setChatListCollapsedWithTransition(false)}
+                    title="Afișează lista de chat-uri"
+                    aria-label="Afișează lista de chat-uri"
+                    type="button"
+                  >
+                    <PanelLeft size={18} />
+                  </button>
+                )}
                 <button
                   className="chatbot-icon-btn"
                   title={isMaximized ? 'Minimizează' : 'Maximizează'}
@@ -1297,6 +1358,20 @@ export default function Chatbot() {
             </div>
             </div>
           </div>
+
+          {/* Cotor mobil: în afara panelului, vizibil doar la tranziție */}
+          {isMobile && (
+            <div
+              className={`chatbot-book-spine chatbot-spine-mobile ${isOverlayTransitioning ? 'chatbot-spine-visible' : ''} ${!isChatListCollapsed ? 'chatbot-spine-clickable' : ''}`}
+              role={!isChatListCollapsed ? 'button' : undefined}
+              tabIndex={!isChatListCollapsed ? 0 : undefined}
+              onClick={!isChatListCollapsed ? () => setChatListCollapsedWithTransition(true) : undefined}
+              onKeyDown={!isChatListCollapsed ? (e) => { if (e.key === 'Enter') setChatListCollapsedWithTransition(true); } : undefined}
+              aria-label={!isChatListCollapsed ? 'Închide lista de chat-uri' : undefined}
+              title={!isChatListCollapsed ? 'Închide lista' : undefined}
+            />
+          )}
+        </div>
         </div>
       )}
 

@@ -1362,18 +1362,34 @@
   }
 }
 
-// Responsive
+// Responsive - mobil: chat list ca overlay peste conversație
+$chatbot-overlay-duration: 0.3s;
+
+.chatbot-mobile-wrapper {
+  display: contents;
+}
+
 @media (max-width: 768px) {
   .chatbot-overlay {
     justify-content: center;
     align-items: center;
   }
 
-  .chatbot-panel.chatbot-book {
+  .chatbot-mobile-wrapper-active {
+    display: flex !important;
+    position: relative;
+    align-items: center;
+    justify-content: center;
     width: 95%;
     height: 90vh;
+  }
+
+  .chatbot-panel.chatbot-book.chatbot-mobile {
+    position: relative;
+    width: 100%;
+    height: 100%;
     max-height: none;
-    flex-direction: column;
+    flex-direction: row;
     animation: chatbotBookOpenMobile 0.4s ease-out;
   }
 
@@ -1388,19 +1404,156 @@
     }
   }
 
-  .chatbot-page-left,
-  .chatbot-page-right {
+  // Pe mobil: conversația ocupă tot panoul (fără padding – cotorul e în afară)
+  .chatbot-panel.chatbot-book.chatbot-mobile .chatbot-page-right {
+    flex: 1;
+    min-width: 0;
+    border-radius: 4px;
+    transition: opacity $chatbot-overlay-duration ease, visibility $chatbot-overlay-duration ease;
+  }
+
+  // Când overlay-ul e activ: ascunde partea dreapta
+  .chatbot-panel.chatbot-book.chatbot-mobile:not(.chatbot-chatlist-collapsed) .chatbot-page-right {
+    visibility: hidden;
+    pointer-events: none;
+    opacity: 0;
+    position: absolute;
+    width: 0;
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  // Overlay pe tot asistentul (fără spațiu pentru cotor – e în afară)
+  .chatbot-panel.chatbot-book.chatbot-mobile .chatbot-page-left {
+    position: absolute;
+    inset: 0;
+    width: 100% !important;
+    max-width: none !important;
+    min-width: 0;
+    z-index: 10;
+    border-radius: 4px;
+    transform: translateX(0);
+    transition: transform $chatbot-overlay-duration ease, visibility $chatbot-overlay-duration ease;
+    box-shadow: 4px 0 24px rgba(78, 46, 30, 0.25);
+
+    .dark-theme & {
+      box-shadow: 4px 0 24px rgba(0, 0, 0, 0.4);
+    }
+  }
+
+  // Colapsat: slide-out la stânga
+  .chatbot-panel.chatbot-book.chatbot-mobile.chatbot-chatlist-collapsed .chatbot-page-left {
+    transform: translateX(-100%);
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  // Cotor mobil: în afara panelului, ascuns default, vizibil doar la tranziție
+  .chatbot-spine-mobile {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 12px;
+    z-index: 12;
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.15s ease, visibility 0.15s ease, left $chatbot-overlay-duration ease, right $chatbot-overlay-duration ease;
+    background: linear-gradient(
+      180deg,
+      #3a2318 0%,
+      #4e2e1e 25%,
+      #7c4f2b 50%,
+      #4e2e1e 75%,
+      #3a2318 100%
+    );
+    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.4);
+
+    &::before,
+    &::after {
+      display: none;
+    }
+
+    .dark-theme & {
+      background: linear-gradient(180deg, #1a0f08 0%, #2a1a0e 50%, #4e2e1e 100%);
+    }
+
+    &.chatbot-spine-visible {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+
+    &.chatbot-spine-clickable {
+      cursor: pointer;
+    }
+  }
+
+  // Colapsat: cotor în stânga, în afara panelului
+  .chatbot-mobile-wrapper-active .chatbot-spine-mobile {
+    left: -12px;
+    right: auto;
+    border-radius: 4px 0 0 4px;
+  }
+
+  // Overlay activ: cotor în dreapta, în afara panelului
+  .chatbot-mobile-wrapper-active.chatbot-chatlist-expanded .chatbot-spine-mobile {
+    left: auto;
+    right: -12px;
+    border-radius: 0 4px 4px 0;
+  }
+
+  .chatbot-sidebar {
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+  }
+
+  .chatbot-sidebar-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .chatbot-sidebar-collapse-btn {
+    flex-shrink: 0;
+  }
+
+  .chatbot-session-btn {
+    max-width: 100%;
+  }
+
+  .chatbot-message-content {
+    max-width: 85%;
+  }
+
+  .chatbot-chatlist-toggle {
+    margin-right: auto;
+  }
+}
+
+// Fallback pentru panel fără chatbot-mobile (tablete/rezoluții intermediare)
+@media (max-width: 768px) {
+  .chatbot-panel.chatbot-book:not(.chatbot-mobile) {
+    width: 95%;
+    height: 90vh;
+    max-height: none;
+    flex-direction: column;
+  }
+
+  .chatbot-panel.chatbot-book:not(.chatbot-mobile) .chatbot-page-left,
+  .chatbot-panel.chatbot-book:not(.chatbot-mobile) .chatbot-page-right {
     width: 100%;
     max-width: none;
     min-width: 0;
     border-radius: 4px;
   }
 
-  .chatbot-page-left {
+  .chatbot-panel.chatbot-book:not(.chatbot-mobile) .chatbot-page-left {
     max-height: 40%;
   }
 
-  .chatbot-book-spine {
+  .chatbot-panel.chatbot-book:not(.chatbot-mobile) .chatbot-book-spine {
     width: 100%;
     height: 10px;
     background: linear-gradient(
@@ -1419,24 +1572,6 @@
     &::after {
       display: none;
     }
-
-    .dark-theme & {
-      background: linear-gradient(180deg, #1a0f08 0%, #2a1a0e 50%, #4e2e1e 100%);
-    }
-  }
-
-  .chatbot-sidebar {
-    width: 100%;
-    max-width: none;
-    min-width: 0;
-  }
-
-  .chatbot-session-btn {
-    max-width: 100%;
-  }
-
-  .chatbot-message-content {
-    max-width: 85%;
   }
 }
 
