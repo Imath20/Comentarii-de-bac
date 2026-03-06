@@ -872,7 +872,16 @@ export default function Opera() {
                       </button>
                       {isActive && descrierePersonaj && (
                         <div className="opera-character-description">
-                          {descrierePersonaj}
+                          <div className="opera-character-description-text">{descrierePersonaj}</div>
+                          {operaDetails.caractereFolder && operaDetails.personajeImagini?.[personaj] && (
+                            <div className="opera-character-description-img-wrap">
+                              <img
+                                src={`/caractere/${operaDetails.caractereFolder}/${operaDetails.personajeImagini[personaj]}`}
+                                alt={personaj}
+                                className="opera-character-img"
+                              />
+                            </div>
+                          )}
                         </div>
                       )}
                     </li>

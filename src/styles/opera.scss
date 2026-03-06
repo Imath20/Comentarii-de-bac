@@ -916,12 +916,34 @@ body.tabs-revealed .opera-back-btn {
         }
 
         .opera-character-description {
+          display: flex;
+          align-items: flex-start;
+          gap: 1.5rem;
           padding: 0 1.25rem 1rem 1.25rem;
           border-top: 1px solid rgba(0, 0, 0, 0.04);
           font-size: 0.98rem;
           line-height: 1.7;
           color: #444;
           background: linear-gradient(135deg, #ffffff 0%, #f7f3ec 100%);
+
+          .opera-character-description-text {
+            flex: 1;
+            min-width: 0;
+          }
+
+          .opera-character-description-img-wrap {
+            flex-shrink: 0;
+          }
+
+          .opera-character-img {
+            display: block;
+            width: 160px;
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            object-fit: cover;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+          }
         }
       }
 
