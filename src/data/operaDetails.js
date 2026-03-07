@@ -1436,11 +1436,18 @@ export const OPERA_DETAILS = {
     ],
 
     personaje: [
-      'Otilia Marculescu',
       'Felix Sima',
-      'Moș Costache',
-      'Aglae',
-      'Pascalopol'
+      'Otilia Mărculescu',
+      'Moș Costache Giurgiuveanu',
+      'Leonida Pascalopol',
+      'Aglae Tulea',
+      'Stănică Rațiu',
+      'Aurica Tulea',
+      'Simion Tulea',
+      'Titi Tulea',
+      'Georgeta',
+      'Olimpia',
+      'Marina'
     ],
 
     analiza: 'Călinescu construiește un roman realist complex, punând accent pe psihologia personajelor și pe conflictele sociale. Otilia simbolizează feminitatea modernă, inteligentă și misterioasă, iar Felix reprezintă tânărul intelectual prins între idealuri și realitate. Moștenirea devine motorul intrigii, iar mediul bucureștean interbelic reflectă toate contrastele sociale și morale.',
@@ -1454,11 +1461,33 @@ export const OPERA_DETAILS = {
     ],
 
     personajeDetalii: {
-      'Otilia Marculescu': 'Tânără frumoasă, inteligentă și enigmatică, simbol al feminității moderne și al libertății interioare. Atrage și fascinează bărbații, dar își păstrează independența și discernământul.',
-      'Felix Sima': 'Tânăr orfan și student, tipul intelectualului sensibil și confuz. Este atras de Otilia și influențat de interesele materiale și sociale ale familiei, învățând să discearnă între iubire și oportunism.',
-      'Moș Costache': 'Bătrân bogat si avar, simbol al tradiției și al moștenirii materiale. Influențează indirect deciziile și destinul tinerilor prin dorința sa de păstrare a averii.',
-      'Aglae': 'Femeie intrigantă, mamă sau tutore care urmărește propriile interese. Reprezintă egoismul și interesul material în mediul familial.',
-      'Pascalopol': 'Om în vârstă și respectat în societate, observator al relațiilor și intrigilor. Reprezintă experiența și echilibrul moral.'
+      'Felix Sima': 'Status: tânăr orfan, student la medicină (vreo 18-20 ani), protagonistul prin a cărui privire cititorul descoperă lumea romanului. Fizic: figură de „băiat bun”, inteligent și ambițios; trăsături fine, nas drept, păr castaniu îngrijit, privire serioasă de viitor doctor. Tipul studentului silitor, un pic stingher în casa lui Moș Costache. Scene: la birou cu cărți groase de medicină, în lumină caldă de lampă cu gaz. Haine: costum de epocă gri sau bleumarin, cămașă albă cu guler scrobit, cravată subțire. Descriere generală: simbolul tânărului intelectual prins între iubire și realitate; evoluează de la naivitate la maturitate, acceptând în final că Otilia rămâne o enigmă și că destinul lui e altul.',
+      'Otilia Mărculescu': 'Status: „enigma” întruchipată, protejata lui Moș Costache, obiectul afecțiunii lui Felix și al lui Pascalopol. Fizic: fată subțirică, foarte mobilă, față de copil dar privire de femeie matură; păr blond-miere sau castaniu deschis, buze subțiri, ochi mari visători care se schimbă repede de la bucurie la tristețe. Libertate și imprevizibil. Scene: alergând prin grădină, cântând la pian cu expresie pierdută sau probând pălării scumpe în fața unei oglinzi venețiene prăfuite. Haine: rochii vaporoase, elegante, din mătase sau dantelă, coliere de perle, pălării cu boruri largi. Descriere generală: simbol al feminității enigmatice și al libertății interioare; alege în final securitatea (Pascalopol) în locul iubirii (Felix), apoi dispare din viața lor, transformându-se în amintire.',
+      'Moș Costache Giurgiuveanu': 'Status: bătrân avar, stăpânul casei, tutorele lui Felix, obiectul hăituirii familiei Tulea pentru moștenire. Fizic: bătrânel mic de statură, chel în creștet, câteva fire albe pe lateral; figură grotescă, gesticulează ciudat, se bâlbâie, se uită mereu suspect în jur. Pare mereu că îi e frică să nu-i fure cineva „puiuțul” (banii). Scene: ascunzând un teanc de bani sub o scândură din podea sau mâncând un ou fiert cu zgârcenie incredibilă. Haine: haine vechi, roase în coate, halat de casă pătat, papuci tociți. Descriere generală: avarul clasic; moare sărac, jefuit de Stănică, iar averea ascunsă devine simbolul inutilității lăcomiei.',
+      'Leonida Pascalopol': 'Status: boier matur, protector al Otiliei, rival „elegant” al lui Felix. Fizic: bărbat pe la 50 de ani, bine făcut, burtică discretă de om bogat; păr grizonat tăiat scurt, mustață îngrijită, atitudine de „gentleman” desăvârșit. Opusul lui Costache. Eleganță și melancolie. Scene: fumând o țigară de foi pe terasă luxoasă, privind-o pe Otilia cu amestec de iubire paternă și dorință. Haine: costume impecabile din lână englezească, vestă, ceas de aur cu lanț, baston cu mâner de argint. Descriere generală: reprezintă securitatea și cultura; Otilia îl alege pentru a nu „cădea” alături de Felix; la final apare la Paris și dezvăluie lui Felix soarta banalizată a Otiliei.',
+      'Aglae Tulea': 'Status: sora lui Costache, „Baba Absolută”, capul clanului Tulea, vulturul după moștenire. Fizic: femeie autoritară, trăsături rigide, ochi răi și reci, buze strânse mereu într-o linie dreaptă de dispreț; te deochi dintr-o singură privire. Răutatea pură. Scene: stând în capul mesei, supraveghind totul ca un vultur, gata să atace. Haine: rochii negre sau mov închis, încheiate până sub bărbie, broșe masive, părul prins într-un coc foarte strâns. Descriere generală: meschinăria și ipocrizia; o alungă pe Otilia din casă la moartea lui Costache; planurile ei pentru avere eșuează.',
+      'Stănică Rațiu': 'Status: avocat fără clienți, ginere în familia Tulea, soțul Olimpiei, intrigant și parvenit. Fizic: bărbat blond, ochi albaștri, mereu agitat, vorbind mult și gesticulând teatral; figură de „șarlatan simpatic” la prima vedere. Demagogul. Scene: vorbind cu patos despre „familie” și „morală” în timp ce fură din sertarele lui Moș Costache. Haine: costum care vrea să pară scump dar e cam lucios sau uzat, joben, mănuși. Descriere generală: arivismul fără scrupule; îl jefuiește pe Costache pe patul de moarte; devine politician, divorțează, se recăsătorește.',
+      'Aurica Tulea': 'Status: fata bătrână a Aglaei, disperată să se mărite. Fizic: slabă, nas lung, pistruiată, expresie de nemulțumire cronică. Invidie și frustrare. Scene: uitându-se cu ură la Otilia sau pudrându-se excesiv în fața oglinzii. Haine: rochii prea încărcate care nu i se potrivesc, încercând să pară mai tânără. Descriere generală: contrastul cu Otilia; moare singură și nebună, ilustrând soarta celor care nu pot ieși din invidie.',
+      'Simion Tulea': 'Status: soțul Aglaei, bătrânul apatic al familiei. Fizic: bătrân care brodează la gherghef; privire absentă, de om care s-a deconectat de realitate. Alienarea. Scene: într-un fotoliu, făcând broderie, ignorând circul din jur. Descriere generală: reprezintă retragerea și neputința; umbra soției autoritare.',
+      'Titi Tulea': 'Status: membru al familiei Tulea, tânăr cu aspect infantil. Fizic: față rotundă, ochi inexpressivi; se joacă mereu cu ceva sau desenează monoton. Lene și imbecilitate. Descriere generală: personaj grotesc, contrast cu ambiția și intriga celorlalți; ilustrează decăderea morală a clanului.',
+      'Georgeta': 'Status: „curtezana” de lux, prietena lui Stănică. Fizic și moral: frumusețe provocatoare, machiaj strident, atitudine degajată. Contrast bun pentru Otilia – feminitatea vulgară și calculată vs. enigma. Descriere generală: reprezintă lumea de pe marginea „respectabilității” cu care Stănică se înconjoară; subliniază ipocrizia morală a personajelor „cuminti”.',
+      'Olimpia': 'Status: soția lui Stănică Rațiu, fiica Aglaei. Fizic și moral: femeie ștearsă, plictisită, care suportă toate nebuniile soțului ei. Descriere generală: victimă pasivă a căsniciei cu un parvenit; tolerează infidelitatea și ambiția lui Stănică; ilustrează soarta femeii fără putere în acel mediu.',
+      'Marina': 'Status: servitoarea lui Moș Costache. Fizic și moral: femeie aspră, care știe toate secretele casei. Descriere generală: vocea „de pe dincoace” a gospodăriei; ține legătura între bătrân și lumea exterioară; știe unde sunt ascunși banii și cum funcționează avariul.'
+    },
+
+    caractereFolder: 'enigma_otiliei',
+    personajeImagini: {
+      'Felix Sima': 'felix.png',
+      'Otilia Mărculescu': 'otilia.png',
+      'Moș Costache Giurgiuveanu': 'mos_costache.png',
+      'Leonida Pascalopol': 'pascalopol.png',
+      'Aglae Tulea': 'aglae.png',
+      'Stănică Rațiu': 'ratiu.png',
+      'Aurica Tulea': 'aurica.png',
+      'Simion Tulea': 'simion.png',
+      'Titi Tulea': 'titi.png',
+      'Olimpia': 'olimpia.png',
+      'Marina': 'marina.png'
     },
 
     titluSection: {
