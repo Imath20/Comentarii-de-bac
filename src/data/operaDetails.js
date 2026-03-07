@@ -651,13 +651,14 @@ export const OPERA_DETAILS = {
     ],
 
     personaje: [
-      'Zaharia Trahanache',
-      'Zoe',
       'Ștefan Tipătescu',
+      'Zoe Trahanache',
+      'Zaharia Trahanache',
       'Nae Cațavencu',
-      'Farfuridi',
-      'Brânzovenescu',
-      'Pristanda'
+      'Agamemnon Dandanache',
+      'Ghiță Pristanda',
+      'Farfuridi și Brânzovenescu',
+      'Cetățeanul Turmentat'
     ],
 
     analiza: 'Comedia se bazează pe tipurile sociale exagerate și pe situațiile ridicole generate de ambiția și vanitatea personajelor. Scrisoarea pierdută devine catalizatorul întregii acțiuni, punând în evidență corupția, demagogia și ipocrizia mediului politic. Caragiale combină realismul observațional cu umorul fin și dialogul spumos, creând un spectacol de caricaturi sociale.',
@@ -671,13 +672,26 @@ export const OPERA_DETAILS = {
     ],
 
     personajeDetalii: {
-      'Zaharia Trahanache': 'Primarul și politicianul local, simbol al autorității corupte și al ipocriziei sociale. Se preocupă mai mult de imagine și de interesele proprii decât de dreptate sau moralitate.',
-      'Zoe': 'Soția lui Trahanache, elegantă și manipulatorie. Este conștientă de efectele scrisorii și folosește situația pentru a-și proteja poziția și pentru a influența bărbații din jur.',
-      'Ștefan Tipătescu': 'Secretarul primăriei, prudent și realist, încearcă să mențină ordinea și să evite scandalurile. Reprezintă vocea rațiunii și a bunului simț în universul comic al piesei.',
-      'Nae Cațavencu': 'Avocat și politician ambițios, demagog și intrigant. Profită de orice oportunitate pentru a-și crește influența și pentru a-l discredita pe Trahanache.',
-      'Farfuridi': 'Om docil și vanitos, figură comică. Reprezintă conformismul și umanitatea superficială, fără inițiativă sau caracter puternic.',
-      'Brânzovenescu': 'Colaborator al lui Farfuridi, la fel de lipsit de inițiativă și ușor manipulat. Încarnează rutina și mediocritatea funcționarului politic.',
-      'Pristanda': 'Figură comică și secundară, funcționar obedient al primăriei. Rolul său este mai mult decorativ, contribuind la tensiunea și comicitatea situațiilor.'
+      'Ștefan Tipătescu': 'Status: prefectul județului, puterea locală, amantul Zoei. Fizic: bărbat „prezentabil”, cam la 40 de ani, înalt, bine făcut, trăsături regulate; privire autoritară dar ușor plictisită de viața de provincie; mustață neagră bine tunsă. Tipul cuceritorului care știe că are puterea. Scene: stând picior peste picior într-un fotoliu de piele, fumând, cu o scrisoare în mână și o expresie de „iar s-a întâmplat o boacănă”. Haine: costum impecabil, redingotă neagră, vestă de mătase, cămașă cu guler înalt și lavalieră. Descriere generală: simbolul puterii provinciale și al calmului cinic; este cel care trebuie să rezolve criza scrisorii; la final capitulează în fața Zoei și face pact cu Cațavencu, apoi se bucură de „reconciliere”.',
+      'Zoe Trahanache': 'Status: Coana Joițica, soția președintelui Trahanache, singura femeie din piesă, cea care a pierdut scrisoarea. Fizic: distinsă, ageră, ochi mari care trădează inteligență și disperare ascunsă; nu e neapărat o frumusețe clasică, dar are farmec irezistibil. Disperarea elegantă. Scene: cu batistă la ochi (prefăcut sau nu), în agitație, încercând să rezolve criza scrisorii; emane autoritate asupra bărbaților din jur. Haine: rochii de epocă cu corset, turnură (spatele rochiei bombat), pălării cu pene, umbreluță de soare. Descriere generală: motorul emoțional al intrigii; scrisoarea ei de dragoste (de la Tipătescu) devine armă de șantaj; o salvează în final Cetățeanul turmentat, care îi înmânează scrisoarea ca „andrisantului”.',
+      'Zaharia Trahanache': 'Status: președintele Comitetului electoral, soțul Zoei. Fizic: bătrân „venerabil” dar cam ramolit, mișcări lente; păr alb, burtică respectabilă, față care radiază un calm enervant. „Ai puțină puțintică răbdare.” Privirea mereu binevoitoare, chiar și când e vorba de trădare. Scene: verificând niște acte cu o lupă. Haine: haină lungă de ceremonie, ceas cu lanț gros de aur pe burtă, ochelari pe vârful nasului. Descriere generală: naivul care crede că scrisoarea e falsă (plastografie); proclamă candidatul impus (Dandanache); la final e fericit și îmbrățișează pe toți – ilustrează ipocrizia și inocența convențională.',
+      'Nae Cațavencu': 'Status: demagog, director la Răcnetul Carpați, șantajistul care deține scrisoarea. Fizic: tipul demagogului „lătrător”; figură mobilă, ochi mici și vii care caută mereu oportunitatea; poate purta bărbuță tăiată „à la Napoleon III” pentru a părea mai intelectual. Prefăcătoria. Scene: cu o mână pe piept și cealaltă ridicată, ca și cum ar ține un discurs despre „binele țării”, dar cu rânjet viclean pe față. Haine: costum un pic mai uzat decât al lui Tipătescu, dar purtat cu mândrie de „mare patriot”. Descriere generală: simbolul ambiției și al șantajului politic; pierde scrisoarea în haosul întrunirii (îi e smulsă pălăria); la final e umilit dar „salvat” de Zoe, conducând manifestația pentru Dandanache.',
+      'Agamemnon Dandanache': 'Status: Agamiță, candidatul impus de la Centru, vechi luptător de la 48. Fizic: mult mai bătrân și mai senil decât Trahanache; figură de copil bătrân, zâmbește tont, uită de la mână până la gură; personajul cel mai ticălos, mascat de aparență de bunicuț inofensiv. Senilitatea calculată. Scene: râzând singur sau spunând povestea cu „becherul” pentru a suta oară. Haine: haină de călătorie plină de praf, cu fular, deși e cald afară. Descriere generală: candidatul „moral” care și-a asigurat el însuși candidatura șantajând pe cineva cu o scrisoare de amor; caricatura „veteranului” cinic.',
+      'Ghiță Pristanda': 'Status: polițaiul, omul de încredere al prefectului. Fizic: om de 45-50 ani, față „scursă”, obosită de atâta servilism; postură ușor aplecată (ca și cum ar asculta la uși). Omul bun la toate (și la nimic). Scene: numărând steagurile pe degete („două la primărie, două la școală...”). Haine: uniformă de polițai de epocă, un pic cam strâmtă, sabie la șold. Descriere generală: executantul servil; spionează pentru Tipătescu, nu găsește scrisoarea la Cațavencu, îl aduce pe Cațavencu la schimb; întruchipează birocrația și supunerea.',
+      'Farfuridi și Brânzovenescu': 'Status: membri ai Comitetului electoral, „masa de manevră”, pereche comică. Fizic: unul mai gras și mai bleg (Brânzovenescu), celălalt mai slab și mai înfipt (Farfuridi); ca două păpuși care se mișcă împreună. Teamă de trădare. Scene: șoptind la urechea celuilalt, uitându-se speriați în stânga și în dreapta. Descriere generală: vin la prefect cu bănuieli de trădare, amenință cu depeșe la București; la întrunire Farfuridi ține un discurs confuz; întruchipează conformismul și frica, oscilând între putere și panică.',
+      'Cetățeanul Turmentat': 'Status: alegător beat, fost împărțitor la poștă, cel care găsește scrisoarea și o restituie. Fizic: om de rând, barbă neîngrijită, ochi roșii, mereu în stare de ebrietate veselă dar confuză. „Eu cu cine votez?” Scene: cu scrisoarea pierdută în mână, uitându-se la ea ca la o minune pe care n-o înțelege. Haine: haine de orășean de rând, cam șifonate, pălăria pusă strâmb. Descriere generală: salvatorele comic și naiv; a găsit scrisoarea pe drum, i-a fost furată de Cațavencu la băutură, o găsește din nou în căptușeala pălăriei lui Cațavencu și o înmânează „andrisantului” (Zoei); ilustrează absurdul și norocul care rezolvă criza.'
+    },
+
+    caractereFolder: 'o_scrisoare',
+    personajeImagini: {
+      'Ștefan Tipătescu': 'stefan.png',
+      'Zoe Trahanache': 'zoe.png',
+      'Zaharia Trahanache': 'zaharia.png',
+      'Nae Cațavencu': 'catavencu.png',
+      'Agamemnon Dandanache': 'agamemnon.png',
+      'Ghiță Pristanda': 'pristanda.png',
+      'Farfuridi și Brânzovenescu': 'farfuridi_branzovenescu.png',
+      'Cetățeanul Turmentat': 'cetateanul.png'
     },
 
     titluSection: {
