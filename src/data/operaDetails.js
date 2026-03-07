@@ -22,10 +22,17 @@ export const OPERA_DETAILS = {
     personaje: [
       'Ion al Glanetașului',
       'Ana',
-      'Vasile Baciu',
       'Florica',
-      'George',
-      'Familia Herdelea'
+      'George Bulbuc',
+      'Vasile Baciu',
+      'Toma Bulbuc',
+      'Zaharia Herdelea',
+      'Maria Herdelea',
+      'Titu Herdelea',
+      'Ghighi și Laura',
+      'Alexandru Glanetașu',
+      'Zenitybia',
+      'Savista'
     ],
 
     analiza: 'Romanul arată cum dorința de pământ devine forța care domină viața și deciziile lui Ion. Personajul este complex: ambițios, determinat, dar și incapabil să vadă consecințele morale ale acțiunilor sale. Rebreanu creează un portret realist al satului transilvănean, unde iubirea, setea de avere și conflictul social se împletesc.',
@@ -40,12 +47,36 @@ export const OPERA_DETAILS = {
     ],
 
     personajeDetalii: {
-      'Ion al Glanetașului': 'Protagonistul, țăran ambițios și complex, dominat de dorința de pământ. Face alegeri care îi schimbă viața și afectează oamenii din jur, simbolizând setea de putere și consecințele morale ale acesteia.',
-      'Ana': 'Tânără inocentă, căsătorită cu Ion, simbol al dragostei sincere și al sacrificiului. Relația cu Ion reflectă tensiunea dintre iubire și interese materiale.',
-      'Vasile Baciu': 'Tatăl Anei, țăran respectat și prudent. Reprezintă tradiția și valorile morale, dar este prins în conflictul social și familial generat de setea de avere a lui Ion.',
-      'Florica': 'Tânăra iubită inițial de Ion, simbol al iubirii neîmplinite și al visului unui alt tip de viață. Relația lor evidențiază contradicțiile dintre dorințe și realitate.',
-      'George': 'Personaj secundar, simbol al echilibrului moral și al prieteniei, care contrabalansează ambițiile lui Ion.',
-      'Familia Herdelea': 'Reprezintă comunitatea rurală și normele sociale, care judecă și influențează acțiunile personajelor.'
+      'Ion al Glanetașului': 'Status: protagonist, țăran sărac din Pripas, fiul lui Alexandru Glanetașu; obsesia pentru pământ îl definește. Fizic: tânăr, înalt, uscățiv dar cu mușchi de oțel, „muncit”; față arsă de soare, trăsături colțuroase, mâini mari, cu degete groase, făcute să strângă coada sapei sau pământul. Privirea e totul la el: o căutătură fixă, obsedată, de prădător care vede prada (pământul). Scene emblematică: îngenuncheat pe câmp, sărutând pământul, cu expresie de triumf sălbatic. Haine: cămașă de cânepă aspră, descheiată la gât, murdară de sudoare și pământ, ițari strâmți și opinci. Descriere generală: simbolul setei de avere și al țăranului care sacrifică totul (iubirea, moralitatea) pentru pământ; destinul lui tragic închide tema coruperii prin ambiție.',
+      'Ana': 'Status: fiica lui Vasile Baciu, soția lui Ion; victimă a căsniciei de interes și a violenței. Fizic: nu e vreo frumusețe, e slabă, „ștearsă”, cu obrajii supți și ochii mari, speriați, încercănați de plâns; aer de om bătut de soartă (și de tată, și de soț). Postură gârbovită, mâini care se frământă mereu în șorț; transmite o tristețe profundă, de animal hăituit. Poate fi imaginată stând într-un colț de ogradă, uitându-se cu jind la Ion. Haine: catrință veche, batic legat strâns sub bărbie, haine care par prea mari pentru corpul ei firav. Descriere generală: antiteza feminității fericite; simbol al sacrificiului și al suferinței tăcute; moartea ei tragică este consecința directă a patimii lui Ion pentru pământ.',
+      'Florica': 'Status: iubita sinceră a lui Ion, apoi soția lui George Bulbuc; antiteza Anei. Fizic: „frumoasă de-ți ia ochii”, buze pline, obraji rumeni, ochi care sclipesc de viață; forme generoase, frumusețe sănătoasă de la țară. Senzualitate naturală, zâmbet ștrengăresc. Imagine emblematică: la râu, spălând haine, sau la horă, centrul atenției. Haine: ie curată, cu broderii colorate, flori în păr, gătită de sărbătoare. Descriere generală: simbol al iubirii adevărate pe care Ion o trădează pentru pământ; reprezintă visul unei vieți altfel, neîmplinit; relația ei cu George și ulterior cu Ion (în secret) amplifică tragedia.',
+      'George Bulbuc': 'Status: fiul lui Toma Bulbuc, rivalul lui Ion pentru Florica, „băiat de bani gata” al satului. Fizic: mai bine hrănit, mai lat în umeri decât Ion, dar cu trăsături mai moi, mai puțin „ascuțite”. Aroganță calmă, de om care știe că are spatele asigurat de averea tatălui. Scene: stând mândru lângă un car plin cu fân sau la cârciumă, plătind băutura cu gesturi largi. Haine: haine de duminică, noi, căciulă de astrahan pusă într-o ureche. Descriere generală: contrapunctul social al lui Ion; posedă ce îl dorește Ion (bani, statut) fără să fi muncit pentru pământ; la final devine ucigașul lui Ion, în defensiva geloziei.',
+      'Vasile Baciu': 'Status: tatăl Anei, „greul” satului, oponentul lui Ion. Fizic: bătrân dar încă vânăros, față brăzdată de riduri adânci, mustață căruntă stufoasă; privire autoritară și violentă. Înrăit de băutură și de frica de a-și pierde averea. Scene: cu un pahar de rachiu în mână, încruntat, gata să izbucnească. Haine: cojoc greu, pălărie veche, aspect de „gospodar bătrân și arțăgos”. Descriere generală: reprezintă ordinea veche și opoziția la ascensiunea lui Ion; violența lui față de Ana și refuzul de a accepta căsnicia oglindesc conflictul pentru pământ și pentru putere în sat.',
+      'Toma Bulbuc': 'Status: tatăl lui George, cel mai bogat țăran din sat. Fizic: mai masiv decât Vasile Baciu, burtă de om bogat, față rotundă, roșie; emană siguranță de sine aproape enervantă. Bogătașul satului, relaxat, vorbind „de sus”. Haine: cele mai bune haine țărănești din sat, curea lată de piele cu catarame de metal. Descriere generală: simbolul averii și al stabilității sociale; contrastul cu familia Glanetașu și cu Vasile Baciu subliniază ierarhia satului și sursa puterii lui George.',
+      'Zaharia Herdelea': 'Status: învățătorul satului, capul familiei Herdelea, intelectualul de provincie. Fizic: om între două vârste, cu ochelari (contrast cu țăranii), barbă scurtă sau favoriți, figură blajină dar ușor obosită. Intelectualul de provincie, un pic șters, dar respectat. Scene: în biroul lui, printre cărți și hârțogării. Haine: costum „orășenesc” ușor uzat, vestă, ceas de buzunar. Descriere generală: reprezintă cultura și normele „culturate” în mediul rural; punerea lui în contrast cu țăranii evidențiază tensiunea dintre tradiție și modernitate.',
+      'Maria Herdelea': 'Status: soția lui Zaharia Herdelea, doamna învățătorului. Fizic: femeie gospodină, trăsături blânde, dar cu o sclipire de mândrie de clasă în ochi; se vede că s-a chinuit să mențină aparențele de familie „bună”. Grija maternă amestecată cu eticheta socială. Haine: rochii lungi, sobre, cu guler înalt, părul strâns la spate în coc. Descriere generală: întruchipează demnitatea și grija familiei Herdelea; contrastul cu femeile țărănci (Ana, Florica) subliniază diferențele de clasă și de expectanțe.',
+      'Titu Herdelea': 'Status: fiul învățătorului, tânăr boem, poet. Fizic: slab, visător, părul poate un pic mai lung; privire inteligentă, curioasă, mereu pe gânduri. Poetul neînțeles. Scene: stând pe un gard, observând satul cu un carnet în mână. Haine: haine orășenești moderne pentru început de sec. XX, cravată subțire. Descriere generală: observatorul sensibil al satului; reprezintă cultura și sensibilitatea care privesc din afară lumea țărănească și conflictele ei.',
+      'Ghighi și Laura': 'Status: fiicele lui Zaharia și Maria Herdelea, „fete de pension”. Fizic: două fete tinere, drăguțe, cu maniere rafinate; Laura e mai matură, mai serioasă (se gândește la măritiș), Ghighi e mai visătoare. Fragile în peisajul brut al satului. Haine: rochii elegante de epocă, dantele, umbreluțe de soare (pentru exterior). Descriere generală: simbolul tinereții și al rafinamentului în contrast cu lumea țărănească; evidențiază diferența dintre mediul Herdelea și restul satului.',
+      'Alexandru Glanetașu': 'Status: tatăl lui Ion, țăran sfârșit, leneș. Fizic și moral: un om sfârșit care a pierdut pământurile nevestei; arată ca o umbră a lui Ion, fără ambiție. Descriere generală: antiteză a lui Ion; ilustrează soarta celui care nu are voința sau norocul de a păstra pământul; fundalul familial care îl motivează pe Ion (să nu ajungă ca tatăl).',
+      'Zenitybia': 'Status: mama lui Ion, femeia care muncește cât trei bărbați. Fizic și moral: asprită de viață, dar îl susține pe Ion orbește; munca ei asiduă contrastează cu lenea lui Alexandru. Descriere generală: reprezintă sacrificiul feminin și sprijinul necondiționat din spatele ambiției lui Ion; personajul care ține casa Glanetașu în picioare.',
+      'Savista': 'Status: oloaga satului, bârfitoarea, „vocea” care dă de gol secretele. Fizic: personaj grotesc, față strâmbă, ochi care văd tot; se târăște prin sat. Esențială pentru intrigă – dezvăluie și amplifică conflictele. Descriere generală: mecanismul social al bârfei și al controlului moral în sat; prin ea Rebreanu arată cum comunitatea știe și judecă, influențând soarta personajelor.'
+    },
+
+    caractereFolder: 'Ion',
+    personajeImagini: {
+      'Ion al Glanetașului': 'Ion.png',
+      'Ana': 'Ana.png',
+      'Florica': 'Florica.png',
+      'George Bulbuc': 'George.png',
+      'Vasile Baciu': 'Vasile.png',
+      'Toma Bulbuc': 'Toma.png',
+      'Zaharia Herdelea': 'Zaharia.png',
+      'Maria Herdelea': 'Maria_herdelea.png',
+      'Titu Herdelea': 'Titu.png',
+      'Ghighi și Laura': 'Fetele_herdelea.png',
+      'Alexandru Glanetașu': 'Alexandru.png',
+      'Zenitybia': 'Zenitybia.png',
+      'Savista': 'Saveta.png'
     },
 
     titluSection: {
