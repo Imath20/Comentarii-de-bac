@@ -1013,9 +1013,16 @@ export const OPERA_DETAILS = {
 
     personaje: [
       'Vitoria Lipan',
+      'Gheorghiță Lipan',
       'Nechifor Lipan',
-      'Gheorghiță',
-      'Minodora'
+      'Calistrat Bogza',
+      'Ilie Cuțui',
+      'Minodora Lipan',
+      'Moș Pricop',
+      'Lupu',
+      'Părintele Dănilă',
+      'Baba Maranda',
+      'Hangiii de pe drum'
     ],
 
     analiza: 'Sadoveanu construiește un portret complex al femeii țărănești prin Vitoria Lipan, care întruchipează inteligența practică, forța și curajul. Romanul este un elogiu al tradiției și al dreptății, arătând cum comunitatea și regulile ei morale susțin echilibrul și răzbunarea justă.',
@@ -1028,10 +1035,31 @@ export const OPERA_DETAILS = {
     ],
 
     personajeDetalii: {
-      'Vitoria Lipan': 'Protagonista romanului, femeie puternică și hotărâtă. Reprezintă dreptatea, inteligența practică și respectul pentru tradiție. Pleacă în căutarea soțului său și nu se lasă oprită de obstacole.',
-      'Nechifor Lipan': 'Soțul Vitoriei, om cinstit și respectat în sat. Victimă a crimei, simbol al dreptății încălcate și al lumii tradiționale românești.',
-      'Gheorghiță': 'Fiul Vitoriei, tânăr curajos și loial, care o însoțește pe mama sa în căutarea adevărului. Reprezintă legătura între generații și continuitatea valorilor morale.',
-      'Minodora': 'Fiica Vitoriei, simbol al inocenței și al legăturilor familiale, oferă sprijin moral și afectiv în demersul mamei sale.'
+      'Vitoria Lipan': 'Status: protagonista, soția lui Nechifor, „detectivă” arhaică care caută adevărul despre moartea soțului. Fizic: femeie de munte la vreo 40 de ani, încă frumoasă, dar cu față „uscată” de vânturi și griji; ochi căprui foarte ageri, care par că citesc gândurile omului; părul ascuns sub batic negru strâns tare. Privirea e totul: fixă, bănuitoare, de o inteligență sclipitoare. Scene: stând la un foc de tabără, uitându-se în flăcări ca și cum ar vedea viitorul, sau călare pe un cal mic de munte, cu privirea spre creste. Haine: catrință neagră, cojocel brodat, opinci, batic negru; totul sobru, de doliu, dar demn. Descriere generală: întruchipează dreptatea și tradiția; urmează rânduielile (post, rugăciune, binecuvântarea baltagului), reconstituie crima prin intuiție și o dezvăluie la masa de pomană; forța morală a romanului.',
+      'Gheorghiță Lipan': 'Status: fiul Vitoriei, flăcăul de 17-18 ani, „brațul înarmat” al mamei. Fizic: seamănă mult cu tatăl, Nechifor; înalt, vânos, mustață abia mijită; la început figură de copil, pe drum fața i se asprește, devine bărbat. Inițierea. Scene: ținând în mână baltagul (toporul cu două tăișuri), cu expresie de frică amestecată cu curaj. Haine: cămașă lungă de lână, ițari, cușmă de miel, cojoc gros. Descriere generală: sloboade câinele Lupu asupra lui Bogza și îl lovește pe ucigaș cu baltagul în frunte, împlinind justiția; simbolul trecerii de la copil la bărbat prin datorie.',
+      'Nechifor Lipan': 'Status: soțul Vitoriei, cioban înstărit, victimă a crimei; apare în amintiri și viziuni. Fizic: un munte de om, spătos, mustață neagră stufoasă, zâmbet larg de om care iubește viața, petrecerile și drumurile lungi. Spiritul care bântuie muntele. Scene: siluetă impunătoare parțial pierdută în ceață, sau la o masă bând vin dintr-o carafă de lut. Haine: straie de oier înstărit, căciulă mare, curea lată de piele cu buzunare (punga cu bani). Descriere generală: dispariția lui declanșează întreaga acțiune; e ucis de Bogza și Cuțui pe drumul de la Dorna; visul rău al Vitoriei îl prefigurează trecând apa neagră spre apus.',
+      'Calistrat Bogza': 'Status: unul dintre cei doi munteni care l-au însoțit pe Nechifor, ucigașul („cei cu musca pe căciulă”). Fizic: bărbat uriaș, violent, mâini ca niște lopeți; față colțuroasă, ochi care fug mereu, trădând o conștiință încărcată. Bestia. Scene: cu expresie de furie sau frică când e încolțit de întrebările Vitoriei; forță brută dar nesigură. Haine: cojoc mare de oaie, haine de muntean murdare, topor greu la brâu. Descriere generală: îl lovește pe Nechifor pe la spate în cap, împinge calul și omul în prăpastie; la masa de pomană e demascat de Vitoria, se repede după baltag, e mușcat de Lupu și lovit de Gheorghiță; mărturisește crima înainte de a muri.',
+      'Ilie Cuțui': 'Status: complicele lui Bogza, al doilea muntean. Fizic: mai mic de statură decât Bogza, dar mai viclean; complicele tăcut care se ascunde în spatele partenerului. Umbra celui vinovat; figură ștearsă dar periculoasă, mereu la pândă. Descriere generală: face pereche cu Bogza în crimă; trădează o conștiință la fel de încărcată; e demascat împreună cu Bogza la confruntarea de la Sabașa.',
+      'Minodora Lipan': 'Status: fiica Vitoriei, inocența lăsată acasă. Fizic: tânără, frumoasă, obraji rumeni; tipul fetei de la țară care vrea să fie „modernă” (vrea rochii, nu catrință), spre disperarea mamei. Scene: torcând lână lângă vatră, cu privire visătoare. Descriere generală: e dusă la mănăstirea Vărățicului (la maică Melania) ca să fie ferită de rău în timp ce Vitoria și Gheorghiță pornesc la drum; simbol al tinereții și al protecției materne.',
+      'Moș Pricop': 'Status: fierarul de la Fărcașa, localnic de pe drum de la care Vitoria cere sfat. Fizic: bătrân blând, față murdară de funingine, mâini muncite. Ospitalitatea montană. Descriere generală: îi confirmă Vitoriei că l-a potcovit pe calul lui Nechifor cu potcoave speciale, dându-i o urmă concretă; reprezintă rețeaua de oameni care ajută în căutare.',
+      'Lupu': 'Status: câinele ciobănesc al lui Nechifor, loialitatea supremă. Fizic: ciobănesc carpatin uriaș, blană gri-albicioasă murdară, ochi inteligenți și triști. Scene: stând lângă mormântul stăpânului sau conducând-o pe Vitoria spre râpa unde e Nechifor. Descriere generală: a încercat să-l apere pe Nechifor la crimă; la dezvăluirea de la Sabașa, Gheorghiță îl sloboade și se năpustește asupra lui Bogza; simbol al loialității și al justiției animale.',
+      'Părintele Dănilă': 'Status: preotul satului, autoritate morală. Descriere generală: îi scrie Vitoriei jalba (plângerea oficială) și binecuvântează baltagul făcut pentru Gheorghiță (arma justiției) înainte de plecarea la drum; întruchipează legătura dintre ritualul bisericesc și dreptatea pe care Vitoria o va împlini.',
+      'Baba Maranda': 'Status: vrăjitoarea satului, latura mistică a Vitoriei. Fizic: bătrână gârbovită, privire ciudată, înconjurată de ierburi uscate și un motan negru. Descriere generală: reprezintă superstiția și credințele arhaice care se împletesc cu creștinismul în lumea Vitoriei; contrapunctul „rational” al părintelui Dănilă.',
+      'Hangiii de pe drum': 'Status: localnici de la hanuri și popasuri. Fizic: oameni rumeni la față, cu șorțuri albe. Scene: în scenele de popas, aducând mâncare caldă și vin. Descriere generală: ospitalitate montană; oferă informații și odihnă pe traseul Vitoriei și Gheorghiță; fac din drum o succesiune de întâlniri umane.'
+    },
+
+    caractereFolder: 'baltagul',
+    personajeImagini: {
+      'Vitoria Lipan': 'vitoria.png',
+      'Gheorghiță Lipan': 'gheorghita.png',
+      'Nechifor Lipan': 'nechifor.png',
+      'Calistrat Bogza': 'bogza.png',
+      'Ilie Cuțui': 'cutui.png',
+      'Minodora Lipan': 'minodora.png',
+      'Moș Pricop': 'pricop.png',
+      'Lupu': 'lupu.png',
+      'Părintele Dănilă': 'popa.png',
+      'Hangiii de pe drum': 'hangii.png'
     },
 
     titluSection: {
