@@ -1698,14 +1698,16 @@ export const OPERA_DETAILS = {
 
     personaje: [
       'Ilie Moromete',
-      'Catrina',
-      'Niculae',
-      'Paraschiv',
-      'Achim',
-      'Nilă',
-      'Guica',
+      'Catrina Moromete',
+      'Niculae Moromete',
+      'Paraschiv, Nilă și Achim',
       'Cocoșilă',
-      'Bălosu'
+      'Dumitru al lui Nae',
+      'Tudor Bălosu',
+      'Guica (sora lui Moromete)',
+      'Iocan',
+      'Polina',
+      'Salcâmul'
     ],
 
     analiza: 'Preda creează una dintre cele mai importante fresce ale satului românesc, surprinzând cu finețe destrămarea unei lumi aflate în fața modernizării. Volumul I explorează tensiunile din familia Moromete și disoluția tradițiilor, în timp ce volumul II îl urmărește pe Niculae în confruntarea cu noua realitate politică postbelică. Romanul pune în centru drama unei familii și tragedia unei lumi care dispare.',
@@ -1719,15 +1721,31 @@ export const OPERA_DETAILS = {
     ],
 
     personajeDetalii: {
-      'Ilie Moromete': 'Patriarhul familiei și simbolul țăranului filozof. Inteligent, ironic, calm, încearcă să mențină unitatea familiei într-o lume aflată în schimbare. Volumul II îl arată înfrânt de modernizare.',
-      'Catrina': 'Soția răbdătoare și harnică, silită să suporte indiferența și preferințele lui Moromete pentru copiii din prima căsătorie.',
-      'Niculae': 'Fiul cel mic, inteligent și sensibil. În vol. I caută educația; în vol. II devine intelectual prins în frământările politice postbelice.',
-      'Paraschiv': 'Fiul cel mare, rebel, egoist, preocupat de bani; pleacă la oraș, abandonând familia.',
-      'Achim': 'Ambițios și dur, se ocupă cu negustoria și contribuie la destrămarea familiei.',
-      'Nilă': 'Lipsit de inițiativă, influențabil, simbol al omului slab în fața schimbării.',
-      'Guica': 'Sora lui Moromete, mereu pusă pe intrigi; tensionează atmosfera familială.',
-      'Cocoșilă': 'Prieten și confident al lui Moromete; reprezintă umorul și înțelepciunea satului.',
-      'Bălosu': 'Vecinul bogat, simbol al presiunii sociale și economice asupra familiei Moromete.'
+      'Ilie Moromete': 'Status: patriarhul familiei Moromete, țăranul filozof. Fizic: bărbat între două vârste, încă sprinten; față arsă de soare, riduri de expresie care „joacă” între ironie și gânduri adânci; ochi sclipitori, șireți, care văd tot fără să pară că se uită. Vibe: filosoful desculț , pe stănoaga podiștei, cu țigară răsucită în mână, uitându-se peste drum la drumul mare cu zâmbet în colțul gurii; autoritate calmă, ușor distantă. Haine: cămașă de cânepă veche, descheiată, pălărie de paie tocită, ițari largi. Comportament: menține unitatea familiei prin dialog și amânare; luptă cu perceptorul, banca, fiilor; izbucnește cu violență când complotul devine evident; în vol. II e înfrânt, vinde pământ, îl trimite pe Niculae la școală; refuză colectivul, moare la bătrânețe. Descriere generală: simbolul țăranului filozof și al unei lumi care dispare.',
+      'Catrina Moromete': 'Status: soția lui Ilie (a doua), mamă a copiilor din a doua căsătorie. Fizic: femeie îmbătrânită înainte de vreme de muncă și de gura soțului; figură religioasă, sobră, gura strânsă de supărare. Vibe: revoltă mocnită , trebăluind prin curte sau la masă cu privire plină de reproș către Ilie; pare că mormăie rugăciune sau blestem printre dinți. Haine: catrință neagră, batic legat strâns, haine de muncă pătate de pământ. Comportament: suportă indiferența lui Ilie și preferințele pentru copiii din prima căsătorie; părăsește în vol. II din cauza pământului ei. Descriere generală: soția răbdătoare și harnică, dar plină de resentimente ascunse.',
+      'Niculae Moromete': 'Status: fiul cel mic al lui Ilie și Catrina. Fizic: copil (apoi adolescent) firav, ochi mari și inteligenți, frunte bombată; arată ca un băiat făcut pentru litere, nu pentru coada sapei. Vibe: visătorul neînțeles , mergând cu oile cu carte ascunsă sub cămașă sau plângând în hohote când nu e lăsat la școală. Haine: haine rămase mici, picioare goale pline de praf. Comportament: în vol. I caută educația; Ilie acceptă în final să-l trimită la școală; în vol. II devine activist de partid, reprezentant al noii puteri. Descriere generală: intelectualul care iese din familie și se prinde în frământările politice postbelice.',
+      'Paraschiv, Nilă și Achim': 'Status: cei trei fii din prima căsătorie a lui Ilie. Fizic: trei flăcăi zdraveni, solizi, fețe colțuroase, mâini grele; seamănă cu tatăl la trăsături dar le lipsește „lumina” din ochi; priviri opace, încărcate de ură și lăcomie. Vibe: brutalitatea pragmatică , vorbind pe furiș în spatele grajdului, plănuind fuga la București. Haine: straie de flăcăi de sat, cămăși aspre, opinci. Comportament: Paraschiv e rebel, egoist, preocupat de bani; Nilă lipsit de inițiativă, influențabil; Achim ambițios, se ocupă cu negustoria; toți trei complotează împreună, pleacă la oraș și abandonează familia; sunt bătuți de Ilie cu parul când complotul iese la iveală. Descriere generală: cei trei fiii cei mari care destramă familia și sfidează autoritatea patriarhală.',
+      'Cocoșilă': 'Status: prietenul cel mai bun al lui Moromete, „parlamentar” din Poiana. Fizic: om coleric, față care se înroșește repede când înjură (ceea ce face des). Vibe: partenerul de duel verbal , dând din mâini, nervos, explicându-i lui Moromete politica externă. Haine: pălărie pusă pe ceafă, vestă veche. Comportament: confident și partener de discuții; reprezintă umorul și vocea satului. Descriere generală: prietenul care îl însoțește pe Ilie la discuțiile din poiana lui Iocan.',
+      'Dumitru al lui Nae': 'Status: „parlamentar” din Poiana. Fizic: om mai așezat, mai serios. Vibe: audiența atentă , ascultă mult, intervine rar. Comportament: face parte din cercul care se strânge la Iocan; contrastează cu Cocoșilă prin liniște. Descriere generală: figura calmă din grupul de discuții din sat.',
+      'Tudor Bălosu': 'Status: vecinul bogat, inamic al familiei Moromete. Fizic: om „greu”, față pătrată, inexpresivă; opusul lui Moromete , nu glumește, doar calculează pământuri. Vibe: lăcomia rece , stând la gardul lui, uitându-se cu dispreț la curtea neîngrijită a lui Moromete. Comportament: bogat, avar; simbol al presiunii economice; Polina e fiica lui. Descriere generală: vecinul care întruchipează lăcomia și disprețul față de cei în dificultate.',
+      'Guica (sora lui Moromete)': 'Status: sora lui Ilie Moromete. Fizic: bătrână slabă, „uscățivă”, trăsături de vrăjitoare; voce stridentă, privire plină de venin. Vibe: răutatea satului , ascunsă după gard, pândind ce fac ceilalți, cu rânjet răutăcios. Comportament: mereu pusă pe intrigi; tensionează atmosfera familială. Descriere generală: umbra răutății și a bârfei în ograda Moromeților.',
+      'Iocan': 'Status: fierarul satului. Fizic: om impunător, mușchi de fierar, dar cu ochelari de citit , aer de „intelectual al ciocanului”. Comportament: în poiana lui se strâng toți; aici au loc discuțiile politice și de sat; Ilie participă la „parlament”. Descriere generală: cel în a cărui poiană se strâng toți; punctul de întâlnire al satului.',
+      'Polina': 'Status: fiica lui Tudor Bălosu. Fizic: fată mândră, frumusețe sălbatică. Comportament: gata să fugă cu Birică (săracul satului) doar ca să-și sfideze tatăl. Descriere generală: contrastează cu avaricia tatălui; simbol al dorinței de libertate.',
+      'Salcâmul': 'Status: copac-personaj. Fizic: copac uriaș, noduros, care domină ograda lui Moromete. Vibe: gardian vechi al curții. Comportament: este tăiat în cursul poveștii; dispariția lui marchează schimbarea și pierderea. Descriere generală: personaj simbolic , prezența veche asupra ogrăzii, înainte de destrămare.'
+    },
+    caractereFolder: 'morometii',
+    personajeImagini: {
+      'Ilie Moromete': 'ilie.png',
+      'Catrina Moromete': 'catrina.png',
+      'Niculae Moromete': 'niculae.png',
+      'Paraschiv, Nilă și Achim': 'cei_trei.png',
+      'Cocoșilă': 'cocosila.png',
+      'Dumitru al lui Nae': 'dumitru.png',
+      'Tudor Bălosu': 'tudor.png',
+      'Guica (sora lui Moromete)': 'Guica.png',
+      'Iocan': 'iocan.png',
+      'Polina': 'polina.png',
+      'Salcâmul': 'salcamul.png'
     },
 
     titluSection: {
