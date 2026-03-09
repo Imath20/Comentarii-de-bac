@@ -1335,8 +1335,17 @@ export const OPERA_DETAILS = {
     ],
 
     personaje: [
-      'Ștefan Gheorghidiu',
-      'Ela'
+      'Ștefan Gheorghidiu (înainte de război)',
+      'Ștefan Gheorghidiu (în război)',
+      'Ștefan și Ela',
+      'Ela Gheorghidiu',
+      'Unchiul Tache',
+      'Domnul G. (Grigoriade)',
+      'Nae Gheorghidiu',
+      'Sublocotenentul Orișan',
+      'Anisoara',
+      'Căpitanul Corbu',
+      'Soldații'
     ],
 
     analiza: 'Petrescu folosește tehnici narative moderne pentru a explora psihologia personajelor. Romanul combină introspecția, analiza emoțională și experiența războiului, oferind un portret profund al iubirii pasionale și al consecințelor ei. Temele principale sunt gelozia, obsesia, suferința și modul în care individul se confruntă cu realitatea istorică și socială.',
@@ -1350,8 +1359,28 @@ export const OPERA_DETAILS = {
     ],
 
     personajeDetalii: {
-      'Ștefan Gheorghidiu': 'Protagonistul, intelectual și ofițer, prins între iubire și gelozie. Analizează obsesiv comportamentul Elei și trăiește conflicte interioare profunde. Simbolizează introspecția și modernismul psihologic.',
-      'Ela': 'Tânăra iubită a lui Ștefan, sensibilă și pasională, dar percepută prin filtrul geloziei lui Ștefan. Este simbol al feminității și al complexității relațiilor afective în cadrul modernist.'
+      'Ștefan Gheorghidiu (înainte de război)': 'Status: protagonist în partea I, intelectual, soțul Elei, înainte de plecarea pe front. Fizic: bărbat tânăr, subțire, frunte înaltă de intelectual, ochi care par mereu că analizează ceva; aer ușor arogant dar vulnerabil; tip de bibliotecă. În București: elegant, privire fixă, geloasă, urmărind-o pe Ela la petreceri. Haine: costum la comandă. Comportament: prins între iubire și gelozie, analizează obsesiv comportamentul Elei; primește moștenire de la unchiul Tache; o urmărește pe Ela în ultima noapte de dragoste; cere divorțul. Descriere generală: prima ipostază a lui Ștefan , obsesia, gelozia și drama iubirii înainte de război.',
+      'Ștefan Gheorghidiu (în război)': 'Status: același protagonist în partea a II-a, sublocotenent pe front. Fizic: față murdară de pământ, barbă de câteva zile, privire golită de speranță, uitându-se la explozii. Haine: uniformă de ofițer român din Primul Război Mondial, prăfuită și ruptă. Comportament: trăiește experiența războiului; transformarea și detașarea față de trecut, de gelozie și de Ela; conflict cu Căpitanul Corbu. Descriere generală: a doua ipostază , războiul anulează drama iubirii; simbolizează introspecția în fața morții și a absurdității.',
+      'Ștefan și Ela': 'Cuplul central al romanului. Reprezintă idila și apoi erodarea relației: dragostea pasională, gelozia lui Ștefan, schimbarea Elei după moștenire, „ultima noapte de dragoste” și cererea de divorț. Imaginea îi surprinde pe amândoi , perechea înainte de despărțire și de război.',
+      'Ela Gheorghidiu': 'Status: soția lui Ștefan, personaj feminin central. Fizic: femeie superbă, tip „femme fatale”; ochi mari (albaștri sau verzi), păr coafat după moda anilor ’20 (bob sau valuri), zâmbet interpretabil în mii de feluri (inocent sau viclean). Vibe: misterul feminin , rochie de seară, pahar de șampanie, râzând cu alt bărbat în timp ce Ștefan o privește din umbră; senzualitate care îl înnebunește pe soț. Haine: rochii de mătase, perle, blănuri scumpe, pălării cochete. Comportament: se schimbă după moștenire, devine atentă la lumea mondenă și la bărbați bogați (domnul G.); Ștefan o urmărește gelos; la petrecere este în centrul suspiciunilor. Descriere generală: percepută prin filtrul geloziei lui Ștefan; simbol al feminității și al complexității relațiilor afective în cadrul modernist.',
+      'Unchiul Tache': 'Status: unchiul lui Ștefan, bătrân foarte bogat. Fizic: față ca de pergament, uscată; privire tăioasă și disprețuitoare față de rudele care îi vânează averea. Vibe: avarul singuratic , în pat mare, luxos dar rece, înconjurat de perne, mână slabă strângând cearșaful. Haine: halat de mătase scump, dar cam vechi. Comportament: îi lasă moștenire lui Ștefan; accesul la avere deschide lui Ștefan și Elei ușa în lumea mondenă, cu consecințe asupra relației. Descriere generală: zgârcit, simbol al averii care corupe și schimbă dinamica familiei.',
+      'Domnul G. (Grigoriade)': 'Status: rivalul lui Ștefan în dragoste, personaj monden. Fizic: tip „monden”, bine făcut, sportiv; zâmbet de om care știe să placă femeilor; maniere impecabile, siguranță de sine care îl scoate din minți pe Gheorghidiu. Vibe: șmecherașul de salon , șoptindu-i ceva Elei la ureche, mână pe spătarul scaunului ei. Haine: smoking negru, pantofi lăcuiți, floare la butonieră. Comportament: atrage atenția Elei în lumea bună; alimentează gelozia și suspiciunile lui Ștefan. Descriere generală: rivalul elegant care întruchipează pericolul și obsesia lui Ștefan.',
+      'Nae Gheorghidiu': 'Status: unchiul politician al lui Ștefan. Fizic: bărbat corpolent, voce puternică; față roșie de mâncău; privire de om care știe să „se descurce”. Vibe: cinismul pragmatic , la masă plină cu mâncare, vorbind despre bani. Comportament: mereu pus pe afaceri și politică; reprezintă lumea intereselor și a pragmatismului. Descriere generală: tipul politicianului și al omului de afaceri în familia Gheorghidiu.',
+      'Sublocotenentul Orișan': 'Status: ofițer tânăr pe front, tovarăș de tranșee. Fizic: tânăr, curajos, dar epuizat. Vibe: rezistența , scriind o scrisoare acasă la lumina unei lumânări, într-un buncăr. Comportament: reprezintă camaraderia pură din tranșee; contrastează cu dramele filosofice ale lui Ștefan. Descriere generală: simbol al omeniei și solidarității în război.',
+      'Anisoara': 'Status: verișoara lui Ștefan. Caracteristici: cea care îl introduce în lumea bună; femeie plină de viață, dar superficială; adoră bârfele. Descriere generală: personaj de tranziție care deschide accesul la mediul monden unde se va desfășura drama geloziei.',
+      'Căpitanul Corbu': 'Status: militar de carieră, superior al lui Ștefan pe front. Caracteristici: rigid, nu înțelege dramele filosofice ale lui Ștefan; simbol al datoriei împlinite orbește. Comportament: Ștefan intră în conflict cu el (incident violent menționat în rezumat). Descriere generală: reprezintă autoritatea militară și distanța față de introspecția intelectualului.',
+      'Soldații': 'Status: masa de manevră, oamenii din război care mor lângă Ștefan. Fizic: oameni simpli, țărani luați de la plug; fețe lăsate, ochi speriați, mâini înghețate. Vibe: teroarea războiului , stând în noroi, sub ploaie măruntă, așteptând atacul. Descriere generală: reprezintă prețul uman al războiului și fundalul în fața căruia se desfășoară transformarea lui Ștefan.'
+    },
+    caractereFolder: 'ultima_noapte',
+    personajeImagini: {
+      'Ștefan Gheorghidiu (înainte de război)': 'stefan_prewar.png',
+      'Ștefan Gheorghidiu (în război)': 'stefan_war.png',
+      'Ștefan și Ela': 'stefan_ela.png',
+      'Ela Gheorghidiu': 'ela.png',
+      'Unchiul Tache': 'unchiul_tache.png',
+      'Domnul G. (Grigoriade)': 'domnul_g.png',
+      'Nae Gheorghidiu': 'nae.png',
+      'Căpitanul Corbu': 'corbu.png'
     },
 
     titluSection: {
