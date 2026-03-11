@@ -207,10 +207,10 @@ export const OPERA_DETAILS = {
       'Demiurgul'
     ],
     personajeDetalii: {
-      'Hyperion (Luceafărul)': 'Protagonistul cosmic al poemului, spirit etern și genial. Trăiește drama imposibilității de a coborî la nivelul oamenilor. Deși aspiră la iubire, esența sa nemuritoare îl condamnă la singurătate și luciditate absolută.',
-      Cătălina: 'Fata de împărat, frumoasă și visătoare, simbol al lumii terestre. Este atrasă de misterul Luceafărului, dar rămâne ancorată în real și îl preferă pe Cătălin. Reprezintă idealul uman al fericirii imediate.',
-      Cătălin: 'Paj ștrengar, vioi și seducător. Emblema omului simplu, instinctual, al vitalității lumești. Antiteza perfectă a lui Hyperion; el oferă Cătălinei ceea ce geniul nu poate: prezență și afectivitate concretă.',
-      Demiurgul: 'Figura supremă a ordinii cosmice. Îl refuză pe Hyperion atunci când acesta cere să devină muritor, subliniind imposibilitatea modificării naturii divine. Reprezintă rațiunea cosmică, imuabilă și rece.'
+      'Hyperion (Luceafărul)': 'Status: protagonistul cosmic al poemului, spirit astral și genial, „rege al nopții”. Trăsături: esență nemuritoare, conștiință care cuprinde tot universul; aspiră la iubire și coborâre la lume, dar natura lui îl condamnă la singurătate. Comportament: coboară „pe-o rază” la Cătălina, o întreabă dacă vrea să fie „împărăteasă în cer”; când ea alege pe Cătălin, se retrage în cosmos; merge la Demiurg să ceară să devină muritor și este refuzat. Descriere generală: simbolul geniului romantic izolat și al imposibilității de a trăi pământește; trăiește drama cunoașterii absolute care exclude apartenența la lumea oamenilor; singurătatea și luciditatea îl definesc ca personaj tragic.',
+      Cătălina: 'Status: fata de împărat, obiectul iubirii Luceafărului și alegerea ei între el și Cătălin. Trăsături: frumoasă, visătoare, ancorată în lumea terestră; atrasă de misterul și frumusețea Luceafărului (citat: cum numa în vis un înger se arată), dar îi e frică de necunoscut. Comportament: primește vizita Luceafărului; îl preferă pe Cătălin, cel „de lut”, pentru că oferă prezență și siguranță imediată. Descriere generală: simbolul lumii terestre și al fericirii imediate; alegerea ei ilustrează opoziția dintre absolut (Luceafăr) și contingent (Cătălin); reprezintă idealul uman care refuză geniul pentru viața simplă.',
+      Cătălin: 'Status: pajul ștrengar, rivalul terestru al Luceafărului. Trăsături: vioi, seducător, „chip de lut” — om simplu, instinctual, prezent. Comportament: oferă Cătălinei ceea ce Luceafărul nu poate: apropiere, căldură, viață de zi cu zi. Descriere generală: antiteza perfectă a lui Hyperion; emblema vitalității lumești și a fericirii posibile; prin el Eminescu subliniază că lumea alege omul concret, nu geniul inaccesibil.',
+      Demiurgul: 'Status: figura supremă a ordinii cosmice, „stăpânul” cerului. Trăsături: rațiune imuabilă, rece; garantează legile universului. Comportament: îl refuză pe Hyperion când acesta cere să devină muritor („să cobori la lume”), subliniind că natura divină nu poate fi schimbată. Descriere generală: reprezintă imposibilitatea modificării destinului și a esenței; închide definitiv drama Luceafărului, confirmând condamnarea la singurătate eternă.'
     },
     analiza: 'Poemul construiește opoziția fundamentală dintre absolut și contingent. Hyperion, spiritul cosmic, aspiră spre iubire, dar rămâne prizonier al propriei esențe nemuritoare. Cătălina, ființă fragilă a lumii pământești, caută fericirea imediată și îl preferă pe Cătălin. Refuzul Demiurgului scoate în evidență drama geniului: înțelege tot, dar nu poate aparține lumii comune.',
     citate: [
@@ -1565,11 +1565,11 @@ export const OPERA_DETAILS = {
       'Aglae Tulea': 'Status: sora lui Costache, „Baba Absolută”, capul clanului Tulea, vulturul după moștenire. Fizic: femeie autoritară, trăsături rigide, ochi răi și reci, buze strânse mereu într-o linie dreaptă de dispreț; te deochi dintr-o singură privire. Răutatea pură. Scene: stând în capul mesei, supraveghind totul ca un vultur, gata să atace. Haine: rochii negre sau mov închis, încheiate până sub bărbie, broșe masive, părul prins într-un coc foarte strâns. Descriere generală: meschinăria și ipocrizia; o alungă pe Otilia din casă la moartea lui Costache; planurile ei pentru avere eșuează.',
       'Stănică Rațiu': 'Status: avocat fără clienți, ginere în familia Tulea, soțul Olimpiei, intrigant și parvenit. Fizic: bărbat blond, ochi albaștri, mereu agitat, vorbind mult și gesticulând teatral; figură de „șarlatan simpatic” la prima vedere. Demagogul. Scene: vorbind cu patos despre „familie” și „morală” în timp ce fură din sertarele lui Moș Costache. Haine: costum care vrea să pară scump dar e cam lucios sau uzat, joben, mănuși. Descriere generală: arivismul fără scrupule; îl jefuiește pe Costache pe patul de moarte; devine politician, divorțează, se recăsătorește.',
       'Aurica Tulea': 'Status: fata bătrână a Aglaei, disperată să se mărite. Fizic: slabă, nas lung, pistruiată, expresie de nemulțumire cronică. Invidie și frustrare. Scene: uitându-se cu ură la Otilia sau pudrându-se excesiv în fața oglinzii. Haine: rochii prea încărcate care nu i se potrivesc, încercând să pară mai tânără. Descriere generală: contrastul cu Otilia; moare singură și nebună, ilustrând soarta celor care nu pot ieși din invidie.',
-      'Simion Tulea': 'Status: soțul Aglaei, bătrânul apatic al familiei. Fizic: bătrân care brodează la gherghef; privire absentă, de om care s-a deconectat de realitate. Alienarea. Scene: într-un fotoliu, făcând broderie, ignorând circul din jur. Descriere generală: reprezintă retragerea și neputința; umbra soției autoritare.',
-      'Titi Tulea': 'Status: membru al familiei Tulea, tânăr cu aspect infantil. Fizic: față rotundă, ochi inexpressivi; se joacă mereu cu ceva sau desenează monoton. Lene și imbecilitate. Descriere generală: personaj grotesc, contrast cu ambiția și intriga celorlalți; ilustrează decăderea morală a clanului.',
-      'Georgeta': 'Status: „curtezana” de lux, prietena lui Stănică. Fizic și moral: frumusețe provocatoare, machiaj strident, atitudine degajată. Contrast bun pentru Otilia – feminitatea vulgară și calculată vs. enigma. Descriere generală: reprezintă lumea de pe marginea „respectabilității” cu care Stănică se înconjoară; subliniază ipocrizia morală a personajelor „cuminti”.',
-      'Olimpia': 'Status: soția lui Stănică Rațiu, fiica Aglaei. Fizic și moral: femeie ștearsă, plictisită, care suportă toate nebuniile soțului ei. Descriere generală: victimă pasivă a căsniciei cu un parvenit; tolerează infidelitatea și ambiția lui Stănică; ilustrează soarta femeii fără putere în acel mediu.',
-      'Marina': 'Status: servitoarea lui Moș Costache. Fizic și moral: femeie aspră, care știe toate secretele casei. Descriere generală: vocea „de pe dincoace” a gospodăriei; ține legătura între bătrân și lumea exterioară; știe unde sunt ascunși banii și cum funcționează avariul.'
+      'Simion Tulea': 'Status: soțul Aglaei, bătrânul apatic al familiei Tulea. Fizic: bătrân care brodează la gherghef; privire absentă, de om care s-a deconectat de realitate; mișcări lente, automate. Scene: într-un fotoliu, făcând broderie, ignorând complet circul din jur — Aglaea, Stănică, moștenirea. Comportament: nu intervine în conflicte, nu ia parte la hăituirea după avere; trăiește într-o bulă de indiferență. Descriere generală: reprezintă retragerea și neputința masculină; umbra soției autoritare; ilustrează cum unii membri ai familiei supraviețuiesc prin detașare totală.',
+      'Titi Tulea': 'Status: membru al familiei Tulea, tânăr cu aspect și comportament infantil. Fizic: față rotundă, ochi inexpressivi; se joacă mereu cu ceva sau desenează monoton; pare blocat la vârsta de copil. Comportament: nu participă la intrigi, nu înțelege lupta pentru moștenire; ocupat doar de jucării și de rutina lui. Descriere generală: personaj grotesc care contrastează cu ambiția și intriga celorlalți; ilustrează decăderea morală și intelectuală a clanului Tulea; prin el Călinescu arată că familia are și „resturi” inofensive dar triste.',
+      'Georgeta': 'Status: „curtezana” de lux, prietena lui Stănică Rațiu, contrapunctul feminității „respectabile”. Fizic: frumusețe provocatoare, machiaj strident, atitudine degajată; știe că atrage privirile și o folosește. Comportament: apare alături de Stănică în lumea bucureșteană; ilustrează dublul standard moral — bărbații o folosesc, dar o desconsideră. Descriere generală: reprezintă lumea de pe marginea respectabilității cu care Stănică se înconjoară; contrastul cu Otilia (enigma, rafinamentul) subliniază ipocrizia: „femeile cuminti” sunt judecate altfel decât cele „ușoare”, deși bărbații le folosesc pe amândouă.',
+      'Olimpia': 'Status: soția lui Stănică Rațiu, fiica Aglaei. Fizic și moral: femeie ștearsă, plictisită, fără sclipire; suportă toate nebuniile soțului — infidelitatea, ambiția, jefuirea lui Costache — fără să protesteze cu adevărat. Comportament: tolerează; rămâne în umbră; la divorț și recăsătorirea lui Stănică e pusă la margine. Descriere generală: victimă pasivă a căsniciei cu un parvenit; ilustrează soarta femeii fără putere economică sau emoțională în acel mediu; prin ea se vede că „familia” Tulea sacrifică și pe ai săi.',
+      'Marina': 'Status: servitoarea lui Moș Costache, vocea practică a gospodăriei. Fizic și moral: femeie aspră, harnică, care știe toate secretele casei — unde sunt banii, cum se închide ușa, ce se întâmplă cu „puiuțul”. Comportament: face legătura între bătrân și lumea exterioară; știe despre jefuirea lui Stănică dar nu poate opri cursul evenimentelor; uneori mustră, alteori se supune. Descriere generală: reprezintă clasa servitoarelor care vede tot și nu are putere; ține casa în picioare; simbolul cunoașterii practice, opusă iluziilor bătrânului avar.'
     },
 
     caractereFolder: 'enigma_otiliei',
@@ -1964,7 +1964,7 @@ export const OPERA_DETAILS = {
       '"Și-i atârnau aripile de plumb"'
     ],
     personajeDetalii: {
-      'eul liric': 'Vocea poetică centrală, exprimă sentimentul de izolare, neputință și melancolie. Este un observator pasiv al propriei stări și al mediului apăsător în care trăiește.'
+      'eul liric': 'Status: vocea poetică centrală, singurul „personaj” viu în universul mortuar al poeziei. Trăsături: exprimă izolarea absolută („stam singur în cavou”), neputința, melancolia și disperarea; observator pasiv al sicrielor de plumb, al florilor de plumb, al „amorului” mort. Comportament: stă în cavou lângă cel iubit mort; încearcă să-l strige pe cel dispărut; trăiește starea de coșmar (vânt, scârțâit de coroane). Descriere generală: simbolismul bacovian întruchipat — greutatea sufletească (plumbul), iminența morții, oboseala metafizică; eul nu acționează, doar suferă și constată, devenind vocea apocalipsei interioare și a singurătății fără ieșire.'
     },
     titluSection: {
       descriere: 'Titlul „Plumb” sintetizează tema centrală a poeziei: greutatea sufletească, apăsarea existențială și iminența morții.',
@@ -2086,7 +2086,7 @@ export const OPERA_DETAILS = {
       '"Din bube, mucegaiuri și noroi / Iscat-am frumuseți și prețuri noi"'
     ],
     personajeDetalii: {
-      'eul liric': 'Vocea poetică care se adresează posterității, asumându-și rolul de creator și păstrător al valorilor culturale. Reprezintă artistul care își folosește experiența personală și durerea ca materie primă pentru creație și transmiterea moștenirii spirituale.'
+      'eul liric': 'Status: vocea poetică a poetului-testator, creatorul care își lasă moștenirea spirituală. Trăsături: se adresează direct fiului și posterității; asumă rolul de intermediar între lumea umilă a străbunilor (materia primă) și lumea cultă (cartea, opera). Comportament: declară că nu lasă bunuri materiale, ci „un nume adunat pe o carte”; descrie transformarea suferinței, a „bubelor și mucegaiurilor”, în frumuseți și prețuri noi; transmite valorile și lupta străbunilor. Descriere generală: reprezintă artistul care își folosește experiența personală și durerea ca materie primă pentru creație; poemul e o artă poetică — definirea rolului poetului ca cel care transfigură realitatea dură în moștenire culturală pentru generațiile viitoare.'
     },
     titluSection: {
       descriere: 'Titlul „Testament” sugerează o moștenire care nu este materială, ci spirituală și artistică, subliniind ideea responsabilității poetului față de cultură și posteritate.',
@@ -2282,7 +2282,7 @@ export const OPERA_DETAILS = {
       '"Și m-am silit să scriu cu unghiile de la mâna stângă"'
     ],
     personajeDetalii: {
-      'eul liric': 'Vocea poetică care experimentează suferința și degradarea, transformând experiența dureroasă în creație artistică. Reprezintă artistul care luptă cu condițiile vitrege pentru a lăsa o urmă a existenței sale.'
+      'eul liric': 'Status: vocea poetică a artistului închis, cel care scrie „cu unghia pe tencuială” în condiții extreme. Trăsături: experimentează suferința fizică și spirituală, degradarea (celulă, firidă goală, întuneric); e abandonat de „taurul, leul, vulturul” (puteri divine). Comportament: scrie „stihuri de groapă”, „stihuri fără an”; se silește să scrie „cu unghiile de la mâna stângă” când i se topește unghia; transformă durerea în text. Descriere generală: reprezintă artistul care luptă cu condiții vitrege pentru a lăsa o urmă a existenței; oximoronul „flori de mucigai” îi aparține — creația se naște din putrezire și suferință; ilustrează estetica urâtului și puterea transformatoare a artei.'
     },
     titluSection: {
       descriere: 'Titlul „Flori de mucigai” reflectă contrastul dintre frumusețe și degradare, subliniind capacitatea artei de a înfrumuseța chiar și cele mai întunecate experiențe.',
@@ -2422,7 +2422,7 @@ export const OPERA_DETAILS = {
       '"căci eu iubesc / și flori și ochi și buze și morminte"'
     ],
     personajeDetalii: {
-      'eul liric': 'Vocea poetică care exprimă respectul față de misterul lumii și rolul creatorului în păstrarea și sporirea frumuseții și a tainei existenței.'
+      'eul liric': 'Status: vocea poetică a creatorului blagian, cel care declară atitudinea față de lume și cunoaștere. Trăsături: refuză cunoașterea rațională care „strivește” minunea; preferă „lumina” care sporește taina, nu o ucide; exprimă iubire față de „flori și ochi și buze și morminte”. Comportament: afirmă „Eu nu strivesc corola de minuni a lumii”; se opune „lumii altora” care sugrumă vraja; se compară cu luna care mărește taina nopții. Descriere generală: reprezintă manifestul estetic și filosofic blagian — cunoașterea luciferică (intuitivă, creatoare) vs. paradisiacă (rațională, ucigătoare de taină); eul devine cel care „îmbogățește întunecata zare cu largi fiori de sfânt mister”.'
     },
     titluSection: {
       descriere: 'Titlul subliniază ideea centrală a poeziei: respectul față de viață, mister și frumusețe, fără a distruge sau diminua minunile lumii.',
@@ -2562,7 +2562,7 @@ export const OPERA_DETAILS = {
       '"o leoaică aramie / cu mișcările viclene"'
     ],
     personajeDetalii: {
-      'eul liric': 'Vocea poetică care experimentează iubirea ca forță intensă și transformatoare. Este martor și participant la revelația iubirii, trăind-o ca o experiență senzorială și existențială care zguduie universul interior.'
+      'eul liric': 'Status: vocea poetică care trăiește revelația iubirii ca atac și capturare. Trăsături: este „pândit” de iubire (leoaica), apoi „mușcat” — experiența e senzorială, violentă, transfiguratoare; nu descrie iubirea blândă, ci forța primordială. Comportament: „iubirea mi-a sărit în față”; eul e obiectul atacului, apoi al mușcăturii; trăiește starea de grație și alienare. Descriere generală: reprezintă iubirea ca forță sălbatică (leoaica aramie, mișcări viclene); poemul cosmicizează actul erotic prin metaforă animalică; eul devine martor și participant la o experiență care zguduie universul interior.'
     },
     titluSection: {
       descriere: 'Titlul „Leoaică tânără, iubirea” pune în prim-plan iubirea ca forță vie și instinctuală, evidențiind caracterul sălbatic și primar al emoției.',
@@ -2718,7 +2718,7 @@ export const OPERA_DETAILS = {
       '"Si totul ce romantic, ca-n basme, se urzea"'
     ],
     personajeDetalii: {
-      'eul liric': 'Vocea poetică care evocă amintirile copilăriei și legătura cu trecutul. Prin intermediul experiențelor și observațiilor sale, eul liric pune în valoare frumusețea naturii, tradițiile familiale și continuitatea valorilor culturale.'
+      'eul liric': 'Status: vocea poetică care evocă amintirile copilăriei și legătura cu trecutul. Trăsături: privirile și experiențele sale pun în valoare bunica Calyopi, câmpia sub lună, „totul ce romantic, ca-n basme, se urzea”; ton nostalgic, cald. Comportament: „aci sosi pe vremuri” — intră în trecut; privește cu bunica câmpia „ca un lac”; recuperează memoria familială și peisajul rural. Descriere generală: reprezintă continuitatea valorilor culturale și frumusețea naturii transmişe prin generații; eul leagă prezentul de trecut și oferă „comoara nesecată” a copilăriei fericite.'
     },
     titluSection: {
       descriere: 'Titlul „Aci sosi pe vremuri” evocă sosirea în trecut, amintirile și legătura cu tradițiile și familia. Este o invitație la reflectarea asupra timpului și a valorilor transmise de generații.',
@@ -2902,8 +2902,8 @@ export const OPERA_DETAILS = {
       '"Bătându-se cu moartea, uitase de viață!"'
     ],
     personajeDetalii: {
-      'eul liric': 'Vocea poetică care reflectă asupra suferinței și sacrificiului, punând accent pe dimensiunea umană și spirituală a evenimentelor.',
-      'Hristos': 'Figura centrală a poeziei, simbol al sacrificiului suprem și al puterii morale, confruntat cu suferința și destinul divin.'
+      'eul liric': 'Status: vocea poetică care meditează asupra scenei din Ghetsimani și o reinterpretă. Trăsături: nu e participant, ci observator care pune accent pe dimensiunea umană și spirituală — lupta lui Iisus cu soarta, refuzul paharului, „bătându-se cu moartea”. Comportament: reflectă; transmite cititorului gravitatea agoniei și revolta umană în fața sacrificiului. Descriere generală: oferă cadrul meditativ expresionist; prin eul liric Voiculescu transformă episodul biblic într-o luptă viscerală, cosmică, între voința divină și carnea care se împotrivește.',
+      'Hristos': 'Status: figura centrală a poeziei, Iisus în Grădina Ghetsimani. Trăsături: prezentat în ipostază profund umană și vulnerabilă — nu ca Fiu al lui Dumnezeu rece, ci ca erou tragic care luptă fizic și spiritual („căzut pe brânci”). Comportament: „lupta cu soarta și nu primea paharul”; „nu voia s-atingă infama băutură”; „bătându-se cu moartea, uitase de viață”. Descriere generală: simbol al sacrificiului suprem și al puterii morale; confruntarea cu suferința și destinul divin e redată ca revoltă și agonie, nu ca acceptare pasivă — Voiculescu subliniază dimensiunea umană a Mântuitorului.'
     },
     titluSection: {
       descriere: 'Titlul poeziei situează cititorul în Grădina Ghetsimani, spațiul în care Hristos se confruntă cu ultimele momente de suferință înaintea răstignirii. Este un titlu care evocă solemnitatea și dramatismul sacrificial.',
@@ -3058,8 +3058,8 @@ export const OPERA_DETAILS = {
       '"Mulţumesc Dumitale. Fragii fragezi, mai la vale. Începi, rogu-te, cu mine. - Te-aş culege, rigă blând. Lasă. - Aşteaptă de te coace."'
     ],
     personajeDetalii: {
-      'Riga Crypto': 'Regele-ciupercă, simbol al lumii vegetale limitate, incapabile de evoluție spirituală. Reprezintă ființa care trăiește în umbră și refuză lumina, rămânând captivă propriei naturi.',
-      'Lapona Enigel': 'Tânără pură, luminată și orientată spre cunoaștere. Aspirația ei spre soare simbolizează dorința de evoluție spirituală și depășire a condiției materiale.'
+      'Riga Crypto': 'Status: „regele-ciupercă”, personaj alegoric, simbol al lumii vegetale și al umbrei. Trăsături: ființă atrasă de umbră, de umezeală și de instinct; „crai de ghiață”, „inimă ascunsă”; refuză lumina și înflorirea („că nu voia să înflorească”). Comportament: vine s-o mâie pe Enigel „cu dulceață”; la nuntă („spartul nunții”) nu poate suporta soarele; rămâne captiv al propriei naturi. Descriere generală: reprezintă condiția limitată, incapabilă de evoluție spirituală; opusul lui Enigel — ea aspiră la soare, el trăiește în umbră; eșecul apropierii dintre cele două naturi e tema centrală a poemului.',
+      'Lapona Enigel': 'Status: tânăra pură, personaj alegoric, simbol al luminii și al aspirației. Trăsături: „cu piei, pre nume Enigel”; orientată spre cunoaștere și spiritualizare; aspiră spre soare. Comportament: este mâiată de Crypto cu dulceață; la nuntă („nuntaș fruntaș”) unirea e imposibilă — Crypto nu poate ieși la lumină. Descriere generală: reprezintă dorința de evoluție spirituală și depășire a condiției materiale; contrastul dintre ea și Crypto (lumină vs. umbră) conduce la „spartul nunții” și la imposibilitatea unirii.'
     },
     titluSection: {
       descriere: 'Titlul combină numele celor două personaje pentru a sugera contrastul dintre lumi opuse și destinul lor incompatibil.',
@@ -3168,9 +3168,9 @@ export const OPERA_DETAILS = {
     teme: ['puterea', 'răzbunarea', 'tradiția istorică', 'destinul', 'conflictul moral'],
     personaje: ['Alexandru Lăpușneanu', 'Ruxanda', 'Moțoc'],
     personajeDetalii: {
-      'Alexandru Lăpușneanu': 'Domnitor tiranic, condus de dorința de putere și răzbunare. Deciziile lui drastice afectează soarta întregului regat și pun în evidență lupta dintre autoritate și moralitate.',
-      'Ruxanda': 'Fiica lui Lăpușneanu, simbol al nevinovăției și al victimei neputincioase în fața puterii tatălui. Relația ei cu tatăl și cu Moțoc amplifică tensiunea dramatică a nuvelei.',
-      'Moțoc': 'Tânăr curajos și devotat, reprezentant al poporului și al dreptății morale, care devine ținta răzbunării domnitorului.'
+      'Alexandru Lăpușneanu': 'Status: domnitorul Moldovei, personaj istoric, tiran. Trăsături: condus de dorința de putere și răzbunare; replică emblematică: „Dacă voi nu mă vreți, eu vă vreau”; deciziile lui drastice (capul lui Moțoc, sângele vărsat) afectează soarta regatului. Comportament: se întoarce cu spahii turci; îi primește pe boieri și îi tratează cu dispreț; cruță pe Moțoc doar ca să-l folosească; la final e învins și învață „a muri”. Descriere generală: simbolul puterii absolute și al tiraniei; lupta dintre autoritate și moralitate; Negruzzi îl prezintă ca personaj complex, nu doar monstru.',
+      'Ruxanda': 'Status: fiica lui Lăpușneanu. Trăsături: simbol al nevinovăției și al victimei neputincioase în fața puterii tatălui; legătura ei cu Moțoc și cu tatăl creează tensiune. Comportament: devine mija de conflict și obiect al deciziilor tatălui; soarta ei amplifică drama. Descriere generală: reprezintă nevinovăția care suferă din cauza tiraniei; prin ea se vede că puterea oprimată lovește și în cei apropiați.',
+      'Moțoc': 'Status: tânăr boier, unul dintre cei patru trimiși la Lăpușneanu. Trăsături: curajos, devotat poporului, vorbește deschis despre „sângele ce ai vărsat”; reprezentant al dreptății morale. Comportament: îl avertizează pe domnitor că țara nu-l dorește; e cruțat ironic („ca să mă scapi de blestemele norodului”); devine ținta răzbunării — „Capul lui Moțoc vrem!”. Descriere generală: simbolul opoziției morale și al curajului în fața tiraniei; soarta lui ilustrează prețul cinstitudinei.'
     },
     analiza: 'Nuvela explorează puterea absolută și consecințele ei asupra indivizilor și societății. Negruzzi evidențiază dilemele morale și dramatice ale domnitorului, alternând între istorie și ficțiune. Relațiile dintre personaje și deciziile lor tragice subliniază tensiunea dintre autoritate, justiție și răzbunare.',
     citate: [
@@ -3309,9 +3309,9 @@ export const OPERA_DETAILS = {
     teme: ['iubirea', 'diferențele culturale', 'pasiunea', 'inițierea', 'conflictul tradiție vs. modernitate'],
     personaje: ['Allan', 'Maitreyi', 'Narendra Sen'],
     personajeDetalii: {
-      'Allan': 'Protagonist european, tânăr curios și intelectual, care descoperă o lume diferită de a sa și experimentează iubirea pasională. Este un personaj aflat între rațiune și emoție, între cultură și pasiune.',
-      'Maitreyi': 'Tânăra indiană, educată și sensibilă, simbol al exoticului și al frumuseții inaccesibile. Relația ei cu Allan este intensă, dar limitată de diferențele culturale și norme sociale.',
-      'Narendra Sen': 'Profesor și tutore al Maitreyi, simbol al tradiției și al autorității în societatea indiană. Este o figură de contrast pentru libertatea emoțională a tinerilor.'
+      'Allan': 'Status: protagonist european (alter ego al lui Eliade), tânăr inginer/curios, intelectual. Trăsături: aflat între rațiune și emoție, între cultură și pasiune; descoperă India și Maitreyi ca pe o revelație; trăiește iubirea imposibilă și gelozia (trecutul ei cu Tagore, „șapte frunze”). Comportament: locuiește la Ripon Mansion; se îndrăgostește de Maitreyi; confruntă normele și diferențele culturale; la final părăsește India, chinuit. Descriere generală: simbolul căutării cunoașterii și al maturizării prin iubire; experiența inițiatică e și emoțională și culturală; „o iubire cum este aceasta nu moare niciodată, chiar dacă trupurile se despart”.',
+      'Maitreyi': 'Status: tânăra indiană, obiectul iubirii lui Allan. Trăsături: educată, sensibilă, „brațul gol, brun, de lut și de ceară”; simbol al exoticului și al frumuseții inaccesibile; are trecut spiritual (Tagore, mantra, șuvița de păr). Comportament: relația cu Allan e intensă, pasională; limitată de diferențele culturale și de familia ei (Narendra Sen); devine enigmă și obiect al geloziei lui Allan. Descriere generală: simbolul iubirii imposibile între două lumi; prin ea Eliade explorează granița dintre real și sacru, între pasiune și tradiție.',
+      'Narendra Sen': 'Status: profesor, tatăl sau tutore al Maitreyi. Trăsături: simbol al tradiției și al autorității în societatea indiană; figură de contrast pentru libertatea emoțională a tinerilor. Comportament: exercită controlul asupra fiicei și asupra normelor; limitează relația Allan–Maitreyi. Descriere generală: reprezintă barierele sociale și culturale care fac iubirea „imposibilă”; prin el se vede tensiunea dintre generații și între India tradițională și atracția tinerilor.'
     },
     analiza: 'Romanul explorează iubirea imposibilă între două culturi și efectele diferențelor sociale și culturale asupra sentimentelor. Eliade folosește experiența lui Allan pentru a analiza maturizarea interioară, conflictele interioare și tensiunea dintre tradiție și pasiune. Opera surprinde universalitatea iubirii și constrângerile impuse de normele sociale.',
     citate: [
@@ -3579,10 +3579,10 @@ export const OPERA_DETAILS = {
     teme: ['oralitatea', 'trecutul', 'legenda', 'tradiția', 'societatea rurală'],
     personaje: ['Ancuța', 'Moș Leonte', 'Ioniță Comisul', 'călătorii și povestitorii de la han'],
     personajeDetalii: {
-      'Ancuța': 'Proprietara hanului, simbol al ospitalității și al locului de întâlnire pentru povești și experiențe. Este un punct central care adună diverse personaje și narațiuni.',
-      'Moș Leonte': 'Povestitor înțelept, reprezentant al tradiției orale. Prin poveștile sale transmite experiență, moravuri și valori morale.',
-      'Ioniță Comisul': 'Tânăr călător sau personaj care contribuie la atmosfera hanului prin relatările sale, reflectând preocupările și evenimentele comunității.',
-      'povestitorii de la han': 'Diverse personaje care completează tabloul social al hanului, fiecare cu propria experiență sau legendă, contribuind la diversitatea narațiunilor.'
+      'Ancuța': 'Status: proprietara Hanului Ancuței, centrul locului de întâlnire. Trăsături: tânără, frumoasă și vicleană „ca mama ei”; simbol al ospitalității; servește vin nou și adună oaspeții. Comportament: hanul e descris ca „cetate” cu ziduri groase; sub acoperișul hanului „sufletele se întâlneau și se împleteau în povești de viață”; ea face ca hanul să fie „o poveste nesfârșită, cu oameni și întâmplări venite din veacuri apuse”. Descriere generală: punctul central care adună diverse personaje și narațiuni; prin ea Sadoveanu stabilește spațiul simbolic al comunității și al schimbului de povești.',
+      'Moș Leonte': 'Status: povestitor la han, zodier. Trăsături: înțelept, reprezentant al tradiției orale; transmite experiență, moravuri și valori morale. Comportament: face parte din cercul eterogen de povestitori (alături de Comisul Ionița, Căpitanul Neculai Isac, Părintele Gherman, Meșterul Ienache); poveștile lui completează „cărții de balade” a neamului. Descriere generală: vocea înțelepciunii populare și a legăturii cu trecutul; prin el se păstrează memoria colectivă.',
+      'Ioniță Comisul': 'Status: razaș bătrân, călător, povestitor. Trăsături: „eu aici îs trecător... cu oala în mână”; roibu mereu gata, „cal ca mine n-are nimeni”; personaj care amână mereu „cea mai minunată istorisire”. Comportament: promite povestea cea mai minunată și creează cadrul narativ (povestea în ramă); la final uită să o spună, îmbrățișează pe Căpitanul Neculai Isac. Descriere generală: simbolul călătorului și al amânării; prin el Sadoveanu subliniază circularitatea și legătura afectivă dintre povestitori.',
+      'călătorii și povestitorii de la han': 'Status: personaje colective — Comisul Ionița, Căpitanul Neculai Isac, Moș Leonte, Părintele Gherman, Meșterul Ienache, alții. Trăsături: fiecare cu propria experiență sau legendă; „hanul era ca o pagină ruptă dintr-un basm”. Comportament: se adună la han, beau vin nou, spun povești despre vitejie, nedreptate, dreptate divină, destin; narațiunile creează tabloul epic al Moldovei de altădată. Descriere generală: diversitatea povestitorilor și a narațiunilor; prin ei se reface „cărții de balade” a neamului și se păstrează memoria comună.'
     },
     analiza: 'Sadoveanu creează o nuvelă în ramă care combină ficțiunea cu tradiția orală. Hanul devine un spațiu simbolic al comunității, al schimbului de experiențe și al păstrării memoriei colective. Fiecare povestire reflectă valori morale, legende locale și legătura dintre trecut și prezent, evidențiind tensiunea dintre tradiție și modernitate.',
     citate: [
@@ -3733,10 +3733,10 @@ export const OPERA_DETAILS = {
     ],
 
     personajeDetalii: {
-      'Iona': 'Personajul principal, pescar prins în burta unui pește uriaș. Este simbolul omului modern, singur, confruntându-se cu sensul vieții, limitele existenței și absurdul.',
-      'Pescarul 1': 'Apare episodic și reprezintă omul obișnuit, prins în rutina vieții, fără întrebări existențiale profunde.',
-      'Pescarul 2': 'Simbolizează repetitivitatea vieții și ciclul existenței; pare o dublură ironică a lui Iona.',
-      'Vocea': 'Instanță abstractă, poate fi conștiința lui Iona sau destinul însuși.'
+      'Iona': 'Status: personajul principal, pescar, prins în burta chitului. Trăsături: om modern, singur, confruntat cu sensul vieții și cu absurdul; vorbește singur, se dedublă (acționează ca două personaje); pierde ecoul („Io” = „eu”) — ultima legătură cu exteriorul. Comportament: se află în gura peștelui cu năvodul aruncat; strigă „Io-na!”, primește doar „Io”; visă să fie pădurar; strigă „Ajutor!” când gura peștelui se închide; „m-am născut în pântecele chitului”. Descriere generală: simbolul omului prins în limitele existenței și al destinului inevitabil; parabolă existențialistă — Iona poate fi oricine; lupta cu cuțitul pentru libertate și cunoaștere.',
+      'Pescarul 1': 'Status: personaj episodic. Trăsături: om obișnuit, prins în rutina vieții, fără întrebări existențiale profunde. Comportament: apare în scenele din afara „chitului”; contrastează cu drama lui Iona. Descriere generală: reprezintă lumea de dincolo de absurd — cei care trăiesc fără a pune problema sensului.',
+      'Pescarul 2': 'Status: dublură episodică. Trăsături: simbolizează repetitivitatea vieții și ciclul existenței; pare o dublură ironică a lui Iona. Descriere generală: subliniază că condiția lui Iona e universală — „omul e un pește care trebuie mereu să înoate împotriva curentului”.',
+      'Vocea': 'Status: instanță abstractă în piesă. Trăsături: poate fi conștiința lui Iona sau destinul însuși; răspunde (sau nu) strigătului. Descriere generală: simbol al comunicării cu absolutul sau al lipsei răspunsului; amplifică izolarea și întrebarea existențială.'
     },
 
     titluSection: {
@@ -3875,11 +3875,11 @@ export const OPERA_DETAILS = {
       '"Răscoala creștea ca un val uriaș."'
     ],
     personajeDetalii: {
-      'Țugurlan': 'Simbol al forței brute și al răzvrătirii necontrolate; reprezintă violența născută din disperare.',
-      'Petre Petre': 'Țăran muncitor, sărac, devenit vocea revoltei, împins la extrem de nedreptăți.',
-      'Grigore Iuga': 'Moșier intelectual, moderat, reprezentant al clasei superioare care încearcă să înțeleagă drama țăranilor.',
-      'Nadina': 'Soția lui Iuga, personaj care reflectă viața aristocratică și contrastul cu lumea țărănimii.',
-      'mulțimea': 'Personaj colectiv simbolic, reprezentând explozia socială produsă de condițiile grele.'
+      'Țugurlan': 'Status: personaj al răscoalei, simbol al forței brute și al răzvrătirii. Trăsături: reprezintă violența născută din disperare și din nedreptăți; forță necontrolată. Comportament: participă la explozia socială; acțiunile lui ilustrează cum țăranii strânși „ca într-o menghină” se transformă în val uriaș. Descriere generală: prin el Rebreanu arată că răscoala e consecința condițiilor grele și a tăierii drepturilor; „pământul era în toate” — obsesia pentru pământ și lipsa lui alimentează revolta.',
+      'Petre Petre': 'Status: țăran muncitor, sărac, unul dintre vocile revoltei. Trăsături: muncitor cinstit, împins la extrem de nedreptăți; „omul, muncind în zadar la pământul altuia, își pierde speranța”. Comportament: devine parte a mulțimii care se răscoală; soarta lui ilustrează trecerea de la muncă la disperare și la violență. Descriere generală: reprezintă țăranul care și-a pierdut speranța și care, când i se taie drepturile, devine vocea revoltei.',
+      'Grigore Iuga': 'Status: tânăr moșier, intelectual. Trăsături: moderat, conștient de inegalitățile profunde; ascultă critic discuțiile despre țărani (ex. în tren, pe ruta Craiova–București). Comportament: contrast cu arendașul Rogojinaru care consideră țăranul „leneș, prost și rău”; Iuga încearcă să înțeleagă drama țăranilor. Descriere generală: reprezentant al clasei superioare care nu închide ochii; prin el Rebreanu arată că și în stăpâniri există conștiințe care văd nedreptatea.',
+      'Nadina': 'Status: soția lui Grigore Iuga. Trăsături: personaj care reflectă viața aristocratică și contrastul cu lumea țărănimii. Comportament: face parte din universul moșierilor; soarta ei și a familiei se împletesc cu evenimentele răscoalei. Descriere generală: subliniază prisma de clasă — viața privilegiată a stăpânilor vs. drama țărănimii; prin Nadina se vede lumea care e șocată sau afectată de explozia socială.',
+      'mulțimea': 'Status: personaj colectiv, țăranii în răscoală. Trăsături: „răscoala creștea ca un val uriaș”; „țăranii se simțeau strânși ca într-o menghină”. Comportament: explozie socială produsă de condiții grele, de foame și de tăierea drepturilor; incendieri, violență, luptă pentru pământ. Descriere generală: simbolul forței colective și al instinctului primar; Rebreanu nu demonizează mulțimea, ci arată cauzele — „pământul era în toate”.'
     },
     titluSection: {
       descriere: 'Titlul trimite direct la revolta țărănească din 1907, sugerând un eveniment istoric major și amploarea socială a conflictului.',
@@ -3986,7 +3986,20 @@ export const OPERA_DETAILS = {
     curent: 'realism',
     descriere: 'Opera prezintă copilăria autorului în satul Humulești, printr-o serie de episoade pline de umor, naturalețe și observație socială. Creangă surprinde cu finețe viața satului, jocurile copilăriei, relația cu familia și școala, dar și obiceiurile și tradițiile rurale. Textul îmbină realismul cu nostalgia și umorul, oferind o frescă vie a lumii țărănești din secolul XIX.',
     teme: ['copilăria', 'educația', 'satul tradițional', 'familia', 'umorul'],
-    personaje: ['Ion Creangă', 'mama', 'tata', 'verii', 'bunicii', 'vecinii'],
+    personaje: [
+      'Nică a lui Ștefan a Petrei',
+      'Smaranda (Mama)',
+      'Ștefan a Petrei (Tatăl)',
+      'Mătușa Mărioara',
+      'Popa Smântână',
+      'Irinuța',
+      'Smărăndița Popii',
+      'Moș Chiorpec Ciubotarul',
+      'Pupăza din tei',
+      'Bunicul David Creangă din Pipirig',
+      'Badia Vasile (Învățătorul)',
+      'Mogorogea'
+    ],
     analiza: '„Amintiri din copilărie” este un roman autobiografic în care Creangă construiește o imagine autentică a vieții rurale. Fiecare episod este însoțit de observații morale sau comice, iar stilul este viu și direct. Opera explorează relațiile familiale, educația, obiceiurile și valorile comunității. Naratorul combină perspectiva copilului cu reflecții de adult, oferind profunzime și umor subtil.',
     citate: [
       '„Ştiu că sunt prost. Dar când mă uit în jur, prind curaj.”',
@@ -3998,12 +4011,30 @@ export const OPERA_DETAILS = {
       '„Copilăria este fericirea de a fi tu însuţi.”'
     ],
     personajeDetalii: {
-      'Ion Creangă': 'Naratorul și personajul principal, copil curios și isteț, care trăiește aventuri pline de umor și lecții de viață în satul natal.',
-      'mama': 'Simbol al grijii și iubirii materne, oferă protecție și sfaturi, dar și discipline blânde.',
-      'tata': 'Figura autoritară și totodată afectuoasă, reprezintă principiile morale și regulile de conduită ale satului.',
-      'verii': 'Parteneri de joacă și complice la năzbâtii, simbolizează solidaritatea și camaraderia copilăriei.',
-      'bunicii': 'Reprezentanți ai tradiției și înțelepciunii populare, transmit povești, obiceiuri și lecții de viață.',
-      'vecinii': 'Personaje colective care dau culoare satului și reflectă viața comunității rurale din secolul XIX.'
+      'Nică a lui Ștefan a Petrei': 'Status: naratorul și personajul principal (Ion Creangă copil). Fizic: băiețandru cu ochi sclipind de șotii, păr ciufulit, bălai, ars de soare; mereu genunchii juliți, desculț; nu poate sta locului o secundă. Vibe: nevinovăția șireată , în pom (la cireșe), cămașa plină de fructe, uitându-se speriat dar amuzat spre Mătușa Mărioara; sau la scăldat, ascuns în stuf. Haine: cămașă de in albă (deja gri de la joacă), ițari strâmți, zâmbet până la urechi. Comportament: aventuri pline de umor, fuge de la școală, face râie la Irinuca, pleacă la Seminarul de la Socola. Descriere generală: „Raiul de la Humulești” , copilul care trăiește lecții de viață în satul natal.',
+      'Smaranda (Mama)': 'Status: mama lui Nică. Fizic: femeie aprigă, dar cu bunătate imensă în ochi; mereu în mișcare, mâini pline de aluat sau cu fusul; figură luminoasă chiar și când îl aleargă pe Nică cu nuiaua. Vibe: sufletul casei , descântând sau gătind la vatră, batic colorat legat la spate; „vrăjitoarea” bună care face soarele să răsară în Humulești. Haine: catrință, ie cu pui (broderii), zâmbet cald ascuns sub asprimea vorbei. Comportament: insistă ca Nică să plece la Seminar; voință de fier. Descriere generală: simbolul grijii și al iubirii materne.',
+      'Ștefan a Petrei (Tatăl)': 'Status: tatăl lui Nică. Fizic: om gospodar, solid, mustață groasă, mâini bătătorite de muncă; mai tăcut; se uită la Nică cu mândrie și ciudă că e zărpătic. Vibe: stâlpul gospodăriei , venind de la munte cu carele cu cherestea. Comportament: reprezintă principiile morale și regulile casei. Descriere generală: figura autoritară și afectuoasă a satului.',
+      'Mătușa Mărioara': 'Status: „dușmanul” copilăriei. Fizic: femeie mai în vârstă, plinuță, față care se înroșește repede de nervi. Vibe: gura satului , cu nuia în mână, alergându-l pe Nică prin cânepă, expresie de furie comică. Haine: haine de zi cu zi, șifonate de „luptă”. Descriere generală: personajul comic care îl disciplinează pe Nică.',
+      'Popa Smântână': 'Status: preotul, autoritatea școlară. Fizic: preot cu burtă respectabilă, barbă lungă și albă, privire severă. Vibe: autoritatea rigidă , cu „Calul Bălan” și „Sfântul Nicolai” (biciul), gata să facă ordine printre școlari. Descriere generală: simbolul disciplinei și al învățăturii de teamă.',
+      'Irinuța': 'Status: fetiță (sau tânără) cu grijă de capre. Fizic: păr împletit, figură un pic neîngrijită; trăiește într-o casă plină de râie. Vibe: fata cu ghinion , lângă casă dărăpănată, cu capre slăbănoage în jur. Comportament: Nică și Dumitru stau în gazdă la Irinuca (Irinuța), fac râie, sunt alungați. Descriere generală: simbolul sărăciei și al nevoii.',
+      'Smărăndița Popii': 'Status: fată isteață, prima la învățătură. Fizic: ochi ageri. Vibe: ambiția școlară , „încasează” prima loviturile de la Calul Bălan, deși e silitoare. Descriere generală: contrapunctul lui Nică la școală.',
+      'Moș Chiorpec Ciubotarul': 'Status: ciubotar, meșteșugar. Fizic: bătrânel simpatic, un singur ochi, mereu aplecat peste pingele; umor sec, îi place să-i tachineze pe copii. Vibe: meșteșugarul hâtru. Descriere generală: personaj de neuitat din satul Humulești.',
+      'Pupăza din tei': 'Status: pasăre-personaj. Fizic: pasăre cu moț spectaculos, „zburlită” și obosită după ce a fost purtată prin iarmaroc de Nică. Vibe: simbolul ghinionului. Descriere generală: episodul comic al pupăzii , obiectul năzbâtiilor copilului.',
+      'Bunicul David Creangă din Pipirig': 'Status: bunicul lui Nică. Fizic: bătrân falnic, „ca un stejar”. Comportament: îl duce pe Nică la școală; emana înțelepciune arhaică. Descriere generală: punte între generații, tradiția și drumul spre învățătură.',
+      'Badia Vasile (Învățătorul)': 'Status: învățătorul iubit. Fizic: tânăr blând, cu ochelari. Comportament: e luat la oaste , momentul trist al copilăriei. Descriere generală: figura blândă a educației, pierdută din cauza destinului.',
+      'Mogorogea': 'Status: hâtru din sat. Comportament: mereu pus pe glume și povești la șezători. Descriere generală: umorul și poveștile din comunitatea rurală.'
+    },
+    caractereFolder: 'amintiri',
+    personajeImagini: {
+      'Nică a lui Ștefan a Petrei': 'nica.png',
+      'Smaranda (Mama)': 'smaranda.png',
+      'Ștefan a Petrei (Tatăl)': 'stefan.png',
+      'Mătușa Mărioara': 'marioara.png',
+      'Popa Smântână': 'smantana.png',
+      'Irinuța': 'irinuta.png',
+      'Smărăndița Popii': 'smarandita.png',
+      'Moș Chiorpec Ciubotarul': 'chiopec.png',
+      'Pupăza din tei': 'pupaza.png'
     },
     titluSection: {
       descriere: 'Titlul evocă memoria și experiența personală a autorului, sugerând că ceea ce urmează sunt relatări sincere și personale despre copilărie.',
