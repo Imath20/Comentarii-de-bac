@@ -1196,13 +1196,39 @@ export const OPERA_DETAILS = {
     curent: 'realism',
     descriere: 'Roman realist care prezintă destinul Marei, o femeie puternică din Transilvania, care își dedică întreaga viață educației și bunăstării copiilor săi. Opera explorează sacrificiul matern, relațiile familiale, dificultățile economice și valorile morale într-o societate tradițională în schimbare.',
     teme: ['familia', 'educația', 'tradiția', 'sacrificiul', 'morala'],
-    personaje: ['Mara', 'Persida', 'Trică', 'Bandi', 'Natl'],
+    personaje: [
+      'Mara',
+      'Persida',
+      'Trică',
+      'Națl (Hubăr)',
+      'Hubăr (tatăl lui Națl)',
+      'Maica Aegidia',
+      'Codreanu',
+      'Bocioacă',
+      'Marta',
+      'Cei doi copii ai Marei'
+    ],
     personajeDetalii: {
-      'Mara': 'Protagonista, femeie puternică și responsabilă, simbol al dăruirii materne și al respectului pentru tradiții. Ea își sacrifică fericirea personală pentru binele copiilor.',
-      'Persida': 'Fiica Marei, simbol al inocenței și al fragilității. Este influențată de educația și valorile mamei sale.',
-      'Trică': 'Fiul Marei, reprezentant al tineretului care învață de la mamă și se confruntă cu provocările lumii adulte.',
-      'Bandi': 'Persoană din cercul social al familiei, simbol al influenței mediului asupra destinului personajelor.',
-      'Natl': 'Alt membru al familiei sau comunității, reflectă legăturile sociale și tradițiile transilvănene.'
+      'Mara': 'Status: protagonistă, văduvă, precupeață din Radna. Fizic: „munte de femeie”, voinică și aspră, obrajii bătuți de vânt și soare; picioare mari, pășește greu dar sigur; poartă mereu doi ciorapi de lână (unul pentru banii de argint, altul pentru cei de aur). Vibe: forța naturii , în mijlocul târgului, cu coș pe cap sau lângă masa cu podoabe, strigându-și marfa; privire de dragoste maternă feroce și calcul matematic rece. Haine: straie de văduvă gospodărească , broboadă neagră, fustă lungă și groasă, vestă de lână. Comportament: își împarte câștigul în trei ciorapi (bătrânețe, Persida, Trică); o dă pe Persida la mănăstire; obține arânda podului de pe Murăș; refuză inițial căsnicia Persidei cu Națl; la final acceptă. Descriere generală: simbol al dăruirii materne și al voinței de a nu rămâne săracă.',
+      'Persida': 'Status: fiica Marei (Sidi). Fizic: „cea mai frumoasă fată din Lipova”; înaltă, subțire, postură nobilă; ochi mari, blânzi, voință de fier; păr bogat, adesea împletit. Vibe: frumusețe și sacrificiu , la fereastra mănăstirii sau în casa modestă, cu demnitate în fața suferinței; puritate care îi face pe bărbați să înghețe. Haine: rochii țărănești curate, mai elegante spre final, baticuț așezat cu grijă. Comportament: dată la mănăstirea din Lipova; se îndrăgostește de Națl, fuge și se căsătorește cu el; își apără soțul în fața Marei; devine centrul moral al familiei. Descriere generală: simbol al inocenței, al voinței și al iubirii interzise.',
+      'Trică': 'Status: fiul Marei. Fizic: băiat care crește sub ochii cititorului, devine flăcau „vânos”, umeri lați de la munca în atelierul de cojocărie; figură onestă, un pic încăpățânată. Vibe: truda și onoarea , în atelier, plin de praf de piele, lucrând la cojoc, sau în uniformă militară (mai târziu). Haine: șorț de piele, cămașă cu mânecile suflecate. Comportament: bătut de Costi Balcovici, fuge la mănăstire; ucenic la Bocioacă; se abate de la calea visată de mamă, se înrolează în armată; devine staroste cojocar. Descriere generală: reprezentant al tineretului care învață de la mamă și își găsește drumul prin muncă.',
+      'Națl (Hubăr)': 'Status: fiul măcelarului Hubăr, iubitul Persidei. Fizic: tânăr neamț, blond sau șaten deschis, ochi albaștri, trăsături mai fine decât ale flăcăilor români; aer de „băiat de tată”, dar cu rebeliune interioară. Vibe: iubirea interzisă , uitându-se cu dor la Persida de peste gard sau la masă de cârciumă, prăbușit de durere și băutură. Haine: haine orășenești nemțești (țic-țac), pălărie mică, jachetă croită bine. Comportament: se căsătorește în secret cu Persida; deschid birt lângă pod; relația se degradează, o lovește pe Persida; pleacă în armată; se întoarce la naștere; moștenește după moartea tatălui și a lui Bandi. Descriere generală: iubirea care sfidează barierele etnice și religioase.',
+      'Hubăr (tatăl lui Națl)': 'Status: Balthazar, măcelarul orașului, tatăl lui Națl. Fizic: om masiv, față roșie, autoritară, ochi reci; tată tiran care nu acceptă ca fiul să se încurce cu o româncă. Vibe: rigiditatea , în măcelărie, cu satâr în mână, dominând spațiul. Comportament: se opune relației Națl–Persida; moare bătrân; moștenirea simplifică situația cuplului. Descriere generală: simbolul autorității paternă și al barierelor sociale.',
+      'Maica Aegidia': 'Status: călugăriță catolică la mănăstirea din Lipova. Fizic: înaltă, palidă, figură senină care pare că plutește. Vibe: liniștea , pe coridoarele mănăstirii, contrast total pentru zbuciumata Mara. Comportament: o protejează pe Mara, o ajută să obțină arânda podului, reduce taxa Persidei; aspră dar bună la suflet. Descriere generală: spirit tutelar, punte între lumea Marei și educația Persidei.',
+      'Codreanu': 'Status: tânăr teolog, rivalul „intelectual” al lui Națl pentru inima Persidei. Fizic: rafinat, ochelari, gesturi măsurate. Vibe: cumpătarea. Comportament: contrastează cu Națl; opțiunea „corectă” în ochii Marei (fiu de popă, nepot de protopop). Descriere generală: alternativa „respectabilă” la iubirea interzisă.',
+      'Bocioacă': 'Status: starostele cojocarilor. Fizic: om influent, cu o burtă respectabilă. Comportament: îl ia pe Trică sub aripa lui; oferă șansa de a deveni staroste. Descriere generală: simbolul meseriei și al ascensiunii sociale prin muncă.',
+      'Marta': 'Status: soția lui Bocioacă. Comportament: cochetează cu ideea de a-l avea pe Trică prin preajmă; un pic de intrigă. Descriere generală: personaj secundar care adaugă tensiune în cercul atelierului.',
+      'Cei doi copii ai Marei': 'Status: Persida și Trică în varianta mică, la începutul poveștii. Fizic: doi copii zdrențăroși, murdari la gură de mămăligă, dar veseli. Vibe: alergând pe malul Mureșului în timp ce Mara își vinde puntele de pod. Descriere generală: imaginea inocenței și a începutului sacrificiului Marei.'
+    },
+    caractereFolder: 'mara',
+    personajeImagini: {
+      'Mara': 'mara.png',
+      'Persida': 'persida.png',
+      'Trică': 'trica.png',
+      'Națl (Hubăr)': 'natl.png',
+      'Hubăr (tatăl lui Națl)': 'hubar.png',
+      'Maica Aegidia': 'aegidia.png',
+      'Codreanu': 'codreanu.png'
     },
     analiza: 'Romanul urmărește destinul Marei și modul în care valorile tradiționale, dăruirea și educația modelează viețile copiilor ei. Slavici explorează tensiunea dintre tradiție și modernitate, responsabilitatea individuală și impactul sacrificiului asupra dezvoltării personajelor.',
     citate: [
