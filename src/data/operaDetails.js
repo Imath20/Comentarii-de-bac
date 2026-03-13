@@ -201,17 +201,29 @@ export const OPERA_DETAILS = {
       'eterna nefericire a spiritului superior'
     ],
     personaje: [
-      'Hyperion (Luceafărul)',
-      'Cătălina',
-      'Cătălin',
-      'Demiurgul'
+      'Hyperion – Forma de Spirit (Zeu al Cerului)',
+      'Hyperion – Prima Întrupare (Fiul Mării)',
+      'Hyperion – A doua Întrupare (Fiul Soarelui)',
+      'Cătălina și Cătălin (Cuplul Pământean)',
+      'Demiurgul (Tatăl Universului)'
     ],
     personajeDetalii: {
-      'Hyperion (Luceafărul)': 'Status: protagonistul cosmic al poemului, spirit astral și genial, „rege al nopții”. Trăsături: esență nemuritoare, conștiință care cuprinde tot universul; aspiră la iubire și coborâre la lume, dar natura lui îl condamnă la singurătate. Comportament: coboară „pe-o rază” la Cătălina, o întreabă dacă vrea să fie „împărăteasă în cer”; când ea alege pe Cătălin, se retrage în cosmos; merge la Demiurg să ceară să devină muritor și este refuzat. Descriere generală: simbolul geniului romantic izolat și al imposibilității de a trăi pământește; trăiește drama cunoașterii absolute care exclude apartenența la lumea oamenilor; singurătatea și luciditatea îl definesc ca personaj tragic.',
-      Cătălina: 'Status: fata de împărat, obiectul iubirii Luceafărului și alegerea ei între el și Cătălin. Trăsături: frumoasă, visătoare, ancorată în lumea terestră; atrasă de misterul și frumusețea Luceafărului (citat: cum numa în vis un înger se arată), dar îi e frică de necunoscut. Comportament: primește vizita Luceafărului; îl preferă pe Cătălin, cel „de lut”, pentru că oferă prezență și siguranță imediată. Descriere generală: simbolul lumii terestre și al fericirii imediate; alegerea ei ilustrează opoziția dintre absolut (Luceafăr) și contingent (Cătălin); reprezintă idealul uman care refuză geniul pentru viața simplă.',
-      Cătălin: 'Status: pajul ștrengar, rivalul terestru al Luceafărului. Trăsături: vioi, seducător, „chip de lut” , om simplu, instinctual, prezent. Comportament: oferă Cătălinei ceea ce Luceafărul nu poate: apropiere, căldură, viață de zi cu zi. Descriere generală: antiteza perfectă a lui Hyperion; emblema vitalității lumești și a fericirii posibile; prin el Eminescu subliniază că lumea alege omul concret, nu geniul inaccesibil.',
-      Demiurgul: 'Status: figura supremă a ordinii cosmice, „stăpânul” cerului. Trăsături: rațiune imuabilă, rece; garantează legile universului. Comportament: îl refuză pe Hyperion când acesta cere să devină muritor („să cobori la lume”), subliniind că natura divină nu poate fi schimbată. Descriere generală: reprezintă imposibilitatea modificării destinului și a esenței; închide definitiv drama Luceafărului, confirmând condamnarea la singurătate eternă.'
+      'Hyperion – Forma de Spirit (Zeu al Cerului)': 'Prima figură, albastră și translucidă: Hyperion în starea lui pură, cosmică. Arată ca o nebuloasă antropomorfă, făcut din stele și energie, fără chip uman clar , o emanație a universului. E momentul în care el e doar o idee, o forță a naturii care privește spre pământ. Status: zeu al cerului, forma de spirit înainte de coborâre.',
+      'Hyperion – Prima Întrupare (Fiul Mării)': 'A doua figură: băiatul blond, palid și aproape dezbrăcat, cu toiagul. Descrierea din prima strofă la coborâre: Părea un tânăr voievod / Cu păr de aur moale. Textura albicioasă de pe el e ca spumă de mare înghețată sau apă scursă. Toiagul de trestie e fix detaliul din text. E mortul frumos de care se sperie Cătălina la început. Status: prima întrupare, Fiul Mării.',
+      'Hyperion – A doua Întrupare (Fiul Soarelui)': 'Bărbatul cu coroana de flăcări, manta neagră și privirea care te bagă în pământ. Varianta dark a Luceafărului: Pe negre umerele-i curg / Iubite, mândre plete. Coroana de jăratic și manta care pare că arde la margini simbolizează originea solară, dar și suferința și pasiunea care îl mistuie. E varianta demonică, fascinantă și periculoasă. Status: a doua întrupare, Fiul Soarelui.',
+      'Cătălina și Cătălin (Cuplul Pământean)': 'Cei doi care se țin de mână , ea în rochie albastră, el în haine de paj/curtean. Cătălina: fată de împărat, distinsă, privirea ei e ațintită spre băiatul de lângă ea, nu spre cer. Cătălin: vicleanul copil de casă; haine verzi cu maro și țichie , costumația clasică de paj. E cald, e uman, e la nivelul ochilor ei. Contrastul dintre ei (mici și colorați) și giganții cosmici din stânga e esențial. Status: cuplul pământean care alege lumea concretă.',
+      'Demiurgul (Tatăl Universului)': 'Ultima figură: bătrânul uriaș care ține planetele în palme. Reprezentarea clasică a creatorului , imens, făcut din haosul de stele, pare că jonglează cu galaxiile de parcă ar fi jucării. Privirea lui e grea, plină de timpul care nu trece pentru el. E cel care îi dă lui Hyperion lecția finală despre nemurire și răceală. Status: Tatăl Universului, stăpânul ordinii cosmice.'
     },
+
+    caractereFolder: 'luceafarul',
+    personajeImagini: {
+      'Hyperion – Forma de Spirit (Zeu al Cerului)': 'hyperion-stele.png',
+      'Hyperion – Prima Întrupare (Fiul Mării)': 'hyperion-mare.png',
+      'Hyperion – A doua Întrupare (Fiul Soarelui)': 'hyperion-soare.png',
+      'Cătălina și Cătălin (Cuplul Pământean)': 'catalin-catalina.png',
+      'Demiurgul (Tatăl Universului)': 'demiurgul.png'
+    },
+
     analiza: 'Poemul construiește opoziția fundamentală dintre absolut și contingent. Hyperion, spiritul cosmic, aspiră spre iubire, dar rămâne prizonier al propriei esențe nemuritoare. Cătălina, ființă fragilă a lumii pământești, caută fericirea imediată și îl preferă pe Cătălin. Refuzul Demiurgului scoate în evidență drama geniului: înțelege tot, dar nu poate aparține lumii comune.',
     citate: [
       'A fost odată ca \'n povești, / A fost ca niciodată',
@@ -1956,7 +1968,7 @@ export const OPERA_DETAILS = {
     curent: 'simbolism',
     descriere: 'Poezie simbolistă care redă o atmosferă apăsătoare, singurătatea și moartea, folosind plumbul ca simbol al greutății sufletești și al inexorabilității destinului.',
     teme: ['moartea', 'singurătatea', 'neputința comunicării', 'melancolia'],
-    personaje: ['eul liric'],
+    personaje: ['eul liric', 'Imaginea poemului'],
     analiza: 'Bacovia construiește un univers dominat de apăsare și tristețe, unde plumbul simbolizează atât greutatea fizică, cât și sufletească. Eul liric trăiește o alienare profundă, incapabil să comunice cu lumea exterioară. Poezia reflectă condiția omului modern, prins între dorința de viață și inevitabilitatea morții.',
     citate: [
       '"Dormeau adânc sicriele de plumb"',
@@ -1964,7 +1976,13 @@ export const OPERA_DETAILS = {
       '"Și-i atârnau aripile de plumb"'
     ],
     personajeDetalii: {
-      'eul liric': 'Status: vocea poetică centrală, singurul „personaj” viu în universul mortuar al poeziei. Trăsături: exprimă izolarea absolută („stam singur în cavou”), neputința, melancolia și disperarea; observator pasiv al sicrielor de plumb, al florilor de plumb, al „amorului” mort. Comportament: stă în cavou lângă cel iubit mort; încearcă să-l strige pe cel dispărut; trăiește starea de coșmar (vânt, scârțâit de coroane). Descriere generală: simbolismul bacovian întruchipat , greutatea sufletească (plumbul), iminența morții, oboseala metafizică; eul nu acționează, doar suferă și constată, devenind vocea apocalipsei interioare și a singurătății fără ieșire.'
+      'eul liric': 'Status: vocea poetică centrală, singurul „personaj” viu în universul mortuar al poeziei. Trăsături: exprimă izolarea absolută („stam singur în cavou”), neputința, melancolia și disperarea; observator pasiv al sicrielor de plumb, al florilor de plumb, al „amorului” mort. Comportament: stă în cavou lângă cel iubit mort; încearcă să-l strige pe cel dispărut; trăiește starea de coșmar (vânt, scârțâit de coroane). Descriere generală: simbolismul bacovian întruchipat , greutatea sufletească (plumbul), iminența morții, oboseala metafizică; eul nu acționează, doar suferă și constată, devenind vocea apocalipsei interioare și a singurătății fără ieșire.',
+      'Imaginea poemului': 'Imaginea: Un bărbat singuratic într-un cavou de metal. Totul e gri-șobolan, greu și rece. Elemente vizuale: Flori de plumb (petale rigide, metalice), aripi de plumb care atârnă greu, un sicriu de plumb. Lumina e stinsă, atmosfera e de vid. Vibe: Depresie cosmică , lume unde gravitația e de zece ori mai mare; totul stă să cadă.'
+    },
+    caractereFolder: 'Eul liric',
+    personajeImagini: {
+      'eul liric': 'plumb.png',
+      'Imaginea poemului': 'plumb.png'
     },
     titluSection: {
       descriere: 'Titlul „Plumb” sintetizează tema centrală a poeziei: greutatea sufletească, apăsarea existențială și iminența morții.',
@@ -2078,7 +2096,7 @@ export const OPERA_DETAILS = {
     curent: 'modernism',
     descriere: 'Poezie-manifest care subliniază menirea artei și rolul poetului în transmiterea valorilor spirituale și culturale. Arghezi pune accent pe transformarea experienței dure și a realității murdare în creație artistică, demonstrând cum durerea, mizeria și suferința pot fi convertite în frumusețe și sens. Opera evidențiază responsabilitatea artistului și moștenirea culturală pe care o lasă posterității.',
     teme: ['arta', 'moștenirea', 'creația', 'transformarea dureroasă în frumusețe', 'responsabilitatea artistică'],
-    personaje: ['eul liric'],
+    personaje: ['eul liric', 'Imaginea poemului'],
     analiza: '„Testament” este o poezie-manifest în care Arghezi explorează rolul poetului ca transformator al realității și ca păstrător al valorilor spirituale. Eul liric declară ce lasă moștenire lumii: nu bunuri materiale, ci opere care provin din experiență și suferință. Opera subliniază ideea că arta adevărată se naște din mizerie, din conflict și durere, și are puterea de a oferi posterității frumusețe și învățăminte morale.',
     citate: [
       '"Nu-ți voi lăsa drept bunuri, după moarte"',
@@ -2086,7 +2104,13 @@ export const OPERA_DETAILS = {
       '"Din bube, mucegaiuri și noroi / Iscat-am frumuseți și prețuri noi"'
     ],
     personajeDetalii: {
-      'eul liric': 'Status: vocea poetică a poetului-testator, creatorul care își lasă moștenirea spirituală. Trăsături: se adresează direct fiului și posterității; asumă rolul de intermediar între lumea umilă a străbunilor (materia primă) și lumea cultă (cartea, opera). Comportament: declară că nu lasă bunuri materiale, ci „un nume adunat pe o carte”; descrie transformarea suferinței, a „bubelor și mucegaiurilor”, în frumuseți și prețuri noi; transmite valorile și lupta străbunilor. Descriere generală: reprezintă artistul care își folosește experiența personală și durerea ca materie primă pentru creație; poemul e o artă poetică , definirea rolului poetului ca cel care transfigură realitatea dură în moștenire culturală pentru generațiile viitoare.'
+      'eul liric': 'Status: vocea poetică a poetului-testator, creatorul care își lasă moștenirea spirituală. Trăsături: se adresează direct fiului și posterității; asumă rolul de intermediar între lumea umilă a străbunilor (materia primă) și lumea cultă (cartea, opera). Comportament: declară că nu lasă bunuri materiale, ci „un nume adunat pe o carte”; descrie transformarea suferinței, a „bubelor și mucegaiurilor”, în frumuseți și prețuri noi; transmite valorile și lupta străbunilor. Descriere generală: reprezintă artistul care își folosește experiența personală și durerea ca materie primă pentru creație; poemul e o artă poetică , definirea rolului poetului ca cel care transfigură realitatea dură în moștenire culturală pentru generațiile viitoare.',
+      'Imaginea poemului': 'Imaginea: Un bătrân țăran/scriitor care transformă o sapă într-un condei și bubele în icoane. Elemente vizuale: O carte veche, uriașă, care pare făcută din pământ și sudoare. Din pagini ies scântei și flăcări. Vibe: Alchimia cuvântului , transformarea muncii brute în artă sacră.'
+    },
+    caractereFolder: 'Eul liric',
+    personajeImagini: {
+      'eul liric': 'testament.png',
+      'Imaginea poemului': 'testament.png'
     },
     titluSection: {
       descriere: 'Titlul „Testament” sugerează o moștenire care nu este materială, ci spirituală și artistică, subliniind ideea responsabilității poetului față de cultură și posteritate.',
@@ -2274,7 +2298,7 @@ export const OPERA_DETAILS = {
     curent: 'modernism',
     descriere: 'Volum liric inspirat de experiența detenției, în care Arghezi explorează suferința, degradarea și condițiile vitrege ale vieții. Poeziile transmit starea de izolare, neputință și melancolie, dar în același timp arată cum arta și creația pot transforma durerea și mizeria în frumusețe și sens. Autorul folosește imagini dure, simboluri puternice și un limbaj expresiv pentru a reda atmosfera apăsătoare, dar și forța interioară a eului liric.',
     teme: ['existența', 'degradarea', 'creația din suferință', 'suferința și frumusețea'],
-    personaje: ['eul liric'],
+    personaje: ['eul liric', 'Imaginea poemului'],
     analiza: 'Arghezi construiește un univers poetic în care condițiile extreme – închisoarea, degradarea, izolarea – devin sursă de inspirație și creație. Poeziile din volum pun în prim-plan lupta interioară a eului liric cu suferința, încercarea de a transforma experiența dureroasă în artă și capacitatea de a găsi frumusețe chiar și în cele mai întunecate situații. „Flori de mucigai” evidențiază tensiunea dintre degradare și renaștere artistică, dintre realitatea dură și imaginația creatorului, și se remarcă prin forța simbolurilor și originalitatea limbajului.',
     citate: [
       '"Le-am scris cu unghia pe tencuială"',
@@ -2282,7 +2306,13 @@ export const OPERA_DETAILS = {
       '"Și m-am silit să scriu cu unghiile de la mâna stângă"'
     ],
     personajeDetalii: {
-      'eul liric': 'Status: vocea poetică a artistului închis, cel care scrie „cu unghia pe tencuială” în condiții extreme. Trăsături: experimentează suferința fizică și spirituală, degradarea (celulă, firidă goală, întuneric); e abandonat de „taurul, leul, vulturul” (puteri divine). Comportament: scrie „stihuri de groapă”, „stihuri fără an”; se silește să scrie „cu unghiile de la mâna stângă” când i se topește unghia; transformă durerea în text. Descriere generală: reprezintă artistul care luptă cu condiții vitrege pentru a lăsa o urmă a existenței; oximoronul „flori de mucigai” îi aparține , creația se naște din putrezire și suferință; ilustrează estetica urâtului și puterea transformatoare a artei.'
+      'eul liric': 'Status: vocea poetică a artistului închis, cel care scrie „cu unghia pe tencuială” în condiții extreme. Trăsături: experimentează suferința fizică și spirituală, degradarea (celulă, firidă goală, întuneric); e abandonat de „taurul, leul, vulturul” (puteri divine). Comportament: scrie „stihuri de groapă”, „stihuri fără an”; se silește să scrie „cu unghiile de la mâna stângă” când i se topește unghia; transformă durerea în text. Descriere generală: reprezintă artistul care luptă cu condiții vitrege pentru a lăsa o urmă a existenței; oximoronul „flori de mucigai” îi aparține , creația se naște din putrezire și suferință; ilustrează estetica urâtului și puterea transformatoare a artei.',
+      'Imaginea poemului': 'Imaginea: O mână cu unghii de drac care zgârie un perete de celulă igrasios. Elemente vizuale: Pereți umezi, întuneric, flori care cresc direct din igrasie (mucigai), culori murdare (verde putred, negru). Vibe: Estetica urâtului , frumusețea găsită în mizerie; eul liric e prizonier care scrie cu disperare pe întuneric.'
+    },
+    caractereFolder: 'Eul liric',
+    personajeImagini: {
+      'eul liric': 'flori-mucigai.png',
+      'Imaginea poemului': 'flori-mucigai.png'
     },
     titluSection: {
       descriere: 'Titlul „Flori de mucigai” reflectă contrastul dintre frumusețe și degradare, subliniind capacitatea artei de a înfrumuseța chiar și cele mai întunecate experiențe.',
@@ -2414,7 +2444,7 @@ export const OPERA_DETAILS = {
     curent: 'modernism',
     descriere: 'Poezie filozofică în care Blaga explorează misterul și frumusețea lumii, raportul dintre cunoaștere și respectul față de viață. Eul liric afirmă o atitudine contemplativă și reverențioasă față de creația universală, subliniind delicatețea cu care omul trebuie să interacționeze cu tot ce există, de la flori și ochi până la moarte și morminte.',
     teme: ['misterul', 'cunoașterea', 'iubirea', 'respectul față de viață'],
-    personaje: ['eul liric'],
+    personaje: ['eul liric', 'Imaginea poemului'],
     analiza: 'Blaga construiește un univers poetic dominat de ideea că lumea și misterul ei trebuie privite cu atenție și respect. Eul liric nu distruge, nu invadează, ci participă la sporeșterea tainelor lumii prin contemplare și iubire. Poezia pune accent pe responsabilitatea creatorului, a poetului, și a omului față de univers, subliniind că adevărata cunoaștere implică delicatețe și înțelegere. Opera combină o estetică modernistă cu gândirea filozofică, explorând relația dintre individ, cunoaștere și eternitatea misterului lumii.',
     citate: [
       '"Eu nu strivesc corola de minuni a lumii"',
@@ -2422,7 +2452,13 @@ export const OPERA_DETAILS = {
       '"căci eu iubesc / și flori și ochi și buze și morminte"'
     ],
     personajeDetalii: {
-      'eul liric': 'Status: vocea poetică a creatorului blagian, cel care declară atitudinea față de lume și cunoaștere. Trăsături: refuză cunoașterea rațională care „strivește” minunea; preferă „lumina” care sporește taina, nu o ucide; exprimă iubire față de „flori și ochi și buze și morminte”. Comportament: afirmă „Eu nu strivesc corola de minuni a lumii”; se opune „lumii altora” care sugrumă vraja; se compară cu luna care mărește taina nopții. Descriere generală: reprezintă manifestul estetic și filosofic blagian , cunoașterea luciferică (intuitivă, creatoare) vs. paradisiacă (rațională, ucigătoare de taină); eul devine cel care „îmbogățește întunecata zare cu largi fiori de sfânt mister”.'
+      'eul liric': 'Status: vocea poetică a creatorului blagian, cel care declară atitudinea față de lume și cunoaștere. Trăsături: refuză cunoașterea rațională care „strivește” minunea; preferă „lumina” care sporește taina, nu o ucide; exprimă iubire față de „flori și ochi și buze și morminte”. Comportament: afirmă „Eu nu strivesc corola de minuni a lumii”; se opune „lumii altora” care sugrumă vraja; se compară cu luna care mărește taina nopții. Descriere generală: reprezintă manifestul estetic și filosofic blagian , cunoașterea luciferică (intuitivă, creatoare) vs. paradisiacă (rațională, ucigătoare de taină); eul devine cel care „îmbogățește întunecata zare cu largi fiori de sfânt mister”.',
+      'Imaginea poemului': 'Imaginea: Un filozof-mag care stă cu mâinile întinse deasupra unei lumi strălucitoare, protejând-o. Elemente vizuale: O corolă (floare) uriașă care conține stele, munți și mistere. Luna care luminează totul cu o lumină albă, mistică. Ochii eului liric sunt mari, plini de mirare. Vibe: Misterul protector , nu e despre a vedea clar, ci despre a simți taina.'
+    },
+    caractereFolder: 'Eul liric',
+    personajeImagini: {
+      'eul liric': 'eu_nu_strivesc.png',
+      'Imaginea poemului': 'eu_nu_strivesc.png'
     },
     titluSection: {
       descriere: 'Titlul subliniază ideea centrală a poeziei: respectul față de viață, mister și frumusețe, fără a distruge sau diminua minunile lumii.',
@@ -2554,7 +2590,7 @@ export const OPERA_DETAILS = {
     curent: 'postmodernism',
     descriere: 'Poezie modernă care explorează iubirea ca forță revelatoare, primitivă și transformatoare. Prin metafore animalice și imagini senzoriale, Stănescu surprinde intensitatea și imprevizibilitatea iubirii, redând-o ca experiență existențială și energie vitală. Poezia este o meditație asupra modului în care iubirea poate provoca schimbări interioare profunde și poate stimula percepții noi asupra lumii.',
     teme: ['iubirea', 'cunoașterea', 'existența', 'energia vitală', 'metamorfoza sentimentelor'],
-    personaje: ['eul liric'],
+    personaje: ['eul liric', 'Imaginea poemului'],
     analiza: 'Stănescu folosește limbajul poetic modern și imagini metaforice pentru a transforma iubirea într-un fenomen vizual și senzorial. „Leoaică tânără, iubirea” explorează dinamica pasiunii, impactul ei asupra conștiinței și legătura dintre instinct și intelect. Eul liric trăiește iubirea ca o forță care mușcă, zguduie și transformă, iar poezia creează un univers în care iubirea și cunoașterea sunt inseparabile.',
     citate: [
       '"Leoaică tânără, iubirea / mi-a sărit în față"',
@@ -2562,7 +2598,13 @@ export const OPERA_DETAILS = {
       '"o leoaică aramie / cu mișcările viclene"'
     ],
     personajeDetalii: {
-      'eul liric': 'Status: vocea poetică care trăiește revelația iubirii ca atac și capturare. Trăsături: este „pândit” de iubire (leoaica), apoi „mușcat” , experiența e senzorială, violentă, transfiguratoare; nu descrie iubirea blândă, ci forța primordială. Comportament: „iubirea mi-a sărit în față”; eul e obiectul atacului, apoi al mușcăturii; trăiește starea de grație și alienare. Descriere generală: reprezintă iubirea ca forță sălbatică (leoaica aramie, mișcări viclene); poemul cosmicizează actul erotic prin metaforă animalică; eul devine martor și participant la o experiență care zguduie universul interior.'
+      'eul liric': 'Status: vocea poetică care trăiește revelația iubirii ca atac și capturare. Trăsături: este „pândit” de iubire (leoaica), apoi „mușcat” , experiența e senzorială, violentă, transfiguratoare; nu descrie iubirea blândă, ci forța primordială. Comportament: „iubirea mi-a sărit în față”; eul e obiectul atacului, apoi al mușcăturii; trăiește starea de grație și alienare. Descriere generală: reprezintă iubirea ca forță sălbatică (leoaica aramie, mișcări viclene); poemul cosmicizează actul erotic prin metaforă animalică; eul devine martor și participant la o experiență care zguduie universul interior.',
+      'Imaginea poemului': 'Imaginea: O leoaică aurie, făcută din energie pură, care sare de nicăieri și mușcă fața eului liric. Elemente vizuale: O explozie de lumină, cercuri concentrice în jurul feței omului (simbolul transformării), o deșertăciune care devine brusc vie. Vibe: Șocul vital , iubirea nu e un porumbel, e un prădător care îți schimbă percepția.'
+    },
+    caractereFolder: 'Eul liric',
+    personajeImagini: {
+      'eul liric': 'leoaica_tanara.png',
+      'Imaginea poemului': 'leoaica_tanara.png'
     },
     titluSection: {
       descriere: 'Titlul „Leoaică tânără, iubirea” pune în prim-plan iubirea ca forță vie și instinctuală, evidențiind caracterul sălbatic și primar al emoției.',
@@ -2710,7 +2752,7 @@ export const OPERA_DETAILS = {
     curent: 'traditionalism',
     descriere: 'Poezie tradiționalistă care evocă trecutul și amintirile din copilărie, prin prisma familiei și a legăturii cu natura. Pillat surprinde frumusețea lumii rurale, nostalgia vremurilor de demult și continuitatea tradițiilor transmise de generații, redând o atmosferă lirică, caldă și armonioasă.',
     teme: ['nostalgia', 'timpul', 'familia', 'tradiția', 'legătura cu natura'],
-    personaje: ['eul liric'],
+    personaje: ['eul liric', 'Imaginea poemului'],
     analiza: '„Aci sosi pe vremuri” este o poezie care explorează raportul dintre trecut și prezent, între copilărie și maturitate. Eul liric evocă figura bunicii și atmosfera satului, amintind de tradițiile românești și legătura cu natura. Pillat reușește să creeze o poezie nostalgică și armonioasă, în care trecutul devine un spațiu sacru al memoriei și valorilor familiale.',
     citate: [
       '"Aci sosi pe vremuri bunica-mi Calyopi"',
@@ -2718,7 +2760,13 @@ export const OPERA_DETAILS = {
       '"Si totul ce romantic, ca-n basme, se urzea"'
     ],
     personajeDetalii: {
-      'eul liric': 'Status: vocea poetică care evocă amintirile copilăriei și legătura cu trecutul. Trăsături: privirile și experiențele sale pun în valoare bunica Calyopi, câmpia sub lună, „totul ce romantic, ca-n basme, se urzea”; ton nostalgic, cald. Comportament: „aci sosi pe vremuri” , intră în trecut; privește cu bunica câmpia „ca un lac”; recuperează memoria familială și peisajul rural. Descriere generală: reprezintă continuitatea valorilor culturale și frumusețea naturii transmişe prin generații; eul leagă prezentul de trecut și oferă „comoara nesecată” a copilăriei fericite.'
+      'eul liric': 'Status: vocea poetică care evocă amintirile copilăriei și legătura cu trecutul. Trăsături: privirile și experiențele sale pun în valoare bunica Calyopi, câmpia sub lună, „totul ce romantic, ca-n basme, se urzea”; ton nostalgic, cald. Comportament: „aci sosi pe vremuri” , intră în trecut; privește cu bunica câmpia „ca un lac”; recuperează memoria familială și peisajul rural. Descriere generală: reprezintă continuitatea valorilor culturale și frumusețea naturii transmişe prin generații; eul leagă prezentul de trecut și oferă „comoara nesecată” a copilăriei fericite.',
+      'Imaginea poemului': 'Imaginea: Două perechi de îndrăgostiți, una în culori sepia (trecutul) și una în culori vii (prezentul), în fața aceleiași porți de conac. Elemente vizuale: Un turn vechi, clopotul bisericii, un lan de secară. Fantomele trecutului se suprapun peste tinerii de azi. Vibe: Nostalgia ciclică , timpul trece, dar dragostea e la fel.'
+    },
+    caractereFolder: 'Eul liric',
+    personajeImagini: {
+      'eul liric': 'aci_sosi.png',
+      'Imaginea poemului': 'aci_sosi.png'
     },
     titluSection: {
       descriere: 'Titlul „Aci sosi pe vremuri” evocă sosirea în trecut, amintirile și legătura cu tradițiile și familia. Este o invitație la reflectarea asupra timpului și a valorilor transmise de generații.',
@@ -2894,7 +2942,7 @@ export const OPERA_DETAILS = {
     curent: 'modernism',
     descriere: 'Poezie religioasă care evocă ultimele momente de liniște și rugăciune ale lui Hristos înaintea răstignirii. Voiculescu explorează suferința spirituală și lupta interioară dintre acceptarea destinului și teama de suferință. Opera este meditativă, religioasă și profund umană, concentrându-se pe sacrificiu, credință și puterea alegerii morale.',
     teme: ['credința', 'sacrificiul', 'suferința', 'lupta interioară', 'acceptarea destinului'],
-    personaje: ['eul liric', 'Hristos'],
+    personaje: ['eul liric', 'Hristos', 'Imaginea poemului'],
     analiza: '„În Grădina Ghetsimani” surprinde dramatismul sufletesc al lui Hristos și relația acestuia cu destinul său divin. Voiculescu creează o poezie meditativă, în care eul liric reflectă asupra suferinței, sacrificiului și puterii morale de a rezista răului. Opera combină lirismul modernist cu temele religioase tradiționale, punând accent pe dimensiunea umană a Mântuitorului și alegerea sa morală supremă.',
     citate: [
       '"Iisus lupta cu soarta și nu primea paharul"',
@@ -2903,7 +2951,14 @@ export const OPERA_DETAILS = {
     ],
     personajeDetalii: {
       'eul liric': 'Status: vocea poetică care meditează asupra scenei din Ghetsimani și o reinterpretă. Trăsături: nu e participant, ci observator care pune accent pe dimensiunea umană și spirituală , lupta lui Iisus cu soarta, refuzul paharului, „bătându-se cu moartea”. Comportament: reflectă; transmite cititorului gravitatea agoniei și revolta umană în fața sacrificiului. Descriere generală: oferă cadrul meditativ expresionist; prin eul liric Voiculescu transformă episodul biblic într-o luptă viscerală, cosmică, între voința divină și carnea care se împotrivește.',
-      'Hristos': 'Status: figura centrală a poeziei, Iisus în Grădina Ghetsimani. Trăsături: prezentat în ipostază profund umană și vulnerabilă , nu ca Fiu al lui Dumnezeu rece, ci ca erou tragic care luptă fizic și spiritual („căzut pe brânci”). Comportament: „lupta cu soarta și nu primea paharul”; „nu voia s-atingă infama băutură”; „bătându-se cu moartea, uitase de viață”. Descriere generală: simbol al sacrificiului suprem și al puterii morale; confruntarea cu suferința și destinul divin e redată ca revoltă și agonie, nu ca acceptare pasivă , Voiculescu subliniază dimensiunea umană a Mântuitorului.'
+      'Hristos': 'Status: figura centrală a poeziei, Iisus în Grădina Ghetsimani. Trăsături: prezentat în ipostază profund umană și vulnerabilă , nu ca Fiu al lui Dumnezeu rece, ci ca erou tragic care luptă fizic și spiritual („căzut pe brânci”). Comportament: „lupta cu soarta și nu primea paharul”; „nu voia s-atingă infama băutură”; „bătându-se cu moartea, uitase de viață”. Descriere generală: simbol al sacrificiului suprem și al puterii morale; confruntarea cu suferința și destinul divin e redată ca revoltă și agonie, nu ca acceptare pasivă , Voiculescu subliniază dimensiunea umană a Mântuitorului.',
+      'Imaginea poemului': 'Imaginea: Iisus în genunchi, transpirând sânge amestecat cu sudoare, în fața unei cupe de aur care pare plină cu un venin întunecat. Elemente vizuale: Măslini contorsionați (ca oameni în durere), un cer greu de noapte, o lumină divină care se luptă cu întunericul. Vibe: Suferința supremă , lupta între latura umană și cea divină.'
+    },
+    caractereFolder: 'Eul liric',
+    personajeImagini: {
+      'eul liric': 'gradina_ghetsimani.png',
+      'Hristos': 'gradina_ghetsimani.png',
+      'Imaginea poemului': 'gradina_ghetsimani.png'
     },
     titluSection: {
       descriere: 'Titlul poeziei situează cititorul în Grădina Ghetsimani, spațiul în care Hristos se confruntă cu ultimele momente de suferință înaintea răstignirii. Este un titlu care evocă solemnitatea și dramatismul sacrificial.',
@@ -3045,7 +3100,11 @@ export const OPERA_DETAILS = {
     ],
     personaje: [
       'Riga Crypto',
-      'Lapona Enigel'
+      'Lapona Enigel',
+      'Menestrelul (Povestitorul)',
+      'Regatul Umbrei (Grota lui Crypto)',
+      'Regatul Soarelui (Calea lui Enigel)',
+      'Momentul Final (Transformarea lui Crypto)'
     ],
     analiza: 'Poemul redă, sub forma unei povești alegorice, eșecul apropierii dintre două naturi opuse. Crypto, ființă vegetală atrasă de umbră, este incapabil să urmeze chemarea spre lumină, în timp ce Enigel aspiră spre cunoaștere și spiritualizare. Conflictul dintre cele două principii conduce la imposibilitatea unirii lor.',
     citate: [
@@ -3058,9 +3117,21 @@ export const OPERA_DETAILS = {
       '"Mulţumesc Dumitale. Fragii fragezi, mai la vale. Începi, rogu-te, cu mine. - Te-aş culege, rigă blând. Lasă. - Aşteaptă de te coace."'
     ],
     personajeDetalii: {
-      'Riga Crypto': 'Status: „regele-ciupercă”, personaj alegoric, simbol al lumii vegetale și al umbrei. Trăsături: ființă atrasă de umbră, de umezeală și de instinct; „crai de ghiață”, „inimă ascunsă”; refuză lumina și înflorirea („că nu voia să înflorească”). Comportament: vine s-o mâie pe Enigel „cu dulceață”; la nuntă („spartul nunții”) nu poate suporta soarele; rămâne captiv al propriei naturi. Descriere generală: reprezintă condiția limitată, incapabilă de evoluție spirituală; opusul lui Enigel , ea aspiră la soare, el trăiește în umbră; eșecul apropierii dintre cele două naturi e tema centrală a poemului.',
-      'Lapona Enigel': 'Status: tânăra pură, personaj alegoric, simbol al luminii și al aspirației. Trăsături: „cu piei, pre nume Enigel”; orientată spre cunoaștere și spiritualizare; aspiră spre soare. Comportament: este mâiată de Crypto cu dulceață; la nuntă („nuntaș fruntaș”) unirea e imposibilă , Crypto nu poate ieși la lumină. Descriere generală: reprezintă dorința de evoluție spirituală și depășire a condiției materiale; contrastul dintre ea și Crypto (lumină vs. umbră) conduce la „spartul nunții” și la imposibilitatea unirii.'
+      'Riga Crypto': 'Status: regele-ciupercă, creatură a umbrei, personaj alegoric. Fizic: nu e om , e o ciupercă antropomorfă: piele palidă, moale, ca buretele, cu firișoare de mușchi sau spori; capul e o pălărie imensă de ciupercă, poate bătută cu pietre prețioase oarbe (care nu sclipesc); ochi mari, umezi, fixați pe Enigel. Vibe: inima fierbinte a umbrei , stând pe un tron de mușchi putred, într-o grotă întunecată, cu expresie de dor disperat; emana o fragilitate veninoasă. Haine: nu poartă haine, forma lui e îmbrăcată în mătase grea, pătată de pământ și spori. Descriere generală: simbol al lumii vegetale și al limitării; la soare se usucă și crapă, devine ciupercă otrăvitoare; eșecul apropierii cu Enigel e tema centrală.',
+      'Lapona Enigel': 'Status: tânăra pură, făptura solară, simbol al luminii și al voinței. Fizic: fată de la pol, mică de statură dar puternică, figură senină, limpede ca gheața; păr alb sau blond-argintiu, ochi albaștri-rece, raționali; pielea albă, neatinsă de soare, dar gata să-l înfrunte. Vibe: voința solară , mergând cu o caravană de reni, privirea fixată spre sud (spre soare); e gândul rece care refuză tentația umbrei. Haine: haine groase de blană albă de ren, motive geometrice albastre, cizme înalte, căciulă grea. Descriere generală: aspiră spre cunoaștere și spiritualizare; incompatibilitatea ontologică cu Crypto conduce la spartul nunții.',
+      'Menestrelul (Povestitorul)': 'Status: bardul de la nuntă, cunoscătorul tainelor, cel care spune povestea. Fizic: om al cârciumii, barbă rară, ochi vicleni, zâmbet amar. Vibe: cunoscătorul tainelor , într-o crâșmă întunecată, cu lăuta în mână, spunând povestea cu expresie de avertisment. Descriere generală: cadrul narativ; la nuntă e rugat de nuntașul fruntaș să cânte din nou legenda Riga Crypto și Lapona Enigel; prin el povestea devine baladă în baladă.',
+      'Regatul Umbrei (Grota lui Crypto)': 'Descriere: spațiu umed, plin de mușchi, licheni uriași, ciuperci fosforescente, picături de apă care cad ritmic. Lumina e difuză, verzuie, bolnăvicioasă. Vibe: atracția vicioasă. Status: lumea lui Crypto , tron de rouă, vecinic, grotă întunecată; aici Crypto o curtează pe Enigel cu dulceață și fragi, dar ea refuză să rămână.',
+      'Regatul Soarelui (Calea lui Enigel)': 'Descriere: câmpie imensă înghețată, sub un soare polar care nu apune niciodată, orbitor. Totul e alb, albastru-rece și sclipitor. Vibe: rațiunea înghețată. Status: lumea Enigel , ținuturile nordice, puritatea gheții, caravana de reni; ea se îndreaptă spre sud spre soare; Crypto nu poate urma.',
+      'Momentul Final (Transformarea lui Crypto)': 'Descriere: Riga Crypto, încercând să stea la soare pentru Enigel, se usucă și crapă. Devine o ciupercă otrăvitoare, roșie cu puncte albe, nebun și fierbând la soare. Vibe: geniul blestemat. Status: catastrofa solară , ascunsa-i inimă plesnește, sucul se înăcrește, țâșnesc venin și roșu untdelemn; metamorfoză grotescă; rămâne să rătăcească cu altă față, mai crăiască.'
     },
+
+    caractereFolder: 'Riga -Lapona',
+    personajeImagini: {
+      'Riga Crypto': 'riga.png',
+      'Lapona Enigel': 'enigel.png',
+      'Menestrelul (Povestitorul)': 'menestrel.png'
+    },
+
     titluSection: {
       descriere: 'Titlul combină numele celor două personaje pentru a sugera contrastul dintre lumi opuse și destinul lor incompatibil.',
       puncte: [
@@ -3520,7 +3591,7 @@ export const OPERA_DETAILS = {
     curent: 'junimism',
     descriere: 'Eseu critic în care Maiorescu analizează societatea românească și denunță adoptarea de forme culturale și instituționale fără un fond real, susținând că modernizarea adevărată trebuie să se bazeze pe dezvoltarea internă și autentică a societății.',
     teme: ['critica socială', 'cultura', 'modernizarea falsă', 'tradiția vs. modernitatea'],
-    personaje: ['– (eseu)'],
+    personaje: ['– (eseu)', 'Imaginea operei'],
     analiza: 'Lucrarea lui Maiorescu reprezintă un punct de referință în critica literară și socială românească. Autorul argumentează că societatea românească copiază formele Occidentului fără a le adapta la realitatea internă, ceea ce duce la superficialitate și ineficiență. Eseul pune bazele unei gândiri critice fundamentate pe observație și rațiune, fiind un manifest pentru autenticitate și maturitate culturală.',
     citate: [
       '"Nu formele contează, ci fondul."',
@@ -3528,7 +3599,13 @@ export const OPERA_DETAILS = {
       '"Autenticitatea trebuie să fie temelia progresului."'
     ],
     personajeDetalii: {
-      '– (eseu)': 'Eseul nu are personaje, dar vocea autorului acționează ca un „personaj critic”, analizând cu luciditate și ironie societatea românească și practicile sale culturale și sociale.'
+      '– (eseu)': 'Eseul nu are personaje, dar vocea autorului acționează ca un „personaj critic”, analizând cu luciditate și ironie societatea românească și practicile sale culturale și sociale.',
+      'Imaginea operei': 'Imaginea: O clădire care arată ca un templu grecesc superb la exterior, dar e goală pe dinăuntru sau susținută de niște bețe șubrede. Elemente vizuale: Un boier/politician român îmbrăcat în haine de lux pariziene, dar care sub haină e murdar sau poartă opinci. Biblioteci pline de cărți cu pagini goale. Vibe: Imitația ieftină , contrastul între fațadă (ce vrem să părem) și fond (ce suntem de fapt).'
+    },
+    caractereFolder: 'forme',
+    personajeImagini: {
+      '– (eseu)': 'forme-fara-fond.png',
+      'Imaginea operei': 'forme-fara-fond.png'
     },
     titluSection: {
       descriere: 'Titlul subliniază ideea centrală a eseului: adoptarea formelor fără un conținut real este inutilă și chiar periculoasă pentru dezvoltarea societății.',
@@ -3800,10 +3877,13 @@ export const OPERA_DETAILS = {
     ],
 
     personaje: [
-      'Iona',
-      'Pescarul 1',
-      'Pescarul 2',
-      'Vocea'
+      'Iona (Pescarul Solitar)',
+      'Burțile Peștilor (Mediul claustrofobic)',
+      'Acvariul (Simbolul limitării)',
+      'Cei doi Pescari (Tăcuții)',
+      'Marea (Visul)',
+      'Eoul (Ecoul)',
+      'Gura ultimului pește'
     ],
 
     analiza: 'Sorescu construiește o dramă-parabolă despre omul modern prins într-o lume a absurdității și limitării. Piesa urmărește lupta interioară a lui Iona, simbol al individului care încearcă să iasă din propriile limite și să-și găsească sensul existenței. Textul are puternice accente alegorice, ironice și metafizice.',
@@ -3815,10 +3895,21 @@ export const OPERA_DETAILS = {
     ],
 
     personajeDetalii: {
-      'Iona': 'Status: personajul principal, pescar, prins în burta chitului. Trăsături: om modern, singur, confruntat cu sensul vieții și cu absurdul; vorbește singur, se dedublă (acționează ca două personaje); pierde ecoul („Io” = „eu”) , ultima legătură cu exteriorul. Comportament: se află în gura peștelui cu năvodul aruncat; strigă „Io-na!”, primește doar „Io”; visă să fie pădurar; strigă „Ajutor!” când gura peștelui se închide; „m-am născut în pântecele chitului”. Descriere generală: simbolul omului prins în limitele existenței și al destinului inevitabil; parabolă existențialistă , Iona poate fi oricine; lupta cu cuțitul pentru libertate și cunoaștere.',
-      'Pescarul 1': 'Status: personaj episodic. Trăsături: om obișnuit, prins în rutina vieții, fără întrebări existențiale profunde. Comportament: apare în scenele din afara „chitului”; contrastează cu drama lui Iona. Descriere generală: reprezintă lumea de dincolo de absurd , cei care trăiesc fără a pune problema sensului.',
-      'Pescarul 2': 'Status: dublură episodică. Trăsături: simbolizează repetitivitatea vieții și ciclul existenței; pare o dublură ironică a lui Iona. Descriere generală: subliniază că condiția lui Iona e universală , „omul e un pește care trebuie mereu să înoate împotriva curentului”.',
-      'Vocea': 'Status: instanță abstractă în piesă. Trăsături: poate fi conștiința lui Iona sau destinul însuși; răspunde (sau nu) strigătului. Descriere generală: simbol al comunicării cu absolutul sau al lipsei răspunsului; amplifică izolarea și întrebarea existențială.'
+      'Iona (Pescarul Solitar)': 'Status: personajul principal, pescar prins în burta chitului. Fizic: bărbat de vârstă mijlocie, figură marcată de oboseală și curiozitate disperată; barbă crescută, păr vâlvoi, piele albă ca de om care n-a mai văzut soarele de mult (blocat în burtă). Vibe: singurătatea absolută și perseverența , postură de gânditor, cu cuțit în mână, gata să despice peretele de carne; privire care caută mereu ceva dincolo de ce vede. Haine: haine de pescar foarte simple, cămașă și ițari care au devenit zdrențe; desculț. Descriere generală: simbolul omului prins în limitele existenței; parabolă existențialistă; lupta cu cuțitul pentru libertate; m-am născut în pântecele chitului.',
+      'Burțile Peștilor (Mediul claustrofobic)': 'Descriere: cercurile iadului din carne. Prima burtă: pereți umezi, roz-roșiatici, oase uriașe pe post de coloane; spațiu strâmt, resturi de pești. A doua burtă (în interiorul celei de-a doua): spațiu și mai întunecat, pereții par să se strângă. Vibe: claustrofobia; texturi organice, umede, reflexii de lumină ciudate, ca și cum ar veni de nicăieri. Status: mediul în care Iona descoperă că e pește în pește, captivitate la infinit.',
+      'Acvariul (Simbolul limitării)': 'Descriere: Iona are lângă el un acvariu mic cu peștișori care par fericiți în spațiul lor mic. Ironia supremă: un pește captiv într-un om captiv într-un pește. Vibe: lumină difuză care vine dinspre acvariu, singura sursă de viață normală. Status: simbol al limitării acceptate și al iluziei că spațiul mic e suficient.',
+      'Cei doi Pescari (Tăcuții)': 'Status: cei care trec prin scenă, masa de manevră. Fizic: doi bărbați identici, inexpresivi, ca roboți; cărând bârne grele pe umeri. Nu vorbesc, nu se uită la Iona. Vibe: indiferența universului; au acceptat destinul fără să pună întrebări. Descriere generală: contrastează cu drama lui Iona; Iona încearcă în zadar să comunice cu ei; subliniază că condiția e universală.',
+      'Marea (Visul)': 'Descriere: imaginea mării infinite, văzută printr-o crăpătură minusculă sau doar în mintea lui Iona. Un albastru orbitor care contrastează cu roșul sângeriu al burții de pește. Status: visul libertății și al ieșirii; când Iona spintecă peștele și iese, vede nasturi de nisip și orizonturi care sunt tot burți de pește.',
+      'Eoul (Ecoul)': 'Descriere: a doua siluetă a lui Iona, ușor transparentă, la distanță, care îi repetă mișcările , reprezentarea dialogului interior. Status: ecoul care dispare (Io-na devine doar Io = eu); ultima legătură cu exteriorul; amplifică singurătatea și căutarea de răspuns.',
+      'Gura ultimului pește': 'Descriere: deschidere uriașă de unde nu se vede afară, ci doar un alt rând de dinți sau altă burtă. Status: simbol al captivității fără sfârșit; orice ieșire duce la un alt nivel de închisoare; Doamne, câți pești unul într-altul!'
+    },
+
+    caractereFolder: 'iona',
+    personajeImagini: {
+      'Iona (Pescarul Solitar)': 'iona.png',
+      'Burțile Peștilor (Mediul claustrofobic)': 'burti.png',
+      'Acvariul (Simbolul limitării)': 'acvariu.png',
+      'Cei doi Pescari (Tăcuții)': 'pescari.png'
     },
 
     titluSection: {
