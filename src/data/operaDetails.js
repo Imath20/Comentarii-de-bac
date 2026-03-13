@@ -3166,11 +3166,36 @@ export const OPERA_DETAILS = {
     curent: 'romantism',
     descriere: 'Nuvelă istorică care surprinde domnia tiranică a lui Alexandru Lăpușneanu, reflectând conflictele de putere, răzbunarea și consecințele deciziilor crude. Opera combină evenimente istorice cu tensiuni dramatice, evidențiind relațiile dintre domnitor și supuși și dilemele morale ale conducătorului.',
     teme: ['puterea', 'răzbunarea', 'tradiția istorică', 'destinul', 'conflictul moral'],
-    personaje: ['Alexandru Lăpușneanu', 'Ruxanda', 'Moțoc'],
+    personaje: [
+      'Alexandru Lăpușneanu',
+      'Domnița Ruxanda',
+      'Moțoc (Vornicul)',
+      'Veveriță și boierii',
+      'Piramida de Capete',
+      'Mulțimea de Țărani',
+      'Mercenarii Albași',
+      'Mitropolitul Teofan'
+    ],
     personajeDetalii: {
-      'Alexandru Lăpușneanu': 'Status: domnitorul Moldovei, personaj istoric, tiran. Trăsături: condus de dorința de putere și răzbunare; replică emblematică: „Dacă voi nu mă vreți, eu vă vreau”; deciziile lui drastice (capul lui Moțoc, sângele vărsat) afectează soarta regatului. Comportament: se întoarce cu spahii turci; îi primește pe boieri și îi tratează cu dispreț; cruță pe Moțoc doar ca să-l folosească; la final e învins și învață „a muri”. Descriere generală: simbolul puterii absolute și al tiraniei; lupta dintre autoritate și moralitate; Negruzzi îl prezintă ca personaj complex, nu doar monstru.',
-      'Ruxanda': 'Status: fiica lui Lăpușneanu. Trăsături: simbol al nevinovăției și al victimei neputincioase în fața puterii tatălui; legătura ei cu Moțoc și cu tatăl creează tensiune. Comportament: devine mija de conflict și obiect al deciziilor tatălui; soarta ei amplifică drama. Descriere generală: reprezintă nevinovăția care suferă din cauza tiraniei; prin ea se vede că puterea oprimată lovește și în cei apropiați.',
-      'Moțoc': 'Status: tânăr boier, unul dintre cei patru trimiși la Lăpușneanu. Trăsături: curajos, devotat poporului, vorbește deschis despre „sângele ce ai vărsat”; reprezentant al dreptății morale. Comportament: îl avertizează pe domnitor că țara nu-l dorește; e cruțat ironic („ca să mă scapi de blestemele norodului”); devine ținta răzbunării , „Capul lui Moțoc vrem!”. Descriere generală: simbolul opoziției morale și al curajului în fața tiraniei; soarta lui ilustrează prețul cinstitudinei.'
+      'Alexandru Lăpușneanu': 'Status: domnitorul Moldovei, tiran, personaj istoric. Fizic: bărbat de vârstă mijlocie, figură impunătoare dar marcată de cruzime rece; ochi negri scânteietori care par să vadă trădarea peste tot; mustață neagră tăiată scurt, barbă îngrijită; zâmbet sardonoc care îți îngheață sângele. Vibe: tiranul calculat. Scene: pe tronul Moldovei, o mână pe mânerul buzduganului de aur, cealaltă mângâindu-și barba; în ochi scânteie de nebunie când spune „Dacă voi nu mă vreți, eu vă vreu!”. Haine: caftan de catifea roșu-închis (ca sângele închegat), brodat cu fir de aur, blană de zibelină pe umeri, coroană voievodală masivă. Descriere generală: simbolul puterii absolute și al terorii; prânzul de sânge, piramida de capete, predarea lui Moțoc mulțimii; la final e otrăvit de Ruxanda și moare în chinuri.',
+      'Domnița Ruxanda': 'Status: soția lui Lăpușneanu, fiica lui Petru Rareș, victima nobilă a cruzimii soțului. Fizic: frumusețe palidă, fragilă, trăsături nobile dar pline de tristețe; ochi mari, umezi, mereu speriați; contrast total față de cruzimea soțului. Vibe: victima nobilă. Scene: îngenuncheată la picioarele lui Lăpușneanu, rugându-se pentru viața boierilor, cu lacrimi pe obraji; eleganță suferindă. Haine: rochii lungi de mătase albă sau azurie, acoperite cu pietre prețioase, văl transparent pe cap. Descriere generală: îl imploră pe domn să înceteze vărsarea de sânge; leșină la vederea piramidei de capete; la final, pentru a-și salva fiul, îi dă otrăvă pe Lăpușneanu, îndemnată de Mitropolitul Teofan.',
+      'Moțoc (Vornicul)': 'Status: vornic, unul dintre cei patru boieri trimiși la Lăpușneanu; „Iuda Moldovei”. Fizic: om bătrân, gârbovit de atâta plecat în fața puterii; față vicleană, de vulpe, ochi mici care fug mereu în stânga și-n dreapta; zâmbet servil, prefăcut. Vibe: trădătorul calculat. Scene: în spatele tronului, șoptind la urechea domnitorului; în momentul final, târât de mulțime, cu fața desfigurată de teroare. Haine: haine boierești scumpe care par să atârne pe el, simbolizând caracterul mic. Descriere generală: îl avertizează pe Lăpușneanu că „sângele ce ai vărsat” îl urăște pe țară; e cruțat ironic ca „să mă scapi de blestemele norodului”; la final e predat poporului – „Capul lui Moțoc vrem!” – și sfâșiat.',
+      'Veveriță și boierii': 'Status: boierii vechii aristocrații care nu vor să se supună; Veveriță e lovit primul la prânzul de sânge. Fizic: bărbați solizi, bărbi lungi albe, fețe mândre și autoritare. Vibe: mândria zdrobită. Scene: la prânzul de taină, așezați la masă, trecând de la veselie la groază când mercenarii intră în sală. Descriere generală: cei 47 de boieri invitați la „împăcare”; masacrul începe când Veveriță ridică paharul și e lovit în cap de buzdugan; capetele lor vor forma piramida.',
+      'Piramida de Capete': 'Status: „monumentul” lui Lăpușneanu, element vizual al groazei. Descriere: 47 de capete de boieri așezate cu grijă în formă de piramidă, după rang – cei mari la bază, cei mici la vârf. Vibe: grotescul. Scene: șocantă, sub lumină rece de lună sau la lumina torțelor, în curtea palatului; Ruxanda leșină la vederea ei. Descriere generală: „leacul de frică” promis Ruxandei; apogeul tiraniei și al cinismului macabru.',
+      'Mulțimea de Țărani': 'Status: poporul de la porțile palatului, vocea „justiției” oarbe. Fizic: oameni simpli, zdrențăroși, fețe asprite de foame și nedreptate. Vibe: justiția oarbă. Scene: la porțile palatului, strigând cu gurile căscate „Capul lui Moțoc vrem!”; sute de mâini ridicate, torțe. Descriere generală: Lăpușneanu îi mulțumește predându-le pe Moțoc – „Proști, dar mulți...” – și își cumpără loialitatea.',
+      'Mercenarii Albași': 'Status: soldați străini (spahii, lefegii), executori ai masacrului. Fizic: armuri strălucitoare, „mutre” fioroase; nu vorbesc limba dar știu să mânuiască sabia. Descriere generală: înconjoară curtea la ospăț; la semnalul domnului („A! voi ocărâți pre domnul vostru! la ei, flăcăi!”) năpustesc asupra boierilor; umbrele care împlinesc teroarea.',
+      'Mitropolitul Teofan': 'Status: autoritatea bisericească, conștiința religioasă. Fizic: bătrân impunător, în haine bisericești aurii. Scene: îl mustră pe Lăpușneanu pe patul de moarte; îi spune Ruxandei „Domnul Dumnezeu să te povățuiască” când ea se chinuie să-l otrăvească pe domn. Descriere generală: simbolul legii morale și al îndemnului la acțiune; Ruxanda acționează și după cuvântul lui.'
+    },
+    caractereFolder: 'lapusneanu',
+    personajeImagini: {
+      'Alexandru Lăpușneanu': 'alexandru.png',
+      'Domnița Ruxanda': 'ruxandra.png',
+      'Moțoc (Vornicul)': 'motoc.png',
+      'Veveriță și boierii': 'grupul.png',
+      'Piramida de Capete': 'piramida.png',
+      'Mulțimea de Țărani': 'tarani.png',
+      'Mercenarii Albași': 'mercenari.png',
+      'Mitropolitul Teofan': 'mitropilitul.png'
     },
     analiza: 'Nuvela explorează puterea absolută și consecințele ei asupra indivizilor și societății. Negruzzi evidențiază dilemele morale și dramatice ale domnitorului, alternând între istorie și ficțiune. Relațiile dintre personaje și deciziile lor tragice subliniază tensiunea dintre autoritate, justiție și răzbunare.',
     citate: [
@@ -3307,11 +3332,48 @@ export const OPERA_DETAILS = {
     curent: 'modernism',
     descriere: 'Roman exotic care surprinde iubirea pasională și imposibilă dintre Allan, un european curios și inteligent, și Maitreyi, o tânără indiană. Eliade explorează diferențele culturale, tensiunile dintre lumi și condiția individului în fața sentimentelor și tradițiilor, evidențiind experiența inițiatică a dragostei și maturizarea emoțională.',
     teme: ['iubirea', 'diferențele culturale', 'pasiunea', 'inițierea', 'conflictul tradiție vs. modernitate'],
-    personaje: ['Allan', 'Maitreyi', 'Narendra Sen'],
+    personaje: [
+      'Allan (Sahibul la birou)',
+      'Allan (Pierdut în obsesie)',
+      'Maitreyi Devi (Pictura / Alpana)',
+      'Maitreyi Devi (Chitara / cântecul)',
+      'Narendra Sen',
+      'Srimati Devi',
+      'Chabu',
+      'Harold',
+      'Robu',
+      'Guru-ul',
+      'Servitorii casei',
+      'Copacul de Banyan'
+    ],
     personajeDetalii: {
-      'Allan': 'Status: protagonist european (alter ego al lui Eliade), tânăr inginer/curios, intelectual. Trăsături: aflat între rațiune și emoție, între cultură și pasiune; descoperă India și Maitreyi ca pe o revelație; trăiește iubirea imposibilă și gelozia (trecutul ei cu Tagore, „șapte frunze”). Comportament: locuiește la Ripon Mansion; se îndrăgostește de Maitreyi; confruntă normele și diferențele culturale; la final părăsește India, chinuit. Descriere generală: simbolul căutării cunoașterii și al maturizării prin iubire; experiența inițiatică e și emoțională și culturală; „o iubire cum este aceasta nu moare niciodată, chiar dacă trupurile se despart”.',
-      'Maitreyi': 'Status: tânăra indiană, obiectul iubirii lui Allan. Trăsături: educată, sensibilă, „brațul gol, brun, de lut și de ceară”; simbol al exoticului și al frumuseții inaccesibile; are trecut spiritual (Tagore, mantra, șuvița de păr). Comportament: relația cu Allan e intensă, pasională; limitată de diferențele culturale și de familia ei (Narendra Sen); devine enigmă și obiect al geloziei lui Allan. Descriere generală: simbolul iubirii imposibile între două lumi; prin ea Eliade explorează granița dintre real și sacru, între pasiune și tradiție.',
-      'Narendra Sen': 'Status: profesor, tatăl sau tutore al Maitreyi. Trăsături: simbol al tradiției și al autorității în societatea indiană; figură de contrast pentru libertatea emoțională a tinerilor. Comportament: exercită controlul asupra fiicei și asupra normelor; limitează relația Allan–Maitreyi. Descriere generală: reprezintă barierele sociale și culturale care fac iubirea „imposibilă”; prin el se vede tensiunea dintre generații și între India tradițională și atracția tinerilor.'
+      'Allan (Sahibul la birou)': 'Status: protagonist european (alter-ego al lui Eliade), tânăr de 24-25 de ani, intelectual, la început „sahib” sigur pe el. Fizic: slab, trăsături rafinate, privire curioasă dar ușor arogantă și distantă; poartă ochelari (detaliu de „deștept”). Vibe: inginerul european tipic, disciplinat. Scene: la birou, scriind în jurnal, într-o cameră de bungalow colonial, lumină caldă; se uită pe furiș la Maitreyi. Haine: costum de in alb/crem, cravată subțire, păr cu pomadă, aspect îngrijit. Descriere generală: intră în India ca într-un laborator cultural și iese transformat; începutul poveștii îl prinde în postura de observator controlat.',
+      'Allan (Pierdut în obsesie)': 'Status: același Allan, dar în etapa de pasiune și destrămare interioară. Fizic: aceeași finețe de intelectual, dar cu privirea rătăcită, obosită, „pierdută”; nervozitate și tensiune. Vibe: obsesia. Scene: într-un fotoliu sau pe o terasă, copleșit de dorință și gelozie, cu gesturi mecanice, ca un om care nu mai stăpânește nimic. Haine: încă european, dar mai neglijent, „șifonat” de febra iubirii. Descriere generală: întruchipează inițierea prin iubire – nu mai e doar un colonist curios, ci un om transformat, chinuit de imposibilitatea legăturii dintre lumi.',
+      'Maitreyi Devi (Pictura / Alpana)': 'Status: tânăra indiană, „enigma” iubirii, poartă în ea tradiția și misterul. Fizic: frumusețe exotică; piele de culoarea „ceaiului cu lapte”, ochi negri uriași, migdalați; păr negru ca abanosul, lung, uneori împletit cu flori; grație de felină. Vibe: esența feminității indiene – inocență copilărească + senzualitate mistică. Scene: desenând/pictând pe podea (Alpana), brățări zăngănind, privire intensă. Haine: sariuri viu colorate (roșu, albastru, auriu), bijuterii de aur, bindi. Descriere generală: simbolul sacru-profanului, al iubirii imposibile; atrage, inițiază și destabilizează universul lui Allan.',
+      'Maitreyi Devi (Chitara / cântecul)': 'Status: aceeași Maitreyi, în ipostaza de artistă și vrajă sonoră. Fizic: aceleași trăsături (ochi foarte mari, păr abanos), dar cu expresie visătoare, hipnotică. Vibe: cântecul care îl dezarmează pe Allan; intens eye contact, mister. Scene: cântând la un instrument tradițional (chitară/alt instrument), într-o cameră cu miros de iasomie și lumină cinematografică. Haine: sari de mătase, brățări multe, coliere, bindi. Descriere generală: accentuează latura ei de „vrăjitoare” a erosului și a tradiției; iubirea devine ritual, nu simplă poveste romantică.',
+      'Narendra Sen': 'Status: tatăl (și zidul cultural), intelectual bengalez, autoritatea casei. Fizic: bărbat matur, impunător, cu ochelari; figură de intelectual; burtă discretă de om înstărit; zâmbet binevoitor care ascunde rigoare tradițională. Vibe: autoritatea calmă. Scene: în fotoliu de ratan, citind sau discutând filosofie cu Allan, într-o cameră cu rafturi de cărți. Haine: dhoti alb și cămașă ușoară. Descriere generală: păzește granița culturală; când află adevărul, rupe legătura fără ezitare, impunând ordinea tradiției.',
+      'Srimati Devi': 'Status: mama, umbra tradiției care veghează casa. Fizic: femeie matură, încă frumoasă, trăsături nobile. Vibe: tradiția mută. Scene: în fundal, supraveghind servitorii, privire care simte pericolul înaintea bărbaților. Descriere generală: gardianul nevăzut al codului; întruchipează rușinea, onoarea și reacția implacabilă a familiei.',
+      'Chabu': 'Status: sora mai mică a lui Maitreyi, martorul nevinovat. Fizic: fetiță veselă, ochi curioși. Vibe: inocența care dă de gol. Scene: se joacă prin casă, observă tot și scapă adevărul fără să vrea. Descriere generală: declanșatorul catastrofei; prin ea secretul devine public în familie.',
+      'Harold': 'Status: prietenul european al lui Allan, contrast colonial. Fizic: englez tipic, roșcat sau blond, ars de soare. Vibe: cinismul colonial. Scene: la clubul englezilor, cu gin în mână, ironizând „localnicii” și obsesia lui Allan. Descriere generală: vocea colonistului pragmatic; arată cât de departe se îndepărtează Allan de lumea lui.',
+      'Robu': 'Status: verișorul lui Maitreyi, îndrăgostit în tăcere, rival latent. Fizic: tânăr indian serios, tăcut, privire întunecată. Vibe: geloasia tăcută. Scene: la marginea conversațiilor, urmărind fără să intervină, acumulând resentiment. Descriere generală: tensiunea din interiorul familiei; întruchipează rivalitatea și presiunea tradiției asupra fetei.',
+      'Guru-ul': 'Status: figură spirituală, magnet pentru fascinația lui Allan. Fizic: bătrân sfrijit, aproape gol, barbă lungă albă. Vibe: misticismul Indiei. Scene: în lotus sub un banyan, în lumină caldă, ca o apariție. Descriere generală: simbol al dimensiunii sacre care îl atrage și îl rătăcește pe Allan.',
+      'Servitorii casei': 'Status: fundal social al casei Sen. Vibe: distanța socială. Scene: siluete care se mișcă în penumbra holurilor, aducând ceai și fructe exotice. Descriere generală: accentuează ierarhiile, ritualul, și faptul că iubirea se petrece sub priviri invizibile.',
+      'Copacul de Banyan': 'Status: „personaj vizual” al iubirii, loc al jurămintelor. Fizic: uriaș, cu rădăcini aeriene ca niște liane. Vibe: spațiu magic, protector și amenințător. Descriere generală: simbol al legământului și al destinului; natura devine martor al iubirii imposibile.'
+    },
+
+    caractereFolder: 'Maytreyi',
+    personajeImagini: {
+      'Allan (Sahibul la birou)': 'allan-birou.png',
+      'Allan (Pierdut în obsesie)': 'allan-picioare.png',
+      'Maitreyi Devi (Pictura / Alpana)': 'maytreyi-pictura.png',
+      'Maitreyi Devi (Chitara / cântecul)': 'maytreyi-chitara.png',
+      'Narendra Sen': 'narendra.png',
+      'Srimati Devi': 'srimati.png',
+      'Chabu': 'chabu.png',
+      'Harold': 'harold.png',
+      'Robu': 'robu.png',
+      'Guru-ul': 'guru.png',
+      'Copacul de Banyan': 'copac.png'
     },
     analiza: 'Romanul explorează iubirea imposibilă între două culturi și efectele diferențelor sociale și culturale asupra sentimentelor. Eliade folosește experiența lui Allan pentru a analiza maturizarea interioară, conflictele interioare și tensiunea dintre tradiție și pasiune. Opera surprinde universalitatea iubirii și constrângerile impuse de normele sociale.',
     citate: [
